@@ -31,3 +31,7 @@ def pre_edit(string_items):
         return acc
     result = reduce(reducer,string_items,[])      
     return result
+
+# str() == repr()
+print repr([0,1,2,3]) 
+# '[0,1,2,3]'
