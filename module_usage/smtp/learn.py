@@ -56,12 +56,12 @@ from email.header import Header
 
 # 如果我们本机没有 sendmail 访问，也可以使用其他邮件服务商的 SMTP 访问（QQ、网易、Google等）。
 # 第三方 SMTP 服务
-mail_host="smtp.qq.com"  #设置服务器
+mail_host="smtp.exmail.qq.com"  #设置服务器
 mail_user="1737785826@qq.com"    #用户名
-mail_pass="dong151924"   #口令 
+mail_pass="spkwrwllapwlcide"   #口令 
 
 sender = 'ghou@vmware.com'
-receivers = ['1403004929@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+receivers = ['1737785826@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
 message['From'] = Header("菜鸟教程", 'utf-8')
