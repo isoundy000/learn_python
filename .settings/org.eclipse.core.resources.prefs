@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//algorithm/fib.py=utf-8
 encoding//algorithm/prime_number.py=utf-8
+encoding//base/deploy.py=UTF-8
 encoding//function_special_usage/conversion_usage.py=utf-8
 encoding//function_special_usage/copy_file.py=utf-8
 encoding//function_special_usage/pop.py=utf-8
@@ -9,6 +10,7 @@ encoding//hundred_examples/one_hundred_examples.py=utf-8
 encoding//module_usage/gui/learn.py=utf-8
 encoding//module_usage/json/learn.py=utf-8
 encoding//module_usage/mysql/learn.py=utf-8
+encoding//module_usage/network/learn.py=utf-8
 encoding//module_usage/os/file_dir_method.py=utf-8
 encoding//module_usage/smtp/learn.py=utf-8
 encoding//module_usage/thread/learn.py=utf-8
