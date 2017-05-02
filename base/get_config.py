@@ -8,7 +8,6 @@ from ConfigParser import ConfigParser as config
 from configobj import ConfigObj
 from constants import configConstants as CON
 
-
 import os
 class getConfig(object):
     '''
@@ -83,8 +82,6 @@ class getConfig(object):
             os.mkdir(backup_path)
 
         return backup_path
-
-
 if __name__ =="__main__":
     con = getConfig(CON.CONFIG_FILE_PATH)
     print con.get_source_path()

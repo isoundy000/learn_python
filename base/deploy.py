@@ -46,6 +46,7 @@ class Deploy(object):
             else:
                 raise Exception("File can not be deleted:%s"%backup_file_path)
 
+              
     def delete_file(self,file_path):
         # print 'filepath:%s'%file_path
         filename = file_path.split('/')[-1]
@@ -98,30 +99,20 @@ class Deploy(object):
                 dest_content_list.remove(i) 
         return  dest_content_list 
     
-    def modify_release_file(self,release_base,source_release_number, target_release_number):
-#         l10n = self.l10n
-#         release_path = self.config_release_path
-        release_file_path = release_base.format(target_release_number)
-        source_release_number = str(source_release_number)
-        target_release_number = str(target_release_number)
-        with open(release_file_path,'r') as r:
+    def modify_config_file(self,config_file_path, pattern=None ,targetstring=None):
+        targetstring = "xuli,"
+        import re 
+        pattern = re.compile(".*?(dupkey_receiver_list|l10nverify_receiver_list)\s*=\s*(.*).*?")
+        with open(config_file_path,'r') as r:
             lines = r.readlines()
-            # print 'lines:\n',lines
-        with open(release_file_path,'w') as w:
-            for line in lines:
-                w.write(line.replace(source_release_number,target_release_number))
-        # f = open(release_file_path,'r+')
-        # f.seek(0)
-        # f.truncate()
-        # release_content = f.readlines()
-        # for line in release_content:
-        #     if source_release_number in line:
-        #         new_line = line.replace(source_release_number, target_release_number)
-        #         f.write(new_line)
-        #     else:
-        #         file.write(line)
-        # f.close()
-        print "[*] File modified: %s"%release_file_path
+        with open(config_file_path,'w') as w:
+            for content in lines:
+                if re.match(pattern, content):
+                    m = re.match(pattern, content)
+                    content = content.replace(m.group(2),targetstring)
+                w.write(content)
+                
+        print "[*] File modified: %s"%config_file_path
     
     def mapping_file(self,release_base_source,release_base_target,source_release_number, target_release_number):
         self.delete_file(release_base_target.format(target_release_number))
@@ -157,7 +148,7 @@ class Deploy(object):
                 raise Exception("Settings file can not copy to %s"%settings_template_dic[field])
               
     def script_mapping(self,release_base_source,release_base_target): 
-        script_dic = config_dic = self.con.get_mapping_dic()[CON.SCRIPT_DIC]
+        script_dic =  config_dic = self.con.get_mapping_dic()[CON.SCRIPT_DIC]
         for key in script_dic.keys():
             self.mapping_file(release_base_source,release_base_target,key,script_dic[key])
         
@@ -195,7 +186,7 @@ class Deploy(object):
         deploy_list = self.get_final_list(self.dest_home_front)
         for i in deploy_list:
             file_path = os.path.join(self.dest_home_front,i)
-            # print 'file path:',file_path
+            print 'file path:',file_path
             backup_filename = os.path.join(self.backup_path, i)
             self.empty_backup_file(backup_filename)
             self.delete_file(file_path)
@@ -204,10 +195,10 @@ class Deploy(object):
         if self.con.is_need_mapping():
             config_data_base_source = os.path.join(self.source_home_front,self.l10n,self.config_data_path)
             config_data_base_target = os.path.join(self.dest_home_front,self.l10n,self.config_data_path)
-            # config_release_base_source = os.path.join(self.source_home_front,self.l10n,self.config_release_path)
-            # config_release_base_target = os.path.join(self.dest_home_front,self.l10n,self.config_release_path)
+            #config_release_base_source = os.path.join(self.source_home_front,self.l10n,self.config_release_path)
+           # config_release_base_target = os.path.join(self.dest_home_front,self.l10n,self.config_release_path)
             self.config_mapping(config_data_base_source, config_data_base_target)
-            # self.config_mapping(config_release_base_source, config_release_base_target)
+           # self.config_mapping(config_release_base_source, config_release_base_target)
             
             script_base_source = os.path.join(self.source_home_front,self.l10n,self.script_path)
             script_base_target = os.path.join(self.dest_home_front,self.l10n,self.script_path)
@@ -217,6 +208,7 @@ class Deploy(object):
         print "*"*20+"Front-end has been deployed successfully"+"*"*20
 
     def back_end_deploy(self):
+       
         field = CON.BACK
 
         self.copy_settings_to_template(field)
@@ -229,17 +221,21 @@ class Deploy(object):
         if self.con.is_need_mapping():
             config_data_base_source = os.path.join(self.source_home_back,self.config_data_path)
             config_data_base_target = os.path.join(self.dest_home_back,self.config_data_path)
-            #config_release_base_source = os.path.join(self.source_home_back,self.config_release_path)
-            #config_release_base_target = os.path.join(self.dest_home_back,self.config_release_path)
             self.config_mapping(config_data_base_source, config_data_base_target)
-            #self.config_mapping(config_release_base_source, config_release_base_target)
+        for parpath, dirinfo, files in os.walk(os.path.join(self.dest_home_back,"config","data")):
+            for file in files:
+                if file == "Configuration.ini":
+                    self.modify_config_file(os.path.join(parpath,file))
+            
         print "*" * 20 + "Back-end has been deployed successfully" + "*" * 20
 
     def both_deploy(self):
         self.front_end_deploy()
         self.back_end_deploy()   
-
-
+            
+        
+    
+    
 if __name__ =='__main__':
     import os
     print os.getcwd()
