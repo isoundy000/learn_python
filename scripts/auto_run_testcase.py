@@ -8,7 +8,7 @@ Created on 4/26/2017
 import logging
 import subprocess
 # down pytest-3.0.7.tar.gz  install
-import py.test
+# import py.test
 
 
 def test_get_logger():
@@ -25,10 +25,14 @@ def test_get_logger():
 
 
 def auto_run_testcase(logger):
-    # run testcase
     # python -m unittest discover
-    shell1 = 'cd /var/lib/jenkins/workspace/grm'
-    
+    cmd = "cd /var/lib/jenkins/workspace/grm/l10n_parser && echo qwe123 | sudo -S python -m unittest discover"
+    p3 = subprocess.Popen(cmd, shell=True)
+    stdout, stderr = p3.communicate()
+    if stderr:
+        logger.info("kill celery beat process is out %s, err %s" % (stdout, stderr))
+    else:
+        logger.info("run l10n_parser testcase is success")
 
 
 def main():
