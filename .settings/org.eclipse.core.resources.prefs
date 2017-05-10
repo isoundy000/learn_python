@@ -39,3 +39,4 @@ encoding//module_usage/xml/parser.py=utf-8
 encoding//scripts/daily_send_mail.py=utf-8
 encoding//scripts/native2ascii.py=utf-8
 encoding//scripts/supervisor_restart.py=utf-8
+encoding//scripts/vip_json_api.py=utf8
