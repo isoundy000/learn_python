@@ -21,7 +21,7 @@ def test_get_logger():
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
     file.setFormatter(formatter)
     #set log level
-    logger.setLevel(logging.NOTSET)
+    logger.setLevel(logging.ERROR)
     return logger
 
 
@@ -43,8 +43,9 @@ def auto_run_testcase(logger):
             logger.info("mkdir log path is out %s, err %s" % (stdout1, stderr1))
         else:
             logger.info("mkdir log path  is success")
-    
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "/var/lib/jenkins/workspace/grm/g11nRepository/g11nRepository/settings_dev")
+
+    os.environ['DJANGO_SETTINGS_MODULE']='/var/lib/jenkins/workspace/grm/g11nRepository/g11nRepository/settings_pro'
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "/var/lib/jenkins/workspace/grm/g11nRepository/g11nRepository/settings_pro")
     cmd2 = "cd /var/lib/jenkins/workspace/grm/g11nRepository && echo qwe123 | sudo -S python -m unittest discover"
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout, stderr = p2.communicate()
