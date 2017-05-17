@@ -38,12 +38,12 @@ product_dict = {
 
 not_daily_export = [
     '116', '149', '163', '44', '51', '63', '75',
-    '148'                                       # special release id
+    '68', '61', '92'                                       # special release id
 ]
 
 user_info = {
     'username': 'ghou',
-    'password': 'Donga@123'
+    'password': 'Dong!123'
 }
 
 
@@ -56,7 +56,7 @@ def test_get_logger():
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
     file.setFormatter(formatter)
     #set log level
-    logger.setLevel(logging.NOTSET)
+    logger.setLevel(logging.ERROR)
     return logger
 
 
@@ -67,18 +67,18 @@ def daily_send_mail(logger):
     content = 'Hi All, \n'
     content += 'This is %s report' % (datetime.date.today()+datetime.timedelta(days=1)) +'\n\n'
     content += 'GRM(gabi.eng.vmware.com):\n'
-    if stdout or stderr:
+    if stderr:
         supervisor_message = '1 Supervisor process is down'
-        logger.info("supervisor process is down out %s, err %s" % (stdout, stderr))
+        logger.warning("supervisor process is down, err %s" % stderr)
     else:
         supervisor_message = '1 Supervisor process is running successfully.'
     content += supervisor_message + '\n'
     rabbitmq_status = "sudo rabbitmqctl status"
     p1 = subprocess.Popen(rabbitmq_status, shell=True)
     stdout, stderr = p1.communicate()
-    if stdout or stderr:
+    if stderr:
         rabbitmq_message = '2 Rabbitmq process is down'
-        logger.info("rabbitmq process is down out %s, err %s" % (stdout, stderr))
+        logger.warning("rabbitmq process is down, err %s" % stderr)
     else:
         rabbitmq_message = '2 Rabbitmq process is running successfully.'
     content += rabbitmq_message + '\n'
@@ -115,7 +115,7 @@ def daily_send_mail(logger):
         disk_residue = '5 /var/ disk free %s.' % stdout.strip('\n')
     content += disk_residue
     content += '\n\nGRM_DB(gabi-db.eng.vmware.com):\n'
-    cat_gabi_db = "cat /var/www/g11nRepository/ghou.txt | sed -n '2p'" # sshpass -p Donga@123 ssh ghou@gabi-db.eng.vmware.com free -m | grep 'cache' | awk '{print $4}'
+    cat_gabi_db = "cat /var/www/g11nRepository/ghou.txt | sed -n '2p'" # sshpass -p Dong!123 ssh ghou@gabi-db.eng.vmware.com free -m | grep 'cache' | awk '{print $4}'
     p5 = subprocess.Popen(cat_gabi_db, shell=True, stdout=subprocess.PIPE)
     stdout1, stderr1 = p5.communicate()
     if stderr1:
@@ -124,7 +124,7 @@ def daily_send_mail(logger):
     else:
         memory_free1 = '1 Server memory free %sM.' % stdout1.strip('\n')
     content += memory_free1 + '\n'
-    cat_mnt_data = "cat /var/www/g11nRepository/ghou.txt | sed -n '3p'" # sshpass -p Donga@123 ssh ghou@gabi-db.eng.vmware.com df -h | awk '{print $4}' | sed -n '13p'
+    cat_mnt_data = "cat /var/www/g11nRepository/ghou.txt | sed -n '3p'" # sshpass -p Dong!123 ssh ghou@gabi-db.eng.vmware.com df -h | awk '{print $4}' | sed -n '13p'
     p6 = subprocess.Popen(cat_mnt_data, shell=True, stdout=subprocess.PIPE)
     stdout2, stderr2 = p6.communicate()
     if stderr2:
