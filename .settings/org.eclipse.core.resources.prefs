@@ -36,6 +36,7 @@ encoding//module_usage/reg/learn.py=utf-8
 encoding//module_usage/smtp/learn.py=utf-8
 encoding//module_usage/thread/learn.py=utf-8
 encoding//module_usage/xml/parser.py=utf-8
+encoding//scripts/auto_push_vip_source.py=utf-8
 encoding//scripts/daily_send_mail.py=utf-8
 encoding//scripts/native2ascii.py=utf-8
 encoding//scripts/supervisor_restart.py=utf-8

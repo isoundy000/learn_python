@@ -8,8 +8,12 @@ Created on 4/26/2017
 import logging
 import subprocess
 import os
+import sys
 # down pytest-3.0.7.tar.gz  install
 # import py.test
+import django
+sys.path.append('/var/lib/jenkins/workspace/grm/g11nRepository')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "g11nRepository.settings_test")
 
 
 def test_get_logger():
@@ -44,8 +48,7 @@ def auto_run_testcase(logger):
         else:
             logger.info("mkdir log path  is success")
 
-    os.environ['DJANGO_SETTINGS_MODULE']='/var/lib/jenkins/workspace/grm/g11nRepository/g11nRepository/settings_pro'
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "/var/lib/jenkins/workspace/grm/g11nRepository/g11nRepository/settings_pro")
+
     cmd2 = "cd /var/lib/jenkins/workspace/grm/g11nRepository && echo qwe123 | sudo -S python -m unittest discover"
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout, stderr = p2.communicate()
