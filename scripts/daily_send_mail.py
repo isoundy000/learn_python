@@ -16,31 +16,6 @@ os.environ['DJANGO_SETTINGS_MODULE']='g11nRepository.settings'
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "g11nRepository.settings")
 
 
-product_dict = {
-    '133': 'ts', '132': 'cls', '131': 'vapi', '130': 'vimclients', '137': 'vmrc', '136': 'daas', '135': 'integrity', '134': 'vdcs', '139': 'vcops-vmware-om-adapter', 
-    '138': 'vrops', '166': 'viewusbcart', '167': 'view', '160': 'viewportalwar', '161': 'crtbora', '162': 'viewcrt', '163': 'viewclientweb', '121': 'tools(bora)', 
-    '122': 'tools(bora-vmsoft)', '124': 'vcoserver-ng', '125': 'hws-desktop-client', '128': 'vimclients-platform', '129': 'Vsphere-client-modules', '58': 'ciswin', 
-    '54': 'marvin2.0.1', '57': 'BDE', '56': 'vIDM', '51': 'Host client', '50': 'VUM', '53': 'vRB', '52': 'loginsight', '164': 'viewportalwar', '115': 'SV_Agent', 
-    '114': 'wem-agent-installer', '116': 'srm', '110': 'vshield-mgmtplatform', '113': 'hydra', '112': 'hms-va', '82': 'vimclients', '83': 'vsphere-ui-useless', 
-    '80': 'vsphere-client-modules', '81': 'vsphere-ui-modules-useless', '86': 'vsphere-ui', '87': 'vcloud', '85': 'vsphere-ui-modules', '108': 'vsmva', '109': 'vseva', 
-    '102': 'WorkStation', '103': 'HvRO', '100': 'vsaniscsingc', '106': 'Astro', '107': 'vshield-sslvpn-client-win', '104': 'Mirage', '105': 'AccessPoint', '38': 'Marvin2.0.0', 
-    '37': 'VIO', '60': 'licenseservice', '61': 'rd-identity-server', '62': 'ciswin_standalone', '63': 'fusion', '65': 'vcsa_installer', '66': 'licenseservice', 
-    '67': 'appliance-mgmt-ui', '68': 'vcsa-ui-installer', '69': 'cls', '173': 'vIDM', '172': 'rde-rft-all', '171': 'rde-rft-all', '154': 'vseva', '2': 'vRA', 
-    '99': 'vsan-health-ui', '98': 'vsan', '168': 'cafe-container', '169': 'admiral', '91': 'vsphere-ui-modules', '90': 'phonehome', '93': 'vsphere-client-modules', 
-    '92': 'vsphere-ui', '95': 'vsanhealth', '94': 'vimclients', '97': 'vsanvit', '96': 'vsanmgmt', '89': 'rd-identity-server', '150': 'viewusbcart', '153': 'vsmva', 
-    '152': 'vshield-sslvpn-client-win', '155': 'vshield-mgmtplatform', '41': 'client-module', '157': 'view', '159': 'v4c (v4pa)', '158': 'v4v(v4h)', '48': 'VAMI', 
-    '46': 'vapi', '119': 'srm_vrops', '44': 'vcenter', '43': 'vpxwin', '40': 'vimclients', '118': 'hws-desktop-client', '146': 'vsphere-ui', '147': 'crtbora', 
-    '145': 'vsphere-ui-modules', '142': 'view', '143': 'installkit', '140': 'vcopssuitevm', '148': 'viewcrt', '149': 'viewclientweb', '77': 'vsphere-client-modules', 
-    '76': 'vimclients', '75': 'ciswin_standalone', '74': 'vcenter', '73': 'iso', '72': 'ts', '71': 'ovfs', '70': 'vmsyslogcollector', '79': 'cls', '78': 'vapi',
-    '175': 'wem-agent-installer', '176': 'SV_Agent', '177': 'Astro', '178': 'wem-agent-installer'
-}
-
-
-not_daily_export = [
-    '116', '149', '163', '44', '51', '63', '75',
-    '68', '61', '92'                                       # special release id
-]
-
 user_info = {
     'username': 'ghou',
     'password': 'Dong!123'
@@ -141,16 +116,16 @@ def daily_send_mail(logger):
     flag = False
     for item in jobs_list:
         if item['color'] == 'red':
-            item_number = item['name'].split('-')[0].strip()
-            product_name = product_dict.get(item_number)
-            if item_number in not_daily_export:
+            name = item['name']
+            config_xml = server.get_job_config(name).encode('utf-8')
+            if '<triggers/>' in config_xml:
                 continue
-            if item_number and product_name:
+            list1 = name.split('-', 1)
+            if len(list1) == 2:
+                item_number = list1[0].strip().encode('utf-8')
+                product_name = list1[1].strip()
                 flag = True
                 content += '%s %s product(release_%s) is build fail' % (i, product_name, item_number)
-            elif item_number:
-                flag = True
-                content += '%s release_%s is build fail' % (i, item_number)
             content += '\n'
             i+=1
     if not flag:

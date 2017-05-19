@@ -28,28 +28,38 @@ def test_get_logger():
 
 
 def auto_push_vip_source(logger):
-    # this is local bundle
-    source_path = '/local/source'
-    # this is copy local bundle
-    copy_source_path = '/hou/copy/g11n-translations/l10n/'
-    # this is origin git Repository
-    target_path = '/hou/origin/g11n-translations/l10n/'
-    cmd = 'cp -r % %' % source_path, copy_source_path
-    p = subprocess.Popen(cmd, shell=True)
-    stdout, stderr = p.communicate()
-    if stderr:
-        logger.info("copy local source is err %s", stderr)
+    originCopy = 1
+    if originCopy:
+#         10.117.168.77 root/!QAZ2wsx /usr/l10n/
+        cmd = "sshpass -p '!QAZ2wsx' scp -r root@10.117.168.77:/usr/l10n aaa/"
+        
     else:
-        logger.info("copy local source is success")
-    
-    bcompare = 'bcompare @Compare.script %s %s' % copy_source_path, target_path
+        # this is local bundle
+        source_path = '/root/ghou/local/source/.'
+        # this is copy local bundle
+    #     copy_source_path = '/root/ghou/copy/g11n-translations/l10n/'
+        copy_source_path = '/root/ghou/'
+        # this is origin git Repository
+        if not os.path.exists(copy_source_path):
+            os.mkdir(copy_source_path)
+    #     target_path = '/root/ghou/origin/vip/g11n-translations/l10n/'
+        target_path = '/root/ghou/SIM_PASS'
+        cmd = 'cp -r %s %s' % (source_path, copy_source_path)
+        p = subprocess.Popen(cmd, shell=True)
+        stdout, stderr = p.communicate()
+        if stderr:
+            logger.info("copy local source is err %s", stderr)
+        else:
+            logger.info("copy local source is success")
+    bcompare = 'bcompare @Compare.script %s %s' % (copy_source_path, target_path)
     p = subprocess.Popen(bcompare, shell=True)
     stdout, stderr = p.communicate()
     if stderr:
-        logger.info("run l10n_parser testcase is out %s, err %s" % (stdout, stderr))
+        logger.info("run bcompare is out %s, err %s" % (stdout, stderr))
     else:
-        logger.info("run l10n_parser testcase is success")
+        logger.info("run bcompare is success")
     send_mail_message(logger)
+    
 
 
 def send_mail_message(logger):
