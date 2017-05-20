@@ -1,0 +1,5 @@
+load "/root/ghou/copy/l10n" "/root/ghou/l10n" 
+ filter "*.json" 
+ expand all 
+ select all 
+ file-report layout:side-by-side options:display-mismatches output-to:"/root/ghou/compare_report.html" output-options:wrap-word,html-color
