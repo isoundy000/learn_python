@@ -1,4 +1,4 @@
-load "/root/ghou/copy/l10n" "/root/ghou/l10n" 
+load "/root/ghou/copy/l10n" "/root/ghou/g11n-translations/l10n" 
  filter "*.json" 
  expand all 
  select all 
