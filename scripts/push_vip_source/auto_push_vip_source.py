@@ -12,6 +12,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
+import time
 
 
 remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
@@ -60,10 +61,14 @@ def auto_push_vip_source(logger):
             return
         else:
             logger.info("copy local source is success")
+    time.sleep(30)
     # this is git repository
     target_path = '/root/ghou/g11n-translations/l10n/'
-    bcompare = 'bcompare @Compare.script %s %s' % (copy_source_path, target_path)
-    p = subprocess.Popen(bcompare, shell=True)
+    bcompare_source = copy_source_path + 'l10n/'
+    compare_report_html = '/root/ghou/compare_report.html'
+    print bcompare_source, target_path, compare_report_html, '22222222222'
+    bcompare1 = 'bcompare @/root/ghou/Compare.script %s %s %s' % (bcompare_source, target_path, compare_report_html)
+    p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
         logger.info("run bcompare is out %s, err %s" % (stdout0, stderr0))
@@ -84,6 +89,7 @@ def auto_push_vip_source(logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
+    time.sleep(60)
 #     cmd2 = "git add . && git commit -m '%s' && git push origin master" % 'auto push vip source'
 #     p2 = subprocess.Popen(cmd2, shell=True)
 #     stdout2, stderr2 = p2.communicate()
@@ -98,14 +104,13 @@ def auto_push_vip_source(logger):
 #         return
 #     else:
 #         logger.info("run git command is success")
-
+#     os.system('rm -rf %s' % copy_source_path)
     mail_message = '''Hi all,
     The attachment is the result of a comparison between the code library and the collection library
  
 thanks, %s
     ''' % sender.split('@')[0]
-    send_mail_message(logger, 1, mail_message)
-    os.system('rm -rf %s' % copy_source_path)
+#     send_mail_message(logger, 1, mail_message)
     
 
 def send_mail_message(logger, is_fujian, mail_message=None):
@@ -139,10 +144,10 @@ def send_mail_message(logger, is_fujian, mail_message=None):
         logger.info("Successful mail delivery")
     except smtplib.SMTPException:
         logger.info("Error: Unable to send mail")
-    if os.path.exists('/root/ghou/compare_report.html'):
-        os.remove('/root/ghou/compare_report.html')
-    if os.path.exists('/root/ghou/compare_report.tar.gz'):
-        os.remove('/root/ghou/compare_report.tar.gz')
+#     if os.path.exists('/root/ghou/compare_report.html'):
+#         os.remove('/root/ghou/compare_report.html')
+#     if os.path.exists('/root/ghou/compare_report.tar.gz'):
+#         os.remove('/root/ghou/compare_report.tar.gz')
 
 
 def main():
