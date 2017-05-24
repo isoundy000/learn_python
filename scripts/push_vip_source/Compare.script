@@ -1,5 +1,5 @@
-load "/root/ghou/copy/l10n" "/root/ghou/g11n-translations/l10n" 
- filter "*.json" 
+load %1 %2 
+ filter "*en_US.json" 
  expand all 
  select all 
- file-report layout:side-by-side options:display-mismatches output-to:"/root/ghou/compare_report.html" output-options:wrap-word,html-color
+ file-report layout:side-by-side options:display-mismatches,line-numbers  output-to:%3 output-options:wrap-word,html-color

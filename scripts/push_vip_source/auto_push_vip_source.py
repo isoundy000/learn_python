@@ -6,19 +6,21 @@ Created on 2017年5月18日
 '''
 
 import os
+import sys
+import time
 import subprocess
 import logging
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
-import time
 
 
 remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
 remote_or_local_copy = 0
 sender = 'ghou@vmware.com'
-receivers = ['ghou@vmware.com']
+# receivers = ['ghou@vmware.com']
+receivers = ['ghou@vmware.com', 'nannany@vmware.com', 'huihuiw@vmware.com', 'gongy@vmware.com', 'linr@vmware.com', 'longl1@vmware.com']
 
 
 def test_get_logger():
@@ -35,6 +37,14 @@ def test_get_logger():
 
 
 def auto_push_vip_source(logger):
+    if os.path.exists('/root/ghou/compare_report.html'):
+        os.remove('/root/ghou/compare_report.html')
+    if os.path.exists('/root/ghou/compare_report.tar.gz'):
+        os.remove('/root/ghou/compare_report.tar.gz')
+    if os.path.exists("/root/ghou/g11n-translations"):
+        os.system('rm -rf %s' % "/root/ghou/g11n-translations")
+    os.chdir("/root/ghou/")
+    os.system("git clone ssh://git@git.eng.vmware.com/g11n-translations.git")
     # this is copy local bundle
     copy_source_path = '/root/ghou/copy/'
     if not os.path.exists(copy_source_path):
@@ -61,13 +71,11 @@ def auto_push_vip_source(logger):
             return
         else:
             logger.info("copy local source is success")
-    time.sleep(30)
     # this is git repository
     target_path = '/root/ghou/g11n-translations/l10n/'
     bcompare_source = copy_source_path + 'l10n/'
     compare_report_html = '/root/ghou/compare_report.html'
-    print bcompare_source, target_path, compare_report_html, '22222222222'
-    bcompare1 = 'bcompare @/root/ghou/Compare.script %s %s %s' % (bcompare_source, target_path, compare_report_html)
+    bcompare1 = 'bcompare @/root/ghou/Compare.script %s %s %s' % (target_path[:-1], bcompare_source[:-1], compare_report_html)
     p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
@@ -77,7 +85,8 @@ def auto_push_vip_source(logger):
         logger.info("run bcompare is success")
     # 把文件同步到git库    之后提交上去
     # -I, –ignore-times 不跳过那些有同样的时间和长度的文件      -a, –archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
-    cmd1 = 'rsync -aI %s %s' % (copy_source_path, target_path[:-5])
+    # -r表示recursive递归  --exclude不包含/ins目录    --recursive
+    cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (copy_source_path, target_path[:-5])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
@@ -89,28 +98,27 @@ def auto_push_vip_source(logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    time.sleep(60)
-#     cmd2 = "git add . && git commit -m '%s' && git push origin master" % 'auto push vip source'
-#     p2 = subprocess.Popen(cmd2, shell=True)
-#     stdout2, stderr2 = p2.communicate()
-#     if stderr2:
-#         logger.info("run git command is out %s, err %s" % (stdout2, stderr2))
-#         mail_message = '''Hi all,
-#     git push is fail
-#  
-# thanks, %s
-#         ''' % sender.split('@')[0]
-#         send_mail_message(logger, 0, mail_message)
-#         return
-#     else:
-#         logger.info("run git command is success")
-#     os.system('rm -rf %s' % copy_source_path)
+    cmd2 = "git add . && git commit -m '%s' && git push origin master" % 'auto push vip source'
+    p2 = subprocess.Popen(cmd2, shell=True)
+    stdout2, stderr2 = p2.communicate()
+    if stderr2:
+        logger.info("run git command is out %s, err %s" % (stdout2, stderr2))
+        mail_message = '''Hi all,
+    git push is fail
+  
+thanks, %s
+        ''' % sender.split('@')[0]
+        send_mail_message(logger, 0, mail_message)
+        return
+    else:
+        logger.info("run git command is success")
+    os.system('rm -rf %s' % copy_source_path)
     mail_message = '''Hi all,
     The attachment is the result of a comparison between the code library and the collection library
  
 thanks, %s
     ''' % sender.split('@')[0]
-#     send_mail_message(logger, 1, mail_message)
+    send_mail_message(logger, 1, mail_message)
     
 
 def send_mail_message(logger, is_fujian, mail_message=None):
@@ -144,15 +152,18 @@ def send_mail_message(logger, is_fujian, mail_message=None):
         logger.info("Successful mail delivery")
     except smtplib.SMTPException:
         logger.info("Error: Unable to send mail")
-#     if os.path.exists('/root/ghou/compare_report.html'):
-#         os.remove('/root/ghou/compare_report.html')
-#     if os.path.exists('/root/ghou/compare_report.tar.gz'):
-#         os.remove('/root/ghou/compare_report.tar.gz')
-
+    
 
 def main():
+    argv = sys.argv
     logger = test_get_logger()
-    auto_push_vip_source(logger)
+    if len(argv) == 1:
+        auto_push_vip_source(logger)
+    else:
+        time_number = int(sys.argv[1])
+        while True:
+            auto_push_vip_source(logger)
+            time.sleep(time_number)
 
 
 if __name__ == '__main__':
