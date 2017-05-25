@@ -19,8 +19,8 @@ from email.header import Header
 remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
 remote_or_local_copy = 0
 sender = 'ghou@vmware.com'
-# receivers = ['ghou@vmware.com']
-receivers = ['ghou@vmware.com', 'nannany@vmware.com', 'huihuiw@vmware.com', 'gongy@vmware.com', 'linr@vmware.com', 'longl1@vmware.com']
+receivers = ['ghou@vmware.com']
+# receivers = ['ghou@vmware.com', 'nannany@vmware.com', 'huihuiw@vmware.com', 'gongy@vmware.com', 'linr@vmware.com', 'longl1@vmware.com']
 
 
 def test_get_logger():
@@ -94,18 +94,30 @@ def auto_push_vip_source(logger):
         return
     else:
         logger.info("run rsync is success")
+    data = []
+    for parent, dirnames, filenames in os.walk(target_path):
+        if 'messages_en_US.json' in filenames and parent[len(target_path):]:
+            data.append(parent[len(target_path):])
+    data1 = []
+    for parent, dirnames, filenames in os.walk(copy_source_path):
+        if 'messages_en_US.json' in filenames and parent[len(copy_source_path)+len('l10n/'):]:
+            data1.append(parent[len(copy_source_path)+len('l10n/'):])
+    delete_path = list(set(data).difference(set(data1)))
+    for path in delete_path:
+        rm_path = target_path + path
+        os.system('rm -rf %s' % rm_path)
     os.chdir(target_path) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git add . && git commit -m '%s' && git push origin master" % 'auto push vip source'
+    cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:
         logger.info("run git command is out %s, err %s" % (stdout2, stderr2))
         mail_message = '''Hi all,
     git push is fail
-  
+    
 thanks, %s
         ''' % sender.split('@')[0]
         send_mail_message(logger, 0, mail_message)
