@@ -11,8 +11,6 @@ import os
 import sys
 # down pytest-3.0.7.tar.gz  install
 # import py.test
-sys.path.append('/var/lib/jenkins/workspace/grm/g11nRepository')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "g11nRepository.settings_test")
 
 
 def test_get_logger():
@@ -30,7 +28,8 @@ def test_get_logger():
 
 def auto_run_testcase(logger):
     # python -m unittest discover
-    cmd = "cd /var/lib/jenkins/workspace/grm/l10n_parser && echo qwe123 | sudo -S python -m unittest discover"
+    # echo qwe123 | sudo -S 
+    cmd = "cd /var/lib/jenkins/workspace/grm/l10n_parser && python -m unittest discover"
     p = subprocess.Popen(cmd, shell=True)
     stdout, stderr = p.communicate()
     if stderr:
@@ -39,7 +38,8 @@ def auto_run_testcase(logger):
         logger.info("run l10n_parser testcase is success")
  
     if not os.path.exists('/var/www/g11nRepository/log'):
-        cmd1 = "echo qwe123 | sudo -S mkdir -p /var/www/g11nRepository/log"
+        # echo qwe123 | sudo -S
+        cmd1 = "mkdir -p /var/www/g11nRepository/log"
         p1 = subprocess.Popen(cmd1, shell=True)
         stdout1, stderr1 = p1.communicate()
         if stderr1:
@@ -47,8 +47,8 @@ def auto_run_testcase(logger):
         else:
             logger.info("mkdir log path  is success")
  
- 
-    cmd2 = "cd /var/lib/jenkins/workspace/grm/g11nRepository && echo qwe123 | sudo -S python -m unittest discover"
+    # echo qwe123 | sudo -S 
+    cmd2 = "cd /var/lib/jenkins/workspace/grm/g11nRepository && python -m unittest discover"
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout, stderr = p2.communicate()
     if stderr:
