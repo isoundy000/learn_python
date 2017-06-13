@@ -1,0 +1,42 @@
+1.JAVA part
+source(properties) file path: /strata/loginsight/components/commons-lib/lib/src/com/vmware/loginsight/i18n/messages.properties
+
+i18n method:  I18nUtil.getMessage
+replace where call  I18nUtil.getMessage
+
+sample:
+original call:  I18nUtil.getMessage("com.vmware.loginsight.scheduled.ScheduledQueryEmailNotification.formatSubjectLead", IInstallationNames.LOG_PRODUCT_NAME, numHitsStr, messageStr);
+expected call:  I18nUtil.getMessage("com.vmware.loginsight.scheduled.ScheduledQueryEmailNotification.formatSubjectLead", "[{0}] {1} new {2} found for alert:", IInstallationNames.LOG_PRODUCT_NAME, numHitsStr, messageStr);
+
+
+2.JSP part
+source(properties) file path: /strata/loginsight/components/ui/application/src/webui.properties
+i18n method: getMessage (in class /strata/loginsight/components/ui/application/src/com/vmware/loginsight/web/actions/BaseActionBean.java)
+replace where call : getMessage
+sample:
+original call: getMessage("com.vmware.loginsight.web.actions.chart.LogChartingActionBean.fixedBucket", gbVal)
+expected call: getMessage("com.vmware.loginsight.web.actions.chart.LogChartingActionBean.fixedBucket", "(fixed bucket: {0})", gbVal)
+
+i18n method:
+replace where use <fmt:message tag
+sample:
+original call: <fmt:message key="copyright.general" >
+expected call: <fmt:message key="copyright.general" source="Copyright &copy; {0} VMware, Inc. All rights reserved. This product is protected by copyright and intellectual property laws in the United States and other countries as well as by international treaties. VMware products are covered by one or more patents listed at <a href="http://www.vmware.com/go/patents" target="_blank">http://www.vmware.com/go/patents</a>.">
+
+3.JS part
+source(properties) file path: /strata/loginsight/components/ui/application/WebContent/js/pi-i18n/lang/pi-i18n.js
+i18n method: Y.PI.I.getString
+replace where call Y.PI.I.getString
+sample:
+original call: Y.PI.I.getString('widgetsYui3_dropdown_multiSelectInstructions', Y.PI.Util.getModifierKeyDisplayText())
+expected call: Y.PI.I.getString('widgetsYui3_dropdown_multiSelectInstructions',"'{0}-click to multi-select'", Y.PI.Util.getModifierKeyDisplayText())
+
+
+
+
+
+
+
+/strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/settings/stats/StatsTableType.java
+ /strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/utilities/EmailUtil.java
+/strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/actions/misc/HelpActionBean.java
