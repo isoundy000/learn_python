@@ -12,6 +12,7 @@ import os
 import sys
 from  xml.dom import  minidom
 from xml.sax.saxutils import *
+import logging
 
 
 class Parser(object):
@@ -254,7 +255,7 @@ class PropertiesParser(Parser):
             block=s_block
         if block : self._generate_item(comment,"","",block,"")
         
-        
+
 class JsParser(Parser):
     encoding='utf-8'
     def __init__(self, file_path):
@@ -265,11 +266,14 @@ class JsParser(Parser):
     def load(self):
         stream = self._open_resource_file()
         lines = stream.read()
+        stream.close()
         lines = re.sub(r'(\"\s*\+[\n|\r\n|\r]*\s*\")', '', lines)
-        out = codecs.open(r'D:\vip_testdata\pi-i18n.js', 'w', self.encoding)
+        if os.path.exists(self._file_path):
+            os.remove(self._file_path)
+        out = codecs.open(self._file_path, 'w', self.encoding)
         out.write(lines)
-        out.close( )
-        file_stream = codecs.open(r'D:\vip_testdata\pi-i18n.js', 'r', self.encoding)
+        out.close()
+        file_stream = codecs.open(self._file_path, 'r', self.encoding)
         lines1 = file_stream.readlines()
         self._parse(lines1)
         
@@ -281,32 +285,87 @@ class JsParser(Parser):
                 key = regPattern.group(1)
                 value = regPattern.group(2)
                 self._generate_item("",key,value,"","")
+                
+
+class ReplaceMessage(object):
+    encoding = 'utf-8'
+    def __init__(self, file_path, data):
+        self.filePath = file_path
+        self.data = data
+        self.i18nUtilGetMessageReplace = r'I18nUtil\.getMessage\([\r|\n|\n\r]*\s*"(.*)".*\)'
+        self.getMessage = r'(?<!I18nUtil.)getMessage\("(.*)"(.*)\)'
+#         self.jspMessage = re.compile("")
+
+    def replace_get_message(self, logger):
+        fileStream = codecs.open(self.filePath, 'r', self.encoding)
+        lines = fileStream.read()
+        fileStream.close()
+        if self.filePath.endswith('.java'):
+            i18nUtilGetMessageReplace = re.findall(self.i18nUtilGetMessageReplace, lines)
+            if i18nUtilGetMessageReplace:
+                i18nUtilGetMessageReplace = list(set(i18nUtilGetMessageReplace))
+                for regKey in i18nUtilGetMessageReplace:
+                    value = self.data['messages'].get(regKey)
+                    if not value:
+                        logger.info("key not legal, sourcePath is : {}, key is {}".format(self.filePath, regKey))
+                    else:
+                        targetValue = regKey + '", "' + value
+                        lines = lines.replace(regKey, targetValue)
+            getMessageList = re.findall(self.getMessage, lines)
+            if getMessageList:
+                pass
+        elif self.filePath.endswith('.jsp'):
+            pass
+        # js
+        else:
+            pass
+        out = codecs.open(self.filePath, 'w', self.encoding)
+        out.write(lines)
+        out.close()
+       
+ 
+def test_get_logger():
+    logger = logging.getLogger()
+    #set loghandler
+    file1 = logging.FileHandler("replace_messages.log")
+    logger.addHandler(file1)
+    #set formater
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+    file1.setFormatter(formatter)
+    #set log level
+    logger.setLevel(logging.ERROR)
+    return logger
 
 
 if __name__ == '__main__':
-    data = {"messages": [], "webui": [], "pi-i18n": []}
+    logger = test_get_logger()
+    data = {"messages": {}, "webui": {}, "pi-i18n": {}}
     propreties1 = r'D:\strata\loginsight\components\commons-lib\lib\src\com\vmware\loginsight\i18n\messages.properties'
     parser1 = PropertiesParser(propreties1)
     parser1.load()
     for i in parser1._string_item_list:
-        data["messages"].append((i.key, i.value))
+        if i.key not in data["messages"]:
+            data["messages"][i.key] = i.value.strip(" ")
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
-        data["webui"].append((i.key, i.value))
+        if i.key not in data["webui"]:
+            data["webui"][i.key] = i.value.strip(" ")
     
-    jsPath = r'D:\\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
+    jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
     jsParser.load()
     for i in jsParser._string_item_list:
-        data["pi-i18n"].append((i.key, i.value))
+        if i.key not in data["pi-i18n"]:
+            data["pi-i18n"][i.key] = i.value.strip(" ")
+    
     rootdir = r"D:\strata"
     for parent, dirnames, filenames in os.walk(rootdir):
         for filename in filenames:
-            if not (filename.endswith(".java") or filename.endswith(".jsp")):
+            if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
                 continue
             filePath = "\\".join([parent, filename])
-            file_stream = codecs.open(filePath, 'r', 'utf-8')
-            print file_stream.read()
+            replace_message = ReplaceMessage(filePath, data)
+            replace_message.replace_get_message(logger)

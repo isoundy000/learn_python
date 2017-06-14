@@ -9,7 +9,7 @@ original call:  I18nUtil.getMessage("com.vmware.loginsight.scheduled.ScheduledQu
 expected call:  I18nUtil.getMessage("com.vmware.loginsight.scheduled.ScheduledQueryEmailNotification.formatSubjectLead", "[{0}] {1} new {2} found for alert:", IInstallationNames.LOG_PRODUCT_NAME, numHitsStr, messageStr);
 
 
-2.JSP part
+2.java part
 source(properties) file path: /strata/loginsight/components/ui/application/src/webui.properties
 i18n method: getMessage (in class /strata/loginsight/components/ui/application/src/com/vmware/loginsight/web/actions/BaseActionBean.java)
 replace where call : getMessage
@@ -17,7 +17,7 @@ sample:
 original call: getMessage("com.vmware.loginsight.web.actions.chart.LogChartingActionBean.fixedBucket", gbVal)
 expected call: getMessage("com.vmware.loginsight.web.actions.chart.LogChartingActionBean.fixedBucket", "(fixed bucket: {0})", gbVal)
 
-i18n method:
+JSP part
 replace where use <fmt:message tag
 sample:
 original call: <fmt:message key="copyright.general" >
@@ -35,8 +35,6 @@ expected call: Y.PI.I.getString('widgetsYui3_dropdown_multiSelectInstructions',"
 
 
 
-
-
-/strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/settings/stats/StatsTableType.java
- /strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/utilities/EmailUtil.java
-/strata.git/loginsight/components/ui/application/src/com/vmware/loginsight/web/actions/misc/HelpActionBean.java
+D:/strata/loginsight/components/ui/application/src/com/vmware/loginsight/web/settings/stats/StatsTableType.java
+D:/strata/loginsight/components/ui/application/src/com/vmware/loginsight/web/utilities/EmailUtil.java
+D:/strata/loginsight/components/ui/application/src/com/vmware/loginsight/web/actions/misc/HelpActionBean.java
