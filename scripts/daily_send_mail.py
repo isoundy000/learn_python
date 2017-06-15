@@ -18,7 +18,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "g11nRepository.settings")
 
 user_info = {
     'username': 'ghou',
-    'password': 'Dong!123'
+    'password': 'Donga@1234'
 }
 
 

@@ -292,38 +292,62 @@ class ReplaceMessage(object):
     def __init__(self, file_path, data):
         self.filePath = file_path
         self.data = data
-        self.i18nUtilGetMessageReplace = r'I18nUtil\.getMessage\([\r|\n|\n\r]*\s*"(.*)".*\)'
-        self.getMessage = r'(?<!I18nUtil.)getMessage\("(.*)"(.*)\)'
-#         self.jspMessage = re.compile("")
+        self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.getMessage\((.*?)"(.*?)"'
+        self.getMessage = r'(?<![I18nUtil|\.])getMessage\([\r|\n|\n\r]*\s*"(.*)".*\)'
+        self.jspMessage = r'<fmt:message\s*key="(.*)"\s*>'
+        self.jsMessage = r'Y.PI.I[\r|\n|\r\n]*\s*.getString\([\r|\n|\n\r]*\s*\'(.)\'.*\)'
 
     def replace_get_message(self, logger):
         fileStream = codecs.open(self.filePath, 'r', self.encoding)
         lines = fileStream.read()
         fileStream.close()
         if self.filePath.endswith('.java'):
-            i18nUtilGetMessageReplace = re.findall(self.i18nUtilGetMessageReplace, lines)
-            if i18nUtilGetMessageReplace:
-                i18nUtilGetMessageReplace = list(set(i18nUtilGetMessageReplace))
-                for regKey in i18nUtilGetMessageReplace:
-                    value = self.data['messages'].get(regKey)
-                    if not value:
-                        logger.info("key not legal, sourcePath is : {}, key is {}".format(self.filePath, regKey))
-                    else:
-                        targetValue = regKey + '", "' + value
-                        lines = lines.replace(regKey, targetValue)
-            getMessageList = re.findall(self.getMessage, lines)
-            if getMessageList:
-                pass
+            print self.filePath
+            i18nMessage = re.findall(self.i18nMessage, lines, re.S)
+            if i18nMessage:
+                data_dict = self.data['messages']
+                separate = '", "'
+                keyList = [i[1] for i in i18nMessage]
+                newList = list(set(keyList))
+                lines = self.replace_lines_message(newList, lines, data_dict, separate, logger)
+            getMessage = re.findall(self.getMessage, lines)
+            if getMessage:
+                data_dict = self.data['webui']
+                separate = '", "'
+                lines = self.replace_lines_message(getMessage, lines, data_dict, separate, logger)
         elif self.filePath.endswith('.jsp'):
-            pass
-        # js
+            jspMessage = re.findall(self.jspMessage, lines)
+            if jspMessage:
+                data_dict = self.data['webui']
+                separate = '" source="'
+                lines = self.replace_lines_message(jspMessage, lines, data_dict, separate, logger)
         else:
-            pass
+            jsMessage = re.findall(self.jsMessage, lines)
+            if jsMessage:
+                data_dict = self.data['pi-i18n']
+                separate = '" source="'
+                lines = self.replace_lines_message(jsMessage, lines, data_dict, separate, logger)
+
         out = codecs.open(self.filePath, 'w', self.encoding)
         out.write(lines)
         out.close()
-       
- 
+    
+    def replace_lines_message(self, newList, lines, data_dict, separate, logger):
+        replace_key = []
+        for regKey in newList:
+            value = data_dict.get(regKey)
+            if not value:
+                logger.error("key not legal, sourcePath is : {}, key is {}".format(self.filePath, regKey))
+            else:
+                targetValue = regKey + separate + value
+                lines = lines.replace(regKey, targetValue)
+                replace_key.append(regKey)
+        for key in regKey:
+            if key in data_dict:
+                data_dict.pop(key)
+        return lines
+
+
 def test_get_logger():
     logger = logging.getLogger()
     #set loghandler
@@ -345,21 +369,21 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key not in data["messages"]:
-            data["messages"][i.key] = i.value.strip(" ")
-
+            data["messages"][i.key] = i.value.strip(" ").strip('"')
+            
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
         if i.key not in data["webui"]:
-            data["webui"][i.key] = i.value.strip(" ")
+            data["webui"][i.key] = i.value.strip(" ").strip('"')
     
     jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
     jsParser.load()
     for i in jsParser._string_item_list:
         if i.key not in data["pi-i18n"]:
-            data["pi-i18n"][i.key] = i.value.strip(" ")
+            data["pi-i18n"][i.key] = i.value.strip(" ").strip('"')
     
     rootdir = r"D:\strata"
     for parent, dirnames, filenames in os.walk(rootdir):
