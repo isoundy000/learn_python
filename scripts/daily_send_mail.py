@@ -88,7 +88,17 @@ def daily_send_mail(logger):
         logger.info("var disk residue command message is %s" % stderr)
     else:
         disk_residue = '5 /var/ disk free %s.' % stdout.strip('\n')
-    content += disk_residue
+    content += disk_residue + '\n'
+    list_queues = "sudo rabbitmqctl list_queues"
+    p7 = subprocess.Popen(list_queues, shell=True, stdout=subprocess.PIPE)
+    stdout7, stderr7 = p7.communicate()
+    if stderr7:
+        list_queues = '6 rabbitmqctl list_queues command is err'
+        logger.info("rabbitmqctl list_queues command message is %s" % stderr7)
+    else:
+        stdout7 = stdout7.replace('...', '').strip(' ').rstrip('done..')
+        list_queues = '6 status of celery queues %s.' % stdout7.strip('\n')
+    content += list_queues
     content += '\n\nGRM_DB(gabi-db.eng.vmware.com):\n'
     cat_gabi_db = "cat /var/www/g11nRepository/ghou.txt | sed -n '2p'" # sshpass -p Dong!123 ssh ghou@gabi-db.eng.vmware.com free -m | grep 'cache' | awk '{print $4}'
     p5 = subprocess.Popen(cat_gabi_db, shell=True, stdout=subprocess.PIPE)
@@ -132,7 +142,6 @@ def daily_send_mail(logger):
         content += "All product's builds are successful."
         content += '\n'
     content += '\n'
-    #　g11n-grm-project@vmware.com
     send_mail("GRM daily maintenance information", content, 'ghou@vmware.com', ['g11n-grm-project@vmware.com'], auth_user=user_info['username'], auth_password=user_info['password'])
 
 
