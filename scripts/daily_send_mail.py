@@ -142,7 +142,10 @@ def daily_send_mail(logger):
         content += "All product's builds are successful."
         content += '\n'
     content += '\n'
-    send_mail("GRM daily maintenance information", content, 'ghou@vmware.com', ['g11n-grm-project@vmware.com'], auth_user=user_info['username'], auth_password=user_info['password'])
+    file = open('/var/www/g11nRepository/daily_report.txt', 'w')
+    file.write(content)
+    file.close()
+#     send_mail("GRM daily maintenance information", content, 'ghou@vmware.com', ['g11n-grm-project@vmware.com'], auth_user=user_info['username'], auth_password=user_info['password'])
 
 
 def main():
