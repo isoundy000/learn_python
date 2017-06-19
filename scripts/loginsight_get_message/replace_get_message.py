@@ -351,11 +351,13 @@ class ReplaceMessage(object):
             else:
                 if regKey not in replace_key:
                     replace_key.append(regKey)
+                else:
+                    continue
                 targetValue = regKey + separate + value + anchor
-                lines = lines.replace(regKey + anchor, targetValue, 1)
-        for key in replace_key:
-            if key in data_dict:
-                data_dict.pop(key)
+                lines = lines.replace(regKey + anchor, targetValue)
+#         for key in replace_key:
+#             if key in data_dict:
+#                 data_dict.pop(key)
         return lines
 
 
@@ -391,21 +393,21 @@ if __name__ == '__main__':
     parser1 = PropertiesParser(propreties1)
     parser1.load()
     for i in parser1._string_item_list:
-        if i.key not in data["messages"]:
+        if i.key and i.key not in data["messages"]:
             data["messages"][i.key] = i.value.strip(" ").strip('"').strip("'")
             
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
-        if i.key not in data["webui"]:
+        if i.key and i.key not in data["webui"]:
             data["webui"][i.key] = i.value.strip(" ").strip('"').strip("'")
     
     jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
     jsParser.load()
     for i in jsParser._string_item_list:
-        if i.key not in data["pi-i18n"]:
+        if i.key and i.key not in data["pi-i18n"]:
             data["pi-i18n"][i.key] = i.value.strip(" ").strip('"').strip("'")
     
     skip_path_list = [
@@ -413,7 +415,7 @@ if __name__ == '__main__':
         'D:\strata\loginsight\src3rd\lucene-4.1.0\queries\src\test\org\apache\lucene\queries\mlt\TestMoreLikeThis.java'
     ]
     
-    rootdir = r"D:\strata"
+    rootdir = r"D:\vip_testdata\strata"
     for parent, dirnames, filenames in os.walk(rootdir):
         for filename in filenames:
             if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
