@@ -54,7 +54,7 @@ def auto_push_vip_source(logger):
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
-            logger.info("copy local source is out %s, err %s" % (stdout, stderr))
+            logger.error("copy local source is out %s, err %s" % (stdout, stderr))
             return
         else:
             logger.info("copy local source is success")
@@ -67,7 +67,7 @@ def auto_push_vip_source(logger):
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
-            logger.info("copy local source is out %s, err %s" % (stdout, stderr))
+            logger.error("copy local source is out %s, err %s" % (stdout, stderr))
             return
         else:
             logger.info("copy local source is success")
@@ -79,7 +79,7 @@ def auto_push_vip_source(logger):
     p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
-        logger.info("run bcompare is out %s, err %s" % (stdout0, stderr0))
+        logger.error("run bcompare is out %s, err %s" % (stdout0, stderr0))
         return
     else:
         logger.info("run bcompare is success")
@@ -90,7 +90,7 @@ def auto_push_vip_source(logger):
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
-        logger.info("run rsync is out %s, err %s" % (stdout1, stderr1))
+        logger.error("run rsync is out %s, err %s" % (stdout1, stderr1))
         return
     else:
         logger.info("run rsync is success")
@@ -106,31 +106,31 @@ def auto_push_vip_source(logger):
     for path in delete_path:
         rm_path = target_path + path
         os.system('rm -rf %s' % rm_path)
-    os.chdir(target_path) # os.getcwd()
-    return_message = os.popen('git status')
-    if 'nothing to commit' in return_message.read():
-        return
-    cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
-    p2 = subprocess.Popen(cmd2, shell=True)
-    stdout2, stderr2 = p2.communicate()
-    if stderr2:
-        logger.info("run git command is out %s, err %s" % (stdout2, stderr2))
-        mail_message = '''Hi all,
-    git push is fail
-    
-thanks, %s
-        ''' % sender.split('@')[0]
-        send_mail_message(logger, 0, mail_message)
-        return
-    else:
-        logger.info("run git command is success")
-    os.system('rm -rf %s' % copy_source_path)
-    mail_message = '''Hi all,
-    The attachment is the result of a comparison between the code library and the collection library
- 
-thanks, %s
-    ''' % sender.split('@')[0]
-    send_mail_message(logger, 1, mail_message)
+#     os.chdir(target_path) # os.getcwd()
+#     return_message = os.popen('git status')
+#     if 'nothing to commit' in return_message.read():
+#         return
+#     cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
+#     p2 = subprocess.Popen(cmd2, shell=True)
+#     stdout2, stderr2 = p2.communicate()
+#     if stderr2:
+#         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
+#         mail_message = '''Hi all,
+#     git push is fail
+#     
+# thanks, %s
+#         ''' % sender.split('@')[0]
+#         send_mail_message(logger, 0, mail_message)
+#         return
+#     else:
+#         logger.info("run git command is success")
+#     os.system('rm -rf %s' % copy_source_path)
+#     mail_message = '''Hi all,
+#     The attachment is the result of a comparison between the code library and the collection library
+#  
+# thanks, %s
+#     ''' % sender.split('@')[0]
+#     send_mail_message(logger, 1, mail_message)
     
 
 def send_mail_message(logger, is_fujian, mail_message=None):
