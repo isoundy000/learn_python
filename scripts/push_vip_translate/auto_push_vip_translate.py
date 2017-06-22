@@ -77,7 +77,7 @@ def auto_push_vip_translate(logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip translate'
+    cmd2 = "git add -A && git commit -m '%s' && git pull && git push origin master" % 'auto push vip translate'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:
