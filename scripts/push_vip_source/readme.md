@@ -25,7 +25,7 @@ push bundle of environment
 
 push source
 1 centos7需要安装图形化界面，因为需要用bcompare，
-第一种形式是在收集的机器上，直接安装图形化界面
+第一种形式是在收集的机器上，直接安装图形化界面     1 GUI
 第二种是单独一台管理机器，在其上安装图形化界面
 安装命令如下
               在命令行下 输入下面的命令来安装Gnome包。

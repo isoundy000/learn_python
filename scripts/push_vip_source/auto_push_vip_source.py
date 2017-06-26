@@ -101,20 +101,6 @@ def auto_push_vip_source(logger):
         return
     else:
         logger.info("run rsync is success")
-    # 如果bundle文件中不存在messages_en_US.json, 就删除整个文件夹
-    data = []
-    for parent, dirnames, filenames in os.walk(target_path):
-        if 'messages_en_US.json' in filenames and parent[len(target_path):]:
-            data.append(parent[len(target_path):])
-    data1 = []
-    for parent, dirnames, filenames in os.walk(copy_source_path):
-        if 'messages_en_US.json' in filenames and parent[len(copy_source_path)+len('l10n/'):]:
-            data1.append(parent[len(copy_source_path)+len('l10n/'):])
-    delete_path = list(set(data).difference(set(data1)))
-    for path in delete_path:
-        rm_path = target_path + path
-        os.chdir(target_path)
-        os.system('git rm -rf %s' % rm_path)
     os.chdir(target_path) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
