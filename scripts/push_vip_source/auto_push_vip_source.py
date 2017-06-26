@@ -16,6 +16,13 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 
 
+argv = sys.argv
+if len(argv) not in [1, 2]:
+    print 'argv error:', argv
+    print 'run format: "python auto_push_vip_source.py(Manual)" or "python auto_push_vip_source.py 3600 &"'
+    sys.exit()
+
+
 remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
 remote_or_local_copy = 0
 sender = 'ghou@vmware.com'
@@ -94,6 +101,7 @@ def auto_push_vip_source(logger):
         return
     else:
         logger.info("run rsync is success")
+    # 如果bundle文件中不存在messages_en_US.json, 就删除整个文件夹
     data = []
     for parent, dirnames, filenames in os.walk(target_path):
         if 'messages_en_US.json' in filenames and parent[len(target_path):]:

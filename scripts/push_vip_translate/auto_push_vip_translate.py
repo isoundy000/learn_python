@@ -12,6 +12,13 @@ import subprocess
 import logging
 
 
+argv = sys.argv
+if len(argv) not in [1, 2]:
+    print 'argv error:', argv
+    print 'run format: "python auto_push_vip_translate.py(Manual)" or "python auto_push_vip_translate.py 3600 &"'
+    sys.exit()
+
+
 remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
 remote_or_local_copy = 0
 
