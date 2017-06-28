@@ -19,10 +19,6 @@ if len(argv) not in [1, 2]:
     sys.exit()
 
 
-remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
-remote_or_local_copy = 0
-
-
 def test_get_logger():
     logger = logging.getLogger()
     #set loghandler
@@ -36,17 +32,43 @@ def test_get_logger():
     return logger
 
 
-def auto_push_vip_translate(logger):
-    if os.path.exists("/root/ghou/g11n-translations"):
-        os.system('rm -rf %s' % "/root/ghou/g11n-translations")
-    os.chdir("/root/ghou/")
+def read_config():
+    file1 = open('./config', mode='r')
+    stream_data = file1.readlines()
+    lines = iter(stream_data)
+    data = {}
+    for line in lines:
+        line = line.strip('\n').strip()
+        if not line:
+            continue
+        if line[0] == '#':
+            continue
+        key, value = line.split(' ', 1)
+        value_list = value.split(',')
+        if len(value_list)>1:
+            if len(value_list) == 2:
+                data[key] = [value_list[0].strip(' ')]
+            else:
+                data[key] = [i and i.strip(' ') for i in value_list]
+        else:
+            data[key] = value.strip(' ')
+    file1.close()
+    return data
+
+
+def auto_push_vip_translate(data, logger):
+    now = int(time.time())
+    os.chdir(data['workspace'])
+    git_rep = data['workspace'] + "/g11n-translations"
+    if os.path.exists(git_rep):
+        os.system('rm -rf %s' % git_rep)
     os.system("git clone ssh://git@git.eng.vmware.com/g11n-translations.git")
     # this is copy local bundle
-    copy_source_path = '/root/ghou/translate_copy/'
-    if not os.path.exists(copy_source_path):
-        os.system('mkdir -p %s' % copy_source_path)
+    if not os.path.exists(data['translate_copy']):
+        os.system('mkdir -p %s' % data['translate_copy'])
+    remote_or_local_copy = int(data['remote_or_local_copy'])
     if remote_or_local_copy:
-        cmd = "sshpass -p '%s' scp -r %s@%s:%s %s" % (remote_server[2], remote_server[1], remote_server[0], remote_server[3], copy_source_path)
+        cmd = "sshpass -p '%s' scp -r %s@%s:%s %s" % (data['remote_server'][2], data['remote_server'][1], data['remote_server'][0], data['remote_server'][3], data['translate_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -56,10 +78,9 @@ def auto_push_vip_translate(logger):
             logger.info("copy local source is success")
     else:
         # this is local bundle
-        source_path = '/root/ghou/translate_local/'
-        if not os.path.exists(source_path):
-            os.mkdir(source_path)
-        cmd = 'cp -r %s %s' % (source_path+'.', copy_source_path)
+        if not os.path.exists(data['translate_local']):
+            os.mkdir(data['translate_local'])
+        cmd = 'cp -r %s %s' % (data['translate_local']+'.', data['translate_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -67,12 +88,11 @@ def auto_push_vip_translate(logger):
             return
         else:
             logger.info("copy local source is success")
-    # this is git repository
-    target_path = '/root/ghou/g11n-translations/l10n/'
     # 把文件同步到git库    之后提交上去
     # -I, –ignore-times 不跳过那些有同样的时间和长度的文件      -a, –archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
     # -r表示recursive递归  --exclude不包含/ins目录    --recursive
-    cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (copy_source_path, target_path[:-5])
+    list_new = data['target_path'].split('g11n-translations/')
+    cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (data['translate_copy']+list_new[1], data['target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
@@ -80,7 +100,7 @@ def auto_push_vip_translate(logger):
         return
     else:
         logger.info("run rsync is success")
-    os.chdir(target_path) # os.getcwd()
+    os.chdir(data['target_path']) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
@@ -90,19 +110,20 @@ def auto_push_vip_translate(logger):
     if stderr2:
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
     else:
-        logger.info("run git command is success")
-    os.system('rm -rf %s' % copy_source_path)
+        logger.log(41, ("run git command is success， time is %s" % now))
+    os.system('rm -rf %s' % data['translate_copy'])
 
 
 def main():
     argv = sys.argv
     logger = test_get_logger()
+    data = read_config()
     if len(argv) == 1:
-        auto_push_vip_translate(logger)
+        auto_push_vip_translate(data, logger)
     else:
         time_number = int(sys.argv[1])
         while True:
-            auto_push_vip_translate(logger)
+            auto_push_vip_translate(data, logger)
             time.sleep(time_number)
 
 

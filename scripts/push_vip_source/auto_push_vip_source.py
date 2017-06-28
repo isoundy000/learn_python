@@ -23,13 +23,6 @@ if len(argv) not in [1, 2]:
     sys.exit()
 
 
-remote_server = ['10.117.168.77', 'root', '!QAZ2wsx', '/usr/l10n']
-remote_or_local_copy = 0
-sender = 'ghou@vmware.com'
-receivers = ['ghou@vmware.com']
-# receivers = ['ghou@vmware.com', 'nannany@vmware.com', 'huihuiw@vmware.com', 'gongy@vmware.com', 'linr@vmware.com', 'longl1@vmware.com']
-
-
 def test_get_logger():
     logger = logging.getLogger()
     #set loghandler
@@ -43,21 +36,49 @@ def test_get_logger():
     return logger
 
 
-def auto_push_vip_source(logger):
-    if os.path.exists('/root/ghou/compare_report.html'):
-        os.remove('/root/ghou/compare_report.html')
-    if os.path.exists('/root/ghou/compare_report.tar.gz'):
-        os.remove('/root/ghou/compare_report.tar.gz')
-    if os.path.exists("/root/ghou/g11n-translations"):
-        os.system('rm -rf %s' % "/root/ghou/g11n-translations")
-    os.chdir("/root/ghou/")
+def read_config():
+    file1 = open('./config', mode='r')
+    stream_data = file1.readlines()
+    lines = iter(stream_data)
+    data = {}
+    for line in lines:
+        line = line.strip('\n').strip()
+        if not line:
+            continue
+        if line[0] == '#':
+            continue
+        key, value = line.split(' ', 1)
+        value_list = value.split(',')
+        if len(value_list)>1:
+            if len(value_list) == 2:
+                data[key] = [value_list[0].strip(' ')]
+            else:
+                data[key] = [i and i.strip(' ') for i in value_list]
+        else:
+            data[key] = value.strip(' ')
+    file1.close()
+    return data
+
+
+def auto_push_vip_source(data, logger):
+    now = int(time.time())
+    os.chdir(data['workspace'])
+    compare_report_html = data['workspace'] + '/compare_report.html'
+    compare_report_zip = data['workspace'] + '/compare_report.tar.gz'
+    git_rep = data['workspace'] + "/g11n-translations"
+    if os.path.exists(compare_report_html):
+        os.remove(compare_report_html)
+    if os.path.exists(compare_report_zip):
+        os.remove(compare_report_zip)
+    if os.path.exists(git_rep):
+        os.system('rm -rf %s' % git_rep)
     os.system("git clone ssh://git@git.eng.vmware.com/g11n-translations.git")
     # this is copy local bundle
-    copy_source_path = '/root/ghou/copy/'
-    if not os.path.exists(copy_source_path):
-        os.system('mkdir -p %s' % copy_source_path)
+    if not os.path.exists(data['source_copy']):
+        os.system('mkdir -p %s' % data['source_copy'])
+    remote_or_local_copy = int(data['remote_or_local_copy'])
     if remote_or_local_copy:
-        cmd = "sshpass -p '%s' scp -r %s@%s:%s %s" % (remote_server[2], remote_server[1], remote_server[0], remote_server[3], copy_source_path)
+        cmd = "sshpass -p '%s' scp -r %s@%s:%s %s" % (data['remote_server'][2], data['remote_server'][1], data['remote_server'][0], data['remote_server'][3], data['source_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -67,10 +88,9 @@ def auto_push_vip_source(logger):
             logger.info("copy local source is success")
     else:
         # this is local bundle
-        source_path = '/root/ghou/local/'
-        if not os.path.exists(source_path):
-            os.mkdir(source_path)
-        cmd = 'cp -r %s %s' % (source_path+'.', copy_source_path)
+        if not os.path.exists(data['source_local']):
+            os.mkdir(data['source_local'])
+        cmd = 'cp -r %s %s' % (data['source_local']+'.', data['source_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -78,11 +98,8 @@ def auto_push_vip_source(logger):
             return
         else:
             logger.info("copy local source is success")
-    # this is git repository
-    target_path = '/root/ghou/g11n-translations/l10n/'
-    bcompare_source = copy_source_path + 'l10n/'
-    compare_report_html = '/root/ghou/compare_report.html'
-    bcompare1 = 'bcompare @/root/ghou/Compare.script %s %s %s' % (target_path[:-1], bcompare_source[:-1], compare_report_html)
+    list_new = data['target_path'].split('g11n-translations/')
+    bcompare1 = 'bcompare @%s/Compare.script %s %s %s' % (data['workspace'], data['target_path'], data['source_copy']+list_new[1], compare_report_html)
     p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
@@ -93,7 +110,7 @@ def auto_push_vip_source(logger):
     # 把文件同步到git库    之后提交上去
     # -I, –ignore-times 不跳过那些有同样的时间和长度的文件      -a, –archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
     # -r表示recursive递归  --exclude不包含/ins目录    --recursive
-    cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (copy_source_path, target_path[:-5])
+    cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (data['source_copy']+list_new[1], data['target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
@@ -101,7 +118,7 @@ def auto_push_vip_source(logger):
         return
     else:
         logger.info("run rsync is success")
-    os.chdir(target_path) # os.getcwd()
+    os.chdir(data['target_path']) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
@@ -112,28 +129,28 @@ def auto_push_vip_source(logger):
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
         mail_message = '''Hi all,
     git push is fail
-      
+          
 thanks, %s
-        ''' % sender.split('@')[0]
-        send_mail_message(logger, 0, mail_message)
+        ''' % data['sender'].split('@')[0]
+        send_mail_message(logger, 0, data, mail_message)
         return
     else:
-        logger.info("run git command is success")
-    os.system('rm -rf %s' % copy_source_path)
+        logger.log(41, ("run git command is success, time is %s" % now))
+    os.system('rm -rf %s' % data['source_copy'])
     mail_message = '''Hi all,
     The attachment is the result of a comparison between the code library and the collection library
-   
+    
 thanks, %s
-    ''' % sender.split('@')[0]
-    send_mail_message(logger, 1, mail_message)
+    ''' % data['sender'].split('@')[0]
+    send_mail_message(logger, 1, data, mail_message)
     
 
-def send_mail_message(logger, is_fujian, mail_message=None):
-    os.chdir('/root/ghou/')
+def send_mail_message(logger, is_fujian, data, mail_message=None):
+    os.chdir(data['workspace'])
     #创建一个带附件的实例
     message = MIMEMultipart()
-    message['From'] = Header(sender)
-    message['To'] =  Header(receivers[0])  
+    message['From'] = Header(data['sender'])
+    message['To'] =  Header(data['receivers'][0])  
     subject = 'Auto push vip source'
     message['Subject'] = Header(subject, 'utf-8')
     #邮件正文内容
@@ -155,7 +172,7 @@ def send_mail_message(logger, is_fujian, mail_message=None):
         message.attach(att1)
     try:
         smtpObj = smtplib.SMTP('localhost')
-        smtpObj.sendmail(sender, receivers, message.as_string())
+        smtpObj.sendmail(data['sender'], data['receivers'], message.as_string())
         logger.info("Successful mail delivery")
     except smtplib.SMTPException:
         logger.info("Error: Unable to send mail")
@@ -164,12 +181,13 @@ def send_mail_message(logger, is_fujian, mail_message=None):
 def main():
     argv = sys.argv
     logger = test_get_logger()
+    data = read_config()
     if len(argv) == 1:
-        auto_push_vip_source(logger)
+        auto_push_vip_source(data, logger)
     else:
         time_number = int(sys.argv[1])
         while True:
-            auto_push_vip_source(logger)
+            auto_push_vip_source(data, logger)
             time.sleep(time_number)
 
 

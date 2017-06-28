@@ -1,0 +1,11 @@
+# spaces must be used between arguments
+remote_or_local_copy    0
+remote_server           10.117.168.77, root, !QAZ2wsx, /usr/l10n
+workspace               /root/ghou/
+source_local            /root/ghou/source_local/
+source_copy             /root/ghou/source_copy/
+translate_local         /root/ghou/translate_local/
+translate_copy          /root/ghou/translate_copy/
+target_path             /root/ghou/g11n-translations/l10n/
+sender                  ghou@vmware.com
+receivers               ghou@vmware.com,
