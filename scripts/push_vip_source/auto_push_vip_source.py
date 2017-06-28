@@ -72,7 +72,7 @@ def auto_push_vip_source(data, logger):
         os.remove(compare_report_zip)
     if os.path.exists(git_rep):
         os.system('rm -rf %s' % git_rep)
-    os.system("git clone ssh://git@git.eng.vmware.com/g11n-translations.git")
+    os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['source_copy']):
         os.system('mkdir -p %s' % data['source_copy'])
@@ -107,9 +107,9 @@ def auto_push_vip_source(data, logger):
         return
     else:
         logger.info("run bcompare is success")
-    # 把文件同步到git库    之后提交上去
-    # -I, –ignore-times 不跳过那些有同样的时间和长度的文件      -a, –archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
-    # -r表示recursive递归  --exclude不包含/ins目录    --recursive
+    # Synchronize files to the GIT library and submit them later
+    # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
+    # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
     cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (data['source_copy']+list_new[1], data['target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
@@ -129,7 +129,7 @@ def auto_push_vip_source(data, logger):
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
         mail_message = '''Hi all,
     git push is fail
-          
+ 
 thanks, %s
         ''' % data['sender'].split('@')[0]
         send_mail_message(logger, 0, data, mail_message)
@@ -139,21 +139,21 @@ thanks, %s
     os.system('rm -rf %s' % data['source_copy'])
     mail_message = '''Hi all,
     The attachment is the result of a comparison between the code library and the collection library
-    
+
 thanks, %s
     ''' % data['sender'].split('@')[0]
     send_mail_message(logger, 1, data, mail_message)
-    
+
 
 def send_mail_message(logger, is_fujian, data, mail_message=None):
     os.chdir(data['workspace'])
-    #创建一个带附件的实例
+    # Create an instance with an attachment
     message = MIMEMultipart()
     message['From'] = Header(data['sender'])
-    message['To'] =  Header(data['receivers'][0])  
+    message['To'] =  Header(data['receivers'][0])
     subject = 'Auto push vip source'
     message['Subject'] = Header(subject, 'utf-8')
-    #邮件正文内容
+    # Mail text content
     message.attach(MIMEText(mail_message, 'plain', 'utf-8'))
     if is_fujian:
         size = os.path.getsize('compare_report.html')
@@ -163,10 +163,10 @@ def send_mail_message(logger, is_fujian, data, mail_message=None):
         else:
             fo = open('compare_report.html', 'rb')
         stream = fo.read()
-        # 构造附件1，传送当前目录下的 test.txt 文件
+        # Construct the attachment 1 to transfer the test.txt file in the current directory
         att1 = MIMEText(stream, 'base64', 'utf-8')
         att1["Content-Type"] = 'application/octet-stream'
-        # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
+        # The filename here can be written arbitrarily, what name is written, what name is displayed in the mail
         contenttype = 'attachment; filename="%s"' % fo.name
         att1["Content-Disposition"] = contenttype
         message.attach(att1)
@@ -176,7 +176,7 @@ def send_mail_message(logger, is_fujian, data, mail_message=None):
         logger.info("Successful mail delivery")
     except smtplib.SMTPException:
         logger.info("Error: Unable to send mail")
-    
+
 
 def main():
     argv = sys.argv

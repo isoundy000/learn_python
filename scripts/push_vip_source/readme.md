@@ -1,6 +1,6 @@
-yum install gcc  
-yum -y install gcc-c++  
-yum install -y perl-Module-Install.noarch  
+yum install gcc
+yum -y install gcc-c++
+yum install -y perl-Module-Install.noarch
 yum install -y net-tools
 
 一、下载sshpass
@@ -10,7 +10,7 @@ yum install -y net-tools
 二、安装
     tar zxvf sshpass-1.05.tar.gz
     cd sshpass-1.05
-    make 
+    make
     make install
 
 三、使用

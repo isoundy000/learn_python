@@ -62,7 +62,7 @@ def auto_push_vip_translate(data, logger):
     git_rep = data['workspace'] + "/g11n-translations"
     if os.path.exists(git_rep):
         os.system('rm -rf %s' % git_rep)
-    os.system("git clone ssh://git@git.eng.vmware.com/g11n-translations.git")
+    os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['translate_copy']):
         os.system('mkdir -p %s' % data['translate_copy'])
@@ -88,9 +88,9 @@ def auto_push_vip_translate(data, logger):
             return
         else:
             logger.info("copy local source is success")
-    # 把文件同步到git库    之后提交上去
-    # -I, –ignore-times 不跳过那些有同样的时间和长度的文件      -a, –archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
-    # -r表示recursive递归  --exclude不包含/ins目录    --recursive
+    # Synchronize files to the GIT library and submit them later
+    # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
+    # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
     list_new = data['target_path'].split('g11n-translations/')
     cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (data['translate_copy']+list_new[1], data['target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)

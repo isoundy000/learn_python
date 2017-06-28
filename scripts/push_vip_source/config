@@ -7,5 +7,6 @@ source_copy             /root/ghou/source_copy/
 translate_local         /root/ghou/translate_local/
 translate_copy          /root/ghou/translate_copy/
 target_path             /root/ghou/g11n-translations/l10n/
+git_lib                 git clone ssh://git@git.eng.vmware.com/g11n-translations.git
 sender                  ghou@vmware.com
 receivers               ghou@vmware.com,
