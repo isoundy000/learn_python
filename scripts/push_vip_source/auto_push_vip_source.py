@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Created on 2017年5月18日
+Created on 5/18/2017
 
 @author: ghou
 '''
@@ -62,17 +62,16 @@ def read_config():
 
 def auto_push_vip_source(data, logger):
     now = int(time.time())
-    os.chdir(data['workspace'])
-    compare_report_html = data['workspace'] + '/compare_report.html'
-    compare_report_zip = data['workspace'] + '/compare_report.tar.gz'
-    git_rep = data['workspace'] + "/g11n-translations"
+    os.chdir(data['source_workspace'])
+    compare_report_html = data['source_workspace'] + '/compare_report.html'
+    compare_report_zip = data['source_workspace'] + '/compare_report.tar.gz'
+    git_rep = data['source_workspace'] + "/g11n-translations"
     if os.path.exists(compare_report_html):
         os.remove(compare_report_html)
     if os.path.exists(compare_report_zip):
         os.remove(compare_report_zip)
-    if os.path.exists(git_rep):
-        os.system('rm -rf %s' % git_rep)
-    os.system(data['git_lib'])
+    if not os.path.exists(git_rep):
+        os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['source_copy']):
         os.system('mkdir -p %s' % data['source_copy'])
@@ -90,7 +89,7 @@ def auto_push_vip_source(data, logger):
         # this is local bundle
         if not os.path.exists(data['source_local']):
             os.mkdir(data['source_local'])
-        cmd = 'cp -r %s %s' % (data['source_local']+'.', data['source_copy'])
+        cmd = 'cp -r %s %s' % (data['source_local'], data['source_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -98,8 +97,8 @@ def auto_push_vip_source(data, logger):
             return
         else:
             logger.info("copy local source is success")
-    list_new = data['target_path'].split('g11n-translations/')
-    bcompare1 = 'bcompare @%s/Compare.script %s %s %s' % (data['workspace'], data['target_path'], data['source_copy']+list_new[1], compare_report_html)
+    list_new = data['source_target_path'].split('g11n-translations/')
+    bcompare1 = 'bcompare @%s/Compare.script %s %s %s' % (data['source_workspace'], data['source_target_path'], data['source_copy']+list_new[1], compare_report_html)
     p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
@@ -108,9 +107,9 @@ def auto_push_vip_source(data, logger):
     else:
         logger.info("run bcompare is success")
     # Synchronize files to the GIT library and submit them later
-    # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
+    # -I, ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
     # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
-    cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (data['source_copy']+list_new[1], data['target_path'])
+    cmd1 = 'rsync -aI --recursive --include="*/" --include="*_en_US.json" --exclude="*" %s %s' % (data['source_copy']+list_new[1], data['source_target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
@@ -118,11 +117,11 @@ def auto_push_vip_source(data, logger):
         return
     else:
         logger.info("run rsync is success")
-    os.chdir(data['target_path']) # os.getcwd()
+    os.chdir(data['source_target_path']) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git add -A && git commit -m '%s' && git pull && git push origin master" % 'auto push vip source'
+    cmd2 = "git pull && git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:
@@ -135,7 +134,7 @@ thanks, %s
         send_mail_message(logger, 0, data, mail_message)
         return
     else:
-        logger.log(41, ("run git command is success, time is %s" % now))
+        logger.info("run git command is success, time is %s" % now)
     os.system('rm -rf %s' % data['source_copy'])
     mail_message = '''Hi all,
     The attachment is the result of a comparison between the code library and the collection library
@@ -146,7 +145,7 @@ thanks, %s
 
 
 def send_mail_message(logger, is_fujian, data, mail_message=None):
-    os.chdir(data['workspace'])
+    os.chdir(data['source_workspace'])
     # Create an instance with an attachment
     message = MIMEMultipart()
     message['From'] = Header(data['sender'])

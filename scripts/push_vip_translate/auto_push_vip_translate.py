@@ -58,11 +58,10 @@ def read_config():
 
 def auto_push_vip_translate(data, logger):
     now = int(time.time())
-    os.chdir(data['workspace'])
-    git_rep = data['workspace'] + "/g11n-translations"
-    if os.path.exists(git_rep):
-        os.system('rm -rf %s' % git_rep)
-    os.system(data['git_lib'])
+    os.chdir(data['translate_workspace'])
+    git_rep = data['translate_workspace'] + "/g11n-translations"
+    if not os.path.exists(git_rep):
+        os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['translate_copy']):
         os.system('mkdir -p %s' % data['translate_copy'])
@@ -80,7 +79,7 @@ def auto_push_vip_translate(data, logger):
         # this is local bundle
         if not os.path.exists(data['translate_local']):
             os.mkdir(data['translate_local'])
-        cmd = 'cp -r %s %s' % (data['translate_local']+'.', data['translate_copy'])
+        cmd = 'cp -r %s %s' % (data['translate_local'], data['translate_copy'])
         p = subprocess.Popen(cmd, shell=True)
         stdout, stderr = p.communicate()
         if stderr:
@@ -91,8 +90,8 @@ def auto_push_vip_translate(data, logger):
     # Synchronize files to the GIT library and submit them later
     # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
     # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
-    list_new = data['target_path'].split('g11n-translations/')
-    cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (data['translate_copy']+list_new[1], data['target_path'])
+    list_new = data['translate_target_path'].split('g11n-translations/')
+    cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (data['translate_copy']+list_new[1], data['translate_target_path'])
     p1 = subprocess.Popen(cmd1, shell=True)
     stdout1, stderr1 = p1.communicate()
     if stderr1:
@@ -100,17 +99,17 @@ def auto_push_vip_translate(data, logger):
         return
     else:
         logger.info("run rsync is success")
-    os.chdir(data['target_path']) # os.getcwd()
+    os.chdir(data['translate_target_path']) # os.getcwd()
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git add -A && git commit -m '%s' && git pull && git push origin master" % 'auto push vip translate'
+    cmd2 = "git pull && git add -A && git commit -m '%s' && git push origin master" % 'auto push vip translate'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
     else:
-        logger.log(41, ("run git command is success， time is %s" % now))
+        logger.info("run git command is success， time is %s" % now)
     os.system('rm -rf %s' % data['translate_copy'])
 
 
