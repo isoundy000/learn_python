@@ -62,6 +62,9 @@ def auto_push_vip_translate(data, logger):
     git_rep = data['translate_workspace'] + "/g11n-translations"
     if not os.path.exists(git_rep):
         os.system(data['git_lib'])
+    else:
+        os.system('rm -rf %s' % git_rep)
+        os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['translate_copy']):
         os.system('mkdir -p %s' % data['translate_copy'])
@@ -103,7 +106,7 @@ def auto_push_vip_translate(data, logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git pull && git add -A && git commit -m '%s' && git push origin master" % 'auto push vip translate'
+    cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip translate'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:

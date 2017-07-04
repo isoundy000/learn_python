@@ -72,6 +72,9 @@ def auto_push_vip_source(data, logger):
         os.remove(compare_report_zip)
     if not os.path.exists(git_rep):
         os.system(data['git_lib'])
+    else:
+        os.system('rm -rf %s' % git_rep)
+        os.system(data['git_lib'])
     # this is copy local bundle
     if not os.path.exists(data['source_copy']):
         os.system('mkdir -p %s' % data['source_copy'])
@@ -98,7 +101,7 @@ def auto_push_vip_source(data, logger):
         else:
             logger.info("copy local source is success")
     list_new = data['source_target_path'].split('g11n-translations/')
-    bcompare1 = 'bcompare @%s/Compare.script %s %s %s' % (data['source_workspace'], data['source_target_path'], data['source_copy']+list_new[1], compare_report_html)
+    bcompare1 = '/usr/bin/bcompare @%s/Compare.script %s %s %s' % (data['source_workspace'], data['source_target_path'], data['source_copy']+list_new[1], compare_report_html)
     p = subprocess.Popen(bcompare1, shell=True)
     stdout0, stderr0 = p.communicate()
     if stderr0:
@@ -121,14 +124,14 @@ def auto_push_vip_source(data, logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
-    cmd2 = "git pull && git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
+    cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
     if stderr2:
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
         mail_message = '''Hi all,
     git push is fail
- 
+   
 thanks, %s
         ''' % data['sender'].split('@')[0]
         send_mail_message(logger, 0, data, mail_message)

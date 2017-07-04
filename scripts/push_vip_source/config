@@ -8,8 +8,9 @@ translate_workspace     /root/ghou/translate
 
 source_copy             /root/ghou/source_copy/
 translate_copy          /root/ghou/translate_copy/
-source_target_path      /root/ghou/source/g11n-translations/l10n/
+source_target_path      /root/ghou/source/g11n-translations/l10n/bundles/Testing
 translate_target_path   /root/ghou/translate/g11n-translations/l10n/
 git_lib                 git clone ssh://git@git.eng.vmware.com/g11n-translations.git
 sender                  ghou@vmware.com
-receivers               nannany@vmware.com,
+#receivers               nannany@vmware.com,
+receivers               ghou@vmware.com,
