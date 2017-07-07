@@ -434,14 +434,19 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key and i.key not in data["messages"]:
-            data["messages"][i.key] = i.value.strip(" ").strip('"').strip("'")
+            value = i.value.strip(" ").strip('"').strip("'")
+            if '"' in value:
+                value = value.replace('"', '\\"').replace("\\\\", "\\")
+            data["messages"][i.key] = value
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
         if i.key and i.key not in data["webui"]:
-            data["webui"][i.key] = i.value.strip(" ").strip('"').strip("'")
+            if '"' in value:
+                value = value.replace('"', '\\"').replace("\\\\", "\\")
+            data["webui"][i.key] = value
 
     jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
@@ -470,7 +475,7 @@ if __name__ == '__main__':
                 continue
             replace_message = ReplaceMessage(filePath)
             replace_message.replace_get_message(logger, data, remove_dict)
-    
+     
     copyData = copy.deepcopy(data)
     for i, v in remove_dict.iteritems():
         dupList = list(set(v))
