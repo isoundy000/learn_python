@@ -464,7 +464,7 @@ if __name__ == '__main__':
     print 'webui', len(data['webui'])
     print 'pi-i18n', len(data['pi-i18n'])
 
-    rootdir = r"D:\vip_testdata\strata"
+    rootdir = r"D:\strata"
     remove_dict = {}
     for parent, dirnames, filenames in os.walk(rootdir):
         for filename in filenames:
