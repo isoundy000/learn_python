@@ -297,8 +297,8 @@ class ReplaceMessage(object):
 #         self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.getMessage\((.*?)"(.*?)"'
         self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.(getMessage|encodeKey)\((.*?)[\r|\n|\r\n]*\s*[\r|\n|\n\r]*"(.*?)"'
         self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*"(.*?)"'
-        self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'"])(.*?)\2)'
-        self.jsMessage = r'Y\.PI\.I[\r|\n|\r\n]*\s*\.getString\([\r|\n|\r\n]*\s*([\'"])(.*?)\1'
+        self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'\"])(.*?)\2)'
+        self.jsMessage = r'Y\.PI\.I[\r|\n|\r\n]*\s*\.getString\([\r|\n|\r\n]*\s*([\'\"])(.*?)\1'
 
     def replace_get_message(self, logger, data, remove_dict):
         try:
@@ -372,17 +372,24 @@ class ReplaceMessage(object):
                 continue
             separate = '", "'
             if self.filePath.endswith('.java'):
+                value = value.replace('"', '\\"').replace("\\\\", "\\")
                 targetValue = regKey + separate + value
                 lines = lines.replace(regKey, targetValue)
             elif self.filePath.endswith('.jsp'):
                 separate = ' source="'
-                if "'" in i[0]:
+                if "'" == i[0]:
                     separate = " source='"
+                    value = value.replace("'", "\\'").replace("\\\\", "\\")
+                else:
+                    value = value.replace('"', '\\"').replace("\\\\", "\\")
                 targetValue = i[0] + separate + value + separate[-1]
                 lines = lines.replace(i[0], targetValue)
             elif self.filePath.endswith('js'):
-                if i[0] == "'":
+                if "'" == i[0]:
                     separate = "', '"
+                    value = value.replace("'", "\\'").replace("\\\\", "\\")
+                else:
+                    value = value.replace('"', '\\"').replace("\\\\", "\\")
                 anchor = separate[0]
                 targetValue = regKey + separate + value + anchor
                 lines = lines.replace(regKey + anchor, targetValue)
@@ -420,7 +427,9 @@ def copy_file(rootdir, target_path):
 
 
 if __name__ == '__main__':
-    logPath = r'D:\learn_python\scripts\loginsight_get_message\replace_messages.log'
+    import time
+    start_time = int(time.time())
+    logPath = r'./replace_messages.log'
     if os.path.exists(logPath):
         try:
             os.remove(logPath)
@@ -434,19 +443,14 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key and i.key not in data["messages"]:
-            value = i.value.strip(" ").strip('"').strip("'")
-            if '"' in value:
-                value = value.replace('"', '\\"').replace("\\\\", "\\")
-            data["messages"][i.key] = value
+            data["messages"][i.key] = i.value.strip(" ").strip('"').strip("'")
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
         if i.key and i.key not in data["webui"]:
-            if '"' in value:
-                value = value.replace('"', '\\"').replace("\\\\", "\\")
-            data["webui"][i.key] = value
+            data["webui"][i.key] = i.value.strip(" ").strip('"').strip("'")
 
     jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
@@ -457,7 +461,6 @@ if __name__ == '__main__':
 
     skip_path_list = [
         'D:\strata\loginsight\lib3rd\play-2.2.4\framework\test\integrationtest\app\controllers\πø$7ß.java',
-        'D:\strata\loginsight\src3rd\lucene-4.1.0\queries\src\test\org\apache\lucene\queries\mlt\TestMoreLikeThis.java'
     ]
 
     print 'messages', len(data['messages'])
@@ -486,3 +489,11 @@ if __name__ == '__main__':
     print 'webui_mod', len(copyData['webui'])
     print 'pi-i18n_mod', len(copyData['pi-i18n'])
     print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
+    not_replace_record = open(r'./not_replace_record.log', 'w')
+    for key, value in copyData.iteritems():
+        not_replace_record.write('{}\n'.format(key))
+        for k, v in value.iteritems():
+            not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
+    not_replace_record.close()
+    end_time = int(time.time())
+    print end_time - start_time
