@@ -443,21 +443,21 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key and i.key not in data["messages"]:
-            data["messages"][i.key] = i.value.strip(" ").strip('"').strip("'")
+            data["messages"][i.key] = i.value.strip(" ")
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
     parser2 = PropertiesParser(propreties2)
     parser2.load()
     for i in parser2._string_item_list:
         if i.key and i.key not in data["webui"]:
-            data["webui"][i.key] = i.value.strip(" ").strip('"').strip("'")
+            data["webui"][i.key] = i.value.strip(" ")
 
     jsPath = r'D:\strata\loginsight\components\ui\application\WebContent\js\pi-i18n\lang\pi-i18n.js'
     jsParser = JsParser(jsPath)
     jsParser.load()
     for i in jsParser._string_item_list:
         if i.key and i.key not in data["pi-i18n"]:
-            data["pi-i18n"][i.key] = i.value.strip(" ").strip('"').strip("'")
+            data["pi-i18n"][i.key] = i.value.strip(" ")
 
     skip_path_list = [
         'D:\strata\loginsight\lib3rd\play-2.2.4\framework\test\integrationtest\app\controllers\πø$7ß.java',
@@ -493,7 +493,10 @@ if __name__ == '__main__':
     for key, value in copyData.iteritems():
         not_replace_record.write('{}\n'.format(key))
         for k, v in value.iteritems():
-            not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
+            try:
+                not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
+            except:
+                pass
     not_replace_record.close()
     end_time = int(time.time())
     print end_time - start_time
