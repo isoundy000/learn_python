@@ -1,0 +1,116 @@
+pi-i18n============================================
+# errorMessageKey
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeDate,            This value must be a valid date.
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeInteger,             This value must be a positive whole number.
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeEmailList,           This value must be one or more valid email addresses, separated by commas.
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeRegex,           This value must use valid regex syntax. To match the following characters escape them with a leading backslash:<br /><span class='monospace'> \\ * + ? | { [ ( ) ^ $ . #</span>
+#找不到的
+explorer_explorerAlertsHistoryView_separator,            {0}: {1}
+header_importLogsView_alertLogBundleBeenImported,            Your log bundle has been imported and is available for analysis.\n\nYou will need to refresh your search to see the new data.
+header_importLogsView_alertUseLogImporter,           To use the log importer you either need a browser that supports HTML5 uploads or have the Flash player installed.
+admin_cluster_clusterView_labelLastIngestedEvent,            Last Ingested Event
+contentpack_content_contentpackMetadataView_editInfoTitle_instructions,              Setup Instructions
+locale_unit_spacing,   
+admin_cluster_clusterView_modelStatusCreatingSnapshot,           Creating Snapshot 
+admin_cluster_clusterView_modelStatusPending,            Upgrade Pending
+header_importLogsView_htmlUploadingComplete,             Uploading: {0}% complete
+header_importLogsView_cancelButtonTextClose,             Close
+explorer_share_shorten,              Shorten
+cui_validator_semicolon_separated_names,             Semicolon separated names are expected
+cui_validator_unquoted_spaces,           unquoted spaces
+admin_cluster_clusterView_failedToRetrieveUpgradeStatus,             Failed to retrieve current upgrade status.
+header_importLogsView_alertUnableToImport,           Unable to Import
+alertsView_tableHeadContentPack,             Content Pack
+explorer_explorerAlertsHistoryView_count,            count
+header_importLogsView_alertImportComplete,           Import Complete
+explorer_explorerAlertsView_htmlAlertsSuspendedByAdmin,              Alerts are currently suspended by an admin
+admin_health_section_queries,            queries
+explorer_explorerAlertsView_defaultMessageValueMustBeNonNegInteger,              Value must be a non-negative integer.
+locale_decimal,              .
+admin_cluster_clusterView_haStatusUnknown,           In Progress
+admin_health_section_statistics,             statistics
+widgetsYui3_dataTable_dataTable_columnInfolabel,             Notes
+explorer_explorerAlertsView_defaultMessageValueMustBeIntegerGreaterThan,             Value must be an integer greater than 0.
+# 动态的
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageSectionEnd,             The section tag is not closed<br />
+com.vmware.loginsight.api.errors.support.request_conflict,           Different bundles subset is in process
+contentpack_content_contentpackMetadataView_setupInstructions,           {0} Setup Instructions
+widgetsYui3_incrementalChart_chartOptions_gaugeRangeMax,             Max
+abstractSearchResultsView_labelUnColorizeField,              Remove Colorizing By '{0}'
+admin_wizard_wizardWorkerView_showRequestFailedConnectionLostUnableConfirmWorkerInitialization,              Connection to node was lost. Unable to confirm node initialization.
+forwardingView_diskCacheSizeValidationError,             Must be between 100 and 2000
+com.vmware.loginsight.api.errors.rbac.group_is_required,             Specified role is required and cannot be deleted.
+abstractSearchResultsView_labelUnHighlightEventsLikeThis,            Remove Highlight Events Like This
+home_content_homeContentHeaderView_CUSTOM,           custom time range
+admin_agents_agentsView_areYouSureToSaveWithErrors,              The configuration contains error(s). Are you sure you want to save anyway?
+home_content_homeContentHeaderView_LAST_5_MINUTES,           latest 5 minutes of data
+admin_cluster_clusterView_haStatusAvailable,             Available
+abstractSearchResultsView_labelColorizeEventTypes,           Colorize Event Types
+home_content_homeContentHeaderView_ALL_TIME,             all time
+cui_errorMessageSectionEnd,              The section tag is not closed
+forwardingView_notSupportedSyslog,           Not supported for Syslog
+widgetsYui3_incrementalQueryWidget_incrementalQueryWidgetTypes_explainNoTimeTwoFieldPositive,            Requires non-time series and exactly two group-by fields, using Count or Unique Count
+home_content_homeContentHeaderView_LAST_48_HOURS,            latest 48 hours of data
+widgetsYui3_incrementalChart_chartOptions_gaugeRangeMin,             Min
+com.vmware.loginsight.api.errors.rbac.group_with_specified_name_already_exists,              Another role with specified name already exists.
+admin_config_configView_editVipMessage,              Virtual IP updated
+home_content_homeContentHeaderView_LAST_HOUR,            latest hour of data
+contentpack_content_contentpackMetadataView_upgradeInstructions,             {0} Upgrade Instructions
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageKeyIsDissallowed,           This key is not allowed for group configuration<br />
+widgetsYui3_incrementalMessages_views_summaryListView_baselineMenuItemAutomatic,             Automatic
+com.vmware.loginsight.api.errors.support.file_not_found,             Cannot delete bundle
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageKeyValueRegexp,             The key/value pair is incorrect<br />
+admin_cluster_clusterView_modelStatusVerifying,              Verifying Upgrade
+contentpack_content_contentpackMarketplaceItemsView_headerUpdateContentPack,             Update Content Pack
+com.vmware.loginsight.api.errors.support.invalid_param_nodes,            There are no nodes corresponding to the requested filter
+admin_config_configView_newVipMessage,           Virtual IP added
+admin_users_usersView_headerContentUnableSaveUser,           Unable to Save User
+admin_config_configView_dialogTitleEditVip,              Edit Virtual IP
+shared_fieldConstraintsView_hideConstraintsTooltip,              Hide constraints
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeUrlList,             This value must be one or more valid URLs, separated by spaces.
+alertsView_tooltipEditTargets,           Edit subscriptions
+admin_cluster_clusterView_upgradeDisabledToolTip,            All nodes must be in the connected state before an upgrade can be started
+contentpack_content_contentpackMetadataView_editInfoTitle_info,              Description
+home_content_homeContentHeaderView_LAST_6_HOURS,             latest 6 hours of data
+widgetsYui3_incrementalChart_legendInfo_result3,             show all items
+widgetsYui3_incrementalChart_legendInfo_result1,             toggle item visibility
+com.vmware.loginsight.api.errors.rbac.group_does_not_exist,              Specified role does not exist.
+shared_fieldConstraintsView_showConstraintsTooltip,              Show constraints
+widgetsYui3_incrementalMessages_views_summaryListView_htmlScoreColumnLabel,              Event Type Anomaly Score
+abstractSearchResultsView_labelHighlightField,           Highlight When Value Is '{0}'
+admin_agents_agentsView_areYouSureToSaveWithErrorsOrGoToBuild,           The configuration contains error(s). To check your configuration in \"Build\" tab, press \"Cancel\".<br/><br/>Press \"Save\" to proceed anyway.
+admin_config_configView_dialogTitleNewVip,           New Virtual IP
+admin_cluster_clusterView_haStatusUnavailable,           Unavailable
+abstractSearchResultsView_labelColorizeField,            Colorize By '{0}'
+admin_users_usersView_autocompleteEnabledMsg,            Autocomplete enabled
+com.vmware.loginsight.api.errors.support.download_failed,            Cannot locate bundle
+contentpack_content_contentpackMarketplaceItemsView_installContentPack,              Install Content Pack
+widgetsYui3_incrementalMessages_views_summaryListView_htmlTrendColumnLabel,              Trend
+abstractSearchResultsView_labelHighlightEventsLikeThis,              Highlight Events Like This
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageRegexp,             The section tag contains an invalid entry<br />
+home_content_homeContentHeaderView_LAST_24_HOURS,            latest 24 hours of data
+alertsView_hasContentPack,           yes
+home_content_homeContentHeaderView_LAST_7_DAYS,              latest 7 days of data
+contentpack_content_contentpackMarketplaceItemsView_headerInfoContentPack,           Content Pack Details
+com.vmware.loginsight.api.errors.support.invalid_param_timeout,              Timeout should be a non-negative integer (seconds)
+admin_agents_agentsView_notActive,           (Not Active)
+admin_users_usersView_failedToSaveAutocompleteConfiguration,             Failed to save autocomplete configuration
+explorer_explorerMainChartView_showChartTooltip,             Show chart
+admin_cluster_clusterView_modelStatusPendingSnapshot,            Snapshot Pending
+abstractSearchResultsView_labelUnColorizeEventTypes,             Remove Colorizing of Event Types
+admin_cluster_clusterView_upgradeToolTip,            Upgrade cluster with a new PAK file
+admin_users_usersView_autocompleteDisabledMsg,           Autocomplete disabled
+cui_errorMessageRegexp,              The section tag contains an invalid entry
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypePIQL,            The following characters are ignored in this search:<br/><span class='monospace'> \\ = . , : ; ' \" + ^ % $ & ( ) { } [ ] ! # @ < > | ` ~ /</span>
+admin_health_section_resources,              resources
+widgetsYui3_incrementalChart_legendInfo_result2,             toggle visibility of all other items
+explorer_explorerMainChartView_hideChartTooltip,             Hide chart
+contentpack_content_contentpackMetadataView_editInfoTitle_upgradeInstructions,           Upgrade Instructions
+com.vmware.loginsight.api.errors.rbac.group_is_not_editable,             Specified role is not editable.
+admin_cluster_clusterView_msgYouHaveUnsavedChanges,              You have unsaved changes. If you leave this page your changes will be lost.
+com.vmware.loginsight.api.errors.support.invalid_param_id,           ID should be a positive integer (timestamp)
+abstractSearchResultsView_labelUnHighlightField,             Remove Highlight
+widgetsYui3_incrementalChart_legendInfo_action1,             Click:
+widgetsYui3_incrementalChart_legendInfo_action2,             Shift-Click:
+widgetsYui3_incrementalChart_legendInfo_action3,             Option/Alt-Click:
+admin_users_usersView_saveSuccessful,            Save Successful

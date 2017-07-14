@@ -1,0 +1,145 @@
+pi-i18n
+cui_invalid_symbols_in_name,The name contains invalid symbols, suggested name is: <nowrap>'{0}'</nowrap>
+cui_validator_comma_separated_names_or_asterisk,Asterisk or comma separated names are expected
+cui_global_win_event_log,Windows Event Log
+cui_validator_invalid_field_name,            invalid field {0}
+cui_control_enable_automatic_updates_label,              Enable automatic updates:
+cui_winlog_blacklist_help,           <p>Excludes log events for which the filter expression evaluates to non-zero.</p> <p>The blacklist option only works for fields; it cannot be used to blacklist text.</p>
+cui_filelog_blacklist_help,              Excludes log events for which the filter expression evaluates to non-zero. The blacklist option only works for fields; it cannot be used to blacklist text.
+cui_control_decode_fields_label,             Decode fields:
+cui_parser_field_rename_help,            <p>Renames extracted fields.</p><p>Note that field decoder is always applied before field rename.</p>
+cui_control_server_certificate_common_name_label,            Server certificate Common Name (CN):
+cui_validator_duplicated_section,            Duplicated Section Name
+cui_validator_comma_or_semicolon_separated_names,            Comma or semicolon separated names are expected
+cui_logging_debug_level_help,            <p>Logs verbosity level:</p><p>(0 - default, 1 - extended or 2 - verbose)</p>
+cui_server_ssl_ca_path_help,             <p>The path to the trusted root certificates bundle file.</p> <p>The Linux agent attempts to load trusted certificates from their default locations (see Hint).</p> <p>If not specified, the Windows agent uses system root certificates.</p>
+cui_parser_field_decoder_help,           <p>The keys are field names to apply nested parser to. Each nested parser is applied to the appropriate field previously decoded by the base parser.</p><p>Field decoders are useful when the value of a field is a complex value, for example, a timestamp.</p>
+cui_server_ssl_acc_any_help,             Log Insight Agent accepts any certificate from the server even if that certificate does not have a matching Common Name.
+cui_control_next_parser_label,           Next parser:
+cui_global_common,           Common
+cui_rename_all_refs,             Rename all references
+cui_control_include_files_label,             Include files:
+cui_control_port_label,              Port:
+cui_validator_use_field_names_in_pattern,            Name capturing group patterns are expected
+cui_global_error_type,           Error Type:
+cui_validator_semicolon_separated_masks,             Semicolon separated masks are expected
+cui_global_parsers,              Parsers
+cui_global_not_applicable,           Not Applicable
+cui_validator_unknown_section,           Unknown Section Type
+cui_control_max_disk_buffer_size_label,              Max disk buffer size:
+cui_server_ssl_help,             <p>Allows you to provide SSL only connections between the Log Insight Agents and the Log Insight Server through the secure flow.</p> <p>Enable SSL to see aditional settings.</p>
+cui_control_tags_label,              Tags:
+cui_filelog_include_help,            The name of a file or a file mask (glob pattern) from which to collect data.
+cui_new_kindof_section,              New {0} section
+cui_what_kindof_section_supposed,            What section it supposed to be:
+cui_global_unknown_sections,             Unknown Sections
+cui_parser_base_parser_help,             The name of the base parser that this custom parser extends.<p>The automatic parser automatically detects the timestamp within the first 200 characters of a line.</p>
+cui_winlog_parser_help,              Specify Parser to Extract Fields
+cui_filelog_exclude_fields_help,             Names set to exclude individual fields from collection.
+cui_control_certificate_authorities_path_label,              Certificate Authorities path:
+cui_control_accept_trusted_certificates_label,           Accept Trusted Certificates
+cui_logging_debug_level_default,             default
+cui_validator_wrong_named_section,           Incorrect Section Name
+cui_name_cannot_be_empty,            The name cannot be empty
+cui_global_goto_definition,              Go To Definition
+cui_sections_view_prompt,            Hover over the categories to create a new section.
+cui_parser_fields_help,              <p>Mandatory option for CSV parser that specifies names of the fields that exist in the log.</p><p>Total number of the listed field names must be equal to the total number of comma-separated fields in the logs.</p><p>You cannot use <strong>event_type</strong>, <strong>hostname</strong>, <strong>source</strong> and <strong>text</strong> names.</p>
+cui_validator_unknown_property,              Unknown Property
+cui_winlog_tags_help,            <p>Optional parameter to add custom tags to the fields of collected events.</p> <p>A tag name can only begin with a letter or an underscore and cannot exceed 64 characters.</p> <p>You cannot use <strong>event_type</strong> and <strong>timestamp</strong> as tag names.</p>
+global_text_new,             New...
+cui_global_no_tags_added,            No tags added
+cui_validator_missing_property_key,              Missing Property Key
+cui_global_general,              General
+cui_filelog_tags_help,           <p>Optional parameter to add custom tags to the fields of collected events.</p> <p>A tag name can only begin with a letter or an underscore and cannot exceed 64 characters.</p> <p>You cannot use <strong>event_type</strong> and <strong>timestamp</strong> as tag names.</p>
+cui_control_stats_report_period_label,           Stats report period:
+cui_logging_debug_level_verbose,             verbose
+cui_server_proto_help,           Protocol that the agent uses to send events to the Log Insight server.
+cui_control_directory_label,             Directory:
+cui_storage_max_disk_buffer_help,            Size limit of disk buffer in MB (100 - 2000)
+cui_validator_should_be_of_type,             Value should be of type {0}
+cui_validator_valid_field_name,              Invalid field name
+cui_logging_stats_period_help,           Stats report period in minutes
+cui_control_accept_all_certificates_label,           Accept All Certificates
+cui_server_hostname_help,            Server FQDN (Hostname or IP)
+global_text_build,           Build
+cui_control_windows_event_log_channel_label,             Windows Event Log Channel:
+cui_global_description,              Description:
+cui_control_enabled_label,           Enabled:
+cui_control_parser_to_use_extend_label,              Parser to use/extend:
+cui_global_severity,             Severity:
+cui_winlog_exclude_fields_help,              Names to exclude individual fields from collection.
+cui_global_file_logs,            File Logs
+cui_global_theres_no_layout,             There's no layout for:
+cui_control_rename_fields_label,             Rename fields:
+cui_errorMessageSectionDuplicated,           The section is duplicated
+cui_control_blacklist_filter_expression_label,           Blacklist filter expression:
+cui_validator_valid_hostname,            Invalid hostname
+cui_validator_must_be_one_of_options,            {0} must be one of the listed options
+cui_add_general_section,             Add general section:
+cui_validator_should_have_value,             Value cannot be empty
+cui_validator_forbidden_section,             Forbidden (reserved) Section Name
+cui_errors_heading,              {0} error(s) in section [{1}]
+cui_control_parse_fields_by_label,           Parse fields by:
+cui_control_delimiter_label,             Delimiter:
+cui_parser_regex_format_help,            Format should specify a regular expression pattern and giving names to captured groups so that the capture group becomes a field.
+cui_server_reconnect_help,           The time in minutes to force reconnection to the server.
+cui_validator_double_quotes_in_quotes,           unescaped double quotes in quotes
+cui_server_ssl_acc_any_trusted_help,             Accepts any valid certificate signed by a trusted Certificate Authority (disregarding previously accepted and stored certificate).
+cui_filelog_directory_help,              Absolute path to log file directory.
+cui_control_character_set_label,             Character set:
+cui_parser_next_parser_help,             <p>Name of the next parser to run. Allows multiple parsers to run sequentially on the same input.</p><p>Agent process all consequent parsers defined by the next parser option and may replace a field value already extracted by a previous parser.</p>
+cui_filelog_exclude_help,            A file name or file mask (glob pattern) to exclude from collection.
+cui_errorMessageKeyIsDissallowed,            The key is not allowed for group config
+cui_control_whitelist_filter_expression_label,           Whitelist filter expression:
+cui_control_protocol_label,              Protocol:
+cui_validator_key_duplicates,            Keys are duplicated {0}
+cui_delete_section,              Delete section
+cui_filelog_parser_help,             Specify Parser to Extract Fields
+cui_validator_valid_regex,           Invalid regex
+cui_validator_empty_quotes,              empty quotes
+cui_validator_valid_tag_entry,           Invalid tag name
+cui_filelog_charset_help,            The character encoding of the log files that the agent monitors.
+cui_validator_value_shouldnt_contain,            Value should not contain {0}
+cui_control_message_parser_label,            Message parser:
+cui_parser_message_decoder_help,             Parser applying on the trailing message of syslog event.
+cui_global_no_fields_added,              No fields added
+cui_add_common_section,              Add common section:
+cui_server_ssl_cn_help,              The self-signed certificate Common Name (CN).If the certificate CN does not match the hostname, the Log Insight Agent checks it against the value of this option.
+cui_global_cause,            Cause:
+cui_control_format_label,            Format:
+cui_validator_unidentified_section,              Missing Section Name
+cui_validator_comma_separated_names,             Comma separated names are expected
+global_text_rename,              Rename
+cui_rename_section,              Rename section
+cui_control_exclude_files_label,             Exclude files:
+cui_control_event_marker_label,              Event marker:
+cui_validator_must_not_exceed_length,            Value length must not exceed {0}
+cui_are_you_sure_want_to_delete_x,           Are you sure you want to delete <h3 style="display:inline">[{0}]</h3>?
+cui_control_reconnect_period_label,              Reconnect period (sec):
+cui_filelog_event_marker_help,           A regular expression that denotes the start of an event in the log file.
+cui_errorMessageKeyValueOrphant,             The key/value pair haven't been included in a section
+cui_validator_valid_ip_address,              Invalid IP address
+cui_parser_timestamp_format_help,            Format specifiers that are used by the Timestamp parser are:<p><ul class=\"standard-list\"><li>'%a': Abbreviated weekday name, e.g. Thu                 </li><li>'%A': Full weekday name, e.g. Thursday                 </li><li>'%b': Abbreviated month name, e.g. Aug                 </li><li>'%B': Full month name, e.g. August                     </li><li>'%d': Day of the month, zero-padded (01-31), e.g. 03   </li><li>'%e': Day of the month, space-padded ( 1-31), e.g.  3  </li><li>'%f': Fractional seconds of time, e.g. .036            </li><li>'%H': Hour in 24h format (00-23), e.g. 14              </li><li>'%I': Hour in 12h format (01-12), e.g. 02              </li><li>'%m': Month as a decimal number (01-12), e.g. 08       </li><li>'%M': Minute (00-59), e.g. 55                          </li><li>'%p': AM or PM designation, e.g. PM                    </li><li>'%S': Second (00-61), e.g. 02                          </li><li>'%Y': Year, e.g. 2001                                  </li><li>'%z': Timezone offset (1 min=1, 1 hour=100), e.g. +100 </li></ul></p>
+cui_control_fields_label,            Fields:
+cui_parser_delimiter_help,           Defines the delimiter between field entries. For KVP parser each of specified characters is an independent delimiter. The delimiter of CSV is an exact pattern. Special characters like <b>\\t \\r \\n</b> can be used. Use <b>\\s</b> to include single space.
+cui_control_debug_level_label,           Debug level:
+cui_parser_exclude_fields_help,              <p>A list of semicolon separated field names to remove from the event before it is delivered to the server.</p><p>This is applied before event filtering is performed so that the field that you excluding during parsing cannot be used in the filter condition.</p>
+cui_control_debug_label,             Verbose logs (debug):
+cui_name_is_already_in_use,              The name is already in use
+cui_control_exclude_fields_label,            Exclude fields:
+cui_logging_debug_level_extended,            extended
+cui_validator_unescaped_back_slashes,            unescaped back slashes
+cui_errorMessageKeyValueRegexp,              The key/value pair is incorrect
+cui_enter_section_name,              Enter the name of section:
+cui_validator_must_be_in_range,              Value must be in the range of {0} - {1}
+cui_winlog_channel_help,             A full name of the event channel as shown in the Windows Event Viewer application.
+cui_validator_cannot_compile_regex,              Cannot compile regex
+cui_control_ssl_label,           SSL:
+cui_validator_single_quotes_in_quotes,           unescaped single quotes in quotes
+cui_parser_clf_format_help,              Specifies the format with which Apache logs are generated.<p><ul class=\"standard-list\"><li>'%a': \"remote_ip\"</li>             <li>'%A': \"local_ip\"</li>              <li>'%B', '%b': \"response_size\"</li>   <li>'%D': \"request_time_ms\"</li>       <li>'%E': \"error_status\"</li>          <li>'%F', '%f': \"file_name\"</li>       <li>'%h': \"remote_host\"</li>           <li>'%H': \"request_protocol\"</li>      <li>'%l': \"remote_log_name\"</li>       <li>'%m': \"request_method\"</li>        <li>'%p': \"server_port\"</li>           <li>'%P': \"process_id\"</li>            <li>'%r': \"request\"</li>               <li>'%R': \"response_handler\"</li>      <li>'%s': \"status_code\"</li>           <li>'%T': \"request_time_sec\"</li>      <li>'%t': \"date_time\"</li>             <li>'%u': \"remote_auth_user\"</li>      <li>'%U': \"requested_url\"</li>         <li>'%v': \"server_name\"</li>           </ul></p>
+cui_control_hostname_label,              Hostname:
+cui_winlog_whitelist_help,           <p>Whitelist rule restricts collection to log events for which the filter expression evaluates to non-zero.</p> Allowed operators are:<ul class=\"standard-list\"> <li>==, !=</li> <li>&gt;=, &gt;, &lt;, &lt;=</li> <li>&amp;, |, ^, ~</li> <li>and, or</li> <li>not</li> <li>()</li> </ul>
+cui_global_no_decoders_added,            No decoders added
+cui_validator_must_be_valid_json,            Value must be a valid JSON
+cui_non_latin_symbols_in_name,           You are not allowed to use non-latin symbols in section name
+cui_filelog_whitelist_help,              <p>Whitelist rule restricts collection to log events for which the filter expression evaluates to non-zero.</p> Allowed operators are:<ul class=\"standard-list\"> <li>==, !=</li> <li>&gt;=, &gt;, &lt;, &lt;=</li> <li>&amp;, |, ^, ~</li> <li>and, or</li> <li>not</li> <li>()</li> </ul>

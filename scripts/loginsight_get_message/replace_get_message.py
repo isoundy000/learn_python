@@ -457,7 +457,7 @@ if __name__ == '__main__':
     jsParser.load()
     for i in jsParser._string_item_list:
         if i.key and i.key not in data["pi-i18n"]:
-            data["pi-i18n"][i.key] = i.value.strip(" ")
+            data["pi-i18n"][i.key.strip('"')] = i.value.strip(" ")
 
     skip_path_list = [
         'D:\strata\loginsight\lib3rd\play-2.2.4\framework\test\integrationtest\app\controllers\πø$7ß.java',
@@ -478,7 +478,7 @@ if __name__ == '__main__':
                 continue
             replace_message = ReplaceMessage(filePath)
             replace_message.replace_get_message(logger, data, remove_dict)
-     
+      
     copyData = copy.deepcopy(data)
     for i, v in remove_dict.iteritems():
         dupList = list(set(v))
@@ -491,7 +491,7 @@ if __name__ == '__main__':
     print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
     not_replace_record = open(r'./not_replace_record.log', 'w')
     for key, value in copyData.iteritems():
-        not_replace_record.write('{}\n'.format(key))
+        not_replace_record.write('{}============================================\n'.format(key))
         for k, v in value.iteritems():
             try:
                 not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
