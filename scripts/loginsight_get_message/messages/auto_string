@@ -1,0 +1,287 @@
+messages============================================
+# 动态的
+com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventTypes,           event types
+com.vmware.loginsight.web.search.NumericGroupByType.fixedBucket,             Fixed bucket size
+com.vmware.loginsight.web.search.NumericGroupByType.eachValue,           Each value
+com.vmware.loginsight.web.search.NumericGroupByType.customBucket,            Custom buckets
+com.vmware.loginsight.rbac.Capability.descriptionViewAdmin,              Can view Admin information
+com.vmware.loginsight.rbac.Capability.displayNameAnalytics,              Interactive Analytics
+com.vmware.loginsight.rbac.Capability.descriptionEditShared,             Can edit shared content
+com.vmware.loginsight.rbac.Capability.displayNameViewAdmin,              View Admin
+com.vmware.loginsight.rbac.Capability.displayNameDashboard,              Dashboard
+com.vmware.loginsight.rbac.Capability.descriptionStatistics,             Can modify statistics via API
+com.vmware.loginsight.rbac.Capability.descriptionEditAdmin,              Can edit Admin information
+com.vmware.loginsight.rbac.Capability.descriptionInventory,              Can modify host message properties
+com.vmware.loginsight.rbac.Capability.displayNameInventory,              Inventory
+com.vmware.loginsight.rbac.Capability.descriptionDashboard,              Can use Dashboards
+com.vmware.loginsight.rbac.Capability.displayNameEditShared,             Edit Shared Content
+com.vmware.loginsight.rbac.Capability.displayNameEditAdmin,              Edit Admin
+com.vmware.loginsight.rbac.Capability.displayNameStatistics,             Statistics
+com.vmware.loginsight.rbac.Capability.descriptionAnalytics,              Can use Interactive Analytics
+com.vmware.loginsight.analytics.ErrorCode.workerUnavailble,              A worker node is unavailable
+com.vmware.loginsight.analytics.ErrorCode.invalidLicense,            Invalid or expired license
+com.vmware.loginsight.analytics.ErrorCode.clientStubsNotInitialzed,              RPC client stubs not initialized
+com.vmware.loginsight.analytics.ErrorCode.requestTokenUnknown,           Invalid query request token
+com.vmware.loginsight.analytics.ErrorCode.maintenanceNodes,              Some node(s) are in maintenance mode
+com.vmware.loginsight.analytics.ErrorCode.estimatedResult,           Results contain approximations
+com.vmware.loginsight.analytics.ErrorCode.regexTimeout,              Timed out while running regular expression matching
+com.vmware.loginsight.analytics.ErrorCode.requestTokenAlreadyExists,             Duplicate query request token
+com.vmware.loginsight.analytics.ErrorCode.requestRejected,           Request was rejected because the system is overloaded
+com.vmware.loginsight.analytics.ErrorCode.searchOwnerUnavailable,            The node serving this search request is in maintenance or unavailable
+com.vmware.loginsight.analytics.ErrorCode.unknownError,              Unknown error
+com.vmware.loginsight.analytics.ErrorCode.truncatedGroups,           Some groups in result are truncated
+com.vmware.loginsight.analytics.ErrorCode.alreadyCancelled,              Query was cancelled
+com.vmware.loginsight.analytics.ErrorCode.invalidIndexBucket,            Invalid index bucket
+com.vmware.loginsight.analytics.ErrorCode.pluginInvokeError,             Failed to invoke plugin on some groups
+com.vmware.loginsight.analytics.ErrorCode.fieldExtractionTimeout,            Timed out while extracting fields
+com.vmware.loginsight.analytics.ErrorCode.ioError,           IO error
+com.vmware.loginsight.analytics.ErrorCode.truncatedExport,           Some results are truncated
+com.vmware.loginsight.analytics.ErrorCode.querySyntaxError,              Query contains invalid syntax
+com.vmware.loginsight.commons.Errors.backupFailed,           Failed to backup data
+com.vmware.loginsight.commons.Errors.webServiceStartFailure,             Failed to start web service
+com.vmware.loginsight.commons.Errors.loggerServiceStartFailure,              Failed to start log service
+com.vmware.loginsight.commons.Errors.licenseError,           An unknown error, related to the license, has occurred
+com.vmware.loginsight.commons.Errors.searchWorkerServiceStartFailure,            Failed to start search worker service
+com.vmware.loginsight.commons.Errors.licenseCannotFindLicense,           Could not find the license file
+com.vmware.loginsight.commons.Errors.projectServiceStartFailure,             Failed to start project service
+com.vmware.loginsight.commons.Errors.commandLineError,           Command line arguments and/or options are not correct
+com.vmware.loginsight.commons.Errors.outOfDiskSpaceFailure,              Run Out of Disk Space
+com.vmware.loginsight.commons.Errors.repoWriterFailed,           failed to write to the repo
+com.vmware.loginsight.commons.Errors.patchServiceStartFailure,           Failed to start patch service
+com.vmware.loginsight.commons.Errors.indexerOutOfDiskSpace,              Insufficient disk space
+com.vmware.loginsight.commons.Errors.loadBalancerServiceStartFailure,            Failed to start Load Balancer service
+com.vmware.loginsight.commons.Errors.restoreCheckpointFileMissing,           Backup checkpoint file missing; provided backup may be corrupt
+com.vmware.loginsight.commons.Errors.licenseExpired,             The license has expired
+com.vmware.loginsight.commons.Errors.daemonConfigurationException,           Error loading {0} configuration
+com.vmware.loginsight.commons.Errors.serviceRegistryStartFailure,            Failed to start service registry
+com.vmware.loginsight.commons.Errors.restoreFailedInvalid,           Provided backup directory does not contain valid backup data
+com.vmware.loginsight.commons.Errors.ingestionServiceStartFailure,           Failed to start ingestion service
+com.vmware.loginsight.commons.Errors.vapiServiceStartFailure,            Failed to start vAPI service
+com.vmware.loginsight.commons.Errors.backupPrepareBlockFileFound,            Prepare operation is blocked to prevent corrupting restorable backup
+com.vmware.loginsight.commons.Errors.userNotOwner,           Current user does not match the owner of the installation files
+com.vmware.loginsight.commons.Errors.commandTimeout,             Command timed out
+com.vmware.loginsight.commons.Errors.daemonNotRunning,           {0} is not running
+com.vmware.loginsight.commons.Errors.commandCanceled,            Command was canceled
+com.vmware.loginsight.commons.Errors.tomcatServiceStartFailure,              Failed to start tomcat
+com.vmware.loginsight.commons.Errors.loadBalancerServiceRunFailure,              Error while running Load Balancer service
+com.vmware.loginsight.commons.Errors.daemonStartupException,             Error starting {0}
+com.vmware.loginsight.commons.Errors.licenseNoMoreCode,              The license does not allow scanning more code
+com.vmware.loginsight.commons.Errors.searchMasterServiceStartFailure,            Failed to start search master service
+com.vmware.loginsight.commons.Errors.displayServiceStartFailure,             Failed to start display service
+com.vmware.loginsight.commons.Errors.licenseCannotVerify,            Could not verify the license file. The license file has been tampered
+com.vmware.loginsight.commons.Errors.userIsRoot,             Service cannot be run as root user
+com.vmware.loginsight.commons.Errors.restoreFailedNotDir,            Provided backup location is not a directory
+com.vmware.loginsight.commons.Errors.restoreFailed,              Failed to restore data
+com.vmware.loginsight.commons.Errors.configurationWriteError,            Could not write to {0} . Please ensure the file permissions are correct and that there is enough disk space
+com.vmware.loginsight.commons.Errors.indexerCouldNotFindConfigFile,              Cannot find the configuration file
+com.vmware.loginsight.commons.Errors.daemonIsRunning,            {0} is already running
+com.vmware.loginsight.commons.Errors.indexerVersionError,            The existing index has the wrong version
+com.vmware.loginsight.commons.Errors.searchIncompatibleIndexVersion,             Incompatible index version or index is missing
+com.vmware.loginsight.commons.Errors.databaseUpgradeFailure,             Failed to upgrade database schema
+com.vmware.loginsight.commons.Errors.logDataServiceStartFailure,             Failed to start log data service
+com.vmware.loginsight.commons.Errors.licenseIpDoesNotMatch,              The license does not allow running this application on this machine
+com.vmware.loginsight.commons.Errors.apiServiceStartFailure,             Failed to start API service
+com.vmware.loginsight.commons.Errors.unknownError,           Unknown error
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.lettersNumUnderscore,             Letters, digits, and underscores
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.mac,              MAC address
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.integer,              Integer
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.anythingButSpace,             Any character except whitespace
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.ip6,              IP address (v6)
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.ip4,              IP address (v4)
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.custom,           Custom regex...
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.hex,              Hexadecimal
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.currency,             Currency
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.decimal,              Decimal
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryOrigin.help,            The origin refers to where the query originated from:<br /><br />\
+Interactive Analytics<br />\
+\u2022 <span style=\"font-weight: bold;\">Chart</span> - visualization above the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Events</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Event Types</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Event Trends</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Alerts</span> - from the alert icon to the right of the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Facet</span> - chart when expanding a field<br /><br />\
+Internal<br />\
+\u2022 <span style=\"font-weight: bold;\">Precompute</span> - cache queries<br />\
+\u2022 <span style=\"font-weight: bold;\">Schema</span> - machine learning queries<br />\
+\u2022 <span style=\"font-weight: bold;\">Tools</span> - internal-only<br />\
+\u2022 <span style=\"font-weight: bold;\">Other</span> - internal-only<br />
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCache.help,             This table contains information about caching.<br />\
+For the best performance, the number of hits should be greater than the number of misses, however depending on the events and the types of queries being issued it is not uncommon for misses to be greater than hits.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Evictions</span> refer to cache that has been removed to make room for new cache in an attempt to optimize performance.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Removals</span> refer to cache that has been removed because it has not been referenced in awhile.
+com.vmware.loginsight.web.settings.stats.StatsTableType.repository.help,             This table contains information about repository caching.<br />\
+For the best performance, the number of hits should be greater than the number of misses, however depending on the events and the types of queries being issued it is not uncommon for misses to be greater than hits.
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEventsIncomingRatePerSecond,              API Events Incoming Rate (Per Second)
+com.vmware.loginsight.web.settings.stats.StatsTableType.pendingArchives,             Pending Archives
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngestionRatePerSecond,            Events Ingestion Rate (Per Second)
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngested.help,             The sum of Syslog Events and API Events.
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEventsIncomingRatePerSecond.help,              The incoming rate of Syslog events being sent directly to each node by devices.<br />\
+The incoming rate is calculated prior to message rebalancing and does not reflect the actual ingestion rate per node.<br /><br />\
+It is acceptable, expected and supported for the incoming rate on a node -- such as the ILB -- to be greater than the ingestion rate configuration maximum for a node as message rebalancing will fairly distribute the load.<br /><br />\
+For the actual ingestion rate, see the Events Ingestion Rate (Per Second) table above.
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEventsIncomingRatePerSecond,           Syslog Events Incoming Rate (Per Second)
+com.vmware.loginsight.web.settings.stats.StatsTableType.ingestionQueue.help,             The ingestion queue is used to ensure Log Insight can keep up with the ingestion rate especially during spikes in ingestion.<br />\
+Even during normal operations the queue may be used.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Memory Utilized/Capacity</span> - memory queue, once full disk queue is used<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Disk Size</span> - disk utilization of current block, once full another disk block will be created<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Disk Blocks</span> - number of disk blocks, once full events either need to be consumed by other nodes in the cluster else they will be dropped<br /><br />\
+Disk Blocks is the most important metric. It is normal to have disk blocks and in the case of a cluster having a small subset of nodes with 62 disk blocks is OK.<br />\
+Indications of a problem are when either majority/all of the nodes are at 62 or when queries are too slow at the same time as having 50+ disk blocks on the majority/all nodes.
+
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngested,              Total Events
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCache,              Query Cache
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEvents.help,           The rate of messages received at each node via the syslog protocol.<br >\
+ The total events ingestion rate might be lower than incoming rate if the incoming rate is higher than sustained ingestion capacity of the cluster.
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEventsIncomingRatePerSecond.help,             The incoming rate of API events being sent directly to each node by devices.<br />\
+The incoming rate is calculated prior to message rebalancing and does not reflect the actual ingestion rate per node.<br /><br />\
+It is acceptable, expected and supported for the incoming rate on a node -- such as the ILB -- to be greater than the ingestion rate configuration maximum for a node as message rebalancing will fairly distribute the load.<br /><br />\
+For the actual ingestion rate, see the Events Ingestion Rate (Per Second) table above.
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEvents,           API Events
+com.vmware.loginsight.web.settings.stats.StatsTableType.repository,              Repository
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEvents.help,              The rate of messages received at each node via API.<br >\
+The total events ingestion rate might be lower than incoming rate if the incoming rate is higher than sustained ingestion capacity of the cluster.
+com.vmware.loginsight.web.settings.stats.StatsTableType.activeQueriesByHost.help,            How many queries each node is running.<br />\
+It is expected for some nodes to have more queries than others, however during times of congestion a small subset of nodes may have a large list of active queries.<br />\
+For more information on running queries, see the Active Queries tab.
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslog.help,             Additional information about syslog events including:<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Active TCP Sessions</span> - this number should be less than the configuration maximum per node<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Total TCP Sessions</span> - the total number of syslog TCP sessions that have been created against that server since its most recent restart<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Memory Utilized/Capacity</span> - queue information<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Messages Enqueued</span> - number of events in the ingestion pipeline that have not been processed yet<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Syslog Exceptions</span> - errors encountered extracting syslog events out of the TCP connections or UDP packets. Typically this happens because the client TCP connection is terminated ungracefully.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Truncated Events</span> - events that exceed the syslog RFC maximum that have been reduced in size to meet the RFC<br /><br />
+com.vmware.loginsight.web.settings.stats.StatsTableType.pendingArchives.help,            Buckets that need to be archived, but have not been.<br /><br />\
+This may indicate an archive, configuration or network issue.<br />\
+Log Insight will send a system notification when archiving issues occurs and will catch up once the archiving issue is resolved.
+com.vmware.loginsight.web.settings.stats.StatsTableType.activeQueriesByHost,             Active Queries By Host
+com.vmware.loginsight.web.settings.stats.StatsTableType.ingestionQueue,              Ingestion Queue
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryOrigin,             Query Origin
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslog,              Syslog
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEvents,            Syslog Events
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCosts.help,             The number of subqueries (bucket query tasks), since restart, that have been issued against each node, broken down by the query source.<br />\
+The unit of cost is a bucket.
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngestionRatePerSecond.help,           The actual ingestion rate (syslog + API) of each node after message rebalancing.<br />\
+Log Insight nodes will rebalance messages to attempt uniform ingestion per node for balanced retention and performance.<br /><br />\
+Note that the ingestion rate of each node must be below the ingestion rate configuration maximum for a node.<br /><br />\
+For the actual rate of events being sent directly to each node prior to message rebalancing, see the Syslog Events Incoming Rate (Per Second) and API Events Incoming Rate (Per Second) tables below.
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCosts,              Query Costs
+com.vmware.loginsight.commons.enums.LicenseStateEnum.deleted,            Deleted
+com.vmware.loginsight.commons.enums.LicenseStateEnum.expired,            Expired
+com.vmware.loginsight.commons.enums.LicenseStateEnum.uninitialized,              Uninitialized
+com.vmware.loginsight.commons.enums.LicenseStateEnum.active,             Active
+com.vmware.loginsight.commons.enums.LicenseStateEnum.error,              Error
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.isNot,              is not
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.stringMatch,            matches
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.matchesRegex,           matches regex
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.lessThan,           &lt;
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.exists,             exists
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.lessOrEqual,            &le;
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.equal,              =
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.is,             is
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotStringMatch,             does not match
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.contains,           contains
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotExist,           does not exist
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.startsWith,             starts with
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotStartsWith,              does not start with
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotContain,             does not contain
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.greaterOrEqual,             &ge;
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.greaterThan,            &gt;
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.notEqual,           &ne;
+com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventType,            event type
+com.vmware.loginsight.config.distributed.KnownServiceGroup.standalone,           Standalone Node
+com.vmware.loginsight.config.distributed.KnownServiceGroup.workernode,           Search Worker Node
+com.vmware.loginsight.config.distributed.KnownServiceGroup.webnode,              Web Node
+com.vmware.loginsight.config.distributed.KnownServiceGroup.masternode,           Search Master Node
+com.vmware.loginsight.web.settings.ClusterNodeStatus.disconnected,           Disconnected
+com.vmware.loginsight.web.settings.ClusterNodeStatus.maintenance,            Maintenance
+com.vmware.loginsight.web.settings.ClusterNodeStatus.connected,              Connected
+com.vmware.loginsight.web.piql.PiqlFunction.min,             Min
+com.vmware.loginsight.web.piql.PiqlFunction.stddev,              Std dev
+com.vmware.loginsight.web.piql.PiqlFunction.ucount,              Unique count
+com.vmware.loginsight.web.piql.PiqlFunction.max,             Max
+com.vmware.loginsight.web.piql.PiqlFunction.avg,             Average
+com.vmware.loginsight.web.piql.PiqlFunction.sum,             Sum
+com.vmware.loginsight.web.piql.PiqlFunction.count,           Count
+com.vmware.loginsight.web.piql.PiqlFunction.variance,            Variance
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneHour,           1 hour
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneMin,            1 minute
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneMilli,              1 ms
+com.vmware.loginsight.web.piql.TimeWindowGrouping.fiveMin,           5 minutes
+com.vmware.loginsight.web.piql.TimeWindowGrouping.sixHour,           6 hours
+com.vmware.loginsight.web.piql.TimeWindowGrouping.twelveHour,            12 hours
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneDay,            1 day
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneSec,            1 second
+com.vmware.loginsight.web.piql.TimeWindowGrouping.hundredMilli,              100 ms
+com.vmware.loginsight.web.piql.TimeWindowGrouping.fiveSec,           5 seconds
+com.vmware.loginsight.web.piql.TimeWindowGrouping.sixtyDays,             60 days
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenMin,            10 minutes
+com.vmware.loginsight.web.piql.TimeWindowGrouping.thirtyDays,            30 days
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenMilli,              10 ms
+com.vmware.loginsight.web.piql.TimeWindowGrouping.year,              1 year
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenSec,            10 seconds
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneWeek,           1 week
+com.vmware.loginsight.web.piql.TimeWindowGrouping.halfYear,              180 days
+com.vmware.loginsight.web.search.ExportFormat.csv,           CSV
+com.vmware.loginsight.web.search.ExportFormat.json,              JSON
+com.vmware.loginsight.web.search.ExportFormat.raw,           Raw events
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.custom,           Custom
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.globalCat,            Global Catalog
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.standard,             Standard
+com.vmware.loginsight.web.piql.DateFilterPreset.lastHour,            Latest hour of data
+com.vmware.loginsight.web.piql.DateFilterPreset.last7Days,           Latest 7 days of data
+com.vmware.loginsight.web.piql.DateFilterPreset.custom,              Custom time range
+com.vmware.loginsight.web.piql.DateFilterPreset.last5Minutes,            Latest 5 minutes of data
+com.vmware.loginsight.web.piql.DateFilterPreset.last6Hours,              Latest 6 hours of data
+com.vmware.loginsight.web.piql.DateFilterPreset.last48Hours,             Latest 48 hours of data
+com.vmware.loginsight.web.piql.DateFilterPreset.allTime,             All time
+com.vmware.loginsight.web.piql.DateFilterPreset.last24Hours,             Latest 24 hours of data
+com.vmware.loginsight.commons.enums.LicenseVersion.limited,              Limited
+com.vmware.loginsight.commons.enums.LicenseVersion.standard,             Standard
+com.vmware.loginsight.commons.enums.SortOrder.desc,              Descending
+com.vmware.loginsight.commons.enums.SortOrder.asc,           Ascending
+com.vmware.loginsight.web.enums.messageViewType.fieldTable,              Field Table
+com.vmware.loginsight.web.enums.messageViewType.summary,             Event Types
+com.vmware.loginsight.web.enums.messageViewType.events,              Events
+com.vmware.loginsight.web.enums.messageViewType.compareQuery,            Event Trends
+com.vmware.loginsight.commons.enums.DirectoryType.ad,            Active Directory
+com.vmware.loginsight.commons.enums.DirectoryType.vidm,              VMware Identity Manager
+com.vmware.loginsight.commons.enums.LicenseType.no_longer_supported,             No Longer Valid
+com.vmware.loginsight.commons.enums.LicenseType.nsx_concurrent_user,             NSX Concurrent User
+com.vmware.loginsight.commons.enums.LicenseType.nsx_invalid,             NSX Invalid
+com.vmware.loginsight.commons.enums.LicenseType.cpu,             CPU
+com.vmware.loginsight.commons.enums.LicenseType.development,             Development
+com.vmware.loginsight.commons.enums.LicenseType.osi,             OSI
+com.vmware.loginsight.commons.enums.LicenseType.nsx_term,            NSX OSI
+com.vmware.loginsight.commons.enums.LicenseType.vcenter,             vCenter
+com.vmware.loginsight.commons.enums.LicenseType.nsx_cpu,             NSX CPU
+com.vmware.loginsight.commons.enums.LicenseType.suite_hybrid,            vRealize Suite
+com.vmware.loginsight.commons.enums.ScheduleType.time,           At specific times
+com.vmware.loginsight.commons.enums.ScheduleType.manually,           Manually
+com.vmware.loginsight.database.cache.LicenseCheck.GenericErrorCode,              License error
+com.vmware.loginsight.database.cache.LicenseCheck.ErrorCode,             Error Code: {0}
+com.vmware.loginsight.database.cache.LicenseCheck.LimitedFromStandardException,              Cannot downgrade to limited from standard
+com.vmware.loginsight.database.cache.LicenseCheck.LimitedFromLimitedException,           Cannot add second limited license
+com.vmware.loginsight.database.superAdminDescription,            Full Admin and User capabilities, including editing Shared content
+com.vmware.loginsight.commons.contentpack.ConstraintToggleType.any,              any
+com.vmware.loginsight.commons.contentpack.ConstraintToggleType.all,              all
+com.vmware.loginsight.commons.enums.AuthenticationAttribute.sam,             SAM (Security Account Manager Account Name)
+com.vmware.loginsight.commons.enums.AuthenticationAttribute.upn,             UPN (User Principal Name)
+com.vmware.loginsight.web.actions.settings.HealthActionBean.running,             Running
+com.vmware.loginsight.database.superAdmin,           Super Admin
+com.vmware.loginsight.commons.enums.AuthenticationMethod.default,            Default (built-in)
+com.vmware.loginsight.commons.enums.AuthenticationMethod.activeDirectory,            Active Directory
+com.vmware.loginsight.commons.enums.AuthenticationMethod.vIDM,           VMware Identity Manager
+com.vmware.loginsight.commons.enums.SearcherConfigPartialResultsType.partialResults,             Return partial results
+com.vmware.loginsight.commons.enums.SearcherConfigPartialResultsType.noResults,              Return no results
+com.vmware.loginsight.commons.enums.AuthenticationResult.fail,           Authentication failed
+com.vmware.loginsight.commons.enums.NtpMode.host,            ESX/ESXi host
+com.vmware.loginsight.commons.enums.NtpMode.ntp,             NTP server (recommended)
+com.vmware.loginsight.commons.enums.RntUnit.minutes,             minutes
+com.vmware.loginsight.commons.enums.RntUnit.days,            days
+com.vmware.loginsight.commons.enums.RntUnit.months,              months
+com.vmware.loginsight.commons.enums.RntUnit.weeks,           weeks
+com.vmware.loginsight.commons.enums.RntUnit.hours,           hours
+com.vmware.loginsight.vcops.VcopsInventoryMatcher.labelVcopsID,              Analysis in vRealize Operations Manager
+com.vmware.loginsight.database.userDescription,              Can use Interactive Analytics and Dashboards
+com.vmware.loginsight.piql0.OrderByItem.messageInOrderNotDefined,            Message item '{0}' used in ORDER BY clause not defined.
+com.vmware.loginsight.database.user,             User

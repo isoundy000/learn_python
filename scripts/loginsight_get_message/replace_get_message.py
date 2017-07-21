@@ -294,7 +294,6 @@ class ReplaceMessage(object):
     encoding = 'utf-8'
     def __init__(self, file_path):
         self.filePath = file_path
-#         self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.getMessage\((.*?)"(.*?)"'
         self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.(getMessage|encodeKey)\((.*?)[\r|\n|\r\n]*\s*[\r|\n|\n\r]*"(.*?)"'
         self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*"(.*?)"'
         self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'\"])(.*?)\2)'
@@ -443,6 +442,8 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key and i.key not in data["messages"]:
+            if i.comment:
+                print i.comment
             data["messages"][i.key] = i.value.strip(" ")
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
@@ -467,36 +468,36 @@ if __name__ == '__main__':
     print 'webui', len(data['webui'])
     print 'pi-i18n', len(data['pi-i18n'])
 
-    rootdir = r"D:\strata"
-    remove_dict = {}
-    for parent, dirnames, filenames in os.walk(rootdir):
-        for filename in filenames:
-            if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
-                continue
-            filePath = "\\".join([parent, filename])
-            if filePath in skip_path_list:
-                continue
-            replace_message = ReplaceMessage(filePath)
-            replace_message.replace_get_message(logger, data, remove_dict)
-      
-    copyData = copy.deepcopy(data)
-    for i, v in remove_dict.iteritems():
-        dupList = list(set(v))
-        for key in dupList:
-            if key in copyData[i]:
-                copyData[i].pop(key)
-    print 'messages_mod', len(copyData['messages'])
-    print 'webui_mod', len(copyData['webui'])
-    print 'pi-i18n_mod', len(copyData['pi-i18n'])
-    print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
-    not_replace_record = open(r'./not_replace_record.log', 'w')
-    for key, value in copyData.iteritems():
-        not_replace_record.write('{}============================================\n'.format(key))
-        for k, v in value.iteritems():
-            try:
-                not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
-            except:
-                pass
-    not_replace_record.close()
-    end_time = int(time.time())
-    print end_time - start_time
+#     rootdir = r"D:\strata"
+#     remove_dict = {}
+#     for parent, dirnames, filenames in os.walk(rootdir):
+#         for filename in filenames:
+#             if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
+#                 continue
+#             filePath = "\\".join([parent, filename])
+#             if filePath in skip_path_list:
+#                 continue
+#             replace_message = ReplaceMessage(filePath)
+#             replace_message.replace_get_message(logger, data, remove_dict)
+#       
+#     copyData = copy.deepcopy(data)
+#     for i, v in remove_dict.iteritems():
+#         dupList = list(set(v))
+#         for key in dupList:
+#             if key in copyData[i]:
+#                 copyData[i].pop(key)
+#     print 'messages_mod', len(copyData['messages'])
+#     print 'webui_mod', len(copyData['webui'])
+#     print 'pi-i18n_mod', len(copyData['pi-i18n'])
+#     print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
+#     not_replace_record = open(r'./not_replace_record.log', 'w')
+#     for key, value in copyData.iteritems():
+#         not_replace_record.write('{}============================================\n'.format(key))
+#         for k, v in value.iteritems():
+#             try:
+#                 not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
+#             except:
+#                 pass
+#     not_replace_record.close()
+#     end_time = int(time.time())
+#     print end_time - start_time
