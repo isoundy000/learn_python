@@ -1,0 +1,119 @@
+# 动态的
+all,             All
+show,            Show
+hide,            Hide
+search,              Search
+any,             Any
+manage,              Manage
+apply,           Apply
+tag,             Tag
+clear,           Clear
+restart,             Restart
+value,           Value
+auth_type,           Login Type
+dropdownSelect,              -- Select --
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveNotMounted,             Unable to connect to the configured archive server or permission denied
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveDisabled,           Archiving is disabled
+com.vmware.loginsight.web.actions.settings.HostsActionBean.missingHosts,             Some hosts may not be listed because there are sources sending events without a hostname field.
+com.vmware.loginsight.web.actions.settings.HostsActionBean.noHosts,              No Host Information Available
+com.vmware.loginsight.web.actions.settings.HostsActionBean.export,           Export
+com.vmware.loginsight.web.actions.settings.HostsActionBean.title,            Hosts | Admin
+com.vmware.loginsight.web.actions.settings.HostsActionBean.tooltip.export,           Export the above hostnames and all their data to a CSV (comma-separated values) file.
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.phoneHome,             Customer Experience Improvement Program
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.enableImpersonate,             Enable User Impersonation
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.title,             General Configuration | Admin
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.rnt,           Retention Notification Threshold
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.emailList,             Email System Notifications To
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.alerts,            Alerts
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.help.experimental,             Experimental features do not include support and should not be used in production environments. In a future release, experimental features may become supported or may be removed from the product.
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.enableVIDMConfigHelp,              An experimental feature to allow VMware Identity Manager SSO authentication.
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.phoneHomeFeedbackText,             \<p class="last-vertical">This product participates in VMware's Customer Experience Improvement Program (&quot;CEIP&quot;). The CEIP provides VMware with information that enables VMware to improve its products and services, to fix problems, and to advise you on how best to deploy and use our products. As part of the CEIP, VMware collects technical information about your organization's use of VMware products and services on a regular basis in association with your organization's VMware license key(s).\This information does not personally identify any individual. For additional information regarding the CEIP, please see the Trust & Assurance Center at <a href="http://www.vmware.com/trustvmware/ceip.html" target="_blank">http://www.vmware.com/trustvmware/ceip.html</a>.</p>
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.suspend,           Suspend User Alerts
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.help.suspend,              Disable all alerts for every user. This setting does not affect system notifications.
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.disableVIDMConfig,             Cannot disable VMware Identity Manager SSO
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.phoneHomeFeedback,             Usage Reporting
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.timeout,           Session Timeout
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.enableVIDMConfig,              Enable VMware Identity Manager SSO
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.webhooksList,              Send HTTP Post System Notifications To
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.generalConfiguration,              General Configuration
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.agentClasses,           Agent Groups
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.instructions,           Setup Instructions...
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.dashboards,             Dashboards
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.bookmarkedQueries,              Favorite Queries
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.importDialog.asUser,            Import into My Content
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.queries,            Queries
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.downloadMore,           Download more...
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.enable,             Enable
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.fields,             Extracted Fields
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.disable,            Disable
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.importDialog.header,            Import Content Pack
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.dashboardQueries,           Dashboard Queries
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.export,             Export...
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.version,            Version:
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.author,             Author:
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.title,              Content Packs
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.alerts,             Alerts
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.uninstall,              Uninstall...
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.importContent,              Import Content Pack
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.importDialog.asPack,            Install as content pack
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.installed,              Installed
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.updateAll,              Update All
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.existing,              Existing Certificate
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.title,             SSL Configuration | Admin
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.certificateFile,           New Certificate File (PEM format)
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.uploadingCustomCertificate,            Updating SSL certificate properties
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.help.certificate,              Provide a custom SSL certificate signed by a trusted root authority to avoid certificate warnings (optional).
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.certificate,           Custom SSL Certificate
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.sslOnly,           Require SSL Connection
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.title,              Event Forwarding | Admin
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.downloadBundle,            Download Support Bundle
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.installedVersion,              Installed Version
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.vaRequiredBundle,              Virtual Appliance is required to generate bundle
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.networkHeader,            Network
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.versionHeader,             Version
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.gateway,              Gateway
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.lastRestart,           Last Restart:
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.dns,              DNS Servers
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.restart,           Restart
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.netmask,              Netmask
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.support,           Support
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.supportBundleInfo,             Downloading a support bundle is only necessary if requested by VMware Support Services. Generating a support bundle may take several minutes. The download will begin once the bundle is ready.
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.saveButton,             Add License
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.vaRequiredBundle,            Virtual Appliance is required to generate a support bundle
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.supportBundleInfo,           Downloading a {0} support bundle is only necessary if requested by VMware Support Services. Two types of bundles are available:
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.downloadBundle,              Download Support Bundle
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.lastRestart,             Last Restart
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.dns,            DNS Servers
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.instructions,           To change network settings, please see the {0}. (Note that changes via the console are not supported.)
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.support,             Support
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.versionHeader,           Version
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.networkHeader,              Network
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.installedVersion,            Installed Version
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.gateway,            Gateway
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.restart,             Restart
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.netmask,            Netmask
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.archiveLocation,           Archive Location
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.saveButton,           Save and Continue
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.help.fqdn,            Entering an IP address rather than an FQDN is not recommended. See the {0} for details.
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.newGroup,            New Group
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.downloadAgent,           Download Log Insight Agent Version
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.tooltip.export,              Export the above agents and all their data to a CSV (comma-separated values) file.
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.tooltip.export,              Export the above alerts and all their data to a CSV (comma-separated values) file.
+com.vmware.loginsight.web.actions.settings.UsersActionBean.usersAndGroups,           Users and Groups
+com.vmware.loginsight.web.actions.settings.UsersActionBean.noRoles,              (no roles)
+com.vmware.loginsight.web.actions.settings.UsersActionBean.newGroup,             New Group
+com.vmware.loginsight.web.actions.settings.UsersActionBean.newPassword,              New Password
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.help.target,           IP or hostname where sources should send log events. If at least one virtual IP is defined for the Integrated Load Balancer, logs will be sent to the VIP selected. If the Integrated Load Balancer is not configured, sources will send log events to the master node.
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.readOnlyTargetTooltip,             Target cannot be changed while ESXi hosts are configured. To change this value, first click &quot;Unconfigure&quot; to unconfigure all hosts.
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.help.ssl,             Sets whether SSL/TLS encryption should be enabled for the SMTP transport upon connection (SMTPS/POPS).
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.updatePassword,              Update
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.help.target,             IP or hostname where sources should send log events. If at least one virtual IP is defined for the Integrated Load Balancer, logs will be sent to the VIP selected. If the Integrated Load Balancer is not configured, sources will send log events to the master node.
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.readOnlyTargetTooltip,           Target cannot be changed while vRops is configured. To change this value, first click &quot;Unconfigure&quot; to unconfigure vRops.
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.fqdn,             To simplify future changes and upgrades, it is recommended to have clients point to a FQDN that resolves to the VIP address, instead of pointing directly to the VIP address. vSphere and vRealize Operations integrations as well as alert messages will use the FQDN if provided otherwise they will use the ILB IP address. Log Insight should be able to resolve the FQDN to the given IP address meaning that the FQDN defined here should match what is defined in DNS.
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.tags,             Tags allow you to add fields with pre-defined values to events for easier querying and metadata creation.
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.newPassword,           New password
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.noRoles,           (no roles)
+com.vmware.loginsight.api.errors.archiving.nfs_location_failed_mount,            Failed to mount NFS location
+com.vmware.loginsight.api.errors.archiving.cannot_parse_archive_location,            Cannot parse archive location
+com.vmware.loginsight.api.errors.license.already_exists,             License Already Exists
+validation.required.valueWhitespaceOnly,             Value cannot have only whitespace

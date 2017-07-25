@@ -356,7 +356,7 @@ class ReplaceMessage(object):
                 endString = regKey.split("}")[-1]
                 num = 0
                 for key, value in data_dict.iteritems():
-                    if endString and endString in key:
+                    if endString and key.endswith(endString):
                         tmpKey = key
                         num += 1
                 if num == 1:
