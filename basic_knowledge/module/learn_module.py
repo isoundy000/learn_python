@@ -14,9 +14,9 @@ Created on 2017年5月3日
 # 例子
 # 下例是个简单的模块 support.py：
 # support.py 模块：
-# def print_func( par ):
-#    print "Hello : ", par
-#    return
+def print_func( par ):
+   print "Hello : ", par
+   return
 # import 语句
 # 模块的引入
 # 
