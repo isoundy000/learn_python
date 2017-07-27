@@ -262,8 +262,8 @@ class PropertiesParser(Parser):
 class JsParser(Parser):
     encoding='utf-8'
     def __init__(self, file_path):
-        self.multiLineReg = re.compile(r'(\"\s*\+[\n|\r\n|\r]*\s*\")')
-        sepCharReg = re.compile(r'\s*(.*):\s*["|\'](.*)["|\'],')
+        sepCharReg = re.compile(r'\s*(.*):\s*([\"|\'])(.*?)\2,')
+        self.lastOne = re.compile(r'\s*(.*):\s*([\"|\'])(.*?)\2')
         Parser.__init__(self, file_path, sepCharReg, None, None)
 
     def load(self):
@@ -286,16 +286,22 @@ class JsParser(Parser):
             regPattern = self._sep_char_re.search(line)
             if regPattern:
                 key = regPattern.group(1)
-                value = regPattern.group(2)
-                self._generate_item("",key,value,"","")
+                value = regPattern.group(3)
+                self._generate_item("", key, value, "", "")
+            else:
+                regPattern1 = self.lastOne.search(line)
+                if regPattern1:
+                    key = regPattern1.group(1)
+                    value = regPattern1.group(3)
+                    self._generate_item("", key, value, "", "")
                 
 
 class ReplaceMessage(object):
     encoding = 'utf-8'
     def __init__(self, file_path):
         self.filePath = file_path
-        self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.(getMessage|encodeKey)\((.*?)[\r|\n|\r\n]*\s*[\r|\n|\n\r]*"(.*?)"'
-        self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*"(.*?)"'
+        self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.(getMessage|encodeKey)\((.*?)[\r|\n|\r\n]*\s*[\r|\n|\n\r]*(\".*?\")'
+        self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*(\".*?\")'
         self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'\"])(.*?)\2)'
         self.jsMessage = r'Y\.PI\.I[\r|\n|\r\n]*\s*\.getString\([\r|\n|\r\n]*\s*([\'\"])(.*?)\1'
 
@@ -361,18 +367,23 @@ class ReplaceMessage(object):
                         num += 1
                 if num == 1:
                     tmpValue = data_dict.get(tmpKey)
-            value = data_dict.get(regKey)
+            if self.filePath.endswith('java'):
+                tmp = regKey.strip('"')
+                value = data_dict.get(tmp)
+            else:
+                value = data_dict.get(regKey)
             if not value:
                 value = tmpValue
             if not value:
-                logger.error("key not legal, sourcePath is : {}, key is {}".format(self.filePath, regKey))
+                logger.error("key not legal, sourcePath is : {}, key is {}".format(self.filePath, regKey.strip('"')))
                 continue
-            if regKey in replace_key:
+            if regKey.strip('"') in replace_key:
                 continue
-            separate = '", "'
             if self.filePath.endswith('.java'):
+                separate = ', "'
                 value = value.replace('"', '\\"').replace("\\\\", "\\")
-                targetValue = regKey + separate + value
+                anchor = separate[-1]
+                targetValue = "".join([regKey, separate, value, anchor])
                 lines = lines.replace(regKey, targetValue)
             elif self.filePath.endswith('.jsp'):
                 separate = ' source="'
@@ -381,22 +392,23 @@ class ReplaceMessage(object):
                     value = value.replace("'", "\\'").replace("\\\\", "\\")
                 else:
                     value = value.replace('"', '\\"').replace("\\\\", "\\")
-                targetValue = i[0] + separate + value + separate[-1]
+                targetValue = "".join([i[0], separate, value, separate[-1]])
                 lines = lines.replace(i[0], targetValue)
             elif self.filePath.endswith('js'):
+                separate = '", "'
                 if "'" == i[0]:
                     separate = "', '"
                     value = value.replace("'", "\\'").replace("\\\\", "\\")
                 else:
                     value = value.replace('"', '\\"').replace("\\\\", "\\")
                 anchor = separate[0]
-                targetValue = regKey + separate + value + anchor
+                targetValue = "".join([regKey, separate, value, anchor])
                 lines = lines.replace(regKey + anchor, targetValue)
-            replace_key.append(regKey)
+            replace_key.append(regKey.strip('"'))
             if "${beanClass}" in regKey:
                 remove_list.append(tmpKey)
             else:
-                remove_list.append(regKey)
+                remove_list.append(regKey.strip('"'))
         return lines
 
 
@@ -442,8 +454,6 @@ if __name__ == '__main__':
     parser1.load()
     for i in parser1._string_item_list:
         if i.key and i.key not in data["messages"]:
-            if i.comment:
-                print i.comment
             data["messages"][i.key] = i.value.strip(" ")
 
     propreties2 = r'D:\strata\loginsight\components\ui\application\src\webui.properties'
@@ -468,36 +478,37 @@ if __name__ == '__main__':
     print 'webui', len(data['webui'])
     print 'pi-i18n', len(data['pi-i18n'])
 
-#     rootdir = r"D:\strata"
-#     remove_dict = {}
-#     for parent, dirnames, filenames in os.walk(rootdir):
-#         for filename in filenames:
-#             if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
-#                 continue
-#             filePath = "\\".join([parent, filename])
-#             if filePath in skip_path_list:
-#                 continue
-#             replace_message = ReplaceMessage(filePath)
-#             replace_message.replace_get_message(logger, data, remove_dict)
-#       
-#     copyData = copy.deepcopy(data)
-#     for i, v in remove_dict.iteritems():
-#         dupList = list(set(v))
-#         for key in dupList:
-#             if key in copyData[i]:
-#                 copyData[i].pop(key)
-#     print 'messages_mod', len(copyData['messages'])
-#     print 'webui_mod', len(copyData['webui'])
-#     print 'pi-i18n_mod', len(copyData['pi-i18n'])
-#     print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
-#     not_replace_record = open(r'./not_replace_record.log', 'w')
-#     for key, value in copyData.iteritems():
-#         not_replace_record.write('{}============================================\n'.format(key))
-#         for k, v in value.iteritems():
-#             try:
-#                 not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
-#             except:
-#                 pass
-#     not_replace_record.close()
-#     end_time = int(time.time())
-#     print end_time - start_time
+    rootdir = r"D:\vip_testdata\test_source_file"
+    remove_dict = {}
+    for parent, dirnames, filenames in os.walk(rootdir):
+        for filename in filenames:
+            if not (filename.endswith(".java") or filename.endswith(".jsp") or filename.endswith(".js")):
+                continue
+            filePath = "\\".join([parent, filename])
+            if filePath in skip_path_list:
+                continue
+            replace_message = ReplaceMessage(filePath)
+            replace_message.replace_get_message(logger, data, remove_dict)
+
+    copyData = copy.deepcopy(data)
+    for i, v in remove_dict.iteritems():
+        dupList = list(set(v))
+        for key in dupList:
+            if key in copyData[i]:
+                copyData[i].pop(key)
+
+    print 'messages_mod', len(copyData['messages'])
+    print 'webui_mod', len(copyData['webui'])
+    print 'pi-i18n_mod', len(copyData['pi-i18n'])
+    print len(data['messages']) + len(data['webui']) + len(data['pi-i18n']) - len(copyData['messages']) - len(copyData['webui']) - len(copyData['pi-i18n'])
+    not_replace_record = open(r'./not_replace_record.log', 'w')
+    for key, value in copyData.iteritems():
+        not_replace_record.write('{}============================================\n'.format(key))
+        for k, v in value.iteritems():
+            try:
+                not_replace_record.write('{}, \t\t\t {}\n'.format(k, v))
+            except:
+                pass
+    not_replace_record.close()
+    end_time = int(time.time())
+    print end_time - start_time

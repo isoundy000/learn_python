@@ -124,6 +124,12 @@ def auto_push_vip_source(data, logger):
     return_message = os.popen('git status')
     if 'nothing to commit' in return_message.read():
         return
+    fo1 = open(data['source_workspace']+'/compare_report.html', 'rb')
+    stream1 = fo1.read()
+    fo1.close()
+    index = stream1.find('class')
+    if index < 0:
+        return
     cmd2 = "git add -A && git commit -m '%s' && git push origin master" % 'auto push vip source'
     p2 = subprocess.Popen(cmd2, shell=True)
     stdout2, stderr2 = p2.communicate()
@@ -172,6 +178,7 @@ def send_mail_message(logger, is_fujian, data, mail_message=None):
         contenttype = 'attachment; filename="%s"' % fo.name
         att1["Content-Disposition"] = contenttype
         message.attach(att1)
+        fo.close()
     try:
         smtpObj = smtplib.SMTP('localhost')
         smtpObj.sendmail(data['sender'], data['receivers'], message.as_string())
