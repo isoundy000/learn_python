@@ -4,13 +4,37 @@ Created on 7/20/2017
 
 @author: ghou
 '''
+import os
 # 可迭代的
 from collections import Iterable
 # 迭代器
 from collections import Iterator
 
+# 列表生成器
+print [m + n for m in 'ABC' for n in 'XYZ']
+print [d for d in os.listdir('.')] # os.listdir可以列出文件和目录
+# 列表生成式也可以使用两个变量来生成list：
+d = {'x': 'A', 'y': 'B', 'z': 'C' }
+print [k + '=' + v for k, v in d.iteritems()]
+# 最后把一个list中所有的字符串变成小写：
+L = ['Hello', 'World', 'IBM', 'Apple']
+print [s.lower() for s in L]
+
+
+# 要创建一个generator，有很多种方法。第一种方法很简单，只要把一个列表生成式的[]改成()，就创建了一个generator：
 # 生成器表达式
 gen = (x**2 for x in range(5))
+# 创建L和g的区别仅在于最外层的[]和()，L是一个list，而g是一个generator。
+# 我们可以直接打印出list的每一个元素，但我们怎么打印出generator的每一个元素呢？
+# 如果要一个一个打印出来，可以通过generator的next()方法：
+
+# 这就是定义generator的另一种方法。如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator：
+def fib(max):
+    n, a, b = 0, 0, 1
+    while n < max:
+        print b
+        a, b = b, a + b
+        n = n + 1
 
 def odd():
     n = 1
@@ -19,6 +43,7 @@ def odd():
         n += 2
 
 odd_num = odd()
+print odd_num, '1111'
 count = 0
 for o in odd_num:
     if count >= 5: break
@@ -49,9 +74,13 @@ for count in range(5):
     
 
 def g4():
+    print 'step 1'
     yield 1
+    print 'step 2'
     yield 2
+    print 'step 3'
     yield 3
+
 g=g4()
 print next(g)
 g.close() #关闭后，yield 2和yield 3语句将不再起作用
