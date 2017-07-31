@@ -1,4 +1,137 @@
 messages============================================
+# 找不到的
+com.vmware.loginsight.agents.AgentStatusData.unknownAttribute,           Unknown attribute {0}
+com.vmware.loginsight.aaa.vidm.VIDMConnector.groupNotFoundInDomain,              Group {0} not found in domain {1}.
+com.vmware.loginsight.aaa.vidm.VIDMConnector.userNameValidation,             Failed to retrieve user information
+com.vmware.loginsight.aaa.vidm.VIDMConnector.multipleUsersFoundInDomain,             Multiple users with name {0} found in domain {1}.
+com.vmware.loginsight.aaa.vidm.VIDMConnector.multipleGroupsFoundInDomain,            Multiple groups with name {0} found in domain {1}.
+com.vmware.loginsight.aaa.vidm.VIDMConnector.webCodeValidation,              VMware Identity Manager response validation failed
+com.vmware.loginsight.aaa.vidm.VIDMConnector.userNotFoundInDomain,           User {0} not found in domain {1}.
+com.vmware.loginsight.aaa.vidm.VIDMConnector.requestFailed,              Request failed
+com.vmware.loginsight.web.settings.ClusterNode.justNow,              Just now
+com.vmware.loginsight.aaa.ad.ActiveDirectoryAuthenticator.failedToFindDomain,            Failed to find domain for username {0}
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.multivip,              Multiple VIPs with Tags
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.impersonate,           User Impersonation
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.hostsOverview,             Hosts Overview
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.systemalerts,              System Alerts
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.vsphere,           vSphere Integration Improvements
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.vrops,             vRealize Operations Manager Integration
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.agentconfig,           Agent Configuration Builder
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.forwarding,            Event Forwarding
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.marketplace,           Content Pack Marketplace
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.linuxAgent,            Linux Agent
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.trends,            Event Trends
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.ha,            Integrated Load Balancer
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.rbac,              Role Based Access Control
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.body36,            \
+{0} is now running version {1}. Below are some of the exciting new features we've added to the {1} release. As always, we appreciate your continued support and value your feedback in our {3} and {4} on Twitter.<br />\
+<br /><b>{5} Enhancements</b><br />\
+\u2022 Enhanced Alerting - Alerts sent to vRealize Operations Manager now contain the same metadata as email alerts.<br />\
+\u2022 Auto Cancel Alerts - User alerts to vRealize Operations Manager can be set to auto cancel in 10 minutes.<br />\
+\u2022 Integration HA - When integrating with vRealize Operations Manager, a Integrated Load Balancer VIP is used to ensure HA.<br />\
+<br /><b>General Enhancements</b><br />\
+\u2022 More Dashboard Widgets - Event type and event trend queries can now be saved to the Dashboard page and included in Content Packs.<br />\
+\u2022 Event Type Alerts - User alerts can now be created to alert based on new event types.<br />\
+\u2022 Syslog {6} Enhancements - Syslog Event Forwarding now supports send tags as well as complementary tags.<br />\
+\u2022 Query API Enhancements - The query API now supports duration, Content Pack extracted fields, group by field, order by function, and event trends.<br />\
+\u2022 Content Pack Upgrade Instructions - Content Packs now support separate install and upgrade instructions.<br />\
+<br /><b>Tech Preview Features</b><br />\
+\u2022 {7} - Super Admin users can now impersonate another user, allowing the ability to view, edit, and disable another user's alerts.<br />\
+\u2022 Agent Auto-Upgrade - Agents can be upgraded to the {1} release and be configured to automatically upgrade to future releases.<br />\
+\u2022 Agent Scripted Input - Agents can be configured to run script and collect output allowing for addition collection sources as well as data massaging.<br />\
+\u2022 VMware Identity Manager Integration - Authentication via VMware Identity Manager can be configured allowing for Single Sign-On.<br /><br />\
+For more information about {0}'s great new features, take a look at the {0} v{1} {2}.<br /><br />\
+Happy Logging,<br />\
+The {0} Team<br /><br \>\
+<img src="http://loginsight.vmware.com/community-library/accounts/91/914066/li-logo.png" style="height: 50px; width: 50px;"/>\
+<img src="http://www.google-analytics.com/collect?v=1&tid=UA-43863239-10&cid={9}&t=event&ec=email&ea=open&el=email-open&cs=email&cm=email&cn=log-insight-product-upgrade-open-email"/>
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.body33,            \
+{0} is now running version {1}. Following are some of the exciting new features we've added to the {1} release.<br /><br />\
+As always, we appreciate your continued support and value your feedback in our {7} and {8} on Twitter.<br /><br />\
+<b>New Server Capabilities</b><br />\
+\u2022 {2} - vRealize Log Insight's integrated load balancer now allows for multiple VIPs to be configured, each with zero or more tags.<br />\
+\u2022 Webhooks - Both {3} and user alerts offer the ability to send to one or more webhooks, allowing for easy integration with a large number of third party solutions.<br />\
+\u2022 {4} - Tags for both vCenter Server and ESXi events can be added, and unconfigured ESXi hosts can be automatically detected and integrated.<br />\
+\u2022 Additional OVF properties - Both DNS searchpath and DNS domain can be configured via OVF properties for the vRealize Log Insight virtual appliance.<br /><br />\
+<b>Improved Agent Capabilities</b><br />\
+\u2022 New Parsers - LTSV, Regex, and Syslog parsers are now available to support additional log formats.<br />\
+\u2022 IPv6 Support - All vRealize Log Insight agents support clients running IPv6.<br />\
+\u2022 copytruncate Support - The vRealize Log Insight Linux agents support the copytruncate option from logrotate.<br />\
+\u2022 Windows 10 Support - The vRealize Log Insight Windows agent supports Windows 10.<br /><br />\
+<b>New APIs</b><br />\
+\u2022 Authentication API -- Enables remote client to programmatically authenticate with the vRealize Log Insight platform to perform certain operations.<br />\
+\u2022 Query API - Enables remote clients to programmatically query the vRealize Log Insight platform to retrieve events and aggregations over events.<br />\
+\u2022 Importer Utility - A new importer utility is available to support importing old logs and support bundles via the vRealize Log Insight ingestion API.<br /><br />\
+<b>Tech Preview Features</b><br />\
+\u2022 {5} - The Agent Administration page provides the ability to build and validate agent configurations.<br />\
+\u2022 Virtual Appliance IPv6 Support - The vRealize Log Insight virtual appliance can be configured in a pure IPv6 network.<br />\
+\u2022 Configuration APIs - A variety of tech preview APIs have been made available to configure vRealize Log Insight.<br /><br />\
+For more information about {0}'s great new features, take a look at the {0} v{1} {6}.<br /><br />\
+Happy Logging,<br />\
+The {0} Team<br /><br \>\
+<img src="http://loginsight.vmware.com/community-library/accounts/91/914066/li-logo.png" style="height: 50px; width: 50px;"/>\
+<img src="http://www.google-analytics.com/collect?v=1&tid=UA-43863239-10&cid={9}&t=event&ec=email&ea=open&el=email-open&cs=email&cm=email&cn=log-insight-product-upgrade-open-email"/>
+com.vmware.loginsight.vsphere.config.VimVsphereConfigurer.skippingHostNotSupport,            Skipping host because it does not support {0}.
+com.vmware.loginsight.aaa.ad.ActiveDirectoryValidator.initializeActiveDirectoryDomain,           initialize with Active Directory domain '{0}'
+com.vmware.loginsight.aaa.vidm.VIDMAuthenticator.userVIDMPermittedGroupValidation,           The user does not belong to any permitted groups. User name: {0}
+com.vmware.loginsight.piql0.LimitExpr.invalidLIMIT,              Invalid LIMIT range
+com.vmware.loginsight.aaa.krb5.ActiveDirectoryQueryHelper.cannotParseGroupss,            Cannot parse groups
+com.vmware.loginsight.compare.error.queryCancelled,              The query has been cancelled
+com.vmware.loginsight.database.cache.LicenseCheck.licenseAlreadyExists,              License Already Exists
+com.vmware.loginsight.commons.db.data.UserRole.userRoleNormal,           Normal User
+com.vmware.loginsight.commons.db.data.UserRole.userRoleImplicit,             (group-based)
+com.vmware.loginsight.commons.db.data.UserRole.userRoleAdmin,            Admin
+com.vmware.loginsight.piql0.AppearFunctionExpr.rightValGreateThanZ,              Right value of APPEAR(.) should be >= 0
+com.vmware.loginsight.piql0.AppearFunctionExpr.conditionGreaterThanZTrue,            Condition APPEAR(.) >= 0 is always true
+com.vmware.loginsight.piql0.AppearFunctionExpr.onlyAngleAreValid,            Only '>' and '>=' are valid for APPEAR
+com.vmware.loginsight.piql0.AppearFunctionExpr.messageNotDefined,            Message item '{0}' not defined.
+com.vmware.loginsight.commons.highlighter.Region.formatToString,             Region { openTag: "{0}", closeTag: "{1}", startPosition: {2}, endPosition: {3}}
+com.vmware.loginsight.compare.QueriesController.missingGroupBy,              Missing group by clause
+com.vmware.loginsight.compare.QueriesController.missingPiql,             Missing PIQL query
+com.vmware.loginsight.compare.QueriesController.missingLeft,             Missing left from clause
+com.vmware.loginsight.compare.QueriesController.invalidCompareQueryCancelToken,              Invalid CompareQuery cancel token
+com.vmware.loginsight.compare.QueriesController.missingRight,            Missing right from clause
+com.vmware.loginsight.compare.QueriesController.invalidOrder,            Invalid ordering: {0}
+com.vmware.loginsight.compare.QueriesController.invalidOrderBy,              Invalid order by: {0}
+com.vmware.loginsight.compare.QueriesController.missingToken,            Missing query routing token
+com.vmware.loginsight.aaa.vidm.VIDMValidator.validateVIDMUser,           validate user
+com.vmware.loginsight.aaa.vidm.VIDMValidator.validateVIDMGroup,              validate group
+com.vmware.loginsight.aaa.vidm.VIDMValidator.unableTo,           Unable to {0}. Please check your VMware Identity Manager configuration.
+com.vmware.loginsight.commons.FileUtils.failedMountNFSLocation,              Failed to mount NFS location
+com.vmware.loginsight.commons.FileUtils.failedUnmountTestingDirectory,           failed to unmount the testing directory
+com.vmware.loginsight.commons.FileUtils.unableTestNFSMount,              Unable to test NFS mount: failed to create local mount directory
+com.vmware.loginsight.commons.FileUtils.archivePathNotSet,           Archive path is not set
+com.vmware.loginsight.commons.FileUtils.errorMountingNFSLocation,            Error mounting NFS location: {0}
+com.vmware.loginsight.commons.FileUtils.cannotParseArchiveLocation,              Cannot parse archive location
+com.vmware.loginsight.commons.FileUtils.unableToWriteToHDFS,             Unable to write to the HDFS location: {0}
+com.vmware.loginsight.commons.FileUtils.nfsLocationNotWritable,              The NFS location is not writable
+com.vmware.loginsight.commons.FileUtils.unableToConnectToHDFS,           Unable to connect to the HDFS: {0}
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToRemoveMembership,             Failed to remove membership: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetNodeStatus,            Failed to get a node's status: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToJoin,             Failed to join: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetClusterMembers,            Failed to get cluster members: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetPendingWorkers,            Failed to get membership pending workers: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToJoinDeployment,           Failed to join deployment: The given host is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToApproveMembership,            Failed to approve membership: This is not a master.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.notFinishedStartingUp,            The node has not yet finished starting up. Please try again later.
+com.vmware.loginsight.scheduled.ScheduledPluginService.vCenterCollectionFailed,              vCenter collection failed
+com.vmware.loginsight.piql0.ItemFieldExpr.matchingError,             Matching pattern syntax error: {0}
+com.vmware.loginsight.piql0.ItemFieldExpr.invalidOperator,           Invalid operator '{0}'
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForStr,           Operator '{0}' is valid only for string values
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForSets,              Operator '{0}' is valid only for sets
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForNum,           Operator '{0}' is valid only for numerical values or versions
+com.vmware.loginsight.aaa.krb5.KrbAuthenticator.kerberosAuthenNotConfigured,             Kerberos authenticator is not configured yet
+com.vmware.loginsight.piql0.GroupByExpr.groupByFieldsNotFromSameMsg,             All GROUP BY fields are not from the same message.
+com.vmware.loginsight.piql0.GroupByExpr.messageInGroupNotDefined,            Message item '{0}' used in GROUP BY not defined.
+com.vmware.loginsight.piql0.GroupByExpr.noGroupFieldSpecified,           No GROUP BY field specified.
+com.vmware.loginsight.piql0.BeforeFunctionExpr.messageInBeforeDifferent,             Message items in BEFORE function must be different
+com.vmware.loginsight.piql0.BeforeFunctionExpr.messageNotDefined,            Message item '{0}' not defined.
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToReconfig,            Failed to reconfigure Log Insight on master: {0}
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToPushConfig,              Failed to push configuration to all workers: {0}
+com.vmware.loginsight.daemon.upgrade.ClusterManager.configOutOfWorkerInstance,           We were only able to configure {0} out of {1} worker instances.
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToSaveConfig,              Failed to save configuration on master: {0}
+com.vmware.loginsight.piql0.BeforeMinDistFunctionExpr.minDistanceGreaterThanZ,           minDistance must be greater than 0.
+com.vmware.loginsight.piql0.OrderByItem.msgCannotAppearInORDER,              SAMPLE(message) cannot appear in ORDER BY
 # 动态的
 com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventTypes,           event types
 com.vmware.loginsight.web.search.NumericGroupByType.fixedBucket,             Fixed bucket size
@@ -127,7 +260,6 @@ Even during normal operations the queue may be used.<br /><br />\
 \u2022 <span style=\"font-weight: bold;\">Disk Blocks</span> - number of disk blocks, once full events either need to be consumed by other nodes in the cluster else they will be dropped<br /><br />\
 Disk Blocks is the most important metric. It is normal to have disk blocks and in the case of a cluster having a small subset of nodes with 62 disk blocks is OK.<br />\
 Indications of a problem are when either majority/all of the nodes are at 62 or when queries are too slow at the same time as having 50+ disk blocks on the majority/all nodes.
-
 com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngested,              Total Events
 com.vmware.loginsight.web.settings.stats.StatsTableType.queryCache,              Query Cache
 com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEvents.help,           The rate of messages received at each node via the syslog protocol.<br >\

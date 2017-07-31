@@ -1,3 +1,237 @@
+webui============================================
+# 没找到的
+validation.maxlength.valueTooLong,           Must be no more than {2} characters long
+validation.file.postBodyTooBig,              Total upload size of {3} KB exceeds the maximum size of {2} KB
+header.superheader.about,            About
+admin.page.config,           Server Settings
+com.vmware.loginsight.api.errors.field_required,             Field is required
+integration,             Integration
+errorPage.forSupport,            For support, contact
+stripes.errors.footer,           </ul>
+stripes.errors.header,           <ul class="stripes-validation-global-error">
+stripes.fieldErrors.header,    
+stripes.fieldErrors.afterError,              </span><br />
+stripes.errors.afterError,           </li>
+stripes.fieldErrors.footer,  
+validation.maxvalue.valueAboveMaximum,           The maximum allowed value is {2}  
+header.superheader.help,             Help
+converter.email.invalidEmail,            Not a valid email address 
+converter.enum.notAnEnumeratedValue,             Not a valid value  
+converter.integer.outOfRange,            Must be in the range {2} to {3}
+converter.short.outOfRange,              Must be in the range {2} to {3}
+converter.float.outOfRange,              Must be in the range {2} to {3}
+converter.byte.outOfRange,           Must be in the range {2} to {3}
+converter.creditCard.invalidCreditCard,              Not a valid credit card number
+converter.date.invalidDate,              Not a valid date
+converter.number.invalidNumber,              Not a valid number
+logInsight.restart.restartDialogHeader,              Restart
+logInsight.restart.restartButtonNode,            Restart Node
+logInsight.restart.restartButton,            Restart Log Insight
+validation.expression.valueFailedExpression,             The value supplied ({1}) for field {0} is invalid  
+validation.minvalue.valueBelowMinimum,           The minimum allowed value is {2}   
+admin.page.runtime,              System Parameters
+admin.breadcrumb,            Admin
+logInsight.fields,           Fields
+logInsight.sources,              sources
+validation.mask.valueDoesNotMatch,           Not a valid {0}
+validation.minlength.valueTooShort,              Must be at least {2} characters long
+logInsight.header.magic,              Automated Analytics
+logInsight.header.feedback.shareScreen3,             If you prefer not to install software, you can use {0} to record your screen using Java from a web page.
+logInsight.header.feedbackDialogHeader,              Send Feedback
+logInsight.header.feedback.shareScreenHeader,            Screen Capture
+logInsight.header.feedback.shareScreen1,             If you're willing to share your screen with us, we would love to watch a video of your interactions with Log Insight. Any screen captures you take can be shared via email.
+logInsight.header.feedback.shareScreen2,             We recommend {0}, a desktop app for Windows or Mac, for capturing your screen and narrating actions.
+logInsight.header.piql,              PIQL
+logInsight.header.feedback.intro,            We want to hear about your experience with Log Insight. What's good, what's bad, or what's missing? Help us improve Log Insight!
+logInsight.header.feedback.email,            Email us at
+logInsight.header.feedback,              Send Feedback...
+logInsight.header.alerts,            Alerts
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.utilization,           Total CPU utilization is currently at {0}
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources,           Resources
+com.vmware.loginsight.web.actions.settings.HealthActionBean.memCurrent,              Current memory usage:
+com.vmware.loginsight.web.actions.settings.HealthActionBean.title,           System Monitor | Admin
+com.vmware.loginsight.web.actions.settings.HealthActionBean.queries,             Active Queries
+com.vmware.loginsight.web.actions.settings.HealthActionBean.swapCurrent,             Current swap space usage:
+com.vmware.loginsight.web.actions.settings.HealthActionBean.swapHistoryLabel,            Swap space use ({0} available) during last 24 hours:
+com.vmware.loginsight.web.actions.settings.HealthActionBean.osiCheck,            OSI Count
+com.vmware.loginsight.web.actions.settings.HealthActionBean.memHistoryLabel,             Memory use ({0} available) during last 24 hours:
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.syslogReceived,            Received syslog events since last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.truncated,             Truncated events since last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.lastIngestTimestamp,           Time of last ingested event
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.meanIngestRate,            Average ingestion rate since last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.importReceived,            Received imported events since last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.dropped,           Dropped events since last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.recentIngestRate,              Recent ingestion rate in the last minute
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.restartTimestamp,              Time of last restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats,           Statistics
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.rateUnitSingle,            event per second
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.lastDropTimestamp,             Time of last dropped event
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.rateUnit,              events per second
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipUninstall,           Uninstall this content pack for all users
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noSharedContentTitle,           No shared content
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noUserContentInfo,              Dashboards, queries, alerts, and extracted fields that you create will show up here.
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noContentInfo,              This content pack contains no dashboards, queries, alerts, or extracted fields.
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipExport,              Export this content to a file
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noContentTitle,             Empty content pack
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipDisable,             Disable this content pack for you only (does not affect other users)
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.updates,            Updates
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noSharedContentInfo,            Shared dashboards, queries, alerts, and extracted fields created by administrators will show up here.
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.marketplace,            Marketplace
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipEnable,              Re-enable this content pack
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noUserContentTitle,             No personal content
+com.vmware.loginsight.web.actions.misc.AboutActionBean.logInfo,              {0} total log {1}
+com.vmware.loginsight.web.actions.misc.AboutActionBean.from,             from
+com.vmware.loginsight.web.actions.misc.AboutActionBean.contact,              Contact
+com.vmware.loginsight.web.actions.misc.AboutActionBean.title,            About
+com.vmware.loginsight.web.actions.misc.AboutActionBean.to,           to
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.ipAddress,              IP Address
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.hostname,           Hostname
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.version,            Version
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.os,             OS
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.numTargets,             destinations
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.numTarget,              destination
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.noTargets,              No Destinations
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.pending,            Pending
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.cannotSaveConfig,           Cannot save forwarding configuration
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.delete,             Delete
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.active,             Active
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.idle,           Idle
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importLogs,             Import Log File...
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.enableAlertsAdd,            The following alerts will be enabled and added to 'My Saved Alerts':
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.saveAutoFieldIntro,             Choose a name for this smart field:
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importLogsHeader,           Import Log File
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.chartName,              Chart Name
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.dateTime,           Time Range
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.description,            Description:
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.enableAlertsPre,            The following alerts will be enabled:
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.options,            Options
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.before,             Before
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.regex,              Regex
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.zoomInstructions,           Click and drag over a region to select
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.to,             to
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.shareSearchDialogShorten,           Shorten
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importFrom,             Choose log file:
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.ofEvents,           of events
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.extractField,           Extract Field
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.sourceFilter,           Source Filter
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.from,           from
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.alsoAddToDashboard,             Also save to dashboard
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.setAnchorTip,           Set time range from this event
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.loadSearchDialogHeader,             Favorite Queries
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.title,              Interactive Analytics
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.after,              After
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.intervalLabel,              Run query every:
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.of,             of
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.custom,             Custom
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.title,            Appliance | Admin
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.quantity,           Quantity
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.exceptionPattern1,              License key is invalid: [status={0}], [configuration={1}], [expires={2}], [error={3}]
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.exceptionPattern2,              License key is invalid: [status={0}], [configuration={1}], [expires={2}]
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.status,             Status
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.expiration,             Expiration
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.title,              License | Admin
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.key,            Key
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.type,           Type
+com.vmware.loginsight.web.actions.home.HomeActionBean.refresh,           Update
+com.vmware.loginsight.web.actions.home.HomeActionBean.title,             Dashboards
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.bundle,              Support Bundle
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.title,              Cluster Management | Admin
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.workers,            Nodes
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.master,             Master
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.clusterConfig,              Configuration
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.upgrade,             Upgrade Log Insight
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.maxStorage,            Maximum storage to use
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.storageSizeHeader,             Storage Size
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.help.maxStorage,           Maximum amount of storage to use for imported data.
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.title,             Archiving Configuration | Admin
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.archiveHeader,             Archiving
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.disconnected,             DdomainISCONNECTED
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.,           Default Domain
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.adminPassword,            AD Server Password
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.connected,            CONNECTED
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.unableToLoginToVIDM,              Unable to login to VMware Identity Manager
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.port,             Port:
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.unconfigured,             UNCONFIGURED
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.title,            Authentication | Admin
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.needUserAlertInWizard,            To grant access to an Active Directory group or user, visit the Users configuration page.
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.adminUsername,            AD Server Username
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.UntrustedCertificateHeader,           Untrusted Certificate
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerAtIp,           Worker at IP
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.title,            Startup
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerAdmittedNoIp,           Worker has been admitted to the Log Insight deployment.
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerJoinInProgress,             Initializing worker...
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.hasBeenAdmitted,              has been admitted to the Log Insight deployment.
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.export,              Export
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.applyAgentsConfigGroupDoesNotExist,              An Agent Group doesn't exist
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.refresh,             Refresh
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.saveNewConfigExceptionMsgCannotSave,             Cannot save agent configuration
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.title,           Agent Management | Admin
+com.vmware.loginsight.web.actions.settings.UsersActionBean.domain,           Domain
+com.vmware.loginsight.web.actions.settings.UsersActionBean.description,              Description
+com.vmware.loginsight.web.actions.settings.UsersActionBean.upn,              UPN
+com.vmware.loginsight.web.actions.settings.UsersActionBean.role,             Roles
+com.vmware.loginsight.web.actions.settings.UsersActionBean.title,            Access Control | Admin
+com.vmware.loginsight.web.actions.settings.UsersActionBean.delete,           Delete
+com.vmware.loginsight.web.actions.settings.UsersActionBean.confirmPassword,              Confirm
+com.vmware.loginsight.web.actions.settings.UsersActionBean.users,            Users
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.description,           Integration with vSphere provides many advantages including the ability to collect vCenter Server events, tasks and alarms as well as configure ESXi hosts to forward logs to Log Insight. Up to 10 vCenter Server instances can be configured. For more information, see the {0}.
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.help.esxiLogsAutomatic,            When new hosts are added to this vCenter Server, they will be automatically configured to send their logs to Log Insight via syslog.
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiDialog.udp,            UDP
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiDialog.tcp,            TCP
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.unconfigure,           Unconfigure
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.configInProgress,              ESXi host syslog configuration will proceed in the background. It may take several minutes to complete.
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.title,             vSphere Integration | Admin
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.target,            Target
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.updatePassword,            Update
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.configInProgressRestart,           Restarting Log Insight will not affect the configuration process.
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.emailAddress,             Email Address
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.testEmail,            Test Email
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.server,           SMTP Server
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.ssl,              SSL (SMTPS)
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.title,            SMTP Configuration | Admin
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.port,             Port
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.explain,             Integrate to enable sending Log Insight alerts to vRealize Operations Manager.
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.vCOpsChanged,            vC Ops Changed
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.description,             Integration with vRealize Operations Manager provides many advantages including the ability to send Log Insight alerts to vRealize Operations Manager and enable launch in context between the two products. If integrating with vRealize Operations Manager 6.0 or later then inventory mapping is enabled by default, which tags environment specific information such as vCenter Server, datacenter and cluster from which an event originated. Note that integration requires read-only permissions for a local user account on vRealize Operations Manager. Use of an administrator account is not recommended for security reasons. For more information, see the {0}.
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.target,              Target
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.title,           vRealize Operations Manager Integration | Admin
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.enabled,             Enable alerts integration
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAStatus,              Status
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAFQDN,            FQDN (optional)
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAAddress,             IP Address
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.highAvailability,             It is strongly recommended that the Integrated Load Balancer (ILB) be enabled. \The ILB balances incoming ingestion traffic fairly among available Log Insight nodes. \The ILB also ensures that incoming ingestion traffic is accepted even if some Log Insight nodes become unavailable. \Log Insight clients, using both the web user interface and ingestion (via Syslog or the API), should connect to \Log Insight via the specified ILB IP address.<br /><br />The ILB requires that all Log Insight nodes be on the same Layer 2 network, such as behind \the same switch or otherwise able to receive ARP requests from and send ARP responses to each other. \The ILB IP address should be chosen so that any Log Insight node can own it and receive traffic for it. \Typically, this means that the ILB IP address will be in the same subnet as the physical address of the Log Insight nodes. \After you configure the ILB IP address, try to ping it from a different network to ensure that it is routable. <br /><br /> \To simplify future changes and upgrades, it is recommended to have clients point to a FQDN that resolves to the ILB IP address, \instead of pointing directly to the ILB IP address. vSphere integration and alert messages will use FQDN if provided otherwise it will use ILB IP address. \Log Insight should be able to resolve FQDN to given IP address.
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.enableHA,              Enable Integrated Load Balancer
+com.vmware.loginsight.web.actions.misc.LoginActionBean.title,            Login
+com.vmware.loginsight.web.actions.misc.LoginActionBean.worker,           Worker:
+com.vmware.loginsight.web.actions.settings.TimeConfigurationActionBean.title,            Time Configuration | Admin
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.role,              Roles
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.title,             My Settings
+com.vmware.loginsight.web.actions.misc.HelpActionBean.community,             Community
+com.vmware.loginsight.web.actions.piql.PiqlQueryActionBean.title,            PIQL
+com.vmware.loginsight.web.actions.settings.ConfigActionBean.warning,             <b>WARNING:</b> Improperly modifying the server config may cause problems with Log Insight, including data loss. Use at your own risk.
+com.vmware.loginsight.web.actions.settings.AbstractConfigurationActionBean.writeConfigWarning,           Configuration was saved successfully but could not be applied to the following workers: {0}
+com.vmware.loginsight.web.actions.misc.HelpActionBean.support,           Support
+com.vmware.loginsight.web.actions.explorer.ShortUrlActionBean.errorShortening,           Unable to shorten URL: {0}
+com.vmware.loginsight.web.actions.message.LogMessageActionBean.exportException,              Invalid export format: {0}
+com.vmware.loginsight.web.actions.piql.PiqlQueryActionBean.searchSimpleExceptionMessageInvalidDataSets,              User has invalid data sets.
+com.vmware.loginsight.web.actions.misc.HelpActionBean.documentation,             Documentation
+com.vmware.loginsight.web.actions.misc.HelpActionBean.title,             Help
+com.vmware.loginsight.api.errors.archiving.nfs_unable_test_mount,            Unable to test NFS mount: failed to create local mount directory
+com.vmware.loginsight.api.errors.archiving.archive_path_not_set,             Archive path is not set
+com.vmware.loginsight.api.errors.archiving.nfs_location_failed_unmount,              Failed to unmount the testing directory
+com.vmware.loginsight.api.errors.archiving.hdfs_unable_to_connect,           Unable to connect to the HDFS: {0}
+com.vmware.loginsight.api.errors.archiving.hdfs_unable_to_write,             Unable to write to the HDFS location: {0}
+com.vmware.loginsight.api.errors.archiving.nfs_location_not_writable,            The NFS location is not writable
+com.vmware.loginsight.api.errors.license.expired,            License Expired
+com.vmware.loginsight.api.errors.license.not_exists,             License Does Not Exist
+stripes.errors.beforeError,              <li class="validate-style stripes-validation-individual-error">
+stripes.fieldErrors.beforeError,             <span class="validate-style stripes-validation-field-error">
+logInsight.search.resultsTextNoMatches,              No matching events
+logInsight.search.viewCompleteLog,           View event in original context
+logInsight.search.loadMoreMatches,           Load more events
+logInsight.search.resultsTextSearching,              Searching events
+logInsight.fieldUpdate.field.updateConfirm,              Modifying this field will update all the dependent items.
+
 # 动态的
 all,             All
 show,            Show

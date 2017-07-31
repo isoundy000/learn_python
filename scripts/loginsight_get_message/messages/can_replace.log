@@ -1,0 +1,6 @@
+messages============================================
+# 新的方法
+com.vmware.loginsight.database.dashboardUser,            Dashboard User
+com.vmware.loginsight.database.dashboardUserDescription,             Can use only Dashboards
+com.vmware.loginsight.database.viewOnlyAdmin,            View Only Admin
+com.vmware.loginsight.database.viewOnlyAdminDescription,             Can view Admin info and has full User access, including editing Shared content

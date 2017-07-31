@@ -302,6 +302,7 @@ class ReplaceMessage(object):
         self.filePath = file_path
         self.i18nMessage = r'I18nUtil[\r|\n|\r\n]*\s*\.(getMessage|encodeKey)\((.*?)[\r|\n|\r\n]*\s*[\r|\n|\n\r]*(\".*?\")'
         self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*(\".*?\")'
+        self.rbacGroupDao = r'rbacGroupDAO[\r|\n|\r\n]*\s*\.createGroup\((\".*?\"),\s*(\".*?\")'
         self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'\"])(.*?)\2)'
         self.jsMessage = r'Y\.PI\.I[\r|\n|\r\n]*\s*\.getString\([\r|\n|\r\n]*\s*([\'\"])(.*?)\1'
         self.jsCmon = r'Cmon\.resID\(([\'\"])(.*?)\1'
@@ -325,6 +326,12 @@ class ReplaceMessage(object):
                     remove_dict["messages"] = []
                 regPos = 2
                 lines = self.replace_lines_message(i18nMessage, regPos, lines, data_dict, logger, remove_dict["messages"])
+            rbacGroupDao = re.findall(self.rbacGroupDao, lines)
+            if rbacGroupDao:
+                data_dict = data['messages']
+                if "messages" not in remove_dict:
+                    remove_dict["messages"] = []
+                lines = self.replace_lines_many_message(rbacGroupDao, lines, data_dict, logger, remove_dict["messages"])
             getMessage = re.findall(self.getMessage, lines)
             if getMessage:
                 data_dict = data['webui']
@@ -417,6 +424,26 @@ class ReplaceMessage(object):
             else:
                 remove_list.append(regKey.strip('"'))
         return lines
+    
+    def replace_lines_many_message(self, rbacGroupDao, lines, data_dict, logger, remove_list):
+        replace_key = []
+        for i in rbacGroupDao:
+            for regKey in i:
+                tmp = regKey.strip('"')
+                value = data_dict.get(tmp)
+                if not value:
+                    logger.error("key not legal, sourcePath is : {}, key is {}".format(self.filePath, tmp))
+                    continue
+                if tmp in replace_key:
+                    continue
+                separate = ', "'
+                value = value.replace('"', '\\"').replace("\\\\", "\\")
+                anchor = separate[-1]
+                targetValue = "".join([regKey, separate, value, anchor])
+                lines = lines.replace(regKey, targetValue)
+                replace_key.append(tmp)
+                remove_list.append(tmp)
+        return lines
 
 
 def test_get_logger(logPath):
@@ -485,7 +512,7 @@ if __name__ == '__main__':
     print 'webui', len(data['webui'])
     print 'pi-i18n', len(data['pi-i18n'])
 
-    rootdir = r"D:\strata"
+    rootdir = r"D:\testdata\dong"
     remove_dict = {}
     for parent, dirnames, filenames in os.walk(rootdir):
         for filename in filenames:
