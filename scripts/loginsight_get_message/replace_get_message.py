@@ -304,6 +304,7 @@ class ReplaceMessage(object):
         self.getMessage = r'(?<![I18nUtil|\.])getMessage\((.*?)[\r|\n|\r\n]*\s*(\".*?\")'
         self.jspMessage = r'(\<fmt:message\s*key\s*=\s*([\'\"])(.*?)\2)'
         self.jsMessage = r'Y\.PI\.I[\r|\n|\r\n]*\s*\.getString\([\r|\n|\r\n]*\s*([\'\"])(.*?)\1'
+        self.jsCmon = r'Cmon\.resID\(([\'\"])(.*?)\1'
 
     def replace_get_message(self, logger, data, remove_dict):
         try:
@@ -347,7 +348,13 @@ class ReplaceMessage(object):
                     remove_dict["pi-i18n"] = []
                 regPos = 1
                 lines = self.replace_lines_message(jsMessage, regPos, lines, data_dict, logger, remove_dict["pi-i18n"])
-
+            jsCmon = re.findall(self.jsCmon, lines)
+            if jsCmon:
+                data_dict = data['pi-i18n']
+                if "pi-i18n" not in remove_dict:
+                    remove_dict["pi-i18n"] = []
+                regPos = 1
+                lines = self.replace_lines_message(jsCmon, regPos, lines, data_dict, logger, remove_dict["pi-i18n"])
         out = codecs.open(self.filePath, 'w', self.encoding)
         out.write(lines)
         out.close()
@@ -478,7 +485,7 @@ if __name__ == '__main__':
     print 'webui', len(data['webui'])
     print 'pi-i18n', len(data['pi-i18n'])
 
-    rootdir = r"D:\vip_testdata\test_source_file"
+    rootdir = r"D:\strata"
     remove_dict = {}
     for parent, dirnames, filenames in os.walk(rootdir):
         for filename in filenames:
@@ -490,6 +497,14 @@ if __name__ == '__main__':
             replace_message = ReplaceMessage(filePath)
             replace_message.replace_get_message(logger, data, remove_dict)
 
+    dup_key = [
+        'com.vmware.loginsight.web.actions.settings.HealthActionBean.supportBundleNotFound',
+        'com.vmware.loginsight.web.actions.settings.HealthActionBean.queued',
+        'com.vmware.loginsight.web.actions.settings.HealthActionBean.failedLoadQueries',
+        'com.vmware.loginsight.web.actions.settings.HealthActionBean.completed'
+    ]
+    if 'messages' in remove_dict:
+        remove_dict['messages'].extend(dup_key)
     copyData = copy.deepcopy(data)
     for i, v in remove_dict.iteritems():
         dupList = list(set(v))
