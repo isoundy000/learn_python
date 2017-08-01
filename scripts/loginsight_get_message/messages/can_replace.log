@@ -1,5 +1,5 @@
 messages============================================
-# 新的方法
+# new method
 com.vmware.loginsight.database.dashboardUser,            Dashboard User
 com.vmware.loginsight.database.dashboardUserDescription,             Can use only Dashboards
 com.vmware.loginsight.database.viewOnlyAdmin,            View Only Admin

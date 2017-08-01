@@ -137,7 +137,7 @@ def auto_push_vip_source(data, logger):
         logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
         mail_message = '''Hi all,
     git push is fail
-   
+
 thanks, %s
         ''' % data['sender'].split('@')[0]
         send_mail_message(logger, 0, data, mail_message)

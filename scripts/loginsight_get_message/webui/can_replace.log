@@ -1,5 +1,5 @@
 webui============================================
-# 新方法
+# new method
 <d:column titleKey="${beanClass}.resources.archiveSize" escapeXml="true">
     ${elf:formatMemorySize(archiveBucket.size)}
 </d:column>
@@ -40,7 +40,7 @@ errorPage.errorHeader,           Sorry, an error has occurred
 # com.vmware.loginsight.web.actions.explorer.AlertActionBean.emailNotificationErrors,              Sending the email failed
 
 
-# 没替换全
+# not cover
 com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.memory,            Memory
 com.vmware.loginsight.web.actions.settings.HealthActionBean.unavailable,             Not Available
 com.vmware.loginsight.web.actions.settings.HealthActionBean.refreshData,             Refresh data

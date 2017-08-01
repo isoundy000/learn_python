@@ -118,7 +118,7 @@ class Parser(object):
 def c_mul(a, b):
     return eval(hex((long(a) * b) & 0xFFFFFFFFL)[:-1])
 
-       
+
 def getHashCode(s):
     if not s:
         return 0 # empty
@@ -144,10 +144,10 @@ class StringItems(object):
                  'nexthashcode',
                  'filepath',
                  'fileid']
-    
+
     def __init__(self, *args, **kwargs):
         """
-        Initialize attributes with parameters and set default value, if None. 
+        Initialize attributes with parameters and set default value, if None.
         """
         for dic in args:
             for key in dic:
@@ -257,7 +257,7 @@ class PropertiesParser(Parser):
             comment=""
             block=s_block
         if block : self._generate_item(comment,"","",block,"")
-        
+
 
 class JsParser(Parser):
     encoding='utf-8'
@@ -279,7 +279,7 @@ class JsParser(Parser):
         file_stream = codecs.open(self._file_path, 'r', self.encoding)
         lines1 = file_stream.readlines()
         self._parse(lines1)
-        
+
     def _parse(self, lines):
         i = iter(lines)
         for line in i:
@@ -294,7 +294,7 @@ class JsParser(Parser):
                     key = regPattern1.group(1)
                     value = regPattern1.group(3)
                     self._generate_item("", key, value, "", "")
-                
+
 
 class ReplaceMessage(object):
     encoding = 'utf-8'
@@ -424,7 +424,7 @@ class ReplaceMessage(object):
             else:
                 remove_list.append(regKey.strip('"'))
         return lines
-    
+
     def replace_lines_many_message(self, rbacGroupDao, lines, data_dict, logger, remove_list):
         replace_key = []
         for i in rbacGroupDao:

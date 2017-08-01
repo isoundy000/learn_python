@@ -1,5 +1,5 @@
 webui============================================
-# 没找到的
+# no found
 validation.maxlength.valueTooLong,           Must be no more than {2} characters long
 validation.file.postBodyTooBig,              Total upload size of {3} KB exceeds the maximum size of {2} KB
 header.superheader.about,            About
@@ -232,7 +232,7 @@ logInsight.search.loadMoreMatches,           Load more events
 logInsight.search.resultsTextSearching,              Searching events
 logInsight.fieldUpdate.field.updateConfirm,              Modifying this field will update all the dependent items.
 
-# 动态的
+# dynamic
 all,             All
 show,            Show
 hide,            Hide

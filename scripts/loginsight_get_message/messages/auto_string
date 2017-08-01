@@ -1,5 +1,5 @@
 messages============================================
-# 找不到的
+# no found
 com.vmware.loginsight.agents.AgentStatusData.unknownAttribute,           Unknown attribute {0}
 com.vmware.loginsight.aaa.vidm.VIDMConnector.groupNotFoundInDomain,              Group {0} not found in domain {1}.
 com.vmware.loginsight.aaa.vidm.VIDMConnector.userNameValidation,             Failed to retrieve user information
@@ -132,7 +132,7 @@ com.vmware.loginsight.daemon.upgrade.ClusterManager.configOutOfWorkerInstance,  
 com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToSaveConfig,              Failed to save configuration on master: {0}
 com.vmware.loginsight.piql0.BeforeMinDistFunctionExpr.minDistanceGreaterThanZ,           minDistance must be greater than 0.
 com.vmware.loginsight.piql0.OrderByItem.msgCannotAppearInORDER,              SAMPLE(message) cannot appear in ORDER BY
-# 动态的
+# dynamic
 com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventTypes,           event types
 com.vmware.loginsight.web.search.NumericGroupByType.fixedBucket,             Fixed bucket size
 com.vmware.loginsight.web.search.NumericGroupByType.eachValue,           Each value

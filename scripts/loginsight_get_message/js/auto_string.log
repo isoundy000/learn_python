@@ -1,5 +1,5 @@
 pi-i18n============================================
-#找不到的
+# no found
 explorer_explorerAlertsHistoryView_separator,            {0}: {1}
 header_importLogsView_alertLogBundleBeenImported,            Your log bundle has been imported and is available for analysis.\n\nYou will need to refresh your search to see the new data.
 header_importLogsView_alertUseLogImporter,           To use the log importer you either need a browser that supports HTML5 uploads or have the Flash player installed.
@@ -26,7 +26,7 @@ admin_cluster_clusterView_haStatusUnknown,           In Progress
 admin_health_section_statistics,             statistics
 widgetsYui3_dataTable_dataTable_columnInfolabel,             Notes
 explorer_explorerAlertsView_defaultMessageValueMustBeIntegerGreaterThan,             Value must be an integer greater than 0.
-# 动态的
+# dynamic
 widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeDate,            This value must be a valid date.
 widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeInteger,             This value must be a positive whole number.
 widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeEmailList,           This value must be one or more valid email addresses, separated by commas.
