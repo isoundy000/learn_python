@@ -401,7 +401,7 @@ class ReplaceMessage(object):
                 lines = lines.replace(regKey, targetValue)
             elif self.filePath.endswith('.jsp'):
                 separate = ' source="'
-                if "'" == i[0]:
+                if "'" == i[1]:
                     separate = " source='"
                     value = value.replace("'", "\\'").replace("\\\\", "\\")
                 else:
