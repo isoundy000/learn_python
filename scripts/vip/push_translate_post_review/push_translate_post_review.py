@@ -8,7 +8,6 @@ import os
 import sys
 import time
 import subprocess
-import logging
 
 
 argv = sys.argv
@@ -16,43 +15,6 @@ if len(argv) not in [1, 2]:
     print 'argv error:', argv
     print 'run format: "python post_review_translate.py(Manual)" or "python post_review_translate.py 3600 &"'
     sys.exit()
-
-
-def test_get_logger():
-    logger = logging.getLogger()
-    #set loghandler
-    file1 = logging.FileHandler("post_review_translate.log")
-    logger.addHandler(file1)
-    #set formater
-    formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
-    file1.setFormatter(formatter)
-    #set log level
-    logger.setLevel(logging.ERROR)
-    return logger
-
-
-def read_config():
-    file1 = open('./config', mode='r')
-    stream_data = file1.readlines()
-    lines = iter(stream_data)
-    data = {}
-    for line in lines:
-        line = line.strip('\n').strip()
-        if not line:
-            continue
-        if line[0] == '#':
-            continue
-        key, value = line.split(' ', 1)
-        value_list = value.split(',')
-        if len(value_list)>1:
-            if len(value_list) == 2:
-                data[key] = [value_list[0].strip(' ')]
-            else:
-                data[key] = [i and i.strip(' ') for i in value_list]
-        else:
-            data[key] = value.strip(' ')
-    file1.close()
-    return data
 
 
 def post_review_translate(data, logger):
@@ -92,31 +54,33 @@ def post_review_translate(data, logger):
     # Synchronize files to the GIT library and submit them later
     # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
     # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
-    list_new = data['translate_target_path'].split('g11n-translations/')
-    productList = data['translate_target_path'] + os.path.sep + "bundles"
-    for parent, dirnames, filenames in os.walk(data['translate_target_path']):
-        if parent:
-            pass
-    cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (data['translate_copy']+list_new[1], data['translate_target_path'])
-    p1 = subprocess.Popen(cmd1, shell=True)
-    stdout1, stderr1 = p1.communicate()
-    if stderr1:
-        logger.error("run rsync is out %s, err %s" % (stdout1, stderr1))
-        return
-    else:
-        logger.info("run rsync is success")
-    os.chdir(data['translate_target_path']) # os.getcwd()
-    return_message = os.popen('git status')
-    if 'nothing to commit' in return_message.read():
-        return
-    cmd2 = "/build/apps/bin/post-review -o %s --username=%s" % ('commit', 'username')
-    p2 = subprocess.Popen(cmd2, shell=True)
-    stdout2, stderr2 = p2.communicate()
-    if stderr2:
-        logger.error("run git command is out %s, err %s" % (stdout2, stderr2))
-    else:
-        logger.info("run git command is success， time is %s" % now)
-    os.system('rm -rf %s' % data['translate_copy'])
+    dirnames = [product for product in os.listdir(data['post_target_path']) if os.path.isdir(product)]
+    for product in dirnames:
+        os.chdir(data['post_target_path'])
+        os.system('git branch feature/%s && git checkout feature/%s' % product)
+        list_new = data['post_copy'].split(product)
+        cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (list_new[0]+product, data['post_target_path']+product)
+        p1 = subprocess.Popen(cmd1, shell=True)
+        stdout1, stderr1 = p1.communicate()
+        if stderr1:
+            logger.error("run rsync is out %s, err %s" % (stdout1, stderr1))
+            continue
+        else:
+            logger.info("run rsync is success")
+        return_message = os.popen('git status')
+        if 'nothing to commit' in return_message.read():
+            continue
+        os.system('git add -A && git commit -m %s' % ('check %s change code' % product))
+        commit = os.popen("git rev-parse HEAD")
+        cmd3 = "/build/apps/bin/post-review -o %s" % commit
+        p3 = subprocess.Popen(cmd3, shell=True)
+        stdout3, stderr3 = p3.communicate()
+        if stderr3:
+            logger.error("run git command is out %s, err %s" % (stdout3, stderr3))
+        else:
+            logger.info("run git command is success， time is %s" % now)
+        os.system('git checkout master')
+    os.system('rm -rf %s' % data['post_copy'])
 
 
 def main():
