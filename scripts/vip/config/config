@@ -15,8 +15,11 @@ sender                  ghou@vmware.com
 #receivers               nannany@vmware.com,
 receivers               ghou@vmware.com,
 
-post_local              /root/l10n/
-post_workspace          /root/ghou/post
-post_copy               /root/ghou/post_copy/
-post_target_path        /root/ghou/post/g11n-translations/l10n/bundles/
-PM                      hshi@vmware.com devCenter SIM vCG; andrewc@vmare.com logInsight;
+post_local              /data/l10n/
+post_workspace          /script/ghou/post
+post_copy               /script/ghou/post_copy/
+post_target_path        /script/ghou/post/g11n-translations/l10n/bundles/
+#hshi@vmware.com         devCenter, SIM, vCG
+#andrewc@vmare.com       logInsight,
+ghou@vmware.com         devCenter, SIM, vCG
+ghou@vmare.com          logInsight,
