@@ -52,6 +52,7 @@ encoding//module_usage/inner-module/learn_itertools.py=utf-8
 encoding//module_usage/inner-module/learn_struct.py=utf-8
 encoding//module_usage/json/learn.py=utf-8
 encoding//module_usage/learn_email/learn.py=utf-8
+encoding//module_usage/learn_email/pop3/learn.py=utf-8
 encoding//module_usage/learn_email/smtp/learn.py=utf-8
 encoding//module_usage/learn_email/smtp/learn_1.py=utf-8
 encoding//module_usage/multi_process_thread_coroutine/coroutine.py=utf-8
