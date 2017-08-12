@@ -105,8 +105,6 @@ def post_review_translate(data, logger):
         if product in targetdirnames:
             copydirnames.append(product)
     for product in copydirnames:
-        if product == 'vCG':
-            continue
         os.chdir(data['post_target_path'])
         os.system('git branch feature/%s && git checkout feature/%s' % (product, product))
         list_new = "".join([data['post_copy'], 'l10n/bundles/'])
@@ -133,19 +131,19 @@ def post_review_translate(data, logger):
             logger.error("run git command is out %s, err %s" % (stdout3, stderr3))
         else:
             logger.info("run git command is success， time is %s" % now)
-        time.sleep(60)
+        time.sleep(30)
         ghouTxt = open('ghou.txt')
         review_url = ''
         for line in ghouTxt.readlines():
             if re.search('.*reviewboard.*', line):
                 review_url = line
+        ghouTxt.close()
         for pm_email, product_list in data.iteritems():
             if product in product_list:
-                mail_message = '''Hi all,
+                mail_message = '''Hi %s,
     this is the post review url %s
 thanks, %s
-        ''' % (review_url, data['sender'].split('@')[0])
-                print mail_message, '111111111111111111111111111111'
+        ''' % (pm_email.split('@')[0], review_url, data['sender'].split('@')[0])
                 send_mail_message(logger, data, pm_email, mail_message)
                 break
         os.system('git checkout master')

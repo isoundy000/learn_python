@@ -19,10 +19,10 @@ if len(argv) not in [1, 2]:
     sys.exit()
 
 
-def test_get_logger():
+def test_get_logger(name):
     logger = logging.getLogger()
     #set loghandler
-    file1 = logging.FileHandler("auto_push_vip_translate.log")
+    file1 = logging.FileHandler(name)
     logger.addHandler(file1)
     #set formater
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
@@ -118,7 +118,7 @@ def auto_push_vip_translate(data, logger):
 
 def main():
     argv = sys.argv
-    logger = test_get_logger()
+    logger = test_get_logger("auto_push_vip_translate.log")
     data = read_config()
     if len(argv) == 1:
         auto_push_vip_translate(data, logger)
