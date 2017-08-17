@@ -53,7 +53,10 @@ def read_config():
             if len(value_list) == 2:
                 data[key] = [value_list[0].strip(' ')]
             else:
-                data[key] = [i and i.strip(' ') for i in value_list]
+                if key not in data:
+                    data[key] = [i and i.strip(' ') for i in value_list]
+                else:
+                    data[key].extend([i and i.strip(' ') for i in value_list])
         else:
             data[key] = value.strip(' ')
     file1.close()
@@ -62,6 +65,8 @@ def read_config():
 
 def auto_push_vip_source(data, logger):
     now = int(time.time())
+    if not os.path.exists(data['source_workspace']):
+        os.mkdir(data['source_workspace'])
     os.chdir(data['source_workspace'])
     compare_report_html = data['source_workspace'] + '/compare_report.html'
     compare_report_zip = data['source_workspace'] + '/compare_report.tar.gz'

@@ -1,0 +1,1038 @@
+pi-i18n============================================
+admin_wizard_wizardWorkerView_showRequestFailedConnectionLostUnableConfirmWorkerInitialization, 			 Connection to node was lost. Unable to confirm node initialization.
+cui_control_enable_automatic_updates_label, 			 Enable automatic updates:
+cui_winlog_blacklist_help, 			 <p>Excludes log events for which the filter expression evaluates to non-zero.</p> <p>The blacklist option only works for fields; it cannot be used to blacklist text.</p>
+cui_filelog_blacklist_help, 			 Excludes log events for which the filter expression evaluates to non-zero. The blacklist option only works for fields; it cannot be used to blacklist text.
+explorer_explorerAlertsHistoryView_separator, 			 {0}: {1}
+forwardingView_diskCacheSizeValidationError, 			 Must be between 100 and 2000
+cui_control_decode_fields_label, 			 Decode fields:
+cui_parser_field_rename_help, 			 <p>Renames extracted fields.</p><p>Note that field decoder is always applied before field rename.</p>
+cui_control_server_certificate_common_name_label, 			 Server certificate Common Name (CN):
+cui_validator_comma_or_semicolon_separated_names, 			 Comma or semicolon separated names are expected
+cui_logging_debug_level_help, 			 <p>Logs verbosity level:</p><p>(0 - default, 1 - extended or 2 - verbose)</p>
+cui_server_ssl_ca_path_help, 			 <p>The path to the trusted root certificates bundle file.</p> <p>The Linux agent attempts to load trusted certificates from their default locations (see Hint).</p> <p>If not specified, the Windows agent uses system root certificates.</p>
+cui_parser_field_decoder_help, 			 <p>The keys are field names to apply nested parser to. Each nested parser is applied to the appropriate field previously decoded by the base parser.</p><p>Field decoders are useful when the value of a field is a complex value, for example, a timestamp.</p>
+abstractSearchResultsView_labelUnColorizeField, 			 Remove Colorizing By '{0}'
+cui_server_ssl_acc_any_help, 			 Log Insight Agent accepts any certificate from the server even if that certificate does not have a matching Common Name.
+header_importLogsView_alertLogBundleBeenImported, 			 Your log bundle has been imported and is available for analysis.\n\nYou will need to refresh your search to see the new data.
+widgetsYui3_incrementalChart_chartOptions_gaugeRangeMax, 			 Max
+contentpack_content_contentpackMetadataView_setupInstructions, 			 {0} Setup Instructions
+cui_control_next_parser_label, 			 Next parser:
+com.vmware.loginsight.api.errors.support.request_conflict, 			 Different bundles subset is in process
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageSectionEnd, 			 The section tag is not closed<br />
+com.vmware.loginsight.api.errors.rbac.group_is_required, 			 Specified role is required and cannot be deleted.
+header_importLogsView_alertUseLogImporter, 			 To use the log importer you either need a browser that supports HTML5 uploads or have the Flash player installed.
+cui_control_include_files_label, 			 Include files:
+abstractSearchResultsView_labelUnHighlightEventsLikeThis, 			 Remove Highlight Events Like This
+admin_cluster_clusterView_labelLastIngestedEvent, 			 Last Ingested Event
+cui_control_port_label, 			 Port:
+cui_global_error_type, 			 Error Type:
+contentpack_content_contentpackMetadataView_editInfoTitle_instructions, 			 Setup Instructions
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeDate, 			 This value must be a valid date.
+home_content_homeContentHeaderView_CUSTOM, 			 custom time range
+admin_agents_agentsView_areYouSureToSaveWithErrors, 			 The configuration contains error(s). Are you sure you want to save anyway?
+cui_control_max_disk_buffer_size_label, 			 Max disk buffer size:
+home_content_homeContentHeaderView_LAST_5_MINUTES, 			 latest 5 minutes of data
+admin_cluster_clusterView_haStatusAvailable, 			 Available
+cui_server_ssl_help, 			 <p>Allows you to provide SSL only connections between the Log Insight Agents and the Log Insight Server through the secure flow.</p> <p>Enable SSL to see aditional settings.</p>
+cui_control_tags_label, 			 Tags:
+abstractSearchResultsView_labelColorizeEventTypes, 			 Colorize Event Types
+cui_filelog_include_help, 			 The name of a file or a file mask (glob pattern) from which to collect data.
+locale_unit_spacing, 			 
+home_content_homeContentHeaderView_ALL_TIME, 			 all time
+cui_errorMessageSectionEnd, 			 The section tag is not closed
+cui_parser_base_parser_help, 			 The name of the base parser that this custom parser extends.<p>The automatic parser automatically detects the timestamp within the first 200 characters of a line.</p>
+cui_winlog_parser_help, 			 Specify Parser to Extract Fields
+forwardingView_notSupportedSyslog, 			 Not supported for Syslog
+cui_filelog_exclude_fields_help, 			 Names set to exclude individual fields from collection.
+widgetsYui3_incrementalQueryWidget_incrementalQueryWidgetTypes_explainNoTimeTwoFieldPositive, 			 Requires non-time series and exactly two group-by fields, using Count or Unique Count
+cui_control_certificate_authorities_path_label, 			 Certificate Authorities path:
+admin_cluster_clusterView_modelStatusCreatingSnapshot, 			 Creating Snapshot
+cui_control_accept_trusted_certificates_label, 			 Accept Trusted Certificates
+cui_logging_debug_level_default, 			 default
+admin_cluster_clusterView_modelStatusPending, 			 Upgrade Pending
+home_content_homeContentHeaderView_LAST_48_HOURS, 			 latest 48 hours of data
+widgetsYui3_incrementalChart_chartOptions_gaugeRangeMin, 			 Min
+cui_global_goto_definition, 			 Go To Definition
+com.vmware.loginsight.api.errors.rbac.group_with_specified_name_already_exists, 			 Another role with specified name already exists.
+header_importLogsView_htmlUploadingComplete, 			 Uploading: {0}% complete
+admin_config_configView_editVipMessage, 			 Virtual IP updated
+cui_sections_view_prompt, 			 Hover over the categories to create a new section.
+cui_parser_fields_help, 			 <p>Mandatory option for CSV parser that specifies names of the fields that exist in the log.</p><p>Total number of the listed field names must be equal to the total number of comma-separated fields in the logs.</p><p>You cannot use <strong>event_type</strong>, <strong>hostname</strong>, <strong>source</strong> and <strong>text</strong> names.</p>
+home_content_homeContentHeaderView_LAST_HOUR, 			 latest hour of data
+contentpack_content_contentpackMetadataView_upgradeInstructions, 			 {0} Upgrade Instructions
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageKeyIsDissallowed, 			 This key is not allowed for group configuration<br />
+widgetsYui3_incrementalMessages_views_summaryListView_baselineMenuItemAutomatic, 			 Automatic
+com.vmware.loginsight.api.errors.support.file_not_found, 			 Cannot delete bundle
+cui_winlog_tags_help, 			 <p>Optional parameter to add custom tags to the fields of collected events.</p> <p>A tag name can only begin with a letter or an underscore and cannot exceed 64 characters.</p> <p>You cannot use <strong>event_type</strong> and <strong>timestamp</strong> as tag names.</p>
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageKeyValueRegexp, 			 The key/value pair is incorrect<br />
+cui_global_no_tags_added, 			 No tags added
+header_importLogsView_cancelButtonTextClose, 			 Close
+admin_cluster_clusterView_modelStatusVerifying, 			 Verifying Upgrade
+contentpack_content_contentpackMarketplaceItemsView_headerUpdateContentPack, 			 Update Content Pack
+cui_filelog_tags_help, 			 <p>Optional parameter to add custom tags to the fields of collected events.</p> <p>A tag name can only begin with a letter or an underscore and cannot exceed 64 characters.</p> <p>You cannot use <strong>event_type</strong> and <strong>timestamp</strong> as tag names.</p>
+cui_control_stats_report_period_label, 			 Stats report period:
+cui_logging_debug_level_verbose, 			 verbose
+cui_server_proto_help, 			 Protocol that the agent uses to send events to the Log Insight server.
+com.vmware.loginsight.api.errors.support.invalid_param_nodes, 			 There are no nodes corresponding to the requested filter
+admin_config_configView_newVipMessage, 			 Virtual IP added
+admin_users_usersView_headerContentUnableSaveUser, 			 Unable to Save User
+cui_control_directory_label, 			 Directory:
+cui_storage_max_disk_buffer_help, 			 Size limit of disk buffer in MB (100 - 2000)
+explorer_share_shorten, 			 Shorten
+admin_config_configView_dialogTitleEditVip, 			 Edit Virtual IP
+shared_fieldConstraintsView_hideConstraintsTooltip, 			 Hide constraints
+cui_validator_valid_field_name, 			 Invalid field name
+cui_logging_stats_period_help, 			 Stats report period in minutes
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeUrlList, 			 This value must be one or more valid URLs, separated by spaces.
+cui_control_accept_all_certificates_label, 			 Accept All Certificates
+cui_server_hostname_help, 			 Server FQDN (Hostname or IP)
+alertsView_tooltipEditTargets, 			 Edit subscriptions
+cui_validator_semicolon_separated_names, 			 Semicolon separated names are expected
+global_text_build, 			 Build
+cui_control_windows_event_log_channel_label, 			 Windows Event Log Channel:
+cui_global_description, 			 Description:
+cui_control_enabled_label, 			 Enabled:
+admin_cluster_clusterView_upgradeDisabledToolTip, 			 All nodes must be in the connected state before an upgrade can be started
+cui_control_parser_to_use_extend_label, 			 Parser to use/extend:
+contentpack_content_contentpackMetadataView_editInfoTitle_info, 			 Description
+home_content_homeContentHeaderView_LAST_6_HOURS, 			 latest 6 hours of data
+cui_validator_unquoted_spaces, 			 unquoted spaces
+header_importLogsView_alertImportComplete, 			 Import Complete
+widgetsYui3_incrementalChart_legendInfo_result3, 			 show all items
+cui_global_severity, 			 Severity:
+admin_cluster_clusterView_failedToRetrieveUpgradeStatus, 			 Failed to retrieve current upgrade status.
+cui_winlog_exclude_fields_help, 			 Names to exclude individual fields from collection.
+widgetsYui3_incrementalChart_legendInfo_result1, 			 toggle item visibility
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeInteger, 			 This value must be a positive whole number.
+cui_global_theres_no_layout, 			 There's no layout for:
+cui_control_rename_fields_label, 			 Rename fields:
+header_importLogsView_alertUnableToImport, 			 Unable to Import
+cui_control_blacklist_filter_expression_label, 			 Blacklist filter expression:
+cui_validator_valid_hostname, 			 Invalid hostname
+alertsView_tableHeadContentPack, 			 Content Pack
+com.vmware.loginsight.api.errors.rbac.group_does_not_exist, 			 Specified role does not exist.
+cui_errors_heading, 			 {0} error(s) in section [{1}]
+cui_control_parse_fields_by_label, 			 Parse fields by:
+cui_control_delimiter_label, 			 Delimiter:
+cui_server_reconnect_help, 			 The time in minutes to force reconnection to the server.
+shared_fieldConstraintsView_showConstraintsTooltip, 			 Show constraints
+cui_server_ssl_acc_any_trusted_help, 			 Accepts any valid certificate signed by a trusted Certificate Authority (disregarding previously accepted and stored certificate).
+explorer_explorerAlertsHistoryView_count, 			 count
+cui_validator_semicolon_separated_masks, 			 Semicolon separated masks are expected
+cui_filelog_directory_help, 			 Absolute path to log file directory.
+widgetsYui3_incrementalMessages_views_summaryListView_htmlScoreColumnLabel, 			 Event Type Anomaly Score
+explorer_explorerAlertsView_htmlAlertsSuspendedByAdmin, 			 Alerts are currently suspended by an admin
+cui_control_character_set_label, 			 Character set:
+cui_parser_next_parser_help, 			 <p>Name of the next parser to run. Allows multiple parsers to run sequentially on the same input.</p><p>Agent process all consequent parsers defined by the next parser option and may replace a field value already extracted by a previous parser.</p>
+cui_filelog_exclude_help, 			 A file name or file mask (glob pattern) to exclude from collection.
+admin_agents_agentsView_areYouSureToSaveWithErrorsOrGoToBuild, 			 The configuration contains error(s). To check your configuration in \"Build\" tab, press \"Cancel\".<br/><br/>Press \"Save\" to proceed anyway.
+abstractSearchResultsView_labelHighlightField, 			 Highlight When Value Is '{0}'
+cui_control_whitelist_filter_expression_label, 			 Whitelist filter expression:
+cui_control_protocol_label, 			 Protocol:
+admin_config_configView_dialogTitleNewVip, 			 New Virtual IP
+admin_cluster_clusterView_haStatusUnavailable, 			 Unavailable
+admin_users_usersView_autocompleteEnabledMsg, 			 Autocomplete enabled
+cui_filelog_parser_help, 			 Specify Parser to Extract Fields
+abstractSearchResultsView_labelColorizeField, 			 Colorize By '{0}'
+cui_validator_valid_regex, 			 Invalid regex
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeEmailList, 			 This value must be one or more valid email addresses, separated by commas.
+com.vmware.loginsight.api.errors.support.download_failed, 			 Cannot locate bundle
+cui_validator_valid_tag_entry, 			 Invalid tag name
+cui_filelog_charset_help, 			 The character encoding of the log files that the agent monitors.
+cui_control_message_parser_label, 			 Message parser:
+contentpack_content_contentpackMarketplaceItemsView_installContentPack, 			 Install Content Pack
+widgetsYui3_incrementalMessages_views_summaryListView_htmlTrendColumnLabel, 			 Trend
+abstractSearchResultsView_labelHighlightEventsLikeThis, 			 Highlight Events Like This
+widgetsYui3_syntaxHighlighter_iniSyntaxValidator_htmlErrorMessageRegexp, 			 The section tag contains an invalid entry<br />
+home_content_homeContentHeaderView_LAST_24_HOURS, 			 latest 24 hours of data
+cui_parser_message_decoder_help, 			 Parser applying on the trailing message of syslog event.
+cui_global_no_fields_added, 			 No fields added
+cui_server_ssl_cn_help, 			 The self-signed certificate Common Name (CN).If the certificate CN does not match the hostname, the Log Insight Agent checks it against the value of this option.
+cui_global_cause, 			 Cause:
+alertsView_hasContentPack, 			 yes
+home_content_homeContentHeaderView_LAST_7_DAYS, 			 latest 7 days of data
+cui_control_format_label, 			 Format:
+contentpack_content_contentpackMarketplaceItemsView_headerInfoContentPack, 			 Content Pack Details
+com.vmware.loginsight.api.errors.support.invalid_param_timeout, 			 Timeout should be a non-negative integer (seconds)
+admin_agents_agentsView_notActive, 			 (Not Active)
+admin_users_usersView_failedToSaveAutocompleteConfiguration, 			 Failed to save autocomplete configuration
+explorer_explorerMainChartView_showChartTooltip, 			 Show chart
+admin_health_section_queries, 			 queries
+cui_control_exclude_files_label, 			 Exclude files:
+cui_control_event_marker_label, 			 Event marker:
+cui_control_reconnect_period_label, 			 Reconnect period (sec):
+cui_filelog_event_marker_help, 			 A regular expression that denotes the start of an event in the log file.
+admin_cluster_clusterView_modelStatusPendingSnapshot, 			 Snapshot Pending
+abstractSearchResultsView_labelUnColorizeEventTypes, 			 Remove Colorizing of Event Types
+explorer_explorerAlertsView_defaultMessageValueMustBeNonNegInteger, 			 Value must be a non-negative integer.
+admin_cluster_clusterView_upgradeToolTip, 			 Upgrade cluster with a new PAK file
+admin_users_usersView_autocompleteDisabledMsg, 			 Autocomplete disabled
+cui_winlog_channel_help, 			 A full name of the event channel as shown in the Windows Event Viewer application.
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypePIQL, 			 The following characters are ignored in this search:<br/><span class='monospace'> \\ = . , : ; ' \" + ^ % $ & ( ) { } [ ] ! # @ < > | ` ~ /</span>
+admin_health_section_resources, 			 resources
+cui_control_ssl_label, 			 SSL:
+widgetsYui3_incrementalChart_legendInfo_result2, 			 toggle visibility of all other items
+explorer_explorerMainChartView_hideChartTooltip, 			 Hide chart
+cui_control_hostname_label, 			 Hostname:
+contentpack_content_contentpackMetadataView_editInfoTitle_upgradeInstructions, 			 Upgrade Instructions
+com.vmware.loginsight.api.errors.rbac.group_is_not_editable, 			 Specified role is not editable.
+cui_winlog_whitelist_help, 			 <p>Whitelist rule restricts collection to log events for which the filter expression evaluates to non-zero.</p> Allowed operators are:<ul class=\"standard-list\"> <li>==, !=</li> <li>&gt;=, &gt;, &lt;, &lt;=</li> <li>&amp;, |, ^, ~</li> <li>and, or</li> <li>not</li> <li>()</li> </ul>
+admin_cluster_clusterView_haStatusUnknown, 			 In Progress
+cui_global_no_decoders_added, 			 No decoders added
+admin_cluster_clusterView_msgYouHaveUnsavedChanges, 			 You have unsaved changes. If you leave this page your changes will be lost.
+widgetsYui3_validatingTextBox_validatingTextBox_htmlErrorMessageTypeRegex, 			 This value must use valid regex syntax. To match the following characters escape them with a leading backslash:<br /><span class='monospace'> \\ * + ? | { [ ( ) ^ $ . #</span>
+cui_control_debug_label, 			 Verbose logs (debug):
+cui_control_exclude_fields_label, 			 Exclude fields:
+cui_logging_debug_level_extended, 			 extended
+admin_health_section_statistics, 			 statistics
+com.vmware.loginsight.api.errors.support.invalid_param_id, 			 ID should be a positive integer (timestamp)
+cui_validator_valid_ip_address, 			 Invalid IP address
+cui_control_fields_label, 			 Fields:
+cui_parser_delimiter_help, 			 Defines the delimiter between field entries. For KVP parser each of specified characters is an independent delimiter. The delimiter of CSV is an exact pattern. Special characters like <b>\\t \\r \\n</b> can be used. Use <b>\\s</b> to include single space.
+cui_control_debug_level_label, 			 Debug level:
+cui_parser_exclude_fields_help, 			 <p>A list of semicolon separated field names to remove from the event before it is delivered to the server.</p><p>This is applied before event filtering is performed so that the field that you excluding during parsing cannot be used in the filter condition.</p>
+widgetsYui3_dataTable_dataTable_columnInfolabel, 			 Notes
+widgetsYui3_validatingTextBox_validatingTextBox_validateNowValueIsRequired, 			 A value is required.
+abstractSearchResultsView_labelUnHighlightField, 			 Remove Highlight
+explorer_explorerAlertsView_defaultMessageValueMustBeIntegerGreaterThan, 			 Value must be an integer greater than 0.
+cui_filelog_whitelist_help, 			 <p>Whitelist rule restricts collection to log events for which the filter expression evaluates to non-zero.</p> Allowed operators are:<ul class=\"standard-list\"> <li>==, !=</li> <li>&gt;=, &gt;, &lt;, &lt;=</li> <li>&amp;, |, ^, ~</li> <li>and, or</li> <li>not</li> <li>()</li> </ul>
+cui_errorMessageRegexp, 			 The section tag contains an invalid entry
+widgetsYui3_incrementalChart_legendInfo_action1, 			 Click:
+widgetsYui3_incrementalChart_legendInfo_action2, 			 Shift-Click:
+widgetsYui3_incrementalChart_legendInfo_action3, 			 Option/Alt-Click:
+locale_decimal, 			 .
+admin_users_usersView_saveSuccessful, 			 Save Successful
+messages============================================
+com.vmware.loginsight.web.enums.messageViewType.compareQuery, 			 Event Trends
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngestionRatePerSecond.help, 			 The actual ingestion rate (syslog + API) of each node after message rebalancing.<br />\
+Log Insight nodes will rebalance messages to attempt uniform ingestion per node for balanced retention and performance.<br /><br />\
+Note that the ingestion rate of each node must be below the ingestion rate configuration maximum for a node.<br /><br />\
+For the actual rate of events being sent directly to each node prior to message rebalancing, see the Syslog Events Incoming Rate (Per Second) and API Events Incoming Rate (Per Second) tables below.
+com.vmware.loginsight.commons.enums.RntUnit.weeks, 			 weeks
+com.vmware.loginsight.piql0.AppearFunctionExpr.onlyAngleAreValid, 			 Only '>' and '>=' are valid for APPEAR
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenSec, 			 10 seconds
+com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventTypes, 			 event types
+com.vmware.loginsight.compare.QueriesController.missingRight, 			 Missing right from clause
+com.vmware.loginsight.web.piql.TimeWindowGrouping.year, 			 1 year
+com.vmware.loginsight.web.piql.DateFilterPreset.last48Hours, 			 Latest 48 hours of data
+com.vmware.loginsight.commons.enums.RntUnit.hours, 			 hours
+com.vmware.loginsight.database.dashboardUser, 			 Dashboard User
+com.vmware.loginsight.aaa.vidm.VIDMValidator.unableTo, 			 Unable to {0}. Please check your VMware Identity Manager configuration.
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.systemalerts, 			 System Alerts
+com.vmware.loginsight.commons.contentpack.ConstraintToggleType.all, 			 all
+com.vmware.loginsight.commons.Errors.apiServiceStartFailure, 			 Failed to start API service
+com.vmware.loginsight.web.piql.DateFilterPreset.allTime, 			 All time
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCosts, 			 Query Costs
+com.vmware.loginsight.web.search.NumericGroupByType.fixedBucket, 			 Fixed bucket size
+com.vmware.loginsight.commons.enums.LicenseType.nsx_cpu, 			 NSX CPU
+com.vmware.loginsight.database.dashboardUserDescription, 			 Can use only Dashboards
+com.vmware.loginsight.analytics.ErrorCode.truncatedExport, 			 Some results are truncated
+com.vmware.loginsight.commons.enums.SearcherConfigPartialResultsType.noResults, 			 Return no results
+com.vmware.loginsight.database.cache.LicenseCheck.licenseExpiredMessage, 			 A license for your %s installation has expired [%s]. If this is the last valid license, %s will no longer be able to serve queries. Expired licenses can be viewed on the %s page.
+com.vmware.loginsight.compare.QueriesController.invalidOrder, 			 Invalid ordering: {0}
+com.vmware.loginsight.web.piql.DateFilterPreset.last24Hours, 			 Latest 24 hours of data
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneWeek, 			 1 week
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.greaterThan, 			 &gt;
+com.vmware.loginsight.commons.enums.LicenseType.suite_hybrid, 			 vRealize Suite
+com.vmware.loginsight.web.piql.TimeWindowGrouping.halfYear, 			 180 days
+com.vmware.loginsight.commons.Errors.unknownError, 			 Unknown error
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.notEqual, 			 &ne;
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.vsphere, 			 vSphere Integration Improvements
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.hostsOverview, 			 Hosts Overview
+com.vmware.loginsight.analytics.ErrorCode.querySyntaxError, 			 Query contains invalid syntax
+com.vmware.loginsight.commons.FileUtils.unableToWriteToHDFS, 			 Unable to write to the HDFS location: {0}
+com.vmware.loginsight.agents.AgentStatusData.unknownAttribute, 			 Unknown attribute {0}
+com.vmware.loginsight.aaa.vidm.VIDMConnector.groupNotFoundInDomain, 			 Group {0} not found in domain {1}.
+com.vmware.loginsight.web.search.NumericGroupByType.customBucket, 			 Custom buckets
+com.vmware.loginsight.rbac.Capability.displayNameDashboard, 			 Dashboard
+com.vmware.loginsight.analytics.ErrorCode.requestTokenAlreadyExists, 			 Duplicate query request token
+com.vmware.loginsight.commons.Errors.backupFailed, 			 Failed to backup data
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.lettersNumUnderscore, 			 Letters, digits, and underscores
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryOrigin.help, 			 The origin refers to where the query originated from:<br /><br />\
+Interactive Analytics<br />\
+\u2022 <span style=\"font-weight: bold;\">Chart</span> - visualization above the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Events</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Event Types</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Event Trends</span> - tab below the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Alerts</span> - from the alert icon to the right of the search bar<br />\
+\u2022 <span style=\"font-weight: bold;\">Facet</span> - chart when expanding a field<br /><br />\
+Internal<br />\
+\u2022 <span style=\"font-weight: bold;\">Precompute</span> - cache queries<br />\
+\u2022 <span style=\"font-weight: bold;\">Schema</span>	- machine learning queries<br />\
+\u2022 <span style=\"font-weight: bold;\">Tools</span> - internal-only<br />\
+\u2022 <span style=\"font-weight: bold;\">Other</span> - internal-only<br />
+com.vmware.loginsight.web.settings.ClusterNode.justNow, 			 Just now
+com.vmware.loginsight.commons.enums.LicenseStateEnum.deleted, 			 Deleted
+com.vmware.loginsight.analytics.ErrorCode.regexTimeout, 			 Timed out while running regular expression matching
+com.vmware.loginsight.piql0.GroupByExpr.groupByFieldsNotFromSameMsg, 			 All GROUP BY fields are not from the same message.
+com.vmware.loginsight.compare.QueriesController.invalidOrderBy, 			 Invalid order by: {0}
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.stringMatch, 			 matches
+com.vmware.loginsight.commons.Errors.webServiceStartFailure, 			 Failed to start web service
+com.vmware.loginsight.analytics.ErrorCode.estimatedResult, 			 Results contain approximations
+com.vmware.loginsight.compare.QueriesController.missingToken, 			 Missing query routing token
+com.vmware.loginsight.compare.CompareMessageSearchExecutor.eventType, 			 event type
+com.vmware.loginsight.aaa.ad.ActiveDirectoryAuthenticator.failedToFindDomain, 			 Failed to find domain for username {0}
+com.vmware.loginsight.config.distributed.KnownServiceGroup.standalone, 			 Standalone Node
+com.vmware.loginsight.web.settings.ClusterNodeStatus.disconnected, 			 Disconnected
+com.vmware.loginsight.piql0.AppearFunctionExpr.messageNotDefined, 			 Message item '{0}' not defined.
+com.vmware.loginsight.web.piql.PiqlFunction.min, 			 Min
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneHour, 			 1 hour
+com.vmware.loginsight.web.search.ExportFormat.csv, 			 CSV
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToJoinDeployment, 			 Failed to join deployment: The given host is not a master.
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCache.help, 			 This table contains information about caching.<br />\
+For the best performance, the number of hits should be greater than the number of misses, however depending on the events and the types of queries being issued it is not uncommon for misses to be greater than hits.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Evictions</span> refer to cache that has been removed to make room for new cache in an attempt to optimize performance.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Removals</span> refer to cache that has been removed because it has not been referenced in awhile.
+com.vmware.loginsight.piql0.GroupByExpr.noGroupFieldSpecified, 			 No GROUP BY field specified.
+com.vmware.loginsight.web.search.NumericGroupByType.eachValue, 			 Each value
+com.vmware.loginsight.commons.FileUtils.nfsLocationNotWritable, 			 The NFS location is not writable
+com.vmware.loginsight.web.piql.PiqlFunction.stddev, 			 Std dev
+com.vmware.loginsight.web.settings.stats.StatsTableType.repository.help, 			 This table contains information about repository caching.<br />\
+For the best performance, the number of hits should be greater than the number of misses, however depending on the events and the types of queries being issued it is not uncommon for misses to be greater than hits.
+com.vmware.loginsight.rbac.Capability.displayNameAnalytics, 			 Interactive Analytics
+com.vmware.loginsight.commons.db.data.UserRole.userRoleAdmin, 			 Admin
+com.vmware.loginsight.commons.FileUtils.unableToConnectToHDFS, 			 Unable to connect to the HDFS: {0}
+com.vmware.loginsight.commons.enums.LicenseStateEnum.expired, 			 Expired
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.agentconfig, 			 Agent Configuration Builder
+com.vmware.loginsight.config.distributed.KnownServiceGroup.workernode, 			 Search Worker Node
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToApproveMembership, 			 Failed to approve membership: This is not a master.
+com.vmware.loginsight.commons.Errors.loggerServiceStartFailure, 			 Failed to start log service
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEventsIncomingRatePerSecond, 			 API Events Incoming Rate (Per Second)
+com.vmware.loginsight.database.cache.LicenseCheck.LimitedFromLimitedException, 			 Cannot add second limited license
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.custom, 			 Custom
+com.vmware.loginsight.commons.Errors.licenseError, 			 An unknown error, related to the license, has occurred
+com.vmware.loginsight.web.settings.stats.StatsTableType.pendingArchives, 			 Pending Archives
+com.vmware.loginsight.analytics.ErrorCode.maintenanceNodes, 			 Some node(s) are in maintenance mode
+com.vmware.loginsight.rbac.Capability.descriptionViewAdmin, 			 Can view Admin information
+com.vmware.loginsight.commons.Errors.searchWorkerServiceStartFailure, 			 Failed to start search worker service
+com.vmware.loginsight.rbac.Capability.descriptionEditShared, 			 Can edit shared content
+com.vmware.loginsight.aaa.vidm.VIDMConnector.userNameValidation, 			 Failed to retrieve user information
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneMin, 			 1 minute
+com.vmware.loginsight.commons.Errors.licenseCannotFindLicense, 			 Could not find the license file
+com.vmware.loginsight.rbac.Capability.displayNameViewAdmin, 			 View Admin
+com.vmware.loginsight.commons.Errors.projectServiceStartFailure, 			 Failed to start project service
+com.vmware.loginsight.web.search.ExportFormat.json, 			 JSON
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.matchesRegex, 			 matches regex
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneMilli, 			 1 ms
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.mac, 			 MAC address
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngestionRatePerSecond, 			 Events Ingestion Rate (Per Second)
+com.vmware.loginsight.commons.Errors.commandLineError, 			 Command line arguments and/or options are not correct
+com.vmware.loginsight.analytics.ErrorCode.requestTokenUnknown, 			 Invalid query request token
+com.vmware.loginsight.web.piql.DateFilterPreset.lastHour, 			 Latest hour of data
+com.vmware.loginsight.commons.Errors.outOfDiskSpaceFailure, 			 Run Out of Disk Space
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.vrops, 			 vRealize Operations Manager Integration
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.isNot, 			 is not
+com.vmware.loginsight.web.piql.TimeWindowGrouping.fiveMin, 			 5 minutes
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.lessThan, 			 &lt;
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.exists, 			 exists
+com.vmware.loginsight.commons.Errors.repoWriterFailed, 			 failed to write to the repo
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForNum, 			 Operator '{0}' is valid only for numerical values or versions
+com.vmware.loginsight.commons.Errors.patchServiceStartFailure, 			 Failed to start patch service
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.notFinishedStartingUp, 			 The node has not yet finished starting up. Please try again later.
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.multivip, 			 Multiple VIPs with Tags
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.impersonate, 			 User Impersonation
+com.vmware.loginsight.commons.enums.LicenseVersion.limited, 			 Limited
+com.vmware.loginsight.commons.enums.SortOrder.desc, 			 Descending
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.forwarding, 			 Event Forwarding
+com.vmware.loginsight.web.enums.messageViewType.fieldTable, 			 Field Table
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngested.help, 			 The sum of Syslog Events and API Events.
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.marketplace, 			 Content Pack Marketplace
+com.vmware.loginsight.vsphere.config.VimVsphereConfigurer.skippingHostNotSupport, 			 Skipping host because it does not support {0}.
+com.vmware.loginsight.aaa.ad.ActiveDirectoryValidator.initializeActiveDirectoryDomain, 			 initialize with Active Directory domain '{0}'
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEventsIncomingRatePerSecond.help, 			 The incoming rate of Syslog events being sent directly to each node by devices.<br />\
+The incoming rate is calculated prior to message rebalancing and does not reflect the actual ingestion rate per node.<br /><br />\
+It is acceptable, expected and supported for the incoming rate on a node -- such as the ILB -- to be greater than the ingestion rate configuration maximum for a node as message rebalancing will fairly distribute the load.<br /><br />\
+For the actual ingestion rate, see the Events Ingestion Rate (Per Second) table above.
+com.vmware.loginsight.analytics.ErrorCode.clientStubsNotInitialzed, 			 RPC client stubs not initialized
+com.vmware.loginsight.commons.Errors.indexerOutOfDiskSpace, 			 Insufficient disk space
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEventsIncomingRatePerSecond, 			 Syslog Events Incoming Rate (Per Second)
+com.vmware.loginsight.web.settings.stats.StatsTableType.ingestionQueue.help, 			 The ingestion queue is used to ensure Log Insight can keep up with the ingestion rate especially during spikes in ingestion.<br />\
+Even during normal operations the queue may be used.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Memory Utilized/Capacity</span> - memory queue, once full disk queue is used<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Disk Size</span> - disk utilization of current block, once full another disk block will be created<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Disk Blocks</span> - number of disk blocks, once full events either need to be consumed by other nodes in the cluster else they will be dropped<br /><br />\
+Disk Blocks is the most important metric. It is normal to have disk blocks and in the case of a cluster having a small subset of nodes with 62 disk blocks is OK.<br />\
+Indications of a problem are when either majority/all of the nodes are at 62 or when queries are too slow at the same time as having 50+ disk blocks on the majority/all nodes.
+com.vmware.loginsight.commons.Errors.loadBalancerServiceStartFailure, 			 Failed to start Load Balancer service
+com.vmware.loginsight.commons.enums.LicenseStateEnum.uninitialized, 			 Uninitialized
+com.vmware.loginsight.commons.Errors.restoreCheckpointFileMissing, 			 Backup checkpoint file missing; provided backup may be corrupt
+com.vmware.loginsight.web.settings.stats.StatsTableType.eventsIngested, 			 Total Events
+com.vmware.loginsight.aaa.vidm.VIDMAuthenticator.userVIDMPermittedGroupValidation, 			 The user does not belong to any permitted groups. User name: {0}
+com.vmware.loginsight.piql0.LimitExpr.invalidLIMIT, 			 Invalid LIMIT range
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCache, 			 Query Cache
+com.vmware.loginsight.rbac.Capability.descriptionStatistics, 			 Can modify statistics via API
+com.vmware.loginsight.web.search.ExportFormat.raw, 			 Raw events
+com.vmware.loginsight.aaa.krb5.ActiveDirectoryQueryHelper.cannotParseGroupss, 			 Cannot parse groups
+com.vmware.loginsight.commons.enums.DirectoryType.ad, 			 Active Directory
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEvents.help, 			 The rate of messages received at each node via the syslog protocol.<br >\
+ The total events ingestion rate might be lower than incoming rate if the incoming rate is higher than sustained ingestion capacity of the cluster.
+com.vmware.loginsight.commons.enums.LicenseType.no_longer_supported, 			 No Longer Valid
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEventsIncomingRatePerSecond.help, 			 The incoming rate of API events being sent directly to each node by devices.<br />\
+The incoming rate is calculated prior to message rebalancing and does not reflect the actual ingestion rate per node.<br /><br />\
+It is acceptable, expected and supported for the incoming rate on a node -- such as the ILB -- to be greater than the ingestion rate configuration maximum for a node as message rebalancing will fairly distribute the load.<br /><br />\
+For the actual ingestion rate, see the Events Ingestion Rate (Per Second) table above.
+com.vmware.loginsight.compare.error.queryCancelled, 			 The query has been cancelled
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.lessOrEqual, 			 &le;
+com.vmware.loginsight.commons.enums.ScheduleType.time, 			 At specific times
+com.vmware.loginsight.database.cache.LicenseCheck.licenseAlreadyExists, 			 License Already Exists
+com.vmware.loginsight.commons.enums.LicenseStateEnum.active, 			 Active
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEvents, 			 API Events
+com.vmware.loginsight.commons.Errors.licenseExpired, 			 The license has expired
+com.vmware.loginsight.commons.Errors.daemonConfigurationException, 			 Error loading {0} configuration
+com.vmware.loginsight.commons.db.data.UserRole.userRoleNormal, 			 Normal User
+com.vmware.loginsight.database.superAdminDescription, 			 Full Admin and User capabilities, including editing Shared content
+com.vmware.loginsight.web.settings.stats.StatsTableType.repository, 			 Repository
+com.vmware.loginsight.web.piql.PiqlFunction.ucount, 			 Unique count
+com.vmware.loginsight.piql0.AppearFunctionExpr.rightValGreateThanZ, 			 Right value of APPEAR(.) should be >= 0
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.rbac, 			 Role Based Access Control
+com.vmware.loginsight.commons.contentpack.ConstraintToggleType.any, 			 any
+com.vmware.loginsight.web.settings.stats.StatsTableType.apiEvents.help, 			 The rate of messages received at each node via API.<br >\
+The total events ingestion rate might be lower than incoming rate if the incoming rate is higher than sustained ingestion capacity of the cluster.
+com.vmware.loginsight.commons.enums.LicenseType.nsx_concurrent_user, 			 NSX Concurrent User
+com.vmware.loginsight.commons.enums.AuthenticationAttribute.sam, 			 SAM (Security Account Manager Account Name)
+com.vmware.loginsight.commons.highlighter.Region.formatToString, 			 Region { openTag: "{0}", closeTag: "{1}", startPosition: {2}, endPosition: {3}}
+com.vmware.loginsight.web.piql.DateFilterPreset.last7Days, 			 Latest 7 days of data
+com.vmware.loginsight.compare.QueriesController.missingGroupBy, 			 Missing group by clause
+com.vmware.loginsight.aaa.vidm.VIDMValidator.validateVIDMUser, 			 validate user
+com.vmware.loginsight.analytics.ErrorCode.requestRejected, 			 Request was rejected because the system is overloaded
+com.vmware.loginsight.web.actions.settings.HealthActionBean.running, 			 Running
+com.vmware.loginsight.commons.FileUtils.failedMountNFSLocation, 			 Failed to mount NFS location
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToRemoveMembership, 			 Failed to remove membership: This is not a master.
+com.vmware.loginsight.web.piql.TimeWindowGrouping.sixHour, 			 6 hours
+com.vmware.loginsight.commons.enums.LicenseType.nsx_invalid, 			 NSX Invalid
+com.vmware.loginsight.commons.enums.AuthenticationAttribute.upn, 			 UPN (User Principal Name)
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.globalCat, 			 Global Catalog
+com.vmware.loginsight.web.settings.stats.StatsTableType.activeQueriesByHost.help, 			 How many queries each node is running.<br />\
+It is expected for some nodes to have more queries than others, however during times of congestion a small subset of nodes may have a large list of active queries.<br />\
+For more information on running queries, see the Active Queries tab.
+com.vmware.loginsight.commons.FileUtils.failedUnmountTestingDirectory, 			 failed to unmount the testing directory
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslog.help, 			 Additional information about syslog events including:<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Active TCP Sessions</span> - this number should be less than the configuration maximum per node<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Total TCP Sessions</span> - the total number of syslog TCP sessions that have been created against that server since its most recent restart<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Memory Utilized/Capacity</span> - queue information<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Messages Enqueued</span> - number of events in the ingestion pipeline that have not been processed yet<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Syslog Exceptions</span> - errors encountered extracting syslog events out of the TCP connections or UDP packets. Typically this happens because the client TCP connection is terminated ungracefully.<br /><br />\
+\u2022 <span style=\"font-weight: bold;\">Truncated Events</span> - events that exceed the syslog RFC maximum that have been reduced in size to meet the RFC<br /><br />
+com.vmware.loginsight.rbac.Capability.descriptionEditAdmin, 			 Can edit Admin information
+com.vmware.loginsight.commons.enums.LicenseType.cpu, 			 CPU
+com.vmware.loginsight.commons.Errors.serviceRegistryStartFailure, 			 Failed to start service registry
+com.vmware.loginsight.commons.enums.ScheduleType.manually, 			 Manually
+com.vmware.loginsight.aaa.vidm.VIDMConnector.multipleUsersFoundInDomain, 			 Multiple users with name {0} found in domain {1}.
+com.vmware.loginsight.commons.Errors.restoreFailedInvalid, 			 Provided backup directory does not contain valid backup data
+com.vmware.loginsight.database.superAdmin, 			 Super Admin
+com.vmware.loginsight.commons.FileUtils.unableTestNFSMount, 			 Unable to test NFS mount: failed to create local mount directory
+com.vmware.loginsight.config.distributed.KnownServiceGroup.webnode, 			 Web Node
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.equal, 			 =
+com.vmware.loginsight.scheduled.ScheduledPluginService.vCenterCollectionFailed, 			 vCenter collection failed
+com.vmware.loginsight.web.piql.DateFilterPreset.custom, 			 Custom time range
+com.vmware.loginsight.commons.FileUtils.archivePathNotSet, 			 Archive path is not set
+com.vmware.loginsight.commons.Errors.ingestionServiceStartFailure, 			 Failed to start ingestion service
+com.vmware.loginsight.web.settings.ClusterNodeStatus.maintenance, 			 Maintenance
+com.vmware.loginsight.commons.enums.SortOrder.asc, 			 Ascending
+com.vmware.loginsight.piql0.ItemFieldExpr.matchingError, 			 Matching pattern syntax error: {0}
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.integer, 			 Integer
+com.vmware.loginsight.commons.enums.AuthenticationMethod.default, 			 Default (built-in)
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.anythingButSpace, 			 Any character except whitespace
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetNodeStatus, 			 Failed to get a node's status: This is not a master.
+com.vmware.loginsight.web.piql.PiqlFunction.max, 			 Max
+com.vmware.loginsight.web.settings.stats.StatsTableType.pendingArchives.help, 			 Buckets that need to be archived, but have not been.<br /><br />\
+This may indicate an archive, configuration or network issue.<br />\
+Log Insight will send a system notification when archiving issues occurs and will catch up once the archiving issue is resolved.
+com.vmware.loginsight.commons.enums.LicenseType.development, 			 Development
+com.vmware.loginsight.commons.Errors.vapiServiceStartFailure, 			 Failed to start vAPI service
+com.vmware.loginsight.analytics.ErrorCode.invalidLicense, 			 Invalid or expired license
+com.vmware.loginsight.commons.Errors.backupPrepareBlockFileFound, 			 Prepare operation is blocked to prevent corrupting restorable backup
+com.vmware.loginsight.analytics.ErrorCode.workerUnavailble, 			 A worker node is unavailable
+com.vmware.loginsight.rbac.Capability.descriptionInventory, 			 Can modify host message properties
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.ip6, 			 IP address (v6)
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.ip4, 			 IP address (v4)
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.is, 			 is
+com.vmware.loginsight.daemon.upgrade.ClusterManager.configOutOfWorkerInstance, 			 We were only able to configure {0} out of {1} worker instances.
+com.vmware.loginsight.web.piql.PiqlFunction.avg, 			 Average
+com.vmware.loginsight.web.enums.messageViewType.summary, 			 Event Types
+com.vmware.loginsight.commons.Errors.userNotOwner, 			 Current user does not match the owner of the installation files
+com.vmware.loginsight.compare.QueriesController.missingPiql, 			 Missing PIQL query
+com.vmware.loginsight.analytics.ErrorCode.searchOwnerUnavailable, 			 The node serving this search request is in maintenance or unavailable
+com.vmware.loginsight.database.viewOnlyAdmin, 			 View Only Admin
+com.vmware.loginsight.commons.Errors.commandTimeout, 			 Command timed out
+com.vmware.loginsight.web.enums.messageViewType.events, 			 Events
+com.vmware.loginsight.aaa.krb5.KrbAuthenticator.kerberosAuthenNotConfigured, 			 Kerberos authenticator is not configured yet
+com.vmware.loginsight.commons.enums.LicenseType.osi, 			 OSI
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToJoin, 			 Failed to join: This is not a master.
+com.vmware.loginsight.commons.enums.SearcherConfigPartialResultsType.partialResults, 			 Return partial results
+com.vmware.loginsight.commons.enums.AuthenticationResult.fail, 			 Authentication failed
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.body36, 			 \
+{0} is now running version {1}. Below are some of the exciting new features we've added to the {1} release. As always, we appreciate your continued support and value your feedback in our {3} and {4} on Twitter.<br />\
+<br /><b>{5} Enhancements</b><br />\
+\u2022 Enhanced Alerting - Alerts sent to vRealize Operations Manager now contain the same metadata as email alerts.<br />\
+\u2022 Auto Cancel Alerts - User alerts to vRealize Operations Manager can be set to auto cancel in 10 minutes.<br />\
+\u2022 Integration HA - When integrating with vRealize Operations Manager, a Integrated Load Balancer VIP is used to ensure HA.<br />\
+<br /><b>General Enhancements</b><br />\
+\u2022 More Dashboard Widgets - Event type and event trend queries can now be saved to the Dashboard page and included in Content Packs.<br />\
+\u2022 Event Type Alerts - User alerts can now be created to alert based on new event types.<br />\
+\u2022 Syslog {6} Enhancements - Syslog Event Forwarding now supports send tags as well as complementary tags.<br />\
+\u2022 Query API Enhancements - The query API now supports duration, Content Pack extracted fields, group by field, order by function, and event trends.<br />\
+\u2022 Content Pack Upgrade Instructions - Content Packs now support separate install and upgrade instructions.<br />\
+<br /><b>Tech Preview Features</b><br />\
+\u2022 {7} - Super Admin users can now impersonate another user, allowing the ability to view, edit, and disable another user's alerts.<br />\
+\u2022 Agent Auto-Upgrade - Agents can be upgraded to the {1} release and be configured to automatically upgrade to future releases.<br />\
+\u2022 Agent Scripted Input - Agents can be configured to run script and collect output allowing for addition collection sources as well as data massaging.<br />\
+\u2022 VMware Identity Manager Integration - Authentication via VMware Identity Manager can be configured allowing for Single Sign-On.<br /><br />\
+For more information about {0}'s great new features, take a look at the {0} v{1} {2}.<br /><br />\
+Happy Logging,<br />\
+The {0} Team<br /><br \>\
+<img src="http://loginsight.vmware.com/community-library/accounts/91/914066/li-logo.png" style="height: 50px; width: 50px;"/>\
+<img src="http://www.google-analytics.com/collect?v=1&tid=UA-43863239-10&cid={9}&t=event&ec=email&ea=open&el=email-open&cs=email&cm=email&cn=log-insight-product-upgrade-open-email"/>
+com.vmware.loginsight.web.piql.TimeWindowGrouping.twelveHour, 			 12 hours
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.body33, 			 \
+{0} is now running version {1}. Following are some of the exciting new features we've added to the {1} release.<br /><br />\
+As always, we appreciate your continued support and value your feedback in our {7} and {8} on Twitter.<br /><br />\
+<b>New Server Capabilities</b><br />\
+\u2022 {2} - vRealize Log Insight's integrated load balancer now allows for multiple VIPs to be configured, each with zero or more tags.<br />\
+\u2022 Webhooks - Both {3} and user alerts offer the ability to send to one or more webhooks, allowing for easy integration with a large number of third party solutions.<br />\
+\u2022 {4} - Tags for both vCenter Server and ESXi events can be added, and unconfigured ESXi hosts can be automatically detected and integrated.<br />\
+\u2022 Additional OVF properties - Both DNS searchpath and DNS domain can be configured via OVF properties for the vRealize Log Insight virtual appliance.<br /><br />\
+<b>Improved Agent Capabilities</b><br />\
+\u2022 New Parsers - LTSV, Regex, and Syslog parsers are now available to support additional log formats.<br />\
+\u2022 IPv6 Support - All vRealize Log Insight agents support clients running IPv6.<br />\
+\u2022 copytruncate Support - The vRealize Log Insight Linux agents support the copytruncate option from logrotate.<br />\
+\u2022 Windows 10 Support - The vRealize Log Insight Windows agent supports Windows 10.<br /><br />\
+<b>New APIs</b><br />\
+\u2022 Authentication API -- Enables remote client to programmatically authenticate with the vRealize Log Insight platform to perform certain operations.<br />\
+\u2022 Query API - Enables remote clients to programmatically query the vRealize Log Insight platform to retrieve events and aggregations over events.<br />\
+\u2022 Importer Utility - A new importer utility is available to support importing old logs and support bundles via the vRealize Log Insight ingestion API.<br /><br />\
+<b>Tech Preview Features</b><br />\
+\u2022 {5} - The Agent Administration page provides the ability to build and validate agent configurations.<br />\
+\u2022 Virtual Appliance IPv6 Support - The vRealize Log Insight virtual appliance can be configured in a pure IPv6 network.<br />\
+\u2022 Configuration APIs - A variety of tech preview APIs have been made available to configure vRealize Log Insight.<br /><br />\
+For more information about {0}'s great new features, take a look at the {0} v{1} {6}.<br /><br />\
+Happy Logging,<br />\
+The {0} Team<br /><br \>\
+<img src="http://loginsight.vmware.com/community-library/accounts/91/914066/li-logo.png" style="height: 50px; width: 50px;"/>\
+<img src="http://www.google-analytics.com/collect?v=1&tid=UA-43863239-10&cid={9}&t=event&ec=email&ea=open&el=email-open&cs=email&cm=email&cn=log-insight-product-upgrade-open-email"/>
+com.vmware.loginsight.commons.enums.LicenseVersion.standard, 			 Standard
+com.vmware.loginsight.commons.Errors.daemonNotRunning, 			 {0} is not running
+com.vmware.loginsight.piql0.ItemFieldExpr.invalidOperator, 			 Invalid operator '{0}'
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotStringMatch, 			 does not match
+com.vmware.loginsight.analytics.ErrorCode.unknownError, 			 Unknown error
+com.vmware.loginsight.commons.enums.DirectoryType.vidm, 			 VMware Identity Manager
+com.vmware.loginsight.web.settings.ClusterNodeStatus.connected, 			 Connected
+com.vmware.loginsight.web.piql.PiqlFunction.sum, 			 Sum
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.ha, 			 Integrated Load Balancer
+com.vmware.loginsight.commons.Errors.commandCanceled, 			 Command was canceled
+com.vmware.loginsight.commons.enums.NtpMode.host, 			 ESX/ESXi host
+com.vmware.loginsight.aaa.vidm.VIDMConnector.multipleGroupsFoundInDomain, 			 Multiple groups with name {0} found in domain {1}.
+com.vmware.loginsight.web.settings.stats.StatsTableType.activeQueriesByHost, 			 Active Queries By Host
+com.vmware.loginsight.web.piql.DateFilterPreset.last5Minutes, 			 Latest 5 minutes of data
+com.vmware.loginsight.commons.Errors.tomcatServiceStartFailure, 			 Failed to start tomcat
+com.vmware.loginsight.commons.enums.LicenseType.nsx_term, 			 NSX OSI
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.custom, 			 Custom regex...
+com.vmware.loginsight.compare.QueriesController.missingLeft, 			 Missing left from clause
+com.vmware.loginsight.aaa.vidm.VIDMValidator.validateVIDMGroup, 			 validate group
+com.vmware.loginsight.aaa.vidm.VIDMConnector.webCodeValidation, 			 VMware Identity Manager response validation failed
+com.vmware.loginsight.rbac.Capability.displayNameInventory, 			 Inventory
+com.vmware.loginsight.commons.enums.LicenseType.vcenter, 			 vCenter
+com.vmware.loginsight.commons.Errors.loadBalancerServiceRunFailure, 			 Error while running Load Balancer service
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToSaveConfig, 			 Failed to save configuration on master: {0}
+com.vmware.loginsight.commons.enums.RntUnit.minutes, 			 minutes
+com.vmware.loginsight.rbac.Capability.descriptionDashboard, 			 Can use Dashboards
+com.vmware.loginsight.analytics.ErrorCode.truncatedGroups, 			 Some groups in result are truncated
+com.vmware.loginsight.commons.db.data.UserRole.userRoleImplicit, 			 (group-based)
+com.vmware.loginsight.rbac.Capability.displayNameEditShared, 			 Edit Shared Content
+com.vmware.loginsight.commons.Errors.daemonStartupException, 			 Error starting {0}
+com.vmware.loginsight.commons.enums.AuthenticationMethod.activeDirectory, 			 Active Directory
+com.vmware.loginsight.piql0.GroupByExpr.messageInGroupNotDefined, 			 Message item '{0}' used in GROUP BY not defined.
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.contains, 			 contains
+com.vmware.loginsight.commons.Errors.licenseNoMoreCode, 			 The license does not allow scanning more code
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneDay, 			 1 day
+com.vmware.loginsight.vcops.VcopsInventoryMatcher.labelVcopsID, 			 Analysis in vRealize Operations Manager
+com.vmware.loginsight.commons.Errors.searchMasterServiceStartFailure, 			 Failed to start search master service
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotExist, 			 does not exist
+com.vmware.loginsight.web.settings.stats.StatsTableType.ingestionQueue, 			 Ingestion Queue
+com.vmware.loginsight.commons.Errors.displayServiceStartFailure, 			 Failed to start display service
+com.vmware.loginsight.web.piql.DateFilterPreset.last6Hours, 			 Latest 6 hours of data
+com.vmware.loginsight.commons.enums.LicenseStateEnum.error, 			 Error
+com.vmware.loginsight.database.cache.LicenseCheck.GenericErrorCode, 			 License error
+com.vmware.loginsight.commons.Errors.licenseCannotVerify, 			 Could not verify the license file. The license file has been tampered
+com.vmware.loginsight.commons.Errors.userIsRoot, 			 Service cannot be run as root user
+com.vmware.loginsight.aaa.vidm.VIDMConnector.userNotFoundInDomain, 			 User {0} not found in domain {1}.
+com.vmware.loginsight.commons.Errors.restoreFailedNotDir, 			 Provided backup location is not a directory
+com.vmware.loginsight.commons.Errors.restoreFailed, 			 Failed to restore data
+com.vmware.loginsight.web.piql.TimeWindowGrouping.oneSec, 			 1 second
+com.vmware.loginsight.web.piql.PiqlFunction.count, 			 Count
+com.vmware.loginsight.commons.Errors.configurationWriteError, 			 Could not write to {0} . Please ensure the file permissions are correct and that there is enough disk space
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.startsWith, 			 starts with
+com.vmware.loginsight.commons.FileUtils.errorMountingNFSLocation, 			 Error mounting NFS location: {0}
+com.vmware.loginsight.rbac.Capability.displayNameEditAdmin, 			 Edit Admin
+com.vmware.loginsight.config.AuthenticationAdPortType.portType.standard, 			 Standard
+com.vmware.loginsight.commons.FileUtils.cannotParseArchiveLocation, 			 Cannot parse archive location
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryOrigin, 			 Query Origin
+com.vmware.loginsight.aaa.vidm.VIDMConnector.requestFailed, 			 Request failed
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForStr, 			 Operator '{0}' is valid only for string values
+com.vmware.loginsight.analytics.ErrorCode.alreadyCancelled, 			 Query was cancelled
+com.vmware.loginsight.web.piql.TimeWindowGrouping.hundredMilli, 			 100 ms
+com.vmware.loginsight.commons.enums.AuthenticationMethod.vIDM, 			 VMware Identity Manager
+com.vmware.loginsight.commons.Errors.indexerCouldNotFindConfigFile, 			 Cannot find the configuration file
+com.vmware.loginsight.database.cache.LicenseCheck.ErrorCode, 			 Error Code: {0}
+com.vmware.loginsight.analytics.ErrorCode.invalidIndexBucket, 			 Invalid index bucket
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslog, 			 Syslog
+com.vmware.loginsight.piql0.BeforeFunctionExpr.messageInBeforeDifferent, 			 Message items in BEFORE function must be different
+com.vmware.loginsight.piql0.BeforeFunctionExpr.messageNotDefined, 			 Message item '{0}' not defined.
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToReconfig, 			 Failed to reconfigure Log Insight on master: {0}
+com.vmware.loginsight.piql0.AppearFunctionExpr.conditionGreaterThanZTrue, 			 Condition APPEAR(.) >= 0 is always true
+com.vmware.loginsight.database.userDescription, 			 Can use Interactive Analytics and Dashboards
+com.vmware.loginsight.commons.Errors.daemonIsRunning, 			 {0} is already running
+com.vmware.loginsight.commons.Errors.indexerVersionError, 			 The existing index has the wrong version
+com.vmware.loginsight.piql0.OrderByItem.messageInOrderNotDefined, 			 Message item '{0}' used in ORDER BY clause not defined.
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetClusterMembers, 			 Failed to get cluster members: This is not a master.
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotStartsWith, 			 does not start with
+com.vmware.loginsight.piql0.BeforeMinDistFunctionExpr.minDistanceGreaterThanZ, 			 minDistance must be greater than 0.
+com.vmware.loginsight.database.cache.LicenseCheck.LimitedFromStandardException, 			 Cannot downgrade to limited from standard
+com.vmware.loginsight.database.viewOnlyAdminDescription, 			 Can view Admin info and has full User access, including editing Shared content
+com.vmware.loginsight.piql0.ItemFieldExpr.operatorValidForSets, 			 Operator '{0}' is valid only for sets
+com.vmware.loginsight.analytics.ErrorCode.pluginInvokeError, 			 Failed to invoke plugin on some groups
+com.vmware.loginsight.web.piql.TimeWindowGrouping.fiveSec, 			 5 seconds
+com.vmware.loginsight.commons.enums.RntUnit.days, 			 days
+com.vmware.loginsight.web.piql.TimeWindowGrouping.sixtyDays, 			 60 days
+com.vmware.loginsight.rbac.Capability.displayNameStatistics, 			 Statistics
+com.vmware.loginsight.analytics.ErrorCode.fieldExtractionTimeout, 			 Timed out while extracting fields
+com.vmware.loginsight.rbac.Capability.descriptionAnalytics, 			 Can use Interactive Analytics
+com.vmware.loginsight.commons.enums.RntUnit.months, 			 months
+com.vmware.loginsight.web.settings.stats.StatsTableType.syslogEvents, 			 Syslog Events
+com.vmware.loginsight.daemon.upgrade.DaemonCommandsHandler.failedToGetPendingWorkers, 			 Failed to get membership pending workers: This is not a master.
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.hex, 			 Hexadecimal
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenMin, 			 10 minutes
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.doesNotContain, 			 does not contain
+com.vmware.loginsight.commons.Errors.searchIncompatibleIndexVersion, 			 Incompatible index version or index is missing
+com.vmware.loginsight.piql0.OrderByItem.msgCannotAppearInORDER, 			 SAMPLE(message) cannot appear in ORDER BY
+com.vmware.loginsight.web.piql.TimeWindowGrouping.thirtyDays, 			 30 days
+com.vmware.loginsight.commons.contentpack.ConstraintOperator.greaterOrEqual, 			 &ge;
+com.vmware.loginsight.commons.Errors.databaseUpgradeFailure, 			 Failed to upgrade database schema
+com.vmware.loginsight.web.piql.TimeWindowGrouping.tenMilli, 			 10 ms
+com.vmware.loginsight.database.user, 			 User
+com.vmware.loginsight.config.distributed.KnownServiceGroup.masternode, 			 Search Master Node
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.trends, 			 Event Trends
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.currency, 			 Currency
+com.vmware.loginsight.analytics.ErrorCode.ioError, 			 IO error
+com.vmware.loginsight.web.utilities.EmailUtil.upgrade.linuxAgent, 			 Linux Agent
+com.vmware.loginsight.compare.QueriesController.invalidCompareQueryCancelToken, 			 Invalid CompareQuery cancel token
+com.vmware.loginsight.daemon.upgrade.ClusterManager.failedToPushConfig, 			 Failed to push configuration to all workers: {0}
+com.vmware.loginsight.commons.enums.NtpMode.ntp, 			 NTP server (recommended)
+com.vmware.loginsight.commons.Errors.logDataServiceStartFailure, 			 Failed to start log data service
+com.vmware.loginsight.web.piql.PiqlFunction.variance, 			 Variance
+com.vmware.loginsight.web.settings.stats.StatsTableType.queryCosts.help, 			 The number of subqueries (bucket query tasks), since restart, that have been issued against each node, broken down by the query source.<br />\
+The unit of cost is a bucket.
+com.vmware.loginsight.commons.contentpack.ExtractedFieldPreset.decimal, 			 Decimal
+com.vmware.loginsight.commons.Errors.licenseIpDoesNotMatch, 			 The license does not allow running this application on this machine
+webui============================================
+all, 			 All
+logInsight.header.magic, 			 Automated Analytics
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.ipAddress, 			 IP Address
+validation.mask.valueDoesNotMatch, 			 Not a valid {0}
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveStart, 			 Start Time
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.upgradeInstructions, 			 Upgrade Instructions...
+validation.minlength.valueTooShort, 			 Must be at least {2} characters long
+show, 			 Show
+com.vmware.loginsight.web.actions.misc.AboutActionBean.logInfo, 			 {0} total log {1}
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetHost, 			 Host
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.instructions, 			 To change network settings, please see the {0}. (Note that changes via the console are not supported.)
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.quantity, 			 Quantity
+converter.enum.notAnEnumeratedValue, 			 Not a valid value
+com.vmware.loginsight.web.actions.home.HomeActionBean.refresh, 			 Update
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.addWorker, 			 To add a node, deploy a new Log Insight instance and choose &quot;Join Deployment&quot; in the startup wizard.
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.archiveLocation, 			 Archive Location
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoTenant, 			 Tenant
+logInsight.header.feedback.shareScreen3, 			 If you prefer not to install software, you can use {0} to record your screen using Java from a web page.
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.title, 			 Event Forwarding | Admin
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.saveButton, 			 Save and Continue
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.help.ssl, 			 Event forwarding via SSL will not work with the self-signed certificate installed on destination servers by default. A custom SSL certificate must be created and uploaded. Additionally, the corresponding trusted root certificate must be imported into the certificate store of the forwarder instance.<br /><br />Refer to the section "<i>Configure vRealize Log Insight Event Forwarding with SSL</i>" of the Online Help.
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.emailNotifications, 			 Email notifications
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.numTargets, 			 destinations
+hide, 			 Hide
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.tooltip.export, 			 Export the above alerts and all their data to a CSV (comma-separated values) file.
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.applyAgentsConfigGroupDoesNotExist, 			 An Agent Group doesn't exist
+com.vmware.loginsight.web.actions.settings.UsersActionBean.usersAndGroups, 			 Users and Groups
+validation.expression.valueFailedExpression, 			 The value supplied ({1}) for field {0} is invalid
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.newGroup, 			 New Group
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.vsphereEvents, 			 Collect vCenter Server events, tasks, and alarms
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.emailAddress, 			 Email Address
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.downloadBundle, 			 Download Support Bundle
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.testEmail, 			 Test Email
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveSize, 			 Archive Size
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.bundle, 			 Support Bundle
+search, 			 Search
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipUninstall, 			 Uninstall this content pack for all users
+com.vmware.loginsight.web.actions.settings.UsersActionBean.domain, 			 Domain
+admin.page.runtime, 			 System Parameters
+com.vmware.loginsight.web.actions.settings.UsersActionBean.description, 			 Description
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.numTarget, 			 destination
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.title, 			 Cluster Management | Admin
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.utilization, 			 Total CPU utilization is currently at {0}
+manage, 			 Manage
+apply, 			 Apply
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.instructions, 			 Setup Instructions...
+logInsight.header.feedbackDialogHeader, 			 Send Feedback
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.updatePassword, 			 Update
+stripes.fieldErrors.footer, 			 
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.disconnected, 			 DISCONNECTED
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.clusterNtpWarn, 			 Cluster mode is now enabled. To ensure proper operation, please verify the following configuration settings:\
+<ul class="standard-list">\
+<li><b>NTP is required</b>. Make sure you have correctly configured and validated NTP on the <a href="/admin/time">Time Configuration page</a>. Using at least two NTP servers is strongly recommended.</li>\
+<li><b>DNS is required</b>. Make sure you have correctly configured and validated DNS through the vApp options (see the {0} for details). Using two DNS servers and setting the hostname for each node is strongly recommended.</li>\
+<li>Enabling the Integrated Load Balancer is recommended. This can be done in the configuration section below.</li>\
+</ul>
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoHost, 			 Host
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetTags, 			 Tags
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.domain, 			 Default Domain
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.vaRequiredBundle, 			 Virtual Appliance is required to generate a support bundle
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importLogs, 			 Import Log File...
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.supportBundleInfo, 			 Downloading a {0} support bundle is only necessary if requested by VMware Support Services. Two types of bundles are available:
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.installedVersion, 			 Installed Version
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.downloadBundle, 			 Download Support Bundle
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.sender, 			 Sender
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.dashboards, 			 Dashboards
+tag, 			 Tag
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.averageOsis, 			 Average Active OSIs:
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.lastRestart, 			 Last Restart
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.explain, 			 Integrate to enable sending Log Insight alerts to vRealize Operations Manager.
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.exceptionPattern1, 			 License key is invalid: [status={0}], [configuration={1}], [expires={2}], [error={3}]
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.exceptionPattern2, 			 License key is invalid: [status={0}], [configuration={1}], [expires={2}]
+admin.breadcrumb, 			 Admin
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.upgrade, 			 Upgrade Log Insight
+logInsight.fields, 			 Fields
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.enableSSO, 			 Enable Single Sign-On
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.maxStorage, 			 Maximum storage to use
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.enableAlertsAdd, 			 The following alerts will be enabled and added to 'My Saved Alerts':
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAStatus, 			 Status
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.help.fqdn, 			 Entering an IP address rather than an FQDN is not recommended. See the {0} for details.
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.storageSizeHeader, 			 Storage Size
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.refresh, 			 Refresh
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.enableAD, 			 Enable Active Directory support
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noSharedContentTitle, 			 No shared content
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noUserContentInfo, 			 Dashboards, queries, alerts, and extracted fields that you create will show up here.
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.saveNewConfigExceptionMsgCannotSave, 			 Cannot save agent configuration
+com.vmware.loginsight.web.actions.misc.LoginActionBean.title, 			 Login
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.adminPassword, 			 AD Server Password
+validation.minvalue.valueBelowMinimum, 			 The minimum allowed value is {2}
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.workers, 			 Nodes
+com.vmware.loginsight.web.actions.settings.TimeConfigurationActionBean.timeConfigTitle, 			 {0} {1}
+com.vmware.loginsight.web.actions.misc.LoginActionBean.worker, 			 Worker:
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.warningTitle, 			 Warning:
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveEnd, 			 End Time
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.fields, 			 Fields
+logInsight.sources, 			 sources
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetFilter, 			 Filter
+converter.email.invalidEmail, 			 Not a valid email address
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.newPassword, 			 New password
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.title, 			 General Configuration | Admin
+logInsight.header.feedback.shareScreenHeader, 			 Screen Capture
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAFQDN, 			 FQDN (optional)
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.dns, 			 DNS Servers
+converter.integer.outOfRange, 			 Must be in the range {2} to {3}
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetTransport, 			 Transport
+logInsight.restart.restartDialogHeader, 			 Restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.meanIngestRate, 			 Average ingestion rate since last restart
+logInsight.header.feedback.shareScreen1, 			 If you're willing to share your screen with us, we would love to watch a video of your interactions with Log Insight. Any screen captures you take can be shared via email.
+logInsight.header.feedback.shareScreen2, 			 We recommend {0}, a desktop app for Windows or Mac, for capturing your screen and narrating actions.
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.HAAddress, 			 IP Address
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerAtIp, 			 Worker at IP
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.rnt, 			 Retention Notification Threshold
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.refreshData, 			 Refresh data
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.help.target, 			 IP or hostname where sources should send log events. If at least one virtual IP is defined for the Integrated Load Balancer, logs will be sent to the VIP selected. If the Integrated Load Balancer is not configured, sources will send log events to the master node.
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.saveAutoFieldIntro, 			 Choose a name for this smart field:
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.help.suspend, 			 Administratively suspend the execution of all user-defined alerts (for example, such as during maintenance). This switch leaves <b>system notifications</b> unaffected, including those regarding node connectivity.
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.connected, 			 CONNECTED
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.emailList, 			 Email System Notifications To
+com.vmware.loginsight.web.actions.settings.HealthActionBean.memCurrent, 			 Current memory usage:
+validation.maxvalue.valueAboveMaximum, 			 The maximum allowed value is {2}
+com.vmware.loginsight.web.actions.settings.UsersActionBean.directoryType, 			 Type
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.importReceived, 			 Received imported events since last restart
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.vaRequiredBundle, 			 Virtual Appliance is required to generate bundle
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.clusterDataNotAvailable, 			 The latest cluster data is not currently available, most likely because the master node is not accessible.
+com.vmware.loginsight.web.actions.settings.HostsActionBean.export, 			 Export
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.help.ssl, 			 Sets whether SSL/TLS encryption should be enabled for the SMTP transport upon connection (SMTPS/POPS).
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noContentInfo, 			 This content pack contains no dashboards, queries, alerts, or extracted fields.
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.pending, 			 Pending
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importLogsHeader, 			 Import Log File
+com.vmware.loginsight.web.actions.settings.HealthActionBean.title, 			 System Monitor | Admin
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.hostname, 			 Hostname
+logInsight.restart.restartButtonNode, 			 Restart Node
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.exitText1, 			 All done!
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.exitText2, 			 You&#39;re now ready to start using Log Insight. Enjoy!
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoImitateAdUserLogin, 			 Allow Active Directory users login
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.instructions, 			 To change network settings, please see the {0}. (Note that changes via the console are not supported.)
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.noRoles, 			 (no roles)
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.description, 			 Integration with vSphere provides many advantages including the ability to collect vCenter Server events, tasks and alarms as well as configure ESXi hosts to forward logs to Log Insight. Up to 10 vCenter Server instances can be configured. For more information, see the {0}.
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipExport, 			 Export this content to a file
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.title, 			 SSL Configuration | Admin
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.osiCount, 			 OSI Count
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.alerts, 			 Alerts
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.chartName, 			 Chart Name
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.title, 			 Agent Management | Admin
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetWorkerCount, 			 Worker Count
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveNotMounted, 			 Unable to connect to the configured archive server or permission denied
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.help.maxStorage, 			 Maximum amount of storage to use for imported data.
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.standaloneMode, 			 Log Insight is currently operating in standalone mode. You can create a cluster by adding one or more additional nodes.
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.help.esxiLogsAutomatic, 			 When new hosts are added to this vCenter Server, they will be automatically configured to send their logs to Log Insight via syslog.
+converter.creditCard.invalidCreditCard, 			 Not a valid credit card number
+header.superheader.help, 			 Help
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.networkHeader, 			 Network
+com.vmware.loginsight.web.actions.settings.UsersActionBean.upn, 			 UPN
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.queries, 			 Queries
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.support, 			 Support
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.dateTime, 			 Time Range
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.vCOpsChanged, 			 vC Ops Changed
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.ssl, 			 SSL (SMTPS)
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.downloadMore, 			 Download more...
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiDialog.udp, 			 UDP
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.certificateFile, 			 New Certificate File (PEM format)
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.versionHeader, 			 Version
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.gateway, 			 Gateway
+any, 			 Any
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.dropped, 			 Dropped events since last restart
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.description, 			 Description:
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.title, 			 Archiving Configuration | Admin
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.versionHeader, 			 Version
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiDialog.tcp, 			 TCP
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.enableArchiving, 			 Enable Data Archiving
+com.vmware.loginsight.api.errors.archiving.nfs_unable_test_mount, 			 Unable to test NFS mount: failed to create local mount directory
+com.vmware.loginsight.web.actions.misc.AboutActionBean.to, 			 to
+logInsight.header.piql, 			 PIQL
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.help.target, 			 IP or hostname where sources should send log events. If at least one virtual IP is defined for the Integrated Load Balancer, logs will be sent to the VIP selected. If the Integrated Load Balancer is not configured, sources will send log events to the master node.
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetPort, 			 Port
+com.vmware.loginsight.web.actions.settings.UsersActionBean.authMethod, 			 Authentication
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.noTargets, 			 No Destinations
+com.vmware.loginsight.web.actions.settings.AgentsActionBean.agentConfigNote, 			 <p>See the {0} for Default agent configuration and other examples.</p>
+stripes.errors.beforeError, 			 <li class="validate-style stripes-validation-individual-error">
+clear, 			 Clear
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.status, 			 Status
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noContentTitle, 			 Empty content pack
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiLogs, 			 Configure ESXi hosts to send logs to Log Insight
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.bundle, 			 Support Bundle
+com.vmware.loginsight.api.errors.archiving.nfs_location_failed_mount, 			 Failed to mount NFS location
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.enableVIDMConfigHelp, 			 An experimental feature to allow VMware Identity Manager SSO authentication.
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.fields, 			 Extracted Fields
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.role, 			 Roles
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.enableAlertsPre, 			 The following alerts will be enabled:
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.title, 			 Startup
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.fqdn, 			 To simplify future changes and upgrades, it is recommended to have clients point to a FQDN that resolves to the VIP address, instead of pointing directly to the VIP address. vSphere and vRealize Operations integrations as well as alert messages will use the FQDN if provided otherwise they will use the ILB IP address. Log Insight should be able to resolve the FQDN to the given IP address meaning that the FQDN defined here should match what is defined in DNS.
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.networkHeader, 			 Network
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.master, 			 Master
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.expiration, 			 Expiration
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.unableToLoginToVIDM, 			 Unable to login to VMware Identity Manager
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.lastRestart, 			 Last Restart:
+restart, 			 Restart
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.recentIngestRate, 			 Recent ingestion rate in the last minute
+com.vmware.loginsight.web.actions.piql.PiqlQueryActionBean.title, 			 PIQL
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.explain, 			 Integrate with vCenter to enable tasks and events to be sent to Log Insight, and to collect logs from ESXi hosts.
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.restartTimestamp, 			 Time of last restart
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.suspend, 			 Suspend all user alerts
+com.vmware.loginsight.web.actions.settings.TimeConfigurationActionBean.title, 			 Time Configuration | Admin
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.options, 			 Options
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipDisable, 			 Disable this content pack for you only (does not affect other users)
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.updates, 			 Updates
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoUser, 			 Username
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.regex, 			 Regex
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.version, 			 Version
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noSharedContentInfo, 			 Shared dashboards, queries, alerts, and extracted fields created by administrators will show up here.
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetProtocol, 			 Protocol
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoPort, 			 API Port
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.configInProgress, 			 ESXi host syslog configuration will proceed in the background. It may take several minutes to complete.
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.readOnlyTargetTooltip, 			 Target cannot be changed while vRops is configured. To change this value, first click &quot;Unconfigure&quot; to unconfigure vRops.
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.cannotSaveConfig, 			 Cannot save forwarding configuration
+errorPage.errorHeader, 			 Sorry, an error has occurred
+stripes.fieldErrors.beforeError, 			 <span class="validate-style stripes-validation-field-error">
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.readOnlyTargetTooltip, 			 Target cannot be changed while ESXi hosts are configured. To change this value, first click &quot;Unconfigure&quot; to unconfigure all hosts.
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.port, 			 Port:
+converter.short.outOfRange, 			 Must be in the range {2} to {3}
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.jsonLogNotifications, 			 JSON Log File notifications
+com.vmware.loginsight.web.actions.settings.HealthActionBean.queries, 			 Active Queries
+com.vmware.loginsight.web.actions.settings.UsersActionBean.noRoles, 			 (no roles)
+stripes.errors.footer, 			 </ul>
+logInsight.search.resultsTextNoMatches, 			 No matching events
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.export, 			 Export
+auth_type, 			 Login Type
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.title, 			 Appliance | Admin
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.dns, 			 DNS Servers
+com.vmware.loginsight.web.actions.misc.AboutActionBean.from, 			 from
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.title, 			 SMTP Configuration | Admin
+com.vmware.loginsight.api.errors.field_required, 			 Field is required
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.domainControllers, 			 Domain Controller(s)
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.unconfigured, 			 UNCONFIGURED
+com.vmware.loginsight.web.actions.settings.HealthActionBean.swapCurrent, 			 Current swap space usage:
+com.vmware.loginsight.web.actions.settings.UsersActionBean.dataSets, 			 Data Sets
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.suspend, 			 Suspend User Alerts
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources.archiveDisabled, 			 Archiving is disabled
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.zoomInstructions, 			 Click and drag over a region to select
+com.vmware.loginsight.web.actions.settings.UsersActionBean.role, 			 Roles
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.installedVersion, 			 Installed Version
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.restart, 			 Restart
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.title, 			 vSphere Integration | Admin
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.title, 			 License | Admin
+com.vmware.loginsight.web.actions.settings.HealthActionBean.resources, 			 Resources
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerJoinInProgress, 			 Initializing worker...
+value, 			 Value
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.to, 			 to
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.title, 			 Authentication | Admin
+logInsight.restart.restartButton, 			 Restart Log Insight
+com.vmware.loginsight.web.actions.misc.ConstraintsActionBean.os, 			 OS
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.rateUnitSingle, 			 event per second
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.workerAdmittedNoIp, 			 Worker has been admitted to the Log Insight deployment.
+converter.float.outOfRange, 			 Must be in the range {2} to {3}
+com.vmware.loginsight.web.actions.settings.HostsActionBean.title, 			 Hosts | Admin
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.lastDropTimestamp, 			 Time of last dropped event
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.description, 			 Integration with vRealize Operations Manager provides many advantages including the ability to send Log Insight alerts to vRealize Operations Manager and enable launch in context between the two products. If integrating with vRealize Operations Manager 6.0 or later then inventory mapping is enabled by default, which tags environment specific information such as vCenter Server, datacenter and cluster from which an event originated. Note that integration requires read-only permissions for a local user account on vRealize Operations Manager. Use of an administrator account is not recommended for security reasons. For more information, see the {0}.
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.introText2, 			 We&#39;ll walk through a few settings first. Click 'Next' to begin.
+com.vmware.loginsight.web.actions.settings.HealthActionBean.swapHistoryLabel, 			 Swap space use ({0} available) during last 24 hours:
+com.vmware.loginsight.web.actions.settings.UsersActionBean.newPassword, 			 New Password
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.rateUnit, 			 events per second
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.shareSearchDialogShorten, 			 Shorten
+com.vmware.loginsight.api.errors.archiving.archive_path_not_set, 			 Archive path is not set
+com.vmware.loginsight.web.actions.settings.AbstractConfigurationActionBean.writeConfigWarning, 			 Configuration was saved successfully but could not be applied to the following workers: {0}
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.help.suspend, 			 Disable all alerts for every user. This setting does not affect system notifications.
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.disableVIDMConfig, 			 Cannot disable VMware Identity Manager SSO
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.importFrom, 			 Choose log file:
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targets, 			 Destinations
+com.vmware.loginsight.web.actions.misc.HelpActionBean.support, 			 Support
+com.vmware.loginsight.web.actions.home.HomeActionBean.title, 			 Dashboards
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.highAvailability, 			 It is strongly recommended that the Integrated Load Balancer (ILB) be enabled. \
+The ILB balances incoming ingestion traffic fairly among available Log Insight nodes. \
+The ILB also ensures that incoming ingestion traffic is accepted even if some Log Insight nodes become unavailable. \
+Log Insight clients, using both the web user interface and ingestion (via Syslog or the API), should connect to \
+Log Insight via the specified ILB IP address.<br /><br />The ILB requires that all Log Insight nodes be on the same Layer 2 network, such as behind \
+the same switch or otherwise able to receive ARP requests from and send ARP responses to each other. \
+The ILB IP address should be chosen so that any Log Insight node can own it and receive traffic for it. \
+Typically, this means that the ILB IP address will be in the same subnet as the physical address of the Log Insight nodes. \
+After you configure the ILB IP address, try to ping it from a different network to ensure that it is routable. <br /><br /> \
+To simplify future changes and upgrades, it is recommended to have clients point to a FQDN that resolves to the ILB IP address, \
+instead of pointing directly to the ILB IP address. vSphere integration and alert messages will use FQDN if provided otherwise it will use ILB IP address. \
+Log Insight should be able to resolve FQDN to given IP address.
+com.vmware.loginsight.web.actions.explorer.ShortUrlActionBean.errorShortening, 			 Unable to shorten URL: {0}
+com.vmware.loginsight.web.actions.home.HomeActionBean.newDashboard, 			 New Dashboard
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.export, 			 Export...
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.version, 			 Version:
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.clusterConfig, 			 Configuration
+com.vmware.loginsight.web.actions.message.LogMessageActionBean.exportException, 			 Invalid export format: {0}
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.vropsSuiteNotificationErrors, 			 Sending the alert to vRealize Operations Manager Suite failed
+com.vmware.loginsight.web.actions.settings.HostsActionBean.tooltip.export, 			 Export the above hostnames and all their data to a CSV (comma-separated values) file.
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.saveButton, 			 Add License
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.webhookNotificationErrors, 			 Sending the webhook notification failed
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.gateway, 			 Gateway
+logInsight.search.viewCompleteLog, 			 View event in original context
+validation.maxlength.valueTooLong, 			 Must be no more than {2} characters long
+com.vmware.loginsight.web.actions.settings.UsersActionBean.newGroup, 			 New Group
+com.vmware.loginsight.web.actions.piql.PiqlQueryActionBean.searchSimpleExceptionMessageInvalidDataSets, 			 User has invalid data sets.
+converter.date.invalidDate, 			 Not a valid date
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.backButton, 			 Back
+logInsight.header.feedback.intro, 			 We want to hear about your experience with Log Insight. What's good, what's bad, or what's missing? Help us improve Log Insight!
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.ofEvents, 			 of events
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.help.tags, 			 Tags allow you to add fields with pre-defined values to events for easier querying and metadata creation.
+validation.required.valueWhitespaceOnly, 			 Value cannot have only whitespace
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.author, 			 Author:
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.target, 			 Target
+converter.number.invalidNumber, 			 Not a valid number
+header.superheader.about, 			 About
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.title, 			 Content Packs
+com.vmware.loginsight.web.actions.misc.AboutActionBean.contact, 			 Contact
+com.vmware.loginsight.web.actions.settings.HealthActionBean.osiCheck, 			 OSI Count
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.extractField, 			 Extract Field
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.vropsNotificationErrors, 			 Sending the alert to vRealize Operations Manager failed
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.chooseDeployment, 			 Choose Deployment Type
+com.vmware.loginsight.api.errors.license.not_exists, 			 License Does Not Exist
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.cpuCount, 			 CPU Count
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.target, 			 Target
+com.vmware.loginsight.web.actions.settings.UsersActionBean.title, 			 Access Control | Admin
+com.vmware.loginsight.web.actions.settings.UsersActionBean.delete, 			 Delete
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.vropsNotifications, 			 vRealize Operations Manager notifications
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.sourceFilter, 			 Source Filter
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.esxiLogsUpdatePeriodically, 			 Automatically configure all ESXi hosts
+logInsight.header.feedback.email, 			 Email us at
+stripes.errors.afterError, 			 </li>
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.enableVIDMConfig, 			 Enable VMware Identity Manager SSO
+converter.byte.outOfRange, 			 Must be in the range {2} to {3}
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.restart, 			 Restart
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.network.netmask, 			 Netmask
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.port, 			 Port
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.network.netmask, 			 Netmask
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.alsoAddToDashboard, 			 Also save to dashboard
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.support, 			 Support
+integration, 			 Integration
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.from, 			 from
+stripes.fieldErrors.afterError, 			 </span><br />
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.updatePassword, 			 Update
+stripes.errors.header, 			 <ul class="stripes-validation-global-error">
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.requestedMsg, 			 has requested to be added as a worker
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.key, 			 Key
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.setAnchorTip, 			 Set time range from this event
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.alerts, 			 Alerts
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.delete, 			 Delete
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.marketplace, 			 Marketplace
+logInsight.header.feedback, 			 Send Feedback...
+com.vmware.loginsight.web.actions.misc.AboutActionBean.title, 			 About
+com.vmware.loginsight.api.errors.archiving.nfs_location_failed_unmount, 			 Failed to unmount the testing directory
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.vropsSuiteNotifications, 			 vRealize Operations Manager Suite notifications
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.loadSearchDialogHeader, 			 Favorite Queries
+com.vmware.loginsight.web.actions.settings.HealthActionBean.memHistoryLabel, 			 Memory use ({0} available) during last 24 hours:
+validation.file.postBodyTooBig, 			 Total upload size of {3} KB exceeds the maximum size of {2} KB
+com.vmware.loginsight.web.actions.settings.UsersActionBean.confirmPassword, 			 Confirm
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.needUserAlertInWizard, 			 To grant access to an Active Directory group or user, visit the Users configuration page.
+admin.page.config, 			 Server Settings
+com.vmware.loginsight.web.actions.settings.StorageConfigurationActionBean.archiveHeader, 			 Archiving
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.changePw, 			 Admin Credentials
+logInsight.search.loadMoreMatches, 			 Load more events
+com.vmware.loginsight.web.actions.settings.SmtpConfigurationActionBean.tls, 			 STARTTLS Encryption
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.hasBeenAdmitted, 			 has been admitted to the Log Insight deployment.
+com.vmware.loginsight.api.errors.archiving.hdfs_unable_to_connect, 			 Unable to connect to the HDFS: {0}
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.active, 			 Active
+com.vmware.loginsight.web.actions.settings.VsphereConfigurationActionBean.configInProgressRestart, 			 Restarting Log Insight will not affect the configuration process.
+com.vmware.loginsight.web.actions.settings.UsersActionBean.users, 			 Users
+com.vmware.loginsight.api.errors.archiving.cannot_parse_archive_location, 			 Cannot parse archive location
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.requireSsl, 			 Require SSL
+com.vmware.loginsight.web.actions.misc.HelpActionBean.title, 			 Help
+com.vmware.loginsight.web.actions.settings.HealthActionBean.refreshData, 			 Refresh data
+com.vmware.loginsight.api.errors.archiving.hdfs_unable_to_write, 			 Unable to write to the HDFS location: {0}
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.title, 			 Interactive Analytics
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.manage.upgrade, 			 Upgrade Log Insight
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.syslogReceived, 			 Received syslog events since last restart
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.tooltipEnable, 			 Re-enable this content pack
+com.vmware.loginsight.web.actions.settings.ClusterConfigurationActionBean.enableHA, 			 Enable Integrated Load Balancer
+com.vmware.loginsight.web.actions.settings.ApplianceActionBean.manage.supportBundleInfo, 			 Downloading a support bundle is only necessary if requested by VMware Support Services. Generating a support bundle may take several minutes. The download will begin once the bundle is ready.
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoStatus, 			 Status
+com.vmware.loginsight.api.errors.archiving.nfs_location_not_writable, 			 The NFS location is not writable
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.ssoRedirectIp, 			 Redirect URL Host
+com.vmware.loginsight.web.actions.misc.ContentPackActionBean.noUserContentTitle, 			 No personal content
+com.vmware.loginsight.web.actions.settings.LicenseActionBean.type, 			 Type
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.joinDeployment, 			 Join Existing Deployment
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.webhookNotifications, 			 Webhook notifications
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.certificate, 			 Custom SSL Certificate
+com.vmware.loginsight.web.actions.settings.UserSettingsActionBean.title, 			 My Settings
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.exitTextRestart2, 			 Log Insight must restart in order to complete the setup process.
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.exitTextRestart1, 			 Restart Required
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.intervalLabel, 			 Run query every:
+logInsight.search.resultsTextSearching, 			 Searching events
+stripes.fieldErrors.header, 			 
+com.vmware.loginsight.web.actions.settings.SslConfigurationActionBean.sslOnly, 			 Require SSL Connection
+errorPage.forSupport, 			 For support, contact
+com.vmware.loginsight.web.actions.settings.AlertAdminActionBean.title, 			 User Alerts | Admin
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.adminUsername, 			 AD Server Username
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.targetDiskCacheSize, 			 Disk Cache
+com.vmware.loginsight.web.actions.explorer.LogExplorerActionBean.of, 			 of
+com.vmware.loginsight.web.actions.explorer.AlertActionBean.emailNotificationErrors, 			 Sending the email failed
+com.vmware.loginsight.web.actions.settings.AuthConfigurationActionBean.UntrustedCertificateHeader, 			 Untrusted Certificate
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.help.tags, 			 Tags allow you to add fields with pre-defined values to events for easier querying.
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.clusterUpsell, 			 Log Insight is currently operating in standalone mode. It has the ability to scale out to use multiple nodes and to support multiple virtual IPs for ingestion, but this is not enabled with your current license.
+com.vmware.loginsight.api.errors.license.already_exists, 			 License Already Exists
+com.vmware.loginsight.api.errors.license.expired, 			 License Expired
+dropdownSelect, 			 -- Select --
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.webhooksList, 			 Send HTTP Post System Notifications To
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.truncated, 			 Truncated events since last restart
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.warningContent, 			 2-node clusters are not supported. It is recommended that you add at least one more node to the cluster.
+com.vmware.loginsight.web.actions.settings.HealthActionBean.stats.lastIngestTimestamp, 			 Time of last ingested event
+com.vmware.loginsight.web.actions.settings.ClusterActionBean.vipsTitle, 			 Integrated Load Balancer
+com.vmware.loginsight.web.actions.settings.GeneralConfigurationActionBean.generalConfiguration, 			 General Configuration
+com.vmware.loginsight.web.actions.settings.VcopsConfigurationActionBean.title, 			 vRealize Operations Manager Integration | Admin
+logInsight.fieldUpdate.field.updateConfirm, 			 Modifying this field will update all the dependent items.
+logInsight.header.alerts, 			 Alerts
+com.vmware.loginsight.web.actions.settings.EventForwardingActionBean.idle, 			 Idle
+com.vmware.loginsight.web.actions.misc.StartupWizardActionBean.introText1, 			 Welcome to vRealize Log Insight
