@@ -2,7 +2,7 @@
 '''
 Created on 8/3/2017
 
-@author: ghou
+@author: vip
 '''
 import os
 import sys
@@ -53,7 +53,10 @@ def read_config():
             if len(value_list) == 2:
                 data[key] = [value_list[0].strip(' ')]
             else:
-                data[key] = [i and i.strip(' ') for i in value_list]
+                if key not in data:
+                    data[key] = [i and i.strip(' ') for i in value_list]
+                else:
+                    data[key].extend([i and i.strip(' ') for i in value_list])
         else:
             data[key] = value.strip(' ')
     file1.close()
@@ -62,6 +65,8 @@ def read_config():
 
 def post_review_translate(data, logger):
     now = int(time.time())
+    if not os.path.exists(data['post_workspace']):
+        os.mkdir(data['post_workspace'])
     os.chdir(data['post_workspace'])
     git_rep = data['post_workspace'] + "/g11n-translations"
     if not os.path.exists(git_rep):
@@ -97,18 +102,11 @@ def post_review_translate(data, logger):
     # Synchronize files to the GIT library and submit them later
     # -I, –ignore-times don't skip files that have the same time and length  -a, –archive Archive mode, which means to transfer files in a recursive manner and keep all file attributes equal to -rlptgoD
     # -r Represents recursive recursion --exclude doesn't contain/ins Catalog --recursive
-    targetdirnames = []
-    for product in os.listdir(data['post_target_path']):
-        targetdirnames.append(product)
-    copydirnames = []
     for product in os.listdir(data['post_copy']+'l10n/bundles/'):
-        if product in targetdirnames:
-            copydirnames.append(product)
-    for product in copydirnames:
         os.chdir(data['post_target_path'])
         os.system('git branch feature/%s && git checkout feature/%s' % (product, product))
         list_new = "".join([data['post_copy'], 'l10n/bundles/'])
-        cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (list_new+product, data['post_target_path']+product)
+        cmd1 = 'rsync -aI --recursive --include="*/" --exclude="*_en_US.json" %s %s' % (list_new+product+'/', data['post_target_path']+product+'/')
         p1 = subprocess.Popen(cmd1, shell=True)
         stdout1, stderr1 = p1.communicate()
         if stderr1:
@@ -124,7 +122,7 @@ def post_review_translate(data, logger):
         commitLog = open('commit.log')
         commit = commitLog.readline().strip('\n').strip(' ')
         commitLog.close()
-        cmd3 = "/build/apps/bin/post-review -o %s > ghou.txt" % commit
+        cmd3 = "/build/apps/bin/post-review -o %s > vip.txt" % commit
         p3 = subprocess.Popen(cmd3, shell=True)
         stdout3, stderr3 = p3.communicate()
         if stderr3:
@@ -132,32 +130,40 @@ def post_review_translate(data, logger):
         else:
             logger.info("run git command is success， time is %s" % now)
         time.sleep(30)
-        ghouTxt = open('ghou.txt')
-        review_url = ''
+        ghouTxt = open('vip.txt')
+        review_url = r''
         for line in ghouTxt.readlines():
             if re.search('.*reviewboard.*', line):
                 review_url = line
         ghouTxt.close()
+        is_flag = False
         for pm_email, product_list in data.iteritems():
-            if product in product_list:
+            if type(product_list) == list and product in product_list:
+                is_flag = True
                 mail_message = '''Hi %s,
     this is the post review url %s
 thanks, %s
         ''' % (pm_email.split('@')[0], review_url, data['sender'].split('@')[0])
-                send_mail_message(logger, data, pm_email, mail_message)
+                send_mail_message(logger, data, pm_email, product, mail_message)
                 break
+        if not is_flag:
+            mail_message = '''Hi All,
+this is the post review url %s
+thanks, %s
+    ''' % (review_url, data['sender'].split('@')[0])
+            send_mail_message(logger, data, data['post_default_email'], product, mail_message)
         os.system('git checkout master')
-        os.system('rm -rf ghou.txt')
+        os.system('rm -rf vip.txt')
         os.system('rm -rf commit.log')
     os.system('rm -rf %s' % data['post_copy'])
 
 
-def send_mail_message(logger, data, pm_email, mail_message=None):
+def send_mail_message(logger, data, pm_email, product, mail_message=None):
     # Create an instance with an attachment
     message = MIMEMultipart()
     message['From'] = Header(data['sender'])
     message['To'] =  Header(pm_email)
-    subject = 'post review of email'
+    subject = '(%s)post review of email' % product
     message['Subject'] = Header(subject, 'utf-8')
     # Mail text content
     message.attach(MIMEText(mail_message, 'plain', 'utf-8'))

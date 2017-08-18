@@ -49,7 +49,10 @@ def read_config():
             if len(value_list) == 2:
                 data[key] = [value_list[0].strip(' ')]
             else:
-                data[key] = [i and i.strip(' ') for i in value_list]
+                if key not in data:
+                    data[key] = [i and i.strip(' ') for i in value_list]
+                else:
+                    data[key].extend([i and i.strip(' ') for i in value_list])
         else:
             data[key] = value.strip(' ')
     file1.close()
@@ -58,6 +61,8 @@ def read_config():
 
 def auto_push_vip_translate(data, logger):
     now = int(time.time())
+    if not os.path.exists(data['translate_workspace']):
+        os.mkdir(data['translate_workspace'])
     os.chdir(data['translate_workspace'])
     git_rep = data['translate_workspace'] + "/g11n-translations"
     if not os.path.exists(git_rep):

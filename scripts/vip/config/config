@@ -1,25 +1,28 @@
 # spaces must be used between arguments
 remote_or_local_copy    0
 remote_server           10.117.168.77, root, !QAZ2wsx, /usr/l10n
-source_local            /usr/l10n/
-translate_local         /usr/l10n/
-source_workspace        /root/ghou/source
-translate_workspace     /root/ghou/translate
 
-source_copy             /root/ghou/source_copy/
-translate_copy          /root/ghou/translate_copy/
-source_target_path      /root/ghou/source/g11n-translations/l10n/bundles/Testing
-translate_target_path   /root/ghou/translate/g11n-translations/l10n/
-git_lib                 git clone ssh://git@git.eng.vmware.com/g11n-translations.git
-sender                  ghou@vmware.com
-#receivers               nannany@vmware.com,
-receivers               ghou@vmware.com,
+# Need to manually create /script/vip/ route
+source_local            /usr/l10n/
+source_workspace        /script/vip/source
+source_copy             /script/vip/source_copy/
+source_target_path      /script/vip/source/g11n-translations/l10n/bundles/Testing
+
+translate_local         /usr/l10n/
+translate_workspace     /script/vip/translate
+translate_copy          /script/vip/translate_copy/
+translate_target_path   /script/vip/translate/g11n-translations/l10n/
 
 post_local              /data/l10n/
-post_workspace          /script/ghou/post
-post_copy               /script/ghou/post_copy/
-post_target_path        /script/ghou/post/g11n-translations/l10n/bundles/
-#hshi@vmware.com         devCenter, SIM, vCG
-#andrewc@vmare.com       logInsight,
-ghou@vmware.com         devCenter, SIM, vCG
-ghou@vmare.com          logInsight,
+post_workspace          /script/vip/post
+post_copy               /script/vip/post_copy/
+post_target_path        /script/vip/post/g11n-translations/l10n/bundles/
+
+git_lib                 git clone ssh://git@git.eng.vmware.com/g11n-translations.git
+sender                  ghou@vmware.com
+receivers               ghou@vmware.com,
+#hshi@vmware.com        devCenter, SIM, vCG
+#andrewc@vmware.com     logInsight,
+nannany@vmware.com      devCenter, SIM, vCG
+nannany@vmware.com      logInsight, Testing, vCG1
+post_default_email      g11n-vip-project@vmware.com
