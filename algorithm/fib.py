@@ -10,7 +10,7 @@ def fib(n):
     while a < n:
         print a
         a, b = b, a+b
-fib(10)
+fib(55)
 
 
 def recur_fibo(n):
@@ -18,7 +18,8 @@ def recur_fibo(n):
     if n <= 1:
         return n
     else:
-        return(recur_fibo(n-1) + recur_fibo(n-2))
+        return (recur_fibo(n-1) + recur_fibo(n-2))
+
 
 # 获取用户输入
 input1 = int(input("您要输出几项? "))
@@ -31,16 +32,16 @@ else:
         print(recur_fibo(i))
 
 
-def fib(n):
-    a,b = 1,1
+def fib1(n):
+    a, b = 1, 1
     for i in range(n-1):
-        a,b = b,a+b
+        a, b = b, a+b
     return a
 # 输出了第10个斐波那契数列
-print fib(10)
+print '前10项的和为:', fib1(10)
 
 
-def fib(n):
+def fib2(n):
     if n == 1:
         return [1]
     if n == 2:
@@ -50,4 +51,17 @@ def fib(n):
         fibs.append(fibs[-1] + fibs[-2])
     return fibs
 # 输出前 10 个斐波那契数列
-print fib(10) 
+print '前10项list是:', fib2(10)
+
+
+def fibYield(n):
+    i = 0
+    a = 0
+    b = 1
+    while i < n:
+        yield a
+        a, b = b, a + b
+        i += 1
+
+for i in fibYield(10):
+    print i
