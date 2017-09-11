@@ -4,6 +4,7 @@ Created on 2017年9月2日
 
 @author: houguangdong
 '''
+import copy
 
 
 def get_next_seat(seat_id):
@@ -27,8 +28,25 @@ def get_next_player(seat_id):
             continue
         else:
             return seat_id
-        
+
+
+def fa_pai(player_pai_list, pai_list, num):
+        for i in range(num):
+            if len(pai_list) >= 1:
+                player_pai_list.append(pai_list.pop(0))
+
+
+pai_list = range(1, 55)
+def a(pai_list):
+    player_poker_list = [[]] * 2
+    print player_poker_list
+    for i in range(0, 2):
+        player_poker_list[i] = copy.deepcopy(player_poker_list[i])
+        fa_pai(player_poker_list[i], pai_list, 9)
+        print player_poker_list[i], i
+    print player_poker_list   
 
 
 if __name__ == "__main__":
     print get_next_player(1)
+    a(pai_list)
