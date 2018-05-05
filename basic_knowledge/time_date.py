@@ -242,3 +242,32 @@ Created on 2017年5月7日
 #     datetime模块
 #     pytz模块
 #     dateutil模块
+
+import time
+from datetime import datetime
+
+#把datetime转成字符串
+def datetime_toString(dt):
+    return dt.strftime("%Y-%m-%d-%H")
+
+#把字符串转成datetime
+def string_toDatetime(string):
+    return datetime.strptime(string, "%Y-%m-%d-%H")
+
+#把字符串转成时间戳形式
+def string_toTimestamp(strTime):
+    return time.mktime(string_toDatetime(strTime).timetuple())
+
+#把时间戳转成字符串形式
+def timestamp_toString(stamp):
+    return time.strftime("%Y-%m-%d-%H", time.localtime(stamp))
+
+#把datetime类型转外时间戳形式
+def datetime_toTimestamp(dateTim):
+    return time.mktime(dateTim.timetuple())
+
+
+if __name__ == "__main__":
+    print datetime_toString("2018-04-20-20")
+    print string_toDatetime(datetime.now())
+    print   ("2018-04-20-20")
