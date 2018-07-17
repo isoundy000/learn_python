@@ -13,6 +13,7 @@ Created on 2017年8月3日
 from gevent import monkey; monkey.patch_socket()
 import gevent
 
+
 def f(n):
     for i in range(n):
         print gevent.getcurrent(), i
