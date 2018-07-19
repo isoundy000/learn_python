@@ -1,0 +1,8 @@
+# 接着就是编写和转换proto文件：
+# 1 新建一个addressbook.proto文件，这个文件完全是按照原帖编写的，如下：
+# 2 利用protoc.exe编译proto文件，如下：
+# protoc -I=. --python_out=./result/ addressbook.proto
+其中 -I是源文件目录 --python_out是文件输出目录 最后的参数addressbook.proto是你需要编译的协议文件，
+编译好之后你就会在目标目录里面看到输出的结果文件，如下：
+2 然后运行这个文件，并按照提示进行操作：
+python use_addressbook.py beach
