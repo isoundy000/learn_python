@@ -1,0 +1,111 @@
+message SlotS{
+	message General_Property{
+			required int32 cid = 1;//武将实例ID
+			required int32 iid = 2;//武将配置ID
+			required int32 level1 = 3;//武将等级
+			required int32 level2 = 4;//武将突破
+			required int32 exp = 5;//武将当前经验
+			required int32 atk = 6;//攻击力
+			required int32 defense = 7;//防御
+			required int32 hp = 8;//血
+			required int32 speed = 9;//速度
+			optional int32 critical = 10;//暴击
+			optional int32 dodge = 11;//闪避
+			optional int32 parry = 12;//招架
+			optional int32 resilience = 13;//
+			optional int32 hit = 14;
+			optional int32 arp = 15;
+			optional int32 criticaldmg = 16;
+			required int32 potential = 17;//潜力
+			required int32 skilllevel = 18;//技能等级
+			required int32 skillexp = 19;//技能经验
+			optional int32 power = 20;//战斗力
+			required int32 level4 = 21;//神器强化
+			required int32 level5 = 22;//备用
+	}
+	message Soul_Property{
+			required int32 iid = 1;
+			required int32 cid = 2;
+			required int32 level = 3;
+	}
+	message Relation_Skill{
+			required int32 activate = 1;  //激活状态 >1:已激活  1:半激活  0:未激活
+			repeated int32 ids = 2;
+		}
+	message Slot_Property{
+		required int32 sid = 1; //槽编号
+		optional int32 general = 2; //武将基本属性
+		repeated Relation_Skill relation = 3; //关系技能
+		optional int32 weapon = 4; //武器
+		optional int32 armor  = 5; //护甲
+		optional int32 accessories = 6;//饰品
+		optional int32 shoe = 7;//鞋子
+		optional int32 treasure = 8;//宝物
+		optional int32 horse  = 9; //坐骑
+		optional int32 s1     = 10;//武魂1
+		optional int32 s2     = 11;//武魂2
+		optional int32 s3     = 12;//武魂3
+		optional int32 s4     = 13;//武魂4
+		optional int32 s5     = 14;//武魂5
+		optional int32 s6     = 15;//武魂6
+		optional int32 s7     = 16;//武魂7
+		optional int32 s8     = 17;//武魂8
+		optional int32 g1     = 18;//神石头1
+		optional int32 g2     = 19;//神石头2
+		optional int32 g3     = 20;//神石头3
+		optional int32 g4     = 21;//神石头4
+		optional int32 g5     = 22;//神石头5
+		optional int32 g6     = 23;//神石头6
+		optional int32 g7     = 24;//神石头7
+		optional int32 g8     = 25;//神石头8
+		optional int32 newartifact = 26;//新神器
+	}
+	
+	message Cheer_Property{
+		required int32 sid = 1; //槽编号
+		optional int32 general = 2;//武将编号
+		repeated Relation_Skill relation = 3; //关系技能
+	}
+	message Protagonist{
+	required int32 iid = 1;
+	required int32 level1 = 2;
+	required int32 level2 = 3;
+	optional int32 atk_a = 4;
+	optional int32 def_a = 5;
+	optional int32 hp_a = 6;
+	optional int32 train = 7;
+	optional int32 train_max = 8;
+	optional int32 nexttime = 9;
+	optional General_Property general = 10;
+}
+	message Ids{
+		repeated int32 ids = 1;
+}
+	repeated General_Property generals = 1; //武将
+	repeated Ids equips = 2;//装备
+	repeated Soul_Property souls = 3;//武魂
+	repeated Slot_Property slots = 4;//槽
+	repeated Cheer_Property cheers = 5;//助威
+	optional Protagonist protagonist = 6;//主角
+	repeated Ids gems = 7;//符文
+
+	
+	optional Ids   f1     = 8;//1号位置符文集合
+	optional Ids   f2     = 9;//1号位置符文集合
+	optional Ids   f3     = 10;//1号位置符文集合
+	optional Ids   f4     = 11;//1号位置符文集合
+	optional Ids   f5     = 12;//1号位置符文集合
+	optional Ids   f6     = 13;//1号位置符文集合
+	optional Ids   f7     = 14;//1号位置符文集合
+	optional Ids   f8     = 15;//1号位置符文集合
+
+	message ParamS{
+		message Param{
+			optional int32 i = 1;
+			optional string s = 2;
+		}
+		repeated Param params = 1;
+	}
+	repeated ParamS newartifacts = 16;//新神器
+	repeated Ids jewels = 17;//宝石
+}

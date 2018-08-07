@@ -82,7 +82,7 @@ class ModelTools(object):
         :param redis_name:
         :return:
         '''
-        redis_config = REDIS_CONFIG.get(redis_name)
+        redis_config = REDIS_CONFIG.get(redis_name.upper())
         if not redis_config:
             raise ValueError, "NOT EXIST THE REDIS CONFIG"
         client_key = get_redis_client_key(redis_config)

@@ -64,13 +64,15 @@ class RedisString(ModelTools):
             r[k] = data
         self.rset(r)
 
-    def get(self, key_name='', syst='', channel=0, server_id=0, rid=0):
+    def get(self, key_name='', syst='', channel=0, server_id=0, rid=0, key=None):
         """
         获得数据
         server_name = 用于指定数据库列表
         need_init : 如果数据库中没有这个数据，是否需要初始化
         """
-        if self._key and not key_name and not syst:
+        if key:
+            _key = key
+        elif self._key and not key_name and not syst:
             _key = self._key
         else:
             _key = self.make_tool_key(key_name, syst, channel, server_id, rid)
