@@ -1,0 +1,39 @@
+{
+    "src_databases": [
+        {
+            "host": "127.0.0.1",
+            "port": "3307",
+            "username": "sanguo_bg",
+            "password": "sanguo_passwd",
+            "database": "hot_yuenan_game_14",
+            "param": "charset=utf8",
+
+            "server_id": 14
+        },
+        {
+            "host": "127.0.0.1",
+            "port": "3307",
+            "username": "sanguo_bg",
+            "password": "sanguo_passwd",
+            "database": "hot_yuenan_game_15",
+            "param": "charset=utf8",
+
+            "server_id": 15
+        }
+    ],
+    "dst_database": {
+        "host": "127.0.0.1",
+        "port": "3307",
+        "username": "sanguo_bg",
+        "password": "sanguo_passwd",
+        "database": "hot_yuenan_game_m_14",
+        "param": "charset=utf8",
+
+        "server_id": 0
+    },
+    "role_filter_login_datetime": "2018-08-04 00:00:00",
+    "role_filter_level": 100,
+    "server_id_step": 1000000,
+    "rename_postfix": ".S",
+    "status_url": "ahttp://console-android.zyj.16801.com:10050/merge_status?mid=3&status="
+}
