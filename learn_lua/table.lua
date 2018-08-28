@@ -109,7 +109,7 @@ function table.unique(t, bArray)
     local n = {}
     local idx = 1
     for k, v in pairs(t) do
-	if not check[v] then
+        if not check[v] then
             if bArray then
                 n[idx] = v
                 idx = idx + 1
