@@ -21,5 +21,3 @@ function module.func3()
 end
 
 return module
-
---require 函数
