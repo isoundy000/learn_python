@@ -26,6 +26,8 @@ Created on 2018年8月21日
 
 # diff -r source999999/ source|grep -v pyo
 
+# show create table t_reward_record;
+# show tables like 't_god_down%';
 
 # 创建备份表
 # create table if not EXISTS t_god_down_hou select * from t_god_down2018_09_12;
@@ -48,3 +50,13 @@ Created on 2018年8月21日
 # update t_god_down_dong p inner join t_god_down_hou pp on p.rid = pp.rid set p.c5 = 6, pp.c1 = 0 where pp.c5 = 6;
 
 # 两张表做关联，更新了ProductPrice表的price字段和Product表字段的dateUpdate两个字段。
+
+
+
+# set names utf8;
+# insert into t_mail2 (rid, source, type, title, content, attachment) (select r.id, 0, 'system', '时间屋属性优化补偿', '亲爱的勇者们，我们对主角的属性做了优化，对您时间屋的属性进行了重置并以强化药剂的形式返还给您。', CONCAT('{"20161":',(p.atk_a+p.def_a+p.hp_a/10),'}') from t_role r, t_protagonist p where r.id = p.id and p.atk_a+p.def_a+p.hp_a > 0);
+# insert into t_mail2 (rid, source, type, title, content, attachment) (select rid, 0, 'system', '时间屋属性优化补偿', '亲爱的勇者们，我们对主角的属性做了优化，对您时间屋的属性进行了重置并以强化药剂的形式返还给您。', CONCAT('{"1001":',sum(num),'}') from t_log_usegold where opt = 'god_down_x6' and time > '2018-05-23 00:00:00' and time < '2018-05-23 02:00:00' group by rid);
+# create table if not EXISTS t_favorite_general4 select * from t_favorite_general4_bak;
+# create table t_favorite_general4_bak select * from t_favorite_general4;
+# insert into t_mail2 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'bug修复公告', '由于线上花坊系统异常导致数据出错，现将花坊还原至今早凌晨03:00，现将今日所获取道具及在花坊内花费钻石发放，后续20：30-21:00之间将对受到影响的玩家发放补偿', CONCAT('{"20208":',sum(num),'}') from t_log_useprop where cid = 20208 and time > '2018-08-15 00:30:00' and time < '2018-08-15 20:11:00' group by rid);
+# insert into t_mail2 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'bug修复公告', '由于线上花坊系统异常导致数据出错，现将花坊还原至今早凌晨03:00，现将今日所获取道具及在花坊内花费钻石发放，后续20：30-21:00之间将对受到影响的玩家发放补偿', CONCAT('{"1001":',sum(num),'}') from t_log_usegold where opt='favor2_useprop' and time > '2018-08-15 00:30:00' and time < '2018-08-15 20:11:00' group by rid);

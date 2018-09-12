@@ -42,6 +42,7 @@ Created on 2018年9月7日
 
 
 # 越南更新
+# set names utf8;
 # alter table t_protagonist add column `wing_show` tinyint(1) unsigned NOT NULL DEFAULT '1';
 #
 #  CREATE TABLE `t_daoguan_record` (
