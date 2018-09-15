@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 #coding: utf-8
 
-# psql的命令都是以"\"开头的
-# 查看数据库
-# psql -l = \l
+# psql                  进入默认的数据库
 
-# 创建数据库
-# create database testdb;
-# 使用 \c testdb就可连接到testdb上
+# psql                  命令都是以"\"开头的
+# psql -l = \l          # 查看所有数据库
+
+# create database testdb;       # 创建数据库
+# \c testdb                     # 连接到testdb上 也就是数据库的切换
+
 # 常用的psql连接数据库的方法, 命令格式如下
 # psql -h <hostname or ip> -p <端口> [数据库名称] [用户名称]
 # psql -h 192.168.56.11 -p 5432 testdb postgres
@@ -16,14 +17,15 @@
 # export PGHOST=192.168.56.11
 # export PGPORT=5432
 # export PGUSER=postgres
+
 # \d命令
-# \d命令什么都不带, 列出当前数据库中所有表
-# \d student 显示表的结构定义
-# \d t_pkey 显示索引的信息
-# \d 后面也可以跟一通配符如"*"或"?"
-# \d x?
-# \d t*
-# \d+ t t表更详细的信息
+# \d                            命令什么都不带, 列出当前数据库中所有表
+# \d student                    显示表的结构定义
+# \d t_pkey                     显示索引的信息
+# \d                            后面也可以跟一通配符如"*"或"?"
+# \d x?                         x1, x2, xx
+# \d t*                         t, t1, tx
+# \d+ t                         t表更详细的信息
 # 匹配不同对象类型的\d命令
 # 1 如果想只显示匹配的表 可以使用\dt命令
 # 2 如果想只显示索引 可以使用\di命令
@@ -39,7 +41,7 @@
 # \encoding utf8|gbk; 命令设置客户端的字符编码为gbk;
 
 # \pset命令
-# \pset命令用于设置输出的格式
+# \pset             命令用于设置输出的格式
 # \pset border 0: 表示输出内容无边框
 # \pset border 1: 表示边框只在内部
 # \pset border 2: 表示内外都有边框
@@ -47,15 +49,13 @@
 # \pset border 0;
 # select * from x1;
 
-# \x命令, 可以把表每一行的每列数据都拆分为单行展示
+# \x                            命令, 可以把表每一行的每列数据都拆分为单行展示
 # select * from pg_stat_activity;
 
 # 执行存储在外部文件中的SQL命令
-# 命令\i<文件名>执行存储在外部文件中的sql语句或命令
-# \i getrunsql
-# 可以在psql命令行加-s <filename>来执行SQL脚本文件中的命令
-# psql -x -f getrunsql
-# 其中命令行参数"-x"相当于在psql交互模式下运行"\x"命令
+# \i getrunsql                  命令\i<文件名>执行存储在外部文件中的sql语句或命令
+# psql -x -f getrunsql          可以在psql命令行加-s <filename>来执行SQL脚本文件中的命令
+                                # 其中命令行参数"-x"相当于在psql交互模式下运行"\x"命令
 
 # 显示信息的命令
 # \echo hello world

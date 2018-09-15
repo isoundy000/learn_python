@@ -60,3 +60,10 @@ Created on 2018年8月21日
 # create table t_favorite_general4_bak select * from t_favorite_general4;
 # insert into t_mail2 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'bug修复公告', '由于线上花坊系统异常导致数据出错，现将花坊还原至今早凌晨03:00，现将今日所获取道具及在花坊内花费钻石发放，后续20：30-21:00之间将对受到影响的玩家发放补偿', CONCAT('{"20208":',sum(num),'}') from t_log_useprop where cid = 20208 and time > '2018-08-15 00:30:00' and time < '2018-08-15 20:11:00' group by rid);
 # insert into t_mail2 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'bug修复公告', '由于线上花坊系统异常导致数据出错，现将花坊还原至今早凌晨03:00，现将今日所获取道具及在花坊内花费钻石发放，后续20：30-21:00之间将对受到影响的玩家发放补偿', CONCAT('{"1001":',sum(num),'}') from t_log_usegold where opt='favor2_useprop' and time > '2018-08-15 00:30:00' and time < '2018-08-15 20:11:00' group by rid);
+
+# insert into t_mail3 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'Đền bù nhận thưởng đạo quán', 'Thưởng xếp hạng đạo quán 13.09 ', attachment from t_mail2 where title = 'Thưởng thủ vệ Đạo quán' or title = 'Chưa nhận thưởng');
+# insert into t_mail3 (rid, source, type, title, content, attachment) (select rid, 0, 'system', 'Quà vũ linh đền bù 13.09', 'Thưởng xếp hạng đạo quán 13.09', CONCAT('{"',cid,'":',num-1,'}') from t_log_useprop where time > '2018-09-13 04:00:00' and time < '2018-09-13 14:10:00' and opt = 'gemdiscountshop3' and num not in (1, 10));
+
+# select rid, cid, num, time from t_log_useprop where time > '2018-09-13 04:00:00' and time < '2018-09-13 14:10:00' and opt = 'gemdiscountshop3' and (num != 1 and num != 10);
+
+# select rid, cid, num, time from t_log_useprop where time > '2018-09-13 04:00:00' and time < '2018-09-13 14:10:00' and opt = 'gemdiscountshop3' and num not in (1, 10);
