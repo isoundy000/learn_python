@@ -1,0 +1,6 @@
+SanguoGame/Source/Timer/DayHour/RechargeGiftDayClear.py
+SanguoGame/Source/Timer/DayHour/RechargeGiftDayClear_x3.py
+SanguoGame/Source/Timer/DayHour/RechargeGiftDayClear_x4.py
+SanguoGame/Source/Timer/DayHour/RechargeGiftDayClear_x5.py
+SanguoGame/Source/Timer/DayHour/RechargeGiftX1DayClear.py
+SanguoGame/Source/Timer/DayHour/RechargeGiftX2DayClear.py
