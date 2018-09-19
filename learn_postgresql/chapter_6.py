@@ -101,3 +101,58 @@
 # begin:
 # insert into tmp_t2 values(1, 'aaa');
 # insert into tmp_t2 values(2, 'bbb');
+# select * from tmp_t2;
+# end;
+
+# select * from tmp_t2;
+# 实际上on commit子句有以下三种形式
+# on commit preserve rows: 若不带on commit子句, 默认情况下，数据一值存在于整个会话周期中
+# on commit delete rows: 数据存在于事务周期中，事务一提交，数据就消失了
+# on commit drop: 数据存在于事务周期中，事务一提交，数据就消失了
+
+# 下面的sql等价
+# create TEMPORARY table tmp_t1(id int primary key, note text);
+# create TEMP table tmp_t1(id int primary key, note text);
+# create GLOBAL TEMPORARY table tmp_t1(id int primary key, note text);
+# create LOCAL TEMPORARY table tmp_t1(id int primary key, note text);
+
+# 默认值
+# create table student(no int, name varchar(20), age int default 15);
+# insert into student(no, name) values(1, '张三');
+# insert into student(no, name) values(2, '李四');
+# update student set age = DEFAULT where no = 2;
+
+# timestamp字段默认值now()
+# create table blog(id int, title text, created_date timestamp default now());
+# \d blog;
+# insert into blog values(1, 'PostgreSQL创建临时表');
+# select * from blog;
+
+# 约束
+# 检查约束
+# create table person(name varchar(40), age int CHECK (age >= 0 and age <= 150), sex boolean);
+# 可以给约束起名字
+# create table person(name varchar(40), age int CONSTRAINT check_age CHECK (age >= 0 and age <= 150), sex boolean);
+# create table books(book_no integer, name text, price numeric CHECK (price > 0), discounted_price numeric CHECK (discounted_price > 0), CHECK (price > discounted_price));
+# create table books(book_no integer, name text, price numeric, discounted_price numeric, CHECK (price > 0) CHECK (discounted_price > 0), CHECK (price > discounted_price));
+# create table books(book_no integer, name text, price numeric, discounted_price numeric, CHECK (price > 0 and discounted_price > 0 and price > discounted_price));
+# 和字段约束一样, 也可以给表约束赋予名称
+# create table books(book_no integer, name text, price numeric, discounted_price numeric, CHECK (price > 0) CHECK (discounted_price > 0), CONSTRAINT valid_discount CHECK (price > discounted_price));
+
+# 非空约束
+# create table books(book_no integer not null, name text, price numeric);
+# 非空约束等效于一个检查约束
+# CHECK (column_name IS NOT NULL);
+# 一个字段可以有多个约束
+# create table books(book_no integer not null, name text, price numeric NOT NULL CHECK(price > 0));
+
+# 唯一约束
+# create table books(book_no integer UNIQUE, name text, price numeric);
+# 表约束
+# create table books(book_no integer, name text, price numeric, UNIQUE(book_no));
+
+# 外键约束
+# create table class (class_no int primary key,  class_name varchar(40));
+# create table student (student_no int primary key, student_name varchar(40), age int, class_no int REFERENCES class(class_no));
+
+# 修改表
