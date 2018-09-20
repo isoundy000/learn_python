@@ -67,3 +67,16 @@ Created on 2018年8月21日
 # select rid, cid, num, time from t_log_useprop where time > '2018-09-13 04:00:00' and time < '2018-09-13 14:10:00' and opt = 'gemdiscountshop3' and (num != 1 and num != 10);
 
 # select rid, cid, num, time from t_log_useprop where time > '2018-09-13 04:00:00' and time < '2018-09-13 14:10:00' and opt = 'gemdiscountshop3' and num not in (1, 10);
+
+
+# 18日充值大于等于388元
+# select rid, sum(getgold)/10 as rmb from t_recharge_record where recvtime > '2018-09-18 00:00:00' and recvtime < '2018-09-19 00:00:00' group by rid having sum(getgold)/10 >= 388;
+
+# 19日充值大于等于388元
+# select rid, sum(getgold)/10 as rmb from t_recharge_record where recvtime > '2018-09-19 00:00:00' and recvtime < '2018-09-20 00:00:00' group by rid having sum(getgold)/10 >= 388;
+
+# 18日充值大于100小于388
+# select rid, sum(getgold)/10 as rmb from t_recharge_record where recvtime > '2018-09-18 00:00:00' and recvtime < '2018-09-19 00:00:00' group by rid having sum(getgold)/10 > 100 and sum(getgold)/ 10 < 388;
+
+# 19日充值大于100小于388
+# select rid, sum(getgold)/10 as rmb from t_recharge_record where recvtime > '2018-09-19 00:00:00' and recvtime < '2018-09-20 00:00:00' group by rid having sum(getgold)/10 > 100 and sum(getgold)/ 10 < 388;

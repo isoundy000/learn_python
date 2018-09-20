@@ -156,3 +156,74 @@
 # create table student (student_no int primary key, student_name varchar(40), age int, class_no int REFERENCES class(class_no));
 
 # 修改表
+# 增加字段
+# alter table class ADD COLUMN class_teacher varchar(40);
+# alter table class ADD COLUMN class_teacher varchar(40) CHECK (class_teacher <> '');
+# 删除字段
+# alter table class drop COLUMN class_teacher;
+# 如果想删除外键依赖, 需要通过cascade指明删除任何依赖改字段的东西
+# alter table class drop COLUMN class_no;
+# 使用cascade会把表student上的外键"student_class_no_fkey"也删除掉:
+# alter table class drop COLUMN class_no cascade;
+
+# 增加约束
+# alter table student add check (age < 16);
+# alter table class add constraint unique_class_teacher UNIQUE (class_teacher);
+# 增加非空约束的方法
+# alter table student alter COLUMN student_name SET NOT NULL;
+
+# 删除约束
+# alter table student drop constraint constraint_name;
+# \d student
+# 删除约束
+# alter table student drop constraint student_age_check;
+# 注意非空约束是没有名称的, 需要使用下面的语法去除约束
+# alter table student alter column student_name DROP NOT NULL;
+
+# 修改默认值
+# alter table student alter column age set default 15;
+# 删除默认值
+# alter table student alter column age DROP DEFAULT;
+
+# 修改字段数据类型
+# alter table student alter column student_name TYPE text;
+# 数据长度太小，不能转换
+# alter table class alter column class_name TYPE varchar(5);
+# 数据类型不对，不能转化
+# alter table class alter column class_name TYPE int;
+# 改变字段numeric类型的精度是，虽然可能成功，导致精度数据丢失
+# select * from books;
+# alter table books alter column price TYPE numeric(9, 1);
+# 在修改字段类型之前，最好删除这个字段上的约束，修改完后再把合适的约束添加上去。
+
+# 重命名字段
+# alter table books RENAME COLUMN book_no TO book_id;
+# 重命名表
+# alter table class RENAME TO classes;
+
+# 表继承及分区表
+# create table persons(name text, sex boolean, age int);
+# create table students (class_no int) INHERITS (persons);
+# insert into students values("张三", 15, true, 1);
+# insert into students values("翠莲", 14, true, 2);
+# select * from persons;
+# select * from students;
+# 更新
+# update students set age = 13 where name = '张三';
+# select * from persons;
+# insert into persons values('王五', 30, true);       # student表中看不到
+# 如果只想把父表本身的数据查询出来, 只需要在查询表名前加"ONLY"关键字
+# select * from only persons;
+# 所有父表的检查约束和非空约束都会自动被所有子表继承。不过其他类型的约束(唯一、主键、外键)则不会被继承。
+
+# 分区表
+# create table sales_detail(
+#     product_id int not null,    --产品编号
+#     price       numeric(12, 2), --单价
+#     amount      int not null,   --数量
+#     sale_date   date not null,  --销售日期
+#     buyer       varchar(40),    --买家名称
+#     buyer_contact text          --买家的联系方式
+# );
+
+
