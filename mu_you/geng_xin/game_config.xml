@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--运行配置文件-->
+<Server>
+    <Info>
+        <Acc>1</Acc>
+        <AccCode>1</AccCode>
+        <ID>1</ID>
+        <Type>Game</Type>
+        <Code>0XEE1D</Code>
+         <AccMode>1</AccMode>
+         <MergeMode>1</MergeMode>
+    </Info>
+    <Debug>true</Debug><!--调试开关-->
+    <Log><!--日志-->
+        <switch>true</switch><!--开关-->
+        <level>1</level>     <!--级别（预留）-->
+        <path>/home/hot_blood/log/zyj_1/game_1/game</path><!--写入路径-->
+        <print>true</print><!--是否打印显示-->
+    </Log>
+    <DataBase><!--数据库配置区域-->
+        <DB1><!--1号数据库-->
+            <Engine>MySQL</Engine><!--引擎类型 MySQL Oracle ...-->
+            <host>127.0.0.1</host><!--数据库IP地址-->
+            <port>3306</port>     <!--数据库端口号-->
+            <user>sanguo_bg</user>     <!--用户名-->
+            <unix_socket>/var/lib/mysql/mysql.sock</unix_socket>
+            <password>sanguo_passwd</password> <!--密码-->
+            <db>hotblood_game</db>   <!--对应数据库名字-->
+            <param>charset=utf8</param> <!--数据库参数-->
+            <echo>false</echo>     <!--SQLAlchemy echo-->
+        </DB1>
+    </DataBase>
+    <Interface><!--接口-->
+        <Player><!--玩家接口-->
+            <ProtocolType>protobuf</ProtocolType><!--协议类型-->
+            <listener><!--监听-->
+                <ip>0.0.0.0</ip><!--ip地址-->
+                <port>20100</port><!--端口号-->
+            </listener>
+            <MagicCode>0XEE1C</MagicCode> <!--接入魔术字-->
+            <max>2000</max><!--最大同时接入连接数-->
+        </Player>
+        <Gates><!--gates-->
+            <ProtocolType>protobuf</ProtocolType><!--协议类型-->
+            <listener><!--监听-->
+                <ip>127.0.0.1</ip><!--ip地址-->
+                <port>29001</port><!--端口号-->
+            </listener>
+            <MagicCode>0XEE1C</MagicCode> <!--接入魔术字-->
+            <max>10</max><!--最大同时接入连接数-->
+        </Gates>
+        <AccServer>
+            <ProtocolType>protobuf</ProtocolType>
+            <Address>
+                <ip>127.0.0.1</ip>
+                <port>20013</port>
+            </Address>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+            <max>100</max><!--最大同时接入连接数-->
+        </AccServer>
+        <AccServer2>
+            <ProtocolType>protobuf</ProtocolType>
+            <Address>
+                <ip>127.0.0.1</ip>
+                <port>20014</port>
+            </Address>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+        </AccServer2>
+     <WorldWarServer>
+       <ProtocolType>protobuf</ProtocolType>
+         <Address>
+               <ip>127.0.0.1</ip>
+                 <port>20021</port>
+             </Address>
+         <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+     </WorldWarServer>
+        <ExtServers>
+            <Ext>
+                <ProtocolType>protobuf</ProtocolType>
+                <Address>
+                    <ip>127.0.0.1</ip>
+                    <port>20102</port>
+                </Address>
+                <ID>1</ID>
+                <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+                <max>1</max>
+                <CUP>True</CUP>
+                <DeviFotress>True</DeviFotress>
+                <MiPush>True</MiPush>
+                <Battle>True</Battle>
+            </Ext>
+        </ExtServers>
+        <WSGI>
+            <ProtocolType>http</ProtocolType>
+            <listener><!--监听-->
+                <ip>127.0.0.1</ip><!--ip地址-->
+                <port>20101</port><!--端口号-->
+            </listener>
+        </WSGI>
+    </Interface>
+    <Configure><!--配置文件-->
+        <root>/home/hot_blood/resource/zyj_1/game_1/</root><!--配置文件根目录-->
+    </Configure>
+    <Parallels>
+        <Workers>5000</Workers>
+    </Parallels>
+</Server>
