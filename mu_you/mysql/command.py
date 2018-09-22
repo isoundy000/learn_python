@@ -80,3 +80,11 @@ Created on 2018年8月21日
 
 # 19日充值大于100小于388
 # select rid, sum(getgold)/10 as rmb from t_recharge_record where recvtime > '2018-09-19 00:00:00' and recvtime < '2018-09-20 00:00:00' group by rid having sum(getgold)/10 > 100 and sum(getgold)/ 10 < 388;
+
+
+# 获取在阵位置所有装备的cid
+# select e.id, e.cid from t_equip4 as e, (select weapon, armor, accessory, head, treasure, horse from t_general4 as g, t_slot2 as s where (g.id = s.s1 or g.id = s.s2 or g.id = s.s3 or g.id = s.s4 or g.id = s.s5 or g.id = s.s6) and s.rid = 112) as b where e.id = b.weapon or e.id = b.armor or e.id = b.accessory or e.id = head or e.id = b.treasure or e.id = b.horse;
+
+# 获取所有在阵位置的卡牌iid, cid, 装备的iid
+# select g.id, g.cid, weapon, armor, accessory, head, treasure, horse from t_general4 as g, t_slot2 as s where (g.id = s.s1 or g.id = s.s2 or g.id = s.s3 or g.id = s.s4 or g.id = s.s5 or g.id = s.s6) and s.rid = 112;
+
