@@ -10,6 +10,10 @@ Created on 2018年8月21日
 # sql文件
 # source /home/ghou/tmp.sql;
 
+# mysqldump -usanguo_bg -p -d fantasy_sanguo_game t_copy_star > createtab.sql
+# mysqldump -usanguo_bg -p -d fantasy_sanguo_game > createtab.sql
+# mysqldump -u sanguo_bg -psanguo_passwd fantasy_sanguo_game > createtab.sql
+
 # 119.29.82.181 管理机日志
 # /data/hotblood_log/62
 
@@ -88,3 +92,10 @@ Created on 2018年8月21日
 # 获取所有在阵位置的卡牌iid, cid, 装备的iid
 # select g.id, g.cid, weapon, armor, accessory, head, treasure, horse from t_general4 as g, t_slot2 as s where (g.id = s.s1 or g.id = s.s2 or g.id = s.s3 or g.id = s.s4 or g.id = s.s5 or g.id = s.s6) and s.rid = 112;
 
+# 补消费
+# create table if not EXISTS t_god_down_x6_bak_20180925 select * from t_god_down_x6;
+# insert into t_activity_consumegiftx2(rid, c1, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10) (select rid, sum(num) as c1, 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no' from t_log_usegold where time > '2018-09-25 00:00:00' group by rid);
+
+# 修改mysql表的字段类型
+# alter table news modify column title varchar(130);
+# alter table 表名 modify column 字段名 类型;
