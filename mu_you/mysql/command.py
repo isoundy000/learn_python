@@ -10,9 +10,13 @@ Created on 2018年8月21日
 # sql文件
 # source /home/ghou/tmp.sql;
 
+# 导出
 # mysqldump -usanguo_bg -p -d fantasy_sanguo_game t_copy_star > createtab.sql
 # mysqldump -usanguo_bg -p -d fantasy_sanguo_game > createtab.sql
 # mysqldump -u sanguo_bg -psanguo_passwd fantasy_sanguo_game > createtab.sql
+
+# 倒入
+# mysql -usanguo_bg -p databases_name < createtab.sql
 
 # 119.29.82.181 管理机日志
 # /data/hotblood_log/62
