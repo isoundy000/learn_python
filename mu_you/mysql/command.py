@@ -29,7 +29,7 @@ Created on 2018年8月21日
 
 # 从跳版机下载代码
 # tar zcf source.tar.gz source/
-# scp source.tar.gz 47.89.22.125:/home/t_hotboy
+# scp source.tar.gz t_hotboy@47.89.22.125:/home/t_hotboy
 
 
 # diff -r source999999/ source|grep -v pyo
@@ -103,3 +103,20 @@ Created on 2018年8月21日
 # 修改mysql表的字段类型
 # alter table news modify column title varchar(130);
 # alter table 表名 modify column 字段名 类型;
+
+# 查寻一个库中所有的表的数量
+# SELECT COUNT(*) TABLES, table_schema FROM information_schema.TABLES WHERE table_schema = 'hot_qingfeng_game_1' GROUP BY table_schema;
+
+
+def sql_joint(source_sql, **kwargs):
+    return source_sql.format(**kwargs)
+
+
+if __name__ == '__main__':
+    cids = range(26407, 26417)
+    ins_source_sql = '''insert into t_props select rid, {new_cid}, count(cid) from t_equip4 where cid={old_cid} group by rid;'''
+    del_source_sql = 'delete from t_equip4 where cid={cid};'
+
+    for cid in cids:
+        print sql_joint(ins_source_sql, new_cid=str(cid), old_cid=str(cid))
+        print sql_joint(del_source_sql, cid=cid)
