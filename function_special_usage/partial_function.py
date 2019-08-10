@@ -29,7 +29,7 @@ int4 = functools.partial(int, base=2)
 # 实际上固定了int()函数的关键字参数base，也就是：
 print int4('10010')
 # 相当于：
-kw = { 'base': 2 }
+kw = {'base': 2}
 print int4('10010', **kw)
 
 # 当传入：

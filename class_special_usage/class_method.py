@@ -7,9 +7,10 @@ Created on 2017年3月21日
 
 # Python标准库：内置函数issubclass(class, classinfo)
 # 本函数用来判断类参数class是否是类型参数classinfo的子类。
-#issubclass()  
+# issubclass()
 class Line:
-    pass  
+    pass
+
 class RedLine(Line):  
     pass
       
@@ -21,7 +22,7 @@ print(issubclass(Rect, Line))
 
 # 对象的类型
 a = 10
-print isinstance(a,(int,str))
+print isinstance(a, (int, str))
 
 
 class HouGuangDong(object):
@@ -31,11 +32,12 @@ class HouGuangDong(object):
         print xing, age, entities
 
 
-HouGuangDong.store('hou', 17, {'13':'12'})
+HouGuangDong.store('hou', 17, {'13': '12'})
 
 # 访问限制
 # 如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线__，在Python中，实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问，所以，我们把Student类改一改：
 class Student(object):
+
     def __init__(self, name, score):
         self.__name = name
         self.__score = score

@@ -1,4 +1,4 @@
-# -*-coding:utf-8-*-
+#-*-coding: utf-8-*-
 '''
 Created on 2017年5月11日
 
@@ -15,7 +15,9 @@ def now1():
 f = now1
 # 函数对象有一个__name__属性，可以拿到函数的名字：
 print now1.__name__, f.__name__
-# 现在，假设我们要增强now()函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改now()函数的定义，这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。
+# 现在，假设我们要增强now()函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改now()函数的定义，
+# 这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。
+
 # 本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下：
 def log(func):
     def wrapper(*args, **kw):
@@ -25,15 +27,20 @@ def log(func):
 
 # 把@log放到now()函数的定义处，相当于执行了语句：?
 # now = log(now)
-# 由于log()是一个decorator，返回一个函数，所以，原来的now()函数仍然存在，只是现在同名的now变量指向了新的函数，于是调用now()将执行新函数，即在log()函数中返回的wrapper()函数。
-# wrapper()函数的参数定义是(*args, **kw)，因此，wrapper()函数可以接受任意参数的调用。在wrapper()函数内，首先打印日志，再紧接着调用原始函数。
+# 由于log()是一个decorator，返回一个函数，所以，原来的now()函数仍然存在，
+# 只是现在同名的now变量指向了新的函数，于是调用now()将执行新函数，
+# 即在log()函数中返回的wrapper()函数。
+# wrapper()函数的参数定义是(*args, **kw)，因此，wrapper()函数可以接受任意参数的调用。
+# 在wrapper()函数内，首先打印日志，再紧接着调用原始函数。
 @log
 def now():
     print('2015-3-25')
 
-# 观察上面的log，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，把decorator置于函数的定义处：
+# 观察上面的log，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。
+# 我们要借助Python的@语法，把decorator置于函数的定义处：
 # 调用now()函数，不仅会运行now()函数本身，还会在运行now()函数前打印一行日志：
 now()
+print "====================================="
 
 # 如果decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数，写出来会更复杂。比如，要自定义log的文本：
 def log1(text):
@@ -48,7 +55,9 @@ def log1(text):
 @log1('execute')
 def now2():
     print('2015-3-25')
+
 now2()
+print "====================================="
 
 # 和两层嵌套的decorator相比，3层嵌套的效果是这样的：
 now2 = log1('ni cai ne')(now2)

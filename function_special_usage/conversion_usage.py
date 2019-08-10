@@ -4,13 +4,17 @@ Created on 2017年3月21日
 
 @author: ghou
 '''
-fruits = ['Banana', 'Apple', 'Lime']
-list(enumerate(fruits))
-[(0, 'Banana'), (1, 'Apple'), (2, 'Lime')]
+import re
 
+pattern = re.compile("([0-9]{20}).tag$")
+str1 = "http://1920221212121212122112112122112121212.tag"
+
+print pattern.search(str1).group(1)
+
+fruits = ['Banana', 'Apple', 'Lime']
+print list(enumerate(fruits))
 
 a = ['2', '37', '38']
-b = ['vRA', 'VIO', 'Marvin2.0.0',
-]
+b = ['vRA', 'VIO', 'Marvin2.0.0']
 dictionary = dict(zip(a, b))
 print dictionary

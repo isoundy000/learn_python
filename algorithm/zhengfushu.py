@@ -7,23 +7,29 @@ Created on 2018年8月14日
 
 a = [-1, -3, 4, 5, -7, -8, -9, 10, -11, 12]
 
-tmp = []
-for _, i in enumerate(a):
-    if _ == 0 and i > 0:
-        flag = True
-    elif _ == 0 and i < 0:
-        flag = False
+def test1():
+    tmp = []
+    for _, i in enumerate(a):
+        if _ == 0 and i > 0:
+            flag = True
+        elif _ == 0 and i < 0:
+            flag = False
 
-    if _ % 2 == 0:
-        tmp.append(abs(i) if flag else -abs(i))
-    else:
-        tmp.append(-abs(i) if flag else abs(i))
-
-
-print tmp
+        if _ % 2 == 0:
+            tmp.append(abs(i) if flag else -abs(i))
+        else:
+            tmp.append(-abs(i) if flag else abs(i))
 
 
-def test(arr):
+    return tmp
+
+
+def main(arr):
+    '''
+    一个正数一个负数的输出
+    :param arr:
+    :return:
+    '''
     arr_index_1 = []
     arr_index_2 = []
 
@@ -42,4 +48,6 @@ def test(arr):
     return arr
 
 
-print test(a)
+if __name__ == '__main__':
+    print main(a)
+    print test1()

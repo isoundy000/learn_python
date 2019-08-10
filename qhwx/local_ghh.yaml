@@ -1,0 +1,120 @@
+# redisd default config
+redis_default: &redis_default
+  default_ip: "127.0.0.1"
+  default_port: 6379
+  default_password: ~
+  default_timeout: 5
+  default_max_connections: 100
+  default_debug: False
+
+# storage conf
+enable_storage_context: False
+storage_engines:
+  redis:
+    class: rklib.model.redis.RedisEngine
+    config:
+      <<: *redis_default
+      db: 0
+      override:
+        flag: False
+  mysql:
+    class: rklib.model.mysql.MysqlEngine
+    config:
+      servers:
+        master:
+          - "127.0.0.1:3306"
+          - root
+          - "123456"
+          - jpzmgtest
+        "0":
+          - "127.0.0.1:3306"
+          - root
+          - "123456"
+          - jpzmgtest
+      sharding:
+        ? !!python/tuple
+          - 0x00
+          - 0xFF
+        : "0"
+      table:
+        ? !!python/tuple
+          - 0x0
+          - 0xF
+        : "0"
+      debug: False
+  redis_queue:
+    class: rklib.model.redis_queue.RedisQueuesEngine
+    config:
+      <<: *redis_default
+      db: 7
+      override:
+        flag: False
+  redis_hash:
+    class: rklib.model.redis_hash.RedisHashEngine
+    config:
+      <<: *redis_default
+      db: 4
+      override:
+        flag: False
+
+# django db(celery)
+celery_db_conf:
+  user: root
+  password: 123456
+  host: 127.0.0.1
+  port: 3306
+  database: celery_tasks
+
+# celery_db_info
+celery_db_info:
+  ip: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 6
+  backend: django-db
+
+# platform_server   http request
+platform_server:
+  ip: 154.8.218.107
+  port: 8001
+
+# server_info 服务器信息
+server_info:
+  server_id: 2
+  channel_id: 4
+  platform_id: 1
+  device_id: 1
+
+# global_redis_info 公共的数据存储信息
+global_redis_info:
+  ip: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 10
+
+# cache conf
+redis_sign:
+  <<: *redis_default
+  db: 2
+  override:
+    flag: False
+
+redis_lock:
+  <<: *redis_default
+  db: 5
+  override:
+    flag: False
+
+ranking_default:
+  <<: *redis_default
+  db: 3
+  rank_len: 20
+  eval_rank_func: ""
+  override:
+    flag: False
+
+# chat config
+chat_info:
+  ip: 192.168.15.30
+  port: 8080
+  port1: 9933

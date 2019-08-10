@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="dong@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="dong">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sys"/>
+    <schema id="7" parent="1" name="test"/>
+    <schema id="8" parent="1" name="ylgame"/>
+    <table id="9" parent="2" name="DEPT"/>
+    <table id="10" parent="2" name="EMP"/>
+    <table id="11" parent="2" name="SALGRADE"/>
+    <table id="12" parent="2" name="addresses"/>
+    <table id="13" parent="2" name="friendship"/>
+    <table id="14" parent="2" name="new_user"/>
+    <table id="15" parent="2" name="tmp_user"/>
+    <table id="16" parent="2" name="user"/>
+    <column id="17" parent="9" name="DEPTNO">
+      <Position>1</Position>
+      <DataType>int(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="18" parent="9" name="DNAME">
+      <Position>2</Position>
+      <DataType>varchar(14)|0</DataType>
+    </column>
+    <column id="19" parent="9" name="LOC">
+      <Position>3</Position>
+      <DataType>varchar(13)|0</DataType>
+    </column>
+    <key id="20" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>DEPTNO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="21" parent="10" name="EMPNO">
+      <Position>1</Position>
+      <DataType>int(4)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="10" name="ENAME">
+      <Position>2</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="23" parent="10" name="JOB">
+      <Position>3</Position>
+      <DataType>varchar(9)|0</DataType>
+    </column>
+    <column id="24" parent="10" name="MGR">
+      <Position>4</Position>
+      <DataType>int(4)|0</DataType>
+    </column>
+    <column id="25" parent="10" name="HIREDATE">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+    </column>
+    <column id="26" parent="10" name="SAL">
+      <Position>6</Position>
+      <DataType>double(7,2)|0</DataType>
+    </column>
+    <column id="27" parent="10" name="COMM">
+      <Position>7</Position>
+      <DataType>double(7,2)|0</DataType>
+    </column>
+    <column id="28" parent="10" name="DEPTNO">
+      <Position>8</Position>
+      <DataType>int(2)|0</DataType>
+    </column>
+    <key id="29" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>EMPNO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="30" parent="11" name="GRADE">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="31" parent="11" name="LOSAL">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="32" parent="11" name="HISAL">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="33" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="12" name="email_address">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="12" name="user_id">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="36" parent="12" name="user_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="37" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="38" parent="12" name="addresses_ibfk_1">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>dong</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="39" parent="13" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="40" parent="13" name="user_id1">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="41" parent="13" name="user_id2">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="42" parent="13" name="user_id1">
+      <ColNames>user_id1</ColNames>
+    </index>
+    <index id="43" parent="13" name="user_id2">
+      <ColNames>user_id2</ColNames>
+    </index>
+    <key id="44" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="45" parent="13" name="friendship_ibfk_1">
+      <ColNames>user_id1</ColNames>
+      <RefSchemaName>dong</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="46" parent="13" name="friendship_ibfk_2">
+      <ColNames>user_id2</ColNames>
+      <RefSchemaName>dong</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="47" parent="14" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="48" parent="14" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="49" parent="14" name="password">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <key id="50" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="51" parent="15" name="name">
+      <Position>1</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="52" parent="15" name="sex">
+      <Position>2</Position>
+      <DataType>varchar(2)|0</DataType>
+    </column>
+    <column id="53" parent="15" name="age">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="54" parent="15" name="password">
+      <Position>4</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="55" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="56" parent="16" name="name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="57" parent="16" name="fullname">
+      <Position>3</Position>
+      <DataType>varchar(128)|0</DataType>
+    </column>
+    <column id="58" parent="16" name="password">
+      <Position>4</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <key id="59" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

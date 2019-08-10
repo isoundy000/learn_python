@@ -22,6 +22,7 @@ print reduce(fn, [1, 3, 5, 7, 9])
 # 这个例子本身没多大用处，但是，如果考虑到字符串str也是一个序列，对上面的例子稍加改动，配合map()，我们就可以写出把str转换为int的函数：
 def char2num(s):
     return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+
 print reduce(fn, map(char2num, '13579'))
 # 整理成一个str2int的函数就是：
 def str2int(s):
@@ -47,7 +48,7 @@ name = ['adam', 'LISA', 'barT']
 print map(change, name)
 
 def prod(l):
-    return reduce(lambda x , y: x * y, l)
+    return reduce(lambda x, y: x * y, l)
 print prod([1, 2, 3, 4, 5])
 
 
@@ -68,11 +69,12 @@ print filter(is_not_empty, ['test', None, '', 'str', '  ', 'END'])
 # filter()删除1~100的素数
 def getPrime(num):
     flag = True
-    for x in range(1,101):
-        if x != 1 and x != num and num%x == 0:  #非质数返回False，被filter过滤掉
+    for x in range(1, 101):
+        if x != 1 and x != num and num % x == 0:  #非质数返回False，被filter过滤掉
             flag = False
     return flag
-print filter(getPrime,range(1,101))
+
+print filter(getPrime, range(1, 101))
 # 请利用filter()过滤出1~100中平方根是整数的数，即结果应该是：
 # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 import math
