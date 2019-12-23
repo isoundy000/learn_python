@@ -5,19 +5,22 @@ import arrow
 
 def main():
     today_begin = arrow.utcnow().to("Asia/Shanghai").floor("day")  # 本地时间今日凌晨
-    time_list = [i-8 for i in map(int, [0, 6, 9, 12, 15, 18, 21])]
-    print time_list
+    a = [0, 6, 7, 8, 9, 12, 15, 18, 21]
+    time_list = []
+    for i in a:
+        if i >= 8:
+            time_list.append(i - 8)
+        else:
+            time_list.append(24 - (8 - i))
+
+    print(time_list)
     now_hour = arrow.utcnow().to("Asia/Shanghai").floor("hour")
     flag = 0
-    print now_hour, '1111111'
-    for i in time_list:
-        excute_time = today_begin.shift(hours=+i)
-
+    for excute_time in time_list:
         if excute_time == now_hour:
             flag = 1
-            print excute_time, '11111111'
             break
-    print flag
+    print(flag)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ define('port', default=7777, help='run on the given port', type=int)
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
-	self.render('index_2.html', header_text="Header goes here", footer_text='Footer goes here')
+        self.render('index_2.html', header_text="Header goes here", footer_text='Footer goes here')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,93 @@
+https://blog.csdn.net/meiliangdeng1990/article/details/53209411
+
+游戏服务器学习笔记 5———— twisted Perspective Broker 透明代理
+转载自：http://www.cnblogs.com/fuhaots2009/p/3508864.html
+实际上这章压根不需要我来说，twisted官网的Doc里面有专门介绍的章节。写的非常详细。
+http://twistedmatrix.com/documents/current/core/howto/index.html
+我只能肤浅的说说firefly里面对PB的运用。
+首先firefly使用PB的目的是实现各个模块之间的通信，做到“分布式”，逻辑分离。
+比如
+master模块专门负责控制，
+gate做分发，
+game1做游戏逻辑，
+net做网络相关。
+如果不用twisted.pb的话，我们就要自己写复杂socket逻辑，来实现各个节点之间的数据通讯。
+
+现在有了twisted.pb，“妈妈再也不用担心我的学习”。
+Firefly所有的分布式相关代码都在firefly/distribute/目录
+__init__.py
+child.py
+manager.py
+node.py
+reference.py
+root.py
+
+root.py 实现PB的server功能
+node.py 实现PB的client功能。
+child.py 每个client连接上root都会初始化一个child来保存该client的相关信息，并且将这些child通过manager来管理。
+manager.py 管理root的child，通过一个字典self._childs = {}，实现一个增删改的小管理器。
+reference.py 如果你看了前面twisted官网的介绍就会知道，node只要实例化一个 pb.Referenceable 类，并把它传递给root，那么root就能够把这个pb.Referenceble当成句柄来远程调用root函数。
+前面章节提到master模块实现了一个PBRoot作为server等待client端的连接。我们这里先拿DB模块来说明。（DB模块的其它功能，和我改写的部分后面会详细介绍。）
+master模块里面实现的代码如下（这个是我改过的代码，稍后上传git）：
+38  def__startRoot(self):
+39      GlobalObject().root = PBRoot("rootservice")
+40      reactor.listenTCP(self.rootport, BilateralFactory(GlobalObject().root))
+其中PBRoot类有2个关键函数。
+    def remote_register(self,name,transport):
+        """设置代理通道
+        @param addr:(hostname,port)hostname 根节点的主机名,根节点的端口
+        """
+        log.msg('node [%s]registerdd' % name)
+        child = Child(name,transport)
+        # child.setTransport(transport)
+        self.childsmanager.addChild(child)
+
+    def remote_callTarget(self,command,*args,**kw):
+        """远程调用方法
+        @param commandId:int 指令号
+        @param data: str 调用参数
+        """
+        data =self.service.callTarget(command,*args,**kw)
+        return data
+
+remote_register(),这个函数名称被我改了，原先好像叫做remote_takeproxy()。大家理解的角度不一样，原先作者lan可能是认为这个函数的功能是root取得其它模块提供给他的代理。我认为，这个函数是其它函数注册到root。
+PB的约定是，本地函数起名remote_xxx(),远程函数调用直接callremote（“XXX”)，所以按照习惯，大家看到的remote_xxx()函数都是提供给对方调用的。
+另外，这里补充一下，twisted官网提到，PB一旦建立好连接以后，server和client的行为其实是对等的，大家权限，调用都一样。
+再看一下上面2个函数，regist可以看出就是用child类来保存一下注册过来的client。callTarget函数就是通过services来执行远程的调用命令。具体的callTarget逻辑后面有空再介绍。
+下面 我们看client端，拿DB来说。和master模块不一样，其它模块，包括dbfront，启动过程依赖配置文件config.json的设定后面详细讨论。这里我们只关注PB相关。
+下面的代码取自firefly/server/server.py
+(实际上已经被我整理过，但具体代码逻辑还是一样)
+59         if masterconf: #这里一定为True
+ 60             masterport = masterconf.get('rootport')
+ 61             self.master_remote =RemoteObject(servername)
+ 62             addr = ('localhost',masterport)
+ 63             self.master_remote.connect(addr)
+ 64             GlobalObject().masterremote =self.master_remote
+这里的RemoteObject类的初始化__init__函数如下：（firefly/distribute/node.py)
+
+   def__init__(self,name):
+ 23         """初始化远程调用对象
+ 24         @param port: int 远程分布服的端口号
+ 25         @param rootaddr: 根节点服务器地址
+ 26         """
+ 27         self._name = name
+ 28         self._factory = pb.PBClientFactory()
+ 29         self._reference = ProxyReference()#这个就是pb.Referenceable的子类
+ 30         self._addr = None
+可以看出我们实现了一个RemoteObject类，这个类包括了pb.PBClientFactory 和pb.Referenceble。在line 63对应的代码里面，我们connect的时候
+       reactor.connectTCP(addr[0], addr[1], self._factory)
+
+就建立了一个root和node的连接。然后再调用下面的函数。
+    def register(self):
+
+        """把本节点注册到RootNode,并且向RootNode发送代理通道对象
+
+        """
+
+        deferedRemote =self._factory.getRootObject()#取得root的调用句柄。
+
+       deferedRemote.addCallback(callBack,'register',self._name,self._reference)#callBack函数会调用pb.callRemote（）
+
+这个函数就2行，第一行是twisted.pb的client取得root的句柄，有了这个句柄，我们就能够通过callRemote来调用root的相应函数。这里调用的regist，对应root的remote_regist()函数，并且把自己的referenceble传递给root，那么后面root就可以通过这个referenceble来调用自己（node）了。
+OK，firefly对twisted.pb的封装和实现就介绍到这里。PB的介绍先告一段落，由于俺能力实在有限，可能大家还没有看清楚。
+别担心，我们后面接着介绍各个模块的过程中也会穿插firefly的PB运用的细节介绍。之后如果有时间精力我们再对各个模块中运用PB实现的功能做个总结。

@@ -1,0 +1,74 @@
+{
+  "master": {
+    "root_host": "127.0.0.1",
+    "root_port": 20099,
+    "web_port": 20098,
+    "server_id": 1,
+    "platform_id": 1,
+    "channel_id": "4",
+    "device_id": 1
+  },
+  "servers": {
+    "gate": {
+      "root_port": 30001,
+      "name": "gate",
+      "app": "apps.gate_server",
+      "log": "apps/logs/gate.log"
+    },
+    "net": {
+      "net_port": 31009,
+      "web_port": 31010,
+      "name": "net",
+      "remote_ports": [
+        {
+          "root_port": 30001,
+          "root_name": "gate"
+        }
+      ],
+      "app": "apps.net_server",
+      "log": "apps/logs/net.log"
+    },
+    "game1": {
+      "name": "game1",
+      "remote_ports": [
+        {
+          "root_port": 30001,
+          "root_name": "gate"
+        },
+        {
+          "root_port": 30002,
+          "root_name": "db"
+        }
+      ],
+      "app": "apps.game_server",
+      "log": "apps/logs/net.log"
+    },
+    "game2": {
+      "name": "game1",
+      "remote_ports": [
+        {
+          "root_port": 30001,
+          "root_name": "gate"
+        },
+        {
+          "root_port": 30002,
+          "root_name": "db"
+        }
+      ],
+      "app": "apps.game_server",
+      "log": "apps/logs/net.log"
+    },
+    "db": {
+      "name": "db",
+      "root_port": 30002,
+      "app": "apps.db_server",
+      "log": "apps/logs/net.log",
+      "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "db": 0,
+        "password": ""
+      }
+    }
+  }
+}

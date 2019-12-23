@@ -1,0 +1,12 @@
+2019-11-16T11:05:41+0800 [-] Loading poetry_server/poetry_server.py...
+2019-11-16T11:05:41+0800 [-] Loaded.
+2019-11-16T11:05:41+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.7.0 (/usr/bin/python 2.7.10) starting up.
+2019-11-16T11:05:41+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.selectreactor.SelectReactor.
+2019-11-16T11:05:41+0800 [-] PoetryFactory starting on 9999
+2019-11-16T11:05:41+0800 [__builtin__.PoetryFactory#info] Starting factory <__builtin__.PoetryFactory instance at 0x107329dd0>
+2019-11-16T11:05:41+0800 [-] loaded a poem from: /Users/houguangdong/Workspace/learn_python/learn_twist/poetry_server/poetry/ecstasy.txt
+2019-11-16T11:06:04+0800 [-] Received SIGINT, shutting down.
+2019-11-16T11:06:04+0800 [-] (TCP Port 9999 Closed)
+2019-11-16T11:06:04+0800 [__builtin__.PoetryFactory#info] Stopping factory <__builtin__.PoetryFactory instance at 0x107329dd0>
+2019-11-16T11:06:04+0800 [-] Main loop terminated.
+2019-11-16T11:06:04+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.

@@ -4,11 +4,13 @@
 import urllib2
 from copy import deepcopy
 from math import ceil
-from _pyio import __metaclass__
+import sys
+if sys.version[:1] == '2':
+    from _pyio import __metaclass__
 
 a = [1, 2, 3, 4]
 b = deepcopy(a)
-print b
+print(b)
 
 
 class Singleton(object):
@@ -29,8 +31,8 @@ one = MyClass()
 two = MyClass()
 
 two.a = 2
-print one.a
-print id(one), id(two)
+print(one.a)
+print(id(one), id(two))
 
 
 class Borg(object):
@@ -51,12 +53,12 @@ thre = MyClass2()
 fou = MyClass2()
 
 fou.a = 6
-print thre.a
-print id(thre), id(fou)
+print(thre.a)
+print(id(thre), id(fou))
 
-print thre == fou, thre is fou
-print id(thre.__dict__), id(fou.__dict__)
-print "-" * 40
+print(thre == fou, thre is fou)
+print(id(thre.__dict__), id(fou.__dict__))
+print("-" * 40)
 
 
 class Singleton2(type):
@@ -82,9 +84,9 @@ seven = MyClass3()
 seven.a = 4
 # print six.a
 
-print id(six), id(seven)
-print six == seven, six is seven
-print 'T' * 30
+print(id(six), id(seven))
+print(six == seven, six is seven)
+print('T' * 30)
 
 
 # 装饰器形式的单例模式
@@ -110,13 +112,13 @@ e = MyClass4()
 t = MyClass4()
 
 t.a = 3
-print e.a
+print(e.a)
 
-print id(e), id(t)
-print e == t, e is t
+print(id(e), id(t))
+print(e == t, e is t)
 
 e.x = 1
-print e.x
-print t.x
+print(e.x)
+print(t.x)
 
-print '*' * 30
+print('*' * 30)

@@ -1,0 +1,7 @@
+syntax = "proto3";
+package protoc3;
+
+
+message MyMessage {
+    map<int32, int32> mapfield = 1;
+}

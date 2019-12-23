@@ -8,34 +8,6 @@ import math
 import datetime
 import string
 
-
-# 1 有四个数字：1、2、3、4，能组成多少个互不相同且无重复数字的三位数？各是多少？
-for i in range(1, 5):
-    for j in range(1, 5):
-        for k in range(1, 5):
-            if (i != k) and (i != j) and (j != k):
-                print i, j, k
-
-# 2 题目：企业发放的奖金根据利润提成。利润(I)低于或等于10万元时，奖金可提10%；利润高于10万元，低于20万元时，低于10万元的部分按10%提成，高于10万元的部分，可提成7.5%；20万到40万之间时，高于20万元的部分，可提成5%；40万到60万之间时高于40万元的部分，可提成3%；60万到100万之间时，高于60万元的部分，可提成1.5%，高于100万元时，超过100万元的部分按1%提成，从键盘输入当月利润I，求应发放奖金总数？
-i = int(raw_input('净利润:'))
-arr = [1000000,600000,400000,200000,100000,0]
-rat = [0.01,0.015,0.03,0.05,0.075,0.1]
-r = 0
-for idx in range(0,6):
-    if i>arr[idx]:
-        r+=(i-arr[idx])*rat[idx]
-        print (i-arr[idx])*rat[idx]
-        i=arr[idx]
-print r
-
-# 3 题目：一个整数，它加上100和加上268后都是一个完全平方数，请问该数是多少？
-for i in range(10000):
-    # #转化为整型值
-    x = int(math.sqrt(i + 100))
-    y = int(math.sqrt(i + 268))
-    if(x * x == i + 100) and (y * y == i + 268):
-        print i
-
 # 4 题目：输入某年某月某日，判断这一天是这一年的第几天？
 year = int(raw_input('year:\n'))
 month = int(raw_input('month:\n'))
@@ -203,3 +175,12 @@ for i in range(1, tim + 1):
     height.append(hei)
 print('总高度：tour = {0}'.format(sum(tour)))
 print('第10次反弹高度：height = {0}'.format(height[-1]))
+
+
+# 21 题目：猴子吃桃问题：猴子第一天摘下若干个桃子，当即吃了一半，还不瘾，又多吃了一个第二天早上又将剩下的桃子吃掉一半，又多吃了一个。
+# 以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少。
+x2 = 1
+for day in range(9, 0, -1):
+    x1 = (x2 + 1) * 2
+    x2 = x1
+print x2

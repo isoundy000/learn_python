@@ -22,14 +22,14 @@ print(issubclass(Rect, Line))
 
 # 对象的类型
 a = 10
-print isinstance(a, (int, str))
+print(isinstance(a, (int, str)))
 
 
 class HouGuangDong(object):
 
     @classmethod
     def store(cls, xing, age, entities={}):
-        print xing, age, entities
+        print(xing, age, entities)
 
 
 HouGuangDong.store('hou', 17, {'13': '12'})
@@ -43,7 +43,7 @@ class Student(object):
         self.__score = score
     
     def print_score(self):
-        print '%s: %s' % (self.__name, self.__score)
+        print('%s: %s' % (self.__name, self.__score))
     
     def get_name(self):
         return self.__name
@@ -60,8 +60,8 @@ class Student(object):
  
 # 改完后，对于外部代码来说，没什么变动，但是已经无法从外部访问实例变量.__name和实例变量.__score了：
 bart = Student("ghou", 99)
-print bart._Student__name
-print bart.__name
+print(bart._Student__name)
+print(bart.__name)
 # 这样就确保了外部代码不能随意修改对象内部的状态，这样通过访问限制的保护，代码更加健壮。
 # 但是如果外部代码要获取name和score怎么办？可以给Student类增加get_name和get_score这样的方法：
 # 如果又要允许外部代码修改score怎么办？可以给Student类增加set_score方法：
