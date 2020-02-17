@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="kuaiyou_config@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="kuaiyou_config">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="fantasy_sanguo_acc"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <table id="5" parent="2" name="t_users">
+      <Comment>用户表</Comment>
+    </table>
+    <column id="6" parent="5" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="7" parent="5" name="username">
+      <Position>2</Position>
+      <DataType>varchar(72)|0</DataType>
+    </column>
+    <column id="8" parent="5" name="password">
+      <Position>3</Position>
+      <DataType>varchar(120)|0</DataType>
+    </column>
+    <column id="9" parent="5" name="role5">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+    </column>
+    <column id="10" parent="5" name="custom">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="11" parent="5" name="approve">
+      <Position>6</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <index id="12" parent="5" name="t_users_username_uindex">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="13" parent="5" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="14" parent="5" name="t_users_username_uindex">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>t_users_username_uindex</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>

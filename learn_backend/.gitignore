@@ -1,0 +1,26 @@
+*pyc
+*.pyo
+*.mo
+.idea
+*.sw*
+tags
+ctag_update
+
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+.project
+.pydevproject
+.DS_Store
+.settings
+.settings/org.eclipse.core.resources.prefs
+upload_xls
+shell.py
+shell.sh
+logs
+test/local_config.py
+debug_wenchao.py

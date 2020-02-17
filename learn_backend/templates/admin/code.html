@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>激活码页面</title>
+</head>
+<body>
+    <h3>激活码使用情况(过期的活动将不显示)</h3>
+    <table border="1">
+        <tr>
+            <th>激活码活动ID</th>
+            <th>激活码name</th>
+            <th>激活码总量</th>
+            <th>激活码已使用</th>
+            <th>激活码未使用</th>
+            <th>历史生成次数</th>
+        </tr>
+        {% for code_id, obj in show_code_status.iteritems() %}
+        <tr align="center">
+            <td>{{ code_id }}</td>
+            <td>{{ obj['name'] }}</td>
+            <td>{{ obj['all_num'] }}</td>
+            <td>{{ obj['use_num'] }}</td>
+            <form action="/{{url_partition}}/admin/code_show/" method="get">
+                <input type="hidden" name="code_id" value="{{ code_id }}">
+                <td>
+                    {{ obj['non_num'] }}
+                    <input type="submit" name="all" title="结果会在下面显示" value="显示"/>
+                </td>
+            </form>
+            <form action="/{{url_partition}}/admin/code_history/" method="get">
+                <input type="hidden" name="code_id" value="{{ code_id }}">
+                <td>
+                    {{ obj['one_num']}}
+                    <input type="submit" title="结果会在下面显示" value="显示">
+                </td>
+            </form>
+        </tr>
+        {% end %}
+    </table>
+    <hr/>
+    {% if history %}
+    <p>活动ID（{{ history[0]['code_id'] }}）的生成记录</p>
+    <table border="1">
+    <tr>
+        <th>激活码活动ID</th>
+        <th>生成时间</th>
+        <th>生成数量</th>
+        <th>激活码已使用</th>
+        <th>激活码未使用</th>
+        <th>查看详情</th>
+    </tr>
+    {% for obj in history %}
+    <tr align="center">
+        <td>{{ obj['code_id'] }}</td>
+        <td>{{ obj['create'] }}</td>
+        <td>{{ obj['all_num'] }}</td>
+        <td>{{ obj['use_num'] }}</td>
+        <form action="/{{url_partition}}/admin/code_show/" method="get">
+            <input type="hidden" name='code_id' value="{{ obj['code_id'] }}">
+            <input type="hidden" name='create' value="{{ obj['create'] }}">
+            <td>
+                {{ obj['non_num'] }}
+                <input type="submit" name="code_non" title="结果会在下面显示" value="显示" />
+            </td>
+        </form>
+        <form action="/{{url_partition}}/admin/code_show/" method="get">
+            <input type="hidden" name='code_id' value="{{ obj['code_id'] }}">
+            <input type="hidden" name='create' value="{{ obj['create'] }}">
+            <td>
+                <input type="submit" name="code_one" title="结果会在下面显示" value="显示" />
+            </td>
+        </form>
+    </tr>
+    {% end %}
+    </table>
+    {% end %}
+
+    <h3>生成激活码</h3>
+    <form action="/{{url_partition}}/admin/code_create/" method="post">
+        <table>
+            <tr align="center">
+                <td>
+                    选择活动ID:
+                    <select name="code_id" title="当前激活码活动id">
+                        {% for code_id in show_code_config %}
+                        <option value="{{ code_id }}">{{ code_id }}</option>
+                        {% end %}
+                    </select>
+                </td>
+                <td>数量:<input type="text" name="num" value="1000"/></td>
+                <td><button type="submit" title="结果会在下面显示" onclick="return confirm('是否确认生成激活码?')">生成</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <hr/>
+    {% if show_codes %}
+    <p> 激活码:</p>
+    <textarea style="margin: 2px; height: 355px; width: 1220px;">
+    {{ show_codes }}
+    </textarea>
+    {% end %}
+</body>
+</html>

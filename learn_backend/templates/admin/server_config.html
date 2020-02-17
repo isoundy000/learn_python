@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务器信息</title>
+</head>
+<body>
+    {% for m in msg %}
+        <font color='red'>{{m}}</font>
+    {% end %}
+    <table border="1">
+        <tr><th>服务器编号</th><th>服务器名称</th><th>服务器地址</th><th>开放</th><th>关闭</th><th>提交修改</th><th>类型</th><th>Nginx类型</th><th>服务器标记</th><th>排序权重</th></tr>
+        {% for i in server_list %}
+        <tr>
+            <form action="/{{url_partition}}/admin/server_change/" method="get" accept-charset="utf-8">
+                <td>
+                    {{i['server']}}<input type="hidden" name="server_key" value="{{i['server']}}">
+                </td>
+                <td>
+                    <input type="text" name="server_name" value="{{i['server_name']}}">
+                </td>
+                <td>
+                    domain: {{i.get('domain', '')}}<br/>
+                    lua: {{i.get('lua_url', '')}}<br/>
+                    resource: {{i.get('resource_url', '')}}<br/>
+                </td>
+                <td>
+                    <input type="radio" name="is_open" {{ 'checked="checked"' if i['is_open'] else "" }} value="1"/>开放
+                </td>
+                <td>
+                    <input type="radio" name="is_open" {{ 'checked="checked"' if not i['is_open'] else ""}} value="0"/>关闭
+                </td>
+                <td>
+                    <input type="radio" name="flag" {{ 'checked="checked"' if i['flag'] == 0 else "" }} value="0"/><font color="blue">蓝闲</font><br/>
+                    <input type="radio" name="flag" {{ 'checked="checked"' if i['flag'] == 1 else "" }} value="1"/><font color="green">新绿</font><br/>
+                    <input type="radio" name="flag" {{ 'checked="checked"' if i['flag'] == 2 else "" }} value="2"/><font color="red">满红</font><br/>
+                    <input type="radio" name="flag" {{ 'checked="checked"' if i['flag'] == 3 else "" }} value="3"/><font color="orange">热橙</font><br/>
+                </td>
+                <td>
+                    {{ config_types.get(i['config_type']) }}
+                </td>
+                <td>
+                    {% if server_config_type and server_config_type.get(i['server']) %}
+                        {{config_types.get(server_config_type[i['server']], i['server'])}}
+                    {% elif i['server'] != 'master' %}
+                        <a href="/{{url_partition}}/admin/server_config_type/?server={{i['server']}}">点击查看</a>
+                    {% end %}
+                </td>
+                <td>
+                    <input type="text" name="sort_id" value="{{i['sort_id']}}">
+                </td>
+                <td>
+                    <input type="submit" name="" value="提交修改"/>
+                </td>
+            </form>
+            <td>
+                <a href='/{{url_partition}}/admin/config/?server_id={{i["server"]}}'>配置</a>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+</body>
+</html>

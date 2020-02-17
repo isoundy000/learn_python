@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加删除技能</title>
+</head>
+<body>
+    <br/>
+    <form action="/{{url_partition}}/admin/upload_skill/", method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>上传文件</legend>
+            是leader技能?<input type="checkbox" name="is_leader_skill"> yes
+            <input type="file" name="script"/>
+            <input type="submit" value="上传"/>
+        </fieldset>
+    </form>
+
+    <table border="0" style="width: 100%;">
+        <tr><th>现有的脚本文件</th><th></th><th>测试结果</th></tr>
+        <tr>
+            <td style="width: 200px;">
+                <select multiple name="script_name" id="skill_list" form='skill_test' size=20>
+                    {% for i in own_file %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% end %}
+                </select>
+            </td>
+            <td style="text-align: center; width:10%;">
+                <form id="skill_test" action="/{{url_partition}}/admin/skill_test/" method="post" accept-charset="utf-8">
+                    <input type="checkbox" name="is_leader_skill"/> leader skill<br/>
+                    <input type="submit" name="测试！" value="TEST"/>
+                </form>
+            </td>
+            <td style="width: 72%;">
+                <textarea style="width:100%;height: 300px">
+                    {{battle_result}}
+                </textarea><br/>
+            </td>
+        </tr>
+    </table>
+
+    <form action="/{{url_partition}}/admin/del_skill_script/" method="post">
+        <fieldset>
+            <legend>输入要删除的文件名字</legend>
+            <input type="text" name="del_file" value=""/>
+            <input type="submit" value="删除"/>
+        </fieldset>
+    </form>
+</body>
+</html>

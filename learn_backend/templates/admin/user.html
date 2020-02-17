@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+</head>
+<body>
+    {% if msgs%}
+        {% for msg in msgs %}
+            <font color='red'>{{msg}}</font>
+        {%end%}
+    {% end %}
+    <div id="uid_input">
+        <form action="/{{url_partition}}/admin/user" method="get" accept-charset="utf-8" enctype="multipart/form-data">
+            <p>uid: <input type="text", name="uid" value="{{user.uid}}"/><input type="submit" value="获取用户信息"/></p>
+        </form>
+    </div>
+</body>
+</html>

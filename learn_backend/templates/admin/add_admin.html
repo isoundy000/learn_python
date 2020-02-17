@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+</head>
+<script language="javascript">
+    function clear_cache() {
+        var name_obj = document.getElementById('username');
+        var pwd_obj = document.getElementById('password');
+        name_obj.value = '';
+        pwd_obj.value = '';
+    }
+    clear_cache();
+    function chk() {
+        var name_obj = document.getElementById('username');
+        if (name_obj.value.length == 0){
+            alert("请输入帐号！");
+            name_obj.focus();
+            return false;
+        }
+
+        var pwd_obj = document.getElementById('password');
+        var pwd_obj1 = document.getElementById('password1');
+        if (!pwd_obj.value){
+            alert("密码不能为空");
+            pwd_obj.value = '';
+            pwd_obj1.value = '';
+            pwd_obj.focus();
+            return false;
+        }
+        if (pwd_obj.value != pwd_obj1.value){
+            alert("前后密码不一致, 请重新输入");
+            pwd_obj.value = '';
+            pwd_obj1.value = '';
+            pwd_obj.focus();
+            return false;
+        }
+
+        var email_obj = document.getElementById('email');
+        var Regex = /^(?:\w+\.?)*\w+@(?:\w+\.)*\w+$/;
+        if (!Regex.test(email_obj.value)){
+            alert("请输入有效的email地址");
+            email_obj.value = "";
+            email_obj.focus();
+            return false;
+        }
+
+        return true;
+    }
+</script>
+<body>
+    {% if message %}
+        <p style="color:red;"> {{message}}</p>
+    {% end %}
+    <h2>用户权限查询和修改</h2>
+    <form action="/{{url_partition}}/admin/add_admin/" method="GET", accept-charset="utf-8">
+        <p>
+            <input type="text" name="username">
+            <input type="submit" value="show">
+        </p>
+    </form>
+    {% if not username %}
+    <table style="width: 100%">
+        {% for user, info in all_user.iteritems() %}
+            <tr>
+                <td style="width:20%;border-width:2px; border-style:solid; text-align:center"><a href="/{{url_partition}}/admin/add_admin/?username={{user}}">{{user}}</a> </td>
+                <td style="width:20%;border-width:2px; border-style:solid; text-align:center">{{info.get('email')}}</td>
+                <td style="width:20%;border-width:2px; border-style:solid; text-align:center">{{info.get('last_ip')}}</td>
+                <td style="width:20%;border-width:2px; border-style:solid; text-align:center">{{str(info.get('last_login'))}}</td>
+            </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if user_exist %}
+    <form action="/{{url_partition}}/admin/modify_admin/" method="POST">
+        <p>用户名:<input type="text" name="username" value="{{username}}" readonly="readonly"/></p>
+        <h3>用户权限</h3>
+        {% if menu %}
+            <h4>左侧导航条:</h4>
+            <ul>
+                {% for mv, mm in menu %}
+                    <li><input value="{{mv}}" name={{mv}}  type="checkbox" {{checked_user_left_href_list(mv)}}/> {{mm}} </li>
+                {% end %}
+            </ul>
+            <h4>二级菜单：</h4>
+            <ul>
+                {% for key, name in sorted(right_links.iteritems(), key=lambda x:x[0]) %}
+                    <li><input value={{key}} name={{key}}  type="checkbox" {{checked_user_right_links(key)}} /> {{name}} </li>
+                {% end %}
+            </ul>
+            <input id="submit" name="submit" type="submit" value="确认修改" />
+        {% end %}
+    </form>
+    {% end %}
+
+    <hr>
+    <h2>添加新用户</h2>
+    <form action="/{{url_partition}}/admin/add_admin/" method="POST" onsubmit="return chk()">
+        <table border="1" width="700">
+            <tr>
+                <td>帐号：</td>
+                <td><input type="text" id="username" name="username"></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" id="password" name="password"></td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td><input type="password" id="password1" name="password1"></td>
+            </tr>
+            <tr>
+                <td>邮件地址: </td>
+                <td><input type="email" id="email" name="email"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><p>用户权限</p><td>
+            </tr>
+            {% if menu %}
+            <tr>
+                <td colspan="3">
+                    <ul><li>用户</li></ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    左侧导航条：<br/>
+                    <ul>
+                        {% for mv, mm in menu %}
+                           <li> <input value={{mv}} name={{mv}}  type="checkbox" checked="checked" id="left_check"/>{{mm}}
+
+                           </li>
+                        {% end %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    二级菜单：<br/>
+                    <ul>
+                    {% for key, name in sorted(right_links.iteritems(), key=lambda x:x[0]) %}
+                        <li><input  value={{key}} name={{key}}  type="checkbox" checked="checked" id="right_check"/>{{name}}</li>
+                    {%end%}
+                   </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center"><input name="submit" type="submit" value="添加"/></td>
+            </tr>
+            {% end %}
+        </table>
+    </form>
+</body>
+</html>

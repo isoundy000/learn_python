@@ -6,7 +6,7 @@ class SnakeMatrix():
             self.loop_num = n/2+1
         else:
             self.loop_num = n/2
-        self.loop_order_list = range(self.loop_num)
+        self.loop_order_list = range(int(self.loop_num))
         
     def matrix_initialization(self, n):
         size = range(n)
@@ -40,7 +40,7 @@ class SnakeMatrix():
 if __name__ == "__main__":
     sm = SnakeMatrix(20)
     for i in sm.set_all_value():
-        print i,"\n"
+        print(i,"\n")
     
         
         

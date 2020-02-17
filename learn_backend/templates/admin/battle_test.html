@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>战斗页面</title>
+</head>
+<body>
+    <h3 align="center">选择战斗双方属性</h3>
+    <form action="/{{url_partition}}/admin/battle_test/" method="post" id='fight_form'>
+        <table style="width: 100%; border: none">
+            <tbody>
+                <tr>
+                    <td style="width: 40%; vertical-align: top; border: 1">
+                        <table style="text-align:left; width: 80%; table-layout: auto">
+                            <tbody>
+                                <tr>
+                                    <th colspan="20" style="text-align:center;">选择attacker队伍</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;" colspan="2">选择阵形:</td>
+                                    <td style="text-align:center;" colspan="1">
+                                        <select name="a-f_id" value="" style="width:5em;">
+                                            {% if int(args.get('a-f_id', [0])[0]) %}
+                                            <option value="{{ int(args['a-f_id'][0]) }}" selected>
+                                                {{ int(args['a-f_id'][0]) }}
+                                            </option>
+                                            {% end %}
+
+                                            {% for f_id, obj in formation.iteritems() %}
+                                            <option value="{{ f_id }}">
+                                                {{ f_id }}
+                                            </option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10em;">位置序号</td>
+                                    <td>卡牌ID</td>
+                                    <td>卡牌LV</td>
+                                    <td>技能1ID</td>
+                                    <td>技能1LV</td>
+                                    <td>技能2ID</td>
+                                    <td>技能2LV</td>
+                                    <td>技能3ID</td>
+                                    <td>技能3LV</td>
+                                    <td>技能4ID</td>
+                                    <td>技能4LV</td>
+                                    <td>技能5ID</td>
+                                    <td>技能5LV</td>
+                                </tr>
+                                {% for i in team_pos %}
+                                <tr>
+                                    {% if i <= 10 %}
+                                    <td>POS{{ i }}({{ i-1 }}):</td>
+                                    {% else % }
+                                    <td>POS{{ i }}({{ i-10 }}):</td>
+                                    {% end %}
+                                    <td>
+                                        <select name='a-c_id-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('a-c_id-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-c_id-%s' % i][0]) }}" selected>
+                                                {{ card_detail[int(args['a-c_id-%s' % i][0])]['name'] }} {{ int(args['a-c_id-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">
+                                                None
+                                            </option>
+                                            {% for c_id, obj in card_detail_sort %}
+                                            <option value="{{ c_id }}">
+                                                {{ obj['name'] }}({{ c_id }})
+                                            </option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="a-c_lv-{{ i }}" value="1" style="width:4em;">
+                                            {% if int(args.get('a-c_lv-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-c_lv-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-c_lv-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_id1-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_id1-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_id1-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['a-s_id1-%s' % i][0])]['skill_name'] }} {{ int(args['a-s_id1-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_lv1-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_lv1-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_lv1-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-s_lv1-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_id2-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('a-s_id2-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_id2-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['a-s_id2-%s' % i][0])]['skill_name'] }} {{ int(args['a-s_id2-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{ obj['skill_name'] }}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_lv2-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_lv2-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_lv2-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-s_lv2-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_id3-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('a-s_id3-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_id3-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['a-s_id3-%s' % i][0])]['skill_name'] }} {{ int(args['a-s_id3-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_lv3-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_lv3-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_lv3-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-s_lv3-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_id4-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('a-s_id4-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_id4-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['a-s_id4-%s' % i][0])]['skill_name'] }} {{ int(args['a-s_id4-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_lv4-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_lv4-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_lv4-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-s_lv4-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_id5-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('a-s_id5-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_id5-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['a-s_id5-%s' % i][0])]['skill_name'] }} {{ int(args['a-s_id5-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='a-s_lv5-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('a-s_lv5-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['a-s_lv5-%s' % i][0]) }}" selected>
+                                                {{ int(args['a-s_lv5-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                {% end %}
+                            </tbody>
+                        </table>
+                        <br>
+                    </td>
+                    <td style="width: 10%; vertical-align: center; border: 1">
+                        <table style="text-align: left; width: 80%; table-layout: auto">
+                            <tbody>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td><input type="submit" value="VS-VS" name='vs' onclick="showFight(this)"></td></tr>
+                                <tr><td><input type="reset" value="RESET" name='vs'></td></tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td style="width: 40%; vertical-align: top; border: 1">
+                        <table style="text-align: left; width: 80%; table-layout: auto">
+                            <tbody>
+                                <tr>
+                                    <th colspan="20" style="text-align:center;">选择defender队伍</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;" colspan="2">选择阵形:</td>
+                                    <td style="text-align:center;" colspan="1">
+                                        <select name="b-f_id" value="" style="width:5em;">
+                                            {% if int(args.get('b-f_id', [0])[0]) %}
+                                            <option value="{{ int(args['b-f_id'][0]) }}" selected>
+                                                {{ int(args['b-f_id'][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for f_id, obj in formation.iteritems() %}
+                                            <option value="{{ f_id }}">{{ f_id }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>位置序号</td>
+                                    <td>卡牌ID</td>
+                                    <td>卡牌LV</td>
+                                    <td>技能1ID</td>
+                                    <td>技能1LV</td>
+                                    <td>技能2ID</td>
+                                    <td>技能2LV</td>
+                                    <td>技能3ID</td>
+                                    <td>技能3LV</td>
+                                </tr>
+                                {% for i in team_pos %}
+                                <tr>
+                                    {% if i <= 10 %}
+                                    <td>POS{{ i }}({{ i-1 + 100 }}):</td>
+                                    {% else %}
+                                    <td>POS{{ i }}({{ i-10 }}):</td>
+                                    {% end %}
+                                    <td>
+                                        <select name="d-c_id-{{ i }}" value="" style="width:5em;">
+                                            {% if int(args.get('d-c_id-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-c_id-%s' % i][0]) }}" selected>
+                                                {{ card_detail[int(args['d-c_id-%s' % i][0])]['name']}} {{ int(args['d-c_id-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">
+                                                None
+                                            </option>
+                                            {% for c_id, obj in card_detail_sort %}
+                                            <option value="{{ c_id }}">{{ obj['name'] }}({{ c_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-c_lv-{{ i }}' value="1" style="width:4em;">
+                                            {% if int(args.get('d-c_lv-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-c_lv-%s' % i][0]) }}" selected>
+                                                {{ int(args['d-c_lv-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_id1-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('d-s_id1-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_id1-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['d-s_id1-%s' % i][0])]['skill_name']}} {{ int(args['d-s_id1-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_lv1-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('d-s_lv1-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_lv1-%s' % i][0]) }}" selected>
+                                                {{ int(args['d-s_lv1-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_id2-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('d-s_id2-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_id2-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['d-s_id2-%s' % i][0])]['skill_name']}} {{ int(args['d-s_id2-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_lv2-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('d-s_lv2-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_lv2-%s' % i][0]) }}" selected>
+                                                {{ int(args['d-s_lv2-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_id3-{{ i }}' value="" style="width:5em;">
+                                            {% if int(args.get('d-s_id3-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_id3-%s' % i][0]) }}" selected>
+                                                {{ skill_detail[int(args['d-s_id3-%s' % i][0])]['skill_name']}} {{ int(args['d-s_id3-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            <option value="0">None</option>
+                                            {% for s_id, obj in skill_detail_sort %}
+                                            <option value="{{ s_id }}">{{obj['skill_name']}}({{ s_id }})</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name='d-s_lv3-{{ i }}' value="1" style="width:5em;">
+                                            {% if int(args.get('d-s_lv3-%s' % i, [0])[0]) %}
+                                            <option value="{{ int(args['d-s_lv3-%s' % i][0]) }}" selected>
+                                                {{ int(args['d-s_lv3-%s' % i][0]) }}
+                                            </option>
+                                            {% end %}
+                                            {% for x in xrange(1, 51) %}
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            {% end %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                {% end %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <hr>
+    {% if battle_result %}
+    <p> 战斗数据:
+        <textarea style="margin: 2px; width: 1220px;">
+            {{ battle_result }}
+        </textarea>
+    </p>
+    <hr>
+    {% end %}
+
+    {% if battle_process %}
+    <p> 战斗过程:</p>
+        {% for data in battle_process %}
+            {% if data.startswith('SORT') %}
+            <hr>
+            {% end %}
+            <p><pre>{{ data }}</pre></p>
+        {% end %}
+    {% end %}
+</body>
+</html>

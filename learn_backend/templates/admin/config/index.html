@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <h3>游戏配置:</h3>
+    <hr>
+    <form action="/{{url_partition}}/admin/config/">
+        <textarea name="config_refresh_text">{{config_refresh_text}}</textarea><br/>
+        <input type="text" size="5" value="{{config_refresh_flag}}" name="config_refresh_flag"/>
+        <input type="submit" value="提示前端更新配置" onclick="return confirm('确定更新')"/>ps:0不更新；1 更新
+    </form>
+    <hr>
+    <form action="/{{url_partition}}/admin/config/">
+        <input type="text" size="5" value="{{test_res_version_flag}}" name="test_res_version_flag"/>
+        <input type="submit" value="是否热更测试" onclick="return confirm('确定测试热更')"/>ps:0 不测试；1 测试
+    </form>
+    <hr>
+    {% for index, name in config_types.iteritems() %}
+        {% if config_type == index %}
+            <font style="color: red;">{{name}}</font>
+        {% else %}
+            <a href="/{{url_partition}}/admin/config/?config_type={{index}}&config_key={{config_key}}&server_id={{server_id}}">{{name}}</a>
+        {% end %}
+    {% end %}
+    <hr>
+
+    <span style='color: red'>{{msg}}</span>
+    <table style="width: 100%">
+        {% for i in config_name_list %}
+            <tr>
+                {% for ii in i %}
+                    <td style="width:20%;border-width:2px; border-style:solid; text-align:center">
+                        <a href="/{{url_partition}}/admin/config/?config_key={{ii[0]}}&server_id={{server_id}}&config_type={{config_type}}">{{ ii[4] }}</a>
+                    </td>
+                {% end %}
+            </tr>
+        {% end %}
+    </table>
+    <form action="/{{url_partition}}/admin/upload/" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>上传文件</legend>
+            <input type="hidden" name="config_type" value="{{config_type}}"/>
+            <input type="hidden" name="server_id" value="{{server_id}}"/>
+            <input type="file" name="xls"/>
+            <input type="submit" value="上传" onclick="return confirm('确定上传？{{config_types[config_type]}}')"/>
+        </fieldset>
+    </form>
+    <div>
+        <hr/><br/>
+        {{config_cn}}/{{config_key}}<br/>
+        <textarea style="width:90%;height: 100px">
+            {{config_data}}
+        </textarea>
+    </div>
+    <br/>
+    <div>
+        <a href="/{{url_partition}}/admin/get_all_config">下载测试用配置</a>
+    </div>
+</body>
+</html>

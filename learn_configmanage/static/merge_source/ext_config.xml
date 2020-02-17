@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--运行配置文件-->
+<Server>
+    <Info>
+        <Acc>1</Acc>
+        <Game></Game>
+        <ID>1</ID>
+        <Type>Ext</Type>
+        <Code>0XEE1D</Code>
+    </Info>
+    <Debug>true</Debug><!--调试开关-->
+    <Log><!--日志-->
+        <switch>true</switch><!--开关-->
+        <level>1</level>     <!--级别（预留）-->
+        <path></path><!--写入路径-->
+        <print>true</print><!--是否打印显示-->
+    </Log>
+    <DataBase><!--数据库配置区域-->
+        <DB1><!--1号数据库-->
+            <Engine>MySQL</Engine><!--引擎类型 MySQL Oracle ...-->
+            <host>127.0.0.1</host><!--数据库IP地址-->
+            <port></port>     <!--数据库端口号-->
+            <user>sanguo_bg</user>     <!--用户名-->
+            <unix_socket></unix_socket>
+            <password>sanguo_passwd</password> <!--密码-->
+            <db></db>   <!--对应数据库名字-->
+            <param>charset=utf8mb4</param> <!--数据库参数-->
+            <echo>false</echo>     <!--SQLAlchemy echo-->
+        </DB1>
+    </DataBase>
+    <Interface><!--接口-->
+        <Ext>
+            <ProtocolType>protobuf</ProtocolType>
+            <listener>
+                <ip>127.0.0.1</ip>
+                <port></port>
+            </listener>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+            <max>100</max><!--最大同时接入连接数-->
+        </Ext>
+        <WSGI>
+            <ProtocolType>http</ProtocolType>
+            <listener><!--监听-->
+                <ip></ip><!--ip地址-->
+                <port></port><!--端口号-->
+            </listener>
+        </WSGI>
+    </Interface>
+    <Configure><!--配置文件-->
+        <root></root><!--配置文件根目录-->
+    </Configure>
+    <Parallels>
+        <Workers>50</Workers>
+    </Parallels>
+</Server>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--[if IE 8] <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9] <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE] <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--BEGIN HEAD-->
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width,initial-scale=1.0, maximum-scale=1, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="{{static_url('assets/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{static_url('assets/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet" type="text/css"/>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+	<!-- END PAGE LEVEL PLUGIN STYLES -->
+	<!-- BEGIN THEME STYLES -->
+	<link href="{{static_url('assets/css/style-metronic.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/style.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/style-responsive.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/themes/darkblue.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
+	<!-- END THEME STYLES -->
+</head>
+<body class="page-header-fixed page-full-width">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <span id="username" class="username"></span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="divider"></li>
+                    <li><a href="/exit"><i class="fa fa-key"></i>退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="page-container">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="page-title">
+                        <small></small>
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="modal fade" id="auth_modal">
+                    <div class="modal-dialog">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class=modal-body">
+                            <div class="note note-danger">
+                                <h4 class="block">无权限，请进入其他系统。</h4>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn red">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a id="enter_manage" class="more" href="#">
+                    <div class="dashboard-stat blue-hoki">
+                        <div class="visual">
+                            <i class="fa fa-gears"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number">
+
+                            </div>
+                            <div class="desc">
+                                管理系统
+                            </div>
+                        </div>
+                        <!--<a id="enter_manage" class="more" href="#">-->
+                            <!--进入<i class="m-icon-swapright m-icon-white"></i>-->
+                        <!--</a>-->
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a id="enter_art" class="more" href="#">
+                    <div class="dashboard-stat green-haze">
+                        <div class="visual">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number"></div>
+                            <div class="desc">策划系统</div>
+                        </div>
+                        <!--<a id="enter_art" class="more" href="#">-->
+                            <!--进入 <i class="m-icon-swapright m-icon-white"></i>-->
+                        <!--</a>-->
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a id="enter_count" class="more" href="#">
+                    <div class="dashboard-stat purple-plum">
+                        <div class="visual">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number"></div>
+                            <div class="desc">统计系统</div>
+                        </div>
+                        <!--<a id="enter_count" class="more" href="#">-->
+                            <!--进入 <i class="m-icon-swapright m-icon-white"></i>-->
+                        <!--</a>-->
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a id="enter_operate" class="more" href="#">
+                    <div class="dashboard-stat red-intense">
+                        <div class="visual">
+                            <i class="fa fa-desktop"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number"></div>
+                            <div class="desc">运维系统</div>
+                        </div>
+                        <!--<a id="enter_operate" class="more" href="#">-->
+                            <!--进入 <i class="m-icon-swapright m-icon-white"></i>-->
+                        <!--</a>-->
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a id="enter_service" class="more" href="#">
+                    <div class="dashboard-stat grey-gallery">
+                        <div class="visual">
+                            <i class="fa fa-cog"></i>
+                        </div>
+                        <div class="details">
+                            <div class="number"></div>
+                            <div class="desc">运营系统</div>
+                        </div>
+                        <!--<a id="enter_operate" class="more" href="#">-->
+                            <!--进入 <i class="m-icon-swapright m-icon-white"></i>-->
+                        <!--</a>-->
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->
+	<!--[if lt IE 9]>
+	<script src="{{static_url('assets/plugins/respond.min.js')}}"></script>
+	<script src="{{static_url('assets/plugins/excanvas.min.js')}}"></script>
+	<![endif]-->
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+	<script src="{{static_url('assets/plugins/jquery-migrate-1.2.1.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js')}}" type="text/javascript"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script src="{{static_url('assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js')}}" type="text/javascript" ></script>
+	<script src="{{static_url('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery.blockui.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery.cookie.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/uniform/jquery.uniform.min.js')}}" type="text/javascript" ></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="{{static_url('assets/plugins/jquery-validation/dist/jquery.validate.min.js')}}" type="text/javascript"></script>
+
+	<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="{{static_url('assets/scripts/app.js')}}" type="text/javascript"></script>
+    <script src="{{static_url('assets/scripts/common.js')}}" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            App.init()
+        })
+    </script>
+</body>
+</html>

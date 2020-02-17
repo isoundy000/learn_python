@@ -2,203 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/activity.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/activity1.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/box.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/combination.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/gameparams.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/confparser/xlsxfile/item.xlsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/20140707191036640.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/format_string.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/struct_p2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/struct_p3.jpeg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/algorithm/chang_gui.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/algorithm/eg_1234.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/algorithm/eg_jiang_jin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/algorithm/eg_num_sqrt.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/algorithm/eg_year_of_day.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/basic_knowledge/learn_python3_type.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_logrotate/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_logrotate/logrotate_nginx.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_memcached/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_memcached/mac_install_memcache.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_memcached/test_local_memcache.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_memcached/test_memcache.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_pyexcel/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_pyexcel/parse_game_config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_rabbitMQ/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_rabbitMQ/rabbitMQ.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_redis/redis.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_sqlalchemy/sqlalchemy.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/app_main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/commands/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/commands/config_update.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/db/init_txredisapi.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/db/initapp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/db_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/game/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/game/initapp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/game_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/gate/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/gate/initapp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/gate_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/action/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/core/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/core/net_factory.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/initapp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/service/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net/web/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/apps/net_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/daemon_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/daemon_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/twisted/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/twisted/plugins/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/daemon_server/twisted/plugins/daemon_plugin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/alchimia/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/alchimia/engine.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/alchimia/strategy.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/alchimia/test_alchimia.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/dbpool.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/madminmanager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/memclient.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/memobject.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/mmode.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/tx_redis/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/tx_redis/txredisapi.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/dbentrust/util.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/child.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/manager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/reference.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/distributed/root.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/http_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/http_server/http_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/learn_reactor/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/learn_reactor/callFromThread.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/learn_reactor/callLater.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/line_receiver/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/line_receiver/line_receiver_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/line_receiver/line_receiver_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/master/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/master/master.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/netconnect/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/netconnect/connection.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/netconnect/datapack.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/netconnect/manager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/netconnect/protoc.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/pb_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/pb_server/client_pb.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/pb_server/game.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/pb_server/server_pb.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/poetry/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/poetry/aa.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/poetry/ecstasy.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/poetry_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/poetry_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/twisted/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/twisted/echo.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/twisted/plugins/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/twisted/plugins/echo_plugin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/poetry_server/twisted/plugins/fastpoetry_plugin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/server/globalobject.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/server/logobj.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/server/server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/startmaster.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/tcp_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/tcp_server/socket_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/tcp_server/twist_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/tcp_server/twist_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_dbentrust.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_distributed_node.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_distributed_root.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_netconnect_client.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_netconnect_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_server_apptest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_server_main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/test/test_server_master.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/twistd_command/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/twistd_command/twistd_command.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/utils/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/utils/const.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/utils/interfaces.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/utils/services.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/utils/singleton.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/web/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/web/delayrequest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/web_server/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_twist/web_server/web_server.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mac_install_problem/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mac_install_problem/homebrew_slow.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mac_install_problem/install_twist.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__add__/__add__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__add__/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__all__/__all__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__all__/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__all__/test__all__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__doc__/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__doc__/doc.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__setatrr__/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/__setatrr__/setattr_getattr_setitem_getitem.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/collections/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/func_run_time/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/func_run_time/run_time.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/learn_exec_eval_complie/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/learn_exec_eval_complie/learn_complie.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/learn_exec_eval_complie/learn_eval.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/learn_exec_eval_complie/learn_exec.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/p2_a_p3_thread_diff.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/thread_bug.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/thread_p3_2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/threading_0.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/signal/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/signal/learn.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/str_exchange_byte/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/str_exchange_byte/str_exchange_byte.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/struct_p2_1.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module_usage/struct/struct_p3_0.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/add_person.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/add_person1.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/addressbook.proto" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/addressbook1.proto" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mu_you/protoc3/emu.proto" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/config_update.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/log_parser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/sfs_db.sql" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_0.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_1.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_2.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_3.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_4.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/learn_staticmethod.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sqlalchemy/lian_xi.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/module_usage/inner-module/learn_collections.py" afterPath="$PROJECT_DIR$/module_usage/collections/learn_collections.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/module_usage/inner-module/learn_struct.py" afterPath="$PROJECT_DIR$/module_usage/struct/struct_p2_0.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/learn_thread.py" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/thread_0.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/learn_thread_1.py" afterPath="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/thread_p2_1.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_backend/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_backend/models/models.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/learn_python.iml" afterPath="$PROJECT_DIR$/.idea/learn_python.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.settings/org.eclipse.core.resources.prefs" afterPath="$PROJECT_DIR$/.settings/org.eclipse.core.resources.prefs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/class_special_usage/class_method.py" afterPath="$PROJECT_DIR$/class_special_usage/class_method.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/class_special_usage/singleton.py" afterPath="$PROJECT_DIR$/class_special_usage/singleton.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/function_special_usage/property.py" afterPath="$PROJECT_DIR$/function_special_usage/property.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hundred_examples/one_hundred_examples.py" afterPath="$PROJECT_DIR$/hundred_examples/one_hundred_examples.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tornado/main_1.py" afterPath="$PROJECT_DIR$/learn_tornado/main_1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mu_you/protoc/readme.txt" afterPath="$PROJECT_DIR$/mu_you/protoc/readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qhwx/execute_time.py" afterPath="$PROJECT_DIR$/qhwx/execute_time.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/eg_99.py" afterPath="$PROJECT_DIR$/algorithm/eg_99.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/eg_list_trun_dict_100.py" afterPath="$PROJECT_DIR$/algorithm/eg_list_trun_dict_100.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/snake_matrix.py" afterPath="$PROJECT_DIR$/algorithm/snake_matrix.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/test1.txt" afterPath="$PROJECT_DIR$/algorithm/test1.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/test2.txt" afterPath="$PROJECT_DIR$/algorithm/test2.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/env_config/cloud_andriod.py" afterPath="$PROJECT_DIR$/learn_backend/env_config/cloud_andriod.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/env_config/dev_new.py" afterPath="$PROJECT_DIR$/learn_backend/env_config/dev_new.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/game_config.py" afterPath="$PROJECT_DIR$/learn_backend/game_config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/handlers.py" afterPath="$PROJECT_DIR$/learn_backend/handlers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lang_config/return_msg_ch.py" afterPath="$PROJECT_DIR$/learn_backend/lang_config/return_msg_ch.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/core/environ.py" afterPath="$PROJECT_DIR$/learn_backend/lib/core/environ.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/core/handlers/htornado.py" afterPath="$PROJECT_DIR$/learn_backend/lib/core/handlers/htornado.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/db/__init__.py" afterPath="$PROJECT_DIR$/learn_backend/lib/db/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/utils/__init__.py" afterPath="$PROJECT_DIR$/learn_backend/lib/utils/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/utils/debug.py" afterPath="$PROJECT_DIR$/learn_backend/lib/utils/debug.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/lib/utils/encoding.py" afterPath="$PROJECT_DIR$/learn_backend/lib/utils/encoding.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/logics/share.py" afterPath="$PROJECT_DIR$/learn_backend/logics/share.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/logics/user.py" afterPath="$PROJECT_DIR$/learn_backend/logics/user.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/models/config.py" afterPath="$PROJECT_DIR$/learn_backend/models/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/return_msg_config.py" afterPath="$PROJECT_DIR$/learn_backend/return_msg_config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/run.py" afterPath="$PROJECT_DIR$/learn_backend/run.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/settings.py" afterPath="$PROJECT_DIR$/learn_backend/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/views/user.py" afterPath="$PROJECT_DIR$/learn_backend/views/user.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/common/configmanager.py" afterPath="$PROJECT_DIR$/learn_configmanage/common/configmanager.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/common/dbhelper.py" afterPath="$PROJECT_DIR$/learn_configmanage/common/dbhelper.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/common/global_variable.py" afterPath="$PROJECT_DIR$/learn_configmanage/common/global_variable.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/config.ini" afterPath="$PROJECT_DIR$/learn_configmanage/config.ini" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/handlers/account_handler.py" afterPath="$PROJECT_DIR$/learn_configmanage/handlers/account_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/handlers/gameserverhandler.py" afterPath="$PROJECT_DIR$/learn_configmanage/handlers/gameserverhandler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/web.py" afterPath="$PROJECT_DIR$/learn_configmanage/web.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_django/learn_session_1.py" afterPath="$PROJECT_DIR$/learn_django/learn_session_1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_gunicorn/gunicorn_app.py" afterPath="$PROJECT_DIR$/learn_gunicorn/gunicorn_app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_gunicorn/gunicorn_demo.py" afterPath="$PROJECT_DIR$/learn_gunicorn/gunicorn_demo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py" afterPath="$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_pyexcel/parse_game_config.py" afterPath="$PROJECT_DIR$/learn_pyexcel/parse_game_config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tornado/learn_4.3_document.py" afterPath="$PROJECT_DIR$/learn_tornado/learn_4.3_document.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tornado/many_process_1.py" afterPath="$PROJECT_DIR$/learn_tornado/many_process_1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tornado/thread_pool.py" afterPath="$PROJECT_DIR$/learn_tornado/thread_pool.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tornado/thread_pool_1.py" afterPath="$PROJECT_DIR$/learn_tornado/thread_pool_1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_twist/lian_xi/chatserver.py" afterPath="$PROJECT_DIR$/learn_twist/lian_xi/chatserver.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/__new__and__init__/__init__.py" afterPath="$PROJECT_DIR$/module_usage/__new__and__init__/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_bisect/__init__.py" afterPath="$PROJECT_DIR$/module_usage/learn_bisect/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_cProfile/learn_cProfile.py" afterPath="$PROJECT_DIR$/module_usage/learn_cProfile/learn_cProfile.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_cProfile/learn_cProfile_and_line_profiler.py" afterPath="$PROJECT_DIR$/module_usage/learn_cProfile/learn_cProfile_and_line_profiler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/learn_pycrypto.py" afterPath="$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/learn_pycrypto.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_socket/socket_0.py" afterPath="$PROJECT_DIR$/module_usage/learn_socket/socket_0.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_socket/socket_1.py" afterPath="$PROJECT_DIR$/module_usage/learn_socket/socket_1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/learn_sys/learn_sys_gerframe.py" afterPath="$PROJECT_DIR$/module_usage/learn_sys/learn_sys_gerframe.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_usage/os/learn_exit.py" afterPath="$PROJECT_DIR$/module_usage/os/learn_exit.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qhwx/log_info.py" afterPath="$PROJECT_DIR$/qhwx/log_info.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -210,100 +69,122 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/learn_python$pop_sorted.coverage" NAME="pop_sorted Coverage Results" MODIFIED="1563953183161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
     <SUITE FILE_PATH="coverage/learn_python$http_server.coverage" NAME="http_server Coverage Results" MODIFIED="1573890973489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/http_server" />
-    <SUITE FILE_PATH="coverage/learn_python$learn_init.coverage" NAME="learn_init Coverage Results" MODIFIED="1567585992745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
     <SUITE FILE_PATH="coverage/learn_python$twist_server__1_.coverage" NAME="twist_server (1) Coverage Results" MODIFIED="1573375075409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist_1" />
     <SUITE FILE_PATH="coverage/learn_python$celeryconfig.coverage" NAME="celeryconfig Coverage Results" MODIFIED="1575792030149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
     <SUITE FILE_PATH="coverage/learn_python$madminmanager.coverage" NAME="madminmanager Coverage Results" MODIFIED="1575515663702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/dbentrust" />
-    <SUITE FILE_PATH="coverage/learn_python$callLater.coverage" NAME="callLater Coverage Results" MODIFIED="1574048759542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/learn_reactor" />
-    <SUITE FILE_PATH="coverage/learn_python$test_server_apptest.coverage" NAME="test_server_apptest Coverage Results" MODIFIED="1574262152771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
-    <SUITE FILE_PATH="coverage/learn_python$test_dbentrust.coverage" NAME="test_dbentrust Coverage Results" MODIFIED="1575549719823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
     <SUITE FILE_PATH="coverage/learn_python$singleton.coverage" NAME="singleton Coverage Results" MODIFIED="1563271735503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/class_special_usage" />
     <SUITE FILE_PATH="coverage/learn_python$client_pb.coverage" NAME="client_pb Coverage Results" MODIFIED="1573896199357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/pb_server" />
     <SUITE FILE_PATH="coverage/learn_python$test_distributed_node.coverage" NAME="test_distributed_node Coverage Results" MODIFIED="1574049476864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
     <SUITE FILE_PATH="coverage/learn_python$kuang_jia.coverage" NAME="kuang_jia Coverage Results" MODIFIED="1564291940200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mu_you/kuang_jia" />
     <SUITE FILE_PATH="coverage/learn_python$run_time.coverage" NAME="run_time Coverage Results" MODIFIED="1573734152575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/func_run_time" />
-    <SUITE FILE_PATH="coverage/learn_python$struct_type.coverage" NAME="struct_type Coverage Results" MODIFIED="1574145228324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/struct" />
     <SUITE FILE_PATH="coverage/learn_python$test_netconnect_client.coverage" NAME="test_netconnect_client Coverage Results" MODIFIED="1574261651028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
-    <SUITE FILE_PATH="coverage/learn_python$eg_num_sqrt.coverage" NAME="eg_num_sqrt Coverage Results" MODIFIED="1575947274042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
     <SUITE FILE_PATH="coverage/learn_python$add_person.coverage" NAME="add_person Coverage Results" MODIFIED="1575174064485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mu_you/protoc3" />
-    <SUITE FILE_PATH="coverage/learn_python$le_bo.coverage" NAME="le_bo Coverage Results" MODIFIED="1563954827980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
-    <SUITE FILE_PATH="coverage/learn_python$test_tasks_2.coverage" NAME="test_tasks_2 Coverage Results" MODIFIED="1575814092076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
+    <SUITE FILE_PATH="coverage/learn_python$eg_99.coverage" NAME="eg_99 Coverage Results" MODIFIED="1577523856761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$redis_cli.coverage" NAME="redis_cli Coverage Results" MODIFIED="1563016516815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
     <SUITE FILE_PATH="coverage/learn_python$startmaster.coverage" NAME="startmaster Coverage Results" MODIFIED="1574820288754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
+    <SUITE FILE_PATH="coverage/learn_python$log_info.coverage" NAME="log_info Coverage Results" MODIFIED="1577784505519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
+    <SUITE FILE_PATH="coverage/learn_python$eg_list_trun_dict_100.coverage" NAME="eg_list_trun_dict_100 Coverage Results" MODIFIED="1577522538273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1580176024440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__new__and__init__" />
     <SUITE FILE_PATH="coverage/learn_python$server_pb.coverage" NAME="server_pb Coverage Results" MODIFIED="1573896056205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/pb_server" />
     <SUITE FILE_PATH="coverage/learn_python$add_person1.coverage" NAME="add_person1 Coverage Results" MODIFIED="1575194373662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mu_you/protoc3" />
     <SUITE FILE_PATH="coverage/learn_python$doc.coverage" NAME="doc Coverage Results" MODIFIED="1574260972284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__doc__" />
     <SUITE FILE_PATH="coverage/learn_python$callFromThread.coverage" NAME="callFromThread Coverage Results" MODIFIED="1574048240144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/learn_reactor" />
-    <SUITE FILE_PATH="coverage/learn_python$test__all__.coverage" NAME="test__all__ Coverage Results" MODIFIED="1575426270746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__all__" />
     <SUITE FILE_PATH="coverage/learn_python$poetry_client.coverage" NAME="poetry_client Coverage Results" MODIFIED="1573872889007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/poetry_server" />
-    <SUITE FILE_PATH="coverage/learn_python$learn_yaml.coverage" NAME="learn_yaml Coverage Results" MODIFIED="1565062282548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
     <SUITE FILE_PATH="coverage/learn_python$k.coverage" NAME="k Coverage Results" MODIFIED="1572792799713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xxx" />
     <SUITE FILE_PATH="coverage/learn_python$thread_p3_2.coverage" NAME="thread_p3_2 Coverage Results" MODIFIED="1574147669233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
-    <SUITE FILE_PATH="coverage/learn_python$threading_condition.coverage" NAME="threading_condition Coverage Results" MODIFIED="1574164690462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
     <SUITE FILE_PATH="coverage/learn_python$eg_1.coverage" NAME="eg_1 Coverage Results" MODIFIED="1575817757497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
-    <SUITE FILE_PATH="coverage/learn_python$py_test_in_zheng_fu_shu_py.coverage" NAME="py.test in zheng_fu_shu.py Coverage Results" MODIFIED="1563269629302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
-    <SUITE FILE_PATH="coverage/learn_python$daemon_server.coverage" NAME="daemon_server Coverage Results" MODIFIED="1573869551841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
-    <SUITE FILE_PATH="coverage/learn_python$str_exchange_byte.coverage" NAME="str_exchange_byte Coverage Results" MODIFIED="1574387771410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/str_exchange_byte" />
     <SUITE FILE_PATH="coverage/learn_python$master.coverage" NAME="master Coverage Results" MODIFIED="1574407845142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/master" />
-    <SUITE FILE_PATH="coverage/learn_python$line_receiver_client.coverage" NAME="line_receiver_client Coverage Results" MODIFIED="1573889489401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/line_receiver" />
-    <SUITE FILE_PATH="coverage/learn_python$chang_gui.coverage" NAME="chang_gui Coverage Results" MODIFIED="1576678990718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$chang_gui.coverage" NAME="chang_gui Coverage Results" MODIFIED="1578140617169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$poetry_server.coverage" NAME="poetry_server Coverage Results" MODIFIED="1573872798063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/poetry_server" />
-    <SUITE FILE_PATH="coverage/learn_python$fastpoetry_plugin.coverage" NAME="fastpoetry_plugin Coverage Results" MODIFIED="1573881676682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/poetry_server/twisted/plugins" />
-    <SUITE FILE_PATH="coverage/learn_python$zhengfushu.coverage" NAME="zhengfushu Coverage Results" MODIFIED="1563269869172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
-    <SUITE FILE_PATH="coverage/learn_python$use_celery.coverage" NAME="use_celery Coverage Results" MODIFIED="1572787735115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery" />
-    <SUITE FILE_PATH="coverage/learn_python$config_update.coverage" NAME="config_update Coverage Results" MODIFIED="1575167934770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/apps/commands" />
-    <SUITE FILE_PATH="coverage/learn_python$twist_server.coverage" NAME="twist_server Coverage Results" MODIFIED="1574177846613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/tcp_server" />
+    <SUITE FILE_PATH="coverage/learn_python$thread_pool.coverage" NAME="thread_pool Coverage Results" MODIFIED="1579787201031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_tornado" />
+    <SUITE FILE_PATH="coverage/learn_python$tornado_many_thread.coverage" NAME="tornado_many_thread Coverage Results" MODIFIED="1579534576143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_tornado" />
     <SUITE FILE_PATH="coverage/learn_python$one_hundred_examples.coverage" NAME="one_hundred_examples Coverage Results" MODIFIED="1575947279226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
     <SUITE FILE_PATH="coverage/learn_python$tasks_1.coverage" NAME="tasks_1 Coverage Results" MODIFIED="1575804084502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new/taskapp" />
-    <SUITE FILE_PATH="coverage/learn_python$map_reduce_filter_strip.coverage" NAME="map_reduce_filter_strip Coverage Results" MODIFIED="1563952478155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
     <SUITE FILE_PATH="coverage/learn_python$twist_client.coverage" NAME="twist_client Coverage Results" MODIFIED="1574177899121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/tcp_server" />
-    <SUITE FILE_PATH="coverage/learn_python$thread_bug.coverage" NAME="thread_bug Coverage Results" MODIFIED="1574134082368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
     <SUITE FILE_PATH="coverage/learn_python$threading_0.coverage" NAME="threading_0 Coverage Results" MODIFIED="1574167222393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
-    <SUITE FILE_PATH="coverage/learn_python$daemon_client.coverage" NAME="daemon_client Coverage Results" MODIFIED="1573813631778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
-    <SUITE FILE_PATH="coverage/learn_python$line_receiver_server.coverage" NAME="line_receiver_server Coverage Results" MODIFIED="1573889467354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/line_receiver" />
-    <SUITE FILE_PATH="coverage/learn_python$rabbitMQ.coverage" NAME="rabbitMQ Coverage Results" MODIFIED="1574603904905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
     <SUITE FILE_PATH="coverage/learn_python$learn_class_dict_list_set.coverage" NAME="learn_class_dict_list_set Coverage Results" MODIFIED="1572590202268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_knowledge" />
     <SUITE FILE_PATH="coverage/learn_python$test_tasks_1.coverage" NAME="test_tasks_1 Coverage Results" MODIFIED="1575814083596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
-    <SUITE FILE_PATH="coverage/learn_python$jinshan.coverage" NAME="jinshan Coverage Results" MODIFIED="1563010922202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
-    <SUITE FILE_PATH="coverage/learn_python$test_alchimia.coverage" NAME="test_alchimia Coverage Results" MODIFIED="1575378074419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/dbentrust/alchimia" />
-    <SUITE FILE_PATH="coverage/learn_python$binary_search.coverage" NAME="binary_search Coverage Results" MODIFIED="1563268204268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$socket_1.coverage" NAME="socket_1 Coverage Results" MODIFIED="1580633607706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_socket" />
     <SUITE FILE_PATH="coverage/learn_python$demo_python.coverage" NAME="demo_python Coverage Results" MODIFIED="1573812645659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
-    <SUITE FILE_PATH="coverage/learn_python$setattr_getattr_setitem_getitem.coverage" NAME="setattr_getattr_setitem_getitem Coverage Results" MODIFIED="1573990832827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__setatrr__" />
     <SUITE FILE_PATH="coverage/learn_python$tasks.coverage" NAME="tasks Coverage Results" MODIFIED="1575787929515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery/taskapp" />
-    <SUITE FILE_PATH="coverage/learn_python$py_test_for_zheng_fu_shu_test.coverage" NAME="py.test for zheng_fu_shu.test Coverage Results" MODIFIED="1563268975505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$class_method.coverage" NAME="class_method Coverage Results" MODIFIED="1563270142142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/class_special_usage" />
     <SUITE FILE_PATH="coverage/learn_python$memcache.coverage" NAME="memcache Coverage Results" MODIFIED="1575531008652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
-    <SUITE FILE_PATH="coverage/learn_python$web_server.coverage" NAME="web_server Coverage Results" MODIFIED="1573890132750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/web_server" />
-    <SUITE FILE_PATH="coverage/learn_python$learn_1__1_.coverage" NAME="learn_1 (1) Coverage Results" MODIFIED="1573199883664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
+    <SUITE FILE_PATH="coverage/learn_python$settings.coverage" NAME="settings Coverage Results" MODIFIED="1580189558724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_backend" />
     <SUITE FILE_PATH="coverage/learn_python$test_tasks.coverage" NAME="test_tasks Coverage Results" MODIFIED="1575812756917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
     <SUITE FILE_PATH="coverage/learn_python$exchange_pos.coverage" NAME="exchange_pos Coverage Results" MODIFIED="1566351340188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
     <SUITE FILE_PATH="coverage/learn_python$socket_client.coverage" NAME="socket_client Coverage Results" MODIFIED="1573888397856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/tcp_server" />
-    <SUITE FILE_PATH="coverage/learn_python$test_memcache.coverage" NAME="test_memcache Coverage Results" MODIFIED="1575697027197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
-    <SUITE FILE_PATH="coverage/learn_python$learn.coverage" NAME="learn Coverage Results" MODIFIED="1573028438056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/signal" />
-    <SUITE FILE_PATH="coverage/learn_python$gevent_tcp_server.coverage" NAME="gevent_tcp_server Coverage Results" MODIFIED="1562319234991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mu_you/lian_xi" />
-    <SUITE FILE_PATH="coverage/learn_python$test_task_1.coverage" NAME="test_task_1 Coverage Results" MODIFIED="1575791583853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery/test" />
+    <SUITE FILE_PATH="coverage/learn_python$chatserver.coverage" NAME="chatserver Coverage Results" MODIFIED="1580921582146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/lian_xi" />
     <SUITE FILE_PATH="coverage/learn_python$learn_eval.coverage" NAME="learn_eval Coverage Results" MODIFIED="1573483459952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_exec_eval_complie" />
+    <SUITE FILE_PATH="coverage/learn_python$snake_matrix.coverage" NAME="snake_matrix Coverage Results" MODIFIED="1577524039885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$celery_chain.coverage" NAME="celery_chain Coverage Results" MODIFIED="1572786642435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery" />
-    <SUITE FILE_PATH="coverage/learn_python$test_netconnect_server.coverage" NAME="test_netconnect_server Coverage Results" MODIFIED="1574261645301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
     <SUITE FILE_PATH="coverage/learn_python$decorator.coverage" NAME="decorator Coverage Results" MODIFIED="1563375581276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
-    <SUITE FILE_PATH="coverage/learn_python$eg_jiang_jin.coverage" NAME="eg_jiang_jin Coverage Results" MODIFIED="1576254077934" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
     <SUITE FILE_PATH="coverage/learn_python$d.coverage" NAME="d Coverage Results" MODIFIED="1573839083443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/poetry_server" />
     <SUITE FILE_PATH="coverage/learn_python$celery_command.coverage" NAME="celery_command Coverage Results" MODIFIED="1573023773588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery" />
     <SUITE FILE_PATH="coverage/learn_python$p2_a_p3_thread_diff.coverage" NAME="p2_a_p3_thread_diff Coverage Results" MODIFIED="1574057374358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
-    <SUITE FILE_PATH="coverage/learn_python$test_local_memcache.coverage" NAME="test_local_memcache Coverage Results" MODIFIED="1575692662578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
     <SUITE FILE_PATH="coverage/learn_python$learn_plugins.coverage" NAME="learn_plugins Coverage Results" MODIFIED="1573800065883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/twistd/plugins" />
-    <SUITE FILE_PATH="coverage/learn_python$print_file_name_path.coverage" NAME="print_file_name_path Coverage Results" MODIFIED="1562996953419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
-    <SUITE FILE_PATH="coverage/learn_python$redis_pipeline.coverage" NAME="redis_pipeline Coverage Results" MODIFIED="1563100927005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_redis" />
-    <SUITE FILE_PATH="coverage/learn_python$__add__.coverage" NAME="__add__ Coverage Results" MODIFIED="1574942250364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__add__" />
     <SUITE FILE_PATH="coverage/learn_python$learn_exec.coverage" NAME="learn_exec Coverage Results" MODIFIED="1573484428053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_exec_eval_complie" />
     <SUITE FILE_PATH="coverage/learn_python$learn_complie.coverage" NAME="learn_complie Coverage Results" MODIFIED="1573485203134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_exec_eval_complie" />
     <SUITE FILE_PATH="coverage/learn_python$test_tasks__1_.coverage" NAME="test_tasks (1) Coverage Results" MODIFIED="1575797522237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
     <SUITE FILE_PATH="coverage/learn_python$execute_time.coverage" NAME="execute_time Coverage Results" MODIFIED="1571384045182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
-    <SUITE FILE_PATH="coverage/learn_python$test_distributed_root.coverage" NAME="test_distributed_root Coverage Results" MODIFIED="1574049471843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
     <SUITE FILE_PATH="coverage/learn_python$tesk_hello_world.coverage" NAME="tesk_hello_world Coverage Results" MODIFIED="1572787765178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery/test" />
     <SUITE FILE_PATH="coverage/learn_python$learn_1.coverage" NAME="learn_1 Coverage Results" MODIFIED="1573195123612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_exec" />
     <SUITE FILE_PATH="coverage/learn_python$ord_chr_usage.coverage" NAME="ord_chr_usage Coverage Results" MODIFIED="1559891505833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
     <SUITE FILE_PATH="coverage/learn_python$conversion_usage.coverage" NAME="conversion_usage Coverage Results" MODIFIED="1563951330543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_sys_gerframe.coverage" NAME="learn_sys_gerframe Coverage Results" MODIFIED="1579402098719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_sys" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_init.coverage" NAME="learn_init Coverage Results" MODIFIED="1567585992745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
+    <SUITE FILE_PATH="coverage/learn_python$callLater.coverage" NAME="callLater Coverage Results" MODIFIED="1574048759542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/learn_reactor" />
+    <SUITE FILE_PATH="coverage/learn_python$test_server_apptest.coverage" NAME="test_server_apptest Coverage Results" MODIFIED="1574262152771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
+    <SUITE FILE_PATH="coverage/learn_python$test_dbentrust.coverage" NAME="test_dbentrust Coverage Results" MODIFIED="1575549719823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
+    <SUITE FILE_PATH="coverage/learn_python$socket_0.coverage" NAME="socket_0 Coverage Results" MODIFIED="1580632996400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_socket" />
+    <SUITE FILE_PATH="coverage/learn_python$struct_type.coverage" NAME="struct_type Coverage Results" MODIFIED="1574145228324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/struct" />
+    <SUITE FILE_PATH="coverage/learn_python$main.coverage" NAME="main Coverage Results" MODIFIED="1579500909568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_tornado" />
+    <SUITE FILE_PATH="coverage/learn_python$eg_num_sqrt.coverage" NAME="eg_num_sqrt Coverage Results" MODIFIED="1575947274042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
+    <SUITE FILE_PATH="coverage/learn_python$le_bo.coverage" NAME="le_bo Coverage Results" MODIFIED="1563954827980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
+    <SUITE FILE_PATH="coverage/learn_python$test_tasks_2.coverage" NAME="test_tasks_2 Coverage Results" MODIFIED="1575814092076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery_new" />
+    <SUITE FILE_PATH="coverage/learn_python$test__all__.coverage" NAME="test__all__ Coverage Results" MODIFIED="1575426270746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__all__" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_yaml.coverage" NAME="learn_yaml Coverage Results" MODIFIED="1565062282548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/qhwx" />
+    <SUITE FILE_PATH="coverage/learn_python$threading_condition.coverage" NAME="threading_condition Coverage Results" MODIFIED="1574164690462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
+    <SUITE FILE_PATH="coverage/learn_python$py_test_in_zheng_fu_shu_py.coverage" NAME="py.test in zheng_fu_shu.py Coverage Results" MODIFIED="1563269629302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$daemon_server.coverage" NAME="daemon_server Coverage Results" MODIFIED="1573869551841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
+    <SUITE FILE_PATH="coverage/learn_python$str_exchange_byte.coverage" NAME="str_exchange_byte Coverage Results" MODIFIED="1574387771410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/str_exchange_byte" />
+    <SUITE FILE_PATH="coverage/learn_python$line_receiver_client.coverage" NAME="line_receiver_client Coverage Results" MODIFIED="1573889489401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/line_receiver" />
+    <SUITE FILE_PATH="coverage/learn_python$fastpoetry_plugin.coverage" NAME="fastpoetry_plugin Coverage Results" MODIFIED="1573881676682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/poetry_server/twisted/plugins" />
+    <SUITE FILE_PATH="coverage/learn_python$zhengfushu.coverage" NAME="zhengfushu Coverage Results" MODIFIED="1563269869172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_cProfile_and_line_profiler.coverage" NAME="learn_cProfile_and_line_profiler Coverage Results" MODIFIED="1577691783582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_cProfile" />
+    <SUITE FILE_PATH="coverage/learn_python$use_celery.coverage" NAME="use_celery Coverage Results" MODIFIED="1572787735115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery" />
+    <SUITE FILE_PATH="coverage/learn_python$config_update.coverage" NAME="config_update Coverage Results" MODIFIED="1575167934770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/apps/commands" />
+    <SUITE FILE_PATH="coverage/learn_python$user.coverage" NAME="user Coverage Results" MODIFIED="1579660907822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_backend/models" />
+    <SUITE FILE_PATH="coverage/learn_python$twist_server.coverage" NAME="twist_server Coverage Results" MODIFIED="1574177846613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/tcp_server" />
+    <SUITE FILE_PATH="coverage/learn_python$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1580373701635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_bisect" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_openpyxl.coverage" NAME="learn_openpyxl Coverage Results" MODIFIED="1581341431616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_pyexcel" />
+    <SUITE FILE_PATH="coverage/learn_python$map_reduce_filter_strip.coverage" NAME="map_reduce_filter_strip Coverage Results" MODIFIED="1563952478155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/function_special_usage" />
+    <SUITE FILE_PATH="coverage/learn_python$debug.coverage" NAME="debug Coverage Results" MODIFIED="1579403543501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_backend/lib/utils" />
+    <SUITE FILE_PATH="coverage/learn_python$thread_bug.coverage" NAME="thread_bug Coverage Results" MODIFIED="1574134082368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/multi_process_thread_coroutine" />
+    <SUITE FILE_PATH="coverage/learn_python$many_process_1.coverage" NAME="many_process_1 Coverage Results" MODIFIED="1579587912703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_tornado" />
+    <SUITE FILE_PATH="coverage/learn_python$daemon_client.coverage" NAME="daemon_client Coverage Results" MODIFIED="1573813631778" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
+    <SUITE FILE_PATH="coverage/learn_python$line_receiver_server.coverage" NAME="line_receiver_server Coverage Results" MODIFIED="1573889467354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/line_receiver" />
+    <SUITE FILE_PATH="coverage/learn_python$rabbitMQ.coverage" NAME="rabbitMQ Coverage Results" MODIFIED="1574603904905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
+    <SUITE FILE_PATH="coverage/learn_python$jinshan.coverage" NAME="jinshan Coverage Results" MODIFIED="1563010922202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
+    <SUITE FILE_PATH="coverage/learn_python$test_alchimia.coverage" NAME="test_alchimia Coverage Results" MODIFIED="1575378074419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/dbentrust/alchimia" />
+    <SUITE FILE_PATH="coverage/learn_python$binary_search.coverage" NAME="binary_search Coverage Results" MODIFIED="1563268204268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$setattr_getattr_setitem_getitem.coverage" NAME="setattr_getattr_setitem_getitem Coverage Results" MODIFIED="1573990832827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__setatrr__" />
+    <SUITE FILE_PATH="coverage/learn_python$py_test_for_zheng_fu_shu_test.coverage" NAME="py.test for zheng_fu_shu.test Coverage Results" MODIFIED="1563268975505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/learn_python$web_server.coverage" NAME="web_server Coverage Results" MODIFIED="1573890132750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/web_server" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_1__1_.coverage" NAME="learn_1 (1) Coverage Results" MODIFIED="1573199883664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
+    <SUITE FILE_PATH="coverage/learn_python$test_memcache.coverage" NAME="test_memcache Coverage Results" MODIFIED="1575697027197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
+    <SUITE FILE_PATH="coverage/learn_python$learn.coverage" NAME="learn Coverage Results" MODIFIED="1573028438056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/signal" />
+    <SUITE FILE_PATH="coverage/learn_python$gevent_tcp_server.coverage" NAME="gevent_tcp_server Coverage Results" MODIFIED="1562319234991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mu_you/lian_xi" />
+    <SUITE FILE_PATH="coverage/learn_python$test_task_1.coverage" NAME="test_task_1 Coverage Results" MODIFIED="1575791583853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_celery/test" />
+    <SUITE FILE_PATH="coverage/learn_python$test_netconnect_server.coverage" NAME="test_netconnect_server Coverage Results" MODIFIED="1574261645301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
+    <SUITE FILE_PATH="coverage/learn_python$eg_jiang_jin.coverage" NAME="eg_jiang_jin Coverage Results" MODIFIED="1576254077934" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hundred_examples" />
+    <SUITE FILE_PATH="coverage/learn_python$game_config.coverage" NAME="game_config Coverage Results" MODIFIED="1579956765091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_backend" />
+    <SUITE FILE_PATH="coverage/learn_python$test_local_memcache.coverage" NAME="test_local_memcache Coverage Results" MODIFIED="1575692662578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
+    <SUITE FILE_PATH="coverage/learn_python$print_file_name_path.coverage" NAME="print_file_name_path Coverage Results" MODIFIED="1562996953419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
+    <SUITE FILE_PATH="coverage/learn_python$redis_pipeline.coverage" NAME="redis_pipeline Coverage Results" MODIFIED="1563100927005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_redis" />
+    <SUITE FILE_PATH="coverage/learn_python$__add__.coverage" NAME="__add__ Coverage Results" MODIFIED="1574942250364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__add__" />
+    <SUITE FILE_PATH="coverage/learn_python$run.coverage" NAME="run Coverage Results" MODIFIED="1580189568246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_backend" />
+    <SUITE FILE_PATH="coverage/learn_python$test_distributed_root.coverage" NAME="test_distributed_root Coverage Results" MODIFIED="1574049471843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/test" />
+    <SUITE FILE_PATH="coverage/learn_python$learn_cProfile.coverage" NAME="learn_cProfile Coverage Results" MODIFIED="1577690619461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/learn_cProfile" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -321,11 +202,95 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="chang_gui.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/algorithm/chang_gui.py">
+      <file leaf-file-name="web.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_configmanage/web.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="216" column="44" lean-forward="true" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="44" />
+            <state relative-caret-position="0">
+              <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="22" />
+              <folding>
+                <element signature="e#45#54#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parse_game_config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_pyexcel/parse_game_config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="52" />
+              <folding>
+                <element signature="e#644#678#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="learn_openpyxl.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1848">
+              <caret line="84" column="12" lean-forward="false" selection-start-line="84" selection-start-column="12" selection-end-line="84" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game_config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_backend/game_config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="27" column="12" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="htornado.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_backend/lib/core/handlers/htornado.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cache.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_backend/lib/core/cache.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="14" column="51" lean-forward="false" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mysql_test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/learn_backend/mysql_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workbook.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Python/2.7/site-packages/openpyxl/workbook/workbook.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3872">
+              <caret line="176" column="8" lean-forward="false" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="excel.py" pinned="false" current-in-tab="false">
+        <entry file="file:///Library/Python/2.7/site-packages/openpyxl/reader/excel.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2552">
+              <caret line="116" column="4" lean-forward="false" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -337,45 +302,48 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Jupyter Notebook" />
         <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>timeOut</find>
-      <find>BaseRedisProtocol</find>
-      <find>connected</find>
-      <find>post_proc</find>
-      <find>factory</find>
-      <find>multiBulkDataReceived</find>
-      <find>encode</find>
-      <find>_build_command</find>
-      <find>execute_command</find>
-      <find>MAdminManager</find>
-      <find>ValueError</find>
-      <find>mmanager</find>
-      <find>memcache</find>
-      <find>nginx</find>
-      <find>memcached</find>
-      <find>product_count</find>
-      <find>memory</find>
-      <find>task_r</find>
-      <find>default_exchange</find>
-      <find>CELERY_DEFAULT_QUEUE</find>
-      <find>CELERY_QUEUES</find>
-      <find>default</find>
-      <find>tasks.add</find>
-      <find>learn_celery_new</find>
-      <find>tasks.taskA</find>
-      <find>CELERY_TIMEZONE</find>
-      <find>beat_schedule</find>
-      <find>cut</find>
-      <find>schedule</find>
-      <find>video_compress</find>
+      <find>kill_child</find>
+      <find>signal.SIGTERM</find>
+      <find>signal.SIGINT</find>
+      <find>signal.SIGCHLD,</find>
+      <find>sockets</find>
+      <find>netutil</find>
+      <find>HTTPServer</find>
+      <find>start_child</find>
+      <find>bind_sockets</find>
+      <find>shutdown</find>
+      <find>settings</find>
+      <find>start</find>
+      <find>119.161.137.199</find>
+      <find>NEW_SERVER_TYPE</find>
+      <find>run_on_executor</find>
+      <find>settings.LANG</find>
+      <find>init_combine_server</find>
+      <find>__call__</find>
+      <find>SERVERS</find>
+      <find>settings.SE</find>
+      <find>RMC</find>
+      <find>111111</find>
+      <find>__init__</find>
+      <find>UnameUid</find>
+      <find>_key_prefix</find>
+      <find>socket</find>
+      <find>11111111</find>
+      <find>....:</find>
+      <find>DBHelperObject</find>
+      <find>load_workbook</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
+      <replace>localhost</replace>
+      <replace />
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -384,57 +352,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/learn_twist/dbentrust/memclient.py" />
-        <option value="$PROJECT_DIR$/learn_twist/dbentrust/madminmanager.py" />
-        <option value="$PROJECT_DIR$/learn_twist/dbentrust/memobject.py" />
-        <option value="$PROJECT_DIR$/learn_twist/dbentrust/util.py" />
-        <option value="$PROJECT_DIR$/learn_twist/test/test_dbentrust.py" />
-        <option value="$PROJECT_DIR$/class_special_usage/class_method.py" />
-        <option value="$PROJECT_DIR$/function_special_usage/property.py" />
-        <option value="$PROJECT_DIR$/qhwx/execute_time.py" />
-        <option value="$PROJECT_DIR$/learn_memcached/memcache.py" />
-        <option value="$PROJECT_DIR$/mac_install_problem/homebrew.py" />
-        <option value="$PROJECT_DIR$/mac_install_problem/homebrew_slow.py" />
-        <option value="$PROJECT_DIR$/learn_memcached/mac_install_memcache.py" />
-        <option value="$PROJECT_DIR$/learn_logrotate/logrotate_nginx.py" />
-        <option value="$PROJECT_DIR$/learn_memcached/test_local_memcache.py" />
-        <option value="$PROJECT_DIR$/learn_memcached/test_memcache.py" />
-        <option value="$PROJECT_DIR$/learn_celery/taskapp/tasks2.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celeryconfig_bak.py" />
-        <option value="$PROJECT_DIR$/learn_celery/taskapp/task3.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celery_command.py" />
-        <option value="$PROJECT_DIR$/learn_celery/test/test_task_1.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celery_bak.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/taskapp/tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/taskapp/tasks_1.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/test/test_tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/__init__.py" />
-        <option value="$PROJECT_DIR$/learn_celery/__init__.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celery.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celery_command/celery_command.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/test_tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery/taskapp/tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery/test/test_tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/tasks.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/test_tasks_1.py" />
-        <option value="$PROJECT_DIR$/learn_celery/test/test_tasks_2.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/tesk_tasks_2.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/celeryconfig.py" />
-        <option value="$PROJECT_DIR$/learn_celery_new/celery_comand.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celeryconfig.py" />
-        <option value="$PROJECT_DIR$/learn_celery/w1-4.log" />
-        <option value="$PROJECT_DIR$/learn_celery/w2.log" />
-        <option value="$PROJECT_DIR$/hundred_examples/eg_1.py" />
-        <option value="$PROJECT_DIR$/hundred_examples/eg_1234.py" />
-        <option value="$PROJECT_DIR$/hundred_examples/eg_jiang_jin.py" />
-        <option value="$PROJECT_DIR$/hundred_examples/num_sqrt.py" />
-        <option value="$PROJECT_DIR$/hundred_examples/eg_num_sqrt.py" />
-        <option value="$PROJECT_DIR$/hundred_examples/one_hundred_examples.py" />
-        <option value="$PROJECT_DIR$/algorithm/eg_year_of_day.py" />
-        <option value="$PROJECT_DIR$/qhwx/log_parser.py" />
-        <option value="$PROJECT_DIR$/qhwx/config_update.py" />
-        <option value="$PROJECT_DIR$/learn_celery/celery_comand.py" />
-        <option value="$PROJECT_DIR$/algorithm/chang_gui.py" />
+        <option value="$PROJECT_DIR$/learn_backend/lib/core/environ.py" />
+        <option value="$PROJECT_DIR$/learn_backend/logics/user.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/main.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/tornado_many_thread.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/22.txt" />
+        <option value="$PROJECT_DIR$/learn_tornado/learn_4.3_document.py" />
+        <option value="$PROJECT_DIR$/learn_django/learn_session.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/many_process_1.py" />
+        <option value="$PROJECT_DIR$/learn_django/learn_session_1.py" />
+        <option value="$PROJECT_DIR$/module_usage/os/learn_exit.py" />
+        <option value="$PROJECT_DIR$/learn_backend/logics/share.py" />
+        <option value="$PROJECT_DIR$/learn_backend/env_config.py" />
+        <option value="$PROJECT_DIR$/learn_backend/env_config/cloud_ios.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/thread_pool.py" />
+        <option value="$PROJECT_DIR$/learn_tornado/thread_pool_1.py" />
+        <option value="$PROJECT_DIR$/learn_backend/return_msg_config.ipynb" />
+        <option value="$PROJECT_DIR$/learn_backend/lib/utils/encoding.py" />
+        <option value="$PROJECT_DIR$/learn_backend/lang_config/return_msg_ch.py" />
+        <option value="$PROJECT_DIR$/learn_backend/return_msg_config.py" />
+        <option value="$PROJECT_DIR$/learn_backend/game_config.py" />
+        <option value="$PROJECT_DIR$/learn_backend/env_config/cloud_andriod.py" />
+        <option value="$PROJECT_DIR$/learn_backend/lib/db/__init__.py" />
+        <option value="$PROJECT_DIR$/learn_backend/handlers.py" />
+        <option value="$PROJECT_DIR$/module_usage/__new__and__init__/__init__.py" />
+        <option value="$PROJECT_DIR$/learn_backend/views/user.py" />
+        <option value="$PROJECT_DIR$/learn_backend/models/user.py" />
+        <option value="$PROJECT_DIR$/learn_backend/env_config/dev_new.py" />
+        <option value="$PROJECT_DIR$/learn_backend/settings.py" />
+        <option value="$PROJECT_DIR$/learn_backend/run.py" />
+        <option value="$PROJECT_DIR$/learn_backend/models/config.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_bisect/__init__.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_socket/socket_0.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_socket/socket_1.py" />
+        <option value="$PROJECT_DIR$/learn_gunicorn/gunicorn_app.py" />
+        <option value="$PROJECT_DIR$/learn_gunicorn/gunicorn_demo.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_pycrypto/__init__.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_m2crypto/learn_pycrypto.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_m2crypto/__init__.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_m2crypto/learn_m2crypto.py" />
+        <option value="$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/learn_pycrypto.py" />
+        <option value="$PROJECT_DIR$/learn_twist/apps/db_server.py" />
+        <option value="$PROJECT_DIR$/learn_twist/lian_xi/chatserver.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/common/global_variable.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/handlers/gameserverhandler.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/web.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/common/configmanager.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/config.ini" />
+        <option value="$PROJECT_DIR$/learn_configmanage/common/dbhelper.py" />
+        <option value="$PROJECT_DIR$/learn_configmanage/handlers/account_handler.py" />
+        <option value="$PROJECT_DIR$/learn_pyexcel/parse_game_config.py" />
+        <option value="$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py" />
       </list>
     </option>
   </component>
@@ -445,8 +413,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-13" />
-    <option name="y" value="40" />
+    <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="986" />
   </component>
@@ -466,7 +433,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -477,12 +443,13 @@
             <path>
               <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
               <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_backend" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -492,21 +459,22 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/houguangdong/Workspace/learn_python/learn_gunicorn/gunicorn_demo.py" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/qhwx" />
-      <recent name="$PROJECT_DIR$/algorithm" />
-      <recent name="$PROJECT_DIR$/learn_celery_new" />
-      <recent name="$PROJECT_DIR$/learn_celery_new/test" />
-      <recent name="$PROJECT_DIR$/learn_celery_new/taskapp" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn_configmanage" />
+      <recent name="$PROJECT_DIR$/learn_twist/lian_xi" />
       <recent name="$PROJECT_DIR$/qhwx" />
       <recent name="$PROJECT_DIR$/learn_twist/confparser/xlsxfile" />
       <recent name="$PROJECT_DIR$/learn_twist" />
-      <recent name="$PROJECT_DIR$/module_usage/struct" />
-      <recent name="$PROJECT_DIR$/learn_celery" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn_backend/models" />
+      <recent name="$PROJECT_DIR$/module_usage/learn_sys" />
+      <recent name="$PROJECT_DIR$/qhwx" />
+      <recent name="$PROJECT_DIR$/algorithm" />
+      <recent name="$PROJECT_DIR$/learn_celery_new" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -521,111 +489,111 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.chang_gui">
-    <configuration name="chang_gui" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.learn_openpyxl">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/algorithm" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/module_usage/learn_bisect" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="learn_python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm/chang_gui.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/module_usage/learn_bisect/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="eg_1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="chatserver" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hundred_examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learn_twist/lian_xi" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="learn_python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm/eg_1234.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learn_twist/lian_xi/chatserver.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="eg_jiang_jin" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="learn_openpyxl" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hundred_examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learn_pyexcel" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="learn_python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm/eg_jiang_jin.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="eg_num_sqrt" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="socket_0" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hundred_examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/module_usage/learn_socket" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="learn_python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm/eg_num_sqrt.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/module_usage/learn_socket/socket_0.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="one_hundred_examples" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="socket_1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hundred_examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/module_usage/learn_socket" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="learn_python" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hundred_examples/one_hundred_examples.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/module_usage/learn_socket/socket_1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.one_hundred_examples" />
-      <item index="1" class="java.lang.String" itemvalue="Python.eg_1" />
-      <item index="2" class="java.lang.String" itemvalue="Python.eg_jiang_jin" />
-      <item index="3" class="java.lang.String" itemvalue="Python.eg_num_sqrt" />
-      <item index="4" class="java.lang.String" itemvalue="Python.chang_gui" />
+      <item index="0" class="java.lang.String" itemvalue="Python.__init__" />
+      <item index="1" class="java.lang.String" itemvalue="Python.socket_0" />
+      <item index="2" class="java.lang.String" itemvalue="Python.socket_1" />
+      <item index="3" class="java.lang.String" itemvalue="Python.chatserver" />
+      <item index="4" class="java.lang.String" itemvalue="Python.learn_openpyxl" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.chang_gui" />
-        <item index="1" class="java.lang.String" itemvalue="Python.eg_jiang_jin" />
-        <item index="2" class="java.lang.String" itemvalue="Python.one_hundred_examples" />
-        <item index="3" class="java.lang.String" itemvalue="Python.eg_num_sqrt" />
-        <item index="4" class="java.lang.String" itemvalue="Python.eg_1" />
+        <item index="0" class="java.lang.String" itemvalue="Python.learn_openpyxl" />
+        <item index="1" class="java.lang.String" itemvalue="Python.chatserver" />
+        <item index="2" class="java.lang.String" itemvalue="Python.socket_1" />
+        <item index="3" class="java.lang.String" itemvalue="Python.socket_0" />
+        <item index="4" class="java.lang.String" itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -669,20 +637,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="40" width="1680" height="986" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="986" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4919355" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23617512" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17216118" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21978022" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39754602" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39613527" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18070818" sideWeight="0.50555557" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903662" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -693,7 +661,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32515338" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3249476" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32883435" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout>
@@ -705,21 +673,21 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="654" y="-1047" width="1480" height="786" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4919355" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23617512" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17216118" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16971917" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32515338" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3249476" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32883435" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39754602" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39613527" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18070818" sideWeight="0.50555557" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903662" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -737,179 +705,387 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2/types.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery/taskapp/tasks3.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery_bak/celery_bak.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery_bak/celeryconfig_bak.py" />
-    <entry file="file://$USER_HOME$/.virtualenvs/jpzmg/lib/python2.7/site-packages/pymysql/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="119" column="4" lean-forward="false" selection-start-line="119" selection-start-column="4" selection-end-line="119" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/jpzmg/lib/python2.7/site-packages/tornado/test/gen_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2197">
-          <caret line="675" column="8" lean-forward="false" selection-start-line="675" selection-start-column="8" selection-end-line="675" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/taskapp/tasks.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/taskapp/tasks.py" />
-    <entry file="file://$PROJECT_DIR$/learn_logrotate/__init__.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/lib/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/taskapp/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/tasks_1.py" />
-    <entry file="file://$USER_HOME$/.virtualenvs/jpzmg/lib/python2.7/site-packages/celery/app/base.py">
+    <entry file="file://$PROJECT_DIR$/module_usage/multi_process_thread_coroutine/distributed_process.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="151" column="6" lean-forward="false" selection-start-line="151" selection-start-column="6" selection-end-line="151" selection-end-column="6" />
+        <state relative-caret-position="264">
+          <caret line="75" column="17" lean-forward="false" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/test/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/__init__.py">
+    <entry file="file://$PROJECT_DIR$/module_usage/__doc__/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/jpzmg/lib/python2.7/site-packages/celery/schedules.py">
+    <entry file="file://$PROJECT_DIR$/module_usage/__new__and__init__/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="398" column="29" lean-forward="false" selection-start-line="398" selection-start-column="23" selection-end-line="398" selection-end-column="29" />
+        <state relative-caret-position="301">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/celerybeat-schedule.db" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/celerybeat.pid" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery_command/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery_command/celery_command.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/test_tasks_0.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/taskapp/tasks.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/taskapp/tasks2.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/test/test_tasks.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/test/test_tasks_2.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/celeryconfig.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/celery_comand.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/tasks.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/test_tasks_1.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery_new/test_tasks_2.py" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/tasks.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/handlers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="25" column="36" lean-forward="false" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
+        <state relative-caret-position="2288">
+          <caret line="120" column="13" lean-forward="false" selection-start-line="120" selection-start-column="13" selection-end-line="120" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1.log" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1.pid" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1-1.log" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1-2.log" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1-3.log" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w1-4.log" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w2.pid" />
-    <entry file="file://$PROJECT_DIR$/learn_celery/w2.log" />
-    <entry file="file://$PROJECT_DIR$/algorithm/eg_1234.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/models/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+        <state relative-caret-position="506">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/zhengfushu.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/views/user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1034">
+          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/eg_num_sqrt.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/env_config/dev_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state relative-caret-position="3476">
+          <caret line="158" column="84" lean-forward="false" selection-start-line="158" selection-start-column="84" selection-end-line="158" selection-end-column="84" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/qhwx/log_parser.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/learn_backend/lib/db/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="29" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="29" />
+        <state relative-caret-position="7458">
+          <caret line="339" column="0" lean-forward="false" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/eg_year_of_day.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qhwx/config_update.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4642">
-          <caret line="213" column="12" lean-forward="false" selection-start-line="213" selection-start-column="12" selection-end-line="213" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery/celeryconfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1562">
-          <caret line="72" column="6" lean-forward="false" selection-start-line="72" selection-start-column="6" selection-end-line="72" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_celery/celery_comand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hundred_examples/one_hundred_examples.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="25" column="33" lean-forward="false" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
           <folding>
-            <element signature="e#71#82#0" expanded="false" />
+            <element signature="e#46#55#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/eg_jiang_jin.py">
+    <entry file="file://$PROJECT_DIR$/learn_backend/models/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="30" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="30" />
+        <state relative-caret-position="66">
+          <caret line="3" column="5" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/handler_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_bisect/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="28" column="10" lean-forward="false" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/env_config/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1474">
+          <caret line="76" column="10" lean-forward="false" selection-start-line="76" selection-start-column="10" selection-end-line="76" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mu_you/lian_xi/gevent_tcp_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="51" column="50" lean-forward="false" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_socket/socket_0.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="18" column="41" lean-forward="false" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_socket/socket_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_gunicorn/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_gunicorn/gunicorn_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_gunicorn/gunicorn_demo_0.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_gunicorn/gunicorn_demo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="26" lean-forward="false" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/learn_m2crypto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3080">
+          <caret line="142" column="17" lean-forward="false" selection-start-line="142" selection-start-column="17" selection-end-line="142" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module_usage/learn_m2crypto_pycrypto/learn_pycrypto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="129" column="17" lean-forward="false" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_twist/line_receiver/line_receiver_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_twist/apps/game_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_twist/apps/db_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_twist/lian_xi/telnet_echo.tac.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="34" column="17" lean-forward="false" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_twist/lian_xi/chatserver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/troubleshooting.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6591">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/common/global_variable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/handlers/gameserverhandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="8" lean-forward="false" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/ConfigParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/common/configmanager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/common/dbhelper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="61" column="53" lean-forward="false" selection-start-line="61" selection-start-column="45" selection-end-line="61" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="14" lean-forward="false" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/handlers/account_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="18" lean-forward="false" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_pyexcel/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_configmanage/web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="22" />
+          <folding>
+            <element signature="e#45#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/openpyxl/workbook/workbook.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3872">
+          <caret line="176" column="8" lean-forward="false" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/chang_gui.py">
+    <entry file="file://$PROJECT_DIR$/learn_pyexcel/parse_game_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="216" column="44" lean-forward="true" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="44" />
+        <state relative-caret-position="374">
+          <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="52" />
+          <folding>
+            <element signature="e#644#678#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/openpyxl/worksheet/worksheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="491" column="46" lean-forward="false" selection-start-line="491" selection-start-column="39" selection-end-line="491" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/openpyxl/reader/excel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2552">
+          <caret line="116" column="4" lean-forward="false" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/learn_pyexcel/learn_openpyxl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1848">
+          <caret line="84" column="12" lean-forward="false" selection-start-line="84" selection-start-column="12" selection-end-line="84" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/game_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="27" column="12" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/lib/core/handlers/htornado.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/lib/core/cache.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="14" column="51" lean-forward="false" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_backend/mysql_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

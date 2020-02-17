@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改系统时间</title>
+</head>
+<body>
+    {% if msg%}
+        <font color='red'>{{msg}}</font>
+    {% end %}
+    <form action="/{{url_partition}}/admin/sys_time_modify/" method="get">
+        <table id="mindata">
+            <tr>
+                <td>当前正确时间</td>
+                <td>{{ real_time }}</td>
+            </tr>
+            <tr>
+                <td>当前进程时间</td>
+                <td>{{ sys_time }}</td>
+            </tr>
+            <tr>
+                <td>修改进程时间</td>
+                <td><input type="text" name="sys_time" value=""/>(想恢复正确时间时，填写0)</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <button type="submit" name="save" value="True" onclick="return confirm('确定保存吗？')">保存</button>
+    </form>
+</body>
+</html>
