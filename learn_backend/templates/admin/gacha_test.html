@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽卡页面</title>
+</head>
+<body>
+    <form action="/{{url_partition}}/admin/gacha_test/", method="post", id='gacha_form'>
+        gacha id:
+        <select name="g_id">
+            {% for k, v in game_config.gacha.iteritems() %}
+                {% if g_id == k %}
+                    <option value="{{k}}" selected>{{k}}</option>
+                {% else %}
+                    <option value="{{k}}">{{k}}</option>
+                {% end %}
+            {% end %}
+        </select>
+        <br/>
+        测试次数: <input type="text" value="{{times}}" name="{{times}}"/>
+                <input type="submit" value="测试"/>
+        <hr/>
+        总结果:
+        <br/>
+            <table>
+                {% for card_id, num, quality in counts %}
+                <tr>
+                    <td>品质:{{quality}}</td>
+                    <td>{{card_id}}-{{game_config.character_detail[card_id]['name']}}</td>
+                    <td>{{num}}</td>
+                </tr>
+                {% end %}
+            </table>
+        <br/>
+        <table>
+            <tr><td>次数</td><td>获得卡牌</td><td>获得碎片</td><td>剩余点数</td></tr>
+            {% for i, (r, point, item) in enumerate(rs) %}
+            <tr>
+                <td>第 {{i+1}} 次：</td>
+                <td>
+                    {% for x in r %}
+                        {{game_config.character_detail[x]['name']}},
+                    {% end %}
+                </td>
+                <td>
+                    {% if item %}
+                        {{item}},
+                    {% end %}
+                </td>
+                <td>{{point}}</td>
+            </tr>
+            {% end %}
+        </table>
+    </form>
+</body>
+</html>

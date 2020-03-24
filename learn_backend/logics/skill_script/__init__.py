@@ -22,7 +22,7 @@ def load_all():
             _name, _ext = os.path.splitext(_f)
             if _ext == '.py' and _name not in _exclude_files:
                 # __all__.insert(0, _name)
-                s= _skill_dir
+                s = _skill_dir
                 # m = imp.load_source(_name, s)
                 m = __import__(_name, globals=globals(), fromlist=['logics', 'script_skill'])
                 all_skill[_name] = m

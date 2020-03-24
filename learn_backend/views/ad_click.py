@@ -57,3 +57,30 @@ def ad_callback(env, lv=2):
                 info['activate'] = True
                 Adver.activate(device_mark, info)
 
+
+def update_qiku_mid_info(user, mid=None):
+    """
+    更新设备激活
+    """
+    mid = mid or user.mid_qiku
+    mac = user.device_mark
+    info = Adver.get(mid)
+    if not info:
+        info = {
+            'ts': time.time(),
+            'source': 'qiku',
+            'callback': '',
+            'deviceid': mac,
+            'idfa': mid,
+            'mac': mac,
+            'activate': False,
+            'openudid': '',
+            'uids': {
+                # uid: [step1, step2, step3]
+            }
+        }
+    if user.uid not in info['uids']:
+        info['uids'][user.uid] = []
+    Adver.update(mid, info)
+
+

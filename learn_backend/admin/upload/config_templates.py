@@ -406,6 +406,7 @@ def character_base_rate():
         ('END', """},                                     """, 'None'),
     ], {}
 
+
 def role():
     return [
         ('level',           """%s: {                   """ , 'int'),

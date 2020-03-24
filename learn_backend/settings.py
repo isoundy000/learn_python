@@ -37,6 +37,11 @@ ENV_STG = [ENV_STG_QIKU, ENV_STG_PUB, ENV_STG_IOS, ENV_DEV_NEW, ENV_TEST_QIKU, E
 
 NEW_SERVER_TYPE = [1, 4]    # 新服config_type
 
+# 91平台相关
+PLATFORM_APPKEY_91 = '6b7fc05664f723d149575c239757e35a869e811929ec6e54'
+PLATFORM_SERVICE_URL_91 = 'http://service.sj.91.com/usercenter/AP.aspx'
+PLATFORM_91_APP_ID = 113290
+
 BASE_ROOT = os.path.dirname(os.path.abspath(__file__)) + os.path.sep
 
 # URL_PARTITION = 'genesis'

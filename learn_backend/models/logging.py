@@ -38,3 +38,76 @@ class Logging(ModelBase):
 
         self.redis.rpush(self.today_index, _key)
         self.redis.expire(self.today_index, self.EXPIRE)
+
+    def get_all_logging(self):
+        '''
+        获取一只之内玩家所有的日志记录
+        :return: '2020-03-03T22:14:42.955484'   now.isoformat()[:10]    '2020-03-03'
+        '''
+        data = []
+        now = datetime.datetime.now()
+        for i in [(now - datetime.timedelta(days=i)).isoformat()[:10] for i in xrange(0, self.EXPIRE_DAY)]:
+            index = self.make_key_cls('%s_%s' % (self.user.uid, i), self._server_name)
+            for _key in self.redis.lrange(index, 0, -1)[::-1]:
+                d = self.redis.get(_key)
+                if d:
+                    data.append(pickle.loads(d))
+        return data
+
+    def get_one_day_logging(self, days_str):
+        """ 获取一天的日志
+
+        :param days_str: '2016-01-26'
+        :return:
+        """
+        data = []
+        index = self.make_key_cls('%s_%s' % (self.user.uid, days_str), self._server_name)
+        for _key in self.redis.lrange(index, 0, -1)[::-1]:
+            d = self.redis.get(_key)
+            if d:
+                data.append(pickle.loads(d))
+        return data
+
+    def get_some_logging(self, days):
+        """ 获得玩家最近 days(int) 天数的日志, days最大等于7 """
+        if days > 7 or days <= 0 or type(days) != int:
+            days = 7
+
+        data = []
+        now = datetime.datetime.now()
+        # 获得格式如 "2015-03-02" 的日期列表
+        date_list = [(now - datetime.timedelta(days=i)).isoformat()[:10] for \
+                     i in xrange(0, days)]
+
+        for date in date_list:
+            raw_str = '%s_%s' % (self.user.uid, date)
+            index = self.make_key_cls(raw_str, self._server_name)
+            for _key in self.redis.lrange(index, 0, -1)[::-1]:
+                value = self.redis.get(_key)
+                if value:
+                    data.append(pickle.loads(value))
+        return data
+
+
+class Step(ModelBase):
+    """ 详细的用户行为记录
+        用来记录用户所到的每一个阶段
+    """
+
+    def __init__(self, uid=None):
+        """
+            logs: {step: timestamp, step1: timestamp}
+        """
+        self.uid = uid
+        self._attrs = {'steps': {}}
+        super(Step, self).__init__(uid)
+
+    def add_step(self, step):
+        '''
+        记录步骤
+        :param step:
+        :return:
+        '''
+        if step not in self.steps:
+            self.steps[step] = int(time.time())
+            self.save()

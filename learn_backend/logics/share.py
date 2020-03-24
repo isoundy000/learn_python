@@ -8,6 +8,47 @@ import datetime
 from lib.utils.debug import print_log
 
 
+def refresh_cyc(model, refresh_time_str, refresh_hour, refresh_func=None, save=False):
+    """
+    周期性刷新活动
+    :param refresh_time:上次刷新时间
+    :param refresh_hour:每天几点刷新
+    :param refresh_func:刷新函数
+    """
+    refresh_time = getattr(model, refresh_time_str)
+    cur_time = time.time()
+
+    if not refresh_time:
+        setattr(model, refresh_time_str, cur_time)
+        if callable(refresh_func):
+            refresh_func()
+        if save:
+            model.save()
+        return True
+    else:
+        refresh_datetime = datetime.datetime.fromtimestamp(refresh_time)
+        if refresh_datetime.hour >= refresh_hour:
+            date4 = datetime.datetime(refresh_datetime.year,
+                                      refresh_datetime.month,
+                                      refresh_datetime.day,
+                                      refresh_hour) + datetime.timedelta(days=1)
+        else:
+            date4 = datetime.datetime(refresh_datetime.year,
+                                      refresh_datetime.month, refresh_datetime.day, refresh_hour)
+
+        time4 = time.mktime(date4.timetuple())
+        if refresh_time < time4 <= cur_time:
+            setattr(model, refresh_time_str, cur_time)
+            if callable(refresh_func):
+                refresh_func()
+            if save:
+                model.save()
+
+            return True
+
+    return False
+
+
 def debug_sync_change_time():
     from lib.utils import change_time
     from models.config import ChangeTime

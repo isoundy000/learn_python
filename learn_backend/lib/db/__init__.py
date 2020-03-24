@@ -238,7 +238,7 @@ class ModelBase(ModelTools):
         }
         super(ModelBase, self).__init__()
 
-    def _client_cache_update(self, ):
+    def _client_cache_update(self):
         """# _client_cache_update: 前端cache更新机制中，数据的处理方法，有些数据是需要特殊处理的
         args:
             :    ---    arg

@@ -1,0 +1,23 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="tornado.escape" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_struct_server.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_struct_server.*" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_struct_client.ConnecionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_struct_client.ConnectionRefusedError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_upload_download_file.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_upload_download_file_server.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_upload_download_file_client.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_upload_download_file_client.ConnectionRefusedError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_socketserver_server.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_socketserver_client.ConnectionResetError" />
+          <option value="learn_tornado.tornado_tcp_server.tcp_online.tcp_socketserver_client.ConnectionRefusedError" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -537,6 +537,40 @@ def battle_test(req):
 
 
 @require_permission
+def gacha_test(req):
+    u = User.get('test')
+    data = {
+        'game_config': game_config,
+        'rs': [],
+        'times': 1,
+        'g_id': '',
+        'counts': [],
+    }
+    counts = {}
+    if settings.DEBUG and req.request.method == 'POST':
+        g_id = int(req.get_argument('g_id'))
+        times = int(req.get_argument('times'))
+        u.gacha.check_config(u.level, for_test=True)
+        data['g_id'] = g_id
+        data['times'] = times
+        for i in xrange(times):
+            g = Gacha(u, g_id)
+            rc, d, item = g.using_gacha(for_test=True)
+            for i in d:
+                if i in counts:
+                    counts[i] += 1
+                else:
+                    counts[i] = 1
+                if len(data['rs']) < 100:
+                    data['rs'].append((d, u.gacha.gacha[g_id]['point'], item))
+
+            counts = [(card_id, count, game_config.character_detail[card_id]['quality']) for card_id, count in counts.iteritems()]
+            data['counts'] = sorted(counts, key=lambda x: x[-1], reverse=True)
+
+    return render(req, 'admin/gacha_test.html', **data)
+
+
+@require_permission
 def sys_time_index(req, msg=''):
     """显示系统时间
     """

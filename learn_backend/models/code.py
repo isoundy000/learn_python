@@ -248,13 +248,122 @@ class Code(ModelBase):
 
 
 class Adver(object):
+    """各种广告积分墙
 
+       deviceid: idfa 或者 mac
+       所有deviceid 都统一转成大写并去除分号，解决各个平台 mac地址 格式不统一的问题
+    """
+    redis = make_redis_client(settings.AD_CLICK)
+    ad_name = 'fuck_all_ad'                                 # 所有激活的设备   单次生成激活码时未使用集合
+    activate_count_name = 'all_ad_activate_count'           # 所有平台的激活数
+    adclick_count_name = 'all_ad_click_count'               # 所有平台的广告点击数
+    youxiduo_count_name = 'youxiduo_count_name'
+
+
+    @classmethod
+    def get(cls, deviceid):
+        """
+        return:
+        {
+            'ts': 0,
+            'source': 'yijifen',                            # 广告平台来源
+            'callback': 'http://www.baidu.com',             # 回调地址
+            'deviceid': '0C74C2E9F2D0'                      # 设备标识
+            'idfa': '99AD5E51-1164-47E4-BF0F-69646AE8F5B6', # 设备标识
+            'mac': '0C74C2E9F2D0',                          # mac
+            'activate': False,                              # 是否激活
+        }
+        """
+        deviceid = deviceid.replace(':', '').upper()
+        info = cls.redis.hget(cls.ad_name, deviceid)
+        return eval(info) if info else {}
+
+    @classmethod
+    def update(cls, deviceid, info, force=False):
+        if not deviceid:
+            return
+        deviceid = deviceid.replace(':', '').upper()
+        if force or not cls.redis.hexists(cls.ad_name, deviceid):
+            cls.redis.hset(cls.ad_name, deviceid, info)
+            # 按source 或者 回调地址url 记录广告点击数
+            path, query = urllib.splitquery(info['callback'])
+            key = '%(path)s||%(date)s' % {'path': info['source'] or path, 'date': time.strftime('%F-%H')}
+            cls.redis.hincrby(cls.adclick_count_name, key)
 
     @classmethod
     def activate(cls, deviceid, info):
         """激活
         """
-        pass
+        deviceid = deviceid.replace(':', '').upper()
+        if info['activate']:
+            if info['source'] == 'youxiduo':
+                if not info.get('active_count'):
+                    info['active_count'] = info.get('active_count', 0) + 1
+                    cls.redis.hset(cls.ad_name, deviceid, info)
+                    cls.incr_youxiduo_count()
+            else:
+                cls.redis.hset(cls.ad_name, deviceid, info)
+                # 按source 或者 回调地址url 记录激活数
+                path, query = urllib.splitquery(info['callback'])
+                key = '%(path)s||%(date)s' % {'path': info['source'] or path, 'date': time.strftime('%F-%H')}
+                cls.redis.hincrby(cls.activate_count_name, key)
+
+    @classmethod
+    def watch_activate_count(cls):
+        """
+        return:
+             [('waps||2014-06-12', '1'),
+             ('limei||2014-06-12', '1'),
+             ('waps||2014-06-11', '2')]
+        """
+        d = {}
+        activate_counts = cls.redis.hgetall(cls.activate_count_name)
+        click_counts = cls.redis.hgetall(cls.adclick_count_name)
+        for k, v in activate_counts.iteritems():
+            d[k] = '%(activate_count)s/%(click_count)s' % {'activate_count': v, 'click_count': click_counts.get(k, 0)}
+        return sorted(d.iteritems(), key=lambda x: x(x[0].split('||'), x[1]), reverse=1)
+
+    @classmethod
+    def incr_youxiduo_count(cls):
+        """记录每日激活数
+        data = {
+            'active_count': 激活数
+            'order_count': 订单数
+            'order_amount': 流水数
+        }
+        """
+        key = '%s' % time.strftime('%F')
+        data = cls.redis.hget(cls.youxiduo_count_name, key)
+        data = eval(data) if data else {'order_count': 0, 'order_amount': 0, 'active_count': 0}
+        data['active_count'] += 1
+        cls.redis.hset(cls.youxiduo_count_name, key, data)
+
+    @classmethod
+    def update_youxiduo_count(cls, deviceid, amount):
+        """记录对应的充值数据， 每日一统计
+        data = {
+            'active_count': 激活数
+            'order_count': 订单数
+            'order_amount': 流水数
+        }
+        """
+        info = cls.get(deviceid)
+        try:
+            if info and info['source'] == 'youxiduo':
+                key = time.strftime('%F')
+                data = cls.redis.hget(cls.youxiduo_count_name, key)
+                data = eval(data) if data else {'order_count': 0, 'order_amount': 0, 'active_count': 0}
+                data['order_count'] += 1
+                data['order_amount'] += amount
+                cls.redis.hset(cls.youxiduo_count_name, key, data)
+        except:
+            pass
+
+    @classmethod
+    def query_youxiduo_count(cls):
+        """查询游戏多激活，订单，流水数
+        """
+        return cls.redis.hgetall(cls.youxiduo_count_name)
 
 
 class AppStoreAdver(object):
@@ -279,7 +388,13 @@ class AppStoreAdver(object):
 
     @classmethod
     def get_all(cls):
-        pass
+        data = cls.redis.hgetall(cls.APP_STORE_ADVER)
+        if not data:
+            return {}
+        result = {}
+        for ip, value in data.iteritems():
+            result[ip] = pickle.loads(value)
+        return result
 
     @classmethod
     def set(cls, ip):

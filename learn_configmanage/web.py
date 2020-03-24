@@ -12,6 +12,8 @@ from common.global_variable import GlobalVal
 GlobalVal.set_value()
 from common.configmanager import ConfigManager
 from handlers import forwardhandlers
+from handlers import basehandler
+from handlers import datahandlers
 from handlers.gameserverhandler import notice_agent
 
 

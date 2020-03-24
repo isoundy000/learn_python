@@ -114,3 +114,25 @@ def timestamp_different_days(time_1, time_2):
         0    ---
     """
     return (datetime_from_timestamp(timestamp_day(time_2)) - datetime_from_timestamp(timestamp_day(time_1))).days
+
+
+FORMAT_DATE = '%Y-%m-%d %H:%M:%S'
+
+
+def is_open_from_week(start_week_int, start_time_str, end_week_int, end_time_str, cur_date=None):
+    """ 根据星期判断是否开启功能, 只支持7天以内
+
+    :return int 0: 未开启
+    :return int >0: 开启
+    """
+    cur_date = cur_date if cur_date else datetime_module.datetime.now()
+    cur_time = time.mktime(cur_date.timetuple())
+    cur_week = cur_date.weekday()
+
+    start_time = datetime_module.datetime.strptime(start_time_str, '%H:%M:%S').time()
+    end_time = datetime_module.datetime.strptime(end_time_str, '%H:%M:%S').time()
+    start_week = start_week_int - 1
+    end_week = end_week_int - 1
+
+    if start_week < end_week:
+        pass
