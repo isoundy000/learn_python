@@ -20,7 +20,9 @@ from handlers.gameserverhandler import notice_agent
 from logic.broadcast import PushBroadcast2
 from common.dbhelper import DBHelperObject
 import uuid
+from handlers import configfilehandler
 from handlers import account_handler
+from handlers.interface.config_data import GetWebInfo
 
 
 define("port", default=9696, type=int)
@@ -32,10 +34,34 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             # 接口
+            (r"/get/web_info", GetWebInfo),                             # 获取网站信息
             # Default
-            (r"/", forwardhandlers.IndexHandler),
-            (r"/login", forwardhandlers.LoginHandler),
-            (r"/validate", datahandlers.AjaxValidateHandler),
+            (r"/", forwardhandlers.IndexHandler),                       # 主页页面
+            (r"/login", forwardhandlers.LoginHandler),                  # 登录页面
+            (r"/updatepass", datahandlers.UpdatePassHandler),           # 更新密码
+            (r"/exit", forwardhandlers.ExitHandler),                    # 退出页面
+            # 管理系统 Route
+            (r"/server", forwardhandlers.ServerHandler),                # 管理系统
+
+            # 统计系统
+            (r"/trend", forwardhandlers.TrendHandler),                  # 统计系统
+
+            # 策划系统
+            (r"/config/configfile", configfilehandler.ConfigFileHandler),   # 策划系统
+
+
+            # 运维系统
+            (r"/allgame_b/total", forwardhandlers.AllGameBTotalHandler),    # 运维系统
+
+            # 运营系统 Route
+            (r"/broadcast", forwardhandlers.BroadcastHandler),          # 运营系统 Route
+
+            # AJax Route
+            (r"/validate", datahandlers.AjaxValidateHandler),           # 验证
+            (r"/getalluser", datahandlers.AjaxGetAllUserHandler),       # 获取所有用户
+            # (r"/getotheruser", datahandlers.AjaxGetOtherUserHandler),
+            (r"/operateuser", datahandlers.AjaxOperateUserHandler),     # 更新或添加用户
+            (r"/deleteuser", datahandlers.AjaxDeleteUserHandler),       # 删除用户
         ]
 
         key = ConfigManager.getvalue("GAME_DATA", "config_path")

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--运行配置文件-->
+<Server>
+    <Info>
+        <ID>1</ID>
+        <Type>Acc</Type>
+        <Code>0XEE1D</Code>
+    </Info>
+    <Debug>true</Debug>             <!--调试开关-->
+    <Log>                           <!--日志-->
+        <switch>true</switch>       <!--开关-->
+        <level>1</level>            <!--级别（预留）-->
+        <!--<path>/Users/jutian/JT-Code/python/SanguoAcc/Log</path>--><!--写入路径-->
+        <path>/Users/houguangdong/Workspace/learn_python/learn_hb_acc/acc/Source/Logg</path>
+        <print>true</print>         <!--是否打印显示-->
+    </Log>
+    <DataBase>                      <!--数据库配置区域-->
+        <DB1>                       <!--1号数据库-->
+            <Engine>MySQL</Engine>      <!--引擎类型 MySQL Oracle ...-->
+            <host>127.0.0.1</host>      <!--数据库IP地址-->
+            <port>3306</port>           <!--数据库端口号-->
+            <!--<unix_socket>/var/lib/mysql/mysql.sock</unix_socket>>&lt;!&ndash;unix_socket高速连接&ndash;&gt;-->
+            <unix_socket>/private/tmp/mysql.sock</unix_socket> <!--unix_socket高速连接-->
+            <user>sanguo_bg</user>      <!--用户名-->
+            <password>sanguo_passwd</password>  <!--密码-->
+            <db>fantasy_sanguo_acc</db> <!--对应数据库名字-->
+            <param>charset=utf8</param> <!--数据库参数-->
+            <echo>false</echo>          <!--SQLAlchemy echo-->
+        </DB1>
+    </DataBase>
+    <Interface>                         <!--接口-->
+        <Player>                        <!--玩家接口-->
+            <ProtocolType>protobuf</ProtocolType>   <!--协议类型-->
+            <listener>                  <!--监听-->
+                <!--<ip>182.92.161.59</ip>-->
+                <ip>127.0.0.1</ip>      <!--ip地址-->
+                <port>8000</port>       <!--端口号-->
+            </listener>
+            <MagicCode>0XEE1C</MagicCode>   <!--接入魔术字-->
+            <max>50</max>               <!--最大同时接入连接数-->
+        </Player>
+        <GameServer>                    <!--游戏接口-->
+            <ProtocolType>protobuf</ProtocolType>
+            <listener>
+                <ip>0.0.0.0</ip>
+                <port>8011</port>
+            </listener>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+            <max>100</max><!--最大同时接入连接数-->
+        </GameServer>
+        <GameServer2>
+            <ProtocolType>protobuf</ProtocolType>
+            <listener>
+                <ip>0.0.0.0</ip>
+                <port>9011</port>
+            </listener>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+            <max>100</max><!--最大同时接入连接数-->
+        </GameServer2>
+        <GlobalServer>
+            <ProtocolType>protobuf</ProtocolType>
+            <Address>
+                <ip>127.0.0.1</ip>
+                <port>8001</port>
+            </Address>
+            <MagicCode>0XEE1D</MagicCode> <!--接入魔术字-->
+        </GlobalServer>
+        <WSGI>
+            <ProtocolType>http</ProtocolType>
+            <listener><!--监听-->
+                <ip>0.0.0.0</ip><!--ip地址-->
+                <port>8999</port><!--端口号-->
+            </listener>
+        </WSGI>
+        <WSGI1>
+            <ProtocolType>http</ProtocolType>
+            <listener><!--监听-->
+                <ip>0.0.0.0</ip><!--ip地址-->
+                <port>8998</port><!--端口号-->
+            </listener>
+        </WSGI1>
+    </Interface>
+    <Configure>                         <!--配置文件-->
+        <root>/Users/houguangdong/Workspace/learn_python/learn_hb_acc/acc/Source/Configure</root>
+        <!--<root>/home/fantasysanguo/SanguoAcc/Configure</root>&lt;!&ndash;配置文件根目录&ndash;&gt;-->
+    </Configure>
+    <Resource>                          <!--资源文件-->
+        <root>/Users/houguangdong/Workspace/learn_python/learn_hb_acc/acc/Source/Resource</root>
+        <!--<root>/home/fantasysanguo/SanguoAcc/Resource</root>&lt;!&ndash;资源文件根目录&ndash;&gt;-->
+    </Resource>
+    <Parallels>
+        <Workers>1000</Workers>
+    </Parallels>
+</Server>

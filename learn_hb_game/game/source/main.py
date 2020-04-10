@@ -73,5 +73,6 @@ if __name__ == '__main__':
 
     WorkPoolManager.Start(WorkPoolFunctions.Excute)
 
-    if not
+    if not TaskResponseQueueDispath.Start():        # 结果派发
+
 

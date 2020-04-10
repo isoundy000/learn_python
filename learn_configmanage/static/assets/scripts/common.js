@@ -5,10 +5,10 @@ var PLATFORM_TYPE = '';
 $.ajax({
     url: '/get/web_info',
     async: false,
-    success:function (result) {
-        title = result['data']['title'];
-        PLATFORM_NAME = result['data']['platform_name'];
-        PLATFORM_TYPE = result['data']['platform_group'];
+    success: function (result) {
+        title = result['data']['title'];                    //网站名
+        PLATFORM_NAME = result['data']['platform_name'];    //渠道名[小米|安趣]
+        PLATFORM_TYPE = result['data']['platform_group'];   //游戏名
     }
 });
 $("title").html(title);
@@ -241,7 +241,7 @@ var getUserNameAndRole = function () {
     $("#username").html(name);
     var str_info = "";
     if (user_role1 == "1"){
-        $("#enter_manage").attr("href", "/server");
+        $("#enter_manage").attr("href", "/server");             //管理系统
         if (typeof(role_tag) != "undefined" && role_tag == 1) {
             str_info += '<a class="btn green-haze dark-stripe" href="/server">管理</a>';
         }
@@ -253,7 +253,7 @@ var getUserNameAndRole = function () {
         $("#enter_manage").attr("onclick", "show_auth_modal()");
     }
     if (user_role2 == "1") {
-        $("#enter_art").attr("href", "/config/configfile");
+        $("#enter_art").attr("href", "/config/configfile");     //策划系统
         if (typeof(role_tag) != "undefined" && role_tag == 2) {
             str_info += '<a  class="btn green-haze dark-stripe" href="/config/configfile">策划</a>';
         }
@@ -264,7 +264,7 @@ var getUserNameAndRole = function () {
     else{
         $("#enter_art").attr("onclick", "show_auth_modal()");
     }
-    if (user_role3 == "1") {
+    if (user_role3 == "1") {                                    //统计系统
         if (user_name == "wangjie" || user_name == "wangjie2" || user_name == "anfeng" || user_name == "anfeng2"
           || user_name == "ihangmei1" || user_name == "ihangmei2" || user_name == "ihangmei3"
           || user_name == 'beiyou888'  || user_name == "jx_yd"
@@ -273,7 +273,7 @@ var getUserNameAndRole = function () {
             $("#enter_count").attr("href", "/operatedata");
         }
         else{
-            $("#enter_count").attr("href", "/trend");
+            $("#enter_count").attr("href", "/trend");           //付费趋势
         }
         if (typeof(role_tag) != "undefined" && role_tag == 3) {
             $("#username").html(channel + ":" + user_name);
@@ -286,7 +286,7 @@ var getUserNameAndRole = function () {
     else{
         $("#enter_count").attr("onclick", "show_auth_modal()");
     }
-    if (user_role4 == "1") {
+    if (user_role4 == "1") {                                    //运维系统
         $("#enter_operate").attr("href", "/allgame_b/total");
         if (typeof(role_tag) != "undefined" && role_tag == 4) {
             str_info += '<a  class="btn green-haze dark-stripe" href="/allgame_b/total">运维</a>';
@@ -298,7 +298,7 @@ var getUserNameAndRole = function () {
     else{
         $("#enter_operate").attr("onclick", "show_auth_modal()");
     }
-    if (user_role5 == "1") {
+    if (user_role5 == "1") {                                    //运营系统
         var user_custom = $.cookie("user_custom");
         var custom_split = user_custom.split("|");
         var url_t = custom_left_type[custom_split[0]]["url"];
@@ -323,7 +323,9 @@ var getUserNameAndRole = function () {
     }
     $("#system_list").html(str_info);
 };
-getUserNameAndRole();
+
+
+getUserNameAndRole();       //获取用户和角色
 
 
 
@@ -623,7 +625,7 @@ var handleTimePickers = function () {
     }
 };
 
-
+//获取现在的时间
 var getNowFormatDate = function (d) {
     var day = new Date();
     var CurrentDate = "";
@@ -659,7 +661,7 @@ $("#update_pass").bind("click", function(e){
 
 var get_exchange = function(){
     var exchange_num = 0;
-    
+
     var url = '/exchange/getexchange';
     var success = function(data){
         exchange_num = data["value"];
@@ -800,6 +802,7 @@ var exchangeValidation = function(){
 };
 exchangeValidation();
 
+//ajax发送汇率到服务器
 var get_exchange = function(e_key){
     var exchange_num = 0;
     var url = '/exchange/getexchange';
@@ -813,7 +816,7 @@ var get_exchange = function(e_key){
     return exchange_num
 };
 
-
+//获取汇率的改变值
 $e_key.on("change", function (e) {
     e.preventDefault();
     var value = $(this).val();
@@ -821,7 +824,7 @@ $e_key.on("change", function (e) {
     $("#exchange_num").val(exchange_num);
 });
 
-
+//修改汇率按钮事件
 $("#set_exchange").on("click", function (e){
     e.preventDefault();
     $e_key.change();
@@ -1065,7 +1068,7 @@ var get_section = function (div_section) {
         my_ajax(true, "/section/querysection", "get", {}, false, success);
     }
     var str_html = "";
-    
+
     for (var i in SECTION_DATA) {
         str_html += "<option value=\"" + SECTION_DATA[i]["id"] + "\">" + SECTION_DATA[i]["name"] + "</option>";
     }
@@ -1500,5 +1503,5 @@ function display_left_count(){
         $("#channel5").hide();
         $("#channel6").hide();
     }
-    
+
 }

@@ -604,7 +604,7 @@ class Battle(object):
         # 用来加在战前技能后的msg
         self.tmp_m_dMsg = []
 
-        self.m_tBuffList = [[], [], [], [], [], [], [], [], [], []]
+        self.m_tBuffList = [[], [], [], [], [], [], [], [], [], []]         # 前5个是攻击方buff 后5个是防守方buff
 
         # 出手排序
         self.m_tSortArray = [0] * 10
@@ -669,6 +669,12 @@ class Battle(object):
             if self.m_tAtkArray[i] != 0:
                 self.startSetMembers(i)
             if self.m_tDfdArray[i] != 0:
+
+
+
+
+
+
                 self.startSetMembers(i + 100)
 
         # 纪录所有历史数据
@@ -764,12 +770,356 @@ class Battle(object):
             self.depart_pre_battle()
             return self.m_dMsg
 
+    def depart_pre_battle(self):
+        """战前技能要常规战斗数据分离
+        """
+        user_toggle = getattr(self.attacker, 'pre_battle', 0)
+        if not user_toggle:
+            return None
+
+        pre_battle = copy.copy(self.m_dMsg['battle'])
+        self.m_dMsg['battle'] = {}      # 清空
+        self.m_nRecord = 1              # 回合数
+
+        pre_battle = self.format_pre_battle(pre_battle)
+        if pre_battle:
+            self.updateMsg('pre_battle', pre_battle)
+
+        self.updateMsg('cur_data', self.get_current_data())
+        self.add_tail_msg()
+
+    def format_pre_battle(self, steps):
+        """战前技能数据格式整理
+        """
+        if len(steps) < 1:
+            return {}
+
+        pre_battle = {
+            'skill': {},
+            'hurt': {},
+            'health': {},
+            'buff': {},
+            'attr_hurt': {},
+        }
+
+        for i in range(1, len(steps) + 1):
+            step = steps[i]
+            flag = step['flag']
+            param = step['param']
+            if flag == 'skill':
+                self.process_skill_data(param, pre_battle)
+                self.process_attr_hurt(param, pre_battle)
+            elif flag == 'add_buff':
+                src = param['src']
+                buffname = param['name']
+                pre_battle['buff'][src] = buffname
+            elif flag == 'anger':
+                self.updateMsg('anger', param)
+            else:
+                self.stash_msg(step)
+
+        pre_battle['skill'] = self.get_pre_skill()
+
+        if not self.is_pre_skill_null(pre_battle):
+            return {}
+
+        return pre_battle
+
+    def is_pre_skill_null(self, pre_battle):
+        '''
+        战前技能数据是空
+        :param pre_battle:
+        :return:
+        '''
+        flag = False
+        for k in pre_battle:
+            if pre_battle[k]:
+                flag = True
+                break
+
+        return flag
+
+    def get_pre_skill(self):
+        """获取英雄战前释放的技能
+        """
+        return self.pre_skill
+
+    def process_skill_data(self, param, pre_battle):
+        """战前的技能伤害数据整理
+        """
+        if not param.get('des'):
+            return None
+
+        des = param.get('des')
+        health = param.get('health')
+        hurt = param.get('hurt')
+        tmp_health = {}
+        tmp_hurt = {}
+
+        if isinstance(des, list):
+            for i, d in enumerate(des):
+                if health:
+                    h = 0
+                    if isinstance(health, list):
+                        if i < len(health):
+                            h = health[i]
+                    else:
+                        h = health
+                    tmp_health[d] = h
+                if hurt and i < len(hurt):
+                    tmp_hurt[d] = hurt[i]
+        else:
+            if health:
+                tmp_health[des] = health
+            if hurt:
+                tmp_health[des] = hurt
+
+        if health:
+            merge_dict(pre_battle['health'], tmp_health)
+        if hurt:
+            merge_dict(pre_battle['hurt'], tmp_hurt)
+
+    def process_attr_hurt(self, param, pre_battle):
+        """属性伤害数据整理
+
+           @des: pre_battle['attr_hur']:
+                attr_hurt: {
+                    pos: {‘attr_type’: hurt ’attr_type’: hurt}
+                }
+        """
+        attr_type = param.get('attr_type')
+        if not attr_type:
+            return None
+
+        attr_hurt = param.get('attr_hurt', [])
+        if not isinstance(attr_hurt, list):
+            attr_hurt = [attr_hurt]
+
+        for i, d in enumerate(attr_hurt):
+            des_attr_hurt = pre_battle['attr_hurt'].get(d, {})
+            if des_attr_hurt.get(attr_type):
+                des_attr_hurt[attr_type] += attr_hurt[i]
+            else:
+                des_attr_hurt[attr_type] = attr_hurt[i]
+
+            pre_battle['attr_hurt'][d] = des_attr_hurt
+
+    def add_tail_msg(self):
+        """把如death和winer信息加入到m_dMsg后边
+        """
+        for step in self.tmp_m_dMsg:
+            self.updateMsg(step['flag'], step['param'])
+
+        self.tmp_m_dMsg = []
+
+    def stash_msg(self, step):
+        """暂存信息
+        """
+        self.tmp_m_dMsg.append(step)
+
+    def get_current_data(self, step):
+        """获取当前血量和最大血量
+        """
+        pass
+
+    def checkDrama(self, flag, round=0):
+        """
+        检查剧情
+        :param flag:
+        :param round:
+        :return:
+        """
+        if self.drama is None:
+            return
+        for i in self.drama:
+            tempDrama = game_config.drama[i]
+            if tempDrama['start_sort'] == flag:
+                if flag == 3 and tempDrama['data'] == round:
+                    self.updateMsg('drama', i)
+                elif flag == 2 and tempDrama['data'] == round:
+                    self.updateMsg('drama', i)
+                elif flag == 1:
+                    self.updateMsg('drama', i)
+
+    def checkOver(self):
+        """
+        检查战斗是否结束
+        """
+        winflag_l = False               # 攻击方获胜
+        winflag_r = False               # 防守方获胜
+        for i in range(5):
+            if self.getMembers(i) != 0:
+                winflag_l = True
+            if self.getMembers(i + 100) != 0:
+                winflag_r = True
+        if not winflag_l or not winflag_r:
+            if winflag_l:
+                self.updateMsg(BATTLEFLAG['winer'], 0)
+                self.setWiner(0)
+            else:
+                self.updateMsg(BATTLEFLAG['winer'], 101)
+                self.setWiner(101)
+            return True
+        return False
+
+    def setWiner(self, positionid):
+        """
+        设置胜利方, <5 attacker获胜
+        """
+        self.m_dMsg['winer'] = positionid
+        if positionid > 5:
+            self.checkDrama(2, 1)
+        else:
+            self.checkDrama(2, 0)
+
+
+
+
     def checkDeath(self):
         """
         检查双方队列里是否有死亡
         """
         # 同步前端数据
-        self.HistoryChangeMsg()
+        self.HistoryChangeMsg()         # changed by ghou on 2014,1,24
+        # 检查死亡，以及死亡触发器
+        deathArray = []
+        for i in xrange(5):
+            if self.m_tAtkArray[i] != 0 and self.m_tAtkArray[i]['tempHp'] <= 0:
+                # self.updateMsg(BATTLEFLAG['death'], i)      # 更新消息 死亡
+                self.buffTregger(i, skill_tregger_def.KBUFFDEAD)    # ???????????????????????死亡buff效果触发
+                skill.skillTregger(self.m_tSkillMap[self.m_tAtkArray[i]['id']], skill_tregger_def.KDEAD, self, i)   # 死亡触发器
+                if self.m_tAtkArray[i]['tempHp'] <= 0:
+                    deathArray.append(i)
+                    # self.updateMsg(BATTLEFLAG['death'], i)  # 更新消息 死亡
+                    # self.__removeAllBuff(i)
+                    # self.substitution(i)
+            if self.m_tDfdArray[i] != 0 and self.m_tDfdArray[i]['tempHp'] <= 0:
+                # self.updateMsg(BATTLEFLAG['death'], i + 100)    # 更新消息 死亡
+                self.buffTregger(i + 100, skill_tregger_def.KBUFFDEAD)  # ???????????????????????死亡buff效果触发
+                skill.skillTregger(self.m_tSkillMap[self.m_tDfdArray[i]['id']], skill_tregger_def.KDEAD, self, i + 100)     # 死亡触发器
+                if self.m_tDfdArray[i]['tempHp'] <= 0:
+                    deathArray.append(i + 100)
+                    # self.updateMsg(BATTLEFLAG['death'], i + 100)    # 更新消息 死亡
+                    # self.__removeAllBuff(i + 100)
+                    # self.substitution(i + 100)
+
+        for j in deathArray:
+            self.updateMsg(BATTLEFLAG['death'], j)
+            self.__removeAllBuff(j)
+            self.substitution(j)
+
+    def substitution(self, positionid):
+        """
+        替补上场
+        positionid: 需要替换队员位置序号
+        """
+        # 插入排序队列？
+        tempindex = 0
+        while tempindex < 10:
+            if positionid == self.m_tSortArray[tempindex]:      # 出手排序
+                break
+            tempindex += 1
+        if tempindex < self.m_nCurtIndex and tempindex > 0:
+            tempi = tempindex - 1
+            while tempi >= 0:
+                self.m_tSortArray[tempi], self.m_tSortArray[tempi + 1] = self.m_tSortArray[tempi + 1], self.m_tSortArray[tempi]
+                tempi -= 1
+
+        if positionid < 5:
+            # 攻击方替补
+            tempSubId = self.m_tAAlternate[positionid] - 1 + 5
+            if self.m_tAtkArray[tempSubId] != 0:
+                self.m_tAtkArray[positionid] = self.m_tAtkArray[tempSubId]      # 把替补放在死亡的卡牌位置
+                self.m_tAtkArray[tempSubId] = 0                                 # 替补清零
+                self.setMembers(positionid)
+                self.m_tAtkArray[positionid]["tempSpeed"] = self.m_nDeathSpeed  # 死亡出手速度
+                self.m_nDeathSpeed -= 1                                         # 出手速度减掉一点
+                self.m_tHistoryDataAll[positionid] = copy.deepcopy(self.m_tAtkArray[positionid])    # 替补的数据 每次同步所有数据一次
+                self.updateMsg(BATTLEFLAG['substitution'], {'a': positionid, 'b': tempSubId})       # 更新消息 替补上场
+                return True
+            else:
+                self.m_tAtkArray[positionid] = 0                                # 攻击卡牌置成0
+                return False
+        else:
+            # 守方替补
+            tempid = positionid - 100                                           # 防守方索引
+            tempSubId = self.m_tDAlternate[tempid] - 1 + 5                      # 替补索引
+            if self.m_tDfdArray[tempSubId] != 0:
+                self.m_tDfdArray[tempid] = self.m_tDfdArray[tempSubId]
+                self.m_tDfdArray[tempSubId] = 0
+                self.setMembers(positionid)
+                self.m_tDfdArray[tempid]["tempSpeed"] = self.m_nDeathSpeed
+                self.m_nDeathSpeed -= 1
+                self.m_tHistoryDataAll[positionid] = copy.deepcopy(self.m_tDfdArray[tempid])
+                self.updateMsg(BATTLEFLAG['substitution'], {'a': positionid, 'b': tempSubId + 100})  # 更新消息 替补上场
+                return True
+            else:
+                self.m_tDfdArray[tempid] = 0
+                return False
+
+
+    def setMembers(self, positionid):
+        '''
+        设置成员
+        :param positionid: 位置
+        初始化临时数据，除血量以外
+        {
+            id,
+            phsc(物理攻),
+            mgc(魔法攻),
+            dfs(防御),
+            hp(血),
+            speed(速),
+            lv(等级),
+            tempSpeed(上场队员当前速度),
+            tempPhsc(物攻临时),
+            tempMgc,
+            tempDfs,
+            subHurt,
+            crit(暴击率),
+            dr(闪避率),
+            hr(命中率),
+            tempcrit(暴击临时),
+            tempdr(闪避率临时),
+            temphr(命中率临时)
+        }
+        :return:
+        '''
+        if positionid < 5:
+            tempMembers = self.m_tAtkArray[positionid]
+        else:
+            tempMembers = self.m_tDfdArray[positionid - 100]
+        tempMembers['tempPhsc'] = tempMembers['phsc']
+        tempMembers['tempMgc'] = tempMembers['mgc']
+        tempMembers['tempDfs'] = tempMembers['dfs']
+        tempMembers['maxHp'] = tempMembers['hp']
+        if 'tempHp' not in tempMembers:
+            tempMembers['tempHp'] = tempMembers['hp']
+            # tempMembers['subhurt'] = 0
+            # tempMembers['crit'] = 0
+            # tempMembers['dr'] = 0
+            # tempMembers['hr'] = 100
+
+        tempMembers['tempSpeed'] = tempMembers['speed']
+        tempMembers['tempCrit'] = tempMembers['crit']
+        tempMembers['tempDr'] = tempMembers['dr']
+        tempMembers['tempHr'] = tempMembers['hr']
+        tempMembers['subHurt'] = tempMembers['subhurt']
+        magic_sorts = ['fire', 'fire_dfs', 'wind', 'wind_dfs', 'water', 'water_dfs', 'earth', 'earth_dfs']
+        for magic_sort in magic_sorts:
+            tempMembers['temp' + magic_sort.capitalize()] = tempMembers[magic_sort]
+
+    def __removeAllBuff(self, positionid):
+        '''
+        去掉指定位置上的所有buff
+        :param positionid:
+        :return:
+        '''
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+        self.m_tBuffList[tempIndex] = []
 
     def HistoryChangeMsg(self):
         """
@@ -792,9 +1142,24 @@ class Battle(object):
             temp1 = {}
             if tempData != 0:
                 for j, v in enumerate(tempHData):
-                    if not ((v == "tempSpeed") and (i in self.m_tHadAttackedId)):
+                    # if not ((v == "tempSpeed") and (i in self.m_tHadAttackedId)):
                         if tempHData[v] != tempData[v]:
-                            pass
+                            temp1[v] = tempData[v]
+                            tempHData = tempData[v]
+            if len(temp1) > 0:
+                tempMsg[i] = temp1
+            temp2 = {}
+            if tempData2 != 0:
+                for j, v in enumerate(tempHData2):
+                    # if not((v == "tempSpeed") and ((i + 100) in self.m_tHadAttackedId)):
+                        if tempHData2[v] != tempData2[v]:
+                            temp2[v] = tempData2[v]
+                            tempHData2[v] = tempData2[v]
+            if len(temp2) > 0:
+                tempMsg[i + 100] = temp2
+        
+        if len(tempMsg) > 0:
+            self.updateMsg('cur_data', tempMsg)
 
     def startSetMembers(self, positionId):
         """
@@ -824,6 +1189,48 @@ class Battle(object):
         magic_sorts = ['fire', 'fire_dfs', 'wind', 'wind_dfs', 'water', 'water_dfs', 'earth', 'earth_dfs']
         for magic_sort in magic_sorts:
             tempMembers['temp' + magic_sort.capitalize()] = tempMembers[magic_sort]     # capitalize()首字母变大写
+
+    def buffTregger(self, positionid, tregger, synchro=True):
+        """
+        buff 效果触发器
+        tregger
+        """
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+
+        tempTrgs = self.m_tBuffList[tempIndex]
+
+        i = 0
+        templen = len(tempTrgs)
+        while i < templen:
+            if tempTrgs[i] is None or tempTrgs[i].m_tregger != tregger:
+                i += 1
+                continue
+            else:
+                tempFunc = tempTrgs[i].m_func
+                tempTrgs[i].m_effect -= 1
+                if tempTrgs[i].m_effect > 0:
+                    self.removeBuffWithIndex(positionid, i)
+                    templen = len(tempTrgs)
+                    tempFunc(self, positionid)
+                    continue
+                else:
+                    self.m_bBuffSkilling = True
+                    tempFunc(self, positionid)
+                    self.m_bBuffSkilling = False
+                    if synchro:
+                        self.HistoryChangeMsg()
+                    tempTrgs[i].m_effect -= 1
+                    templen1 = len(tempTrgs)
+                    if templen != templen1:
+                        templen = templen1
+                        continue
+            i += 1
+
+                
+
 
     def getMembers(self, positionid):
         """

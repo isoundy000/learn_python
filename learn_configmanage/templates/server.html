@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><! <html lang="zh-CN" class="no-js"> <![endif]-->
+<html lang="zh-CN" class="no-js">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="UTF-8" />
+    <title>管理系统页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width,initial-scale=1.0, maximum-scale=1, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="{{static_url('assets/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{static_url('assets/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet" type="text/css"/>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{static_url('assets/plugins/bootstrap-datepicker/css/datepicker.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{static_url('assets/plugins/bootstrap/css/bootstrap-datetimepicker.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{static_url('assets/plugins/bootstrap-timepicker/compiled/timepicker.css')}}" />
+    <!--<link href="{{static_url("assets/plugins/jquery-searchableSelect/jquery.searchableSelect.css")}}" rel="stylesheet" type="text/css"/>-->
+	<!-- END PAGE LEVEL PLUGIN STYLES -->
+	<!-- BEGIN THEME STYLES -->
+	<link href="{{static_url('assets/css/style-metronic.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/style.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/style-responsive.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/themes/darkblue.css')}}" rel="stylesheet" type="text/css"/>
+	<link href="{{static_url('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
+	<!-- END THEME STYLES -->
+    <script type="text/javascript"> var channel_id = 1; channel_second = 1;</script>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+    <!-- BEGIN HEADER -->
+    {% module Template("head.html") %}
+    <div class="clearfix"></div>
+    <!-- BEGIN CONTAINER -->
+	<div class="modal" id="refreshserver_modal"></div>
+    <div class="modal fade" id="confirm_modal">
+        <div class="modal-dialog modal-wide">
+            <form class="form-horizontal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h3 class="modal-title">是否修改以下信息内容</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-body">
+                            <div id="update_info"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" id="cancel_confirm">取消</button>
+                        <button id="button_confirm" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        {% module Template("left.html") %}
+		<!-- END SIDEBAR -->
+
+        <!-- BEGIN PAGE -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <!--<ul class="page-breadcrumb breadcrumb">-->
+                        <!--<li>-->
+                            <!--<i class="fa fa-cloud"></i>-->
+                            <!--<a href="#">服务器管理</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title"></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tabbable tabbable-custom boxless">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab_gameserver" data-toggle="tab">游戏服</a></li>
+                            <li><a id="a_gamebase" href="#tab_gamebase" data-toggle="tab">数据库</a></li>
+                            <!--<li><a id="config_server" href="#tab_configserver" data-toggle="tab">下载服务器</a></li>-->
+                            <!--<li><a id="a_command" href="#tab_command" data-toggle="tab">命令行</a></li>-->
+                            <li><a id="a_openserver" href="#tab_openserver" data-toggle="tab">定时开服</a></li>
+                            <!--<li><a id="a_restartserver" href="#tab_restartserver" data-toggle="tab">定时重启</a></li>-->
+                            <li><a id="a_merge_server" href="#tab_merge_server" data-toggle="tab">合服信息</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab_restartserver">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-th"></i>定时重启</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="restart_add" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-hover" id="table_restartserver">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal fade" id="del_restartserver_modal"></div>
+                                    <div id="restartserver_modal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <form id="restartserver_form" action="#" class="form-horizontal">
+                                                <input type="hidden" id="restart_id" value="">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                                        <h4 class="modal-title">定时重启</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert"></button>
+                                                                <span>请输入下面必填信息</span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">区服<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <div class="checkbox-list" id="restartserver_check"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-3 control-label">操作</label>
+                                                                <div class="col-md-4">
+                                                                    <button id="select_all" type="button" class="btn default">全选</button>
+                                                                    <button id="no_select_all" type="button" class="btn default">反选</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">日期<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
+                                                                        <input type="text" class="form-control" id="restart_date" readonly>
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">时间
+                                                                    <span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group bootstrap-timepicker">
+                                                                        <input type="text" class="form-control timepicker-24" id="restart_time" name="restart_time"  readonly="true">
+                                                                        <span class="input-group-btn">
+                                                                            <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">状态<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control input-medium" id="restart_status" name="restart_status">
+                                                                        <option value="prepare">准备</option>
+                                                                        <option value="execute">执行</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">服务</label>
+                                                                <div class="col-md-3">
+                                                                    <div class="checkbox-list">
+                                                                        <label>
+                                                                            <input type="checkbox" name="service_type" value="1"> 重启游戏
+                                                                        </label>
+                                                                        <label>
+                                                                            <input type="checkbox" name="service_type" value="2"> 重启扩展
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                        <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_openserver">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-th"></i>定时开服</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="open_add" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-hover" id="table_openserver">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal fade" id="del_openserver_modal"></div>
+                                    <div id="openserver_modal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <form id="openserver_form" action="#" class="form-horizontal">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                                        <h4 class="modal-title">定时开服</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert"></button>
+                                                                <span>请输入下面必填信息</span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">区服<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control input-medium" id="select_openserver" name="select_openserver"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">时间<span class="required">*</span></label>
+                                                                <div class="col-md-6" >
+                                                                    <input type="text" id="open_datetime" class="form-control" placeholder="点击选择时间" readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">状态<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control input-medium" id="open_status" name="open_status">
+                                                                        <option value="prepare">准备</option>
+                                                                        <option value="execute">执行</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                        <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_merge_server">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-th"></i>合服信息</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="add_merge" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="modal" id="merge_modal">
+                                            <div class="modal-dialog">
+                                                <form id="merge_form" action="#" class="form-horizontal">
+                                                    <input type="hidden" id="merge_tag" name="merge_tag" value="">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <h4 class="modal-title">合服信息</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-body">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">主区服<span class="required">*</span></label>
+                                                                    <div class="col-md-6">
+                                                                        <select class="form-control input-medium" id="select_mid" name="select_mid"></select>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <button class="btn green-haze" id="btn_add">添加</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" id="merge_oid_1">
+                                                                    <label class="control-label col-md-3">副区服1</label>
+                                                                    <div class="col-md-3">
+                                                                        <div class="input-icon">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <input class="form-control" name="oid_list" placeholder="副区服1" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                            <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr id="merge_title">
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="merge_list">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_command">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-laptop"></i>命令行</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="command" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i></a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <div class="btn-group">
+                                                    <button id="btn_refreshserver2" class="btn blue" data-toggle="modal">
+                                                        刷新服务器列表
+                                                    </button>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button id="btn_updatesection" class="btn purple" data-toggle="modal">
+                                                        更新配置分区
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal" id="updatesection_modal">
+                                            <div class="modal-dialog">
+                                                <form id="updatesection_form" action="#" class="form-horizontal">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <h4 class="modal-title">更新配置分区</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-body">
+                                                                <div class="alert alert-danger display-hide">
+                                                                    <button class="close" data-close="alert"></button>
+                                                                    <span>请输入必填信息</span>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">分区编号<span class="required">*</span></label>
+                                                                    <div class="col-md-6">
+                                                                        <div class="input-icon">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <input class="form-control" id="section_id" name="section_id" placeholder="分区编号" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                            <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>名称</th>
+                                                        <th>命令</th>
+                                                        <th>参数</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="command_list">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="command_modal" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <form id="command_form" action="#" class="form-horizontal">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <h4 class="modal-title">命令行</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-body">
+                                                                <div class="alert alert-danger display-hide">
+                                                                    <button class="close" data-close="alert"></button>
+                                                                    <span>请输入必填信息</span>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">命令名称<span class="required">*</span></label>
+                                                                    <div class="col-md-6">
+                                                                        <div class="input-icon">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <input class="form-control" id="command_name" name="command_name" placeholder="命令名称" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">执行命令<span class="required">*</span></label>
+                                                                    <div class="col-md-6">
+                                                                        <div class="input-icon">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <input class="form-control" id="command_value" name="command_value" placeholder="执行命令" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">执行参数<span class="required">*</span></label>
+                                                                    <div class="col-md-6">
+                                                                        <div class="input-icon">
+                                                                            <i class="fa fa-user"></i>
+                                                                            <input class="form-control" id="command_param" name="command_param" placeholder="执行命令" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                            <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane active" id="tab_gameserver">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-cloud"></i>区服</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="server_add" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i></a>
+                                            </div>
+                                            <div class="btn-group ">
+                                                <button id="btn_refreshserver" class="btn blue-hoki" data-toggle="modal">
+                                                    刷新服务器列表
+                                                </button>
+                                            </div>
+                                            <div class="btn-group ">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#batch_modal">
+                                                    批量操作
+                                                </button>
+                                            </div>
+                                            <div class="btn-group pull-right">
+                                                <button type="button" id="btn_online" class="btn btn-default">在线</button>
+                                                <button type="button" id="btn_offline" class="btn btn-default">停机</button>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-hover" id="table_game_server">
+                                            <thead>
+
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <div class="modal fade" id="server_del_modal"></div>
+                                        <div id="server_modal" class="modal fade">
+                                            <div class="modal-dialog modal-wide">
+                                                <form id="server_form" action="#" class="form-horizontal">
+                                                    <input type="hidden" name="server_id" id="server_id" value="">
+
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                                            <h4 class="modal-title" id="server_title"></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert"></button>
+                                                                <span>请输入下面必填信息</span>
+                                                            </div>
+                                                            <div class="tabbable tabbable-custom boxless">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="active"><a href="#tab_server" data-toggle="tab">区服</a></li>
+                                                                    <li><a href="#tab_port" data-toggle="tab">端口</a></li>
+                                                                    <li><a href="#tab_status" data-toggle="tab">状态</a></li>
+                                                                    <li><a href="#tab_path" data-toggle="tab">路径</a></li>
+                                                                    <li><a href="#tab_section" data-toggle="tab">分区/开服时间</a></li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane active" id="tab_server">
+                                                                        <div class="form-body">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">区服名称<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="server_name" id="server_name" placeholder="" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">IP/域名<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="server_ip" id="server_ip" placeholder="" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">内网IP<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="intranet_ip" id="intranet_ip" placeholder="" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">描述</label>
+                                                                                <div class="col-md-6">
+                                                                                    <textarea class="form-control" name="server_desc" id="server_desc" rows="3"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="tab_port">
+                                                                        <div class="form-body">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">游戏端口<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" name="server_port" placeholder="" id="server_port" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">扩展端口<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" name="server_extport" placeholder="" id="server_extport" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">GM管理端口<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" name="server_gmport" placeholder="" id="server_gmport" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">扩展GM管理端口<span
+                                                                                        class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" name="server_extgmport" placeholder="" id="server_extgmport" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="tab_status">
+                                                                        <div class="form-body">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">类型1<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="server_tag1" id="server_tag1" class="form-control input-medium">
+                                                                                        <option value="">请选择</option>
+                                                                                        <option value="new">新区</option>
+                                                                                        <option value="normal">正常</option>
+                                                                                        <option value="old">老区</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">类型2<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="server_tag2" id="server_tag2" class="form-control input-medium">
+                                                                                        <option value="">请选择</option>
+                                                                                        <option value="normal">正常</option>
+                                                                                        <option value="hot">火爆</option>
+                                                                                        <option value="full">爆满</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">状态<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="server_status" id="server_status" class="form-control input-medium">
+                                                                                        <option value="">请选择</option>
+                                                                                        <option value="online">在线</option>
+                                                                                        <option value="offline">停机</option>
+                                                                                        <option value="maintain">维护</option>
+                                                                                        <option value="fault">缺陷</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="tab_path">
+                                                                        <div class="form-body">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">代码路径<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="server_path" id="server_path" placeholder="代码路径" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">扩展代码路径<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="server_extpath" id="server_extpath" placeholder="扩展代码路径" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">日志路径<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="log_path" id="log_path" placeholder="日志路径" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">配置路径<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <input class="form-control" name="config_path" id="config_path" placeholder="配置路径" type="text"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="tab_section">
+                                                                        <div class="form-body">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">分区<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="section_select" id="section_select" class="form-control input-medium"></select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">日期<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
+                                                                                        <input type="text" class="form-control" id="create_date" readonly>
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn default" type="button">
+                                                                                                <i class="fa fa-calendar"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">时间<span class="required">*</span></label>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="input-group bootstrap-timepicker">
+                                                                                        <input type="text" class="form-control timepicker-24" id="create_time" name="end_time" readonly="true">
+                                                                                        <span class="input-group-btn">
+                                                                                            <button class="btn default" type="button">
+                                                                                                <i class="fa fa-clock-o"></i>
+                                                                                            </button>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-1">
+                                                                                    <button type="button" class="btn red" id="sync_create_time" >同步时间</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">启动模式<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="start_mode" id="start_mode" class="form-control input-medium"></select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-md-3">立即重启<span class="required">*</span></label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="is_restart_now" id="is_restart_now" class="form-control input-medium">
+                                                                                        <option value="0">否</option>
+                                                                                        <option value="1">是</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                                <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_gamebase">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-th"></i>数据库</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-toolbar">
+                                            <div class="btn-group">
+                                                <a id="database_add" class="btn green-haze" data-toggle="modal">添加<i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="table-toolbar pull-right">
+                                            <div class="btn-group">
+                                                <a id="export_test_sql" class="btn green-haze">测试服数据表导出<i class="fa fa-cloud-download"></i></a>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered table-hover" id="table_database">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal fade" id="base_del_modal"></div>
+
+                                    <div id="database_modal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <form id="database_form" action="#" class="form-horizontal">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"></button>
+                                                        <h4 class="modal-title">数据库信息</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-body">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert"></button>
+                                                                <span>请输入下面必填信息</span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">区服<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control input-medium" id="select_server" name="select_server"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">数据库端口<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-icon">
+                                                                        <i class="fa fa-comment"></i>
+                                                                        <input class="form-control" name="base_port" id="base_port"  placeholder="数据库端口" type="text"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">数据库名<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-icon">
+                                                                        <i class="fa fa-comment"></i>
+                                                                        <input class="form-control" name="database_name" id="database_name"  placeholder="数据库名" type="text"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">用户名<span class="required">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-icon">
+                                                                        <i class="fa fa-user"></i>
+                                                                        <input class="form-control" name="database_user" id="database_user"  placeholder="用户名" type="text" value="sanguo_bg"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">密码</label>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-icon">
+                                                                        <i class="fa fa-key"></i>
+                                                                        <input class="form-control" name="database_password" id="database_password" placeholder="密码" type="password" value="sanguo_passwd"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">描述</label>
+                                                                <div class="col-md-6">
+                                                                    <textarea class="form-control" name="database_desc" id="database_desc" rows="3"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                                                        <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab_configserver">
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption"><i class="fa fa-cloud"></i>配置服务器</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <form id="param_config_form" action="#" class="form-horizontal">
+                                            <input type="hidden" name="download_id" id="download_id" value="">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <div class="alert alert-danger display-hide">
+                                                        <button class="close" data-close="alert"></button>
+                                                        <span>请输入参数配置信息</span>
+                                                    </div>
+                                                    <label class="control-label col-md-3">下载服务器ip<span class="required">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-cloud"></i>
+                                                            <input type="text" class="form-control" id="download_ip" name="download_ip" placeholder="下载服务器ip">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">下载服务器端口<span class="required">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-circle-o"></i>
+                                                            <input type="text" name="download_port" id="download_port" class="form-control" placeholder="下载服务器端口">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">下载服务器目录<span class="required">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <div class="input-icon">
+                                                            <i class="fa fa-folder"></i>
+                                                            <input type="text" name="download_dir" class="form-control" id="download_dir" placeholder="下载服务器目录">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-actions fluid">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button type="submit" class="btn green-haze">确定<i class="fa fa-check"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE -->
+
+        <div class="modal fade" id="batch_modal" tabindex="-1" role="dialog" aria-labelledby="batch_modal_title" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="batch_modal_title">
+                            批量修改区服信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center" style="color: red;display: none" id="batch_modal_cue"></p>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="batch_type">模式</label>
+                                <div class="col-md-4">
+                                    <select id="batch_type" class="form-control">
+                                        <option value="1">切换状态</option>
+                                        <option value="2">切换分区</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="batch_target">目标状态</label>
+                                <div class="col-md-4">
+                                    <select id="batch_target" class="form-control">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">游戏服</label>
+                                <div class="col-md-4" style=" overflow-y:auto; width:250px;height:200px;border:1px solid #000000;margin-left: 15px" id="batch_game">
+                                    <div class="checkbox" >
+                                        <label><input type="checkbox" value="">选项 1</label>
+                                        <label><input type="checkbox" value="">选项 1</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="batch_modal_commit">提交更改</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+    {% module Template("bottom.html") %}
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->
+	<!--[if lt IE 9]>
+	<script src="{{static_url('assets/plugins/respond.min.js')}}"></script>
+	<script src="{{static_url('assets/plugins/excanvas.min.js')}}"></script>
+	<![endif]-->
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+	<script src="{{static_url('assets/plugins/jquery-migrate-1.2.1.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js')}}" type="text/javascript"></script>
+	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script src="{{static_url('assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js')}}" type="text/javascript" ></script>
+	<script src="{{static_url('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery.blockui.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/jquery.cookie.min.js')}}" type="text/javascript"></script>
+	<script src="{{static_url('assets/plugins/uniform/jquery.uniform.min.js')}}" type="text/javascript" ></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="{{static_url('assets/plugins/jquery-validation/dist/jquery.validate.min.js')}}"></script>
+	<script type="text/javascript" src="{{static_url('assets/plugins/select2/select2.min.js')}}"></script>
+    <script type="text/javascript" src="{{static_url('assets/plugins/fuelux/js/spinner.min.js')}}"></script>
+    <script type="text/javascript" src="{{static_url('assets/plugins/dataTables/jquery.dataTables.min.js')}}"></script>
+	<script type="text/javascript" src="{{static_url('assets/plugins/data-tables/DT_bootstrap.js')}}"></script>
+    <script type="text/javascript" src="{{static_url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+    <script type="text/javascript" src="{{static_url('assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+    <script type="text/javascript" src="{{static_url('assets/plugins/bootstrap/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{static_url('assets/plugins/bootstrap-markdown/js/bootstrap-markdown.js')}}" type="text/javascript" ></script>
+	<script src="{{static_url('assets/scripts/app.js')}}" type="text/javascript"></script>
+    <script src="{{static_url('assets/scripts/common.js')}}" type="text/javascript"></script>
+    <script src="{{static_url('assets/scripts/server.js')}}" type="text/javascript"></script>
+	<script>
+		jQuery(document).ready(function() {
+		    App.init();
+		});
+
+	</script>
+</body>
+<!-- END BODY -->
+</html>

@@ -61,12 +61,12 @@ var handleLogin = function () {
                         $('.alert-danger', $('.login-form')).show();
                     }
                     else {
-                        window.location.href = "/";
+                        window.location.href = "/";         //访问index.html页面
                     }
                 },
                 error: function (XMLHttpRequest) {
-                error_func(XMLHttpRequest);
-            }
+                    error_func(XMLHttpRequest);
+                }
             })
         }
     });

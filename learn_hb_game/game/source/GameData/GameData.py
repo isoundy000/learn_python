@@ -11,6 +11,7 @@ Game_ID = None
 ktime = None
 ktv = None
 
+sysTickTime = None      # 每秒钟赋值一次   datetime.now()
 
 gAccMode = 0
 
