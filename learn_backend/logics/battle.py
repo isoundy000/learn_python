@@ -125,7 +125,7 @@ class Battle(object):
             self.drama = None
 
         # 用来记录战前技能释放
-        self.pre_skill = {}
+        self.pre_skill = {}                                                 # 战斗前释放的技能
         
         # 传输装备信息
         self.equip_pos_att = {}
@@ -594,20 +594,20 @@ class Battle(object):
         # 标记给前端看 战斗是打人 还是打怪
         self.m_dMsg['fight_user'] = self.defender.HAS_LEADER
         self.m_nRecord = 1
-        self.m_nDeathSpeed = -1
-        self.m_nHistoryAttack = 0
-        self.m_bNextLoop = False
+        self.m_nDeathSpeed = -1         # 死亡速度
+        self.m_nHistoryAttack = 0       # 得到当前攻击者的id
+        self.m_bNextLoop = False        # 是否跳过当前出手者
         self.m_nRoundNum = 0            # 战斗回合数
         self.m_bBeHurting = False       # 是否在伤害中
         self.m_bHeroSkilling = False    # 英雄是否正在施放技能
-        self.m_bBuffSkilling = False
+        self.m_bBuffSkilling = False    # buff技能
         # 用来加在战前技能后的msg
         self.tmp_m_dMsg = []
 
         self.m_tBuffList = [[], [], [], [], [], [], [], [], [], []]         # 前5个是攻击方buff 后5个是防守方buff
 
         # 出手排序
-        self.m_tSortArray = [0] * 10
+        self.m_tSortArray = [0] * 10    # 卡牌索引 [0, 100, 1, 2, 3, 101, 102, 103, 4, 104]
 
         atkSkillid = [0] * 3
         dfdSkillid = [0] * 3
@@ -669,12 +669,6 @@ class Battle(object):
             if self.m_tAtkArray[i] != 0:
                 self.startSetMembers(i)
             if self.m_tDfdArray[i] != 0:
-
-
-
-
-
-
                 self.startSetMembers(i + 100)
 
         # 纪录所有历史数据
@@ -731,6 +725,18 @@ class Battle(object):
             self.m_dMsg['battle'][self.m_nRecord] = {FLAGKEY: 'logSort', PARAMETERKEY: copy.copy(self.m_tSortArray)}    # 出手顺序
         self.m_nRecord += 1
 
+    def setWiner(self, positionid):
+        """
+        设置胜利方, <5 attacker获胜
+        """
+        self.m_dMsg['winer'] = positionid
+        if positionid > 5:
+            self.checkDrama(2, 1)
+        else:
+            self.checkDrama(2, 0)
+            if self.drama != None:
+                self.attacker.drama.completionFight(self.defender.uid)
+
     def start(self):
         """
         战斗开始
@@ -770,8 +776,612 @@ class Battle(object):
             self.depart_pre_battle()
             return self.m_dMsg
 
+        # 宠物战斗前触发技能
+        for i in xrange(2):
+            skill_object = self.m_tPetSkill[i]
+            if skill_object:
+                pet_skill.petTregger(skill_object, skill_tregger_def.KBEFOREBATTLE, self, i)
+                self.checkDeath()
+                if self.checkOver():
+                    self.depart_pre_battle()
+                    return self.m_dMsg
+
+        # 角色出战卡牌战斗前触发技能
+        for i in range(5):              # 战前触发器
+            if self.m_tAtkArray[i] != 0:
+                self.add_pre_skill(i, self.m_tAtkArray, self.m_tSkillMap)
+                skill.skillTregger(self.m_tSkillMap[self.m_tAtkArray[i]['id']], skill_tregger_def.KBEFOREBATTLE, self, i)
+                self.checkDeath()
+                if self.checkOver():
+                    self.depart_pre_battle()
+                    return self.m_dMsg
+
+            if self.m_tDfdArray[i] != 0:
+                self.add_pre_skill(i + 100, self.m_tDfdArray, self.m_tSkillMap)
+                skill.skillTregger(self.m_tSkillMap[self.m_tDfdArray[i]['id']], skill_tregger_def.KBEFOREBATTLE, self, i + 100)
+                self.checkDeath()
+                if self.checkOver():
+                    self.depart_pre_battle()
+                    return self.m_dMsg
+
+        # 战前技能处理()
+        self.depart_pre_battle()
+
+        self.checkDrama(1)
+        self.beforeBattle()                 # 战斗前调整战场
+
+        tempi = 0
+        while tempi < 30:                   # 循环30次
+            self.m_nCurtIndex = 9           # 当前出手索引
+            self.createSpeedArray()         # 初始化出手顺序和、合前buff触发器、触发buff效果持续加持
+            self.m_tHadAttackedId = []      # 记录已经攻击的角色位置id
+
+            self.m_bNextLoop = False        # 判断是否要跳过本次循环
+            self.checkDrama(3, tempi)       # 剧情
+
+            self.checkDeath()               # 检查死亡，其中有死亡触发器
+            if self.checkOver():            # 检查是否战斗结束
+                return self.m_dMsg
+
+            # 宠物战斗前触发技能               回合排序前触发技能
+            for i in xrange(2):
+                skill_object = self.m_tPetSkill[i]
+                if skill_object:
+                    pet_skill.petTregger(skill_object, skill_tregger_def.KBEFOREROUND, self, i)
+                    self.checkDeath()
+                    if self.checkOver():
+                        self.depart_pre_battle()
+                        return self.m_dMsg
+
+            # 角色回合排序前触发技能
+            for i in range(5):              # 回合前触发器
+                if self.m_tAtkArray[i] != 0:
+                    skill.skillTregger(self.m_tSkillMap[self.m_tAtkArray[i]['id']], skill_tregger_def.KBEFOREROUND, self, i)
+                if self.m_tDfdArray[i] != 0:
+                    skill.skillTregger(self.m_tSkillMap[self.m_tDfdArray[i]['id']], skill_tregger_def.KBEFOREROUND, self, i + 100)
+
+            while self.m_nCurtIndex >= 0:
+                self.checkDeath()           # 检查死亡，其中有死亡触发器
+                if self.checkOver():        # 检查是否战斗结束
+                    return self.m_dMsg
+
+                tempPositionid = self.m_tSortArray[self.m_nCurtIndex]
+                if self.checkHaveValue(tempPositionid):
+                    self.m_nHistoryAttack = tempPositionid          # 记录当前攻击者id
+                    tempEnim = self.selectEnim(tempPositionid)      # 选择攻击的目标 敌人
+                    if tempEnim < 0:
+                        self.updateMsg(BATTLEFLAG['winer'], tempPositionid)     # 攻击者胜利
+                        self.setWiner(tempPositionid)
+                        return self.m_dMsg
+
+                    self.buffTregger(tempPositionid, skill_tregger_def.KBUFFATTACK)  # 增加攻击前buff触发器
+                    self.checkDeath()
+                    if not self.checkHaveValue(tempPositionid):     # 攻击完毕
+                        self.m_nCurtIndex -= 1
+                        self.updateMsg('attack_over', {"src": tempPositionid})
+                        # self.updateMsg("log", {"msg": "next loop", "src": tempPositionid})
+                        continue
+
+                    if self.m_bNextLoop:    # 判断是否要跳过本次循环
+                        self.m_nCurtIndex -= 1
+                        self.m_bNextLoop = False
+                        self.updateMsg('attack_over', {"src": tempPositionid})
+                        self.m_tHadAttackedId.append(tempPositionid)
+                        # self.updateMsg("log", {"msg": "next loop", "src": tempPositionid})
+                        continue
+
+                    if not self.attack(tempPositionid):     # 攻击
+                        return self.m_dMsg
+
+                    self.checkDeath()       # 检查死亡，其中有死亡触发器
+                    if self.checkOver():
+                        return self.m_dMsg
+
+                    for tempj in range(5):  # 被攻击触发器  被攻击之后触发的技能
+                        if self.SynHp(tempj):
+                            if self.m_tAtkArray[tempj]:
+                                skill.skillTregger(self.m_tSkillMap[self.m_tAtkArray[tempj]['id']], skill_tregger_def.KAFTERHURT, self, tempj)      # 受伤后触发器
+                        if self.SynHp(tempj + 100):
+                            if self.m_tDfdArray[tempj]:
+                                skill.skillTregger(self.m_tSkillMap[self.m_tDfdArray[tempj]['id']], skill_tregger_def.KAFTERHURT, self, tempj + 100)
+
+                    self.checkDeath()       # 检查死亡，其中有死亡触发器
+                    if self.checkOver():
+                        return self.m_dMsg
+
+                    self.updateMsg("attack_over", {"src": tempPositionid})      # 攻击卡牌出手结束
+                    self.m_tHadAttackedId.append(tempPositionid)                # 添加已经出手的卡牌
+                    self.checkAnger(tempPositionid)                             # 检查英雄怒气
+                    tempMem = self.getMembers(tempPositionid)
+                    if tempMem != 0:
+                        tempMem["tempSpeed"] = 999999999    # 出手卡牌的速度
+
+                    self.checkBuffEffect()      # 检查buff触发次数
+
+                    self.resetMembersAll()      # 重置所有数据，重置keepbuff
+                    self.HistoryChangeMsg()     # 历史数据变化消息
+
+                self.m_nCurtIndex -= 1
+
+            tempi += 1
+            self.m_nRoundNum = tempi
+            self.checkBuffRound()
+            self.checkAbandon()
+            self.changedHeroSkillCd()           # TODO 临时做法
+            for i in self.m_tSkillMap:
+                skill.cardSkillCdChange(self.m_tSkillMap[i])    # 更新卡牌技能当前cd
+            for skillObject in self.m_tPetSkill:
+                pet_skill.petSkillCdChange(skillObject)
+            # 重新计算出手顺序
+            self.sortSpeedArray()
+
+        self.updateMsg(BATTLEFLAG['winer'], 100)
+        self.setWiner(100)
+
+        return self.m_dMsg
+
+    def changedHeroSkillCd(self):
+        """
+        geng新CD
+        """
+        hero_skill.heroChangedCd(self.m_tHeroSkill[0])
+        hero_skill.heroChangedCd(self.m_tHeroSkill[1])
+
+    def checkAbandon(self):
+        """
+        检查buff当前是否被废弃
+        """
+        j = 0
+        for buffs in self.m_tBuffList:
+            i = 0
+            while i < len(buffs):
+                if buffs[i] == None:
+                    del buffs[i]
+                    continue
+                i += 1
+            j += 1
+
+    def checkBuffRound(self):
+        """
+        检查buff时效
+        """
+        j = 0
+        for buffs in self.m_tBuffList:
+            i = 0
+            while i < len(buffs):
+                if buffs[i] != None:
+                    buffs[i].m_record -= 1
+                    if buffs[i].m_record <= 0:
+                        if j < 5:
+                            positionId = j
+                        else:
+                            positionId = j + 100 - 5
+                        self.removeBuffWithIndex(positionId, i)
+                i += 1
+            j += 1
+
+    def resetMembersAll(self):
+        """
+        重置所有活着的卡牌数据
+        """
+        for i in range(5):
+            if self.getMembers(i) != 0:
+                self.setMembers(i)
+                self.buffTregger(i, skill_tregger_def.KBUFFKEEP, False)
+            if self.getMembers(i + 100) != 0:
+                self.setMembers(i + 100)
+                self.buffTregger(i + 100, skill_tregger_def.KBUFFKEEP, False)
+        self.updateMsg("log", "resetMembersAll")
+        self.HistoryChangeMsg()
+
+    def checkBuffEffect(self):
+        """
+        检查buff的次数效果
+        """
+        j = 0
+        for buffs in self.m_tBuffList:          # 前5个是攻击方buff 后5个是防守方buff
+            i = 0
+            while i < len(buffs):
+                if buffs[i] != None:
+                    if buffs[i].m_effect <= 0:
+                        if j < 5:
+                            positionId = j
+                        else:
+                            positionId = j + 100 - 5
+                        self.removeBuffWithIndex(positionId, i)
+                i += 1
+            j += 1
+
+    def removeBuffWithIndex(self, positionid, index):
+        '''
+        删除指定buff
+        :param positionid: 位置0-4    100-104
+        :param index: 技能索引
+        :return:
+        '''
+        if positionid < 5:
+            buffsIndex = positionid
+        else:
+            buffsIndex = positionid - 100 + 5
+        if self.m_tBuffList[buffsIndex][index] is None:
+            return
+
+        tempbuff = self.m_tBuffList[buffsIndex][index]
+        if tempbuff is None:
+            return
+
+        self.updateMsg('remove_buff', {'name': self.m_tBuffList[buffsIndex][index].m_name, 'src': positionid})
+        # del self.m_tBuffList[buffsIndex][index]
+
+        self.m_tBuffList[buffsIndex][index] = None
+        del tempbuff
+
+        tempMembers = self.getMembers(positionid)
+        if tempMembers == 0:
+            return
+        self.setMembers(positionid)                                 # 恢复初始数值
+        self.buffTregger(positionid, skill_tregger_def.KBUFFKEEP)   # 触发buff效果持续加持
+        tempMembers["tempSpeed"] = max(tempMembers["tempSpeed"] - self.m_tHistorySubSpeed[positionid], 0)
+        if tempMembers['tempHp'] > tempMembers['maxHp']:
+            tempMembers['tempHp'] = tempMembers['maxHp']
+
+    def checkAnger(self, positionId):
+        """
+        检查怒气
+        positionid： 本轮出手者id
+        """
+        if positionId < 5:
+            tempList = [0, 1]                   # 出手者的英雄技能顺序
+        else:
+            tempList = [1, 0]
+        for i in tempList:
+            if self.m_tAnger[i] < 100:
+                continue
+            if self.m_tHeroSkill[i] != 0:       # 英雄技能
+                self.m_bHeroSkilling = True
+                tempValue = hero_skill.heroTregger(self.m_tHeroSkill[i], self, i)
+                self.m_bHeroSkilling = False
+            else:
+                tempValue = (False, 0)
+
+            if tempValue[0]:
+                self.m_tAnger[i] -= min(tempValue[1], 100)  # 英雄怒气
+                # 触发减怒气后触发脚本
+                hero_skill.heroSkillEnd(self.m_tHeroSkill[i], self, i)
+                self.updateMsg('test', {'sub_anger': i, 'value': tempValue[1]})     # 减少怒气
+                self.addAnger(i, 0)             # i 0为攻方,1为守方
+
+    def SynHp(self, positionid):
+        """
+        同步历史血量
+        positionid < 5 攻击  > 5防守
+        """
+        if positionid < 5:
+            tempData = self.m_tAtkArray[positionid]
+        else:
+            tempData = self.m_tDfdArray[positionid - 100]
+
+        if tempData == 0:
+            return False
+        # print '------------------synHp-------------------', positionid
+        # print tempData
+        if self.m_tHistoryHp[tempData['id']] <= tempData['tempHp']:     # 同步失败
+            self.m_tHistoryHp[tempData['id']] = tempData['tempHp']
+            return False
+        else:
+            self.m_tHistoryHp[tempData['id']] = tempData['tempHp']      # 同步成功
+            return True
+
+    def attack(self, positionid):
+        """
+        攻击
+        positionid:     攻击者位置
+        """
+        # 这里会有释放技能
+        if skill.skillTregger(self.m_tSkillMap[self.getMembers(positionid)['id']], skill_tregger_def.KBEFOREATTACK,
+                              self, positionid) == 0:   # 攻击前触发，如果返回1则继续触发普通攻击
+            return True
+        # 这里是普通攻击
+        # tempDic = {}    # 返回字符串
+        # tempTk = 0      # 攻击者数据
+        # tempFd = 0      # 被攻击者数据
+
+        # 获得攻击者数据
+        if positionid < 5:
+            tempTk = self.m_tAtkArray[positionid]
+        else:
+            tempTk = self.m_tDfdArray[positionid - 100]
+
+        # 获得被攻击者id
+        tempDid = self.selectEnim(positionid)
+        if tempDid < 0:
+            self.updateMsg(BATTLEFLAG['winer'], positionid)
+            self.setWiner(positionid)
+            return False
+
+        # 获得被攻击者数据
+        if tempDid < 5:
+            tempFd = self.m_tAtkArray[tempDid]
+        else:
+            tempFd = self.m_tDfdArray[tempDid]
+
+        # 计算伤害值
+        temphurt = max((tempTk['tempPhsc'] + tempTk['tempMgc']) / 2 - tempFd['tempDfs'], 1)
+
+        # 计算速度减少值
+        tempSpeedIndex = self.m_tSortArray.index(tempDid)
+        if tempSpeedIndex >= self.m_nCurtIndex:
+            tempspc = 0
+        else:
+            # tempspc = tempFd['speed'] / 10
+            tempspc = 0
+
+        self.addAnger(0, 10)        # 攻击方添加怒气
+        self.addAnger(1, 10)        # 防守方添加怒气
+
+        temphurt = self.realHurt(tempDid, temphurt)     # 被攻击者掉血 返回掉血量
+        # temphurt = temphurt * (100 - tempFd['subHurt']) / 100.0     # 计算免伤系数
+        # tempDic['hurt'] = temphurt
+        tempDic = {
+            'src': positionid,      # 出手位置id
+            'des': tempDid,         # 挨揍位置id
+            'act': 0,               # 动作编号
+            'hurt': temphurt,       # 受伤值
+            'spc': tempspc,         # 速度损失值
+            # 'type': tempRand,       # 攻击种类
+        }
+
+        attr_type, tempattrhurt = 0, 0
+
+        for indx, att in enumerate(self.ATT_ATTRS):     # 攻击者属性伤害 'tempEarth', 'tempWater', 'tempFire', 'tempWind'
+            attr_hurt = tempTk[att]     # 攻击者属性伤害
+            if tempFd['tempHp'] <= 0:   # 防守方血量
+                break
+            if attr_hurt > 0:
+                attr_type = indx + 1
+                tempattrhurt = max(attr_hurt - tempFd[self.DEF_ATTRS[indx]], 1)
+                break
+
+        if attr_type:
+            tempattrhurt = self.realattrHurt(tempDid, tempattrhurt)
+            tempDic['attr_type'] = attr_type            # 属性伤害类型
+            tempDic['attr_hurt'] = tempattrhurt         # 属性伤害
+
+        self.updateMsg(BATTLEFLAG['attack'], tempDic)
+        # self.HistoryChangeMsg()
+
+        if tempDid < 5:                 # 受伤的卡牌
+            # self.m_tAtkArray[tempDid]['tempHp'] -= temphurt
+            self.m_tHistorySubSpeed[tempDid] += tempspc     # 记录速度减少的值
+            if self.m_tAtkArray[tempDid]['tempSpeed'] > 0:
+                self.m_tAtkArray[tempDid]['tempSpeed'] = max(self.m_tAtkArray[tempDid]['tempSpeed'] - tempspc, 0)   # 挨揍的卡减速
+        else:
+            Did = tempDid - 100
+            # self.m_tDfdArray[Did]['tempHp'] -= temphurt
+            self.m_tHistorySubSpeed[Did] += tempspc
+            if self.m_tDfdArray[Did]['tempSpeed'] > 0:
+                self.m_tDfdArray[Did]['tempSpeed'] = max(self.m_tDfdArray[Did]['tempSpeed'] - tempspc, 0)
+
+        skill.skillTregger(self.m_tSkillMap[self.getMembers(positionid)['id']], skill_tregger_def.KATTACK, self, positionid)    # 普攻触发器
+        return True
+
+    def realattrHurt(self, positionid, attr_hurt):
+        """
+        得到指定位置（positionid），指定属性伤害（attr_hurt）, 同时减血
+        :param positionid: 受伤的位置
+        :param attr_hurt: 受到属性伤害
+        :return:
+        """
+        attr_hurt = int(attr_hurt)
+        if attr_hurt <= 0:
+            return 0
+
+        tempEnem = self.getMembers(positionid)
+        if tempEnem == 0:
+            return 0
+
+        tempEnem['tempHp'] -= attr_hurt
+        return attr_hurt
+
+    def realHurt(self, positionid, hurt):
+        """
+        得到指定位置（positionid），指定伤害（hurt）计算免伤后的伤害,同时减血
+        """
+        # if positionid < 5:
+        #     tempIndex = positionid
+        #     tempArray = self.m_tAtkArray
+        # else:
+        #     tempIndex = positionid - 100
+        #     tempArray = self.m_tDfdArray
+        tempEnem = self.getMembers(positionid)      # 敌人信息
+        if tempEnem == 0:
+            return 0
+        if hurt <= 0:
+            hurt = 10       # 伤害为mess
+
+        # 受伤前触发技能
+        if not self.m_bBeHurting and not self.m_bHeroSkilling and not self.m_bBuffSkilling:
+            self.m_bBeHurting = True
+            skill.skillTregger(self.m_tSkillMap[tempEnem['id']], skill_tregger_def.KBEATTACK, self, positionid)     # KBEATTACK 被攻击触发器标志
+            self.buffTregger(positionid, skill_tregger_def.KBUFFBEATTACK)   # buff被攻击前触发效果  # ???????????????????????????buff被攻击触发器
+
+            if self.getMembers(self.m_nHistoryAttack) != 0:     # 记录当前攻击者id
+                if self.hit_1(self.m_nHistoryAttack, positionid):
+                    if self.doubleKill_1(self.m_nHistoryAttack):
+                        hurt *= 1.5
+                else:
+                    hurt = 0
+            self.m_bBeHurting = False
+
+        subHurt = tempEnem['subHurt']       # 减伤率
+        if hurt > 0:
+            tempHurt = max(hurt * max(0, (100 - subHurt)) / 100.0, 10)
+        else:
+            tempHurt = 0
+        tempHurt = int(tempHurt)
+        # tempHurt = max(1, tempHurt)
+        tempEnem['tempHp'] -= tempHurt      # 敌人掉血
+        return tempHurt                     # 掉血量
+
+    def doubleKill(self, positionid):
+        """
+        双倍攻击 不使用
+        """
+        return False
+
+    def doubleKill_1(self, positionid):
+        """
+        双倍攻击
+        :param positionid: 攻击方id
+        :return:
+        """
+        tempRand = real_rand.myRand()
+        tempMember = self.getMembers(positionid)
+        if tempRand < tempMember['tempCrit']:       # 暴击率
+            return True
+        return False
+
+    def hit(self, APositionId, DPositionId):
+        """
+        命中 不使用
+        """
+        return True
+
+    def hit_1(self, APositionId, DPositionId):
+        '''
+        是否命中
+        :param APositionId: 攻击id
+        :param DPositionId: 防守id
+        :return:
+        '''
+        # return True    # 去掉闪避
+        tempRand = real_rand.myRand()
+        tempA = self.getMembers(APositionId)
+        tempD = self.getMembers(DPositionId)
+        tempHit = tempA['tempHr'] - tempD['tempDr']     # 攻击方命中 - 防守方闪避
+        if tempRand <= tempHit:
+            return True
+        return False
+
+    def selectEnim(self, positionid):
+        """
+        选择默认目标敌人
+        :param positionid: 攻击者位置
+        :return:
+        """
+        if positionid < 5:
+            tempAI = self.m_tASelectEnim[positionid + 1][self.m_tDfdFormation]
+            for i in tempAI:
+                if self.m_tDfdArray[i - 1] != 0:
+                    return i - 1 + 100
+            return -1       # 对方无可攻击目标
+        else:
+            tempAI = self.m_tDSelectEnim[positionid - 100 + 1][self.m_tAtkFormation]
+            for i in tempAI:
+                if self.m_tAtkArray[i - 1] != 0:
+                    return i - 1
+            return -1       # 对方无可攻击目标
+
+    def checkHaveValue(self, positionid):
+        """
+        检查是否有角色数据
+        """
+        if positionid < 5:
+            return self.m_tAtkArray[positionid] != 0
+        else:
+            return self.m_tDfdArray[positionid - 100] != 0
+
+    def createSpeedArray(self):
+        '''
+        初始化排序
+        :return:
+        '''
+        self._initHistorySubSpeed()         # 初始化历史扣速度总值
+        for i in [0, 1, 2, 3, 4]:
+            self.m_tSortArray[i] = i        # 出手排序
+            if self.m_tAtkArray[i] != 0:
+                # self.m_tAtkArray[i]['tempSpeed'] = self.m_tAtkArray[i]['speed']
+                # if 'tempHp' not in self.m_tAtkArray[i]:
+                #     self.m_tAtkArray[i]['tempHp'] = self.m_tAtkArray[i]['hp']
+                self.setMembers(i)
+                tempA = self.getMembers(i)
+                tempA["tempSpeed"] = tempA["speed"]
+                self.buffTregger(i, skill_tregger_def.KBUFFBEFOREROUND)     # 回合前buff触发器
+                self.buffTregger(i, skill_tregger_def.KBUFFKEEP)        # 触发buff效果持续加持
+
+            self.m_tSortArray[i + 5] = 100 + i
+            if self.m_tDfdArray[i] != 0:
+                # self.m_tDfdArray[i]['tempSpeed'] = self.m_tDfdArray[i]['speed']
+                # if 'tempHp' not in self.m_tDfdArray[i]:
+                #     self.m_tDfdArray[i]['tempHp'] = self.m_tDfdArray[i]['hp']
+                self.setMembers(i + 100)
+                tempD = self.getMembers(i + 100)
+                tempD["tempSpeed"] = tempD["speed"]
+                self.buffTregger(i + 100, skill_tregger_def.KBUFFBEFOREROUND)  # ????????????????????????增加回合前buff触发器
+                self.buffTregger(i + 100, skill_tregger_def.KBUFFKEEP)  # 触发buff效果持续加持
+
+        self.m_nDeathSpeed = -1
+        self.sortSpeedArray()       # 根据速度排列出手顺序
+        # tempSort = {}
+        # for i, v in enumerate(self.m_tSortArray):
+        #     tempSort[v] = i
+        # self.updateMsg(BATTLEFLAG['sort'], tempSort)        # 输出出手顺序
+        self.updateMsg(BATTLEFLAG['sort'], self.m_tSortArray[:])    # 更新消息 创建排序队列
+        self.m_dMsg['init']['sort_array'].append(self.m_tSortArray[:])
+
+    def sortSpeedArray(self):
+        """
+        重新排序队列
+        """
+        def f(x):
+            if x < 5:                           # 攻击方速度排序
+                if self.m_tAtkArray[x] == 0:
+                    return 0
+                return self.m_tAtkArray[x]['tempSpeed']
+            else:                               # 防守方速度排序
+                if self.m_tDfdArray[x - 100] == 0:
+                    return 0
+                return self.m_tDfdArray[x - 100]['tempSpeed']
+        self.m_tSortArray.sort(key=f)
+
+    def beforeBattle(self):
+        """
+        战前调整战场
+        主战卡牌没有人，但是有替补的位置，让替补上场
+        """
+        for i in range(5):
+            if self.getMembers(i) == 0:
+                self.substitution(i)
+            if self.getMembers(i + 100) == 0:
+                self.substitution(i + 100)
+
+    def add_pre_skill(self, pos, card_array, skill_map):
+        """
+        添加战斗前释放的技能
+        :param pos: 位置
+        :param card_array: 出战卡牌组
+        :param skill_map: 技能包
+        :return:
+        """
+        if pos >= 100:
+            real_pos = pos - 100
+        else:
+            real_pos = pos
+
+        card_id = card_array[real_pos]['id']
+        skill_obj = skill_map[card_id]
+
+        preskill_id = 0
+        for i in range(len(skill_obj.m_tTreggerFlag)):
+            if skill_obj.m_tTreggerFlag[i] == skill_tregger_def.KBEFOREBATTLE:
+                preskill_id = skill_obj.m_tSkillid[i]
+                break
+
+        if preskill_id:
+            self.pre_skill[pos] = preskill_id
+
     def depart_pre_battle(self):
-        """战前技能要常规战斗数据分离
+        """战前技能要和常规战斗数据分离
         """
         user_toggle = getattr(self.attacker, 'pre_battle', 0)
         if not user_toggle:
@@ -917,16 +1527,38 @@ class Battle(object):
         """
         self.tmp_m_dMsg.append(step)
 
-    def get_current_data(self, step):
+    def get_current_data(self):
         """获取当前血量和最大血量
         """
-        pass
+        cur_data = {}
+        for i in range(len(self.m_tAtkArray)):
+            m_tmp = self.m_tAtkArray[i]
+            if not m_tmp:
+                continue
+            tmp_data = {}
+            tmp_data['tempHp'] = m_tmp['tempHp']
+            tmp_data['maxHp'] = m_tmp['maxHp']
+            pos = i
+
+            cur_data[pos] = tmp_data
+
+        for i in range(len(self.m_tDfdArray)):
+            m_tmp = self.m_tDfdArray[i]
+            if not m_tmp:
+                continue
+            tmp_data = {}
+            tmp_data['tempHp'] = m_tmp['tempHp']
+            tmp_data['maxHp'] = m_tmp['maxHp']
+            pos = 100 + i
+            cur_data[pos] = tmp_data
+
+        return cur_data
 
     def checkDrama(self, flag, round=0):
         """
         检查剧情
-        :param flag:
-        :param round:
+        :param flag: 1、3
+        :param round: 回合
         :return:
         """
         if self.drama is None:
@@ -961,19 +1593,6 @@ class Battle(object):
                 self.setWiner(101)
             return True
         return False
-
-    def setWiner(self, positionid):
-        """
-        设置胜利方, <5 attacker获胜
-        """
-        self.m_dMsg['winer'] = positionid
-        if positionid > 5:
-            self.checkDrama(2, 1)
-        else:
-            self.checkDrama(2, 0)
-
-
-
 
     def checkDeath(self):
         """
@@ -1056,7 +1675,6 @@ class Battle(object):
             else:
                 self.m_tDfdArray[tempid] = 0
                 return False
-
 
     def setMembers(self, positionid):
         '''
@@ -1193,7 +1811,10 @@ class Battle(object):
     def buffTregger(self, positionid, tregger, synchro=True):
         """
         buff 效果触发器
-        tregger
+        :param positionid: 卡牌位置
+        :param tregger: 触发类型
+        :param synchro:
+        :return:
         """
         if positionid < 5:
             tempIndex = positionid
@@ -1210,27 +1831,24 @@ class Battle(object):
                 continue
             else:
                 tempFunc = tempTrgs[i].m_func
-                tempTrgs[i].m_effect -= 1
+                # tempTrgs[i].m_effect -= 1
                 if tempTrgs[i].m_effect > 0:
-                    self.removeBuffWithIndex(positionid, i)
-                    templen = len(tempTrgs)
-                    tempFunc(self, positionid)
-                    continue
-                else:
+                #     self.removeBuffWithIndex(positionid, i)
+                #     templen = len(tempTrgs)
+                #     tempFunc(self, positionid)
+                #     continue
+                # else:
                     self.m_bBuffSkilling = True
                     tempFunc(self, positionid)
                     self.m_bBuffSkilling = False
-                    if synchro:
-                        self.HistoryChangeMsg()
+                    # if synchro:
+                    #     self.HistoryChangeMsg()       # changed by zhangchen on 2014,1,24
                     tempTrgs[i].m_effect -= 1
                     templen1 = len(tempTrgs)
                     if templen != templen1:
                         templen = templen1
                         continue
             i += 1
-
-                
-
 
     def getMembers(self, positionid):
         """
@@ -1337,6 +1955,896 @@ class Battle(object):
         for i in xrange(5):
             self.m_tHistorySubSpeed[i] = 0
             self.m_tHistorySubSpeed[i + 100] = 0
+
+    #######################################start end所用的方法############################################
+
+    def get_attacker_last_hp_rate(self):
+        """获取攻击方剩余血量百分比 6%  6/100 * 100 6就是6%"""
+        all_hp = 0
+        last_hp = 0
+        for init_card, finished_card in itertools.izip(self.m_dMsg['init']['atk'], self.m_tAtkArray):
+            if finished_card:
+                all_hp += finished_card['maxHp'] if 'maxHp' in finished_card else finished_card['hp']
+                last_hp += finished_card['tempHp'] if 'tempHp' in finished_card else finished_card['hp']
+            elif init_card:
+                all_hp += init_card['hp']
+        return last_hp * 100.0 / all_hp if last_hp else 0
+
+    def get_defender_last_hp_rate(self):
+        """获取防守方剩余血量百分比"""
+        all_hp = 0
+        last_hp = 0
+        for init_card, finished_card in itertools.izip(self.m_dMsg['init']['dfd'], self.m_tDfdArray):
+            if finished_card:
+                all_hp += finished_card['maxHp'] if 'maxHp' in finished_card else finished_card['hp']
+                last_hp += finished_card['tempHp'] if 'tempHp' in finished_card else finished_card['hp']
+            elif init_card:
+                all_hp += init_card['hp']
+        return last_hp * 100.0 / all_hp if last_hp else 0
+
+    def get_defender_total_hp(self):
+        """获取防守方当前总血量
+        每个成员的血量之和
+        """
+        total_hp = 0
+        for i in self.m_tDfdArray:
+            if i:
+                total_hp += i['tempHp']
+        return total_hp
+
+    def get_defender_hp(self):
+        """# 世界boss战 玩家失败后 查看boss剩余血量
+        """
+        for i in self.m_tDfdArray:
+            if i:
+                return i['tempHp']
+        else:
+            return 0
+
+    def getPets(self, positionid):
+        """
+        通过id获得宠物的数据信息 id 0为攻击方 1为防守方
+        """
+        if positionid not in (0, 1):
+            return 0
+
+        pet = self.m_tPet[positionid]
+        if not pet:
+            return 0
+
+        return pet
+
+    def getAttacker(self):
+        """
+        得到当前攻击者的id
+        """
+        return self.m_nHistoryAttack
+
+    def getAnger(self, id):
+        """
+        获得英雄当前怒气值
+        id 0为攻方,1为守方
+        """
+        return self.m_tAnger[id]
+
+    def addBuff(self, buff, positionid, msg={}):
+        """
+        给指定角色添加buff
+        buff： buff节点
+        positionid：位置id
+        """
+        tempBuff = copy.deepcopy(buff)
+        tempdes = self.getMembers(positionid)
+        if tempdes == 0 or tempdes["tempHp"] <= 0:
+            return
+
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+
+        i = 0
+        for it in self.m_tBuffList[tempIndex]:                  # 前5个是攻击方buff 后5个是防守方buff
+            if it != None and it.m_flag == tempBuff.m_flag:     # m_flag buff类型标记，同样类型的buff不能叠加
+                # self.m_tBuffList[tempIndex][i] = buff
+                self.removeBuffWithIndex(positionid, i)
+                break
+            i += 1
+
+        # self.m_tBuffList[tempIndex].insert(0, tempBuff)
+        self.m_tBuffList[tempIndex].append(tempBuff)
+        self.updateMsg('add_buff', {'name': buff.m_name, 'src': positionid, 'msg': msg})
+
+        self.buffTregger(positionid, skill_tregger_def.KBUFFADDBUFF)        # 触发buff效果，增加buff触发器
+        if tempBuff.m_tregger == skill_tregger_def.KBUFFKEEP:               # buff持续生效
+            self.buffTreggerCur(positionid, tempBuff)                       # 持续buff第一次触发，不做触发计数器减
+
+    def getHeroSkillAll(self, positionid, heroSkillId):
+        """
+        获得英雄指定技能所有数据
+        positionid 0为攻方英雄技能树，1为守方英雄技能树
+        heroSkillId 英雄技能id
+        """
+        if positionid < 0 or positionid > 1 or self.m_tHeroSkill[positionid] == 0:
+            return 0
+        tempSkillMap = self.m_tHeroSkillTree[positionid]
+        tempSkillAll = copy.deepcopy(game_config.leader_skill[heroSkillId])
+        if heroSkillId in tempSkillMap['skill']:        # heroSkillId {433: 3} 用户已经学会的主角技能，对应等级
+            tempSkillLv = tempSkillMap['skill'][heroSkillId]
+        else:
+            tempSkillLv = 0
+        tempSkillAll['lv'] = tempSkillLv
+        return tempSkillAll
+
+    def getHeroSuperSkillAll(self, positionid, heroSkillId):
+        """
+        获得英雄指定技能所有数据 高级的英雄技能
+        """
+        if positionid < 0 or positionid > 1 or self.m_tHeroSkill[positionid] == 0:
+            return 0
+        tempSkillMap = self.m_tHeroSkillTree[positionid]
+        tempSkillAll = copy.deepcopy(game_config.leader_skill_advanced[heroSkillId])
+        if heroSkillId in tempSkillMap.get('super_skill', {}):
+            tempSkillLv = tempSkillMap['super_skill'][heroSkillId]
+        else:
+            tempSkillLv = 0
+        tempSkillAll['lv'] = tempSkillLv
+        return tempSkillAll
+
+    def isHaveBuffTerm(self, positionid, teamId):
+        """
+        检查指定位置上的人是否有指定的buff类型
+        :param positionid: 指定位置
+        :param teamId: 组的id
+        :return:
+        """
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+        if len(self.m_tBuffList[tempIndex]) <= 0:
+            return False
+        for buff in self.m_tBuffList[tempIndex]:
+            if buff != None and buff.m_team == teamId:
+                return True
+        return False
+
+    def isHaveBuffTeams(self, positionid, teamStart, teamEnd):
+        """
+        检查指定位置（positionid）上的人是否有指定的一些buff类型（teamStart到teamEnd）
+        """
+        for teamid in range(teamStart, teamEnd + 1):
+            if self.isHaveBuffTerm(positionid, teamid):
+                return True
+        return False
+
+    def buffTreggerCur(self, positionid, buffbag):
+        """
+        根据buff包触发一个指定buff,不减触发器，专为keep触发器做
+        """
+        tempFunc = buffbag.m_func
+        buffbag.m_effect -= 1
+
+        self.m_bBuffSkilling = True
+        tempFunc(self, positionid)
+        self.m_bBuffSkilling = False
+
+        self.updateMsg("log", "buffTreggerCur")
+        self.HistoryChangeMsg()                     # changed by zhangchen on 2014,1,24
+
+    def removeBuff(self, positionid, name):
+        """
+        删除指定位置上的指定名字的buff
+        """
+        if positionid < 5:
+            buffsIndex = positionid
+        else:
+            buffsIndex = positionid - 100 + 5
+        i = 0
+        for buff in self.m_tBuffList[buffsIndex]:
+            if buff != None and cmp(buff.m_name, name):
+                self.removeBuffWithIndex(positionid, i)
+                return
+            i += 1
+
+    def removeBuffWithTeam(self, positionid, teamId):
+        """
+        移除指定位置（positionid）上的指定team（teamId）的buff
+        """
+        if positionid < 5:
+            buffsIndex = positionid
+        else:
+            buffsIndex = positionid - 100 + 5
+        i = 0
+        while i < len(self.m_tBuffList[buffsIndex]):
+            if self.m_tBuffList[buffsIndex][i] != None and teamId == self.m_tBuffList[buffsIndex][i].m_team:
+                self.removeBuffWithIndex(positionid, i)
+            i += 1
+
+    def removeBuffWithTeams(self, positionId, teamStart, teamEnd):
+        """
+        移除指定位置（positionid）上的指定team范围（teamStart，teamEnd）的buff
+        """
+        if positionId < 5:
+            buffsIndex = positionId
+        else:
+            buffsIndex = positionId
+        for teamId in range(teamStart, teamEnd + 1):
+            self.removeBuffWithTeam(positionId, teamId)
+
+    def removeAllBuff(self, positionid):
+        """
+        去掉指定位置上人物的所有
+        """
+        self.__removeAllBuff(positionid)
+        self.updateMsg('remove_buff', {'name': 'all', 'src': positionid})
+
+    def removeOtherAllBuff(self, positionid, name):
+        """
+        删除除指定buff之外的所有buff
+        """
+        if positionid < 5:
+            buffsIndex = positionid
+        else:
+            buffsIndex = positionid - 100 + 5
+        i = 0
+        for buff in self.m_tBuffList[buffsIndex]:
+            if buff != None and cmp(buff.m_name, name):
+                i += 1
+                continue
+            self.removeBuffWithIndex(positionid, i)
+            i += 1
+
+    def checkRemoveBuff(self):
+        """
+        检查所有的buff是否要释放
+        """
+        j = 0
+        for buffs in self.m_tBuffList:
+            i = 0
+            templen = len(buffs)
+            if j < 5:
+                positionid = j
+            else:
+                positionid = j - 5 + 100
+            while i < templen:
+                if buffs[i] != None:
+                    buffs[i].m_record -= 1
+                    if buffs[i].m_record <= 0 or buffs[i].m_effect <= 0:
+                        self.updateMsg('remove_buff', {'name': buffs[i].m_name, 'src': positionid})
+                        del buffs[i]
+                        continue
+                i += 1
+            j += 1
+
+    def nextAction(self):
+        """
+        跳过当前出手者
+        """
+        self.m_bNextLoop = True
+
+    def getBuffName(self, positionid):
+        """
+        得到指定位置上角色所有buff的名字
+        """
+        tempNameList = []
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+
+        tempbuffs = self.m_tBuffList[tempIndex]
+        for buff in tempbuffs:
+            if buff == None:
+                continue
+            tempNameList.insert(0, buff.m_name)
+        return tempNameList
+
+    def getItemCount(self, positionid):
+        """
+        返回与位置id同队伍的在场人数
+        """
+        if positionid < 5:
+            tempTeam = self.m_tAtkArray
+        else:
+            tempTeam = self.m_tDfdArray
+
+        tempCount = 0
+        for i in [0, 1, 2, 3, 4]:
+            if tempTeam[i] != 0:
+                tempCount += 1
+        return tempCount
+
+    def subHeroSkillCd(self, heroPositionId, skillName, subCd):
+        """
+        减少指定英雄的指定技能的当前Cd时间
+        :param heroPositionId: 0攻击 1防守
+        :param skillName: 技能名称
+        :param subCd: 减少的cd时间
+        :return:
+        """
+        self.m_tHeroSkill[heroPositionId].subCurtCd(skillName, subCd)
+
+    def getMoreEnem(self, positionId, count):
+        """
+        得到更多的敌人没有重复
+        :param positionId: 攻击方[0-4]|防守方[100-104]
+        :param count: 获取敌人的数量 5
+        :return:
+        """
+        randlist = []
+        if positionId < 5:
+            templist = range(100, 105)
+            tempArray = self.m_tDfdArray
+        else:
+            templist = range(0, 5)
+            tempArray = self.m_tAtkArray
+
+        for i in range(0, 5):
+            if tempArray[i] != 0:
+                randlist.insert(0, templist[i])
+
+        tempDid = self.selectEnim(positionId)       # 获取默认的攻击目标
+        if tempDid in randlist:
+            randlist.remove(tempDid)
+        random.shuffle(randlist)                    # 打乱顺序
+        randlist.insert(0, tempDid)                 # 插回默认的敌人
+        realcount = min(count, len(randlist))       # 获取人数
+        return randlist[:realcount]                 # 返回敌人的索引 0-4, 100-105
+
+    def getMaybeMoreEnem(self, positionId, count):
+        """
+        得到更多的敌人，有可能重复
+        :param positionId: 攻击者位置
+        :param count: 获取数量
+        :return:
+        """
+        randlist = []
+        if positionId < 5:
+            templist = range(100, 105)
+            tempArray = self.m_tDfdArray
+        else:
+            templist = range(0, 5)
+            tempArray = self.m_tAtkArray
+
+        for i in range(0, 5):
+            if tempArray[i] != 0:
+                randlist.append(templist[i])
+
+        tempDid = self.selectEnim(positionId)
+        random.shuffle(randlist)                # 敌人打乱顺序
+
+        wantlist = []
+        wantlist.append(tempDid)                # 添加默认的敌人
+
+        for i in range(count - 1):              # 去掉一个可获取的敌人
+            wantlist.append(random.choice(randlist))    # 可能会获取重复的敌人
+
+        return wantlist
+
+    def getMoreEnemHaventNormal(self, heroId, count):
+        """
+        得到更多的敌人，忽略对位，一般用于英雄，heroId可直接传递英雄id，0：取右边敌人count个
+                                                                1：取左边敌人count个
+        所取敌人不会重复，可能少于count个
+        :param heroId:
+        :param count:
+        :return:
+        """
+        if heroId == 0:                     # 攻击方英雄
+            tempList = range(100, 105)
+            tempArray = self.m_tDfdArray
+        else:
+            tempList = range(0, 5)
+            tempArray = self.m_tAtkArray
+
+        randlist = []
+        for i in range(0, 5):
+            if tempArray[i] != 0:
+                randlist.append(tempList[i])
+
+        random.shuffle(randlist)
+        realcount = min(count, len(randlist))
+        return randlist[:realcount]
+
+    def getMaybeMoreEnemHaventNomal(self, heroId, count):
+        """
+        得到更多的敌人，忽落对位，同上
+        所取得敌人可能会重复，不少于count个
+        """
+        if heroId == 0:
+            tempList = range(100, 105)
+            tempArray = self.m_tDfdArray
+        else:
+            tempList = range(0, 5)
+            tempArray = self.m_tAtkArray
+
+        randlist = []
+        for i in range(0, 5):
+            if tempArray[i] != 0:
+                randlist.append(tempList[i])
+        random.shuffle(randlist)
+
+        wantlist = []
+        for i in range(count - 1):
+            wantlist.append(random.choice(randlist))
+        return wantlist
+
+    def setSkillProba(self, positionid, skillname, proba):
+        """
+        设置指定位置上指定技能的触发几率
+        """
+        if not self.checkHaveValue(positionid):
+            return None
+        # if positionid < 5:
+        #     tempIndex = positionid
+        # else:
+        #     tempIndex = positionid - 100 + 5
+        tempId = self.getMembers(positionid)['id']
+        self.m_tSkillMap[tempId].setProba(skillname, proba)
+
+    def setSkillCd(self, positionid, skillname, cd):
+        """
+        设置指定位置上指定技能的cd时间
+        """
+        if not self.checkHaveValue(positionid):
+            return None
+        if positionid < 5:
+            tempIndex = positionid
+        else:
+            tempIndex = positionid - 100 + 5
+        tempId = self.getMembers(positionid)['id']
+        self.m_tSkillMap[tempId].setCurCd(skillname, cd)
+
+    def realPetHurt(self, positionid, pet_hurt):
+        """
+        得到指定位置（positionid），指定属性伤害（pet_hurt）,同时减血
+        """
+        pet_hurt = int(pet_hurt)
+        if pet_hurt <= 0:
+            return 0
+
+        tempEnem = self.getMembers(positionid)
+        if tempEnem == 0:
+            return 0
+
+        tempEnem['temHp'] -= pet_hurt
+        return pet_hurt
+
+    def getAllLife(self):
+        """
+        得到在场所有存活的
+        """
+        tempList = []
+        for i in range(5):
+            if self.m_tAtkArray[i] != 0:
+                tempList.append(i)
+            if self.m_tDfdArray[i] != 0:
+                tempList.append(i + 100)
+        return tempList
+
+    def getCampAssistantLife(self, position_id):
+        """ 获取position_id相同阵营的替补位置
+
+        :param position_id: 5、6、7攻击替补 105、106、107
+        :return:
+        """
+        if position_id < 8:
+            tempArray = self.m_tAtkArray
+            tempOffset = 0
+        else:
+            tempArray = self.m_tDfdArray
+            tempOffset = 100
+
+        tempList = []
+        for i in range(5, 8):
+            if tempArray[i] != 0:
+                tempList.append(i + tempOffset)
+        return tempList
+
+    def getCampAssistantAndAllLife(self, position_id):
+        """ 获取position_id相同的阵容的替补与上阵位置
+
+        :param position_id:
+        :return:
+        """
+        if position_id < 8:
+            tempArray = self.m_tAtkArray
+            tempOffset = 0
+        else:
+            tempArray = self.m_tDfdArray
+            tempOffset = 100
+
+        tempList = []
+        for i in xrange(8):
+            if tempArray[i] != 0:
+                tempList.append(i + tempOffset)
+        return tempList
+
+    def getRowAll(self, positionid, row):
+        """
+        得到指定整排
+        :param positionid: 攻击|防守
+        :param row:
+        :return:
+        """
+        if positionid < 5:
+            tempPosition = self.m_tDPosition        # 防守
+        else:
+            tempPosition = self.m_tAPosition
+
+        temp = []
+        if row == 1:
+            for i in range(3):                      # 0、1、2
+                if tempPosition[i] < 0:             # -1空位
+                    continue
+                tempData = self.getMembers(tempPosition[i])
+                if tempData != 0:
+                    temp.append(tempPosition[i])
+            if len(temp) > 0:
+                return temp
+            for i in range(3, 6):
+                if tempPosition[i] < 0:
+                    continue
+                tempData = self.getMembers(tempPosition[i])
+                if tempData != 0:
+                    temp.append(tempPosition[i])
+            return temp
+        elif row == 2:
+            for i in range(3, 6):
+                if tempPosition[i] < 0:
+                    continue
+                tempData = self.getMembers(tempPosition[i])
+                if tempData != 0:
+                    temp.append(tempPosition[i])
+            if len(temp) > 0:
+                return temp
+            for i in range(3):
+                if tempPosition[i] < 0:
+                    continue
+                tempData = self.getMembers(tempPosition[i])
+                if tempData != 0:
+                    temp.append(tempPosition[i])
+            return temp
+
+    def getFrontRowAll(self, positionid):
+        """
+        得到前排所有人，如果没有，得到后排所有人
+        """
+        return self.getRowAll(positionid, 1)
+
+    def getBackRowAll(self, positionid):
+        """
+        得到后排所有人，如果没有，得到前排所有人
+        """
+        return self.getRowAll(positionid, 2)
+
+    def getVerAll(self, positionid):
+        """
+        得到一列敌人
+        """
+        if positionid < 5:
+            tempPosition = self.m_tDPosition
+        else:
+            tempPosition = self.m_tAPosition
+
+        temp = []
+        tempEnim = self.selectEnim(positionid)
+        temp.append(tempEnim)
+        tempEnimIndex = tempPosition.index(tempEnim)
+        if tempEnimIndex < 3:           # 只有前排有人的时候，后排才会有人
+            tempNextEnim = tempPosition[tempEnimIndex + 3]
+            if self.getMembers(tempNextEnim) != 0:
+                temp.append(tempNextEnim)
+        return temp
+
+    def addHp(self, positionid, value):
+        """
+        给某一个单位加血，不大于血量最大值
+        """
+        tempH = self.getMembers(positionid)
+        if tempH == 0:
+            return
+        tempMaxHp = tempH['maxHp']
+
+        tempHpR = int(value)
+        if tempH['tempHp'] >= 0:
+            tempH['tempHp'] += tempHpR
+        else:
+            tempH['tempHp'] = tempHpR
+
+        if tempH['tempHp'] > tempMaxHp:
+            # tempHpR = tempHpR - (tempH['tempHp'] - tempMaxHp)
+            tempH['tempHp'] = tempMaxHp
+        return int(value)
+
+    def getRoundNum(self):
+        """
+        得到回合数字
+        """
+        return self.m_nRoundNum
+
+    ###################################################################
+
+    @classmethod
+    def world_boss_enemy_info_generator(cls, enemy_id):
+        """# 世界boss信息生成
+           返回的数据结构 与logics.battle.Battle.monster_enemy_info_generator 方法返回的内容相同
+        """
+        return {
+            'alternate1': 0,                # 替补
+            'alternate2': 0,
+            'alternate3': 0,
+            'alternate4': 0,
+            'alternate5': 0,
+            'enemy_rage': 0,                #
+            'formation_id': 1,              # 出战阵型
+            'position1': 0,                 # 主战的卡牌
+            'position2': str(enemy_id),     # 怪的位置
+            'position3': 0,
+            'position4': 0,
+            'position5': 0,
+            'reward_exp_character': 0,      # 卡牌加经验
+            'reward_exp_role': 0,           # 主角加经验
+            'team_rage': 0
+        }
+
+    @classmethod
+    def monster_enemy_info_generator(cls, fight_key):
+        """# monster_enemy_info_generator: 生成一个包含了怪物的数据结构
+        args:
+            fight_key:    ---    arg
+        returns:
+            0    ---
+        """
+        d = {}
+        raw_config = game_config.map_fight[str(fight_key)]
+        for k, v in raw_config.iteritems():
+            if 'position' in k or 'alternate' in k:
+                if len(v) == 0:
+                    d[k] = 0                        # 位置放卡牌
+                elif len(v) != 1:
+                    d[k] = weight_choice(v, 1)[0]   # 位置放卡牌
+                else:
+                    d[k] = int(v[0])
+            else:
+                d[k] = v
+        return d
+
+    def battle_reward(self, fight_info, sort=1):
+        """# battle_reward: 打怪的时候战斗掉落 *** 此函数执行完后必须执行user.save()来保存 ***
+        args:
+            fight_info:    ---    arg
+        returns:
+            0    ---
+        """
+        card_obj = self.attacker.cards
+        battle_rewards = {
+            'reward_exp_player': (),        # 玩家经验
+            'reward_exp_character': {},     # 卡牌经验
+            'reward_character': {},         # 卡牌奖励
+            'reward_item': {}               # 道具奖励
+        }
+
+        # 给攻击者送经验
+        reward_exp_player = fight_info['reward_exp_role']       # 战斗掉落的角色经验
+        if reward_exp_player:
+            old_exp = self.attacker.exp
+            self.attacker.exp += reward_exp_player
+            battle_rewards['reward_exp_player'] = (
+                reward_exp_player, old_exp, self.attacker.level_change   # 奖励经验、之前的经验、角色等级变化
+            )
+
+        # 给每张在阵卡牌送经验
+        reward_card_exp = fight_info['reward_exp_character']
+        if reward_card_exp:                 # 主战阵型 card_obj.alignment[0]
+            for card_set, add_exp in [(card_obj.alignment[0], reward_card_exp), (card_obj.alignment[1], reward_card_exp / 2),]:
+                for card_id in card_set:
+                    if card_id == card_obj.NONE_CARD_ID_FLAG:
+                        continue
+                    old_exp = card_obj._cards[card_id]['exp']
+                    level_change = card_obj.add_exp(card_id, add_exp)
+                    battle_rewards['reward_exp_character'][card_id] = (
+                        add_exp, old_exp, level_change
+                    )
+            self.attacker.user_m._add_model_save(card_obj)
+
+        for p in [
+            'position1', 'position2', 'position3', 'position4', 'position5',
+            'alternate1', 'alternate2', 'alternate3', 'alternate4', 'alternate5'
+        ]:
+            enemy = fight_info['p']
+            if not enemy:
+                continue
+            if sort == 1:
+                enemy_config = game_config.enemy_all[str(enemy)]            # 获取默认的敌人
+            else:
+                enemy_config = game_config.afterlife_enemy[str(enemy)]      # 获取其他敌人
+            enemy_reward_config = [enemy_config['loot_non']]
+            for c in ['loot_character', 'loot_item']:                       # 掉落
+                for i in enemy_config[c]:
+                    enemy_reward_config.append([i[0], i[1], c])
+
+            # 只有loot_non, 没有奖励
+            if len(enemy_reward_config) == 1:
+                continue
+            rbl = utils.weight_choice(enemy_reward_config, 1)
+
+            if rbl[0] == -1:
+                continue
+            if rbl[2] == 'loot_character':
+                card_id = card_obj.now(rbl[0])
+                # card_obj._cards[card_id]['lv'] = rbl[1]
+                battle_rewards['reward_character'][card_id] = card_obj.single_card_info(card_id)
+                self.attacker.user_m._add_model_save(card_obj)
+
+            if rbl[2] == 'loot_item':
+                self.attacker.item.add_item(rbl[0], 1, immediate=True)
+                battle_rewards['reward_item'][rbl[0]] = 1
+                self.attacker.user_m._add_model_save(self.attacker.item)
+        return battle_rewards
+
+    def merge_battle_reward(self, all_rewards, _battle_reward):
+        """# 合成多场战斗的战斗奖励
+        args:
+            all_rewards: merge之前总共的奖励
+            _battle_reward: 单场奖励
+        """
+        battle_rewards = {
+            'reward_exp_player': [],
+            'reward_exp_character': {},
+            'reward_character': {},
+            'reward_item': {}
+        }
+        battle_rewards.update(all_rewards)
+        if _battle_reward['reward_exp_player']:
+            if not battle_rewards['reward_exp_player']:     # reward_exp_player: (add_exp, old_exp, level_change)
+                battle_rewards['reward_exp_player'] = list(_battle_reward['reward_exp_player'])
+            else:
+                battle_rewards['reward_exp_player'][0] += _battle_reward['reward_exp_player'][0]
+                battle_rewards['reward_exp_player'][-1] = battle_rewards['reward_exp_player'][-1]
+
+        for k, v in _battle_reward['reward_exp_character'].iteritems():     # k是card_id
+            if k not in battle_rewards['reward_exp_character']:     # reward_exp_character: (add_exp, old_exp, level_change)
+                battle_rewards['reward_exp_character'][k] = list(v)
+            else:
+                battle_rewards['reward_exp_character'][k][0] += v[0]
+                for i in v[-1]:
+                    if i not in battle_rewards['reward_exp_character'][k][-1]:
+                        battle_rewards['reward_exp_character'][k][-1].append(i)
+
+        for k, v in _battle_reward['reward_character'].iteritems():
+            battle_rewards['reward_character'][k] = v
+        for k, v in _battle_reward['reward_item'].iteritems():
+            if k in battle_rewards['reward_item']:
+                battle_rewards['reward_item'][k] += v
+            else:
+                battle_rewards['reward_item'][k] = v
+        return battle_rewards
+
+    def getAllCardHp(self):
+        """
+        获得战场中全部卡牌剩余血量
+        """
+        tempCardHp = []
+        for i in range(10):
+            tempMem = self.m_tAtkArray[i]
+            if tempMem != 0:
+                if "tempHp" in tempMem:
+                    tempCurHp = tempMem["tempHp"]
+                else:
+                    tempCurHp = tempMem["hp"]
+                tempCardHp.append((i, tempCurHp))
+            tempMem = self.m_tDfdArray[i]
+            if tempMem != 0:
+                if "tempHp" in tempMem:
+                    tempCurHp = tempMem["tempHp"]
+                else:
+                    tempCurHp = tempMem["hp"]
+                tempCardHp.append((i + 100, tempCurHp))
+        return tempCardHp
+
+    def getAttackCardHP(self):
+        """# getAttackCardHP: 获得攻击方当前血量
+        args:
+            :    ---    arg
+        returns:
+            0    ---
+        """
+        tempCardHp = []
+        for i in range(10):
+            tempMem = self.m_tAtkArray[i]
+            if tempMem != 0:
+                if "tempHp" in tempMem:
+                    tempCurHp = tempMem["tempHp"]
+                else:
+                    tempCurHp = tempMem["hp"]
+                tempCardHp.append((i, tempCurHp))
+        return tempCardHp
+
+    def getDefendCardHP(self,):
+        """# getDefendCardHP: 获得防守方当前血量
+        args:
+            :    ---    arg
+        returns:
+            0    ---
+        """
+        tempCardHp = []
+        for i in range(10):
+            tempMem = self.m_tDfdArray[i]
+            if tempMem != 0:
+                if "tempHp" in tempMem:
+                    tempCurHp = tempMem["tempHp"]
+                else:
+                    tempCurHp = tempMem["hp"]
+                tempCardHp.append((i + 100, tempCurHp))
+        return tempCardHp
+
+    def setCardHp(self, positionid, hp):
+        """
+        设置某个位置上的卡牌血量
+        """
+        if positionid < 10:
+            tempCard = self.m_tAtkArray[positionid]
+        else:
+            tempCard = self.m_tDfdArray[positionid - 100]
+
+        if tempCard == 0:
+            return 0
+        if hp > tempCard["maxHp"]:
+            hp = tempCard["maxHp"]
+
+        tempCard['tempHp'] = hp
+        self.HistoryChangeMsg()
+        return hp
+
+    def getAtkDie(self):
+        """ 获取攻击方死亡卡牌
+
+        :return:
+        """
+        life = set()                        # 存活的卡牌
+        for i in xrange(10):
+            tempMem = self.m_tAtkArray[i]
+            if tempMem != 0 and tempMem['tempHp'] > 0:
+                life.add(tempMem['id'].split('_')[-1])
+
+        all_atk = set([i.split('_')[-1] for i in self.card_att.keys()])     # self.card_att传输给前端的所有卡牌
+
+        return list(all_atk - life)         # 所有卡牌 - 存活的卡牌
+
+    def get_attacker_hurt_hp(self):
+        """ 获取攻击方伤害总血量
+
+        :return:
+        """
+        remainder_hp = sum([min(i['tempHp'], self.attacker_hp.get(i['id'], 0)) for i in self.m_tAtkArray if i])  # attacker_hp 攻击方初始化血量
+
+        total_hp = sum([i for i in self.attacker_hp.itervalues()])
+
+        return max(0, total_hp - remainder_hp)
+
+    def get_defender_hurt_hp(self):
+        """ 获取防守方伤害总血量
+
+        :return:
+        """
+        remainder_hp = sum([min(i['tempHp'], self.defender_hp.get(i['id'], 0)) for i in self.m_tDfdArray if i])
+
+        total_hp = sum([i for i in self.defender_hp.itervalues()])
+
+        return max(0, total_hp - remainder_hp)
+
+    def get_attacker_left_hp_percent(self):
+        """ 获取攻击方剩余血量百分比
+
+        :return:
+        """
+        remainder_hp = sum([min(i['tempHp'], self.attacker_hp.get(i['id'], 0)) for i in self.m_tAtkArray if i])
+
+        total_hp = sum([i for i in self.attacker_hp.itervalues()])
+
+        return float(remainder_hp) / total_hp
 
 
 def merge_dict(source, target):

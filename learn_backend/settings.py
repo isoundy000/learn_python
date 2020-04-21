@@ -50,6 +50,7 @@ BASE_ROOT = os.path.dirname(os.path.abspath(__file__)) + os.path.sep
 
 COMPRESS_SWITCH = True      # 数据压缩开关
 MIN_COMPRESS = 50           # 最小字节的压缩大小
+FILTER_ADMIN_PAY = True     # 后台页面是否过滤 虚拟充值
 
 
 SESSION_SWITCH = False      # session开关

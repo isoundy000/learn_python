@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询一个玩家的充值记录</title>
+</head>
+<body>
+    <p> 当前环境: {{environment}} </p>
+
+    <form action="/{{url_partition}}/admin/pay_person/">
+        用户id：<input type="text" value="{{user_id}}" name="user_id"/><input type="submit" value="查看" id="submit" name="submit" />
+    </form>
+    <hr />
+
+    <table border="1" cellpadding="0" cellspacing="0" id='stat'>
+        充值记录
+        <tr>
+            <td align="center">序号</td>
+            <td align="center" name="user_id">用户ID</td>
+            <td align="center" name="user_name">用户名字</td>
+            <td align="center" name="product_id">充值类型<small style="color: grey">(None表示后台不走套餐)</small></td>
+            <td align="center" name="add_kcoin">钻石数</td>
+            <td align="center" name="pay_rmb">RMB数</td>
+            <td align="center" name="platform">充值平台</td>
+            <td align="center" name="transaction_id">定单ID</td>
+            <td align="center" name="purchase_date_ms">定单时间</td>
+            <td align="center" name="create_at">管理员(有值表示是后台直充)</td>
+            <td align="center" name="reason">管理员充值原因</td>
+        </tr>
+        {% for i, st in enumerate(st_list_0) %}
+        <tr bgcolor="cornsilk">
+            <td align="center" width="0">{{i+1}}</td>
+            <td align="center" width="0">{{st['user_id']}}</td>
+            <td align="center" width="0">{{st['name']}}</td>
+            <td align="left" width="0">{{st['product_id']}}</td>
+            <td align="center" width="0">{{st['order_coin']}}</td>
+            <td align="center" width="0">{{st['pay_rmb']}}</td>
+            <td align="center" width="0">{{st.get('platform')}}</td>
+            <td align="center" width="0">{{st['order_id']}}</td>
+            <td align="center" width="0">{{st['order_time']}}</td>
+            <td align="center" width="0">{{st.get('admin', '')}}</td>
+            <td align="center" width="0">{{st.get('reason', '')}}</td>
+        </tr>
+        {% end %}
+        <tr>
+            <td align="center" width="0">合计</td>
+            <td align="center" width="0"></td>
+            <td align="center" width="0"></td>
+            <td align="center" width="0"></td>
+            <td align="center" width="0">{{add_kcoins}}</td>
+            <td align="center" width="0">{{pay_rmbs}}</td>
+            <td align="center" width="0">真实充值&后台代充:<br/>{{really_pay_rmbs}}</td>
+            <td align="center" width="0">管理员测试:<br/>{{admin_pay_rmbs}}</td>
+            <td align="center" width="0"></td>
+            <td align="center" width="0"></td>
+            <td align="center" width="0"></td>
+        </tr>
+    </table>
+</body>
+</html>

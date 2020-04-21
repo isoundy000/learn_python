@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>虚拟充值首页</title>
+</head>
+<body>
+    {% if msg %}
+        <font color="red">{{msg}}</font>
+    {% end %}
+    <br/>
+    <form method="post" action="/{{url_partition}}/admin/virtual_index/">
+        {% if user %}
+            请输入要充值的用户ID: <input name="user_id" type="text" value="{{user.uid}}"/>
+        {% else %}
+            请输入要充值的用户ID: <input name="user_id" type="text"/>
+        {% end %}
+        <button type="submit"提交></button>
+    </form>
+</body>
+</html>

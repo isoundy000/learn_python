@@ -29,26 +29,27 @@ def binary_search2(source_data, search_num):
     low = 0
     high = len(source_data) - 1
     while low <= high:
-        mid = (low + high)/2
+        mid = (low + high) / 2
         if source_data[mid] == search_num:
-            print mid
-            return mid
-        #左半边
+            # return mid
+            return source_data[mid]
+        # 左半边
         elif source_data[mid] > search_num:
             high = mid - 1
-        #右半边
+        # 右半边
         elif source_data[mid] < search_num:
             low = mid + 1
-    print -1
-    return -1
+    return source_data[high]
+    # print -1
+    # return -1
 
         
 if __name__ == '__main__':
     source_data = [1, 3, 5, 7, 9]
     #确认数据集的数据个数大于1
-    if int(len(source_data)) > 1:
-        binary_search(source_data, 1)
-    else:
-        #如果等于1输出提示信息
-        print "就一个数不用搜索"
+    # if int(len(source_data)) > 1:
+    #     binary_search(source_data, 1)
+    # else:
+    #     #如果等于1输出提示信息
+    #     print "就一个数不用搜索"
     binary_search2(source_data, 10)

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发送邮件</title>
+</head>
+<body>
+    {% block content %}
+    {% if msg %}
+        <p><span style="color: red">{{ msg }}</span></p>
+    {% end %}
+
+    {% if success or error %}
+        <p>成功送达: <span style="color: red">{{ len(success) }}</span>人</p>
+        <p>{{ success }}</p>
+        <p>失败: <span style="color: red">{{ len(error) }}</span>人</p>
+        <p>{{ error }}</p>
+        奖励: {{gifts}}
+    {% end %}
+
+    <h1>发送系统邮件</h1>
+    <hr />
+
+    <form method="post">
+        <h2>邮件内容: </h2>
+        <p>标题: </p>
+        <div>
+            <input type="text" name="title" value="{{title}}"/>
+        </div>
+        <p>内容: </p>
+        <div>
+            <textarea name="content" style="width:200px; height: 150px;">{{ content }}</textarea>
+        </div>
+        <p>奖励配置：(通用的 reward 配置结构，比如：[[1, 0, 10000], [6, 9, 20], [6, 12, 20]])</p>
+        <div>
+            <textarea name="gifts" style="width: 200px; height: 400px;">{{gifts}}</textarea><br/>
+        </div>
+        <p>玩家ID：（一行一个UID，总数不能超过 100 个）</p>
+        <div>
+            <textarea name="uids" style="width: 200px; height: 400px;">{{uids}}</textarea>
+        </div>
+        <input type="submit" title="发送" value="发送" onclick="return confirm('确定发送邮件？检查清楚了先。')"/>
+    </form>
+    {% end %}
+</body>
+</html>

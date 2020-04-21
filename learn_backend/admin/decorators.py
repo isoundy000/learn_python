@@ -208,3 +208,132 @@ class Logging(ModelTools):
         for k in self.redis.lrange(key, 0, -1):
             data.append(pickle.loads(k))
         return data
+
+
+class ApprovalPayment(ModelTools):
+    """
+    审批支付
+    """
+    SERVER_NAME = 'master'
+
+    EXPIRE_DAY = 10
+
+    def __init__(self):
+        super(ApprovalPayment, self).__init__()
+        self._key = self.make_key(self.__class__.__name__, server_name=self.SERVER_NAME)
+        # 审批后的key
+        self._key_approval = self.make_key('%s_%s' % (self.__class__.__name__, time.strftime('%Y-%m-%d')), server_name=self.SERVER_NAME)
+
+        self.redis = self.get_redis_client(self._key, self.SERVER_NAME)
+
+    def get_all_payment(self):
+        '''
+        获取所有审批记录
+        :return:
+        '''
+        data = self.redis.hgetall(self._key)
+        result = {}
+        for key, value in data.iteritems():
+            result[key] = pickle.loads(value)
+        return result
+
+    def get_payment(self, key):
+        '''
+        获取单比充值记录
+        :param key:
+        :return:
+        '''
+        data = self.redis.hget(self._key, key)
+        return pickle.loads(data) if data else {}
+
+    def add_payment(self, admin, uid, goods_id, reason, times, tp):
+        """ 增加审批支付
+
+        :param admin: admin账号
+        :param uid: 充值的uid
+        :param goods_id: 物品id
+        :param reason: 理由
+        :param times: 次数
+        :param tp: admin:后台代充  算真实收入 admin_test:管理员测试用 不算真实收入
+        :return:
+        """
+        now = int(time.time())
+        data = {
+            'admin': admin,
+            'uid': uid,
+            'goods_id': goods_id,
+            'reason': reason,
+            'times': times,
+            'dt': now,
+            'approval': '',  # 审批者
+            'status': 0,  # 状态0,为审批时, 1为同意, 2为拒绝
+            'tp': tp,
+        }
+        key = '%s_%s' % (admin, now)
+        self.redis.hset(self._key, key, pickle.dumps(data))
+        return key
+
+    def remove_payment(self, key):
+        """ 删除审批支付
+        :param key:
+        :return:
+        """
+        self.redis.hdel(self._key, key)
+
+    def add_approval_payment(self, data):
+        """ 增加审批支付结果
+        :param key:
+        :param data:
+        :return:
+        """
+        self.redis.lpush(self._key_approval, pickle.dumps(data))
+
+    def approval_payment(self, admin, key, refuse=False):
+        """ 审批支付
+        :param key:
+        :param refuse: 拒绝，默认为同意
+        :return:
+        """
+        from admin import virtual_pay_by_admin
+        from logics.user import User
+        pay = self.get_payment(key)
+        if pay:
+            flag = False
+            if not refuse:
+                # 同意
+                pay['status'] = 1
+                u = User.get(pay['uid'])
+                for i in xrange(int(pay['times'])):
+                    flag = virtual_pay_by_admin(u, pay['goods_id'], pay['admin'], pay['reason'], pay['tp'])
+            else:
+                # 拒绝
+                pay['status'] = 2
+            pay['approval'] = admin         # 审批者
+            self.add_approval_payment(pay)
+            self.remove_payment(key)
+            return flag
+        return False
+
+    def get_all_approval_log(self, day=EXPIRE_DAY):
+        '''
+        获取所有审批过的支付的日志
+        :param day:
+        :return:
+        '''
+        data = []
+        now = datetime.datetime.now()
+        for i in [(now - datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in xrange(0, day)]:
+            data.extend(self.get_logging(i))
+        return data
+
+    def get_logging(self, time_str):
+        """ 获取指定时间的日志
+
+        :param time_str: "%Y-%m-%d"
+        :return:
+        """
+        data = []
+        key = self.make_key_cls('%s_%s' % (self.__class__.__name__, time_str), server_name=self.SERVER_NAME)
+        for k in self.redis.lrange(key, 0, -1):
+            data.append(pickle.loads(k))
+        return data

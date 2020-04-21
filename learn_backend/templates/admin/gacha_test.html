@@ -5,7 +5,7 @@
     <title>抽卡页面</title>
 </head>
 <body>
-    <form action="/{{url_partition}}/admin/gacha_test/", method="post", id='gacha_form'>
+    <form action="/{{url_partition}}/admin/gacha_test/" method="post" id='gacha_form'>
         gacha id:
         <select name="g_id">
             {% for k, v in game_config.gacha.iteritems() %}

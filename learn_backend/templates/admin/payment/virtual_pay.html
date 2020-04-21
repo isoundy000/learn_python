@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>充值记录</title>
+</head>
+<body>
+    {% include virtual_index.html %}
+    {% import datetime %}
+    {% if user %}
+    <table border="1" cellpadding="">
+        <tr>
+            <th>用户id</th>
+            <th>用户名字</th>
+            <th>用户等级</th>
+            <th>vip等级</th>
+            <th>用户现有钻石数量</th>
+            <th>充值钻石数</th>
+            <th>最后一次活跃时间</th>
+        </tr>
+        <tr>
+            <td align="center">{{user.uid}}</td>
+            <td align="center" >{{user.name}}</td>
+            <td align="center" >{{user.level}}</td>
+            <td align="center" >{{user.vip}}</td>
+            <td align="center" >{{user.coin}}</td>
+            <td align="center" >{{user.vip_exp}}</td>
+            <td align="center">{{datetime.datetime.fromtimestamp(user.active_time)}}</td>
+        </tr>
+    </table>
+    <br/>
+    <h4>1. 选择套餐充值</h4>
+    <hr>
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>配置id</th>
+            <th>cost</th>
+            <th>名字</th>
+            <th>price</th>
+            <th>coin</th>
+            <th>gift_coin</th>
+            <th>请输入原因再提交</th>
+        </tr>
+        {% for goods_id, item in buy_coin_values %}
+        <tr>
+            <td align="center">{{goods_id}}</td>
+            <td align="center">{{item['cost']}}</td>
+            <td align="center" >{{item['name']}}</td>
+            <td align="center" >{{item['price']}}</td>
+            <td align="center" >{{item['coin']}}</td>
+            <td align="center" >{{item['gift_coin']}}</td>
+            <td align="right">
+                <form method="post" action="/{{url_partition}}/admin/virtual_pay/">
+                    <input type="hidden" name="user_id" value="{{user.uid}}"/>
+                    <input type="hidden" name="goods_id" value="{{goods_id}}" />
+                    <input type="hidden" name="coin" value="{{item['coin']}}" />
+                    <b>次数:</b><input type="text" title="1-99之间的整数" name="times" value="1" size="2" maxlength="2"/>
+                    <b>原因:</b><input type="text" title="默认淘宝, 其它请自填" name="reason" value="代充">
+                    <input type="submit" title="请检查次数和原因" id="admin" name="admin" onclick="return confirm('确定要为该用户充值?   后台代充(算真实收入)')" value="后台代充(算真实收入)"/>
+                    <input type="submit" title='请检查次数和原因' id='admin_test' name='admin_test' onclick="return confirm('确定要为该用户充值么?')" value="管理员测试专用"/>
+                </form>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+</body>
+</html>

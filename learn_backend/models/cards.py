@@ -110,7 +110,7 @@ class Cards(ModelBase):
         self.uid = uid
         self._attrs = {
             '_cards': {},
-            'bag_extent': 0,               # 卡牌背包的扩展
+            'bag_extend': 0,                 # 卡牌背包的扩展
             'formation': {
                 'own': range(1, 7),        # 已经开启的阵型列表  [1,2,3,4,5,6]
                 'current': 1,              # 当前使用的阵型      6
@@ -195,6 +195,58 @@ class Cards(ModelBase):
                 v['lv'] = lv
                 v['pre_exp'] = pre_exp
 
+    def data_update_func_5(self):
+        """# func_4把卡牌等级和技能等级给搞错了，找补回来
+        """
+        if settings.ENV_NAME not in self.SETTINGS_LIST_FOR_UPDATA_FUNC_4_5:
+            return
+
+        # 未走第一次错误func4的 不走func5
+        if self.ingorne_update_func == 5:
+            return
+        for k, v in self._cards.iteritems():
+            if v['c_id'] == 2200:
+                card_config = game_config.character_detail[v['c_id']]
+                for i in '12345':
+                    if 's_' + i not in v:
+                        continue
+                    skill_source = card_config.get('skill_%s_source' % i)
+                    if skill_source:
+                        s = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        s = 0
+                    s_lv = 1
+                    avail = 0 if i != '1' else 2
+                    v['s_' + i].update({'s': int(s), 'avail': avail})
+
+                lv = v['lv']
+                evo = v['evo']
+                v['evo'] = 0
+                level_off = 0
+                evo_config = self.get_evolution_config(k, v, card_config)
+                for i in range(evo):
+                    cur_evo = v['evo']
+                    next_evo = cur_evo + 1
+                    _config = evo_config.get(next_evo)
+                    if _config:
+                        # 加回被降的等级 重新计算pre_exp
+                        level_off += _config['level_off']
+                    self.evolution(k)
+
+                level_config = game_config.character_base
+                v['pre_exp'] = 0
+                v['lv'] = min(v['level_max'], lv + level_off)
+                for level in range(1, v['lv']):
+                    card_type = card_config['type']
+                    rate = game_config.character_base_rate[card_type]['exp_rate']
+                    v['pre_exp'] += int(level_config[level]['exp'] * rate)
+
+                # 技能等级直接开到最大
+                for i in '12345':
+                    skill = v.get('s_' + i)
+                    if skill and skill['avail']:
+                        skill['lv'] = 30
+
     def data_update_func_6(self):
         """# 增加助威+1数据
         """
@@ -209,6 +261,164 @@ class Cards(ModelBase):
         """# evo配置调整，重新计算下卡牌数值"""
         for k in self._cards:
             self.calc_base_attrs_value(k)
+
+    def data_update_func_9(self):
+        """# 死神2200 技能配置又又出错，再次重走一次进阶以更正技能数据"""
+        if settings.ENV_NAME not in self.SETTINGS_LIST_FOR_UPDATA_FUNC_4_5:
+            return
+
+        for k, v in self._cards.iteritems():
+            if v['c_id'] == 2200:
+                card_config = game_config.character_detail[v['c_id']]
+                lv = v['lv']
+                pre_exp = v['pre_exp']
+                for i in '12345':
+                    if 's_' + i not in v:
+                        continue
+                    skill_source = card_config.get('skill_%s_source' % i)
+                    if skill_source:
+                        s = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        s = 0
+                    s_lv = 1
+                    avail = 0 if i != '1' else 2
+                    v['s_' + i].update({'s': int(s), 'avail': avail})
+                evo = v['evo']
+                v['evo'] = 0
+                for i in range(evo):
+                    self.evolution(k)
+
+                v['lv'] = lv
+                v['pre_exp'] = pre_exp
+
+    def data_update_func_10(self):
+        """# 增加助威+1数据
+        """
+        self.refesh_assistant_effect()
+
+    def data_update_func_11(self):
+        """# 增加助威+1数据
+        """
+        for index, ass in enumerate(self.assistant_effect):
+            if ass.get('active_status') != '-1':
+                self.assistant_effect[index]['base_value'] = game_config.assistant[index + 1]['att_value']
+
+    def data_update_func_12(self):
+        """# 更新图鉴, 图鉴需要在图鉴模块中更新
+        """
+        pass
+        # for k, v in self._cards.iteritems():
+        #     if v['c_id'] in [7900, 32000, 32100]:
+        #         self.add_card_book(v['c_id'])
+
+    def data_update_func_13(self):
+        """# evo配置调整，重新计算下卡牌数值"""
+        for k in self._cards:
+            self.calc_base_attrs_value(k)
+        self.save()
+
+    def data_update_func_14(self):
+        """增加技能4和5"""
+        for k, v in self._cards.iteritems():
+            card_config = game_config.character_detail[v['c_id']]
+            for i, s in enumerate(('s_4', 's_5')):
+                if s not in v:
+                    skill_source = card_config.get('skill_%s_source' % (i + 4))
+                    if skill_source:
+                        skill = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        skill = 0
+                    v[s] = {'lv': 1, 'exp': 0, 'avail': 0, 's': skill}
+                elif not v[s]['s']:
+                    skill_source = card_config.get('skill_%s_source' % (i + 4))
+                    if skill_source:
+                        skill = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        skill = 0
+                    v[s]['s'] = skill
+        self.save()
+
+    def data_update_func_15(self):
+        """增加技能4和5"""
+        for k, v in self._cards.iteritems():
+            card_config = game_config.character_detail[v['c_id']]
+            for i, s in enumerate(('s_4', 's_5')):
+                if s not in v:
+                    skill_source = card_config.get('skill_%s_source' % (i + 4))
+                    if skill_source:
+                        skill = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        skill = 0
+                    v[s] = {'lv': 1, 'exp': 0, 'avail': 0, 's': skill}
+                elif not v[s]['s']:
+                    skill_source = card_config.get('skill_%s_source' % (i + 4))
+                    if skill_source:
+                        skill = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        skill = 0
+                    v[s]['s'] = skill
+        self.save()
+
+    def data_update_func_16(self):
+        """ 清理战力排行榜
+
+        :return:
+        """
+        self.max_combat = 0
+
+    def data_update_func_17(self):
+        """ 修改卡牌8800技能
+
+        :return:
+        """
+        for k, v in self._cards.iteritems():
+            if v['c_id'] == 8800:
+                card_config = game_config.character_detail[v['c_id']]
+                lv = v['lv']
+                pre_exp = v['pre_exp']
+                for i in '2':
+                    if 's_' + i not in v:
+                        continue
+                    skill_source = card_config.get('skill_%s_source' % i)
+                    if skill_source:
+                        s = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        s = 0
+                    v['s_' + i].update({'s': int(s)})
+                evo = v['evo']
+                v['evo'] = 0
+                for i in range(evo):
+                    self.evolution(k)
+
+                v['lv'] = lv
+                v['pre_exp'] = pre_exp
+
+    def data_update_func_18(self):
+        """ 修改卡牌8800技能
+
+        :return:
+        """
+        for k, v in self._cards.iteritems():
+            if v['c_id'] == 9800:
+                card_config = game_config.character_detail[v['c_id']]
+                lv = v['lv']
+                pre_exp = v['pre_exp']
+                for i in '12345':
+                    if 's_' + i not in v:
+                        continue
+                    skill_source = card_config.get('skill_%s_source' % i)
+                    if skill_source:
+                        s = utils.weight_choice(skill_source, 1)[0]
+                    else:
+                        s = 0
+                    v['s_' + i].update({'s': int(s)})
+                evo = v['evo']
+                v['evo'] = 0
+                for i in range(evo):
+                    self.evolution(k)
+
+                v['lv'] = lv
+                v['pre_exp'] = pre_exp
 
     def data_update_func_19(self):
         """ 修改转世卡牌技能
@@ -607,7 +817,7 @@ class Cards(ModelBase):
     def super_attr_plus(self, card_dict, card_config=None):
         """
         增加超进阶的 6 暴击 7 命中 8 减伤 9 闪避 和属性加成(201 火攻 202 水攻 203 风攻 204 地攻 301 火防 302 水防 303 风防 304 地防)
-        (501:改变外框，后面填1和1..1   502:品质增加 # 超进阶 同一品质的变化 橙-->橙1-->橙2-->橙3  不同品质的变化 橙-->红-->金)
+        (501: 改变外框，后面填1和1..1   502: 品质增加 # 超进阶 同一品质的变化 橙-->橙1-->橙2-->橙3  不同品质的变化 橙-->红-->金)
         :param card_dict: 卡牌信息
         :param card_config: 卡牌配置
         :return:
@@ -628,7 +838,7 @@ class Cards(ModelBase):
             501: 'super_quality_1',  # super_step [501, 1] [501, 1] 品质也是累加的所以都配置成1就ok了  501从1到9  502没用
             502: 'super_quality_2',
         }
-        card_config = card_config or game_config.character_detail[card_config['c_id']]
+        card_config = card_config or game_config.character_detail[card_dict['c_id']]
 
         add_attrs = self.calc_super_attrs(super_effect, card_dict, card_config)
 
@@ -886,58 +1096,58 @@ class Cards(ModelBase):
             'level_max': card_config['level_max'],
             'exp': 0,
             'pre_exp': pre_exp,
-            'pos': 0,       # 出战位置[1,2,3,4,5] 替补的位置位[11,12,13], 这两个省略[14, 15] 助威assistant位置为0
-                            # 命运user.cards.destiny激活为0 有card_id表示放上了卡牌
+            'pos': 0,             # 出战位置[1,2,3,4,5] 替补的位置位[11,12,13], 这两个省略[14, 15] 助威assistant位置为0
+                                  # 命运user.cards.destiny激活为0 有card_id表示放上了卡牌
             'evo': 0,
             'step': 0,
-            'super_step': 0,    # 超进阶的等级
-            'super_soul': [],   # 超进阶铸魂的卡牌
+            'super_step': 0,      # 超进阶的等级
+            'super_soul': [],     # 超进阶铸魂的卡牌
             # 'super_quality_1': 0, # 同一品质的变化 橙-->橙1-->橙2-->橙3
             # 'super_quality_2': 0, # 不同品质的变化 橙-->红-->金
             'bre': 0,
 
-            'base_patk': card_config['base_patk'],
-            'base_matk': card_config['base_matk'],
-            'base_def': card_config['base_def'],
-            'base_speed': card_config['base_speed'],
-            'base_hp': card_config['base_hp'],
+            'base_patk'     : card_config['base_patk'],
+            'base_matk'     : card_config['base_matk'],
+            'base_def'      : card_config['base_def'],
+            'base_speed'    : card_config['base_speed'],
+            'base_hp'       : card_config['base_hp'],
 
-            'patk_history': 0,  # 无用
-            'matk_history': 0,  # 无用
-            'def_history': 0,  # 无用
-            'speed_history': 0,  # 无用
-            'hp_history': 0,  # 无用
+            'patk_history'  : 0,    # 无用
+            'matk_history'  : 0,    # 无用
+            'def_history'   : 0,    # 无用
+            'speed_history' : 0,    # 无用
+            'hp_history'    : 0,    # 无用
 
-            'patk_crystal': 0,
-            'matk_crystal': 0,
-            'def_crystal': 0,
-            'speed_crystal': 0,
-            'hp_crystal': 0,
+            'patk_crystal'  : 0,
+            'matk_crystal'  : 0,
+            'def_crystal'   : 0,
+            'speed_crystal' : 0,
+            'hp_crystal'    : 0,
 
-            'patk_afterlife': 0,
-            'matk_afterlife': 0,
-            'def_afterlife': 0,
-            'speed_afterlife': 0,
-            'hp_afterlife': 0,
+            'patk_afterlife'  : 0,
+            'matk_afterlife'  : 0,
+            'def_afterlife'   : 0,
+            'speed_afterlife' : 0,
+            'hp_afterlife'    : 0,
 
             's_1': {
                 'lv': 1,
                 'exp': 0,
-                'avail': 2,  # 0 - 不可用，1 - 可以激活，2 - 已经激活
-                's': 0,  # 技能的id  根据技能的id可以在skill_detail中可以取到最大等级max_lv
+                'avail': 2,    # 0 - 不可用，1 - 可以激活，2 - 已经激活
+                's': 0,        # 技能的id  根据技能的id可以在skill_detail中可以取到最大等级max_lv
             },
             's_2': {'lv': 1, 'exp': 0, 'avail': 0, 's': 0},
             's_3': {'lv': 1, 'exp': 0, 'avail': 0, 's': 0},
             's_4': {'lv': 1, 'exp': 0, 'avail': 0, 's': 0},
             's_5': {'lv': 1, 'exp': 0, 'avail': 0, 's': 0},
 
-            'remove_avail': [],  # 是否可以被删除, []表示可以删除
-            'evo_metals': {},  # 所有进阶消耗的卡牌
-            'is_world': False,  # 卡牌是否转世过了
-            'card_world_task': 0,  # 卡牌转世的任务
-            'card_world_step': 0,  # 卡牌转世的阶段
+            'remove_avail': [],         # 是否可以被删除, []表示可以删除
+            'evo_metals': {},           # 所有进阶消耗的卡牌
+            'is_world': False,          # 卡牌是否转世过了
+            'card_world_task': 0,       # 卡牌转世的任务
+            'card_world_step': 0,       # 卡牌转世的阶段
 
-            'after_world_point': 0,  # 转世能量点槽
+            'after_world_point': 0,     # 转世能量点槽
         }
 
         for i in '12345':
@@ -1040,7 +1250,7 @@ class Cards(ModelBase):
         :return:
         '''
         if card_config is None:
-            raw_card_info = raw_card_info or self._card[card_id]
+            raw_card_info = raw_card_info or self._cards[card_id]
             card_config = card_config or game_config.character_detail[raw_card_info['c_id']]
 
         if 'evo_kind' in card_config:
@@ -1300,14 +1510,13 @@ class Cards(ModelBase):
                     for v in o:                 # 卡牌id
                         if v not in (self.NONE_CARD_ID_FLAG, '0'):  # 没有卡牌、没激活
                             if v not in self._cards:
-                                if v in self._cards:
-                                    if v in self.assistant:
-                                        self.assistant[self.assistant.index(v)] = '0'
-                                        if v not in self.destiny:
-                                            continue
-                                    if v in self.destiny:
-                                        self.destiny[self.destiny.index(v)] = '0'
+                                if v in self.assistant:
+                                    self.assistant[self.assistant.index(v)] = '0'
+                                    if v not in self.destiny:
                                         continue
+                                if v in self.destiny:
+                                    self.destiny[self.destiny.index(v)] = '0'
+                                    continue
 
                             _card_config_id_on_alignment.add(game_config.character_detail[self._cards[v]['c_id']]['character_ID'])
                             # _card_config_id_on_alignment.add(self._cards[vv]['c_id'])
@@ -1602,8 +1811,34 @@ class Cards(ModelBase):
                 tempCardType = game_config.character_detail[tempCard['c_id']]['type']       # get character type
                 tempLv = tempCard['lv']     # get card current lv
                 tempEatBace = game_config.character_base[tempLv]['eaten_skill_exp']
+                tempRate = game_config.character_base_rate[tempCardType]['eaten_skill_exp_rate']    # 0.5
+                tempReal = int(tempEatBace * tempRate)  # 50 * 0.5
+                tempSkillList = []
+                for j in range(1, 4):
+                    skill = tempCard.get('s_' + str(j), {}).get('s')
+                    if skill:
+                        tempSkillList.append(skill)
 
+                if skillCount == 2:
+                    tempReal = int(tempReal * 1.2)
+                elif skillCount == 3:
+                    tempReal = int(tempReal * 1.5)
 
+                tempReal /= skillCount
+                tempSkillId = tempMajor['s_%s' % pos]['s']
+                tempAvailFlag = tempMajor['s_%s' % pos]['avail']
+                if tempSkillId > 0 and tempAvailFlag == 2:
+                    error = self.add_skill_exp(tempMajorId, tempSkillId, tempReal)
+                    if error:
+                        continue
+                    if tempSkillId in tempSkillList:
+                        self.add_skill_exp(tempMajorId, tempSkillId, int(tempEatBace * tempRate))
+                if self.weak_user:
+                    used_crystal, used_adv_crystal = self.check_card_used_crystal(tempCardId, tempCard)
+                    self.weak_user.crystal += used_crystal
+                    self.weak_user.adv_crystal += used_adv_crystal
+                self.remove(tempCardId)
+        return 0
 
     def get_base_attr(self, card_id, attribute):
         """
@@ -1626,7 +1861,18 @@ class Cards(ModelBase):
         """
         根据key（attribute）设置指定值
         """
-        pass
+        attribute = str(attribute)
+        tempAttrKey = ['base_patk', 'base_matk', 'base_def', 'base_speed', 'base_hp']
+        tempHisKey = ['patk_history', 'matk_history', 'def_history', 'speed_history', 'hp_history']
+        if attribute in tempAttrKey:
+            tempIndex = tempAttrKey.index(attribute)
+            tempCard = self._cards[card_id]
+            tempCard[tempHisKey[tempIndex]] = tempCard[attribute]
+            tempCard_cid = tempCard['c_id']
+            card_config = game_config.character_detail[tempCard_cid]
+            tempCard[attribute] = value - card_config[attribute]
+            return True
+        return False
 
     def add_new_formation(self, level):
         """# add_new_fo: 添加一个新的阵型
@@ -1637,7 +1883,47 @@ class Cards(ModelBase):
         """
         # ps: 2014.02.25 默认全开启站位，所以删除这个 配置参数了
         return
+        config_value = game_config.role[level]['open_formation']
+        if config_value and config_value not in self.formation['own']:
+            self.formation['own'].append(config_value)
 
+    def add_new_open_position(self, level):
+        """# 开启新的站位
+        """
+        # ps: 2014.02.25 默认全开启站位，所以删除这个 配置参数了
+        return
+        config_value = game_config.role[level]['open_position']
+        for i in config_value:
+            if i not in self.open_position:             # 当前已开启站位
+                self.open_position.append(int(i))
+
+    def add_position_num(self, level):
+        '''
+        增加开启占位数量
+        :param level:
+        :return:
+        '''
+        config = game_config.role[level]
+        if config['position_num']:
+            self.position_num = config['position_num']
+        if config['alternate_num']:
+            self.alternate_num = config['alternate_num']
+
+    def check_card_used_crystal(self, card_id, card_info=None):
+        ''' # 以元组形式返回需要的 能晶，高级能晶 '''
+        card_info = card_info or self._cards[card_id]
+        need_crystal = 0
+        need_adv_crystal = 0
+        tps = ['patk', 'matk', 'def', 'speed', 'hp']
+        for lvs in [card_info[_tp] for _tp in ['%s_crystal' % tp for tp in tps]]:
+            for lv in range(1, lvs + 1):
+                lv_config = game_config.character_strengthen[lv]
+                need_crystal_list = lv_config['need_crstal_' + tp]
+                if need_crystal_list[0] == 1:
+                    need_crystal += need_crystal_list[1]
+                if need_crystal_list[0] == 2:
+                    need_adv_crystal += need_crystal_list[1]
+        return need_crystal, need_adv_crystal
 
     def generate_assistant_random(self, config_list):
         """ 生成assistant_random
@@ -1790,7 +2076,6 @@ class Cards(ModelBase):
         else:
             return False
 
-
     def cal_one_combat(self, card_id):
         """ 计算一个卡牌的战斗力
 
@@ -1799,7 +2084,7 @@ class Cards(ModelBase):
         """
         card_dict = self._cards[card_id]
         info = self.single_card_info(card_dict)
-        combat = self.weak_user.cal_combat(info, is_user=False)
+        combat = self.weak_user.calc_combat(info, is_user=False)
         evo_num = 100000 + card_dict['evo'] * 1000
         skill_num = sum([card_dict['s_%s' % i]['lv'] for i in xrange(1, 4)])
         num = evo_num + skill_num

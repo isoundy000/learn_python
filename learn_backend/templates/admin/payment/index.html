@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>充值详情页面</title>
+</head>
+<body>
+    <p>当前环境: {{environment}}</p>
+    <hr>
+    <form id="form" name="form" method="get" action="/{{url_partition}}/admin/pay_index/">
+        <p>查询日期
+            start_day:
+            <select name="start_day" value="">
+                {% for day in day_interval %}
+                    {% if day == start_day %}
+                        <option value="{{day}}" selected>{{day}}</option>
+                    {% else %}
+                        <option value="{{day}}">{{day}}</option>
+                    {% end %}
+                {% end %}
+            </select>
+            end_day:
+            <select  name="end_day" value="">
+                {% for day in day_interval %}
+                    {% if day == end_day %}
+                        <option value="{{day}}" selected>{{day}}</option>
+                    {% else %}
+                        <option value="{{day}}">{{day}}</option>
+                    {% end %}
+                {% end %}
+            </select>
+            <span>若end_day < start_day, 默认为今天</span>
+            <input type="submit" name="button" id="submit_by_user" value="查询" />
+        </p>
+    </form>
+
+    <!--<form action="/{{url_partition}}/admin/payment_index/" method="POST">-->
+        <!--<input type="hidden" value="True" name="skip_admin">-->
+        <!--<input type="submit" value="过滤掉虚拟充值" id="submit" name="submit"/>-->
+        <!--<input onclick="javascript:window.location.href='/{{url_partition}}/admin/payment_index/'" value=" 查看所有数据 " type="button" />-->
+    <!--</form>-->
+
+    <hr />
+
+    <table border="1" cellpadding="0" cellspacing="0" id="stat">
+        充值记录
+        <tr>
+            <td align="center" width="100">日期</td>
+            <td align="center" width="95">充值次数</td>
+            <td align="center" width="95">充值人数</td>
+            <td align="center" width="95">总额(钻石)</td>
+            <td align="center" width="95">总额(人民币)</td>
+            {% if filter_admin_pay %}
+                <td align="center" width="150">平台充值&后台代充</td>
+                <td align="center" width="95">管理员测试</td>
+            {% end %}
+            <td align="center" width="75">&nbsp;</td>
+        </tr>
+        {% for i, st in enumerate(st_list_0) %}
+        <tr bgcolor="cornsilk">
+            <td align="center" width="45">{{st['day']}}</td>
+            <td align="center" width="45">{{st['pay_times']}}</td>
+            <td align="center" width="45">{{st['person_times']}}</td>
+            <td align="center" width="45">{{st['pay_coins']}}</td>
+            <td align="center" width="45">{{st['pay_rmbs']}}</td>
+            {% if filter_admin_pay %}
+                <td align="center" width="45">{{st['really_pay_rmbs']}}</td>
+                <td align="center" width="45">{{st['admin_pay_rmbs']}}</td>
+            {% end %}
+            <td align="center" width="45"><a href="/{{url_partition}}/admin/pay_day/?day={{st['day']}}">查看详情</a></td>
+        </tr>
+        {% end %}
+        <tr>
+            <td align="center">合计</td>
+            <td align="center" width="45" height="25" id="pay_times">{{all_data['all_pay_times']}}</td>
+            <td align="center" width="45" height="25" id="person_times">{{all_data['all_person_times']}}</td>
+            <td align="center" width="45" height="25" id="pay_coins">{{all_data['all_pay_coins']}}</td>
+            <td align="center" width="45" height="25" id="pay_rmbs">{{all_data['all_pay_rmbs']}}</td>
+            {% if filter_admin_pay %}
+                <td align="center" width="45" height="25" id="all_platform_pay_rmbs">{{all_data['all_platform_pay_rmbs']}}</td>
+                <td align="center" width="45" height="25" id="all_admin_pay_rmbs">{{all_data['all_admin_pay_rmbs']}}</td>
+            {% end %}
+            <td align="center" width="45" height="25">&nbsp;</td>
+        </tr>
+    </table>
+</body>
+</html>

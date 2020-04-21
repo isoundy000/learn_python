@@ -19,7 +19,7 @@ class Drama(ModelBase):
         self.uid = uid
 
         self._attrs = {
-            '_drama': []        # 已完成战斗id
+            '_drama': []        # 已完成战斗id  uid
         }
         super(Drama, self).__init__(self.uid)
 

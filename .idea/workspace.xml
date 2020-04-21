@@ -2,170 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Config/ConfigManager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Config/XMLToDictionary.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Config/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Log/Write.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Log/Write_old.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/Log/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/Source/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_svn/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tornado/tornado_mysql/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_venv/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/db_async/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/db_async/daemon.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/db_async/hash_write_db_service.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/db_async/write_db_service.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/qhwx/uwsgi.txt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/create_database_config.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/RankingList.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/acclog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/account_query.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/account_query1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/account_qury.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/accserver.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/accserver_zyj_yinni.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/accsysparam.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/active.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/activity.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/activity2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/activitymonitor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/alarm.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame_b_operate.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame_b_record.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame_b_total.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/allgame_new.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/app.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/auto_cut_partition.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/batchrecharge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/battle_brave_copy.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/battle_copy.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/battle_data.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/battle_mie.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/battle_simulation.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/broadcast.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/buried.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/buriedparam.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/channel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/chat.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/clienterror.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/closeaccount.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/common.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/configfile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/configfile2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/configprocess.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/configtype.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/consume_count.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/count.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/count_filter.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/custom.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/data.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/data1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/data2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/dataopt.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/delsource.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/device.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/downcenter.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/fight_simulation.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/fightreport.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/forceupdate.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/game.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/game_info_part.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gamedata.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gamelog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gamelogcount.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gmrecharge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gs_auditing_users.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/gs_gmrecharge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/guild_notice.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/i18n.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/level_consume.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/log.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/login.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/lose_count.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/loyaluser.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/mail_approve.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/mergeinfo.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/newuser.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/notice.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/notice_zyj_yinni.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/online.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/online_audit.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/open_server.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/operate_channel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/operate_email.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/operate_email2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/operate_game_log.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/operatedata.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/partner.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/payuser.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/pickrole.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/plan_game_manage.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/player_type.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/push_files.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/query_account.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/query_drop_result.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/real_count.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/recharge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/recharge_hot.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/recharge_ranking.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/rechargetotal.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/register_count.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource_hot.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/resource_zyj_yinni.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/retain.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/revenue.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/role.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/rolelog.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/section.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/send_gifts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/server.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/serverdata.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/servermonitor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/simrecharge_total.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/simulator.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/system.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/systemparam.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/t_props.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/task_manage.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/trend.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/trend_audit.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/user.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/user2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/userlife.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/userltv.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/welfare.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/learn_configmanage/static/assets/scripts/world_drop.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/qhwx/svn_rollback.py" afterPath="$PROJECT_DIR$/learn_svn/svn_rollback.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/qhwx/venv_install.py" afterPath="$PROJECT_DIR$/learn_venv/venv_install.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/qhwx/venv_install_1.py" afterPath="$PROJECT_DIR$/learn_venv/venv_install_1.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tornado_mysql/__init__.py" afterPath="$PROJECT_DIR$/learn_hb_acc/acc/config.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tornado_mysql/learn_tornado_mysql.py" afterPath="$PROJECT_DIR$/learn_tornado/tornado_mysql/learn_tornado_mysql.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/class_special_usage/class_method.py" afterPath="$PROJECT_DIR$/class_special_usage/class_method.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/algorithm/binary_search.py" afterPath="$PROJECT_DIR$/algorithm/binary_search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/admin/__init__.py" afterPath="$PROJECT_DIR$/learn_backend/admin/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/logics/battle.py" afterPath="$PROJECT_DIR$/learn_backend/logics/battle.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/.idea/dataSources/3b046ec6-754d-457f-987c-a8bda4cded18.xml" afterPath="$PROJECT_DIR$/learn_configmanage/.idea/dataSources/3b046ec6-754d-457f-987c-a8bda4cded18.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/.idea/workspace.xml" afterPath="$PROJECT_DIR$/learn_configmanage/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/handlers/basehandler.py" afterPath="$PROJECT_DIR$/learn_configmanage/handlers/basehandler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/handlers/datahandlers.py" afterPath="$PROJECT_DIR$/learn_configmanage/handlers/datahandlers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/handlers/forwardhandlers.py" afterPath="$PROJECT_DIR$/learn_configmanage/handlers/forwardhandlers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/templates/index.html" afterPath="$PROJECT_DIR$/learn_configmanage/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_configmanage/web.py" afterPath="$PROJECT_DIR$/learn_configmanage/web.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/.idea/workspace.xml" afterPath="$PROJECT_DIR$/learn_hb_game/game/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/source/GameData/GameData.py" afterPath="$PROJECT_DIR$/learn_hb_game/game/source/GameData/GameData.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/source/Net/ServerSocket/ServerSocketManager.py" afterPath="$PROJECT_DIR$/learn_hb_game/game/source/Net/ServerSocket/ServerSocketManager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/source/Net/UserSocket/UserSocketManager.py" afterPath="$PROJECT_DIR$/learn_hb_game/game/source/Net/UserSocket/UserSocketManager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/source/TaskQueue/TaskResponseQueueDispath.py" afterPath="$PROJECT_DIR$/learn_hb_game/game/source/TaskQueue/TaskResponseQueueDispath.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qhwx/redis_log_analysis.py" afterPath="$PROJECT_DIR$/qhwx/redis_log_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qhwx/uwsgi.log" afterPath="$PROJECT_DIR$/qhwx/uwsgi.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/models/cards.py" afterPath="$PROJECT_DIR$/learn_backend/models/cards.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/models/drama.py" afterPath="$PROJECT_DIR$/learn_backend/models/drama.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/models/fake.py" afterPath="$PROJECT_DIR$/learn_backend/models/fake.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_backend/templates/admin/gacha_test.html" afterPath="$PROJECT_DIR$/learn_backend/templates/admin/gacha_test.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -284,8 +128,8 @@
     <SUITE FILE_PATH="coverage/learn_python$rabbitMQ.coverage" NAME="rabbitMQ Coverage Results" MODIFIED="1574603904905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_memcached" />
     <SUITE FILE_PATH="coverage/learn_python$jinshan.coverage" NAME="jinshan Coverage Results" MODIFIED="1563010922202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interview_questions" />
     <SUITE FILE_PATH="coverage/learn_python$test_alchimia.coverage" NAME="test_alchimia Coverage Results" MODIFIED="1575378074419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/dbentrust/alchimia" />
-    <SUITE FILE_PATH="coverage/learn_python$binary_search.coverage" NAME="binary_search Coverage Results" MODIFIED="1563268204268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$setattr_getattr_setitem_getitem.coverage" NAME="setattr_getattr_setitem_getitem Coverage Results" MODIFIED="1573990832827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/module_usage/__setatrr__" />
+    <SUITE FILE_PATH="coverage/learn_python$binary_search.coverage" NAME="binary_search Coverage Results" MODIFIED="1587438514626" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$py_test_for_zheng_fu_shu_test.coverage" NAME="py.test for zheng_fu_shu.test Coverage Results" MODIFIED="1563268975505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/learn_python$web_server.coverage" NAME="web_server Coverage Results" MODIFIED="1573890132750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist/web_server" />
     <SUITE FILE_PATH="coverage/learn_python$learn_1__1_.coverage" NAME="learn_1 (1) Coverage Results" MODIFIED="1573199883664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/learn_twist" />
@@ -322,20 +166,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="learn_4.3_document.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tornado/learn_4.3_document.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tornado/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-278">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -366,17 +200,27 @@
         <entry file="file://$PROJECT_DIR$/learn_tornado/templates/index_1.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="66">
-              <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+              <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="many_process_0.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="many_process_0.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tornado/many_process_0.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-323">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="binary_search.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/algorithm/binary_search.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="936">
+              <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -385,7 +229,7 @@
       <file leaf-file-name="main_2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tornado/main_2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-125">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -478,7 +322,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/learn_celery/tasks.py" />
         <option value="$PROJECT_DIR$/learn_celery/learn_celery.py" />
         <option value="$PROJECT_DIR$/learn_nginx/nginx_install.py" />
         <option value="$PROJECT_DIR$/learn_nginx/mac_nginx_install.py" />
@@ -529,6 +372,7 @@
         <option value="$PROJECT_DIR$/learn_hb_acc/acc/main.py" />
         <option value="$PROJECT_DIR$/learn_hb_acc/acc/Source/Log/Write.py" />
         <option value="$PROJECT_DIR$/qhwx/redis_log_analysis.py" />
+        <option value="$PROJECT_DIR$/algorithm/binary_search.py" />
       </list>
     </option>
   </component>
@@ -539,8 +383,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="234" />
-    <option name="y" value="49" />
+    <option name="x" value="1897" />
+    <option name="y" value="32" />
     <option name="width" value="1680" />
     <option name="height" value="986" />
   </component>
@@ -559,6 +403,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -566,6 +411,11 @@
             <path>
               <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
               <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="algorithm" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
@@ -588,7 +438,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -628,7 +477,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.redis_log_analysis">
+  <component name="RunManager" selected="Python.binary_search">
+    <configuration name="binary_search" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/algorithm" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="learn_python" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm/binary_search.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="redis_log_analysis" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -701,38 +568,20 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="tcp_server_msg" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learn_tornado/tornado_tcp_server" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="learn_python" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learn_tornado/tornado_tcp_server/tcp_server_msg.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.tcp_server_msg" />
-      <item index="1" class="java.lang.String" itemvalue="Python.tcp_client_msg" />
-      <item index="2" class="java.lang.String" itemvalue="Python.tcp_server_chat" />
-      <item index="3" class="java.lang.String" itemvalue="Python.tcp_client_chat" />
-      <item index="4" class="java.lang.String" itemvalue="Python.redis_log_analysis" />
+      <item index="0" class="java.lang.String" itemvalue="Python.tcp_client_msg" />
+      <item index="1" class="java.lang.String" itemvalue="Python.tcp_server_chat" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tcp_client_chat" />
+      <item index="3" class="java.lang.String" itemvalue="Python.redis_log_analysis" />
+      <item index="4" class="java.lang.String" itemvalue="Python.binary_search" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.redis_log_analysis" />
-        <item index="1" class="java.lang.String" itemvalue="Python.tcp_client_chat" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tcp_server_chat" />
-        <item index="3" class="java.lang.String" itemvalue="Python.tcp_client_msg" />
-        <item index="4" class="java.lang.String" itemvalue="Python.tcp_server_msg" />
+        <item index="0" class="java.lang.String" itemvalue="Python.binary_search" />
+        <item index="1" class="java.lang.String" itemvalue="Python.redis_log_analysis" />
+        <item index="2" class="java.lang.String" itemvalue="Python.tcp_client_chat" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tcp_server_chat" />
+        <item index="4" class="java.lang.String" itemvalue="Python.tcp_client_msg" />
       </list>
     </recent_temporary>
   </component>
@@ -776,19 +625,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="234" y="49" width="1680" height="986" extended-state="0" />
+    <frame x="1897" y="32" width="1680" height="986" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17678382" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17626728" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23565324" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23809524" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32285115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39613527" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18070818" sideWeight="0.50555557" order="2" side_tool="true" content_ui="tabs" />
@@ -801,6 +649,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32285115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32883435" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout>
@@ -812,13 +661,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="654" y="-1047" width="1480" height="786" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17714885" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17678382" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23137973" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23809524" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -844,13 +693,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/learn_tornado/tornado_tcp_server/tcp_online/tcp_upload_download_file_client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="48" column="27" lean-forward="false" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/SocketServer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
@@ -1037,7 +879,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1052,7 +893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1628">
           <caret line="74" column="15" lean-forward="false" selection-start-line="74" selection-start-column="15" selection-end-line="74" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1060,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1068,7 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1076,7 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1084,9 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2266">
           <caret line="107" column="34" lean-forward="false" selection-start-line="107" selection-start-column="34" selection-end-line="107" selection-end-column="34" />
-          <folding>
-            <element signature="e#68#84#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1101,7 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1109,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1124,7 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1132,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
           <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1140,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-323">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1154,7 +983,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tornado/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-278">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1178,7 +1007,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tornado/main_2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-125">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1211,15 +1040,23 @@
     <entry file="file://$PROJECT_DIR$/learn_tornado/templates/index_1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
-          <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+          <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tornado/many_process_0.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-323">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm/binary_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding />
         </state>
       </provider>

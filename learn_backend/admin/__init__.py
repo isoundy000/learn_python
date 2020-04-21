@@ -31,7 +31,12 @@ import itertools
 from lib.utils import change_time
 from models.config import ChangeTime
 
+from decorators import ApprovalPayment
 from admin_models import Admin
+from logics.gacha import Gacha
+from logics.payment import virtual_pay_by_admin
+from models.payment import ModelPayment, MySQLConnect
+from models.notify import Notify
 from decorators import require_permission
 
 
@@ -521,8 +526,8 @@ def battle_index(req, battle_process=None, battle_result=None, **kwargs):
 
 @require_permission
 def battle_test(req):
-    # from logics.battle import Battle as BattleLogic
-    # from parse_battle import parse_battle_result
+    from logics.battle import Battle as BattleLogic
+    from parse_battle import parse_battle_result
 
     team_pos = [1, 2, 3, 4, 5, 11, 12, 13]
     attacker = User('test')
@@ -531,7 +536,30 @@ def battle_test(req):
     for p, user in (('a', attacker), ('d', defender)):
         user.cards.reset()
         formation = int(req.get_argument('%-f_id' % p, 1))
+        user.cards.formation['current'] = formation             # 当前的阵型
 
+        for i in team_pos:
+            c_id = int(req.get_argument('%s-c_id-%d' % (p, i), 0))
+            c_lv = int(req.get_argument('%s-c_lv-%d' % (p, i), 1))
+            s_id1 = int(req.get_argument('%s-s_id1-%d' % (p, i), 0))
+            s_lv1 = int(req.get_argument('%s-s_lv1-%d' % (p, i), 1))
+            s_id2 = int(req.get_argument('%s-s_id2-%d' % (p, i), 0))
+            s_lv2 = int(req.get_argument('%s-s_lv2-%d' % (p, i), 1))
+            s_id3 = int(req.get_argument('%s-s_id3-%d' % (p, i), 0))
+            s_lv3 = int(req.get_argument('%s-s_lv3-%d' % (p, i), 1))
+            s_id4 = int(req.get_argument('%s-s_id4-%d' % (p, i), 0))
+            s_lv4 = int(req.get_argument('%s-s_lv4-%d' % (p, i), 1))
+            s_id5 = int(req.get_argument('%s-s_id5-%d' % (p, i), 0))
+            s_lv5 = int(req.get_argument('%s-s_lv5-%d' % (p, i), 1))
+
+            if c_id in game_config.character_detail:
+                card_id = user.cards.new(c_id, s_1=(s_id1, s_lv1), s_2=(s_id2, s_lv2), s_3=(s_id3, s_lv3), s_4=(s_id4, s_lv4), s_5=(s_id5, s_lv5))
+                user.cards._cards[card_id]['lv'] = c_lv
+                user.cards._cards[card_id]['pos'] = i
+
+    tempBattle = BattleLogic(attacker, defender)
+    battle_result = tempBattle.start()
+    battle_process = parse_battle_result(battle_result, game_config)
 
     return battle_index(req, battle_process=battle_process, battle_result=battle_result)
 
@@ -570,6 +598,237 @@ def gacha_test(req):
     return render(req, 'admin/gacha_test.html', **data)
 
 
+def get_buy_coin_value():
+    '''
+    获取购买钻石
+    :return:
+    '''
+    buy_coin_values = []
+    for production_id, scheme in game_config.charge_scheme.iteritems():
+        buy_coin_values.append((production_id, game_config.charge[scheme]))
+    for k, v in game_config.charge.iteritems():
+        buy_coin_values.append((k, v))
+    return sorted(buy_coin_values, key=lambda x: x[1]['price'])
+
+
+@require_permission
+def virtual_index(req):
+    '''
+    虚拟充值 充值详情
+    :param req:
+    :return:
+    '''
+    data = {'msg': '', 'user': None, 'buy_coin_values': []}
+    if req.request.method == 'POST':
+        uid = req.get_argument('user_id', '')
+        u = User.get(uid)
+        if not u.regist_time:
+            data['msg'] = u'查无此人'
+            return render(req, 'admin/payment/virtual_index.html', **data)
+        else:
+            data['user'] = u
+            data['buy_coin_values'] = get_buy_coin_value()
+            return render(req, 'admin/payment/virtual_pay.html', **data)
+    return render(req, 'admin/payment/virtual_index.html', **data)
+
+
+@require_permission
+def virtual_pay(req):
+    '''
+    后台提交虚拟充值
+    :param req:
+    :return:
+    '''
+    uid = req.get_argument('user_id')
+    goods_id = req.get_argument('goods_id')
+    kcoin = int(req.get_argument('coin'))
+    reason = req.get_argument('reason')
+    times = req.get_argument('times', 1)
+
+    if 'admin' in req.request.arguments:
+        tp = 'admin'            # 后台代充  算真实收入
+    elif 'admin_test' in req.request.arguments:
+        tp = 'admin_test'       # 管理员测试用 不算真实收入
+    else:
+        tp = ''
+
+    data = {'msg': '', 'user': None, 'buy_coin_values': get_buy_coin_value()}
+    u = User.get(uid)
+    if not u.regist_time:
+        data['msg'] = u'查无此人'
+        return render(req, 'admin/payment/virtual_index.html', **data)
+    if not reason:
+        data['msg'] = u'充值原因呢'
+        return render(req, 'admin/payment/virtual_index.html', **data)
+
+    approval_payment = ApprovalPayment()
+
+    key = approval_payment.add_payment(req.uname, uid, goods_id, reason, times, tp)
+
+    admin = auth.get_admin_by_request(req)
+
+    if settings.DEBUG or (admin and 'for_approval' in admin.right_links):
+        approval_payment.approval_payment(req.uname, key, refuse=False)
+        data['msg'] = u"充值成功"
+    else:
+        data['msg'] = u"已经提交审批"
+    data['user'] = u
+    return render(req, 'admin/payment/virtual_index.html', **data)
+
+
+@require_permission
+def pay_index(req):
+    """列表显示最近一个月的充值记录
+    日期-充值次数-充值人数-充值总额-查看详细
+    Args:
+        start_day  -- 开始时间
+        end_day    -- 结束时间
+    Returns:
+        st_list_0=[{},{},{},]
+    """
+    start_day = req.get_argument('start_day', None)
+    end_day = req.get_argument('end_day', None)
+
+    now = datetime.datetime.now()
+    filter_admin_pay = getattr(settings, 'FILTER_ADMIN_PAY', True)  # FILTER_ADMIN_PAY
+    day_interval = [(now - datetime.timedelta(days=i)).isoformat()[:10] for i in xrange(0, 31 if filter_admin_pay else 75)]
+
+    if not start_day:
+        start_day = day_interval[30]
+    if not end_day:
+        end_day = day_interval[0]
+
+    payment = ModelPayment()
+    data = {}
+
+    s_day = '%s 00:00:00' % start_day
+    e_day = '%s 23:59:59' % end_day
+
+    mysql_conn = MySQLConnect(settings.PAYLOG_HOST)
+    for item in mysql_conn.find(s_day, e_day):
+        key = item['order_time'][:10]
+        data.setdefault(key, []).append(item)
+
+    st_list_0 = []
+    all_data = dict(all_pay_times=0, all_person_times=0, all_pay_coins=0, all_pay_rmbs=0, all_admin_pay_rmbs=0, all_platform_pay_rmbs=0)
+
+    for day, item_list in data.iteritems():
+        user_ids, pay_coins, pay_rmbs, admin_pay_rmbs, really_pay_rmbs = set(), 0, 0, 0, 0
+
+        for item in item_list:
+            user_ids.add(item['user_id'])
+            pay_coins += item['order_coin']
+            pay_rmbs += item['order_money']
+            if 'admin_test' in item['platform']:
+                admin_pay_rmbs += item['order_money']
+            else:
+                really_pay_rmbs += item['order_money']
+
+        all_data['all_pay_times'] += len(item_list)         # 所有支付的次数            充值次数
+        all_data['all_person_times'] += len(user_ids)       # 所有人充值的次数          充值人数
+        all_data['all_pay_coins'] += pay_coins              # 所有的钻石               总额(钻石)
+        all_data['all_pay_rmbs'] += pay_rmbs                # 所有的支付人民币          总额(人民币)
+        all_data['all_admin_pay_rmbs'] += admin_pay_rmbs    # 所有测试真实的充值人民币    管理员测试
+        all_data['all_platform_pay_rmbs'] += really_pay_rmbs    # 所有真实的充值人民币   平台充值&后台代充
+
+        st_list_0.append({
+            'day': day,                                     # 天
+            'pay_coins': pay_coins,                         # 总额(钻石)
+            'pay_times': len(item_list),                    # 充值次数
+            'pay_rmbs': pay_rmbs,                           # 总额(人民币)
+            'admin_pay_rmbs': admin_pay_rmbs,               # 管理员测试
+            'really_pay_rmbs': really_pay_rmbs,             # 平台充值&后台代充
+            'person_times': len(user_ids),                  # 充值人数
+        })
+
+    st_list_0.sort(key=lambda x: x['day'], reverse=True)
+
+    return render(req, 'admin/payment/index.html', **{
+        'st_list_0': st_list_0,
+        'day_interval': day_interval,
+        'start_day': start_day,
+        'end_day': end_day,
+        'environment': settings.SERVICE_NAME,
+        'all_data': all_data,
+        'filter_admin_pay': filter_admin_pay
+    })
+
+
+@require_permission
+def pay_day(req):
+    """ 按照天查询充值记录
+    Args:
+        year      -- 年
+        month     -- 月
+        day       -- 日
+    Returns:
+        st_list_0=[{},{},{},]
+    """
+    day_dt = req.get_argument('day', None)
+
+    add_kcoins = pay_rmbs = 0
+    s_day = '%s 00:00:00' % day_dt
+    e_day = '%s 23:59:59' % day_dt
+
+    mysql_conn = MySQLConnect(settings.PAYLOG_HOST)
+    st_list_0 = sorted(mysql_conn.find(s_day, e_day), key=lambda x: x['order_time'], reverse=True)
+
+    names_cache = {}
+    for x in st_list_0:
+        x['pay_rmb'] = x['order_money'] * 1
+        pay_rmbs += x['pay_rmb']                # 支付的人民币
+        add_kcoins += x['order_coin']           # 支付的钻石
+        if x['user_id'] not in names_cache:
+            names_cache[x['user_id']] = User.get(x['user_id']).name
+        x['name'] = names_cache[x['user_id']]
+
+    return render(req, 'admin/payment/pay_day.html', **{
+        'start_day': day_dt,
+        'end_day': day_dt,
+        'st_list_0': st_list_0,
+        'add_kcoins': add_kcoins,
+        'pay_rmbs': pay_rmbs,
+        'environment': settings.SERVICE_NAME,
+    })
+
+
+@require_permission
+def pay_person(req):
+    '''
+    查询某人的充值记录
+    :param req:
+    :return:
+    '''
+    user_id = req.get_argument('user_id')
+
+    mysql_conn = MySQLConnect(settings.PAYLOG_HOST)
+    st_list_0 = sorted(mysql_conn.find_by_uid(user_id), key=lambda x: x['order_time'], reverse=True)
+
+    add_kcoins, pay_rmbs, admin_pay_rmbs, really_pay_rmbs = 0, 0, 0, 0
+    names_cache = {}
+    for x in st_list_0:
+        x['pay_rmb'] = x['order_money'] * 1
+        pay_rmbs += x['pay_rmb']
+        add_kcoins += x['order_coin']
+        if x['user_id'] not in names_cache:
+            names_cache[x['user_id']] = User.get(x['user_id']).name
+        x['name'] = names_cache[x['user_id']]
+        if 'admin_test' in x['platform']:
+            admin_pay_rmbs += x['order_money']
+        else:
+            really_pay_rmbs += x['order_money']
+
+    return render(req, 'admin/payment/pay_person.html', **{
+        'admin_pay_rmbs': admin_pay_rmbs,
+        'really_pay_rmbs': really_pay_rmbs,
+        'st_list_0': st_list_0,
+        'add_kcoins': add_kcoins,
+        'pay_rmbs': pay_rmbs,
+        'environment': settings.SERVICE_NAME,
+        'user_id': user_id,
+    })
+
+
 @require_permission
 def sys_time_index(req, msg=''):
     """显示系统时间
@@ -583,6 +842,149 @@ def sys_time_index(req, msg=''):
         'msg': msg,
     })
 
+
+@require_permission
+def send_notify(req):
+    """
+    发送系统邮件
+    """
+    msg = ''
+    success = []
+    error = []
+
+    title = ''
+    content = ''
+    gifts = []
+    str_uids = ''
+
+    if req.request.method == 'POST':
+        title = req.get_argument('title', '')
+        content = req.get_argument('content', '')
+        gifts = eval(req.get_argument('gifts'))
+        str_uids = req.get_argument('uids', '')
+
+        message = {
+            'send_uid': 'sys',
+            'send_name': 'sys',
+            'send_role': 1,
+            'send_level': 1,
+
+            'content': content,
+            'sort': Notify.SYS_SORT,
+            'gift': [] if gifts is None else gifts,
+            'icon': '',
+            'title': title
+        }
+
+        # 获取所有区服的 ID
+        server_ids = set()
+        servers = ServerConfig.get().server_list()
+        for srv in servers:
+            server_ids.add(srv['server'])
+
+        str_uids = str_uids.replace('\r', '')
+        o_uids = str_uids.split("\n")
+
+        # 除重 UIDS
+        uids = set(o_uids)
+
+        if len(uids) > 100:
+            msg = u'一次发送的 UID 数不能大于 100'
+        else:
+            for user_id in uids:
+                user_id = user_id.strip()
+
+                # # 检查玩家 ID 的长度
+                # if len(user_id) != 11:
+                #     error.append(user_id)
+                #     continue
+
+                # 检查区服是否存在或者开启
+                server_id = user_id[:-7]
+                if server_id not in server_ids:
+                    error.append(user_id)
+                    continue
+
+                # 检查是否有效的用户
+                user = User.get(user_id, server_id)
+                if user:
+                    user.notify.add_message(message, True)
+                    success.append(user_id)
+                else:
+                    error.append(user_id)
+                    continue
+
+    return render(req, 'admin/send_notify.html', **{
+        'sub_menu': 'develop',
+        'msg': msg,
+        'success': success,
+        'error': error,
+        'title': title,
+        'content': content,
+        'gifts': gifts,
+        'uids': str_uids,
+    })
+
+
+def status_inquiry(req):
+    '''
+    服务器状态
+    :param req:
+    :return:
+    '''
+    # return req.finish(u'记得去改')
+    from fabric.context_managers import settings
+    from fabfile import info
+
+    # with settings(host_string='houguangdong@dev.kaiqigu.net'):
+    with settings(host_string='1737785826.qq.com'):
+        result = info()
+
+    result = [['1', 2, 4, 5, 6], [7, '2'], '3', '4', '5']
+    return render(req, 'admin/status_inquiry.html', **{
+        'result': result,
+    })
+
+
+@require_permission
+def ad_activate_count(req):
+    '''
+    ad激活
+    :param req:
+    :return:
+    '''
+    from models.code import Adver
+    data = Adver.watch_activate_count()
+    return render(req, 'admin/ad_activate_count.html', **{'data': data})
+
+
+@require_permission
+def spend_person(req):
+    '''
+    用户消费查询
+    :param req:
+    :return:
+    '''
+    uid = req.get_argument('user_id')
+
+    mysql_conn = MySQLConnect(settings.SPENDLOG_HOST)
+    st_list_0 = sorted(mysql_conn.find_by_uid_spend(uid), key=lambda x: x['subtime'], reverse=True)
+
+    names_cache = {}
+    for x in st_list_0:
+        if x['uid'] not in names_cache:
+            names_cache[x['uid']] = User.get(x['uid']).name
+        x['name'] = names_cache[x['uid']]
+
+    # total = {{reduce(lambda x, y: x + y, [st['coin_num'] for st in st_list_0 if 'coin_num' in st.keys()], 0)}}
+    total = sum([st['coin_num'] for st in st_list_0 if st['coin_num']])
+
+    return render(req, 'admin/payment/spend_person.html', **{
+        'st_list_0': st_list_0,
+        'environment': settings.SERVICE_NAME,
+        'user_id': uid,
+        'total': total
+    })
 
 @require_permission
 def sys_time_modify(req):
