@@ -38,17 +38,26 @@
             <td><a target="content" href="/{{url_partition}}/admin/give_equip/">送装备</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/give_gem/">送觉醒宝石</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/give_pet/">送宠物</a></td>
-            <td><a target="content" href="/{{url_partition}}/admin/give_seed/">送无主之地的种子</a></td>
+            <td><a target="content" href="/{{url_partition}}/admin/give_seed/">送种子</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/give_card/">送卡牌</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/notice/">系统消息</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/open_box_index/">开宝箱</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/virtual_index/">虚拟充值</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/approval_index/">充值审批</a></td>
-            <td><a target="content" href="/{{url_partition}}/admin/send_notify/">发送系统邮件</a></td>
+            <td><a target="content" href="/{{url_partition}}/admin/send_notify/">系统邮件</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/give_material/">送勋章碎片</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/give_medal/">送勋章</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/refresh_outlets/">刷新限购商城</a></td>
         </tr>
+        {% elif method == 'logs' %}
+        <tr>
+            <td><a target="content" href="/{{url_partition}}/admin/adminlog_index/">日志页面</a></td>
+        </tr>
+        {% elif method == 'admin' %}
+        <tr>
+            <td><a target="content" href="/{{url_partition}}/admin/change_password/">账号管理</a></td>
+        </tr>
+        {% elif method == 'account' %}
         <tr>
             <td><a target="content" href="/{{url_partition}}/admin/mv_account/">替换账号</a></td>
             <td><a target="content" href="/{{url_partition}}/admin/modify_guild/">工会添加</a></td>

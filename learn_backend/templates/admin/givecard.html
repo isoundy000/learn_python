@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>送卡牌页面</title>
+</head>
+<body>
+    {% if card_give %}
+        已经送出的卡片：<br/>
+        {% for k, v in card_give.iteritems() %}
+            {{v['card_num']}}张编号为{{k}}的卡片，等级：{{v['lv']}}，进阶等级：{{v['evolv']}}<br/>
+        {%end%}
+    {%end%}
+    <table border="1">
+        <form action="/{{url_partition}}/admin/give_card_commit/" method="post">
+            <tr>
+                <td colspan="20">用户ID：<input align="center" type="text" name="user_id" value="{{uid}}"/></td>
+            </tr>
+            {% for c in c_r %}
+            <tr>
+                <td>
+                    <input type="submit" name="commit" value="OK"/>
+                </td>
+                <td>
+                    {{c['c_id']}} - {{c['name']}}&nbsp;{{c['name_after']}}
+                </td>
+                <td>
+                    数量:
+                    <input type="text" name="card_num_{{c['c_id']}}" id="card_num_{{c['c_id']}}" value="0" size="2"/>
+                    等级：
+                    <input type="text" name="card_lv_{{c['c_id']}}" id="card_lv_{{c['c_id']}}" value="1" size="2"/>
+                    进阶等级：
+                    <input type="text" name="card_evolv_{{c['c_id']}}" id="card_evolv_{{c['c_id']}}" value="0" size="2"/>
+                </td>
+                <td>
+                    <input type="submit" name="commit" value="OK"/>
+                </td>
+            </tr>
+            {% end %}
+        </form>
+    </table>
+</body>
+</html>

@@ -1,0 +1,5 @@
+message ShakeToAcc {
+    required int32 id = 1;      //服务器id
+    required int32 code = 2;    //服务器魔术字
+    required int32 port = 3;    //服务器端口
+}

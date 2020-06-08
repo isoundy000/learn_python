@@ -1,0 +1,235 @@
+{
+    "hasrobot": 0,
+    "isMatch": 1,
+    "name": "ID_ROOM_NAME_44102",   //回馈赛欢乐竞技
+    "sceneName": "string_44102",
+    "fishPool": 44102,
+    "multiple": 1,
+    "showLevel": 1,
+    "minLevel": 20,
+    "maxLevel": 999,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2110,
+    "maxGunLevel": 2130,
+    "maxSkillLevel": 20,
+    "robotUserMaxCount": 100,
+    "typeName": "fish_time_point_match",
+    "reviewVerLimit": 1,
+    "matchConf": {
+        "desc": "",
+        "rule": "ID_ROOM_44102_MATCHCONF_RULE",
+        "discountTime": [
+            "2019-05-25 00:00:00",
+            "2019-05-25 23:59:59"
+        ],
+        "fees": [
+            {
+                "count": 500,
+                "itemId": "item:3106",
+                "params": {
+                    "failure": "ID_ROOM_44102_FAILURE_1"
+                }
+            },
+            {
+                "count": 333,
+                "itemId": "item:3106",
+                "params": {
+                    "failure": "ID_ROOM_44102_FAILURE_2"
+                }
+            }
+        ],
+        "fishPool": 44102,
+        "playingTime": 60,
+        "bullet": 7500,
+        "rank.rewards": [
+            {
+                "desc": "ID_ROOM_44102_RANK_DES_1",
+                "ranking": {
+                    "start": 1,
+                    "end": 1
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 50000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44102_RANK_DES_2",
+                "ranking": {
+                    "start": 2,
+                    "end": 2
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 20000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44102_RANK_DES_3",
+                "ranking": {
+                    "start": 3,
+                    "end": 3
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 10000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_1",
+                "ranking": {
+                    "start": 4,
+                    "end": 6
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 5000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44102_RANK_DES_4",
+                "ranking": {
+                    "start": 7,
+                    "end": 10
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 3000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_2",
+                "ranking": {
+                    "start": 11,
+                    "end": 15
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 2000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_3",
+                "ranking": {
+                    "start": 16,
+                    "end": 20
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 1000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_5",
+                "ranking": {
+                    "start": 21,
+                    "end": 30
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 5
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_8",
+                "ranking": {
+                    "start": 31,
+                    "end": 50
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 1
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_10",
+                "ranking": {
+                    "start": 51,
+                    "end": 9999
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 2000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            }
+        ],
+        "stages": [
+            {
+                "name": "ID_ROOM_44101_STAGES_NAME",
+                "rise.user.count": 10000,
+                "seat.principles": 5,
+                "type": 2
+            }
+        ],
+        "start": {
+            "fee.type": 1,
+            "maxplaytime": 600,
+            "prepare.times": 0,
+            "signin.times": 0,
+            "close.times": 120,
+            "reward.times": 60,
+            "list.matchtimes": [10],
+            "start.speed": 5,
+            "table.times": 600,
+            "times": {
+                "days": {
+                    "count": 365,
+                    "first": "",
+                    "interval": "1d"
+                },
+                "times_in_day": {
+                    "count": 800,
+                    "first": "0:00",
+                    "interval": 10
+                }
+            },
+            "type": 3,
+            "user.maxsize": 2300,
+            "user.minsize": 1,
+            "user.next.group": 0,
+            "maxGameTimes": 30
+        },
+        "table.seat.count": 1,
+        "tips": {
+            "infos": [
+                "ID_ROOM_44101_TIPS_INFOS"
+            ],
+            "interval": 5
+        }
+    },
+    "tableConf": {
+        "maxSeatN": 4,
+        "fishGroupsName": "string_44102"
+    }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户动作日志</title>
+</head>
+    <body>
+    <p> 当前环境: {{environment}} </p>
+
+    <form action="/{{url_partition}}/admin/user_logging/">
+        用户id：<input type="text" value="{{user_id}}" name="user_id"/><input type="submit" value="查看" id="submit" name="submit" />
+    </form>
+    <hr />
+
+    <table border="1" cellpadding="0" cellspacing="0" id='stat'>
+        消费记录
+        <tr>
+            <td align="center">序号</td>
+            <td align="center" name="args">请求</td>
+            <td align="center" name="args">时间</td>
+            <td align="center" name="args">参数</td>
+            <td align="center" name="args">返回</td>
+        </tr>
+        {% for i, st in enumerate(st_list_0) %}
+        <tr bgcolor="cornsilk">
+            <td align="center" width="0">{{i+1}}</td>
+            <td align="center" width="0">{{st['method']}}</td>
+            <td align="center" width="0">{{st['dt']}}</td>
+            <td align="center" width="0">{{st['args']}}</td>
+            <td align="center" width="0">{{st['data']}}</td>
+        </tr>
+        {% end %}
+    </table>
+    </body>
+</html>

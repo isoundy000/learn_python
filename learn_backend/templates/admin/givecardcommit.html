@@ -1,0 +1,9 @@
+<html>
+<body>
+    已经送出的卡片：<br/>
+    {% for k, v in cards.iteritems() %}
+        {{k}}-{{v['lv']}}: {{v['skill_1']}}, {{v['skill_2']}}, {{v['skill_3']}}<br/>
+    {%end%}
+    <a href="/{{url_partition}}/admin/give_card/">返回</a>
+</body>
+</html>

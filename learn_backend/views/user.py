@@ -65,6 +65,7 @@ def register(req):
     account = req.get_argument('account', '')
     if not (account.isalnum() and 6 <= len(account) <= 20):
         return 7, None, {}
+    print account, 'zzzzzzzzzzzzzzz00000000000'
     password = req.get_argument('passwd', '')
     old_account = req.get_argument('old_account', '')
     uid = req.get_argument('user_token', '')
@@ -359,6 +360,7 @@ def new_user(req):
     if not server_name:
         server_list = ServerConfig.get().server_list()
         server_name = server_list[0]['server']
+
     if not account:
         return 1, None, {}                      # 必须指定account
 

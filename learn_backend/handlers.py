@@ -628,7 +628,6 @@ class Login(BaseRequestHandler):
         if not game_config.is_config_out():
             game_config.load_all()
         method = self.get_argument('method', 'new_user')
-        print '------------', method
         from views import user
         msg = ''
         is_login = True

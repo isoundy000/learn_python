@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传地图配置的测试页面</title>
+</head>
+<body>
+    {% for i in tb.split('\n') %}
+        {{i}}<br/>
+    {% end %}
+    <hr/>
+    {% for k, v in local_dict.iteritems() %}
+        {% if k not in ['map_building', 'self'] %}
+            {% if k == 'land' %}
+                <table border="1">
+                    {% for r in v %}
+                        <tr>
+                            {% for c in r %}
+                                <td>{{c}}</td>
+                            {% end %}
+                        </tr>
+                    {% end %}
+                </table><br/>
+            {% else %}
+                '{{ k }}': {{v}}<br/><br/>
+            {% end %}
+        {% end %}
+    {% end %}
+</body>
+</html>

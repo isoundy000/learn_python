@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开箱子首页</title>
+</head>
+<body>
+    {% if msg %}
+        <font color="red">{{msg}}</font>
+    {% end %}
+    <form action="/{{url_partition}}/admin/open_box/" method="post">
+        <table>
+            <tr>
+                <td>用户uid</td>
+                <td><input type="text" name="uid" value="{{uid}}" /></td>
+            </tr>
+            <tr>
+                <td>宝箱id</td>
+                <td><input type="text" name="box_id" value="{{box_id}}" /></td>
+            </tr>
+            <tr>
+                <td>次数</td>
+                <td><input type="text" name="times" value="{{times}}" /></td>
+            </tr>
+        </table>
+        <br/><br/>
+        <button type="submit" name="save" value="True" onclick="return confirm('确定保存吗？')">保存</button>
+    </form>
+    <hr/>
+    {% if goods %}
+    <table border="1">
+        <tr>
+            <td>物品</td>
+            <td>数量</td>
+            <td>百分比</td>
+        </tr>
+        {% for good, num in goods %}
+        <tr>
+            <td>{{good}}</td>
+            <td>{{num}}</td>
+            <td>{{num/float(count) * 100}}%</td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+</body>
+</html>

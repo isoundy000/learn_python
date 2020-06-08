@@ -1,0 +1,515 @@
+{
+    "info": {
+        "box_0": {
+            "mode": 0, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "octopus_0": {
+            "mode": 0, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "queen_0": {
+            "mode": 0, 
+            "currencyList": [
+                101, 
+                13761
+            ]
+        }
+    }, 
+    "exchange": {
+        "box_0": {
+            "exchangeItems": [
+                {
+                    "mode": 0, 
+                    "idx": 1, 
+                    "exchangeTimes": 1, 
+                    "costItems": [
+                        {
+                            "count": 12, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 10000, 
+                            "name": 101, 
+                            "maxCount": 10000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 2, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 35, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 30000, 
+                            "name": 101, 
+                            "maxCount": 30000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 3, 
+                    "exchangeTimes": 3, 
+                    "costItems": [
+                        {
+                            "count": 115, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 100000, 
+                            "name": 101, 
+                            "maxCount": 100000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 4, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 230, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 200000, 
+                            "name": 101, 
+                            "maxCount": 200000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 5, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 500, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 500000, 
+                            "name": 101, 
+                            "maxCount": 500000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 6, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 2500, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 5, 
+                            "name": 1194, 
+                            "maxCount": 5
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 7, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 12, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 20000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 8, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 35, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 60000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 9, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 115, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 200000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 10, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 230, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 400000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 11, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 500, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 1000000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 12, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 2500, 
+                            "name": 1402
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 1194, 
+                            "maxCount": 10
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "octopus_0": {
+            "exchangeItems": [
+                {
+                    "mode": 0, 
+                    "idx": 1, 
+                    "exchangeTimes": 1, 
+                    "costItems": [
+                        {
+                            "count": 1, 
+                            "name": 13758
+                        }, 
+                        {
+                            "count": 2, 
+                            "name": 13759
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 10000, 
+                            "name": 101, 
+                            "maxCount": 10000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 2, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 2, 
+                            "name": 13759
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 30000, 
+                            "name": 101, 
+                            "maxCount": 30000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 3, 
+                    "exchangeTimes": 3, 
+                    "costItems": [
+                        {
+                            "count": 3, 
+                            "name": 13760
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 100000, 
+                            "name": 101, 
+                            "maxCount": 100000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 4, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 2, 
+                            "name": 13764
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 200000, 
+                            "name": 101, 
+                            "maxCount": 200000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 5, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 10, 
+                            "name": 13765
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 500000, 
+                            "name": 101, 
+                            "maxCount": 500000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 6, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 5, 
+                            "name": 14114
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 5, 
+                            "name": 1194, 
+                            "maxCount": 5
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 7, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 2, 
+                            "name": 14114
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 20000
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "queen_0": {
+            "exchangeItems": [
+                {
+                    "mode": 0, 
+                    "idx": 1, 
+                    "exchangeTimes": 1, 
+                    "costItems": [
+                        {
+                            "count": 1, 
+                            "name": 13761
+                        }, 
+                        {
+                            "count": 2, 
+                            "name": 13759
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 10000, 
+                            "name": 101, 
+                            "maxCount": 10000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 2, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 2, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 30000, 
+                            "name": 101, 
+                            "maxCount": 30000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 3, 
+                    "exchangeTimes": 3, 
+                    "costItems": [
+                        {
+                            "count": 3, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 100000, 
+                            "name": 101, 
+                            "maxCount": 100000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 4, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 4, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 200000, 
+                            "name": 101, 
+                            "maxCount": 200000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 5, 
+                    "exchangeTimes": -1, 
+                    "costItems": [
+                        {
+                            "count": 5, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 500000, 
+                            "name": 101, 
+                            "maxCount": 500000
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 6, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 6, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 5, 
+                            "name": 1194, 
+                            "maxCount": 5
+                        }
+                    ]
+                }, 
+                {
+                    "mode": 0, 
+                    "idx": 7, 
+                    "exchangeTimes": 2, 
+                    "costItems": [
+                        {
+                            "count": 7, 
+                            "name": 13761
+                        }
+                    ], 
+                    "gainItems": [
+                        {
+                            "minCount": 0, 
+                            "name": 101, 
+                            "maxCount": 20000
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

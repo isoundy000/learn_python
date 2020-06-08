@@ -262,6 +262,7 @@ class Pets(ModelBase):
             resolve_id = pet_config['resolve_id']
             resolve_num = pet_config['resolve_num']
             self.weak_user.item.add_item(resolve_id, resolve_num, immediate=True)
+            return (resolve_id, resolve_num)
         else:
             pet_key = self._make_id(config_id)
             pet_type = pet_config['type']

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>神域刷新敌人</title>
+</head>
+<body>
+    {% block sub_title %} 神域刷新敌人 {% end %}
+    <form action="/{{url_partition}}/admin/refresh_enemy_uid/" method="get">
+        <font color="red">用户id(*)(刷新地块敌人)</font>：
+        <input type="text" width="10px" value="{{user_id}}" size='15' name="uid"/>
+        <font color="red">攻打过的地块(刷新填1,可以再次攻打)</font>：
+        <input type="text" width="10px" value="{{enemy_num}}" size='15' name="enemy_num"/>
+        <input type="submit" value="刷新" id="submit" name="submit" />
+    </form>
+    <hr />
+    <p style="color:red;">{{msg}}</p>
+</body>
+</html>

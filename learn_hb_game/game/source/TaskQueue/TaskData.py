@@ -66,6 +66,11 @@ class TaskData:
         return self._type
 
     def setType(self, tasktype):
+        '''
+        设置类型
+        :param tasktype: 0表示
+        :return:
+        '''
         self._type = tasktype
 
     def Seq(self):

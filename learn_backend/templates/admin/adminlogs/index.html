@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理后台操作记录</title>
+</head>
+<body>
+    {% import time %}
+    {% if message %}
+        <p style="color:red;">{{ message }}</p>
+    {% end %}
+    <h2>日志查询</h2>
+    <form action="/{{url_partition}}/admin/adminlog_search_by_name/" method="GET" accept-charset="utf-8">
+        <p>名字:<input type="text" name="username"><input type="submit" value="查询"></p>
+    </form>
+    <hr>
+    <form action="/{{url_partition}}/admin/adminlog_search_by_time/" method="GET" accept-charset="utf-8">
+        <p>时间:<input type="text" name="search_time" value="{{time.strftime('%Y-%m-%d')}}"><input type="submit" value="查询"></p>
+    </form>
+    <table cellspacing="0" cellpadding="2" border="1" style="table-layout:fixed;">
+        <tr>
+            <td style="text-align:center; width: 80px;">账号</td>
+            <td style="text-align:center; width: 30px;">状态</td>
+            <td style="text-align:center; width: 100px;">IP</td>
+            <td style="text-align:center; width: 150px;">操作时间</td>
+            <td style="text-align:center; width: 200px;">操作</td>
+            <td style="text-align:center">数据</td>
+        </tr>
+        {% for info in logging_data %}
+        <tr>
+            <td style="text-align:center; width: 80px;">{{info['admin']}}</td>
+            <td style="text-align:center; width: 30px;">{{info['status']}}</td>
+            <td style="text-align:center; width: 100px;">{{info.get('ip', '')}}</td>
+            <td style="text-align:center; width: 150px;">{{info['dt']}}</td>
+            <td style="text-align:center; width: 200px;">{{info['action']}}</td>
+            <td style="text-align:center">{{info['args']}}</td>
+        </tr>
+        {% end %}
+    </table>
+</body>
+</html>

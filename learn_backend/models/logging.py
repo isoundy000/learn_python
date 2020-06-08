@@ -41,7 +41,7 @@ class Logging(ModelBase):
 
     def get_all_logging(self):
         '''
-        获取一只之内玩家所有的日志记录
+        获取一周之内玩家所有的日志记录
         :return: '2020-03-03T22:14:42.955484'   now.isoformat()[:10]    '2020-03-03'
         '''
         data = []

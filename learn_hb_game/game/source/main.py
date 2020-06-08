@@ -6,12 +6,13 @@ import sys
 from Source.TaskQueue.TaskResponseQueueDispath import *
 from Source.WorkPool.Common.WorkPoolManager import *
 from Source.WorkPool.Common.WorkPoolFunctions import *
-from Source.Net.TcpServerManager import *
+from Source.Net.TcpServerManager import TcpServerManager
 from Source.Net.UserSocket.UserSocketAccept import *
-from Source.AccServer.AccServerConnection import *
-from Source.AccServer.AccServerConnection2 import *
+from Source.AccServer.AccServerConnection import AccServerConnection
+from Source.AccServer.AccServerConnection2 import AccServerConnection2
 from Source.Timer.Common.TimerManager import *
 from Source.GameData.GameDataManager import *
+from Source.ServerData.ServerDataManager import ServerDataManager
 from Source.GameData import GameData
 from Source.WSGI.URLRoute import *
 from Source.ExtServer.ExtServerConnection import *
@@ -74,5 +75,50 @@ if __name__ == '__main__':
     WorkPoolManager.Start(WorkPoolFunctions.Excute)
 
     if not TaskResponseQueueDispath.Start():        # 结果派发
+        Log.Write("[Error]TaskResponseQueueDispath Start Error")
+        exit(1)
+
+    if not UserDataManager.Init():                  # 用户玩家数据管理器
+        Log.Write("[Error]UserDataManager Init Error")
+        exit(1)
+
+    if not ServerDataManager.Init():
+        Log.Write("[Error]ServerDataManager Init Error")
+        exit(1)
+
+    # 迁移到分区配置确认执行
+    # if not GlobalDataManager.Init():
+    #     Log.Write("[Error]GlobalDataManager Init Error")
+    #     exit(1)
+    #
+    # if not GameDataManager.Init():
+    #     Log.Write("[Error]GameDataManager Init Error")
+    #     exit(1)
+
+    if not UserSocketManager.Init(int(appConfig["Server"]["Interface"]["Player"]["MagicCode"], 16)):    # int(appConfig["Server"]["Interface"]["Player"]["MagicCode"], 16) == 60956
+        Log.Write("[Error]UserSocketManager Init Error")
+        exit(1)
+
+    if not ServerSocketManager.Init(int(appConfig["Server"]["Interface"]["AccServer"]["MagicCode"], 16)):   # 设置区服的sock连接和任务队列
+        Log.Write("[Error]ServerSocketManager Init Error")
+        exit(1)
+
+    if not AccServerConnection.Init():      # Acc进程和ServerSockManager打通连接
+        Log.Write("[Error]AccServerConnection Init Error")
+        exit(1)
+
+    if not AccServerConnection2.Init():
+        Log.Write("[Error]AccServerConnection2 Init Error")
+        exit(1)
+
+    if not WorldWarServerConnection.Init():
+        Log.Write("[Error]WorldWarServerConnection Init Error")
+        exit(1)
+
+    if not TcpServerManager.Init():
+        Log.Write("[Error]TcpServerManager Init Error")
+        exit(1)
+
+
 
 

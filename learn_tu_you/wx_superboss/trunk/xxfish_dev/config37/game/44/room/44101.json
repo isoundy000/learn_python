@@ -1,0 +1,248 @@
+{
+    "hasrobot": 1,    //是否存在机器人
+    "isMatch": 1,     //是否为比赛
+    "name": "ID_ROOM_NAME_44101",   //房间名   回馈赛水上乐园
+    "sceneName": "string_44101",    //场景名
+    "fishPool": 44101,              //渔场id
+    "multiple": 1,                  //场次倍率
+    "showLevel": 1,                 //客户端解锁显示等级
+    "minLevel": 15,                 //最小等级
+    "maxLevel": 999,                //最大等级
+    "minCoin": -1,                  //最小金币数
+    "maxCoin": -1,                  //最大金币数
+    "minGunLevel": 2101,            //最小炮等级
+    "maxGunLevel": 2115,
+    "maxSkillLevel": 12,            //最大技能等级
+    "robotUserMaxCount": 500,       //机器人数量
+    "typeName": "fish_time_point_match",  //渔场类型 比赛场、回馈赛
+    "matchConf": {                  //比赛配置
+        "desc": "",
+        "rule": "ID_ROOM_44101_RULE_1", //规则
+        "discountTime": [               //折扣时间
+            "2018-10-20 00:00:00",
+            "2018-10-23 23:59:59"
+        ],
+        "fees": [                       //服务费
+            {
+                "count": 50,
+                "itemId": "item:3106",
+                "params": {
+                    "failure": "ID_ROOM_44101_FAILURE_1"
+                }
+            },
+            {
+                "count": 33,
+                "itemId": "item:3106",
+                "params": {
+                    "failure": "ID_ROOM_44101_FAILURE_2"
+                }
+            }
+        ],
+        "fishPool": 44101,
+        "playingTime": 120,           //比赛时间
+        "bullet": 5000,               //子弹数
+        "rank.rewards": [
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_1",    //描述
+                "ranking": {                            //排名
+                    "start": 1,
+                    "end": 1
+                },
+                "rewards": [                            //奖励
+                    {
+                        "itemId": "user:coupon",
+                        "count": 5000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"   //消息
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_2",
+                "ranking": {
+                    "start": 2,
+                    "end": 2
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 2000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_3",
+                "ranking": {
+                    "start": 3,
+                    "end": 3
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:coupon",
+                        "count": 1000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_4",
+                "ranking": {
+                    "start": 4,
+                    "end": 6
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 8
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_5",
+                "ranking": {
+                    "start": 7,
+                    "end": 10
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 5
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_6",
+                "ranking": {
+                    "start": 11,
+                    "end": 15
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 3
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_7",
+                "ranking": {
+                    "start": 16,
+                    "end": 20
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 2
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_8",
+                "ranking": {
+                    "start": 21,
+                    "end": 30
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 1
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_9",
+                "ranking": {
+                    "start": 31,
+                    "end": 50
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 5000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_10",
+                "ranking": {
+                    "start": 51,
+                    "end": 100
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 2000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_11",
+                "ranking": {
+                    "start": 101,
+                    "end": 9999
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 600
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            }
+        ],
+        "stages": [
+            {
+                "name": "ID_ROOM_44101_STAGES_NAME",
+                "rise.user.count": 10000,
+                "seat.principles": 5,
+                "type": 2
+            }
+        ],
+        "start": {
+            "fee.type": 1,
+            "maxplaytime": 600,
+            "prepare.times": 0,
+            "signin.times": 0,
+            "close.times": 360,
+            "reward.times": 180,
+            "list.matchtimes": [10],
+            "start.speed": 5,
+            "table.times": 600,
+            "times": {
+                "days": {
+                    "count": 365,
+                    "first": "",
+                    "interval": "1d"
+                },
+                "times_in_day": {
+                    "count": 800,
+                    "first": "9:00",
+                    "interval": 10
+                }
+            },
+            "type": 3,
+            "user.maxsize": 300,
+            "user.minsize": 1,
+            "user.next.group": 0,
+            "maxGameTimes": 30
+        },
+        "table.seat.count": 1,
+        "tips": {
+            "infos": [
+                "ID_ROOM_44101_TIPS_INFOS"
+            ],
+            "interval": 5
+        }
+    },
+    "tableConf": {                                //桌子配置
+        "maxSeatN": 4,                            //最大位置
+        "fishGroupsName": "string_44101"          //鱼阵名字
+    }
+}

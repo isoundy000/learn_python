@@ -1,0 +1,185 @@
+----------------------------
+发送渔场转盘进度（捕鱼后获得能量值,进入渔场和转动轮盘后服务端主动推送此消息）
+{
+    "cmd": "prize_wheel_progress",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "roomId": 4400110010000,    # 渔场
+        "fId": 11,                  # 不等于0时表示捕获鱼的Id
+        "progressPct": 11,          # 对应渔场的进度百分比0-100.progressPct=100时可以抽奖.
+        "state":0,                  # 对应渔场轮盘的状态，0未抽奖，1已抽奖未领奖
+        "progressChanged": 0,       # 进度变化量，大于0表示增加，小于0表示减少，0表示同步数据
+        "curRemainTimes": 1,        # 渔场可用抽奖次数
+    }
+}
+---------------------------
+获取转盘数据/转动轮盘
+{
+    "cmd": "table_call",
+    "params": {
+        "action": "prize_wheel_info",
+        "userId": 10008,
+        "clientId": "",
+        "gameId": 44,
+        "roomId": 4400110010000,
+        "tableId": 4400110010001,
+        "seatId": 1,
+        "act": 0,                   # 0表示获取轮盘数据，1表示转动轮盘（state=0并且进度为100时才能转动轮盘,否则会返回错误）
+    }
+}
+
+{
+    "cmd": "prize_wheel_info",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "act": 0,                                   # 0表示获取轮盘数据，1表示转动轮盘, 2表示钻石抽奖
+        "code": 0,                                  # 表示action是否成功, 0表示成功
+        "state":0,                                  # 轮盘状态:0未抽奖，1已抽奖未领奖，2已领奖,  3抽奖失败；
+        "info": {
+            "paidInfo": {"name":102, "count":0},    # paidInfo转盘失败后，再次翻牌需要消耗的的物品及数量 钻石ID、钻石数量
+            "betFail":  bet,                        # 当只有失败时才将betFail: bet 的值传给前端
+            "prizeList":[{"name": 101, "count": 100, "enable": 1},],    # 轮盘上的奖励数据, enable=1表示可以抽取的奖励
+            "rewards": [{"name": 101, "count": 100}],                   # state=1时有此字段, 表示抽中的奖励
+            "ratioList":  [
+                {"ratio": 1, "rewards":[{"name": 101, "count": 100, "rate": "100%"}], "ret": 0},
+                {"ratio": 2, "rewards":[{"name": 101, "count": 100, "rate": "50%"}, {"name": 101, "count": 10, "rate": "50%"}], "ret": 1,}
+            ],                                      # state=1时有此字段,表示抽中后的领奖方式，ratio=1表示直接领取,ret表示选择对应领奖方式后翻牌后的结果；
+        }
+        "nextRoomMultiple": 50,                     # 下个渔场倍数
+        "nextRoomId": 4400210010000,                # 下个渔场
+        "nextProgressPct": 20,                      # 下个渔场的轮盘进度百分比
+        "curRemainTimes": 1,                        # 渔场可用抽奖次数
+        "nextRemainTimes": 1,                       # 下个渔场可用抽奖次数
+    }
+}
+---------------------------
+确定轮盘赌注(玩家下注翻牌后向服务器发送，确定玩家获取的奖励,即确定此次抽奖的最终结果)
+{
+    "cmd": "table_call",
+    "params": {
+        "action": "prize_wheel_bet",
+        "userId": 10008,
+        "clientId": "",
+        "gameId": 44,
+        "roomId": 4400110010000,
+        "tableId": 4400110010001,
+        "seatId": 1,
+        "bet": 2                                    # 选择的倍数，直接领取使用1
+        "betType": 'bet', 'paid',  'give_up';       # 1.bet 倍率抽奖  # 1.bet 倍率抽奖  2.paid 付费抽奖， 3.give_up 放弃抽奖
+    }
+}
+{
+    "cmd": "prize_wheel_bet",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "betType": 'bet', 'paid',  'give_up',
+        "bet":2,
+        "code": 0,                                  # 选择结果是否成功
+    }
+}
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=================================千炮转盘的协议=======================================
+
+----------------------------
+发送段位等级渔场转盘进度（捕鱼后获得能量值,进入渔场和转动轮盘后服务端主动推送此消息）
+{
+    "cmd": "prize_wheel_progress_m",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "roomId": 4400110010000,    # 渔场
+        "fId": 11,                  # 不等于0时表示捕获鱼的Id
+        "progressPct": 11,          # 对应渔场的进度百分比0-100.progressPct=100时可以抽奖.
+        "state":0,                  # 对应渔场轮盘的状态，0未抽奖，1已抽奖未领奖
+        "progressChanged": 0,       # 进度变化量，大于0表示增加，小于0表示减少，0表示同步数据
+        "curRemainTimes": 1,        # 渔场可用抽奖次数
+        "is_can": 0,                # 转盘激活状态 0表示捕鱼未达到限制 1表示捕鱼达到限制
+    }
+}
+---------------------------
+获取段位等级转盘数据/转动轮盘
+{
+    "cmd": "table_call",
+    "params": {
+        "action": "prize_wheel_info_m",
+        "userId": 10008,
+        "clientId": "",
+        "gameId": 44,
+        "roomId": 4400110010000,
+        "tableId": 4400110010001,
+        "seatId": 1,
+        "act": 0,                   # 1、2、3、4、5表示获取段位轮盘数据，0表示默认的转盘 -1表示转动轮盘（state=0并且进度为100时才能转动轮盘,否则会返回错误)
+    }
+}
+
+{
+    "cmd": "prize_wheel_info_m",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "act": 0,                                   # 1、2、3、4、5表示获取轮盘数据，-1表示转动轮盘, -2表示钻石抽奖
+        "code": 0,                                  # 表示action是否成功, 0表示成功 1表示抽奖失败 2不可抽奖
+        "level": 1,                                 # 当action为0的时候，返回玩家所在的段位 其他action此字段不存在
+        "is_can": [1, 5],                           # 1、[1表示捕鱼达到了转盘的的限制 0表示未达到],   5表示捕鱼的条数
+        "state":0,                                  # 轮盘状态:0未抽奖，1已抽奖未领奖，2已领奖,  3抽奖失败；
+        "info": {
+            "paidInfo": {"name":102, "count":0},    # paidInfo转盘失败后，再次翻牌需要消耗的的物品及数量 钻石ID、钻石数量
+            "betFail":  bet,                        # 当只有失败时才将betFail: bet 的值传给前端
+            "prizeList":[{"name": 101, "count": 100, "enable": 1},],    # 轮盘上的奖励数据, enable=1表示可以抽取的奖励
+            "rewards": [{"name": 101, "count": 100}],                   # state=1时有此字段, 表示抽中的奖励
+            "ratioList":  [
+                {"ratio": 1, "rewards":[{"name": 101, "count": 100, "rate": "100%"}], "ret": 0},
+                {"ratio": 2, "rewards":[{"name": 101, "count": 100, "rate": "50%"}, {"name": 101, "count": 10, "rate": "50%"}], "ret": 1,}
+            ],                                      # state=1时有此字段,表示抽中后的领奖方式，ratio=1表示直接领取,ret表示选择对应领奖方式后翻牌后的结果；
+        }
+        "nextProgressPct": 20,                      # 下个渔场的轮盘进度百分比 当达到满级此字段不存在
+        "curRemainTimes": 1,                        # 渔场可用抽奖次数
+    }
+}
+---------------------------
+确定轮盘赌注(玩家下注翻牌后向服务器发送，确定玩家获取的奖励,即确定此次抽奖的最终结果)
+{
+    "cmd": "table_call",
+    "params": {
+        "action": "prize_wheel_bet_m",
+        "userId": 10008,
+        "clientId": "",
+        "gameId": 44,
+        "roomId": 4400110010000,
+        "tableId": 4400110010001,
+        "seatId": 1,
+        "bet": 2                                    # 选择的倍数，直接领取使用1
+        "betType": 'bet', 'paid',  'give_up';       # 1.bet 倍率抽奖  # 1.bet 倍率抽奖  2.paid 付费抽奖， 3.give_up 放弃抽奖
+    }
+}
+{
+    "cmd": "prize_wheel_bet_m",
+    "result": {
+        "gameId": 44,
+        "userId": 10008,
+        "betType": 'bet', 'paid',  'give_up',
+        "bet": 2,
+        "code": 0,                                  # 选择结果是否成功
+    }
+}
+---------------------------

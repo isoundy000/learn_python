@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务器在线玩家</title>
+</head>
+<body>
+    <input type="button" value="返回" onclick="javascript:history.go(-1)"/>
+    <h1>当前在线:{{len(online_uids)}}</h1>
+    <br/>
+    <a href="/{{url_partition}}/admin/server_online_user/" >首页</a>
+    <a href="/{{url_partition}}/admin/server_online_user?page={{pre_page}}" >上一页</a>
+    当前页:{{cur_page}}
+    <a href="/{{url_partition}}/admin/server_online_user?page={{next_page}}" >下一页</a>
+    <a href="/{{url_partition}}/admin/server_online_user?page={{pages}}" >末页</a> 总共:{{pages}}页
+    <br/><br/>
+    <form action="/{{url_partition}}/admin/server_online_user">
+        <input type="submit" value="跳至"/><input name="page" value="{{cur_page}}" size=2/>
+    </form>
+    <br/>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td>序号:</td>
+            <td>uid</td>
+            <td>名字</td>
+            <td>级别</td>
+            <td>role</td>
+            <td>战力</td>
+            <td>公会id</td>
+            <td>公会名字</td>
+            <td>more</td>
+        </tr>
+        {% for i, u in enumerate(users)%}
+         <tr align="center">
+            <td>{{i}}</td>
+            <td>{{u['uid']}}</td>
+            <td>{{u['name']}}</td>
+            <td>{{u['level']}}</td>
+            <td>{{u['role']}}</td>
+            <td>{{u['combat']}}</td>
+            <td>{{u['association_id']}}</td>
+            <td>{{u['association_name']}}</td>
+            <form action="/{{url_partition}}/admin/user/" method="get" accept-charset="utf-8">
+                <td>
+                    <input type="hidden" name="uid" value="{{u['uid']}}">
+                    {% if 'robot_' not in u['uid']%}
+                        <input type="submit" value="more">
+                    {%end%}
+                </td>
+            </form>
+        </tr>
+        {%end%}
+    </table>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户的卡牌详情页面</title>
+</head>
+<body>
+    <form action="/{{url_partition}}/admin/user_cards/" method="get" accept-charset="utf-8">
+        <p>
+            <input type="text" name="uid" value="{{uid}}"/>
+            <input type="submit" value="show">
+        </p>
+    </form>
+    <table border="1" style="text-align: center;">
+        <tr>
+            <th>id</th>
+            <th>配置key</th>
+            <th>获得时间</th>
+            <th>名字-step</th>
+            <th>evo</th>
+            <th>等级</th>
+            <th>第一技能key</th>
+            <th>第一技能</th>
+            <th>第一技能等级</th>
+            <th>第二技能key</th>
+            <th>第二技能</th>
+            <th>第二技能等级</th>
+            <th>第三技能key</th>
+            <th>第三技能</th>
+            <th>第三技能等级</th>
+            <th>第四技能key</th>
+            <th>第四技能</th>
+            <th>第四技能等级</th>
+            <th>第五技能key</th>
+            <th>第五技能</th>
+            <th>第五技能等级</th>
+            <th>替换卡牌id</th>
+        </tr>
+        {% for v in cards %}
+        <tr>
+            <form action="/{{url_partition}}/admin/del_card/" method="get" accept-charset="utf-8">
+                <td> {{ v['card_id'] }} </td>
+                <td> {{ v['c_id'] }}</td>
+                <td> {{ v['birth_time'] }}</td>
+                <td> {{ v['name'] }}-{{v.get('step', 0)}}</td>
+                <td>
+                    {% if debug %}
+                    <input type="text" value="{{ v['evo'] }}" name="evo" size="4"/>
+                    {% else %}
+                        {{ v['evo'] }}
+                    {% end %}
+                </td>
+                <td><input type="text" value="{{ v['lv'] }}" name="card_level" size="4"/></td>
+                {% for i in ['s_1', 's_2', 's_3', 's_4', 's_5'] %}
+                    {% if i in v %}
+                        <td>{{ v[i]['s'] }}</td>
+                        <td>{{ v[i]['name'] }}</td>
+                        <td><input type="text" value="{{ v[i]['lv'] }}" name="{{i}}_level" size="4"/></td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                        <td><input type="text" value="0" name="{{i}}_level" size="4"/></td>
+                    {% end %}
+                {% end %}
+                <td><input type="text" value="0" name="re_id" size="4"/></td>
+                <td>
+                    <input type="hidden" name="uid" value="{{uid}}"/>
+                    <input type="hidden" name="ids" value="{{v['card_id']}}"/>
+                    <input type="submit" value="REMOVE" name='remove' onclick="javascript:return confirm('are you sure?')"/>
+                    <input type="submit" value="modified" name='modified' onclick="javascript:return confirm('are you sure?')"/>
+                    <input type="submit" value="copy" name='copy' onclick="javascript:return confirm('are you sure?')"/>
+                    <input type="submit" value="replace" name='replace' onclick="javascript:return confirm('are you sure?')"/>
+                </td>
+            </form>
+        </tr>
+        {%end%}
+    </table>
+</body>
+</html>

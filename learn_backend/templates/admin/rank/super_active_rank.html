@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宇宙最强和神龙排名</title>
+</head>
+<body>
+    {% block sub_title %} 宇宙最强排名 {% end %}
+    <form action="/{{url_partition}}/admin/super_active_rank" method="get">
+        用户id(*)：<input type="text" value="{{user_id}}" name="uid"/>
+        日期(*)：<input type="text" value="{{date}}" name="date"/>
+        时间(*)：<input type="text" value="{{time}}" name="time"/>
+        名次：<input type="text" value="{{start}}" name="start"/>到<input type="text" value="{{end}}" name="end"/>
+        <input type="submit" value="查看" id="submit" name="submit" />
+    </form>
+    <hr />
+
+    <table border="1" cellpadding="0" cellspacing="0" id='stat'>
+        宇宙最强排名
+        <tr>
+            <td align="center" width="100">名次</td>
+            <td align="center" width="100" name="args">玩家id</td>
+            <td align="center" width="100" name="args">分数</td>
+        </tr>
+        {% for i, st in enumerate(rank_list) %}
+            {% if st[0] == user_id %}
+            <tr bgcolor="red">
+            {% else %}
+            <tr bgcolor="cornsilk">
+            {% end %}
+                <td align="center" width="0">{{i+start}}</td>
+                <td align="center" width="0">{{st[0]}}</td>
+                <td align="center" width="0">{{st[1]}}</td>
+            </tr>
+        {% end %}
+    </table>
+</body>
+</html>

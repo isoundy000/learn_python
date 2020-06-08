@@ -1,0 +1,15 @@
+{
+	"tyframework": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall0-tyframework/hall0-tyframework_master.tyegg",
+    "sdk": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall0-tygame-sdk/hall0-tygame-sdk_20180809_031157.tyegg",
+    "sdk_config": "https://tyyxsvn.touch4.me/newsvn/config/sdk_config/xxfish_online",
+    "config37": "https://tyyxsvn.touch4.me/newsvn/config/game_config/xxfish_release/config37",
+    "freetime": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-freetime/hall37-freetime_master.tyegg",
+    "poker": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-tuyoo/hall37-tuyoo_master.tyegg",
+    "webroot": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-webroot-py/hall37-webroot-py_master.tyegg",
+    "freetime37patch": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall51-freetime37patch/hall51-freetime37patch_master.tyegg",
+    "hall": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-newfish-frame-py/hall37-hall37-wx-py_20180531_008970.tyegg",
+    "dizhucomm": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-newfish-frame-py/hall37-dizhucomm-py_20180428_000408.tyegg",
+    "dizhu": "https://tyyxsvn.touch4.me/newsvn/tygame/python/hall37-newfish-frame-py/hall37-dizhu-py_20180412_008385.tyegg",
+    "newfish": "https://tyyxsvn.touch4.me/newsvn/newfish-py/wechat/trunk/hall37-newfish",
+    "config5": "https://tyyxsvn.touch4.me/newsvn/config/game_config/xxfish_release/config5"
+}

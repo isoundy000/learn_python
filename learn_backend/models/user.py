@@ -348,6 +348,9 @@ class User(ModelBase):
     _attrs['online_award'] = []         # 激活的在线时长奖励
     _attrs['online_award_done'] = []    # 已经领取的在线时长奖励
     _attrs['_mark'] = 0                 # 设备登录标记，防多设备登录，递增数
+
+    _attrs['double_pay'] = []           # 记录首充双倍的充值项
+    _attrs['double_pay_refresh'] = ''   # 首充双倍刷新时间
     
     _attrs['active_double_pay'] = []            # 记录首充双倍的充值项
     _attrs['active_double_pay_refresh'] = ''    # 首充双倍刷新时间
@@ -370,13 +373,24 @@ class User(ModelBase):
     _attrs['like_date'] = ''            # 点赞时间
     _attrs['like_log'] = {}             # 点赞记录, {'tp': ['uid', 'uid']}
 
+    _attrs['open_door'] = False         # 是否打开过开门
+    _attrs['pre_battle'] = 0            # 是否演示战前技能0:演示;1:不演示
+    _pet_resources = {
+        'pet_exp_ball': 0,              # 宠物经验球
+        'pet_skill_stone': 0,           # 宠物技能石
+    }
+    _attrs.update(_pet_resources)
     _session = {
         'sid': '',                      # session_id
         'expired': 0,                   # 过期时间
     }
     _attrs.update(_session)
+    _attrs['vip_week'] = 0              # 记录vip领取奖励的时间 时间为一年中第几周
     MAX_REQUEST_CODE_SLAVE_NUM = 4      # 邀请码 徒弟数
 
+    # @classmethod
+    # def __new__(cls, *args, **kwargs):
+    #    return object.__new__(cls)
 
     def __init__(self, uid=None):
         self.uid = uid
@@ -492,6 +506,146 @@ class User(ModelBase):
         """
         return '%s_%s' % (self.ONLINE_USERS_PREFIX, self._server_name)
 
+    def get_online_uids(self):
+        """# 获取在线用户
+        """
+        r = self.redis
+        ts = int(time.time())
+        return r.zrevrangebyscore(self.online_user_key(), ts, ts - self.ONLINE_USERS_TIME_RANGE, withscores=1)
+
+    def get_online_user_count(self):
+        """
+        获得在线用户总数
+        """
+        r = self.redis
+        ts = int(time.time())
+        return r.zcount(self.online_user_key(), ts - self.ONLINE_USERS_TIME_RANGE, ts)
+
+    def get_today_new_uids(self, t_ts=None, only_count=False):
+        """获取当天新增用户
+        args:
+            t_ts: 起始时间戳
+            only_count: 只返回总数
+        """
+        r = self.redis
+
+        if t_ts is None:
+            today = datetime.datetime.now().date()
+            t_ts = int(time.mktime(today.timetuple()))
+
+        if only_count:
+            return r.zcount(self.regist_user_key(), t_ts, time.time())
+        else:
+            return r.zrevrangebyscore(self.regist_user_key(), t_ts, time.time(), withscores=1)
+
+    def get_register_count(self, start_ts=None, end_ts=None):
+        """
+        获取某天的注册用户数 - 和 get_today_new_uids 相同
+        :param t_ts:
+        :param only_count:
+        :return:
+        """
+        if end_ts is None:
+            today = datetime.datetime.now().date()
+            end_ts = int(time.mktime(today.timetuple()))
+
+        return self.redis.zcount(self.regist_user_key(), start_ts, end_ts)
+        # return self.get_today_new_uids(t_ts, only_count=True)
+
+    def get_checkin_user_count(self, ts=None):
+        """
+        按每日登錄記錄，統計當日的登錄用戶數
+        :param ts: 時間戳
+        :return:
+        """
+        str_date = time.strftime('%Y%m%d', time.localtime(ts))
+        rkey = '%s_%s' % (self.USERS_CHECKIN_PREFIX, str_date)
+
+        return self.redis.hlen(rkey)
+
+    def get_uids_by_active_days(self, active_days=0):
+        """# 按登录时间 获取所有用户
+            active_days: 活跃时间    -1： 当天登录过，0: 不限制;  正整数: 最近多少天登录过
+        """
+        r = self.redis
+        end_ts = int(time.time())
+        today = datetime.datetime.now().date()
+        start_ts = int(time.mktime(today.timetuple()))
+
+        if active_days == 0:            # 不限制
+            start_ts = 0
+        elif active_days > 0:           # n天之前
+            start_ts = start_ts - 3600 * 24 * active_days
+
+        return r.zrevrangebyscore(self.online_user_key(), start_ts, end_ts)
+
+    def get_user_count_by_active_days(self, active_days=0):
+        """# 按登录时间 获取所有用户
+            active_days: 活跃时间    -1： 当天登录过，0 :不限制;  正整数: 最近多少天登录过
+        """
+        r = self.redis
+
+        end_ts = int(time.time())
+        today = datetime.datetime.now().date()
+        start_ts = int(time.mktime(today.timetuple()))
+
+        if active_days == 0:
+            start_ts = 0
+        elif active_days > 0:
+            start_ts = start_ts - 3600 * 24 * active_days
+
+        return r.zcount(self.online_user_key(), start_ts, end_ts)
+
+    def get_redis_userd_memory(self):
+        '''
+        获取redis使用的内存
+        used_memory_human: Redis分配器分配的内存总量，指Redis存储的所有数据所占的内存
+        used_memory_peak_human: 以更直观的格式返回redis的内存消耗峰值
+        used_memory_rss: 向操作系统申请的内存大小。与 top 、 ps等命令的输出一致。
+        :return:
+        '''
+        redis = self.redis
+        info = redis.info()
+        return '%s/%s/%sG' % (info.get('used_memory_human'), info.get('used_memory_peak_human'), '%0.2f' % (info.get('used_memory_rss', 0) / 1024.0 ** 3))
+
+    def fetch_server_open_time(self):
+        '''
+        获取开服的时间
+        :return:
+        '''
+        if not self.server_open_time:
+            server_list = ServerConfig.get().server_list()
+            server_name = self.uid[:-7]
+            for i in server_list:
+                if i['server'] == server_name:
+                    self.server_open_time = i['open_time']
+        return self.server_open_time
+
+    def get_double_pay(self):
+        """ 获取首冲双倍数据
+
+        :return:
+        """
+        # 首充双倍活动时间段
+        time_config = game_config.inreview.get(144, {})             # 获取活动是否开启
+        time_config_name = time_config.get('name', '')
+        time_config_servers = time_config.get('story', '')
+        if time_config_name:
+            start_time, end_time = time_config_name.split(',')
+            servers = time_config_servers.split(',') if time_config_servers else []
+        else:
+            start_time, end_time = '', ''
+            servers = []
+
+        tody = time.strftime('%F')
+        if start_time <= tody <= end_time and (not servers or (servers and self._server_name in servers)):
+            pay_list = self.active_double_pay
+        else:
+            pay_list = self.double_pay
+
+        return pay_list
+
+
     def update_action_point(self):
         """update_action_point: 行动点数的计时更新
                 1, 只有在当前行动点数低于最大值的时候才“计时更新”
@@ -556,6 +710,17 @@ class User(ModelBase):
             self.active_double_pay_refresh = today      # '2020-03-10'
             self.active_double_pay = []
 
+    def add_countdown(self, func, end_time):
+        """# add_countdown: docstring
+        args:
+            func, end_time:    ---    arg
+        returns:
+            0    ---
+        """
+        temp_flag = time.time()
+        self.countdown_func_list.append((end_time, func, temp_flag))
+        return temp_flag
+
     @property
     def online(self):
         # 最后活跃时间在两个小时内算在线
@@ -606,19 +771,6 @@ class User(ModelBase):
                 self.guide[sort] = step
                 if save:
                     self.save()
-
-    def fetch_server_open_time(self):
-        '''
-        赋值开服时间
-        :return:
-        '''
-        if not self.server_open_time:
-            server_list = ServerConfig.get().server_list()
-            server_name = self.uid[:-7]
-            for i in server_list:
-                if i['server'] == server_name:
-                    self.server_open_time = i['open_time']
-        return self.server_open_time
 
 
     #####################################排行榜#####################################

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>充值审批首页</title>
+</head>
+<body>
+    {% import time %}
+    {% import game_config %}
+    {% import datetime %}
+    {% if message %}
+        <p style="color:red;">{{message}}</p>
+    {% end %}
+    <form method="post" action="/{{url_partition}}/admin/for_approval/">
+        <table cellspacing="0" cellpadding="2" border="1" style="table-layout:fixed;">
+            <tr>
+                <td style="text-align:center; width: 80px;">申请人</td>
+                <td style="text-align:center; width: 30px;">uid</td>
+                <td style="text-align:center; width: 50px;">配置id</td>
+                <td style="text-align:center; width: 100px;">配置名字</td>
+                <td style="text-align:center; width: 150px;">原因</td>
+                <td style="text-align:center; width: 40px;">次数</td>
+                <td style="text-align:center; width: 150px;">时间</td>
+                <td style="text-align:center">类型</td>
+                <td style="text-align: center">
+                    <input type="checkbox" id="selectAllNuRefuse" name="selectAllNuRefuse" onclick="selectAllNuRefuseFunc()">全选
+                </td>
+                <td style="text-align: center">
+                    <input type="checkbox" id="selectAllRefuse" name="selectAllRefuse" onclick="selectAllRefuseFunc()">全选
+                </td>
+                <td style="text-align: center">
+                    操作
+                </td>
+            </tr>
+            {% for key, info in record.iteritems() %}
+            <tr>
+                <td style="text-align:center; width: 80px;">{{info['admin']}}</td>
+                <td style="text-align:center; width: 30px;">{{info['uid']}}</td>
+                <td style="text-align:center; width: 50px;">{{info['goods_id']}}</td>
+                <td style="text-align:center; width: 100px;">{{game_config.charge.get(int(info['goods_id']), {}).get('name', '')}}</td>
+                <td style="text-align:center; width: 150px;">{{info['reason']}}</td>
+                <td style="text-align:center; width: 40px;">{{info['times']}}</td>
+                <td style="text-align:center; width: 150px;">{{datetime.datetime.fromtimestamp(info['dt']).strftime('%Y-%m-%d %H-%M-%S')}}</td>
+                <td style="text-align: center">
+                    {% if info['tp'] == 'admin' %}
+                        {{u"后台代充"}}
+                    {% elif info['tp'] == 'admin_test' %}
+                        {{u"管理员测试"}}
+                    {% else %}
+                        {{info['tp']}}
+                    {% end %}
+                </td>
+                <td style="text-align: center;">
+                    <input type="checkbox" id="unrefuse_{{key}}" name="checkbox_unrefuse" value="{{key}}" onclick="checkClick1(self, 'refuse_{{key}}')">同意
+                </td>
+                <td style="text-align:center;">
+                    <input type="checkbox" id="refuse_{{key}}" name="checkbox_refuse" value="{{key}}" onclick="checkClick2(self, 'unrefuse_{{key}}')">拒绝
+                </td>
+                <td style="text-align: center;"><input type="submit" name="commit" value="提交"/></td>
+            </tr>
+            {% end %}
+        </table>
+    </form>
+    <script language="javascript">
+        function checkClick1(obj, key) {
+            var other = document.getElementById(key);
+            if (obj.checked) {
+                other.checked = 1;
+            } else {
+                other.checked = 0;
+            }
+            document.getElementById("selectAllNuRefuse").checked = 0;
+            document.getElementById("selectAllRefuse").checked = 0;
+        }
+        function checkClick2() {
+            var other = document.getElementById(key);
+            if (obj.checked) {
+                other.checked = 1;
+            } else {
+                other.checked = 0;
+            }
+            document.getElementById("selectAllNuRefuse").checked = 0;
+            document.getElementById("selectAllRefuse").checked = 0;
+        }
+        function selectAllNuRefuseFunc() {
+            var checkunlist = document.getElementsByName("checkbox_unrefuse");
+            var checklist = document.getElementsByName("checkbox_refuse");
+            if (document.getElementById("selectAllNuRefuse").checked) {
+                for (var i=0; i < checkunlist.length; i++) {
+                    checkunlist[i].checked = 1;
+                    checklist[i].checked = 0;
+                }
+            } else {
+                for (var j=0; j < checkunlist.length; j++) {
+                    checkunlist[j].checked = 0;
+                }
+            }
+        }
+        function selectAllRefuseFunc() {
+            var checklist = document.getElementsByName("checkbox_refuse");
+            var checkunlist = document.getElementsByName("checkbox_unrefuse");
+            if (document.getElementById("selectAllRefuse").checked) {
+                for (var i=0; i<checklist.length; i++) {
+                    checklist[i].checked = 1;
+                    checkunlist[i].checked = 0;
+                    document.getElementById("selectAllNuRefuse").checked = 0;
+                }
+            } else {
+                for (var j=0; j<checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

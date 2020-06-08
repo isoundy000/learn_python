@@ -1,0 +1,32 @@
+<html>
+<body>
+    {% if msg %}
+        {{ msg }}
+    {% end %}
+    <table border="1">
+        <form action="/{{url_partition}}/admin/mv_account/" method="post" accept-charset="utf-8">
+            <tr>
+                <td>
+                    替换之前的uid
+                </td>
+                <td>
+                    <input type="text" name="old_uid" id="old_uid" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    替换之后的uid
+                </td>
+                <td>
+                    <input type="text" name="new_uid" id="new_uid" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="替换">
+                </td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+<body>
+    {% if msg %}
+        {{ msg }}
+    {% end %}
+    <table border="1">
+        <form action="/{{url_partition}}/admin/refresh_outlets/" method="post" accept-charset="utf-8">
+            <tr>
+                <td>
+                    <input type="submit" value="刷新">
+                </td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>

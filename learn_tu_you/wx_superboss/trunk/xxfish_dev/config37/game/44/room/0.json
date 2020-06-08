@@ -1,0 +1,104 @@
+{
+    "44402": {                        //10倍
+         "controlServerCount": 1,     //控制进程数
+         "controlTableCount": 0,      //控制桌子的数量
+         "gameServerCount": 50,       //游戏进程数
+         "gameTableCount": 25         //桌子数量gameTableCount
+    },
+    "44403": {                        //50倍
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 40,
+        "gameTableCount": 25
+    },
+    "44404": {                        //200倍
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 10,
+        "gameTableCount": 25
+    },
+    "44405": {                        //500倍
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 10,
+        "gameTableCount": 25
+    },
+    "44499": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 40,
+        "gameTableCount": 100
+    },
+    "44104": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 70
+    },
+    "44101": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 70
+    },
+    "44102": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 70
+    },
+    "44103": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 70
+    },
+    "44301": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 25
+    },
+    "44302": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 5,
+        "gameTableCount": 25
+    },
+    "44501": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 10,
+        "gameTableCount": 25
+    },
+    "44601": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 10,
+        "gameTableCount": 25
+    },
+    "44411": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 1,
+        "gameTableCount": 5
+    },
+    "44412": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 1,
+        "gameTableCount": 5
+    },
+    "44414": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 1,
+        "gameTableCount": 5
+    },
+    "44415": {
+        "controlServerCount": 1,
+        "controlTableCount": 0,
+        "gameServerCount": 1,
+        "gameTableCount": 5
+    }
+}

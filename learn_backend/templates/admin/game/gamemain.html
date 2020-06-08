@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+{% autoescape None %}
+<head>
+<title>{{PLATFORM}}</title>
+<style type="text/css">
+    #info{border-collapse:collapse;border:0;font-size:12px;text-align:left}
+    #info th{padding:10px}
+    #info td{border:0;padding:8px;line-height:24px}
+
+    #mindata{border-collapse:collapse;font-size:12px;}
+    #mindata td{width:130px;padding:3px;text-align:left;font-size:12px;}
+
+    #nva{margin-left:0;padding-left:0;}
+    #nva li{font-size:12px;text-align:center;display:inline;}
+    #nva li span{font-weight:bold}
+    .reset{color:red;}
+</style>
+</head>
+<body>
+<h3>游戏数据&nbsp;{% if data.get('uid', '' ) %}用户ID[{{data['uid']}}]{% end %}</h3>
+
+{% if data.get('fields', '') %}
+<ul id="nva">
+    {% for fd_info in data['fields'] %}
+    <li>
+        {% if fd_info[0] == data['field'] %}
+        <span>{{fd_info[1]}}</span>
+        {% else %}
+        <a href="/{{url_partition}}/admin/game/show/?field={{fd_info[0]}}&uid={{data['uid']}}&next_op=show" target="main">{{fd_info[1]}}</a>
+        {% end %}
+    </li>
+    {% end %}
+</ul>
+{% end %}
+
+<hr>
+<div style="font-size:12px;color:red">
+{% if data.get('msg', '') %}
+{{escape(data['msg'])}}
+{% end %}
+</div>
+{% if data.get('op','input') in ['input', 'save'] %}{# 输入ID #}
+<form action="/{{url_partition}}/admin/game/show/" method="post">
+    <span style="font-size:12px">用户ID:</span>
+    <input type="text" name="uid" value=""></input>
+    <input type="hidden" name="field" value="{{data['field']}}"></input>
+    <input type="hidden" name="next_op" value="show"></input>
+    <button type="submit">查看</button>
+</form>
+{% end %}
+
+{% if data.get('op', input) == 'show' %}{# 显示信息 #}
+{{ data['form'] }}
+{% end %}
+
+</body>
+<script type="text/javascript">
+    var obj=document.getElementById("data");
+    for(var i=0;i<obj.rows.length;i++){
+        obj.rows[i].onmouseover=function(){this.style.background="#B3D9D9";}
+        obj.rows[i].onmouseout=function(){this.style.background="";}
+    }
+</script>
+</html>

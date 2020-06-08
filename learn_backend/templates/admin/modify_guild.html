@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改玩家工会信息</title>
+</head>
+<body>
+    {% if msg %}
+        {{ msg }}
+    {% end %}
+    <table border="1">
+        <form action="/{{url_partition}}/admin/modify_guild/" method="post" accept-charset="utf-8">
+            <tr>
+                <td>玩家uid</td>
+                <td><input type="text" name="uid" id="uid" value=""/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="更正">
+                </td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>

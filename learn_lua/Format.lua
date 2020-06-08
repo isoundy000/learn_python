@@ -18,7 +18,7 @@ print(string.format("%+d", 17.0))
 print(string.format("%05d", 17))           --    输出00017
 print(string.format("%o", 17))             --    输出21
 print("=========")
-print(string.format("%u", 3))           --    输出3
+print(string.format("%u", 3))              --    输出3
 print("-----------")
 print(string.format("%x", 13))             --    输出d
 print(string.format("%X", 13))             --    输出D

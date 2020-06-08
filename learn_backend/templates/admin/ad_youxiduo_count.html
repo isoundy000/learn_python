@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #data{border-collapse: collapse; border: 1px solid #BEBEBE; font-size:12px;}
+        #data th{background: #BEBEBE; border-bottom: 1px solid #BEBEBE; line-height: 24px;
+                font-weight:lighter;padding: 4px;text-align: center;
+        }
+        #data td{border: 1px solid #BEBEBE; padding: 2px;text-align: center;font-size: 12px;}
+    </style>
+    <title>游戏多的主页</title>
+</head>
+<body>
+    {% if not login_user %}
+    <div style="font-size:12px;color:red">
+        {% if msg %}
+            {{ escape(msg) }}
+        {% end %}
+    </div>
+    <form id="loginForm" name="loginForm" action="/{{url_partition}}/admin/ad_youxiduo_count" method="post">
+        <input type="hidden" name="acttype" value="login">
+        <table border="0">
+            <tr>
+                <td>账号:</td>
+                <td><input type="text" id="username" name="username" value="admin"/></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" id="password" name="password" value="admin"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="登录"/></td>
+            </tr>
+        </table>
+    </form>
+    {% else %}
+    <form action="/{{url_partition}}/admin/ad_youxiduo_count/" method="post">
+        <input type="hidden" name="acttype" value="logout">
+        欢迎您： {{ login_user.username }}
+        <input type="submit" value="登出">
+    </form>
+    <hr/>
+
+    <form action="/{{url_partition}}/admin/ad_youxiduo_count/" method="post">
+        <input type="hidden" name="acttype" value="query">
+        时间范围：
+        <input type="text" value="{{ start_day }}" name="start_day">
+        ~
+        <input type="text" value="{{ end_day }}" name="end_day">
+        <input type="submit" value="查看数据" id="submit" name="submit"/>
+    </form>
+    <hr/>
+
+    <table id="data">
+        <tr>
+            <th>时间</th>
+            <th>激活数</th>
+            <th>总订单数</th>
+            <th>流水（单位：元）</th>
+        </tr>
+        {% for key, data in result_data %}
+        <tr onmouseover="return changecolor(this, '#B3D9D9')" onmouseout="return changecolor(this, '')">
+            <td id="day">{{ key }}</td>
+            <td id="active_count">{{ data.get('active_count', 0) }}</td>
+            <td id="order_count">{{ data.get('order_count', 0) }}</td>
+            <td id="order_amount">{{ data.get('order_amount', 0) }}</td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+</body>
+
+<script type="text/javascript">
+    function changecolor(obj, color) {
+        obj.style.background = color;
+    }
+</script>
+</html>

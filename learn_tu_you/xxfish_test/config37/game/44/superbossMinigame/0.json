@@ -1,0 +1,876 @@
+{
+    "info": {
+        "box_0": {
+            "mode": 0, 
+            "maxTimes": 7, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "box_1": {
+            "mode": 1, 
+            "maxTimes": 7, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "octopus_0": {
+            "mode": 0, 
+            "maxTimes": 7, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "octopus_1": {
+            "mode": 1, 
+            "maxTimes": 7, 
+            "currencyList": [
+                101, 
+                1402
+            ]
+        }, 
+        "queen_0": {
+            "mode": 0, 
+            "maxTimes": -1, 
+            "currencyList": [
+                101, 
+                13761
+            ]
+        }, 
+        "queen_1": {
+            "mode": 1, 
+            "maxTimes": -1, 
+            "currencyList": [
+                101, 
+                13761
+            ]
+        }
+    }, 
+    "game": {
+        "box_0": [
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 2, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 4, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 6, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }
+        ], 
+        "box_1": [
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 8, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 10, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 12, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }
+        ], 
+        "octopus_0": [
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13758
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13759
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13760
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13758
+                    }, 
+                    {
+                        "count": 1, 
+                        "name": 13759
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13758
+                    }, 
+                    {
+                        "count": 1, 
+                        "name": 13760
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13759
+                    }, 
+                    {
+                        "count": 1, 
+                        "name": 13760
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 1, 
+                        "name": 13758
+                    }, 
+                    {
+                        "count": 1, 
+                        "name": 13759
+                    }, 
+                    {
+                        "count": 1, 
+                        "name": 13760
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }
+        ], 
+        "octopus_1": [
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 8, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 10, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 12, 
+                        "name": 1402
+                    }
+                ], 
+                "des": "", 
+                "mode": 1
+            }
+        ], 
+        "queen_0": [
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 100, 
+                        "name": 13761
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 80, 
+                        "name": 13761
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 60, 
+                        "name": 13761
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 40, 
+                        "name": 13761
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }, 
+            {
+                "rewards": [
+                    {
+                        "count": 10000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 20000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 30000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 50000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 70000, 
+                        "probb": 100, 
+                        "name": 101
+                    }, 
+                    {
+                        "count": 90000, 
+                        "probb": 100, 
+                        "name": 101
+                    }
+                ], 
+                "costs": [
+                    {
+                        "count": 20, 
+                        "name": 13761
+                    }
+                ], 
+                "des": "", 
+                "mode": 0
+            }
+        ]
+    }
+}

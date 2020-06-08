@@ -11,9 +11,215 @@
         {%end%}
     {% end %}
     <div id="uid_input">
-        <form action="/{{url_partition}}/admin/user" method="get" accept-charset="utf-8" enctype="multipart/form-data">
+        <form action="/{{url_partition}}/admin/user/" method="get" accept-charset="utf-8" enctype="multipart/form-data">
             <p>uid: <input type="text", name="uid" value="{{user.uid}}"/><input type="submit" value="获取用户信息"/></p>
         </form>
+    </div>
+
+    <h3>单个账号转移</h3>
+    <div id="uid_export">
+        <form action="/{{url_partition}}/admin/export/" method="get" accept-charset="utf-8">
+            <p>源用户uid: <input type="text" name="export_uid" value="{{user.uid}}"/>&nbsp<input type="submit" value="导出数据"/></p>
+        </form>
+    </div>
+
+    <div id="uid_inject">
+        <form action="/{{url_partition}}/admin/inject/" method="post" enctype="multipart/form-data">
+            <p>
+                目标用户uid: <input type="text" name="inject_uid" value="{{user.uid}}"/>
+                <p>待导入文件: <input type="file" name="user_file"/></p>
+                &nbsp<input type="submit" value="注入数据"/>
+            </p>
+        </form>
+    </div>
+
+    <h1>玩家数据</h1>
+    <div id="user_info">
+        玩家名字: {{user.name}}<br/>
+        账号注册日期: {{cur_date}}<br/>
+        账号：{{user.account}}
+        <form action="/{{url_partition}}/admin/ban_user/">
+            <input type="hidden" name="user_id" value="{{user.uid}}"><br/>
+            封号:
+            <input type="text" name="is_ban" size="4" value="{{user.is_ban}}"/>
+            <input type="submit" value="修改" onclick="javascript:return confirm('确认封号么?')">
+            ps: 0：未封号；1：封号
+        </form>
+
+        <form action="/{{url_partition}}/admin/set_user_value/" method="get" accept-charset="utf-8">
+            <input type="hidden" name="uid" value="{{user.uid}}"><br/>
+            <table>
+                <tr>
+                    <td>
+                        等级(level):&nbsp;
+                        <input type="text" name="level" size="4" value="{{user.level}}"/>
+                        {% if settings.DEBUG %}
+                            经验(exp):&nbsp;<input type="text" name="exp" size="4" value="{{user.exp}}"/>
+                        {% end %}
+                    </td>
+                    <td>当前行动力(action_point):&nbsp;<input type="text" name="action_point" value="{{user.action_point}}"/></td>
+                    <td>行动力上限(action_point_max):&nbsp;<input type="text" name="action_point_max" value="{{user.action_point_max}}"/></td>
+                </tr>
+                <tr>
+                    {% if settings.DEBUG %}
+                        <td>钻石(coin):&nbsp;<input type="text" name="coin" size="4" value="{{user.coin}}"/></td>
+                    {% else %}
+                        <td>钻石(coin):&nbsp;{{user.coin}}</td>
+                    {% end %}
+                    <td>金币(silver):&nbsp;<input type="text" name="silver"  size="4" value="{{user.silver}}"/></td>
+                    <td>
+                        vip等级(vip):&nbsp;<input type="text" name="vip" size="4"  value="{{getattr(user, 'vip', 'no vip')}}"/>
+                        vip经验(vip_exp):&nbsp;{{getattr(user, 'vip_exp', '0')}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>能晶(crystal):&nbsp;<input type="text" name="crystal" value="{{user.crystal}}"/></td>
+                    <td>统帅精力(cmdr_energy):&nbsp;<input type="text" name="cmdr_energy" value="{{user.cmdr_energy}}"/></td>
+                    <td>精炼石(metalcore):&nbsp;<input type="text" name="metalcore" value="{{user.metalcore}}"/></td>
+                </tr>
+                <tr>
+                    <td>食品(food):&nbsp;<input type="text" name="food" value="{{ getattr(user, 'food') }}"/></td>
+                    <td>金属(metal):&nbsp;<input type="text" name="metal" value="{{ getattr(user, 'metal') }}"/></td>
+                    <td>能源(energy):&nbsp;<input type="text" name="energy" value="{{ getattr(user, 'energy') }}"/></td>
+                </tr>
+                <tr>
+                    <td>食品产量(food_pool):&nbsp;<input type="text" name="food_pool" value="{{ getattr(user, 'food_pool') }}"/></td>
+                    <td>金属产量(metal_pool):&nbsp;<input type="text" name="metal_pool" value="{{ getattr(user, 'metal_pool') }}"/></td>
+                    <td>能源产量(energy_pool):&nbsp;<input type="text" name="energy_pool" value="{{ getattr(user, 'energy_pool') }}"/></td>
+                </tr>
+                <tr>
+                    <td>食品池上限(food_pool_max):&nbsp;<input type="text" name="food_pool_max" value="{{ getattr(user, 'food_pool_max') }}"/></td>
+                    <td>金属池上限(metal_pool_max):&nbsp;<input type="text" name="metal_pool_max" value="{{ getattr(user, 'metal_pool_max') }}"/></td>
+                    <td>能源池上限(energy_pool_max):&nbsp;<input type="text" name="energy_pool_max" value="{{ getattr(user, 'energy_pool_max') }}"/></td>
+                </tr>
+                <tr>
+                    <td>生存(harbor_ability):&nbsp;<input type="text" name="harbor_ability" value="{{ getattr(user, 'harbor_ability') }}"/></td>
+                    <td>生产(factory_ability):&nbsp;<input type="text" name="factory_ability" value="{{ getattr(user, 'factory_ability') }}"/></td>
+                    <td>改造(laboratory_ability):&nbsp;<input type="text" name="laboratory_ability" value="{{ getattr(user, 'laboratory_ability') }}"/></td>
+                </tr>
+                <tr>
+                    <td>学习(school_ability):&nbsp;<input type="text" name="school_ability" value="{{ getattr(user, 'school_ability') }}"/></td>
+                    <td>星(star):&nbsp;<input type="text" name="star" value="{{ getattr(user, 'star') }}"/></td>
+                    <td>每日奖励积分(dailyscore):&nbsp;<input type="text" name="dailyscore" value="{{ getattr(user, 'dailyscore') }}"/></td>
+                </tr>
+                <tr>
+                    <td>能力之尘(dirt_silver):&nbsp;<input type="text" name="dirt_silver" value="{{ getattr(user, 'dirt_silver') }}"/></td>
+                    <td>超能之尘(dirt_gold):&nbsp;<input type="text" name="dirt_gold" value="{{ getattr(user, 'dirt_gold') }}"/></td>
+                    <td>高级能晶(adv_crystal):&nbsp;<input type="text" name="adv_crystal" value="{{ getattr(user, 'adv_crystal') }}"/></td>
+                </tr>
+                <tr>
+                    <td>竞技场点数(arena_point):&nbsp;<input type="text" name="arena_point" value="{{ user.arena.point }}"/></td>
+                    <td>洗炼石(refine_stone):&nbsp;<input type="text" name="refine_stone" value="{{ getattr(user, 'refine_stone') }}"/></td>
+                    <td>宠物能晶(pet_crystal):&nbsp;<input type="text" name="pet_crystal" value="{{ getattr(user, 'pet_crystal') }}"/></td>
+                </tr>
+                <tr>
+                    <td>宠物技能石(pet_skill_stone):&nbsp;<input type="text" name="pet_skill_stone" value="{{ getattr(user, 'pet_skill_stone') }}"/></td>
+                    <td>宠物经验球(pet_exp_ball):&nbsp;<input type="text" name="pet_exp_ball" value="{{ getattr(user, 'pet_exp_ball') }}"/></td>
+                    <td>木材(wood):&nbsp;<input type="text" name="wood" value="{{ getattr(user, 'wood') }}"/></td>
+                </tr>
+                <tr>
+                    <td>魂石(soul_stone):&nbsp;<input type="text" name="soul_stone" value="{{ getattr(user, 'soul_stone') }}"/></td>
+                    <td>初级锻造石(small_forge_stone):&nbsp;<input type="text" name="small_forge_stone" value="{{ getattr(user, 'small_forge_stone') }}"/></td>
+                    <td>中级锻造石(middle_forge_stone):&nbsp;<input type="text" name="middle_forge_stone" value="{{ getattr(user, 'middle_forge_stone') }}"/></td>
+                </tr>
+                <tr>
+                    <td>高级锻造石(high_forge_stone):&nbsp;<input type="text" name="high_forge_stone" value="{{ getattr(user, 'high_forge_stone') }}"/></td>
+                    <td>魔光碎片(enchant):&nbsp;<input type="text" name="enchant" value="{{ getattr(user, 'enchant') }}"/></td>
+                    <td>经验球(exp_ball):&nbsp;<input type="text" name="exp_ball" value="{{user.cards.exp_ball}}"/></td>
+                </tr>
+                <tr>
+                    <td>域界币(integration):&nbsp;<input type="text" name="integration" value="{{ user.god_field.integration }}"/></td>
+                    <td>神域币(god_integration):&nbsp;<input type="text" name="god_integration" value="{{ user.god_field.god_integration }}"/></td>
+                </tr>
+            </table>
+            <br/>
+        <p><input type="submit" value="修改" onclick="javascript:return confirm('确认修改么?')"></p>
+        </form>
+        <hr />
+        <table>
+            <tr>
+                <td>
+                    <form action="/{{url_partition}}/admin/pay_person/" >
+                        <input type="hidden" name="user_id" value="{{user.uid}}">
+                        <input type="submit" value="充值记录" />
+                    </form>
+                </td>
+                <td>
+                    <form action="/{{url_partition}}/admin/spend_person/" >
+                        <input type="hidden" name="user_id" value="{{user.uid}}">
+                        <input type="submit" value="消费记录" />
+                    </form>
+               </td>
+               <td>
+                    <form action="/{{url_partition}}/admin/user_logging/" >
+                        <input type="hidden" name="user_id" value="{{user.uid}}">
+                        <input type="submit" value="动作记录" />
+                    </form>
+               </td>
+            </tr>
+        </table>
+    </div>
+    <hr />
+    <table>
+        <tr>
+            <td>
+                <form action="/{{url_partition}}/admin/open_positions/" method="get" accept-charset="utf-8">
+                    <input type="hidden" name="uid" value="{{user.uid}}">
+                    <p><input type="submit" value="开启所有站位" onclick="javascript: return confirm('are you sure?')"></p>
+                </form>
+            </td>
+            <td>
+                <form action="/{{url_partition}}/admin/open_leader_skill/" method="get" accept-charset="utf-8">
+                   <input type="hidden" name="uid" value="{{user.uid}}">
+                    <p><input type="submit" value="开启所有主角技能" onclick="javascript:return confirm('are you sure?')"></p>
+                </form>
+            </td>
+            <td>
+                <form action="/{{url_partition}}/admin/open_formations/" method="get" accept-charset="utf-8">
+                    <input type="hidden" name="uid" value="{{user.uid}}">
+                    <p><input type="submit" value="开启所有阵型" onclick="javascript:return confirm('are you sure?')"></p>
+                </form>
+            </td>
+            <td>
+                <form action="/{{url_partition}}/admin/recapture_all_building/" method="get" accept-charset="utf-8">
+                    <input type="hidden" name="uid" value="{{user.uid}}">
+                    <p><input type="submit" value="抢占所有城市" onclick="javascript:return confirm('are you sure?')"></p>
+                </form>
+            </td>
+            <td>
+                <form action="/{{url_partition}}/admin/finish_all_guide/" method="get" accept-charset="utf-8">
+                   <input type="hidden" name="uid" value="{{user.uid}}">
+                    <p><input type="submit" value="跳过所有新手引导" onclick="javascript:return confirm('are you sure?')"></p>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <hr>
+
+    <div id="user_attr">
+        <form action="/{{url_partition}}/admin/user_attr/" method="get" accept-charset="utf-8">
+            <input type="hidden" name="uid" value="{{user.uid}}">
+            {% for k, v in user_attr.iteritems() %}
+                <input type="submit" value="{{v}}" name="{{k}}"/>
+            {% end %}
+        </form>
+    </div>
+
+    <div id="user_reset">
+        <hr>
+        {% for k, v in user.__class__.__dict__.iteritems() %}
+            <form action="/{{url_partition}}/admin/user_reset/" method="get" accept-charset="utf-8">
+                {% if 'fget' in dir(v) and k not in user.user_m._attrs %}
+                    <input type="hidden" name="uid" value="{{user.uid}}">
+                    <input type="hidden" name="reset_module" value="{{k}}">
+                    {{ k }}: <input type="submit" value="RESET" onclick="javascript:return confirm('后果很严重，继续？')">
+                    {% if k in reset_msg %}
+                        <span> RESET OK </span>
+                    {% end %}
+                {% end %}
+            </form>
+        {% end %}
     </div>
 </body>
 </html>

@@ -162,3 +162,25 @@ def get_config_type(server_name, now=None):
         return config_type
     else:
         return globals()['SERVERS'].get(server_name, {}).get('config_type', 1)
+
+
+def get_new_server(config_type):
+    '''
+    1 新服 2老服 3老老服 4新区
+    :param config_type:
+    :return:
+    '''
+    if isinstance(config_type, int):
+        config_type = [config_type]
+    from models.config import ServerConfig
+    servers = []
+    sc = ServerConfig.get()
+    for server, value in sc.config_value.iteritems():
+        if server == "master":
+            continue
+        if not value['is_open']:
+            continue
+        if get_config_type(server) not in config_type:
+            continue
+        servers.append(server)
+    return servers

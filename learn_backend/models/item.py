@@ -54,3 +54,28 @@ class Item(ModelBase):
         o = super(Item, cls).get(uid, server)
         o.refresh()
         return o
+
+    def add_box_use_count(self, box_id, num=1):
+        """添加box的使用次数
+        """
+        self.box_use_counts[box_id] = self.box_use_counts.get(box_id, 0) + num
+        return self.box_use_counts[box_id]
+
+    def get_box_use_count(self, box_id):
+        """获取box的使用次数
+        """
+        return self.box_use_counts.get(box_id, 0)
+
+    def get_box_replace_counts(self, box_id):
+        """获取box_id对应的记录
+        """
+        return self.box_replace_counts.get(box_id, {})
+
+    def add_box_replace_count(self, box_id, box_reward_id, num):
+        """记录box_id对应reward_id替换记录
+        """
+        self.box_replace_counts.setdefault(box_id, {})
+        if box_reward_id not in self.box_replace_counts[box_id][box_reward_id]:
+            self.box_replace_counts[box_id][box_reward_id] = num
+        else:
+            self.box_replace_counts[box_id][box_reward_id] += num

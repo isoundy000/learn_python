@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户属性信息</title>
+</head>
+<body>
+    <input type="button" value="返回" onclick="javascript:history.go(-1)"/>
+    <br/>
+    <h1>玩家id：{{user.uid}}&nbsp;玩家名字:{{user.name}}&nbsp;服务器: {{server}}</h1>
+    <p>当前页面：{{user_attrs.get(attr, '')}}</p>
+    <div id="user_attr">
+        <form action="/{{url_partition}}/admin/user_attr/" method="get" accept-charset="utf-8">
+            <input type="hidden" name="uid" value="{{user.uid}}">
+            {% for k, v in user_attrs.iteritems()%}
+                <input type="submit" value="{{v}}" name="{{k}}">
+            {% end %}
+        </form>
+    </div>
+    <br>
+
+    {% if attr == 'map' %}
+    <table>
+        <tr>
+            <td>地图名字</td>
+            <td>进度</td>
+            <td>收复奖励</td>
+            <td>收复奖励2</td>
+            <td>收复奖励3</td>
+        </tr>
+        {% for i in process %}
+        <tr>
+            {% for j in i %}
+                <td>{{j}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'gacha' %}
+    <h2>今天：</h2>
+    <table>
+        <tr>
+            <td>名字</td>
+            <td>完成次数</td>
+        </tr>
+        {% for i in today_process %}
+        <tr>
+            {% for j in i %}
+                <td align="center">{{j}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    <hr/>
+    <h2>昨天：</h2>
+    <table>
+        <tr>
+            <td>名字</td>
+            <td>完成次数</td>
+        </tr>
+       {% for i in yestaday_process %}
+        <tr>
+            {% for j in i %}
+                <td align="center">{{j}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    <hr/>
+    <h2>历史总共：</h2>
+    <table>
+        <tr>
+            <td>名字</td>
+            <td>完成次数</td>
+        </tr>
+       {% for i in process %}
+        <tr>
+            {% for j in i %}
+                <td align="center">{{j}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'subordinate' %}
+    <h1>阵型</h1>
+    <table></table>
+    <h1>下属列表</h1>
+    <table width="80%">
+        <tr align="center">
+            <td >id</td>
+            <td >下属名称</td>
+            <td >等级</td>
+            <td >强化<br/>{{_crystals}}</td>
+            <td >状态</td>
+        </tr>
+       {% for i in card_list %}
+        <tr>
+            {% for j in i %}
+                <td align="center">{{j}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'item' %}
+    <table width="50%">
+        <tr align="center">
+            <td>uid</td>
+            <td>道具名称</td>
+            <td>数量</td>
+        </tr>
+        <br/>
+        {% for j in items %}
+        <form action="/{{url_partition}}/admin/del_item/" method="get" accept-charset="utf-8">
+            <tr align="center">
+                <td >{{j['id']}}</td>
+                <td>{{j['name']}}</td>
+                <td>
+                    <input type="text" value="{{j['num']}}" name="num" size="4"/>
+                    <input type="hidden" name="uid" value="{{user.uid}}"/>
+                    <input type="hidden" name="id" value="{{j['id']}}"/>
+                    <input type="submit" value="修改">
+                </td>
+            </tr>
+        </form>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'skill' %}
+    <h1>使用中</h1>
+    <table cellspacing="1" border="1" cellpadding="3">
+        <tr align="center">
+            {% for name, level in used %}
+                <td>{{name}}-{{level}}级</td>
+            {% end %}
+        </tr>
+        <br/>
+    </table>
+    <h1>技能树</h1>
+    <table cellspacing="1" border="1" cellpadding="3">
+        {% for row in skills%}
+        <tr align="center">
+            {% for name, level in row %}
+            <td>{{name}}-{{level}}级</td>
+            {% end %}
+        </tr>
+        {% end %}
+        <br/>
+    </table>
+    {% end %}
+
+    {% if attr == 'arena' %}
+    <form action="/{{url_partition}}/admin/change_arena_rank/" method="get" accept-charset="utf-8">
+        <input type="hidden" name="uid" value="{{user.uid}}">
+        竞技场总人数：{{user.arena.get_arena_count()}}<br/>
+        自己排名: <input type="text" name="rank" value="{{user.arena.get_rank()}}"/>
+        <input type="submit" value="修改排名" name="arena" onclick="javascript:return confirm('are you sure?');">
+    </form>
+    <hr />
+    <form action="/{{url_partition}}/admin/user_attr/" method="get" accept-charset="utf-8">
+        <input type="text" name="uid" value="{{user.uid}}">
+        <input type="submit" value="查询其他用户" name="arena">
+    </form>
+    <table border="11" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>排名</td>
+            <td>uid</td>
+            <td>名字</td>
+            <td>级别</td>
+            <td>role</td>
+            <td>战力</td>
+            <td>more</td>
+        </tr>
+        {% for u in top %}
+        <tr align="center">
+            <td>{{u['rank']}}</td>
+            <td>{{u['uid']}}</td>
+            <td>{{u['name']}}</td>
+            <td>{{u['level']}}</td>
+            <td>{{u['role']}}</td>
+            <td>{{u['combat']}}</td>
+            <td>
+                <form action="/{{url_partition}}/admin/user/" method="get" accept-charset="utf-8">
+                    <input type="hidden" name="uid" value="{{u['uid']}}"/>
+                    {% if 'robot_' not in u['uid'] %}
+                        <input type="submit" value="more">
+                    {% end %}
+                </form>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'equip'%}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>id</td>
+            <td>c_id</td>
+            <td>名字</td>
+            <td>等级</td>
+            <td>位置</td>
+        </tr>
+            {% for j in equips %}
+            <form action="/{{url_partition}}/admin/del_equip/" method="post" accept-charset="utf-8">
+                <tr align="center">
+                    <td >{{j['id']}}</td>
+                    <td>{{j['c_id']}}</td>
+                    <td>{{j['name']}}</td>
+                    <td>{{j['lv']}}</td>
+                    <td>{{j['pos']}}</td>
+                    <td>
+                        <input type="hidden" name="uid" value="{{user.uid}}"/>
+                        <input type="hidden" name="id" value="{{j['id']}}"/>
+                        <input type="submit" value="删除">
+                    </td>
+                </tr>
+            </form>
+            {% end %}
+            <!--{% for e in equips%}-->
+            <!--<tr align="center">-->
+                <!--{% for i in e%}-->
+                    <!--<td>{{i}}</td>-->
+                <!--{%end%}-->
+            <!--</tr>-->
+            <!--{% end %}-->
+    </table>
+    {% end %}
+
+    {% if attr == 'gem' %}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>c_id</td>
+            <td>名字</td>
+            <td>数量</td>
+        </tr>
+        {% for g in gems %}
+        <tr align="center">
+            {% for i in g %}
+                <td>{{i}}</td>
+            {%end%}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'pet'%}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>pet_key</td>
+            <td>unique_pet_id</td>
+            <td>名字</td>
+            <td>位置</td>
+        </tr>
+        {% for p in pets%}
+        <tr align="center">
+            {% for i in p %}
+                <td>{{i}}</td>
+            {% end %}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'medal'%}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>c_id</td>
+            <td>名字</td>
+            <td>数量</td>
+        </tr>
+        {% for g in medals%}
+        <tr align="center">
+            {% for i in g%}
+                <td>{{i}}</td>
+            {%end%}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'medal_material'%}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>c_id</td>
+            <td>名字</td>
+            <td>数量</td>
+        </tr>
+        {% for g in materials%}
+        <tr align="center">
+            {% for i in g%}
+                <td>{{i}}</td>
+            {%end%}
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+
+    {% if attr == 'soul'%}
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr align="center">
+            <td>id</td>
+            <td>s_id</td>
+            <td>名字</td>
+            <td>等级</td>
+            <td>位置</td>
+            <td>删除</td>
+        </tr>
+        {% for j in souls%}
+        <form action="/{{url_partition}}/admin/del_soul/" method="post" accept-charset="utf-8">
+            <tr align="center">
+                <td >{{j['id']}}</td>
+                <td>{{j['s_id']}}</td>
+                <td>{{j['name']}}</td>
+                <td>{{j['lv']}}</td>
+                <td>{{j['pos']}}</td>
+                <td>
+                    <input type="hidden" name="uid" value="{{user.uid}}"/>
+                    <input type="hidden" name="id" value="{{j['id']}}"/>
+                    {%if j['pos'] == -1%}
+                        <input type="submit" value="删除">
+                    {%else%}
+                        <input type="submit" value="删除" name='remove' onclick="javascript:return confirm('再阵型上，是否删除')"/>
+                    {%end%}
+                </td>
+            </tr>
+        </form>
+        {% end %}
+    </table>
+    {% end %}
+</body>
+</html>

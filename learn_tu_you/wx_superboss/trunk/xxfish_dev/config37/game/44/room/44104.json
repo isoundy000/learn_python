@@ -1,0 +1,259 @@
+{
+    "hasrobot": 1,
+    "isMatch": 1,
+    "name": "ID_ROOM_NAME_44104",       //回馈赛休闲假日
+    "sceneName": "string_44104",
+    "fishPool": 44104,
+    "multiple": 1,
+    "showLevel": 1,
+    "minLevel": 10,
+    "maxLevel": 999,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2101,
+    "maxGunLevel": 2110,
+    "maxSkillLevel": 7,
+    "robotUserMaxCount": 500,
+    "typeName": "fish_time_point_match",
+    "matchConf": {
+        "desc": "",
+        "rule": "ID_ROOM_44104_RULE",
+        "fees": [
+            {
+                "count": 20,
+                "itemId": "item:3106",
+                "params": {
+                    "failure": "ID_ROOM_44104_FAILURE_1"
+                }
+            }
+        ],
+        "fishPool": 44104,
+        "playingTime": 30,
+        "bullet": 3000,
+        "rank.rewards": [
+            {
+                "desc": "ID_ROOM_44103_RANK_DESC_9",
+                "ranking": {
+                    "start": 1,
+                    "end": 1
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1193",
+                        "count": 2
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_1",
+                "ranking": {
+                    "start": 2,
+                    "end": 2
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1193",
+                        "count": 1
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_6",
+                "ranking": {
+                    "start": 3,
+                    "end": 3
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 3
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44101_RANK_DESC_7",
+                "ranking": {
+                    "start": 4,
+                    "end": 6
+                },
+                "rewards": [
+                    {
+                        "itemId": "item:1301",
+                        "count": 2
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_2",
+                "ranking": {
+                    "start": 7,
+                    "end": 10
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 12000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_3",
+                "ranking": {
+                    "start": 11,
+                    "end": 15
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 8000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_4",
+                "ranking": {
+                    "start": 16,
+                    "end": 20
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 3000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_5",
+                "ranking": {
+                    "start": 21,
+                    "end": 30
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 1500
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_6",
+                "ranking": {
+                    "start": 31,
+                    "end": 50
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 1000
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_7",
+                "ranking": {
+                    "start": 51,
+                    "end": 100
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 500
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            },
+            {
+                "desc": "ID_ROOM_44104_RANK_DESC_8",
+                "ranking": {
+                    "start": 101,
+                    "end": 9999
+                },
+                "rewards": [
+                    {
+                        "itemId": "user:chip",
+                        "count": 100
+                    }
+                ],
+                "message": "ID_CONFIG_RANKING_MAIL_MSG_44101"
+            }
+        ],
+        "stages": [
+            {
+                "name": "ID_ROOM_44101_STAGES_NAME",
+                "rise.user.count": 10000,
+                "seat.principles": 5,
+                "type": 2
+            }
+        ],
+        "start": {
+            "fee.type": 1,
+            "maxplaytime": 600,
+            "prepare.times": 0,
+            "signin.times": 0,
+            "close.times": 600,
+            "reward.times": 120,
+            "list.matchtimes": [90, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 690],
+            "start.speed": 5,
+            "table.times": 600,
+            "times": {
+                "days": {
+                    "count": 365,
+                    "first": "",
+                    "interval": "1d"
+                },
+                "times_in_day": {
+                    "list": [
+                        "10:00",
+                        "11:30",
+                        "12:00",
+                        "13:00",
+                        "13:30",
+                        "14:00",
+                        "14:30",
+                        "15:00",
+                        "15:30",
+                        "16:00",
+                        "16:30",
+                        "17:00",
+                        "17:30",
+                        "18:00",
+                        "18:30",
+                        "19:00",
+                        "19:30",
+                        "20:00",
+                        "20:30",
+                        "21:00",
+                        "21:30",
+                        "22:00",
+                        "22:30"
+                    ]
+                }
+            },
+            "type": 3,
+            "user.maxsize": 300,
+            "user.minsize": 1,
+            "user.next.group": 0,
+            "maxGameTimes": 30
+        },
+        "table.seat.count": 1,
+        "tips": {
+            "infos": [
+                "ID_ROOM_44101_TIPS_INFOS"
+            ],
+            "interval": 5
+        }
+    },
+    "tableConf": {
+        "maxSeatN": 4,
+        "fishGroupsName": "string_44104"
+    }
+}

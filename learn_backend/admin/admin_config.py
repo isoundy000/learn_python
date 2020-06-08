@@ -91,10 +91,20 @@ left_href = {
         'target': 'content',
         'name': u'送勋章'
     },
+    'refresh_outlets': {
+            'path': '/%s/admin/refresh_outlets/' % settings.URL_PARTITION,
+            'target': 'content',
+            'name': u'刷新限购商城'
+    },
     'give_gem': {
         'path': '/%s/admin/give_gem/' % settings.URL_PARTITION,
         'target': 'content',
         'name': u'送觉醒宝石'
+    },
+    'give_pet': {
+            'path': '/%s/admin/give_pet/' % settings.URL_PARTITION,
+            'target': 'content',
+            'name': u'送宠物'
     },
     'code_index': {
         'path': '/%s/admin/code_index/' % settings.URL_PARTITION,
@@ -105,6 +115,11 @@ left_href = {
         'path': '/%s/admin/add_admin/' % settings.URL_PARTITION,
         'target': 'content',
         'name': u'修改管理员'
+    },
+    'open_box_index': {
+        'path': '/%s/admin/open_box_index/' % settings.URL_PARTITION,
+        'target': 'content',
+        'name': u'开宝箱'
     },
     'virtual_index': {
         'path': '/%s/admin/virtual_index/' % settings.URL_PARTITION,

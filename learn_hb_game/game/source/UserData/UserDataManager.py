@@ -6,7 +6,7 @@ __author__ = 'ghou'
 from Source.Log.Write import Log
 from Source.DataLock.Lock1 import Lock1
 from Source.DataLock.Lock2 import Lock2
-from UserDataProxy import
+from UserDataProxy import UserDataProxy
 from Source.DataBase.Table.t_session import t_session
 from Source.DataBase.Table.t_role import t_role
 

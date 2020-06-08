@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>server_overview</title>
+</head>
+<body>
+    <h1>游戏概况</h1>
+    <table width="50%" border="0">
+        <tr align="left">
+            <td>今日登录:</td>
+            <td>
+                {{today_online_users_count}}人
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr align="left">
+            <td>当前在线: 最近 {{ONLINE_USERS_TIME_RANGE/60}}分钟</td>
+            <td>
+                {{cur_online_uids}}人
+            </td>
+            <td>
+                <a href="/{{url_partition}}/admin/server_online_user">详情</a>
+            </td>
+        </tr>
+        <tr>
+            <td>今日累计充值:</td>
+            <td>
+                {{len(user_pay)}} 人 - {{sum(user_pay.values())}} RMB
+            </td>
+            <td>
+                <a href="/{{url_partition}}/admin/pay_day/?day={{today}}">详情</a>    <!--按照天查询充值记录-->
+            </td>
+        </tr>
+        <tr>
+            <td>充值No.1服务器:</td>
+            <td>{{pay_top_server}}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>充值No.1玩家：</td>
+            <td>{{big_brother_uid}} - {{big_brother_pay}} RMB /{{big_brother_server}}</td>
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <table width="50%">
+        <tr>
+            <td>昨日平均一回：</td>
+            <td>0</td>
+            <td>昨日平均3回：</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>昨日付费率：</td>
+            <td>0</td>
+            <td>昨日ARPPU：</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>昨日累计计费：</td>
+            <td>0</td>
+            <td>本月累计计费：</td>
+            <td>0</td>
+        </tr>
+    </table>
+    <hr/>
+    <h1>最近新开服务</h1>
+    <table width="80%" border="1" cellpadding="2" cellspacing="0">
+        <tr align="center">
+            <td>服务器id:</td>
+            <td>服务器名称:</td>
+            <td>开服时间</td>
+            <td>总激活用户</td>
+            <td>当日新增注册</td>
+            <td>当日登录</td>
+            <td>当前充值</td>
+            <td>充值用户</td>
+            <td>当前在线:</td>
+            <td>used/peak/rss</td>
+        </tr>
+        {% for server, info in sorted(cur_uid_per_server.iteritems(), key=lambda x: x[1].get('open_time', ''), reverse_1) %}
+        <tr align="center">
+            <td>{{server}}</td>
+            <td>{{info.get('server_name')}}</td>
+            <td>{{info.get('open_time')}}</td>
+            <td>{{info.get('server_user_count')}}</td>
+            <td>{{info.get('newbie_count')}}</td>
+            <td>{{info.get('today_online')}}</td>
+            <td>{{info['pay_rmb']}}</td>
+            <td>{{len(info['pay_users'])}}</td>
+            <td>{{info['user_count']}}</td>
+            <td>{{info.get('redis_used_memory', '')}}</td>
+        </tr>
+        {% end %}
+    </table>
+</body>
+</html>

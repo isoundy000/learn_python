@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批量帐号转移</title>
+</head>
+<body>
+    {% if msgs %}
+        <font color="red">{{msg}}</font>
+    {% end %}
+    <h3> 帐号导出 </h3>
+    <div id="bulk_uid_export">
+        <form action="/{{url_partition}}/admin/bulk_export/" method="get" accept-charset="utf-8">
+            <p>待导出服务器编号( 默认g6 ): <input type="text" name="server" value="g6"/></p>
+            <p>待导出顶级玩家数量（ 默认不填为前50名, 最多200名 ):
+                <input type="text" name="uid_numbers" value="50"/>&nbsp<input type="submit" value="导出数据"/>
+            </p>
+        </form>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <h3> 帐号导入 </h3>
+    <div id="bulk_uid_inject">
+        <form action="/{{url_partition}}/admin/bulk_inject/" method="post" enctype="multipart/form-data">
+            <p>待导入服务器编号( 服务器编号为uid去掉后七位数字, 默认gt1 ): <input type="text" name="server" value="gt1"></p>
+            <p>源用户群数据文件( 此处为用导出功能获得的文件 ）: <input type="file" name="user_file"></p>
+            <p>待导入帐号列表（ 文本文件，每行一个uid, 行首和行尾无多余空格，所有uid需在同一服务器上,一次最多导入200个uid ):
+                <input type="file" name="target_uid_file"/>
+            </p>
+            <p>&nbsp<input type="submit" value="注入数据"></p>
+        </form>
+    </div>
+</body>
+</html>

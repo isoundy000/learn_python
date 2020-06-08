@@ -10,7 +10,7 @@ def fib(n):
     while a < n:
         print a
         a, b = b, a+b
-fib(55)
+fib(2)
 
 
 def recur_fibo(n):

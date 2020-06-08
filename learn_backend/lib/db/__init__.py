@@ -345,7 +345,7 @@ class ModelBase(ModelTools):
         o._server_name = server_name
         o._model_key = _key = cls.make_key_cls(uid, o._server_name)
         o.redis = cls.get_redis_client(_key, o._server_name)
-        o.inited = False
+        o.inited = False            # 是否是初始化
 
         r = o.redis.get(_key)
         if not r:
@@ -384,7 +384,7 @@ class ModelBase(ModelTools):
         return o
 
     def reset(self, save=True):
-        """# reset: docstring
+        """# reset: docstring 重置数据
         args:
             :    ---    arg
         returns:

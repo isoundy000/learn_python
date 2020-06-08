@@ -1,0 +1,30 @@
+<html>
+<body>
+    {% if msg %}
+        {% for m in msg['msg'] %}
+            {{m['num']}}个{{m['name']}}-{{m['unique_pet_id']}};&nbsp;
+        {% end %}
+    {% end %}
+    <table border="1">
+        <form action="/{{url_partition}}/admin/give_pet_commit/" method="post" accept-charset="utf-8">
+            <tr>
+                <td colspan="20">用户ID：<input align="center" type="text" name="user_id" value="{{msg.get('uid', 'test')}}"/></td>
+            </tr>
+            {% for e in r %}
+            <tr>
+                <td>
+                    {{ e['name'] }} - {{e['unique_pet_id']}}
+                </td>
+                <td>
+                    数量:
+                    <input type="text" name="pet_num_{{e['unique_pet_id']}}" id="pet_num_{{e['unique_pet_id']}}" value="0" size="2"/>
+                </td>
+                <td>
+                    <input type="submit" value="OK">        
+                </td>
+            </tr>
+            {% end %}
+        </form>
+    </table>
+</body>
+</html>

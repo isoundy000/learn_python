@@ -1,0 +1,34 @@
+{% extends "rank_base.html" %}
+
+{% block sub_title %} 海贼王排名 {% end %}
+
+{% block sub_content %}
+
+<form action="/{{url_partition}}/admin/limit_hero_rank/" method="get">
+    用户id：<input type="text" value="{{user_id}}" name="uid"/>
+    日期：<input type="text" value="{{date}}" name="date"/>
+    名次：<input type="text" value="{{start}}" name="start"/>到<input type="text" value="{{end}}" name="end"/>
+    <input type="submit" value="查看" id="submit" name="submit" />
+</form>
+
+<br/>
+<br/>
+
+<table border="1" cellpadding="0" cellspacing="0" id='stat'>
+    排名
+    <tr>
+      <td align="center">名次</td>
+      <td align="center" name="args">玩家id</td>
+      <td align="center" name="args">分数</td>
+    </tr>
+    {% for i, st in enumerate(rank_list) %}
+    <tr bgcolor="cornsilk">
+      <td align="center" width="0">{{i+start}}</td>
+      <td align="center" width="0">{{st[0]}}</td>
+      <td align="center" width="0">{{st[1]}}</td>
+    </tr>
+    {% end %}
+</table>
+
+{% end %}
+ No newline at end of file

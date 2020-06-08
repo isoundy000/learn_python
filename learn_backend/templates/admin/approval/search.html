@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询审批后的数据</title>
+</head>
+<body>
+    {% import time %}
+    {% import game_config %}
+    {% import datetime %}
+    {% if message %}
+        <p style="color:red;"> {{message}}</p>
+    {% end %}
+
+    <table cellspacing="0" cellpadding="2" border="1" style="table-layout:fixed;">
+        <tr>
+            <td style="text-align:center; width: 80px;">申请人</td>
+            <td style="text-align:center; width: 30px;">uid</td>
+            <td style="text-align:center; width: 50px;">配置id</td>
+            <td style="text-align:center; width: 100px;">配置名字</td>
+            <td style="text-align:center; width: 150px;">原因</td>
+            <td style="text-align:center; width: 40px;">次数</td>
+            <td style="text-align:center; width: 150px;">时间</td>
+            <td style="text-align:center">类型</td>
+            <td style="text-align:center">审批者</td>
+            <td style="text-align:center">审批结果</td>
+        </tr>
+        {% for info in record %}
+        <tr>
+            <td style="text-align:center; width: 80px;">{{info['admin']}}</td>
+            <td style="text-align:center; width: 30px;">{{info['uid']}}</td>
+            <td style="text-align:center; width: 50px;">{{info['goods_id']}}</td>
+            <td style="text-align:center; width: 100px;">{{game_config.charge.get(int(info['goods_id']), {}).get('name', '')}}</td>
+            <td style="text-align:center; width: 150px;">{{info['reason']}}</td>
+            <td style="text-align:center; width: 40px;">{{info['times']}}</td>
+            <td style="text-align:center; width: 150px;">{{datetime.datetime.fromtimestamp(info['dt']).strftime('%Y-%m-%d %H-%M-%S')}}</td>
+            <td style="text-align:center">
+                {% if info['tp'] == 'admin' %}
+                    {{u"后台代充"}}
+                {% elif info['tp'] == 'admin_test' %}
+                    {{u"管理员测试"}}
+                {% else %}
+                    {{info['tp']}}
+                {% end %}
+            </td>
+            <td style="text-align:center">{{info['approval']}}</td>
+            <td style="text-align:center">
+                % if info['status'] == 1 %}
+                    {{u"同意"}}
+                {% elif info['status'] == 2 %}
+                    {{u"拒绝"}}
+                {% else %}
+                    {{u"error"}}
+                {% end %}
+            </td>
+        </tr>
+        {% end %}
+    </table>
+</body>
+</html>
