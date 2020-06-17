@@ -5,6 +5,7 @@
 import json
 from twisted.enterprise import adbapi
 from twisted.internet import defer, reactor
+from twisted.internet.protocol import Factory
 from twisted.web.http import HTTPFactory
 import freetime.aio.mysql as ftmysql
 import freetime.aio.redis as ftred

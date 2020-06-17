@@ -20,7 +20,6 @@ from newfish.servers.table.rpc import table_remote
 from newfish.servers.room.rpc import room_remote
 
 
-
 class FishNormalRoom(TYNormalRoom):
 
     def __init__(self, roomDefine):

@@ -22,6 +22,25 @@ import freetime.util.log as ftlog
 from tasklet import FTTasklet
 
 
+class FTTimeoutException(Exception,)
+    pass
+
+
+_COUNT_PPS = 0
+_COUNT_COUNT = 0
+_COUNT_TIME = datetime.now()
+_COUNT_PACKS = {}
+
+
+def _countProtocolPack(ptype, proto, count_block=10000):
+    pass
+
+
+def ppsCountProtocolPack():
+    pass
+
+
+
 class FTProtocolBase(object):
     """
     FreeTime协议的公共抽象，封装了“为每个请求派生一个tasklet”的机制
@@ -59,6 +78,46 @@ class FTProtocolBase(object):
         pass
 
 
+class _SocketOpt:
+    """
+    常用socket设置
+    """
+    UDP_BUFFER_SIZE = ((2 * 1024) * 1024)
+    TCP_LINE_MAX_LENGTH = (1024 * 63)
+
+    @classmethod
+    def upd(cls, p):
+        pass
+
+    @classmethod
+    def tcp(cls, p):
+        pass
+
+
+class FTUDPSenderProtocol(DatagramProtocol, FTProtocolBase):
+
+    def startProtocol(self):
+        pass
+
+    def datagramReceived(self, data, address):
+        pass
+
+    def sendTo(self, data, toAddress):
+        pass
+
+
+class FTUDPServerProtocol(DatagramProtocol, FTProtocolBase, ):
+
+    def startProtocol(self):
+        pass
+
+    def stopProtocol(self):
+        pass
+
+    def datagramReceived(self, data, address):
+        pass
+
+
 class FTUDPQueryProtocol(DatagramProtocol, FTProtocolBase):
 
     QUERYID = 0
@@ -80,3 +139,141 @@ class FTUDPQueryProtocol(DatagramProtocol, FTProtocolBase):
 
     def _clearFailed(self, deferred, mid):
         pass
+
+
+class FTTCPServerProtocol(LineReceiver, FTProtocolBase,)
+
+    def connectionMade(self):
+        pass
+
+    def connectionLost(self, reason):
+        pass
+
+    def lineReceived(self, data):
+        pass
+
+    def lineLengthExceeded(self, line):
+        pass
+
+
+class FTZipEncryServerProtocol(protocol.Protocol, FTProtocolBase):
+    """
+    一个压缩加密的tcp协议基类
+    客户端建立连接后，首先回应一个%04X的随机数作为种子
+    然后双方会使用（种子+长度）对数据加密压缩，然后用"%04X%s"%(len, data)的格式交换数据
+    加密算法用cffi实现
+    """
+    _buffer = ''
+
+    def connectionMade(self):
+        pass
+
+    def connectionLost(self, reason):
+        pass
+
+    def _encode(self, src):
+        pass
+
+    def _decode(self, dst):
+        pass
+
+    def clearLineBuffer(self):
+        pass
+
+    def dataReceived(self, data):
+        pass
+
+    def lineReceived(self, data):
+        pass
+
+
+class FTHead4ServerProtocol(protocol.Protocol, FTProtocolBase, ):
+    """
+    一个tcp协议基类, 4字节的数据长度+数据体
+    """
+    _buffer = ''
+
+    def connectionMade(self):
+        pass
+
+    def connectionLost(self, reason):
+        pass
+
+    def _encode(self, src):
+        pass
+
+    def clearLineBuffer(self):
+        pass
+
+    def dataReceived(self, data):
+        pass
+
+    def lineReceived(self, data):
+        pass
+
+
+class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):
+    """
+    WebSocket加密的tcp协议基类
+    客户端建立连接后，首先回应一个%04X的随机数作为种子
+    """
+    _buffer = ''
+    isNewVersion = True
+    handshaken = False
+
+    def connectionMade(self):
+        pass
+
+    def connectionLost(self, reason):
+        pass
+
+    def _encode(self, src):
+        pass
+
+    def encode_message(self, src):
+        pass
+
+    def mask_message(self, mask_key, data):
+        """
+        mask or unmask data. Just do xor for each byte
+        mask_key: 4 byte string(byte).
+        data: data to mask/unmask.
+        """
+        pass
+
+    def _decode(self, dst):
+        pass
+
+    def clearLineBuffer(self):
+        pass
+
+    def dataReceived(self, data):
+        pass
+
+    def lineReceived(self, data):
+        pass
+
+    def on_handshake(self, msg):
+        pass
+
+    def h5_generate_token(self, key1, key2, key3):
+        pass
+
+    def h5_generate_token2(self, key):
+        pass
+
+
+class FTHttpRequest(twisted.web.http.Request, FTProtocolBase, ):
+
+    def process(self):
+        pass
+
+    def getTaskletFunc(self, pack):
+        pass
+
+    def handleRequest(self):
+        pass
+
+
+class FTHttpChannel(twisted.web.http.HTTPChannel, ):
+    requestFactory = FTHttpRequest

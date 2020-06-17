@@ -302,6 +302,97 @@ def skill_star_config():
     outHandle.close()
 
 
+def gunLevel():
+    """千炮升级"""
+    outPath = getOutPath("gunLevel_m")
+    ws = getWorkBook().get_sheet_by_name("GunLevel")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["gunLevel"] = int(cols[0])
+        upgradeItems = collections.OrderedDict()
+        if int(cols[1]):
+            upgradeItems[cols[1]] = cols[2]
+        for x in range(3, 6, 2):
+            if int(cols[x]):
+                upgradeItems[cols[x]] = cols[x + 1]
+        if upgradeItems:
+            one["upgradeItems"] = upgradeItems
+        _tmpIdx = 7
+        one["successRate"] = int(cols[_tmpIdx])
+        if int(cols[_tmpIdx]) < 10000:
+            protectItems = collections.OrderedDict()
+            one["protectItems"] = protectItems
+            protectItems[cols[_tmpIdx + 1]] = int(cols[_tmpIdx + 2])
+        returnItems = []
+        probb = 0
+        for x in range(_tmpIdx + 3, _tmpIdx + 12, 3):
+            if int(cols[x]):
+                item = collections.OrderedDict()
+                item["kindId"] = cols[x]
+                item["count"] = cols[x + 1]
+                item["probb"] = [probb + 1, probb + cols[x + 2]]
+                returnItems.append(item)
+                probb += cols[x + 2]
+        if returnItems:
+            one["returnItems"] = returnItems
+        if cols[_tmpIdx + 12]:
+            one["interval"] = float(cols[_tmpIdx + 12])
+        if cols[_tmpIdx + 13]:
+            one["unlockMultiple"] = int(cols[_tmpIdx + 13])
+        if cols[_tmpIdx + 14] is not None:
+            one["levelAddition"] = float(cols[_tmpIdx + 14])
+        one["levelValue"] = int(cols[_tmpIdx + 15])
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def weapon_config():
+    print "weapon_config_m"
+    outPath = getOutPath("weapon_m")
+    ws = getWorkBook().get_sheet_by_name("Weapon")
+    weaponConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        oneWeapon = {}
+        if str(cols[0]) in weaponConfig:
+            raise KeyError("weaponId %d repeat" % int(cols[0]))
+        weaponConfig[str(cols[2])] = oneWeapon
+        oneWeapon["weaponId"] = int(cols[2])
+        oneWeapon["costBullet"] = cols[3]
+        oneWeapon["power"] = cols[4]
+        oneWeapon["matchAddition"] = cols[5]
+        oneWeapon["wpRatio"] = cols[12]
+
+    result = json.dumps(weaponConfig, indent=4)
+
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def getWorkBook(filename="newfish_multiple.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -357,10 +448,10 @@ config_list = [
     (fish_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
-    # (gunLevel, None),
+    (gunLevel, None),
     # (gunskin_config, None),
     # (superboss_power_config, None),
-    # (weapon_config, None),
+    (weapon_config, None),
     # (level_funds_config, None),
     # (level_funds_config, 25794)
 ]

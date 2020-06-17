@@ -79,7 +79,26 @@ def _initialize():
             _datas['server_num_idx'] = -1
         _datas.update(pgdict)
         _datas['game_packages'] = tuple(pgdict['game_packages'])
-        pass
+        mincenter = min(ftcon.server_type_map.get(SRV_TYPE_HTTP))
+        if mincenter == sid:
+            _datas['is_control_process'] = 1
+        else:
+            _datas['is_control_process'] = 0
+
+        _datas['is_http_process'] = 0
+        sdef = ftcon.server_map[sid]
+        protocols = sdef.get('protocols')
+        if protocols:
+            server = protocols.get('server')
+            if server:
+                for p in server:
+                    if p.endswith('http') :
+                        _datas['is_http_process'] = 1
+                        break
+
+        _dumpGdataInfo()
+        ftlog.info('_initialize gdata end.')
+    return _datas
 
 
 def initializeOk():
@@ -120,6 +139,36 @@ def games():
     注: 由poker系统initialize()方法进行初始化
     '''
     return _datas['tygame.instance.dict']
+
+
+
+
+
+def srvIdRoomIdListMap():
+    '''
+    取得ROOM的进程的映射关系, key为str(serverId), value为int(ROOMID)的list
+    '''
+    return _datas['srvid_roomid_map']
+
+
+def roomIdDefineMap():
+    '''
+    取得ROOM的进程的映射关系, key为int(roomId), value为ROOM的基本定义信息
+    ROOM的基本定义信息RoomDefine:
+
+    RoomDefine.bigRoomId     int 当前房间的大房间ID, 即为game/<gameId>/room/0.json中的键
+    RoomDefine.parentId      int 父级房间ID, 当前为管理房间时, 必定为0 (管理房间, 可以理解为玩家队列控制器)
+    RoomDefine.roomId        int 当前房间ID
+    RoomDefine.gameId        int 游戏ID
+    RoomDefine.configId      int 配置分类ID
+    RoomDefine.controlId     int 房间控制ID
+    RoomDefine.shadowId      int 影子ID
+    RoomDefine.tableCount    int 房间中桌子的数量
+    RoomDefine.shadowRoomIds tuple 当房间为管理房间时, 下属的桌子实例房间的ID列表
+    RoomDefine.configure     dict 房间的配置内容, 即为game/<gameId>/room/0.json中的值
+    '''
+    return _datas['roomid_define_map']
+
 
 def globalConfig():
     '''

@@ -22,3 +22,16 @@ def getOnlineLocList(userId):
                 ]
     '''
     return dbuser._getOnlineLocList(userId)
+
+
+
+def removeOnlineLoc(userId, roomId, tableId):
+    '''
+    移除一个用户的在线位置
+    通常此方法在用户真实离开某一个桌位后调用
+    '''
+    assert (isinstance(roomId, int) and roomId > 0)
+    assert (isinstance(tableId, int) and tableId > 0)
+    return dbuser._removeOnlineLoc(userId, roomId, tableId)
+
+

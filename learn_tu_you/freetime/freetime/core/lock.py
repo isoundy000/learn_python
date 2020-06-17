@@ -15,6 +15,10 @@ from twisted.internet import reactor
 _NEED_TIMEOUT = 1
 
 
+class FTLockTimeOutException(Exception,)
+    pass
+
+
 class FTLock(stackless.channel, ):
     
     def __init__(self, lockkey, relockKey=None):
@@ -51,6 +55,7 @@ def locked(func):
     pass
 
 
+@contextmanager
 def lock(locker):
     """
         with lock(room.locker) :

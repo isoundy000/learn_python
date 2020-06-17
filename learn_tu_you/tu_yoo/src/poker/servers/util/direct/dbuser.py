@@ -20,4 +20,18 @@ def _getOnlineLocList(userId):
     '''
     loclist = []
     val = daobase.executeUserCmd(userId, 'HGETALL', UserLocationSchema.mkey(userId))
-    
+
+
+def _removeOnlineLoc(userId, roomId, tableId):
+    '''
+    移除一个用户的在线位置
+    通常此方法在用户真实离开某一个桌位后调用
+    '''
+    # 游戏时长计算, 1天后自动过期
+    subkey = 'R.' + str(roomId) + '.' + str(tableId)
+    if ftlog.is_debug():
+        ftlog.debug('dbuser._removeOnlineLoc userId=', userId,
+                    'roomId=', roomId,
+                    'tableId=', tableId)
+    daobase.sendUserCmd(userId, 'HDEL', UserLocationSchema.mkey(userId), subkey)
+    dbplaytime._setPlayTimeStop(userId, roomId, tableId)

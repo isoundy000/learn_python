@@ -84,6 +84,7 @@ def ppsCountRedisCmd():
 
 
 def _initialize():
+    """初始化redis数据库链接"""
     global __user_redis_conns, __user_redis_conns_len, __table_redis_conns, __table_redis_conns_len
     global __mix_redis_conn, __keymap_redis_conns, __paydata_redis_conn, __geo_redis_conn
     global __config_redis_conn, __online_redis_conn, __replay_redis_conn, __forbidden_redis_conn
@@ -134,6 +135,17 @@ def loadLuaScripts(luaName, luaScript):
             assert (oldsha == shaval)
 
 
+def getLuaScriptsShaVal(luaName):
+    return __luascripts[luaName]
+
+
+def filterValue(attr, value):
+    if attr in daoconst.FILTER_KEYWORD_FIELDS:
+        value = unicode(value)
+        return keywords.replace(value)
+    return value
+
+
 def executeUserCmd(uid, *cmds):
     """
     执行玩家的命令
@@ -165,3 +177,16 @@ def executeTableCmd(roomId, tableId, *cmds):
     if _REDIS_CMD_PPS_:
         _redisCmdPps('table', cmds)
     return ftred.runCmd(__table_redis_conns[cindex], *cmds)
+
+
+def executeTableLua(roomId, tableId, luaName, *cmds):
+    """
+    执行桌子的lua
+    """
+    assert (isinstance(roomId, int) and roomId > 0)
+    assert (isinstance(tableId, int) and tableId >= 0)
+    cindex = int(roomId) % __table_redis_conns_len
+    shaval = getLuaScriptsShaVal(luaName)
+    if _REDIS_CMD_PPS_:
+        _redisCmdPps('table', ['EVALSHA', luaName])
+    return ftred.runCmd(__table_redis_conns[cindex], 'EVALSHA', shaval, *cmds)

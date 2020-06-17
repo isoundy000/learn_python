@@ -61,6 +61,62 @@ def skill_config():
     print "skill_config, end"
 
 
+
+def item_config(clientId=0):
+    """
+    道具配置
+    """
+    sn = "Item" if clientId == 0 else "Item" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    print "item_config, start, ", sn, fn
+    outPath = getOutPath("item", fn)
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[str(cols[0])] = one
+            one["kindId"] = int(cols[0])
+            one["order"] = int(cols[1])
+            if not cols[2]:
+                one["visibleInBag"] = 0
+            if cols[3]:
+                one["up_skill"] = 1
+            one["actions"] = []
+            one["name"] = str(cols[4])
+            one["desc"] = str(cols[5])
+            if cols[6]:
+                one["itemType"] = int(cols[6])
+            if cols[7]:
+                one["typeName"] = str(cols[7])
+            if cols[8]:
+                one["minimumVersion"] = str(cols[8])
+            one["reviewVerLimit"] = int(cols[9]) if cols[9] else 0
+            actCnt = int(cols[10])
+            for i in range(11, 11 + 2 * actCnt, 2):
+                tmp = collections.OrderedDict()
+                tmp["action"] = str(cols[i])
+                if cols[i + 1]:
+                    tmp["params"] = json.loads(cols[i + 1])
+                one["actions"].append(tmp)
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "item_config, end"
+
+
 def getWorkBook(filename="newfish_common.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -108,10 +164,10 @@ config_list = [
     # (activity_config, None),
     (skill_config, None),
     # (lucky_tree_conf, None),
-    # (item_config, None),
-    # (item_config, 26312),
-    # (item_config, 26760),
-    # (item_config, 26882),
+    (item_config, None),
+    (item_config, 26312),
+    (item_config, 26760),
+    (item_config, 26882),
     # (store_config, None),
     # (store_config, 25598),
     # (store_config, 25794),
@@ -150,6 +206,7 @@ if __name__ == "__main__":
     RealeaseConfPath = ""
     print "begin"
     t1 = int(time.time())
+    ServerPath = '/../../../../../../xxfish_test/config37/game/44'  # 默认练习路径
     if len(sys.argv) > 1 and sys.argv[1] == "-h":
         ServerPath = "/../../../../../../server/newfish-py/wechat/xxfish_test/config37/game/44"
     elif len(sys.argv) > 1 and sys.argv[1] == "-l":
@@ -173,7 +230,7 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1 and sys.argv[1] == "-g":
         ServerPath = "/../../fishwx/xxfish_dev/config37/game/44"
     else:
-        ServerPath = "/../../../../../../../gameServer/hall37/newfish-py/wx_superboss/xxfish_dev/config37/game/44"
+        ServerPath = '/../../../../../../xxfish_test/config37/game/44'  # 默认练习路径
 
     import platform
     _system = platform.system()

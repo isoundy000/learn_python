@@ -178,6 +178,242 @@ def match_fish_config():
     outHandle.close()
 
 
+def weapon_config():
+    """武器配置"""
+    print "weapon_config"
+    outPath = getOutPath("weapon")
+    ws = getWorkBook().get_sheet_by_name("Weapon")
+    weaponConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        oneWeapon = {}
+        if str(cols[0]) in weaponConfig:
+            raise KeyError("weaponId %d repeat" % int(cols[0]))
+        weaponConfig[str(cols[2])] = oneWeapon
+        oneWeapon["weaponId"] = int(cols[2])
+        oneWeapon["costBullet"] = cols[3]
+        oneWeapon["power"] = cols[4]
+        oneWeapon["matchAddition"] = cols[5]
+        oneWeapon["wpRatio"] = cols[12]
+
+    result = json.dumps(weaponConfig, indent=4)
+
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def fixed_multiple_fish():
+    """固定倍率鱼"""
+    outPath = getOutPath("fixedMultipleFish")
+    ws = getWorkBook().get_sheet_by_name("FixedMultipleFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        probbConf = {}
+        one = []
+        config[str(cols[0])] = probbConf
+        probbConf["range"] = json.loads(str(cols[1]))
+        probbConf["probb"] = cols[2]
+        probbConf["multiples"] = one
+        probb = 0
+        for x in xrange(3, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            multiple = collections.OrderedDict()
+            itemProbb = int(cols[x + 1])
+            multiple["multiple"] = int(cols[x])
+            multiple["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one.append(multiple)
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def weaponPowerRate_config():
+    """加载武器威力加成配置"""
+    outPath = getOutPath("weaponPowerRate")
+    ws = getWorkBook().get_sheet_by_name("WeaponPowerRate")
+    powerRateConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        oneRate = []
+        if str(cols[0]) in powerRateConfig:
+            raise KeyError("weaponId %d repeat" % int(cols[0]))
+        powerRateConfig[str(cols[0])] = oneRate
+        probb = 0
+        for m in range(1, len(cols), 2):
+            if not cols[m]:
+                break
+            item = {}
+            item["value"] = json.loads(cols[m])
+            itemProbb = cols[m + 1]
+            item["probb"] = [probb + 1, probb + itemProbb]
+            oneRate.append(item)
+            probb += itemProbb
+    result = json.dumps(powerRateConfig, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def gunskin_config(clientId=0):
+    """皮肤炮配置"""
+    sn = "Gun" if clientId == 0 else "Gun" + "_" + str(clientId)
+    sn2 = "GunSkin" if clientId == 0 else "GunSkin" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    outPath = getOutPath("gun", fn)     # 输出到gun文件夹下 0.json 26312.json
+    ws = getWorkBook().get_sheet_by_name(sn)
+    wsSkin = getWorkBook().get_sheet_by_name(sn2)
+    startRowNum = 4
+    i = 0
+    config = collections.OrderedDict()
+    gunIds = []
+    config["gunIds"] = gunIds                       # 皮肤炮IDS
+    config["gun"] = collections.OrderedDict()       # 皮肤炮配置
+    config["skin"] = collections.OrderedDict()      # 皮肤炮皮肤
+    gunConf = collections.OrderedDict()
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        if row[1].value not in config["gun"].keys():
+            gunConf = collections.OrderedDict()
+            config["gun"][row[1].value] = gunConf
+        one = collections.OrderedDict()
+        gunConf[str(row[2].value)] = one
+        if int(cols[1]) not in gunIds:
+            gunIds.append(int(cols[1]))
+        one["gunId"] = int(cols[1])
+        one["gunLevel"] = int(cols[2])
+        one["name"] = cols[0]
+        one["multiple"] = int(cols[3])
+        one["unlockType"] = int(cols[4])
+        one["unlockValue"] = int(cols[5])
+        one["equipType"] = int(cols[6])
+        one["equipValue"] = int(cols[7])
+        one["exp"] = int(cols[8])
+        one["totalExp"] = int(cols[9])
+        one["effectAddition"] = float(cols[10])
+        one["effectType"] = int(cols[11])
+        one["effectProbb"] = int(cols[12])
+        one["unlockDesc"] = unicode(cols[13] or "")
+        one["equipDesc"] = unicode(cols[14] or "")
+        one["unitPrice"] = int(cols[15])
+        one["skins"] = json.loads(str(cols[16]))
+        aloofOdds = []
+        one["aloofOdds"] = aloofOdds
+        for m in range(17, len(cols), 2):
+            if cols[m] is None:
+                break
+            oddsMap = {}
+            oddsMap["odds"] = cols[m]
+            oddsMap["probb"] = cols[m + 1]
+            aloofOdds.append(oddsMap)
+
+    i = 0
+    for row in wsSkin.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        one = collections.OrderedDict()
+        for cell in row:
+            cols.append(cell.value)
+        config["skin"][cols[0]] = one
+        one["skinId"] = cols[0]
+        one["gunId"] = cols[1]
+        one["kindId"] = cols[2]
+        one["consumeCount"] = cols[3]
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def item_config(clientId=0):
+    """
+    道具配置
+    """
+    sn = "Item" if clientId == 0 else "Item" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    print "item_config, start, ", sn, fn
+    outPath = getOutPath("item", fn)
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[str(cols[0])] = one
+            one["kindId"] = int(cols[0])
+            one["order"] = int(cols[1])
+            if not cols[2]:
+                one["visibleInBag"] = 0
+                continue
+            if cols[3]:
+                one["up_skill"] = 1
+            one["actions"] = []
+            one["name"] = str(cols[4])
+            one["desc"] = str(cols[5])
+            if cols[6]:
+                one["minimumVersion"] = str(cols[6])
+            one["reviewVerLimit"] = int(cols[7]) if cols[7] else 0
+            actCnt = int(cols[8])
+            for i in range(9, 9 + 2 * actCnt, 2):
+                tmp = collections.OrderedDict()
+                tmp["action"] = str(cols[i])
+                if cols[i + 1]:
+                    tmp["params"] = json.loads(cols[i + 1])
+                one["actions"].append(tmp)
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "item_config, end"
+
 
 def getWorkBook(filename="newfish.xlsm"):
     '''
@@ -240,10 +476,10 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
 # 配置列表
 config_list = [
     # # (activity_config, None),
-    # # (item_config, None),
-    # # (item_config, 26312),
-    # # (item_config, 26760),
-    # # (item_config, 26882),
+    (item_config, None),
+    (item_config, 26312),
+    (item_config, 26760),
+    (item_config, 26882),
     # # (store_config, None),
     # # (store_config, 25598),
     # # (store_config, 25794),
@@ -276,7 +512,7 @@ config_list = [
     (drop_config, None),
     (fish_config, None),
     (match_fish_config, None),
-    # (weapon_config, None),
+    (weapon_config, None),
     # (ulevel_config, None),
     # (skill_grade_config, None),
     # (skill_star_config, None),
@@ -299,16 +535,16 @@ config_list = [
     # # (gift_config, 26122),
     # (item_drop_config, None),
     # # (vip_config, None),
-    # (fixed_multiple_fish, None),
+    (fixed_multiple_fish, None),
     # (call_multiple_fish, None),
     # (fishBonus_config, None),
     # (match_multiple_fish, None),
     # # (achievement_config, None),
     # # (honor_config, None),
-    # (weaponPowerRate_config, None),
-    # (gunskin_config, None),
-    # (gunskin_config, 26312),
-    # (gunskin_config, 26760),
+    (weaponPowerRate_config, None),     # 加载武器威力加成配置
+    (gunskin_config, None),             # 皮肤炮配置
+    (gunskin_config, 26312),
+    (gunskin_config, 26760),
     # (plyerBuffer_config, None),
     # (randomMultipleFish_config, None),
     # (gunLevel, None),

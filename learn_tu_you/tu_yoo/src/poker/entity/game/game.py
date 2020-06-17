@@ -59,11 +59,75 @@ class TYGame(object):
         '''
         raise NotImplementedError('')
 
+    def initGameBefore(self):
+        '''
+        此方法由系统进行调用
+        游戏初始化的预处理
+        '''
+
+    def initGame(self):
+        '''
+        此方法由系统进行调用
+        游戏自己初始化业务逻辑模块, 例如: 初始化配置, 建立事件中心等
+        执行的时序为:  首先调用所有游戏的 initGameBefore()
+                    再调用所有游戏的 initGame()
+                    最后调用所有游戏的 initGameAfter()
+        '''
+
+    def initGameAfter(self):
+        '''
+        此方法由系统进行调用
+        游戏初始化的后处理
+        '''
+
+    def getInitDataKeys(self):
+        '''
+        取得游戏数据初始化的字段列表
+        '''
+        return []
+
+    def getInitDataValues(self):
+        '''
+        取得游戏数据初始化的字段缺省值列表
+        '''
+        return []
+
+    def getGameInfo(self, userId, clientId):
+        '''
+        取得当前用户的游戏账户信息dict
+        '''
+        return {}
+
+    def getDaShiFen(self, userId, clientId):
+        '''
+        取得当前用户的游戏账户的大师分信息
+        '''
+        return {}
+
+    def getPlayGameCount(self, userId, clientId):
+        '''
+        取得当前用户游戏总局数
+        '''
+        return 0
+
+    def getPlayGameInfoByKey(self, userId, clientId, keyName):
+        '''
+        取得当前用户的游戏信息
+        key - 要取得的信息键值，枚举详见TYGame类的宏定义
+        '''
+        return None
+
     def getEventBus(self):
         '''
         取得当前游戏的事件中心
         '''
         return self._eventBus
+
+    def isWaitPigTable(self, userId, room, tableId):
+        '''
+        检查是否是杀猪状态的桌子, 缺省为非杀猪状态的桌子
+        '''
+        return 0
 
 
 GAME_STATUS_RUN = 0                     # 进程初始化后，处于正常服务状态

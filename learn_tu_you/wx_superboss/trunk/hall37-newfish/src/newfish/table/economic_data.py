@@ -18,3 +18,19 @@ class EconomicData(object):
     
     def loadData(self):
         pass
+
+    @property
+    def allChip(self):
+        return 0
+
+    @property
+    def chip(self):
+        return 0
+
+    @property
+    def tableChip(self):
+        return 0
+
+    @property
+    def bulletChip(self):
+        return 0

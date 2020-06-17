@@ -128,6 +128,93 @@ ELEC_TOWERID = 3
 TOWERIDS = [ICE_TOWERID, FIRE_TOWERID, ELEC_TOWERID]
 
 # -------------------------
+# 以下type为鱼种类别
+# 普通金币鱼
+NORMAL_FISH_TYPE = [1, 3]
+# 道具鱼
+ITEM_FISH_TYPE = [4, 11, 12, 13, 14, 15, 16]
+# 红包鱼（包含奖券、话费、红包、京东卡、分享奖券鱼）
+RED_FISH_TYPE = [4, 11, 13, 14, 15, 27]
+# Boss鱼
+BOSS_FISH_TYPE = [2, 8, 9, 19]
+# 捕鱼机器人
+ROBOT_FISH_TYPE = [7]
+
+# 冰锥
+ICE_FISH_TYPE = [6]
+
+# 恐怖鱼
+TERROR_FISH_TYPE = [5, 28, 29]
+# 非高冷鱼
+NON_ALOOF_FISH_TYPE = [1, 3]
+# 使用彩虹奖池的鱼
+RAINBOW_BONUS_FISH_TYPE = [5, 26, 28, 29]
+
+
+# -------------------------
+# 以下type为武器类别
+# 火炮/千炮
+GUN_WEAPON_TYPE = 1
+# 技能
+SKILL_WEAPON_TYPE = 2
+# 猎鱼机甲开火
+RB_FIRE_WEAPON_TYPE = 3
+# 猎鱼机甲爆炸
+RB_BOMB_WEAPON_TYPE = 4
+# 炸弹鱼爆炸
+BOMB_WEAPON_TYPE = 5
+# 招财模式火炮
+ROBBERY_WEAPON_TYPE = 6
+# 电鳗
+NUMB_WEAPON_TYPE = 7
+# 钻头鱼
+DRILL_WEAPON_TYPE = 8
+# 超级boss
+SUPERBOSS_WEAPON_TYPE = 9
+
+# -------------------------
+
+# 红包券:奖券 比率
+COUPON_DISPLAY_RATE = 0.01
+# 技能卡片道具ID与技能ID对应表
+skillCardKindIdMap = {
+    1145: 5101,
+    1146: 5102,
+    1147: 5103,
+    1148: 5104,
+    1149: 5105,
+    1150: 5106,
+    1151: 5107,
+    1152: 5108,
+    1153: 5109,
+    1154: 5110
+}
+# 升星卡片道具ID与技能ID对应表
+starCardKindIdMap = {
+    1155: 5101,
+    1156: 5102,
+    1157: 5103,
+    1158: 5104,
+    1159: 5105,
+    1160: 5106,
+    1161: 5107,
+    1162: 5108,
+    1163: 5109,
+    1164: 5110
+}
+
+# 与技能升级、升星有关的道具ID
+upgradeSkillKindIds = [14124, 14125, 14126, 14127, 1145, 1147, 1149, 1150, 1152, 1153, 1154]
+
+# 与火炮升级有关的道具ID
+upgradeGunKindIds = [PEARL_KINDID, PURPLE_CRYSTAL_KINDID, YELLOW_CRYSTAL_KINDID]
+
+# 自定义ID与资产ID对应表
+customKindIdMap = {
+    CHIP_KINDID: "user:chip",
+    DIAMOND_KINDID: "user:diamond",
+    COUPON_KINDID: "user:coupon"
+}
 
 # 9999下的排行榜ID
 RANK_STAR = "110044001"
@@ -218,10 +305,10 @@ GAME_MODES = [CLASSIC_MODE, MULTIPLE_MODE]
 
 # 游戏配置数据
 defaultIntClientId = 0
-sceneGroupConf = {}             # 加载渔场鱼阵配置
+sceneGroupConf = {}             # 加载渔场鱼阵配置 scene场景鱼阵 [group_44201_1、group_44201_2、... group_44201_30]
 sceneGroupConf_m = {}
-groupsConf = {}                 # 鱼阵配置
-groupsConf_m = {}               # 千炮鱼阵配置
+groupsConf = {}                 # 所有鱼阵配置All
+groupsConf_m = {}               # 所有千炮鱼阵配置All
 weaponConf = {}
 weaponConf_m = {}
 weaponPowerRateConf = {}
@@ -652,6 +739,148 @@ def loadNcmpttTaskConf():
     ncmpttTaskConf = rocopy(ncmpttTaskConf)
 
 
+def getNcmpttTaskConf(fishPool):
+    """
+    获取限时任务配置
+    """
+    global ncmpttTaskConf
+    return rwcopy(ncmpttTaskConf.get(str(fishPool), []))
+
+
+def loadFishConf():
+    """
+    加载所有鱼配置
+    """
+    global fishConf
+    fishConf = getGameConf("fish")
+    for key, value in fishConf.iteritems():
+        value["fishType"] = int(key)
+    fishConf = rocopy(fishConf)
+
+
+def loadFishConf_m():
+    """
+    加载千炮所有鱼配置
+    """
+    global fishConf_m
+    fishConf_m = getGameConf("fish_m")
+    for key, value in fishConf_m.iteritems():
+        value["fishType"] = int(key)
+    fishConf_m = rocopy(fishConf_m)
+
+
+def getFishConf(fishType, typeName, multiple=1):
+    """
+    获取鱼配置 fishType: 鱼的ID typeName 渔场类型[好友、比赛、...] multiple渔场倍率
+    """
+    global fishConf, fishConf_m
+    if typeName in [FISH_TIME_MATCH, FISH_FIGHT, FISH_TIME_POINT_MATCH]:    # 回馈赛渔场、渔友竞技渔场、定时积分赛渔场
+        return getMatchFishConf(fishType)
+    else:
+        conf = fishConf_m.get(str(fishType), {}) if fishType == FISH_MULTIPLE else fishConf.get(str(fishType), {})
+        if multiple != 1 and conf.get("type", 0) in ITEM_FISH_TYPE:
+            conf = rwcopy(conf)
+            conf["probb1"] /= multiple
+            conf["probb2"] /= multiple
+            conf["value"] /= multiple
+        return conf
+
+
+def loadMatchFishConf():
+    """
+    加载比赛鱼配置
+    """
+    global matchFishConf
+    matchFishConf = getGameConf("matchFish")
+    for key, value in matchFishConf.iteritems():
+        value["fishType"] = int(key)
+    matchFishConf = rocopy(matchFishConf)
+
+
+def getMatchFishConf(fishId):
+    """
+    获取比赛鱼配置
+    """
+    global matchFishConf
+    return matchFishConf.get(str(fishId), {})
+
+
+def getAllMatchFish(fishPool):
+    """
+    获取所有比赛加倍鱼
+    """
+    allMatchFish = {}
+    global matchFishConf
+    for fishId, fish in matchFishConf.iteritems():
+        if fish["multiple"] > 1 and fishPool in fish["fishPool"]:
+            allMatchFish[int(fishId)] = fish["multiple"]
+    return allMatchFish
+
+
+def loadWeaponConf():
+    """
+    加载武器配置
+    """
+    global weaponConf
+    global minWeaponId
+    weaponConf = rocopy(getGameConf("weapon"))
+    keys = [int(x) for x in weaponConf.keys()]
+    keys2 = sorted(keys)
+    minWeaponId = keys2[0]
+
+
+def getWeaponConf(wpId, useRate=True, mode=CLASSIC_MODE):
+    """
+    获取武器配置
+    """
+    global weaponConf
+    global weaponConf_m
+    conf = weaponConf if mode == CLASSIC_MODE else weaponConf_m
+    weaponInfo = conf.get(str(wpId), {})
+    powerRateConfig = getWeaponPowerRateConf(wpId)
+    if useRate and powerRateConfig:
+        weaponInfo = rwcopy(weaponInfo)
+        probab = random.randint(1, 10000)
+        for probabInfo in powerRateConfig:
+            probbArr = probabInfo["probb"]
+            if probbArr[0] <= probab <= probbArr[1]:
+                if len(probabInfo["value"]) == 1:
+                    rate = probabInfo["value"][0]
+                else:
+                    rate = round(random.uniform(probabInfo["value"][0], probabInfo["value"][1]), 2)
+                    if ftlog.is_debug():
+                        ftlog.debug("getWeaponConf", wpId, probabInfo["value"], rate)
+                weaponInfo["power"] *= rate
+                break
+    return weaponInfo
+
+
+def loadWeaponConf_m():
+    """
+    加载千炮武器配置
+    """
+    global weaponConf_m
+    global minWeaponId_m
+    weaponConf_m = rocopy(getGameConf("weapon_m"))
+    keys = [int(x) for x in weaponConf_m.keys()]
+    keys2 = sorted(keys)
+    minWeaponId_m = keys2[0]
+
+
+def loadWeaponPowerRateConf():
+    """
+    加载武器威力加成配置
+    """
+    global weaponPowerRateConf
+    weaponPowerRateConf = rocopy(getGameConf("weaponPowerRate"))
+
+
+def getWeaponPowerRateConf(wpId):
+    """
+    获取武器威力加成配置
+    """
+    global weaponPowerRateConf
+    return weaponPowerRateConf.get(str(wpId), [])
 
 
 def loadProbabilityConf():
@@ -764,32 +993,257 @@ def loadDynamicOddsConf():
     """
     global dynamicOddsConf
     dynamicOddsConf = rocopy(getGameConf("dynamicOdds"))
+
+
+def loadFixedMultipleFishConf():
+    """
+    加载固定倍率鱼配置
+    """
+    global fixedMultipleFishConf
+    fixedMultipleFishConf = rocopy(getGameConf("fixedMultipleFish"))
+
+
+def getFixedMultipleFishConf(fishPool):
+    """
+    获取固定倍率鱼配置
+    """
+    global fixedMultipleFishConf
+    return fixedMultipleFishConf.get(str(fishPool), {})
+
+
+def loadItemConf(intClientId=0):
+    """
+    加载道具配置
+    """
+    global itemConf
+    _conf = getGameConf("item", intClientidNum=intClientId)
+    if _conf:
+        itemConfDict = OrderedDict(sorted(_conf.iteritems(), key=lambda d: d[1]["order"]))
+        itemConf[intClientId] = rocopy(itemConfDict)
+    else:
+        itemConf[intClientId] = {}
+
+
+def _getItemConfByClientId(clientId):
+    """
+    获取clientId对应的道具配置
+    """
+    global itemConf
+    intClientId = configure.clientIdToNumber((clientId) if clientId else defaultIntClientId)
+    if itemConf.get(intClientId) is None:
+        loadItemConf(intClientId)
+    if itemConf.get(intClientId):
+        return itemConf[intClientId]
+    return itemConf[defaultIntClientId]
+
+
+def getItemConf(clientId, kindId=None):
+    """
+    获取道具配置
+    """
+    _itemConf = _getItemConfByClientId(clientId)
+    if kindId is None:
+        return _itemConf
+    return rwcopy(_itemConf.get(str(kindId), {}))
+
+
+def loadGunTypeConf(intClientId=0):
+    """
+    加载炮配置
+    """
+    global gunTypeConf
+    _conf = getGameConf("gun", intClientidNum=intClientId)
+    gunTypeConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def loadGunTypeConf_m(intClientId=0):
+    """
+    加载炮配置
+    """
+    global gunTypeConf_m
+    _conf = getGameConf("gun_m", intClientidNum=intClientId)
+    gunTypeConf_m[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getAllGunIds(clientId, mode):
+    """
+    获取所有炮IDS
+    """
+    global gunTypeConf, gunTypeConf_m
+    typeConf = gunTypeConf if mode == CLASSIC_MODE else gunTypeConf_m
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if typeConf.get(intClientId) is None:
+        if mode == CLASSIC_MODE:
+            loadGunTypeConf(intClientId)
+        else:
+            loadGunTypeConf_m(intClientId)
+    if typeConf.get(intClientId):
+        return typeConf[intClientId].get("gunIds", [])
+    return typeConf.get(defaultIntClientId, {}).get("gunIds", [])
+
+
+def getGunMaxLevel(gunId, clientId, mode):
+    """
+    获取指定炮ID的最大等级
+    """
+    global gunTypeConf, gunTypeConf_m
+    typeConf = gunTypeConf if mode == CLASSIC_MODE else gunTypeConf_m
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if typeConf.get(intClientId) is None:
+        if mode == CLASSIC_MODE:
+            loadGunTypeConf(intClientId)
+        else:
+            loadGunTypeConf_m(intClientId)
+    if typeConf.get(intClientId):
+        return len(typeConf[intClientId].get("gun", {}).get(str(gunId), {}))
+    return len(typeConf.get(defaultIntClientId, {}).get("gun", {}).get(str(gunId), {}))
+
+
+def getGunConf(gunId, clientId, level=1, mode=CLASSIC_MODE):
+    """
+    获取皮肤炮指定等级配置
+    """
+    global gunTypeConf, gunTypeConf_m
+    typeConf = gunTypeConf if mode == CLASSIC_MODE else gunTypeConf_m
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if typeConf.get(intClientId) is None:
+        if mode == CLASSIC_MODE:
+            loadGunTypeConf(intClientId)
+        else:
+            loadGunTypeConf_m(intClientId)
+    if typeConf.get(intClientId):
+        return typeConf[intClientId].get("gun", {}).get(str(gunId), {}).get(str(level), {})
+    return typeConf.get(defaultIntClientId, {}).get("gun", {}).get(str(gunId), {}).get(str(level), {})
+
+
+def getGunSkinConf(gunSkinId, clientId, mode):
+    """
+    获取皮肤配置
+    """
+    global gunTypeConf, gunTypeConf_m
+    typeConf = gunTypeConf if mode == CLASSIC_MODE else gunTypeConf_m
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if typeConf.get(intClientId) is None:
+        if mode == CLASSIC_MODE:
+            loadGunTypeConf(intClientId)
+        else:
+            loadGunTypeConf_m(intClientId)
+    if typeConf.get(intClientId):
+        return typeConf[intClientId].get("skin", {}).get(str(gunSkinId))
+    return typeConf.get(defaultIntClientId, {}).get("skin", {}).get(str(gunSkinId))
+
+
+
+
+
+def loadGunLevelConf():
+    """
+    加载火炮等级配置
+    """
+    global gunMultipleConf
+    gunMultipleConf = OrderedDict()
+    global gunLevelConf
+    gunLevelConfTmp = getGameConf("gunLevel")
+    gunLevels = sorted(gunLevelConfTmp.iteritems(), key=lambda d: d[0])
+    gunLevelConf = OrderedDict()
+    for key, value in gunLevels:
+        gunLevelConf[key] = value
+        unlockMultiple = value.get("unlockMultiple")    # 解锁倍率
+        if unlockMultiple and unlockMultiple not in gunMultipleConf:
+            gunMultipleConf[unlockMultiple] = int(key)
+    gunLevelConf = rocopy(gunLevelConf)
+    gunMultipleConf = rocopy(gunMultipleConf)
+    # print "gunMultipleConf =", gunMultipleConf
+
+
+def loadGunLevelConf_m():
+    """
+    加载千炮火炮等级配置
+    """
+    global gunLevelConf_m
+    gunLevelConfTmp = getGameConf("gunLevel_m")
+    gunLevels = sorted(gunLevelConfTmp.iteritems(), key=lambda d: d[0])
+    gunLevelConf_m = OrderedDict()
+    for key, value in gunLevels:
+        gunLevelConf_m[key] = value
+    gunLevelConf_m = rocopy(gunLevelConf_m)
+
+
+
+def getGunLevelConf(gunLevel, mode):
+    """
+    读取火炮等级配置
+    """
+    global gunLevelConf, gunLevelConf_m
+    if mode == CLASSIC_MODE:
+        return gunLevelConf.get(str(gunLevel), {})
+    else:
+        return gunLevelConf_m.get(str(gunLevel), {})
+
+
+def loadLotteryTicActConf(intClientId=0):
+    """
+    加载渔场红包券抽奖配置
+    """
+    global lotteryTicketConf
+    _conf = getGameConf("lotteryTicket", intClientidNum=intClientId)
+    lotteryTicketConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getLotteryTicActConf(clientId=None):
+    """
+    获取渔场红包券抽奖配置
+    """
+    global lotteryTicketConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if lotteryTicketConf.get(intClientId) is None:
+        loadLotteryTicActConf(intClientId)
+    if lotteryTicketConf.get(intClientId):
+        return lotteryTicketConf[intClientId]
+    return lotteryTicketConf[defaultIntClientId]
+
+
+def loadSkillCompenConf():
+    """
+    加载技能补偿配置
+    """
+    global skillCompenConf
+    skillCompenConf = rocopy(getGameConf("skillCompensate"))
     
+
+def getSkillCompenConf(key_=None):
+    """
+    获取技能补偿配置
+    """
+    global skillCompenConf
+    if key_ is None:
+        return skillCompenConf
+    return skillCompenConf.get(str(key_))
 
 
 def initConfig():
     """
     初始化所有配置
     """
-    loadPublicConf()
-    loadGroupsConf()
-    loadSceneGroupConf()
-    loadSceneGroupConf_m()
+    loadPublicConf()                        # 加载公共配置
+    loadGroupsConf()                        # 加载所有鱼阵
+    loadSceneGroupConf()                    # 加载渔场鱼阵配置
+    loadSceneGroupConf_m()                  # 加载千炮渔场鱼阵配置
     loadFishConf()
     loadFishConf_m()
-    loadWeaponConf()
-    loadWeaponConf_m()
-    loadWeaponPowerRateConf()
-    loadCheckinConf()
+    loadWeaponConf()                        # 加载武器配置
+    loadWeaponConf_m()                      # 加载千炮武器配置
+    loadWeaponPowerRateConf()               # 加载武器威力加成配置
+    loadCheckinConf()                       # 加载签到配置
     loadStoreConf()
-    loadDropConf()
+    loadDropConf()                          # 加载掉落配置
     loadUlevelConf()
     loadUserLevelConf()
-    loadSkillConf()
-    loadSkillGradeConf()
-    loadSkillGradeConf_m()
-    loadSkillStarConf()
-    loadSkillStarConf_m()
+    loadSkillConf()                         # 加载技能配置
+    loadSkillGradeConf()                    # 加载技能升级配置
+    loadSkillGradeConf_m()                  # 加载千炮技能升级配置
+    loadSkillStarConf()                     # 加载技能星级配置
+    loadSkillStarConf_m()                   # 加载千炮技能星级配置
     loadMainQuestConf()
     loadDailyQuestConf()
     loadDailyQuestRewardConf()
@@ -798,8 +1252,8 @@ def initConfig():
     loadBonusTaskConf()
     loadGuideTaskConf()
     loadExpressionConf()
-    loadChestConf()
-    loadChestDropConf()
+    loadChestConf()                         # 加载宝箱配置
+    loadChestDropConf()                     # 加载宝箱掉落配置
     loadProbabilityConf()                   # 加载概率配置
     loadDynamicOddsConf()                   # 加载动态概率配置
     loadLotteryPoolConf()
@@ -808,23 +1262,23 @@ def initConfig():
     loadCatchDropConf()
     loadVipConf()
     loadMatchFishConf()
-    loadFixedMultipleFishConf()
+    loadFixedMultipleFishConf()             # 加载固定倍率鱼配置
     loadCallMultipleFishConf()
     loadMatchMultipleFishConf()
     loadRankRewardConf()
     loadBounsGameConf()
     loadAchievementConf()
-    loadItemConf()
+    loadItemConf()                          # 加载道具配置
     loadHonorConf()
-    loadGunTypeConf()
-    loadGunTypeConf_m()
+    loadGunTypeConf()                       # 加载皮肤炮炮配置
+    loadGunTypeConf_m()                     # 加载千炮皮肤炮炮配置
     loadRobberyConf()
     loadCommonConf()
     loadPlayerBufferConf()
     loadRobotConf()
     loadRandomMultipleFishConf()
-    loadGunLevelConf()
-    loadGunLevelConf_m()
+    loadGunLevelConf()                      # 加载火炮升级配置
+    loadGunLevelConf_m()                    # 加载千炮火炮升级配置
     loadTableTaskConf()
     loadInviteTaskConf()
     loadRechargePoolConf()
@@ -867,7 +1321,7 @@ def initConfig():
     loadNewbie7DaysGfitConf()
     loadLotteryTicActConf()
     loadPassCardConf()
-    loadSkillCompenConf()
+    loadSkillCompenConf()                                   # 加载技能补偿配置
     loadABTestConf()
     loadGiftAbcTestConf()
     loadReturnerMissionConf()
@@ -891,24 +1345,24 @@ def reloadConfig(event):
     """
     ftlog.debug("reloadConfig->", event.keylist)
     config = {
-        getConfigPath("public"): loadPublicConf,
+        getConfigPath("public"): loadPublicConf,            # 加载公共配置
         getConfigPath("scene"): loadSceneGroupConf,         # 加载渔场鱼阵配置
-        getConfigPath("scene_m"): loadSceneGroupConf_m,
+        getConfigPath("scene_m"): loadSceneGroupConf_m,     # 加载千炮渔场鱼阵配置
         getConfigPath("fish"): loadFishConf,
         getConfigPath("fish_m"): loadFishConf_m,
-        getConfigPath("weapon"): loadWeaponConf,
-        getConfigPath("weapon_m"): loadWeaponConf_m,
-        getConfigPath("weaponPowerRate"): loadWeaponPowerRateConf,
-        getConfigPath("checkin"): loadCheckinConf,
+        getConfigPath("weapon"): loadWeaponConf,            # 加载武器配置
+        getConfigPath("weapon_m"): loadWeaponConf_m,        # 加载千炮武器配置
+        getConfigPath("weaponPowerRate"): loadWeaponPowerRateConf,  # 加载武器威力加成配置
+        getConfigPath("checkin"): loadCheckinConf,          # 加载签到配置
         getConfigPath("store"): loadStoreConf,
         getConfigPath("drop"): loadDropConf,                # 加载掉落配置
         getConfigPath("ulevel"): loadUlevelConf,
         getConfigPath("userLevel"): loadUserLevelConf,
         getConfigPath("skill"): loadSkillConf,              # 加载技能配置
         getConfigPath("skillGrade"): loadSkillGradeConf,    # 加载技能等级配置
-        getConfigPath("skillGrade_m"): loadSkillGradeConf_m,
+        getConfigPath("skillGrade_m"): loadSkillGradeConf_m,# 加载千炮技能等级配置
         getConfigPath("skillStar"): loadSkillStarConf,      # 加载技能星级配置
-        getConfigPath("skillStar_m"): loadSkillStarConf_m,
+        getConfigPath("skillStar_m"): loadSkillStarConf_m,  # 加载千炮技能星级配置
         getConfigPath("mainQuest"): loadMainQuestConf,
         getConfigPath("dailyQuest"): loadDailyQuestConf,
         getConfigPath("dailyQuestReward"): loadDailyQuestRewardConf,
@@ -919,31 +1373,31 @@ def reloadConfig(event):
         getConfigPath("expression"): loadExpressionConf,
         getConfigPath("chest"): loadChestConf,              # 加载宝箱配置
         getConfigPath("chestDrop"): loadChestDropConf,      # 加载宝箱掉落配置
-        getConfigPath("probability"): loadProbabilityConf,
-        getConfigPath("dynamicOdds"): loadDynamicOddsConf,
+        getConfigPath("probability"): loadProbabilityConf,  # 加载概率配置
+        getConfigPath("dynamicOdds"): loadDynamicOddsConf,  # 加载动态概率配置
         getConfigPath("lotteryPool"): loadLotteryPoolConf,
         getConfigPath("gift"): loadGiftConf,
         getConfigPath("activity"): loadActivityConf,
         getConfigPath("catchDrop"): loadCatchDropConf,
         getConfigPath("vip"): loadVipConf,
         getConfigPath("matchFish"): loadMatchFishConf,
-        getConfigPath("fixedMultipleFish"): loadFixedMultipleFishConf,
+        getConfigPath("fixedMultipleFish"): loadFixedMultipleFishConf,  # 加载固定倍率鱼配置
         getConfigPath("callMultipleFish"): loadCallMultipleFishConf,
         getConfigPath("matchMultipleFish"): loadMatchMultipleFishConf,
         getConfigPath("rankReward"): loadRankRewardConf,
         getConfigPath("fishBonusGame"): loadBounsGameConf,
         getConfigPath("achievement"): loadAchievementConf,
-        getConfigPath("item"): loadItemConf,
+        getConfigPath("item"): loadItemConf,                            # 加载道具配置
         getConfigPath("honor"): loadHonorConf,
-        getConfigPath("gun"): loadGunTypeConf,
-        getConfigPath("gun_m"): loadGunTypeConf_m,
+        getConfigPath("gun"): loadGunTypeConf,                          # 加载皮肤炮炮配置
+        getConfigPath("gun_m"): loadGunTypeConf_m,                      # 加载千炮皮肤炮炮配置
         getConfigPath("robbery"): loadRobberyConf,
         getConfigPath("common"): loadCommonConf,
         getConfigPath("playerBuffer"): loadPlayerBufferConf,
         getConfigPath("robot"): loadRobotConf,
         getConfigPath("randomMultipleFish"): loadRandomMultipleFishConf,
-        getConfigPath("gunLevel"): loadGunLevelConf,
-        getConfigPath("gunLevel_m"): loadGunLevelConf_m,
+        getConfigPath("gunLevel"): loadGunLevelConf,                    # 加载火炮升级配置
+        getConfigPath("gunLevel_m"): loadGunLevelConf_m,                # 加载千炮火炮升级配置
         getConfigPath("tableTask"): loadTableTaskConf,
         getConfigPath("inviteTask"): loadInviteTaskConf,
         getConfigPath("rechargePool"): loadRechargePoolConf,
@@ -986,7 +1440,7 @@ def reloadConfig(event):
         getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,
         getConfigPath("lotteryTicket"): loadLotteryTicActConf,
         getConfigPath("passCard"): loadPassCardConf,
-        getConfigPath("skillCompensate"): loadSkillCompenConf,
+        getConfigPath("skillCompensate"): loadSkillCompenConf,          # 加载技能补偿配置
         getConfigPath("abTest"): loadABTestConf,
         getConfigPath("giftAbcTest"): loadGiftAbcTestConf,
         getConfigPath("returnerMission"): loadReturnerMissionConf,

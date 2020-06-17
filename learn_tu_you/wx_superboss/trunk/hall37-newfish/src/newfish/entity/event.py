@@ -45,6 +45,19 @@ class GameTimeEvent(UserEvent):
         self.isFinishRedTask = isFinishRedTask
 
 
+class UseSkillEvent(UserEvent):
+    """
+    使用技能事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId, skillId, fpMultiple, chip=0):
+        super(UseSkillEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+        self.skillId = skillId
+        self.chip = chip
+        self.fpMultiple = fpMultiple
+
+
 class EnterTableEvent(UserEvent):
     """
     进入桌子事件
@@ -53,11 +66,19 @@ class EnterTableEvent(UserEvent):
         super(EnterTableEvent, self).__init__(userId, gameId)
 
 
-
-
 class LeaveTableEvent(UserEvent):
-    pass
-
+    """
+    离开桌子事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId, seatId, enterTime=0):
+        super(LeaveTableEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+        self.seatId = seatId
+        if enterTime:
+            self.gameTime = int((time.time()) - enterTime) / 60
+        else:
+            self.gameTime = 0
 
 
 class ChipChangeEvent(UserEvent):
@@ -68,6 +89,36 @@ class ChipChangeEvent(UserEvent):
         super(ChipChangeEvent, self).__init__(userId, gameId)
         self.delta = delta
         self.final = final
+
+
+class FishModuleTipEvent(UserEvent):
+    """
+    小红点变化事件
+    """
+    def __init__(self, userId, gameId, type, name, value):
+        super(FishModuleTipEvent, self).__init__(userId, gameId)
+        self.type = type
+        self.name = name
+        self.value = value
+
+
+class SkillItemCountChangeEvent(UserEvent):
+    """
+    技能升级升星相关物品数量变化事件
+    """
+    def __init__(self, userId, gameId):
+        super(SkillItemCountChangeEvent, self).__init__(userId, gameId)
+
+
+
+class SkillLevelUpEvent(UserEvent):
+    """
+    技能升级事件
+    """
+    def __init__(self, userId, gameId, skills, actionType):
+        super(SkillLevelUpEvent, self).__init__(userId, gameId)
+        self.skills = skills
+        self.actionType = actionType   # 0:升级 1:升星
 
 
 class CheckLimitTimeGiftEvent(UserEvent):

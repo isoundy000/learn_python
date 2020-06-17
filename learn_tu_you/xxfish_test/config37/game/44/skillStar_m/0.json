@@ -1,0 +1,289 @@
+{
+    "5101": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 9
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5103": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 10
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5105": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 12
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5106": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 9
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5108": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 10
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5109": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 12
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }, 
+    "5110": {
+        "1": {
+            "abilities": []
+        }, 
+        "2": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 30
+                }
+            ]
+        }, 
+        "3": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 300
+                }
+            ]
+        }, 
+        "4": {
+            "abilities": [
+                {
+                    "ability": 1, 
+                    "valueType": 1, 
+                    "value": 10
+                }
+            ]
+        }, 
+        "5": {
+            "abilities": [
+                {
+                    "ability": 25, 
+                    "valueType": 1, 
+                    "value": 3000
+                }
+            ]
+        }
+    }
+}
