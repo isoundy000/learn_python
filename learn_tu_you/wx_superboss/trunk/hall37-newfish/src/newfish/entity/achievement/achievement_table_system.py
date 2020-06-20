@@ -4,5 +4,10 @@
 # @Time: 2020/6/6
 
 
-class AchievementTableSystem:
-    pass
+class AchievementTableSystem(object):
+    """成就系统"""
+    def __init__(self, table, player):
+        self.table = table
+        self.player = player
+        self.achieveTasks = []
+        self.holdAssetTasks = []

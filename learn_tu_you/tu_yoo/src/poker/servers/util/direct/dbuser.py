@@ -35,3 +35,7 @@ def _removeOnlineLoc(userId, roomId, tableId):
                     'tableId=', tableId)
     daobase.sendUserCmd(userId, 'HDEL', UserLocationSchema.mkey(userId), subkey)
     dbplaytime._setPlayTimeStop(userId, roomId, tableId)
+
+
+def _checkUserLoc(userId, clientId, matchGameId=0):
+    return '0.0.0.0'

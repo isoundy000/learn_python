@@ -110,6 +110,13 @@ class SkillItemCountChangeEvent(UserEvent):
         super(SkillItemCountChangeEvent, self).__init__(userId, gameId)
 
 
+class GunItemCountChangeEvent(UserEvent):
+    """
+    普通炮升级相关物品数量变化事件
+    """
+    def __init__(self, userId, gameId):
+        super(GunItemCountChangeEvent, self).__init__(userId, gameId)
+
 
 class SkillLevelUpEvent(UserEvent):
     """
@@ -169,11 +176,23 @@ class MatchWinloseEvent(UserEvent):
         self.luckyValue = luckyValue
 
 
+class AddGunSkinEvent(UserEvent):
+    """
+    皮肤炮增加事件
+    """
+    def __init__(self, userId, gameId, gunId, count, type, mode):
+        super(AddGunSkinEvent, self).__init__(userId, gameId)
+        self.gunId = gunId      # 炮ID
+        self.count = count      # 炮的个数
+        self.type = type        # 参数
+        self.mode = mode        # 模式
+
+
 class FireEvent(UserEvent):
     """
     开火事件
     """
-    def __int__(self, userId, gameId, roomId, tableId, wpId, fpMultiple, costChip=0, holdCoin=0):
+    def __init__(self, userId, gameId, roomId, tableId, wpId, fpMultiple, costChip=0, holdCoin=0):
         super(FireEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.tableId = tableId

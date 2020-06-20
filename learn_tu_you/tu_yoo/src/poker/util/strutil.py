@@ -18,6 +18,7 @@ from freetime.util.cache import lfu_cache
 from poker.util.constants import CLIENT_SYS_IOS, CLIENT_SYS_ANDROID, CLIENT_SYS_H5, \
     CLIENT_SYS_WINPC, CLIENT_SYS_MACOS
 from poker.util import constants
+from sre_compile import isstring
 from copy import deepcopy
 
 
@@ -74,6 +75,16 @@ def decodeObjUtf8(datas):
     return datas
 
 
+@lfu_cache(maxsize=1000, cache_key_args_index=0)
+def getGameIdFromBigRoomId(bigRoomId):
+    '''
+    解析房间的BigRoomId 取得gameId 444111000 / 1000
+    '''
+    bigRoomId = int(bigRoomId)
+    assert (bigRoomId > 0)
+    gameid = bigRoomId / 1000
+    return gameid
+
 
 @lfu_cache(maxsize=1000, cache_key_args_index=0)
 def parseClientId(clientId):
@@ -102,3 +113,30 @@ def parseClientId(clientId):
                 return 'error', 0, 'error'
     ftlog.error('parseClientId params error, clientId=', clientId)
     return 'error', 0, 'error'
+
+
+def parseInts(*args):
+    """
+    转换成int类型
+    :param args:
+    :return:
+    """
+    rets = []
+    for x in args:
+        try:
+            i = int(x)
+        except:
+            i = 0
+        rets.append(i)
+    if len(rets) == 1:
+        return rets[0]
+    return rets
+
+
+def ensureString(val, defVal=''):
+    """返回字符串"""
+    if isstring(val):
+        return val
+    if val is None:
+        return defVal
+    return str(val)

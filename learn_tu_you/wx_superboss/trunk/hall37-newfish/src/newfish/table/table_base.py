@@ -597,12 +597,10 @@ class FishTable(TYTable):
             multiple = None
             fpMultiple = player.fpMultiple
             if wpType == config.GUN_WEAPON_TYPE:
-                costChip = costBullet * fpMultiple
+                costChip = costBullet * fpMultiple      # 消耗的子弹 * 渔场倍率
                 wpPower = wpConf["power"]
-                multiple = config.getGunConf(player.gunId, player.clientId, player.gunLv, self.gameMode).get("multiple",
-                                                                                                             1)
-            player.addFire(bulletId, wpId, timestamp, fpMultiple, skill, costChip=costChip, power=wpPower,
-                           multiple=multiple)
+                multiple = config.getGunConf(player.gunId, player.clientId, player.gunLv, self.gameMode).get("multiple", 1)     # 单倍|双倍炮
+            player.addFire(bulletId, wpId, timestamp, fpMultiple, skill, costChip=costChip, power=wpPower, multiple=multiple)
             if wpType == config.GUN_WEAPON_TYPE:
                 clip = player.costClip(costBullet, "BI_NFISH_GUN_FIRE")
                 _finalPower = player.getFinalWpPower(bulletId)
@@ -615,9 +613,9 @@ class FishTable(TYTable):
                       "skillType": skillType, "lockFId": lockFId}
             player.sendFireMsg(userId, seatId, extends, params)
 
-        if canFire and skill and skill.clip == 0 and skill_release.weaponSkillMap.get(wpId):
-            skill.end()
-            player.gchgTimer = FTLoopTimer(skill.interval, 0, self.broadcastGunChange, player)
+        if canFire and skill and skill.clip == 0 and skill_release.weaponSkillMap.get(wpId):    # skill.clip技能子弹
+            skill.end()                                                                         # 结束技能
+            player.gchgTimer = FTLoopTimer(skill.interval, 0, self.broadcastGunChange, player)  # 广播玩家现在的火炮等级 技能释放完毕变成原来炮的模样
             player.gchgTimer.start()
         return canFire
 
@@ -729,11 +727,11 @@ class FishTable(TYTable):
         fIds = msg.getParam("fIds") or []
         skillId = msg.getParam("skillId")
         skillType = msg.getParam("skillType", 0)
-        extends = msg.getParam("extends")
+        extends = msg.getParam("extends")           # 扩展、透传参数
         bulletId = msg.getParam("bulletId")
         stageId = msg.getParam("stageId", 0)        # 阶段
         player = self.players[seatId - 1]
-        wpIdFire = player.getFireWpId(bulletId)
+        wpIdFire = player.getFireWpId(bulletId)     # 获取子弹开火的武器
         wpType = util.getWeaponType(wpId)
         extendId = 0
         if ftlog.is_debug():
@@ -746,10 +744,10 @@ class FishTable(TYTable):
             if ftlog.is_debug():
                 ftlog.debug("_verifyCatch, hotfix, userId =", userId)
 
-        if wpType < config.RB_BOMB_WEAPON_TYPE and (not wpIdFire or wpIdFire != wpId):
+        if wpType < config.RB_BOMB_WEAPON_TYPE and (not wpIdFire or wpIdFire != wpId):      # 武器类型小于4的必须有开火的武器
             ftlog.warn("_verifyCatch wpIdFire error", userId, bulletId, wpId, wpIdFire)
             return
-        if wpType >= config.RB_BOMB_WEAPON_TYPE:
+        if wpType >= config.RB_BOMB_WEAPON_TYPE:                                            # 特殊武器 特殊鱼
             if extends:
                 # 只有在阶段0才做这种检测.
                 if stageId == 0:    # if wpType != config.DRILL_WEAPON_TYPE or stageId == 0:
@@ -767,7 +765,7 @@ class FishTable(TYTable):
                         pass
                     elif fishConf["type"] in config.DRILL_FISH_TYPE and wpType == config.DRILL_WEAPON_TYPE: # 钻头鱼
                         pass
-                    elif fishConf["type"] in config.SUPERBOSS_FISH_TYPE and wpType == config.SUPERBOSS_WEAPON_TYPE: # 钻头鱼
+                    elif fishConf["type"] in config.SUPERBOSS_FISH_TYPE and wpType == config.SUPERBOSS_WEAPON_TYPE: # 超级boss
                         pass
                     else:
                         ftlog.warn("_verifyCatch special fish not match", userId)
@@ -776,7 +774,7 @@ class FishTable(TYTable):
                 ftlog.warn("_verifyCatch special fish not extend", userId)
                 return
 
-        if skillId:
+        if skillId:                                                                             # 使用技能捕鱼
             if ftlog.is_debug():
                 ftlog.debug("_verifyCatch->skillId", skillId, "userId =", userId)
             skill = player.getFireSkill(bulletId) or player.getSkill(skillId, skillType)
@@ -785,33 +783,29 @@ class FishTable(TYTable):
                 return
             if skill.isReturn == 1 and not fIds:
                 skill.returnClip()
-            catch, gain, gainChip, exp = skill.catchFish(bulletId, wpId, fIds, extends)
+            catch, gain, gainChip, exp = skill.catchFish(bulletId, wpId, fIds, extends)         # 技能捕鱼
             fpMultiple = skill.fpMultiple
         else:
             catch, gain, gainChip, exp = self._catchFish(player, bulletId, wpId, fIds, extends, stageId)
             extendId = extends[0] if extends else 0
             fpMultiple = player.getFireFpMultiple(bulletId, extendId)
+
         self.dealCatch(bulletId, wpId, player, catch, gain, gainChip, exp, fpMultiple, extends, skillId, stageId, skillType=skillType)
         if wpIdFire and wpType != config.SKILL_WEAPON_TYPE:  # 删除非技能子弹
             maxStage = player.getFireMaxStage(bulletId, extendId)
             # 子弹达到最大阶段后销毁.
-            if stageId == maxStage:# if wpType != config.DRILL_WEAPON_TYPE or stageId == 1:
+            if stageId == maxStage:             # if wpType != config.DRILL_WEAPON_TYPE or stageId == 1:
                 player.delFire(bulletId, extendId)
-        if wpType in [config.SKILL_WEAPON_TYPE,
-                      config.RB_FIRE_WEAPON_TYPE,
-                      config.RB_BOMB_WEAPON_TYPE,
-                      config.BOMB_WEAPON_TYPE,
-                      config.NUMB_WEAPON_TYPE,
-                      config.DRILL_WEAPON_TYPE,
-                      config.SUPERBOSS_WEAPON_TYPE]:
-            ftlog.info("_verifyCatch->",
-                       "userId =", userId,
-                       "msg =", msg)
+        if wpType in [config.SKILL_WEAPON_TYPE, config.RB_FIRE_WEAPON_TYPE, config.RB_BOMB_WEAPON_TYPE,
+                      config.BOMB_WEAPON_TYPE, config.NUMB_WEAPON_TYPE, config.DRILL_WEAPON_TYPE, config.SUPERBOSS_WEAPON_TYPE]:
+            ftlog.info("_verifyCatch->", "userId =", userId, "msg =", msg)
 
     def getCostBullet(self, gunId, gunLevel, wpConf, clientId):
-        """根据炮的ID、炮的等级, 武器配置、"""
+        """根据炮的ID、炮的等级, 武器配置、
+        获取武器消耗的子弹
+        """
         gunConf = config.getGunConf(gunId, clientId, gunLevel)
-        costBullet = wpConf.get("costBullet", 1) * gunConf.get("multiple", 1)
+        costBullet = wpConf.get("costBullet", 1) * gunConf.get("multiple", 1)       # 消耗的子弹 * 单倍炮|双倍炮
         return costBullet
 
     def findFish(self, fId):
@@ -884,7 +878,7 @@ class FishTable(TYTable):
                             self.refreshFishTypeCount(self.fishMap[fId])
                         self.fishMap[fId]["alive"] = False
                         isOK = False
-                    if wpId != 2302 and userId == releaseUserId:
+                    if wpId != 2302 and userId == releaseUserId:            # 捕鱼机器人爆炸
                         isOK = False
                 if not isOK:
                     break
@@ -893,6 +887,12 @@ class FishTable(TYTable):
     def _catchFish(self, player, bulletId, wpId, fIds, extends, stageId):
         """
         检测能否捕到鱼
+        :param player:
+        :param bulletId: 子弹ID
+        :param wpId:武器ID
+        :param fIds: 鱼
+        :param extends: 扩展
+        :param stageId: 阶段
         """
         fIdTypes = {}
         catch = []
@@ -901,10 +901,10 @@ class FishTable(TYTable):
         exp = 0
         extendId = extends[0] if extends else 0
         # totalProbb, aloofFish = self.getTotalProbb(player, fIds)
-        superBullet = player.getFire(bulletId).get("superBullet", {})# player.isSuperBullet(bulletId)
-        gunConf = player.getGunConf(bulletId, extendId)
+        superBullet = player.getFire(bulletId).get("superBullet", {})   # player.isSuperBullet(bulletId)
+        gunConf = player.getGunConf(bulletId, extendId)                 # 子弹开火的炮配置
         bufferCoinAdd = player.getCoinAddition(wpId)
-        multiple = player.getFireMultiple(bulletId, extendId)
+        multiple = player.getFireMultiple(bulletId, extendId)           # 获取开火时的倍率
         if multiple is None:
             multiple = gunConf.get("multiple", 1)
         _fpMultiple = player.getFireFpMultiple(bulletId, extendId)
@@ -922,10 +922,10 @@ class FishTable(TYTable):
         gunId = gunConf.get("gunId", 0)
         # 熟练度.
         gunLevel = gunConf.get("gunLevel", 1)
-        wpConf = config.getWeaponConf(wpId, mode=self.gameMode)
+        wpConf = config.getWeaponConf(wpId, mode=self.gameMode)     # 获取武器的配置
         wpType = util.getWeaponType(wpId)
-        totalCostCoin = self.getCostBullet(gunId, gunLevel, wpConf, player.clientId) * _fpMultiple
-        averageCostCoin = float(totalCostCoin) / (len(fIds) or 1)
+        totalCostCoin = self.getCostBullet(gunId, gunLevel, wpConf, player.clientId) * _fpMultiple      # 计算总消耗的金币
+        averageCostCoin = float(totalCostCoin) / (len(fIds) or 1)   # 平均消耗的金币
         curveLossCoin = 0
         curveProfitCoin = 0
         aloofOdds = player.dynamicOdds.getOdds(superBullet=superBullet, aloofFish=True, gunConf=gunConf)
@@ -933,8 +933,8 @@ class FishTable(TYTable):
         fish_type_list = []
 
         _datas = {"fpMultiple": _fpMultiple}
-        if wpType == config.GUN_WEAPON_TYPE and player.isSupplyBulletPowerMode():
-            _finalPower = player.getFinalWpPower(bulletId)
+        if wpType == config.GUN_WEAPON_TYPE and player.isSupplyBulletPowerMode():   # 火炮/千炮
+            _finalPower = player.getFinalWpPower(bulletId)                          # 威力
             player.reduceBulletPowerPool(_finalPower, _fpMultiple, multiple, gunX)
             # 计算网中鱼的总分值.
             totalFishScore = 0
@@ -943,7 +943,7 @@ class FishTable(TYTable):
                     continue
                 fishType = self.fishMap[fId]["conf"]["fishType"]
                 fishConf = config.getFishConf(fishType, self.typeName, self.runConfig.multiple)
-                totalFishScore += fishConf.get("catchValue", 0)
+                totalFishScore += fishConf.get("catchValue", 0)                     # 鱼的价值
             _datas.update({"totalFishScore": totalFishScore, "multiple": multiple, "superBullet": superBullet})
             _datas.update({"bulletPowerPool": player.bulletPowerPool})
         # 清除鱼身上的buffer
@@ -1048,7 +1048,7 @@ class FishTable(TYTable):
                         "otherCatch =", otherCatch,
                         "gunX =", gunX)
         player.dynamicOdds.updateOdds(curveProfitCoin - curveLossCoin)
-        self.dealGunEffect(player, notCatchFids)
+        self.dealGunEffect(player, notCatchFids)                        # 1165的火炮ID, 霜冻特性，有几率冰冻鱼
         player.checkConnect(isInvalid)
         if isCatch:
             player.addCombo()
@@ -1814,17 +1814,23 @@ class FishTable(TYTable):
                 GameMsg.sendMsg(retMsg, self.getBroadcastUids())
 
     def setFishBuffer(self, fId, newBuffer):
+        """
+        给鱼添加buffer 鱼的buffer 人给鱼buffer
+        :param fId: 鱼
+        :param newBuffer: 新的buffer
+        :return:
+        """
         buffers = deepcopy(self.fishMap[fId]["buffer"])
         if buffers:
             for buffer in buffers:
-                if newBuffer[0] == buffer[0]:  # 相同buffer会被新buffer替换
-                    newBuffer[6] = buffer[6] + 1
+                if newBuffer[0] == buffer[0]:       # 相同buffer会被新buffer替换
+                    newBuffer[6] = buffer[6] + 1    # buffer次数
                     buffers.remove(buffer)
                     break
                 elif newBuffer[0] == 5104 or buffer[0] == 5104:  # 冰冻buffer可以与其他buffer共存
                     continue
                 else:
-                    buffers.remove(buffer)  # 除冰冻外的其他buffer会被新buffer替换
+                    buffers.remove(buffer)          # 除冰冻外的其他buffer会被新buffer替换
                     break
         buffers.append(newBuffer)
         self.fishMap[fId]["buffer"] = buffers
@@ -2330,6 +2336,7 @@ class FishTable(TYTable):
         return uids
 
     def _doSitDown(self, msg, userId, seatId, clientId):
+        """玩家坐下"""
         ftlog.info("User sit_down seatId =", seatId, ", userId = ", userId, self.seats, self.runConfig.fishPool)
         if seatId != 0:
             if self.seats[seatId - 1].userId == 0:
@@ -2345,11 +2352,11 @@ class FishTable(TYTable):
             else:
                 ftlog.info("user reconect, userId:", userId)
                 onlinedata.addOnlineLoc(userId, self.roomId, self.tableId, seatId)
-                self.players[seatId - 1].offline = 1
+                self.players[seatId - 1].offline = 1                # 在线
                 self.players[seatId - 1].clientId = clientId
                 self.players[seatId - 1].lang = util.getLanguage(userId, clientId)
                 self.players[seatId - 1].refreshGunSkin()
-                self._sendTableInfo(userId, seatId)
+                self._sendTableInfo(userId, seatId)                 # 发送桌子信息
                 self.players[seatId - 1].dealEnterTable()
                 self.players[seatId - 1].enterTime = int(time.time())
                 self.players[seatId - 1].offline = 0
@@ -2405,29 +2412,29 @@ class FishTable(TYTable):
         msg.setResult("seatNum", self.maxSeatN)
         msg.setResult("typeName", self.typeName)
         msg.setResult("multiple", self.runConfig.multiple)
-        msg.setResult("gameMode", self.gameMode)
+        msg.setResult("gameMode", self.gameMode)                # 游戏模式(经典/千炮)
         _player = self.getPlayer(userId)
-        if _player and _player.isFpMultipleMode():
+        if _player and _player.isFpMultipleMode():              # 是否为渔场倍率模式
             multipleLevelDict = {}
-            for mul, lv in config.getGunMultipleConf().iteritems():
+            for mul, lv in config.getGunMultipleConf().iteritems():     # 获取炮的等级解锁渔场
                 if self.runConfig.minMultiple <= int(mul) <= self.runConfig.maxMultiple:
                     multipleLevelDict[mul] = lv
             if multipleLevelDict:
                 msg.setResult("multipleLevelDict", multipleLevelDict)
-        msg.setResult("buyLimitChip", self.runConfig.minCoin)
-        msg.setResult("maxSkillLevel", self.runConfig.maxSkillLevel)
-        msg.setResult("minGunLevel", self.runConfig.minGunLevel)
+        msg.setResult("buyLimitChip", self.runConfig.minCoin)           # 最小准入金币
+        msg.setResult("maxSkillLevel", self.runConfig.maxSkillLevel)    # 最大技能等级
+        msg.setResult("minGunLevel", self.runConfig.minGunLevel)        # 最小火炮等级
         msg.setResult("maxGunLevel", self.runConfig.maxGunLevel)
-        msg.setResult("isMatch", self.runConfig.isMatch)
+        msg.setResult("isMatch", self.runConfig.isMatch)                # 是否为比赛
         msg.setResult("matchType", self.runConfig.matchType)
-        msg.setResult("tStartTime", self.startTime)
-        msg.setResult("nowServerTime", time.time())
+        msg.setResult("tStartTime", self.startTime)                     # 桌子开始时间
+        msg.setResult("nowServerTime", time.time())                     # 服务器时间
         msg.setResult("coinShortage", self.runConfig.coinShortage)
         expressionConf = config.getExpressionConf(self.bigRoomId)
         expressions = []
         for _, expression in expressionConf.iteritems():
             expressions.append(expression)
-        msg.setResult("expressions", expressions)
+        msg.setResult("expressions", expressions)                       # 表情
         if ftlog.is_debug():
             ftlog.debug("_sendTableInfo->msg =", msg)
         players = []
@@ -2436,16 +2443,16 @@ class FishTable(TYTable):
                 info = self._getPlayerInfo(i + 1, _player.clientId)
                 if info:
                     players.append(info)
-            elif self.seats[i].userId != 0 and not self.players[i]:
+            elif self.seats[i].userId != 0 and not self.players[i]:     # 玩家掉线了
                 ftlog.error("_sendTableInfo error", self.seats[i].userId, self.tableId)
                 self.seats[i] = TYSeat(self)
         msg.setResult("players", players)
         groups = []
-        for i in xrange(0, len(self.normalFishGroups)):
+        for i in xrange(0, len(self.normalFishGroups)):                 # 普通鱼群
             group = self.normalFishGroups[i]
             if group.isAlive(self._getNowTableTime()):
                 groups.append(self._getGroupInfo(group))
-        for i in xrange(0, len(self.callFishGroups)):
+        for i in xrange(0, len(self.callFishGroups)):                   # 召唤出来的鱼群对象
             group = self.callFishGroups[i]
             if group.isAlive(self._getNowTableTime(), self) and group.isVisible(self, userId):
                 groups.append(self._getGroupInfo(group))
@@ -2457,19 +2464,23 @@ class FishTable(TYTable):
         GameMsg.sendMsg(msg, userId)
         if _player and hasattr(_player, "prizeWheel") and _player.prizeWheel:
             _player.prizeWheel.sendEnergyProgress(self.runConfig.fishPool, _player.fpMultiple, self.roomId, 0)
-        if _player and _player.compAct:
+        if _player and _player.compAct:                                 # 竞赛活动
             _player.compAct.sendInspireInfo()
         if _player and hasattr(_player, "lotteryTicket") and _player.lotteryTicket:
-            _player.lotteryTicket.sendProgress(1, isSend=1)
+            _player.lotteryTicket.sendProgress(1, isSend=1)             # 红包券
         # 发送断线后的小游戏进度信息
         mini_game.sendMiniGameProgress(self, userId, self.roomId, seatId)
 
     def _getGroupInfo(self, group):
+        """
+        获取鱼群信息
+        :param group: 鱼群ID
+        """
         info = {}
         info["grpId"] = group.id
         info["enT"] = round(group.enterTime, 2)
         info["fishesStartId"] = group.startFishId
-        info["position"] = group.position
+        info["position"] = group.position               # 鱼群出现的位置
         info["gameResolution"] = group.gameResolution
         diedFish = []
         HPFish = {}
@@ -2482,9 +2493,9 @@ class FishTable(TYTable):
                 fishType = self.fishMap[fId]["conf"]["fishType"]
                 fishConf = config.getFishConf(fishType, self.typeName, self.runConfig.multiple)
                 if fishConf["HP"] > 0:
-                    HPFish[fId] = self.fishMap[fId]["HP"]
+                    HPFish[fId] = self.fishMap[fId]["HP"]               # 有充值奖池的时候 HP为0的时候, 高概率打死
                 if self.fishMap[fId]["buffer"]:
-                    bufferFish[fId] = self.fishMap[fId]["buffer"]
+                    bufferFish[fId] = self.fishMap[fId]["buffer"]       # 给鱼添加buffer 冰冻|无敌
                 if self.fishMap[fId]["multiple"] > 1:
                     multipleFish[fId] = self.fishMap[fId]["multiple"]
         if diedFish:
@@ -2498,41 +2509,46 @@ class FishTable(TYTable):
         return info
 
     def _getPlayerInfo(self, seatId, msgOwnerClientId=None):
+        """
+        获取玩家信息
+        :param seatId: 座位ID
+        :param msgOwnerClientId: 客户端ID
+        :return:
+        """
         if ftlog.is_debug():
             ftlog.debug("_getPlayerInfo->seatId =", seatId, "userId =", self.seats[seatId - 1].userId, msgOwnerClientId)
         info = {}
         p = self.players[seatId - 1]
         if not p:
             ftlog.error("_getPlayerInfo error", self.seats[seatId - 1].userId, self.tableId, msgOwnerClientId)
-            self.seats[seatId - 1] = TYSeat(self)
+            self.seats[seatId - 1] = TYSeat(self)           # 清空玩家信息
             return info
         info["userId"] = p.userId
         info["seatId"] = seatId
         info["name"] = p.name
-        info["offline"] = p.offline
+        info["offline"] = p.offline                         # 在线1|离线
         info["uLv"] = p.level
         userLevelConf = config.getUserLevelConf()
-        lvUpExp = userLevelConf[p.level - 1]["exp"] if p.level <= len(userLevelConf) else userLevelConf[-1]["exp"]
+        lvUpExp = userLevelConf[p.level - 1]["exp"] if p.level <= len(userLevelConf) else userLevelConf[-1]["exp"]  # 用户下一等级需要的经验
         info["expPct"] = min(100, max(0, int(p.exp * 100. / lvUpExp)))
         info["gLv"] = p.gunLevel
         info["gLvNow"] = p.nowGunLevel
         info["gunLevel"] = p.gunLv
         info["exp"] = p.exp
-        info["skillSlots"] = p.getSkillSlotsInfo(0)
+        info["skillSlots"] = p.getSkillSlotsInfo(0)         # 主技能槽的数据
         info["auxiliarySkillSlots"] = p.getSkillSlotsInfo(1)
-        info["usingSkill"] = p.getUsingSkillInfo()
-        info["chip"] = p.chip
+        info["usingSkill"] = p.getUsingSkillInfo()          # 获取使用中的技能数据
         info["tableChip"] = p.tableChip
         info["clip"] = p.clip
-        info["honors"] = honor_system.getHonorList(p.userId)
-        info["gunId"] = p.gunId
+        info["honors"] = honor_system.getHonorList(p.userId)    # 获取称号信息列表
+        info["gunId"] = p.gunId                             # 火炮ID
         skins = config.getGunConf(p.gunId, msgOwnerClientId, mode=self.gameMode).get("skins")
-        info["gunSkinId"] = p.skinId if p.skinId in skins else skins[0]
-        info["charm"] = p.charm
+        info["gunSkinId"] = p.skinId if p.skinId in skins else skins[0]     # 火炮皮肤
+        info["charm"] = p.charm                             # 魅力
         info["sex"] = p.sex
-        info["vipLv"] = util.getVipShowLevel(p.userId)
+        info["vipLv"] = util.getVipShowLevel(p.userId)      # vip等级
         info["purl"] = p.purl
-        info["redState"] = p.redState
+        info["redState"] = p.redState                       # 新手任务状态
         info["fpMultiple"] = p.fpMultiple
         info["gameResolution"] = p.gameResolution
         info["playMode"] = p.multipleMode                   # 0金币模式 1金环
@@ -2862,10 +2878,10 @@ class FishTable(TYTable):
         """
         处理火炮皮肤特性
         """
-        if player.gunId == 1165:  # 霜冻特性，有几率冰冻鱼
+        if player.gunId == 1165:        # 霜冻特性，有几率冰冻鱼
             addTimeGroup = []
             frozenFishes = []
-            duration = 3    # 冰冻时间
+            duration = 3                # 冰冻时间
             if player.skinId == 1472:   # 雪人皮肤特性，冰冻时间加1s
                 duration += 1
             endTime = time.time() + duration

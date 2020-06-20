@@ -6,4 +6,11 @@
 
 
 class DynamicOdds(object):
-    pass
+    """
+    动态概率控制
+    """
+    def __init__(self, table, player):
+        pass
+
+    def saveDynamicOddsData(self):
+        pass

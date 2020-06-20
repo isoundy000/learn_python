@@ -133,22 +133,57 @@ TOWERIDS = [ICE_TOWERID, FIRE_TOWERID, ELEC_TOWERID]
 NORMAL_FISH_TYPE = [1, 3]
 # 道具鱼
 ITEM_FISH_TYPE = [4, 11, 12, 13, 14, 15, 16]
+# 捕获后掉口红的鱼
+HIPPO_FISH_TYPE = [22]
 # 红包鱼（包含奖券、话费、红包、京东卡、分享奖券鱼）
 RED_FISH_TYPE = [4, 11, 13, 14, 15, 27]
+# 捕获后会掉落海星的鱼
+STAR_FISH_TYPE = [1, 2, 3, 8, 9, 19]
+# 捕获后会掉落珍珠的鱼
+PEARL_FISH_TYPE = [1, 2, 3, 8, 9, 19, 26]
+# 捕获后会掉落紫水晶/黄水晶的鱼
+CRYSTAL_FISH_TYPE = [1, 2, 3, 8, 9, 19]
 # Boss鱼
 BOSS_FISH_TYPE = [2, 8, 9, 19]
-# 捕鱼机器人
-ROBOT_FISH_TYPE = [7]
-
+# 金币宝箱
+CHIP_CHEST_FISH_TYPE = [10]
+# 招财模式倍率鱼
+ROBBERY_MULTIPLE_FISH_TYPE = [18]
+# 招财模式boss鱼
+ROBBERY_BOSS_FISH_TYPE = [20]
+# 倍率鱼
+MULTIPLE_FISH_TYPE = [3]
+# 炸弹鱼
+BOMB_FISH_TYPE = [5]
 # 冰锥
 ICE_FISH_TYPE = [6]
-
+# 捕鱼机器人
+ROBOT_FISH_TYPE = [7]
+# Buffer鱼
+BUFFER_FISH_TYPE = [21]
+# 分享宝箱鱼
+SHARE_CHEST_FISH_TYPE = [25]
+# 彩虹鱼
+RAINBOW_FISH_TYPE = [26]
+# 分享奖券鱼
+SHARE_COUPON_FISH_TYPE = [27]
+# 电鳗鱼
+NUMB_FISH_TYPE = [28]
+# 钻头鱼
+DRILL_FISH_TYPE = [29]
 # 恐怖鱼
 TERROR_FISH_TYPE = [5, 28, 29]
+# 超级boss
+SUPERBOSS_FISH_TYPE = [31]
+# 概率专用鱼种类别
 # 非高冷鱼
 NON_ALOOF_FISH_TYPE = [1, 3]
 # 使用彩虹奖池的鱼
 RAINBOW_BONUS_FISH_TYPE = [5, 26, 28, 29]
+
+# 日志专用鱼种类别
+# 需要输出日志的鱼
+LOG_OUTPUT_FISH_TYPE = [2, 3, 5, 8, 9, 10, 11, 13, 14, 15, 18, 19, 20, 28, 29]
 
 
 # -------------------------
@@ -632,6 +667,52 @@ def getPublic(key, defaultValue=None):
     """
     global publicConf
     return publicConf.get(str(key), defaultValue)
+
+
+def loadSpecialItemConf():
+    """
+    加载特殊物品配置
+    """
+    global specialItemConf
+    specialItemConf = rocopy(getGameConf("specialItem"))
+
+
+def getSpecialItemConf():
+    """
+    获取特殊物品配置
+    """
+    global specialItemConf
+    return specialItemConf
+
+
+def getIncrPearlDropRatio(userId):
+    """
+    获取可以增加的珍珠额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrPearlDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrPearlDropRate"]
+    return ratio
+
+
+def getIncrCrystalDropRatio(userId):
+    """
+    获取可以增加的水晶额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrCrystalDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrCrystalDropRate"]
+    return ratio
 
 
 def loadCheckinConf():
@@ -1133,7 +1214,62 @@ def getGunSkinConf(gunSkinId, clientId, mode):
     return typeConf.get(defaultIntClientId, {}).get("skin", {}).get(str(gunSkinId))
 
 
+def loadExpressionConf():
+    """
+    加载表情配置
+    """
+    global expressionConf
+    expressionConf = rocopy(getGameConf("expression"))
 
+
+def getExpressionConf(bigRoomId):
+    """
+    获取表情配置
+    """
+    global expressionConf
+    conf = expressionConf.get("rooms", {}).get(str(bigRoomId), None)
+    if conf:
+        return expressionConf.get("templates", {}).get(conf, {})
+    return {}
+
+
+def isClientIgnoredConf(key, val, clientId=""):
+    pass
+
+
+def loadUserLevelConf():
+    """
+    加载用户等级配置
+    """
+    global userLevelConf
+    userLevelConf = rocopy(getGameConf("userLevel"))
+
+
+def getUserLevelConf():
+    """
+    获取用户等级配置
+    """
+    global userLevelConf
+    return userLevelConf
+
+
+def getGunLevelKeysConf(mode):
+    """
+    读取火炮等级配置
+    """
+    global gunLevelConf, gunLevelConf_m
+    if mode == CLASSIC_MODE:
+        return sorted(map(int, gunLevelConf.keys()))
+    else:
+        return sorted(map(int, gunLevelConf_m.keys()))
+
+
+def getGunMultipleConf():
+    """
+    返回火炮等级和解锁倍率配置
+    """
+    global gunMultipleConf
+    return gunMultipleConf
 
 
 def loadGunLevelConf():

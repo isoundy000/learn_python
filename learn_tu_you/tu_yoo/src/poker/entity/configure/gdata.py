@@ -141,7 +141,32 @@ def games():
     return _datas['tygame.instance.dict']
 
 
+def gameIds():
+    '''
+    取得当前系统初始化后的TYGame的ID列表
+    注: 由poker系统initialize()方法进行初始化
+    '''
+    return _datas['tygame.instance.ids']
 
+
+def getGame(gameId):
+    '''
+    取得当前系统初始化后的TYGame的所有实例
+    key为: int(gameId)
+    value为: TYGame()
+    注: 由poker系统initialize()方法进行初始化
+    '''
+    return _datas['tygame.instance.dict'].get(gameId)
+
+
+def rooms():
+    '''
+    取得当前系统初始化后的TYRoom的所有实例
+    key为: int(roomId)
+    value为: TYRoom()
+    注: 由poker系统initialize()方法进行初始化
+    '''
+    return _datas.get('tyrooms.instance.dict', {})
 
 
 def srvIdRoomIdListMap():
@@ -168,6 +193,30 @@ def roomIdDefineMap():
     RoomDefine.configure     dict 房间的配置内容, 即为game/<gameId>/room/0.json中的值
     '''
     return _datas['roomid_define_map']
+
+
+def bigRoomidsMap():
+    '''
+    取得ROOM的配置ID的映射关系, key为int(bigRoomId), value为int(roomId)的list
+    此处的roomId列表仅包含"管理房间"的ID, 不包含"桌子实例房间shadowRoom"的ID
+    '''
+    return _datas['big_roomids_map']
+
+
+def gameIdBigRoomidsMap():
+    '''
+    取得ROOM的配置ID的映射关系, key为int(gameId), value为int(bigRoomId)的list
+    '''
+    return _datas['gameid_big_roomids_map']
+
+
+def getBigRoomId(roomId):
+    """获取大的房间ID"""
+    if roomId in bigRoomidsMap():
+        return roomId
+    if roomId in roomIdDefineMap():
+        return roomIdDefineMap()[roomId].bigRoomId
+    return 0
 
 
 def globalConfig():

@@ -61,6 +61,33 @@ def getLanguage(userId, clientId=None):
     return "zh"
 
 
+def verifyPhoneNumber(phoneNumber):
+    """
+    验证手机号是否合法
+    """
+    import re
+    pattern = re.compile(r"^[1]([3-9])[0-9]{9}$")
+    if pattern.search(str(phoneNumber)):
+        return True
+    return False
+
+
+def getGunX(wpId, mode):
+    """
+    获取炮台的倍数(经典模式为1:千炮为炮台倍数)
+    """
+    gunX = 1 if mode != config.MULTIPLE_MODE else config.getGunLevelConf(wpId, mode).get("levelValue", 1)
+    return gunX
+
+
+def isFinishAllRedTask(userId):
+    """
+    获得所有已完成的引导
+    """
+    userGuideStep = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.userGuideStep, [])
+    return userGuideStep
+
+
 def timestampToStr(timestamp, formatTime="%Y-%m-%d %H:%M:%S"):
     """
     时间戳转字符串
@@ -154,6 +181,22 @@ def getNickname(userId):
     return keywords.replace(nickname)
 
 
+def isVipShow(userId):
+    """
+    判断是否显示VIP
+    """
+    vipShow = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.vipShow)
+    return vipShow
+
+
+def getVipShowLevel(userId):
+    """
+    获得VIP显示等级
+    """
+    if isVipShow(userId) == 0:
+        return 0
+    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+
 
 def getWeaponType(wpId):
     """
@@ -179,6 +222,15 @@ def getWeaponType(wpId):
         elif wpId // 100 == 29: # 超级boss:宝箱怪,龙女王,大冰龙
             return config.SUPERBOSS_WEAPON_TYPE
     return 0
+
+
+def getSeedRandom(seed, min=1, max=10000):
+    """
+    获得前后端统一随机数种子
+    """
+    seed = (int(seed) * 9301 + 49297) % 233280
+    rand = seed / 233279.0
+    return int(min + rand * (max - min))
 
 
 def balanceItem(userId, kindId):
@@ -236,6 +288,28 @@ def consumeItems(userId, items, eventId, intEventParam=0, param01=0, param02=0):
     if ret:
         datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
     return ret
+
+
+def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, clientId=None,
+             type=0, param01=0, param02=0, changeNotify=False):
+    """
+    添加物品通用方法
+    :param userId:
+    :param gain: 需要改变的物品列表
+    :param eventId: BI事件ID
+    :param intEventParam: BI事件参数（必须为int型）
+    :param roomId:
+    :param tableId:
+    :param clientId:
+    :param type: 0：渔场外 1：渔场内
+    :param param01: BI事件扩展参数（任意可序列化类型）
+    :param param02: BI事件扩展参数（任意可序列化类型）
+    :param changeNotify: 是否立即通知客户端刷新玩家资产数据
+    :return: 改变内容
+    """
+    ud = []     # 用户获得
+    gd = []     # 游戏获得
+    return {}
         
 
 def getAssetKindId(kindId):

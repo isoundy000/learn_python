@@ -30,7 +30,7 @@ class SkillBase(object):
         # 技能类型（0:主技能;1:辅助技能）
         self.skillType = skillType
         self.skillMode = self.table.gameMode    # 0经典 1千炮
-        self.position = {}
+        self.position = {}                      # [bulletId] = [fPosx, fPosy]
         self.initData()                         # 初始化技能数据
         self.initState()                        # 初始化技能状态
 
@@ -237,23 +237,23 @@ class SkillBase(object):
         """
         消耗技能子弹
         """
-        if self.clip > 0:           # 技能子弹数
+        if self.clip > 0:                       # 技能子弹数
             lastCoin = self.player.holdCoin     # 持有金币（非实时数据库+内存金币）
-            for val in self.player.usingSkill:
+            for val in self.player.usingSkill:  # 使用的技能
                 skillId = val.get("skillId")
                 skillType = val.get("skillType")
                 if skillId != self.skillId or skillType != self.skillType:
                     skill = self.player.getSkill(skillId, skillType)
                     if skill.state == 2:        # 使用中
                         skill.end()
-            self.state = 2
+            self.state = 2                      # 0:未使用 1:装备中 2:使用中
             self.clip -= 1
-            self.position[bulletId] = [fPosx, fPosy]
-            self.updateSkillData()
-            self.player.reportBIFeatureData("BI_NFISH_GE_FT_FIRE", self.weaponId, self.onceCostCoin)
+            self.position[bulletId] = [fPosx, fPosy]    # 子弹的位置
+            self.updateSkillData()                      # 更新技能power
+            self.player.reportBIFeatureData("BI_NFISH_GE_FT_FIRE", self.weaponId, self.onceCostCoin)    # 技能单发价值金币数
 
             if lastCoin > self.table.runConfig.coinShortage > self.player.holdCoin:
-                coinShortageCount = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, {})
+                coinShortageCount = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, {})   # 金币不足次数
                 coinShortageCount.setdefault(str(self.table.runConfig.fishPool), 0)
                 coinShortageCount[str(self.table.runConfig.fishPool)] += 1
                 gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, json.dumps(coinShortageCount))
@@ -274,12 +274,12 @@ class SkillBase(object):
         """
         更新技能数据
         """
-        self.updateSkillEnergy()
-        skillGradeConf = config.getSkillGradeConf(self.skillId, self.skillGrade, self.skillMode)
+        self.updateSkillEnergy()            # 更新技能能量
+        skillGradeConf = config.getSkillGradeConf(self.skillId, self.skillGrade, self.skillMode)    # 获取技能等级的配置
         self.impale = skillGradeConf.get("impale", 0)
         powerAddtion = self.player.getPowerAddition(self.weaponId)
         self.totalPower = float(self.power * self.powerRate * powerAddtion)
-        self.originRealPower = self.totalPower + self.energy
+        self.originRealPower = self.totalPower + self.energy    # 总威力 + 能量
         self.deductionHP = self.totalPower
         if ftlog.is_debug():
             ftlog.debug("updateSkillData->",
@@ -292,13 +292,13 @@ class SkillBase(object):
         """
         更新技能能量
         """
-        bonus = self.table.room.lotteryPool.getSkillPoolCoin() // self.fpMultiple
+        bonus = self.table.room.lotteryPool.getSkillPoolCoin() // self.fpMultiple   # 获取技能池的彩池奖金数
         randomNum = random.uniform(0.5, 1.5)
         singleEnergy = math.ceil(self.power * self.powerRate * randomNum)
-        self.originEnergy = min(self.player.energy, singleEnergy)
-        self.energy = max(min(self.originEnergy, bonus), 0)
+        self.originEnergy = min(self.player.energy, singleEnergy)           # 单发威力
+        self.energy = max(min(self.originEnergy, bonus), 0)                 # 能量
         self.player.energy -= self.energy
-        self.table.room.lotteryPool.deductionSkillPoolCoin(int(self.energy * self.fpMultiple))
+        self.table.room.lotteryPool.deductionSkillPoolCoin(int(self.energy * self.fpMultiple))  # 扣除技能池的彩池奖金数
         if ftlog.is_debug():
             ftlog.debug("updateSkillEnergy->",
                     "userId =", self.player.userId,
@@ -720,13 +720,13 @@ class SkillFrozen(SkillBase):
         position = self.position.get(bulletId, [0, 0])
         endTime = time.time() + self.duration       # self.duration效果时间
         invincibleEndTime = 0
-        # 技能ID、结束时间、释放者ID、技能星级、技能等级、持续时间、
+        # 技能ID、结束时间、释放者ID、技能星级、技能等级、持续时间、次数、类型
         buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0]
         self.table.insertFishGroup("call_piton_%d" % self.skillStar, position, self.HP, buffer,
                                    gameResolution=self.player.gameResolution)           # 增加鱼群 == 召唤鱼群
-        frozenFishes = []
+        frozenFishes = []           # 冻住的鱼
         invincibleFishes = []
-        addTimeGroup = []
+        addTimeGroup = []           # 延长时间的鱼群
         for fId in fIds:            # 冻住鱼并刷新剩余冰冻时间
             isOK = self.table.findFish(fId)
             if not isOK:
@@ -735,13 +735,57 @@ class SkillFrozen(SkillBase):
             fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
             if fishConf["type"] in config.ICE_FISH_TYPE:  # 冰锥不会刷新冰冻时间
                 continue
-            lastFrozenTime = 0
+            lastFrozenTime = 0              # 上次冰冻的持续时间
             frozenTime = self.duration
             isCoverFrozen = True
             isCoverInvincible = True
-
-
-
+            buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0, self.skillType]  # 0冰冻次数
+            buffers = self.table.fishMap[fId]["buffer"]
+            if ftlog.is_debug():
+                ftlog.debug("SkillFrozen->lastBuffer =", fId, self.table.fishMap[fId], buffers, endTime)
+            for lastBuffer in buffers:
+                if lastBuffer[0] == 5102 and lastBuffer[1] > time.time():
+                    isCoverInvincible = False       # 不能覆盖魔术炮的无敌技能
+                if lastBuffer[0] == self.skillId:   # 之前处于冰冻状态的鱼
+                    lastFrozenTime = lastBuffer[5]
+                    if endTime > lastBuffer[1]:     # 新冰冻到期时间大于旧冰冻到期时间，覆盖时间
+                        # 如果上一个冰冻状态未到期且小于新冰冻到期时间，则鱼在冰冻状态下再次冰冻，实际冰冻时间为间隔时间
+                        if time.time() < lastBuffer[1] < endTime:
+                            frozenTime = round(endTime - lastBuffer[1], 3)
+                    else:
+                        isCoverFrozen = False       # 不能覆盖冰冻状态
+            if isCoverFrozen:
+                if ftlog.is_debug():
+                    ftlog.debug("SkillFrozen->frozenTime =", fId, frozenTime)
+                buffer[5] = round(lastFrozenTime + frozenTime, 3)
+                self.table.setFishBuffer(fId, buffer)
+                frozenFishes.append(fId)            # 冻住的鱼
+                if ftlog.is_debug():
+                    ftlog.debug("SkillFrozen->isCoverFrozen->buffer =", fId, self.table.fishMap[fId]["buffer"])
+                group = self.table.fishMap[fId]["group"]
+                if group.startFishId not in addTimeGroup:
+                    addTimeGroup.append(group.startFishId)
+                    group.adjust(frozenTime)
+                    self.table.superBossFishGroup and self.table.superBossFishGroup.frozen(fId, self.table.fishMap[fId]["conf"]["fishType"], frozenTime)
+            if isCoverInvincible and self.table.typeName not in config.NORMAL_ROOM_TYPE:  # 非普通场极冻炮附加无敌效果
+                if fishConf["type"] in [6, 7]:      # 冰锥、捕鱼机器人不会有无敌效果
+                    continue
+                invincibleDuration = round(self.duration / 3.0, 3)
+                if self.player.gunId == 1165:
+                    invincibleDuration += 2
+                invincibleEndTime = time.time() + invincibleDuration
+                if ftlog.is_debug():
+                    ftlog.debug("SkillFrozen->invincibleTime =", fId, invincibleDuration)
+                invincibleBuffer = [5102, invincibleEndTime, self.player.userId, self.skillStar, self.skillGrade, invincibleDuration, 0, self.skillType]
+                self.table.setFishBuffer(fId, invincibleBuffer)
+                invincibleFishes.append(fId)
+                if ftlog.is_debug():
+                    ftlog.debug("SkillFrozen->isCoverInvincible->buffer =", fId, self.table.fishMap[fId]["buffer"])
+        if frozenFishes:                            # 广播新处于冰冻状态的鱼
+            self.table.broadcastSkillEffect(self.player, endTime, frozenFishes, self.skillId)
+        if invincibleFishes:                        # 广播新处于无敌状态的鱼
+            self.table.broadcastSkillEffect(self.player, invincibleEndTime, invincibleFishes, 5102)
+        return catch, gain, gainChip, exp
 
 class SkillGrenade(SkillBase):
     """
@@ -824,7 +868,7 @@ skillMap = {
 
 
 skillWeaponMap = {
-    5101: 2201,
+    5101: 2201,         # 技能炮 武器
     5102: 2202,
     5103: 2203,
     5104: 2204,
@@ -838,7 +882,7 @@ skillWeaponMap = {
 
 
 weaponSkillMap = {
-    2201: 5101,
+    2201: 5101,         # 武器 技能炮
     2202: 5102,
     2203: 5103,
     2204: 5104,
