@@ -552,18 +552,39 @@
         "power": 90, 
         "wpRatio": 1
     }, 
-    "2902": {
+    "3001": {
         "costBullet": 0, 
         "matchAddition": 0, 
-        "weaponId": 2902, 
+        "weaponId": 3001, 
         "power": 120, 
         "wpRatio": 1
     }, 
-    "2903": {
+    "3101": {
         "costBullet": 0, 
         "matchAddition": 0, 
-        "weaponId": 2903, 
+        "weaponId": 3101, 
         "power": 200, 
+        "wpRatio": 1
+    }, 
+    "3201": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 3201, 
+        "power": 198, 
+        "wpRatio": 1
+    }, 
+    "3301": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 3301, 
+        "power": 504, 
+        "wpRatio": 1
+    }, 
+    "3401": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 3401, 
+        "power": 315, 
         "wpRatio": 1
     }
 }

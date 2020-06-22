@@ -192,7 +192,6 @@ def fish_config():
             cols.append(cell.value)
         if not cols[3]:
             continue
-        print cols
         one = collections.OrderedDict()
         if str(cols[0]) in config:
             raise KeyError("fishId %d repeat" % int(cols[0]))
@@ -360,6 +359,123 @@ def gunLevel():
     outHandle.close()
 
 
+def gunskin_config(clientId=0):
+    """炮和皮肤的配置"""
+    sn = "Gun" if clientId == 0 else "Gun" + "_" + str(clientId)
+    sn2 = "GunSkin" if clientId == 0 else "GunSkin" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    outPath = getOutPath("gun_m", fn)
+    ws = getWorkBook().get_sheet_by_name(sn)
+    wsSkin = getWorkBook().get_sheet_by_name(sn2)
+    startRowNum = 4
+    i = 0
+    config = collections.OrderedDict()
+    gunIds = []
+    config["gunIds"] = gunIds
+    config["gun"] = collections.OrderedDict()
+    config["skin"] = collections.OrderedDict()
+    gunConf = collections.OrderedDict()
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        if row[1].value not in config["gun"].keys():
+            gunConf = collections.OrderedDict()
+            config["gun"][row[1].value] = gunConf
+        one = collections.OrderedDict()
+        gunConf[str(row[2].value)] = one
+        if int(cols[1]) not in gunIds:
+            gunIds.append(int(cols[1]))
+        one["gunId"] = int(cols[1])
+        one["gunLevel"] = int(cols[2])
+        one["name"] = cols[0]
+        one["multiple"] = int(cols[3])          # 消耗&奖励倍率
+        one["unlockType"] = int(cols[4])        # 解锁条件
+        one["unlockValue"] = int(cols[5])
+        one["equipType"] = int(cols[6])         # 装备条件
+        one["equipValue"] = int(cols[7])
+        one["exp"] = int(cols[8])               # 所需经验
+        one["totalExp"] = int(cols[9])          # 累计经验
+        one["effectAddition"] = float(cols[10]) # 熟练效果加成
+        one["effectType"] = int(cols[11])       # 效果类型
+        one["effectProbb"] = int(cols[12])      # 触发概率
+        one["unlockDesc"] = unicode(cols[13] or "")
+        one["equipDesc"] = unicode(cols[14] or "")
+        one["unitPrice"] = int(cols[15])        # 单价
+        one["skins"] = json.loads(str(cols[16]))    # 对应皮肤的Id
+        aloofOdds = []
+        one["aloofOdds"] = aloofOdds
+        for m in range(17, len(cols), 2):
+            if cols[m] is None:
+                break
+            oddsMap = {}
+            oddsMap["odds"] = cols[m]
+            oddsMap["probb"] = cols[m + 1]
+            aloofOdds.append(oddsMap)
+
+    i = 0
+    for row in wsSkin.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        one = collections.OrderedDict()
+        for cell in row:
+            cols.append(cell.value)
+        config["skin"][cols[0]] = one   # 皮肤
+        one["skinId"] = cols[0]         # 皮肤ID
+        one["gunId"] = cols[1]          # 炮ID
+        one["kindId"] = cols[2]
+        one["consumeCount"] = cols[3]
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def superboss_power_config():
+    print "superboss_power_config, start"
+    outPath = getOutPath("superbossPower")
+    ws = getWorkBook().get_sheet_by_name("SuperBossPower")
+    config = collections.OrderedDict()
+    config["power"] = collections.OrderedDict()
+    config["powerRange"] = []
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config["power"][int(cols[0])] = one     # 鱼ID
+            one["countPct"] = json.loads(cols[1])   # 狂暴次数百分比
+            one["basePower"] = int(cols[2])         # 基础威力
+
+        if cols[4]:
+            one = collections.OrderedDict()
+            config["powerRange"].append(one)        # 威力范围
+            one["min"] = float(cols[5])             # 最小倍率
+            one["max"] = float(cols[6])             # 最大
+            one["probb"] = int(cols[7])             # 概率
+
+    print "superboss_power_config, end"
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def weapon_config():
     print "weapon_config_m"
     outPath = getOutPath("weapon_m")
@@ -391,6 +507,306 @@ def weapon_config():
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+
+
+def level_funds_config(clientId=0):
+    """
+    成长基金奖励配置
+    """
+    sn = "LevelFunds" if clientId == 0 else "LevelFunds" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    print "level_funds_config, start, ", sn, fn
+    outPath = getOutPath("levelFunds_m", fn)
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    config["canBuyIdx"] = []                        # 可购买索引
+    config["funds"] = []
+    config["rewards"] = collections.OrderedDict()
+    startRowNum = 4
+    fundIdx = 2
+    rewardsIdx = 12
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["canBuyIdx"] = json.loads(cols[0])
+
+        if cols[fundIdx]:
+            one = collections.OrderedDict()
+            config["funds"].append(one)             # 基金
+            one["productId"] = cols[fundIdx + 1]    # 商品
+            one["idx"] = cols[fundIdx + 0]          # 索引
+            one["type"] = cols[fundIdx + 2]         # 类型
+            one["name"] = cols[fundIdx + 3]
+            one["buyType"] = cols[fundIdx + 4]      # 购买方式
+            one["price_direct"] = one["price"] = cols[fundIdx + 5]  # 价格/元
+            one["price_diamond"] = cols[fundIdx + 6]                # 钻石价格
+            one["otherBuyType"] = json.loads(cols[fundIdx + 7])     # 其他购买方式
+            one["title"] = cols[fundIdx + 8]        # 标题宣传语
+
+        if cols[rewardsIdx]:
+            config["rewards"].setdefault(str(cols[rewardsIdx + 1]), [])     # 奖励
+            one = collections.OrderedDict()
+            config["rewards"][str(cols[rewardsIdx + 1])].append(one)        # 商品索引: [] 要求火炮倍率
+            one["level"] = int(cols[rewardsIdx + 0])                        # 等级
+            one["free_rewards"] = json.loads(cols[rewardsIdx + 3])          # 免费奖励数量
+            one["rechargeBonus"] = int(cols[rewardsIdx + 4])                # 充值奖池
+            one["funds_rewards"] = json.loads(cols[rewardsIdx + 6])         # 基金奖励数量
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "level_funds_config, end"
+
+
+def prizewheel_m_config():
+    """
+    渔场轮盘配置
+    """
+    print "prizewheel_m_config, start"
+    outPath = getOutPath("prizeWheel_m")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("LevelPrizeWheel")
+    config = collections.OrderedDict()
+    config["maxSpinTimes"] = 1
+    config["condition"] = 0
+    config["energy"] = {}
+    config["prize"] = collections.OrderedDict()
+    config["bet"] = collections.OrderedDict()
+    startRowNum = 4
+    h = 0
+
+    wheelIdx = 5
+    betIdx = 38
+
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["maxSpinTimes"] = int(cols[0])
+
+        if cols[2]:
+            for i in range(2, 4, 2):
+                config["energy"][str(cols[i])] = int(cols[i + 1])
+
+        if cols[wheelIdx]:
+            config["prize"].setdefault(str(cols[wheelIdx]), collections.OrderedDict())
+            config["prize"][str(cols[wheelIdx])]["betList"] = json.loads(cols[wheelIdx + 1])
+            wheel = []
+            for i in range(wheelIdx + 2, wheelIdx + 32, 3):
+                one = collections.OrderedDict()
+                one["rewards"] = json.loads(cols[i])
+                one["rate"] = int(cols[i + 1])
+                one["reset"] = int(cols[i + 2])
+                wheel.append(one)
+            config["prize"][str(cols[wheelIdx])]["wheel"] = wheel
+
+        if cols[betIdx]:
+            one = collections.OrderedDict()
+            config["bet"][str(cols[betIdx])] = one
+            for i in range(betIdx + 1, betIdx + 2, 2):
+                one[str(cols[i])] = json.loads(cols[i + 1])
+
+        if cols[42]:
+            config["condition"] = cols[42]
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "prizewheel_m_config, end"
+
+
+def time_point_match_skill():
+    """
+    回馈赛的随机技能配置
+    """
+    print "time_point_match_skill, start"
+    outPath = getOutPath("timePointMatchSkill_m")
+    ws = getWorkBook().get_sheet_by_name("TimePointMatchSkill")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+
+        if row[1].value not in config.keys():
+            skillId = collections.OrderedDict()
+            config[int(row[1].value)] = skillId
+            skillId['skill_1'] = []
+            skillId['weight_1'] = []
+            skillId['skill_2'] = []
+            skillId['weight_2'] = []
+
+        for cell in row:
+            cols.append(cell.value)
+
+        skillId["skill_1"].append(int(cols[2]))
+        skillId["weight_1"].append(int(cols[3]))
+        skillId["skill_2"].append(int(cols[4]))
+        skillId["weight_2"].append(int(cols[5]))
+
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "time_point_match_skill, end"
+
+
+def autofill_fish_m():
+    """
+    填充鱼配置
+    """
+    def parse(saveDict, cols):
+        if cols[0] and cols[0] not in saveDict:
+            saveDict[cols[0]] = collections.OrderedDict()       # 渔场ID
+        if cols[2] and cols[2] not in saveDict[cols[0]]:
+            fishCategory = collections.OrderedDict()
+            saveDict[cols[0]][cols[2]] = fishCategory           # 渔场ID: {鱼种类别: {}}
+            fishCategory["categoryId"] = str(cols[2])           # 鱼种类别
+            fishCategory["supplyInterval"] = int(cols[1])       # 填充时间间隔
+            fishCategory["groups"] = []                         # 鱼群
+        group = collections.OrderedDict()
+        group["groupType"] = int(cols[3])                       # 分组类型
+        group["fishes"] = []                                    # 鱼
+        for x in xrange(4, len(cols), 6):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = collections.OrderedDict()
+            fish["fishType"] = str(cols[x + 1])
+            fish["weight"] = int(cols[x + 2])
+            fish["fishCount"] = int(cols[x + 3])
+            fish["minCount"] = int(cols[x + 4])
+            fish["maxCount"] = int(cols[x + 5])
+            group["fishes"].append(fish)
+        saveDict[cols[0]][cols[2]]["groups"].append(group)
+        return saveDict
+
+    outPath = getOutPath("autofillFish_m")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("AutofillFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    isFindBlank = False
+    defaultDict = collections.OrderedDict()
+    bossDict = collections.OrderedDict()
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            isFindBlank = True
+            startRowNum += i
+            print startRowNum, '8888888888', cols
+            continue
+        print cols, '99999999999999'
+        if not isFindBlank:             # 是否发现空行
+            defaultDict = parse(defaultDict, cols)
+        else:
+            bossDict = parse(bossDict, cols)
+    config["default"] = defaultDict
+    config["superBoss"] = bossDict
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def terror_fish_m():
+    """特殊鱼出现的概率和间隔"""
+    outPath = getOutPath("terrorFish_m")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("TerrorFish")
+    config = collections.OrderedDict()
+    terrorFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        terrorFish[str(cols[0])] = one          # 渔场44411、44412、44414、44415、44501、44601
+        interval = int(cols[1])
+        probb = 0
+        for x in xrange(2, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])     # 鱼ID
+            fish["interval"] = interval         # 间隔(秒)
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]  # 概率
+            probb += itemProbb
+            one.append(fish)
+    config["terrorFish"] = terrorFish
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def special_fish_effect_count():
+    """
+    特殊鱼的效果次数
+    """
+    print "special_fish_effect_count, start"
+    outPath = getOutPath("specialFishEffectCount")
+    ws = getWorkBook().get_sheet_by_name("SpecialFishEffectCount")
+    config = collections.OrderedDict()
+    config["times"] = []
+    config["energy_pearl"] = []
+    config["trident"] = []
+    config["money_box"] = []
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+
+        for cell in row:
+            cols.append(cell.value)
+
+        if not cols[0]:
+            continue
+
+        config["times"].append(int(cols[0]))
+        config["energy_pearl"].append(int(cols[1]))
+        config["trident"].append(int(cols[2]))
+        config["money_box"].append(int(cols[3]))
+
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "special_fish_effect_count, end"
 
 
 def getWorkBook(filename="newfish_multiple.xlsm"):
@@ -448,12 +864,17 @@ config_list = [
     (fish_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
-    (gunLevel, None),
-    # (gunskin_config, None),
-    # (superboss_power_config, None),
+    (gunLevel, None),                   # 千炮升级
+    (gunskin_config, None),             # 炮和皮肤的配置
+    (superboss_power_config, None),
     (weapon_config, None),
-    # (level_funds_config, None),
-    # (level_funds_config, 25794)
+    (level_funds_config, None),
+    (level_funds_config, 25794),
+    (prizewheel_m_config, None),
+    (time_point_match_skill, None),
+    (terror_fish_m, None),
+    (autofill_fish_m, None),
+    (special_fish_effect_count, None)
 ]
 
 

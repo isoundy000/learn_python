@@ -154,13 +154,13 @@ class SkillBase(object):
                 self.state = 1                      # 选中技能
                 self.clear()                        # 清除技能数据(广播捕鱼机器人因主人离开房间而死亡)
                 self.initData()                     # 初始化技能数据
-                self.player.costClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)      # 扣金币
+                self.player.costClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)      # 消耗子弹
                 self.player.addUsingSkill(self.skillId, self.skillType)                         # 加技能
                 eventId = "BI_NFISH_GE_SKILL_USE"
         else:                                           # 未选中
             if self.state == 1:                         # 选中状态
                 self.state = 0
-                self.player.addClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)       # 加金币
+                self.player.addClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)       # 加子弹
                 self.player.removeUsingSkill(self.skillId, self.skillType)                      # 取消技能
                 eventId = "BI_NFISH_GE_SKILL_CANCEL"
         self.table.broadcastSkillUse(self, select, self.player.userId, orgState)                # 使用技能
@@ -282,11 +282,7 @@ class SkillBase(object):
         self.originRealPower = self.totalPower + self.energy    # 总威力 + 能量
         self.deductionHP = self.totalPower
         if ftlog.is_debug():
-            ftlog.debug("updateSkillData->",
-                    "userId =", self.player.userId,
-                    "impale =", self.impale,
-                    "totalPower =", self.totalPower,
-                    "deductionHP =", self.deductionHP)
+            ftlog.debug("updateSkillData->",  "userId =", self.player.userId, "impale =", self.impale, "totalPower =", self.totalPower, "deductionHP =", self.deductionHP)
 
     def updateSkillEnergy(self):
         """
@@ -495,7 +491,6 @@ class SkillBase(object):
         排序所有鱼
         :param fIds: 鱼的Ids
         :param extends: 扩展
-        :return:
         """
         fishesDict = {}
         fishesHPDict = {}
@@ -629,10 +624,37 @@ class SkillMissile(SkillBase):
     """
 
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        """合金飞弹捕鱼"""
+        useMissileCount = gamedata.getGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount)
+        if not useMissileCount or useMissileCount < 5 and self.table.runConfig.fishPool == 44001:           # 普通渔场2倍爆炸威力增加5倍
+            self.powerRate = 5
+            useMissileCount = 1 if not useMissileCount else useMissileCount + 1
+            gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount, useMissileCount)
+        return self.normalCatchFish(bulletId, wpId, fIds, extends)
 
     def _sortedFishes(self, fIds, extends=None):
-        pass
+        """按照鱼的捕获概率排序"""
+        fishesDict = {}
+        fishesHPDict = {}
+        for fId in fIds:
+            isOK = self.table.findFish(fId)
+            if not isOK:
+                continue
+            fishInfo = self.table.fishMap[fId]
+            originHP = fishInfo["HP"]
+            fishType = fishInfo["conf"]["fishType"]
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            fatal = self.table.dealIceConeEffect(fId, fishConf)     # 冰锥HP在65%以上时无法一击致命
+            fishHP = int(originHP - self.deductionHP)
+            fishHP = self.table.dealFishHP(fId, fishHP, fatal)
+            fishesDict[fId] = self._getFishProbbRadix(fishInfo, fishConf)
+            if originHP != fishHP:
+                fishesHPDict[fId] = originHP
+        # 网中的鱼数量大于5时从小到大排序;反之从大到小.
+        fishes = sorted(fishesDict.iteritems(), key=lambda d: d[1], reverse=(len(fishesDict) <= 5))
+        if ftlog.is_debug():
+            ftlog.debug(self.skillId, ", _sortedFishes->", fishes, fishesHPDict, fIds)
+        return fishes, fishesHPDict
 
 
 class SkillMagic(SkillBase):
@@ -641,10 +663,24 @@ class SkillMagic(SkillBase):
     """
 
     def initStar(self):
-        pass
+        super(SkillMagic, self).initStar()
+        if self.table.typeName == config.FISH_TIME_MATCH:           # 回馈赛-召唤出的鱼永久无敌
+            self.duration += 999                                    # 效果时间
+        elif self.table.typeName == config.FISH_TIME_POINT_MATCH:   # 定时积分赛渔场
+            self.duration += 999
 
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        """魔术炮捕鱼"""
+        catch, gain, gainChip, exp = [], [], 0, 0
+        position = self.position.get(bulletId, [0, 0])
+        buffer = None
+        endTime = time.time() + self.duration
+        fishType = 0
+        if self.duration:
+            buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0]
+            fishes = self.player.getTargetFishs()
+            if fishes:
+                fishType = random.choice(fishes)
 
 
 class SkillCannon(SkillBase):
@@ -787,18 +823,46 @@ class SkillFrozen(SkillBase):
             self.table.broadcastSkillEffect(self.player, invincibleEndTime, invincibleFishes, 5102)
         return catch, gain, gainChip, exp
 
+
 class SkillGrenade(SkillBase):
     """
     榴弹炮(5105)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        """榴弹炮捕鱼"""
+        return self.normalCatchFish(bulletId, wpId, fIds, extends)
 
     def _sortedFishes(self, fIds, extends=None):
-        pass
+        fishesDict = {}
+        fishesHPDict = {}
+        for fId in fIds:
+            isOK = self.table.findFish(fId)
+            if not isOK:
+                continue
+            fishInfo = self.table.fishMap[fId]
+            originHP = fishInfo["HP"]
+            fishType = fishInfo["conf"]["fishType"]
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            fatal = self.table.dealIceConeEffect(fId, fishConf)
+            fishHP = int(originHP - self.deductionHP)
+            fishHP = self.table.dealFishHP(fId, fishHP, fatal)
+            fishesDict[fId] = self._getFishProbbRadix(fishInfo, fishConf)
+            if originHP != fishHP:
+                fishesHPDict[fId] = originHP
+        # 从大到小排序.
+        fishes = sorted(fishesDict.iteritems(), key=lambda d: d[1], reverse=True)
+        if ftlog.is_debug():
+            ftlog.debug(self.skillId, ", _sortedFishes->", fishes, fishesHPDict, fIds)
+        return fishes, fishesHPDict
 
     def returnClip(self):
-        pass
+        """
+        榴弹炮打空，返还技能子弹
+        """
+        if self.state == 2:
+            if self.clip < self.originClip:
+                self.clip += 1
+                self.updateSkillData()
 
 
 class SkillEnergy(SkillBase):
@@ -850,20 +914,20 @@ class SkillGatling(SkillBase):
     格林机关枪(5110)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        return self.normalCatchFish(bulletId, wpId, fIds, extends)
 
 
 skillMap = {
-    5101: SkillMissile,
-    5102: SkillMagic,
-    5103: SkillCannon,
-    5104: SkillFrozen,
-    5105: SkillGrenade,
-    5106: SkillEnergy,
-    5107: SkillFraud,
-    5108: SkillLaser,
-    5109: SkillHunt,
-    5110: SkillGatling
+    5101: SkillMissile,     # 合金飞弹
+    5102: SkillMagic,       # 魔术炮
+    5103: SkillCannon,      # 火蛇加农炮
+    5104: SkillFrozen,      # 极冻炮
+    5105: SkillGrenade,     # 榴弹炮
+    5106: SkillEnergy,      # 汇能弹
+    5107: SkillFraud,       # 欺诈水晶
+    5108: SkillLaser,       # 激光炮
+    5109: SkillHunt,        # 猎鱼机甲
+    5110: SkillGatling      # 格林机关枪
 }
 
 

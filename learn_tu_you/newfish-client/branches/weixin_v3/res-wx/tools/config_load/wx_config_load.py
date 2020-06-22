@@ -212,6 +212,185 @@ def weapon_config():
     outHandle.close()
 
 
+def chest_config():
+    print u"start 宝箱配置Chest"
+    outPath = getOutPath("chest")
+    ws = getWorkBook().get_sheet_by_name("Chest")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("chestId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one
+        one["chestId"] = int(cols[0])
+        one["name"] = unicode(cols[1])
+        one["star"] = int(cols[3])
+        one["type"] = int(cols[4])
+        one["show"] = int(cols[5])              # 是否显示星级
+        one["kindId"] = int(cols[6])            # 兑换券道具ID
+        one["unlockTime"] = int(cols[7])        # 解锁时间
+        one["levelRange"] = map(int, str(cols[8]).split(","))   # 宝箱级别范围
+        one["openCoin"] = int(cols[9])          # 开启消耗金币/分钟
+        startNum = 9
+        assert int(cols[startNum + 1]) <= int(cols[startNum + 2])
+        one["coinRange"] = [int(cols[startNum + 1]), int(cols[startNum + 2])]   # 金币最小数量 金币最大数量
+        assert int(cols[startNum + 3]) <= int(cols[startNum + 4])
+        one["pearlRange"] = [int(cols[startNum + 3]), int(cols[startNum + 4])]  # 珍珠最小数量
+        # 技能卡
+        one["nCardRate"] = int(cols[startNum + 5])
+        one["nCardRandom"] = int(cols[startNum + 6])
+        assert int(cols[startNum + 7]) <= int(cols[startNum + 8])
+        one["nCardRange"] = [int(cols[startNum + 7]), int(cols[startNum + 8])]
+        one["rCardRate"] = int(cols[startNum + 9])
+        one["rCardRandom"] = int(cols[startNum + 10])
+        assert int(cols[startNum + 11]) <= int(cols[startNum + 12])
+        one["rCardRange"] = [int(cols[startNum + 11]), int(cols[startNum + 12])]
+        one["srCardRate"] = int(cols[startNum + 13])
+        one["srCardRandom"] = int(cols[startNum + 14])
+        assert int(cols[startNum + 15]) <= int(cols[startNum + 16])
+        one["srCardRange"] = [int(cols[startNum + 15]), int(cols[startNum + 16])]
+        one["cardCertain"] = int(cols[startNum + 17])
+        one["cardCertainRateRange"] = map(int, str(cols[startNum + 18]).split(",")) if cols[startNum + 18] else []
+        one["cardCertainNum"] = int(cols[startNum + 19])
+        # 升星卡
+        one["nStarCardRate"] = int(cols[startNum + 20])
+        one["nStarCardRandom"] = int(cols[startNum + 21])
+        assert int(cols[startNum + 22]) <= int(cols[startNum + 23])
+        one["nStarCardRange"] = [int(cols[startNum + 22]), int(cols[startNum + 23])]
+        one["rStarCardRate"] = int(cols[startNum + 24])
+        one["rStarCardRandom"] = int(cols[startNum + 25])
+        assert int(cols[startNum + 26]) <= int(cols[startNum + 27])
+        one["rStarCardRange"] = [int(cols[startNum + 26]), int(cols[startNum + 27])]
+        one["srStarCardRate"] = int(cols[startNum + 28])
+        one["srStarCardRandom"] = int(cols[startNum + 29])
+        assert int(cols[startNum + 30]) <= int(cols[startNum + 31])
+        one["srStarCardRange"] = [int(cols[startNum + 30]), int(cols[startNum + 31])]
+        one["starCardCertain"] = int(cols[startNum + 32])
+        one["starCardCertainRateRange"] = map(int, str(cols[startNum + 33]).split(",")) if cols[startNum + 33] else []
+        one["starCardCertainNum"] = int(cols[startNum + 34])
+        # 火炮、水晶、奖券、海星、冷却
+        one["gunSkinRate"] = int(cols[startNum + 35])
+        one["gunSkinRandom"] = int(cols[startNum + 36])
+        assert int(cols[startNum + 37]) <= int(cols[startNum + 38])
+        one["gunSkinRange"] = [int(cols[startNum + 37]), int(cols[startNum + 38])]
+        one["crystalRate"] = int(cols[startNum + 39])
+        one["crystalRandom"] = int(cols[startNum + 40])
+        assert int(cols[startNum + 41]) <= int(cols[startNum + 42])
+        one["crystalRange"] = [int(cols[startNum + 41]), int(cols[startNum + 42])]
+        one["couponRate"] = int(cols[startNum + 43])
+        assert int(cols[startNum + 44]) <= int(cols[startNum + 45])
+        one["couponRange"] = [int(cols[startNum + 44]), int(cols[startNum + 45])]
+        one["starfishRate"] = int(cols[startNum + 46])
+        assert int(cols[startNum + 47]) <= int(cols[startNum + 48])
+        one["starfishRange"] = [int(cols[startNum + 47]), int(cols[startNum + 48])]
+        one["coolDownRate"] = int(cols[startNum + 49])
+        assert int(cols[startNum + 50]) <= int(cols[startNum + 51])
+        one["coolDownRange"] = [int(cols[startNum + 50]), int(cols[startNum + 51])]
+        # 青铜、白银、黄金招财珠数
+        one["bronzeBulletRate"] = int(cols[startNum + 52])
+        assert int(cols[startNum + 53]) <= int(cols[startNum + 54])
+        one["bronzeBulletRange"] = [int(cols[startNum + 53]), int(cols[startNum + 54])]
+        one["silverBulletRate"] = int(cols[startNum + 55])
+        assert int(cols[startNum + 56]) <= int(cols[startNum + 57])
+        one["silverBulletRange"] = [int(cols[startNum + 56]), int(cols[startNum + 57])]
+        one["goldBulletRate"] = int(cols[startNum + 58])
+        assert int(cols[startNum + 59]) <= int(cols[startNum + 60])
+        one["goldBulletRange"] = [int(cols[startNum + 59]), int(cols[startNum + 60])]
+        # 红宝石
+        one["rubyRate"] = int(cols[startNum + 61])
+        assert int(cols[startNum + 62]) <= int(cols[startNum + 63])
+        one["rubyRange"] = [int(cols[startNum + 62]), int(cols[startNum + 63])]
+        # 出现其他物品id，概率，最小数量，最大数量
+        one["itemsData"] = json.loads(cols[startNum + 64])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print u"end 宝箱配置Chest"
+
+
+def chest_drop_config():
+    print u"start 宝箱掉落配置ChestDrop"
+    outPath = getOutPath("chestDrop")
+    ws = getWorkBook().get_sheet_by_name("ChestDrop")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("kindId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one
+        one["kindId"] = int(cols[0])            # 物品ID
+        one["type"] = int(cols[3])
+        one["rare"] = int(cols[4])              # 稀有度
+        one["level"] = int(cols[5])
+        one["unlock"] = int(cols[6])
+        one["weight"] = int(cols[7])
+        one["convertCoin"] = int(cols[8])       # 溢出后转换金币数
+
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print u"end 宝箱掉落配置ChestDrop"
+
+
+def dynamic_odds_config():
+    print u"start 动态概率配置 DynamicOdds"
+    outPath = getOutPath("dynamicOdds")
+    ws = getWorkBook().get_sheet_by_name("DynamicOdds")
+    dynamicOdds = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        dynamicOdds.setdefault(int(cols[0]), collections.OrderedDict())     # 所在渔场
+        fishPool = dynamicOdds[int(cols[0])]
+        wave = collections.OrderedDict()
+        fishPool[str(cols[1])] = wave   # 曲线ID
+        wave["waveId"] = int(cols[1])   # 曲线ID
+        wave["weight"] = int(cols[2])   # 权重
+        wave["type"] = float(cols[3])   # 涨还是跌 0为分界线
+        wave["frequency"] = []          # 曲率列表
+        for x in xrange(4, len(cols)):
+            if cols[x] is None:
+                break
+            wave["frequency"].append(float(cols[x]))
+
+    result = json.dumps(dynamicOdds, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print u"end 动态概率配置 DynamicOdds"
+
+
 def fixed_multiple_fish():
     """固定倍率鱼"""
     outPath = getOutPath("fixedMultipleFish")
@@ -415,6 +594,10 @@ def item_config(clientId=0):
     print "item_config, end"
 
 
+def store_config():
+    pass
+
+
 def getWorkBook(filename="newfish.xlsm"):
     '''
     获取工作sheet
@@ -480,16 +663,16 @@ config_list = [
     (item_config, 26312),
     (item_config, 26760),
     (item_config, 26882),
-    # # (store_config, None),
-    # # (store_config, 25598),
-    # # (store_config, 25794),
-    # # (store_config, 25840),
-    # # (store_config, 26120),
-    # # (store_config, 26121),
-    # # (store_config, 26122),
-    # # (store_config, 26312),
-    # # (store_config, 26760),
-    # # (store_config, 26882),
+    (store_config, None),
+    (store_config, 25598),
+    (store_config, 25794),
+    (store_config, 25840),
+    (store_config, 26120),
+    (store_config, 26121),
+    (store_config, 26122),
+    (store_config, 26312),
+    (store_config, 26760),
+    (store_config, 26882),
     # # (multi_lang_text, None),
     # (newbie7DaysGift_config, None),
     # (lottery_ticket_config, None),
@@ -518,14 +701,14 @@ config_list = [
     # (skill_star_config, None),
     # # (main_quest_config, None),
     # # (daily_quest_config, None),
-    # (chest_config, None),
-    # (chest_drop_config, None),
+    (chest_config, None),               # 宝箱配置
+    (chest_drop_config, None),          # 宝箱掉落配置
     # (cmptt_task_config, None),
     # (ncmptt_task_config, None),
     # (bonus_task_config, None),
     # (guide_task_config, None),
     # (probability_config, None),
-    # (dynamic_odds_config, None),
+    (dynamic_odds_config, None),
     # (lottery_pool_config, None),
     # # (gift_config, None),
     # # (gift_config, 25794),

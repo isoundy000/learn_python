@@ -34,7 +34,7 @@
         }, 
         "queen_0": {
             "mode": 0, 
-            "maxTimes": -1, 
+            "maxTimes": 7, 
             "currencyList": [
                 101, 
                 13761
@@ -42,7 +42,7 @@
         }, 
         "queen_1": {
             "mode": 1, 
-            "maxTimes": -1, 
+            "maxTimes": 7, 
             "currencyList": [
                 101, 
                 13761

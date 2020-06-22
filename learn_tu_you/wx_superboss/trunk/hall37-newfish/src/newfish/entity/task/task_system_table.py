@@ -24,3 +24,10 @@ class TaskSystemTable:
         任务结束
         """
         pass
+
+
+    def dealCatchEvent(self, event):
+        """
+        处理捕获事件
+        """
+        pass

@@ -1076,6 +1076,49 @@ def loadDynamicOddsConf():
     dynamicOddsConf = rocopy(getGameConf("dynamicOdds"))
 
 
+def getDynamicOddsConf(fishPool):
+    """
+    获取动态概率配置
+    """
+    global dynamicOddsConf
+    return dynamicOddsConf.get(str(fishPool), {})
+
+
+def loadCatchDropConf():
+    """
+    加载捕获掉率配置
+    """
+    global catchDropConf
+    catchDropConf = rocopy(getGameConf("catchDrop"))
+
+
+def getCatchDropConf(fpMultiple, fishType, uid):
+    """
+    读取捕获掉率配置
+    """
+    dropConf = None
+    global catchDropConf
+    # dropConf = catchDropConf.get(str(fishPool), {})
+    _conf = _getCatchDropGroupConf(fpMultiple, fishType)
+    if _conf:
+        kindId = _getCatchDropKindId(int(_conf["dropGroupId"]), uid)
+
+
+
+def _getCatchDropKindId(groupId, uid):
+    """
+    根据玩家uid和掉落组返回掉落kindId
+    """
+
+
+def _getCatchDropGroupConf(fpMultiple, fishType):
+    """
+    根据渔场和捕到的鱼的类型获得掉落组
+    """
+
+
+
+
 def loadFixedMultipleFishConf():
     """
     加载固定倍率鱼配置

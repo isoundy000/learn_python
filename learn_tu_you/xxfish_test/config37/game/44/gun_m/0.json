@@ -1,0 +1,384 @@
+{
+    "gunIds": [
+        0, 
+        1288, 
+        1165, 
+        1166, 
+        1167, 
+        1289, 
+        1290
+    ], 
+    "gun": {
+        "0": {
+            "1": {
+                "gunId": 0, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_1", 
+                "multiple": 1, 
+                "unlockType": 3, 
+                "unlockValue": 1, 
+                "equipType": 3, 
+                "equipValue": 1, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 0.0, 
+                "effectType": 0, 
+                "effectProbb": 0, 
+                "unlockDesc": "", 
+                "equipDesc": "", 
+                "unitPrice": 0, 
+                "skins": [
+                    0, 
+                    1366, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 1, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.4, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1288": {
+            "1": {
+                "gunId": 1288, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_2", 
+                "multiple": 1, 
+                "unlockType": 3, 
+                "unlockValue": 5, 
+                "equipType": 3, 
+                "equipValue": 10, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 0.2, 
+                "effectType": 1, 
+                "effectProbb": 10000, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 20000, 
+                "skins": [
+                    1352, 
+                    1395, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 0.95, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.8, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1165": {
+            "1": {
+                "gunId": 1165, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_3", 
+                "multiple": 1, 
+                "unlockType": 3, 
+                "unlockValue": 10, 
+                "equipType": 3, 
+                "equipValue": 50, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 0.2, 
+                "effectType": 1, 
+                "effectProbb": 10000, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 40000, 
+                "skins": [
+                    1353, 
+                    1472, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 0.95, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.8, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1166": {
+            "1": {
+                "gunId": 1166, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_4", 
+                "multiple": 1, 
+                "unlockType": 3, 
+                "unlockValue": 20, 
+                "equipType": 3, 
+                "equipValue": 50, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 1.5, 
+                "effectType": 2, 
+                "effectProbb": 200, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 250000, 
+                "skins": [
+                    1354, 
+                    1473, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 1, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0.2, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1167": {
+            "1": {
+                "gunId": 1167, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_5", 
+                "multiple": 1, 
+                "unlockType": 3, 
+                "unlockValue": 30, 
+                "equipType": 3, 
+                "equipValue": 50, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 2.0, 
+                "effectType": 2, 
+                "effectProbb": 200, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 500000, 
+                "skins": [
+                    1355, 
+                    1476, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.2, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0.2, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1289": {
+            "1": {
+                "gunId": 1289, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_6", 
+                "multiple": 2, 
+                "unlockType": 3, 
+                "unlockValue": 40, 
+                "equipType": 3, 
+                "equipValue": 50, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 2.2, 
+                "effectType": 2, 
+                "effectProbb": 200, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 666666, 
+                "skins": [
+                    1356, 
+                    1478, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2, 
+                        "probb": 0.1
+                    }, 
+                    {
+                        "odds": 0.25, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }, 
+        "1290": {
+            "1": {
+                "gunId": 1290, 
+                "gunLevel": 1, 
+                "name": "ID_CONFIG_GUN_NAME_7", 
+                "multiple": 2, 
+                "unlockType": 3, 
+                "unlockValue": 50, 
+                "equipType": 3, 
+                "equipValue": 50, 
+                "exp": 0, 
+                "totalExp": 0, 
+                "effectAddition": 2.4, 
+                "effectType": 2, 
+                "effectProbb": 200, 
+                "unlockDesc": "ID_CONFIG_LEVEL_UNLOCK_MULTIPLE", 
+                "equipDesc": "ID_CONFIG_LEVEL_EQUIP_MULTIPLE", 
+                "unitPrice": 666666, 
+                "skins": [
+                    1357, 
+                    -1, 
+                    -1
+                ], 
+                "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.72
+                    }, 
+                    {
+                        "odds": 2.4, 
+                        "probb": 0.08
+                    }, 
+                    {
+                        "odds": 0.25, 
+                        "probb": 0.2
+                    }
+                ]
+            }
+        }
+    }, 
+    "skin": {
+        "1352": {
+            "skinId": 1352, 
+            "gunId": 1288, 
+            "kindId": 1352, 
+            "consumeCount": 20
+        }, 
+        "1353": {
+            "skinId": 1353, 
+            "gunId": 1165, 
+            "kindId": 1353, 
+            "consumeCount": 20
+        }, 
+        "1354": {
+            "skinId": 1354, 
+            "gunId": 1166, 
+            "kindId": 1354, 
+            "consumeCount": 20
+        }, 
+        "1355": {
+            "skinId": 1355, 
+            "gunId": 1167, 
+            "kindId": 1355, 
+            "consumeCount": 20
+        }, 
+        "1356": {
+            "skinId": 1356, 
+            "gunId": 1289, 
+            "kindId": 1356, 
+            "consumeCount": 20
+        }, 
+        "1357": {
+            "skinId": 1357, 
+            "gunId": 1290, 
+            "kindId": 1357, 
+            "consumeCount": 20
+        }, 
+        "1366": {
+            "skinId": 1366, 
+            "gunId": 0, 
+            "kindId": 1366, 
+            "consumeCount": 20
+        }, 
+        "1395": {
+            "skinId": 1395, 
+            "gunId": 1288, 
+            "kindId": 1395, 
+            "consumeCount": 20
+        }, 
+        "1471": {
+            "skinId": 1471, 
+            "gunId": 1165, 
+            "kindId": 1471, 
+            "consumeCount": 20
+        }, 
+        "1472": {
+            "skinId": 1472, 
+            "gunId": 1165, 
+            "kindId": 1472, 
+            "consumeCount": 20
+        }, 
+        "1473": {
+            "skinId": 1473, 
+            "gunId": 1166, 
+            "kindId": 1473, 
+            "consumeCount": 20
+        }, 
+        "1475": {
+            "skinId": 1475, 
+            "gunId": 1167, 
+            "kindId": 1475, 
+            "consumeCount": 20
+        }, 
+        "1476": {
+            "skinId": 1476, 
+            "gunId": 1167, 
+            "kindId": 1476, 
+            "consumeCount": 20
+        }, 
+        "1477": {
+            "skinId": 1477, 
+            "gunId": 1289, 
+            "kindId": 1477, 
+            "consumeCount": 20
+        }, 
+        "1478": {
+            "skinId": 1478, 
+            "gunId": 1289, 
+            "kindId": 1478, 
+            "consumeCount": 20
+        }, 
+        "1479": {
+            "skinId": 1479, 
+            "gunId": 1290, 
+            "kindId": 1479, 
+            "consumeCount": 20
+        }
+    }
+}

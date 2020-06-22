@@ -44,11 +44,11 @@ class GameData:
     # 用户等级
     level = "level"
     # 最近一次已拥有的皮肤炮列表（配合过期提示用）(经典和千炮模式共享)
-    ownGunSkins = "ownGunSkins"
+    ownGunSkins = "ownGunSkins"                     # [1288, 1165, 1167, 1166]
     # # 最近一次已拥有的千炮皮肤炮列表（配合过期提示用）
     # ownGunSkins_m = "ownGunSkins_m"
     # 已拥有的皮肤炮皮肤(经典和千炮模式共享)
-    ownGunSkinSkins = "ownGunSkinSkins"
+    ownGunSkinSkins = "ownGunSkinSkins"             # [1366]
     # # 已拥有的千炮皮肤炮皮肤
     # ownGunSkinSkins_m = "ownGunSkinSkins_m"
     # 已发送了过期提示弹窗的皮肤炮(经典和千炮模式共享)
@@ -64,7 +64,7 @@ class GameData:
     # 用户最大千炮倍率
     gunLevel_m = "gunLevel_m"
     # 用户当前皮肤炮ID
-    gunSkinId = "gunSkinId"
+    gunSkinId = "gunSkinId"                 # 使用的皮肤炮ID
     # 用户当前千炮皮肤炮ID
     gunSkinId_m = "gunSkinId_m"
     # 当前玩家在经典渔场中的火炮等级

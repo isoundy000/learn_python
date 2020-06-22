@@ -84,6 +84,7 @@ def register(req):
             current_server = server_list[0]['server']
             uu.current_server = current_server
             uu.save()
+            print 'ddddddddddddddddd'
             return 0, None, {
                 'server_list': server_list,
                 'current_server': uu.current_server,
@@ -573,9 +574,19 @@ def main_page(env):
 
     # 记录在线时间
     user.update_online_status()
+    user.new_update_online_status()
+    card_exchange, equip_exchange = user.item.has_exchange()
+    onlinw_awawrd_id, online_award_expire = user.get_online_award_expire()
+    reward = Reward(user)
 
+    user.daily_award.refresh_login_award()
+    config_refresh_flag, config_refresh_text = ConfigRefresh.check()
     data = {
-
+        'opening_award_expire': user.user_m.SERVER_OPENING_AWARD_EXPIRE,
+        'building_ability': building_ability,
+        'resource': resource,
+        'private_building': building,
+        'arena_rank': user.arena.get_rank(),
     }
 
 

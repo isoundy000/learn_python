@@ -1,0 +1,96 @@
+{
+    "terrorFish": {
+        "44411": [
+            {
+                "interval": 10, 
+                "probb": [
+                    1, 
+                    10000
+                ], 
+                "fishType": 77228
+            }
+        ], 
+        "44412": [
+            {
+                "interval": 10, 
+                "probb": [
+                    1, 
+                    10000
+                ], 
+                "fishType": 77228
+            }
+        ], 
+        "44414": [
+            {
+                "interval": 10, 
+                "probb": [
+                    1, 
+                    10000
+                ], 
+                "fishType": 78229
+            }
+        ], 
+        "44415": [
+            {
+                "interval": 10, 
+                "probb": [
+                    1, 
+                    10000
+                ], 
+                "fishType": 79230
+            }
+        ], 
+        "44501": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    3200
+                ], 
+                "fishType": 64118
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    3201, 
+                    6400
+                ], 
+                "fishType": 20040
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6401, 
+                    10000
+                ], 
+                "fishType": 69119
+            }
+        ], 
+        "44601": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    3500
+                ], 
+                "fishType": 63118
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    3501, 
+                    6500
+                ], 
+                "fishType": 19040
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6501, 
+                    10000
+                ], 
+                "fishType": 68119
+            }
+        ]
+    }
+}

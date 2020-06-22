@@ -115,7 +115,7 @@ class FishPlayer(TYPlayer):
         self.isBankrupt = False                     # 是否破产
         self.resetTime = 0
         self._fires = {}                            # 子弹
-        self._catchFishes = {}
+        self._catchFishes = {}                      # 捕获的鱼ID: 条数
         self._comboBudgetTime = 1.2
         self.clip = 0
         self.combo = 0
@@ -769,9 +769,16 @@ class FishPlayer(TYPlayer):
     def processBulletPower(self, curPower, totalFishScore, fpMultiple, gunMultiple, cnt, bulletPowerPool, gunX):
         """
         处理子弹威力
+        :param curPower: 当前子弹的威力
+        :param totalFishScore: 鱼的总积分
+        :param fpMultiple: 渔场倍率
+        :param gunMultiple: 炮的倍率 单倍炮|双倍炮
+        :param cnt: 一网打的鱼
+        :param bulletPowerPool: 子弹能量池
+        :param gunX: 炮的倍数
         """
         finalPower = curPower
-        if self.isSupplyBulletPowerMode():
+        if self.isSupplyBulletPowerMode():      # 是否为补足子弹威力的模式
             if ftlog.is_debug():
                 ftlog.debug("1 bulletPower, process =", self.isSupplyBulletPowerMode(), "userId =", self.userId,
                         "curPower =", curPower, "totalFishScore =", totalFishScore, "fpMultiple =", fpMultiple,
@@ -1093,6 +1100,21 @@ class FishPlayer(TYPlayer):
         msg.setResult("auxiliarySkillSlots", self.getSkillSlotsInfo(1))
         GameMsg.sendMsg(msg, self.table.getBroadcastUids())
 
+
+    def useBullet(self, bulletKindId):
+        pas
+
+    def addCatchFishes(self, fishTypes):
+        """
+        添加捕获的鱼
+        :param fishTypes: 鱼ID
+        """
+        self.lastCatchTime = int(time.time())           # 最后捕鱼时间
+        for fishType in fishTypes:
+            if fishType not in self._catchFishes:
+                self._catchFishes[fishType] = 0
+            self._catchFishes[fishType] += 1
+
     def getTargetFishs(self):
         """
         获取任务目标鱼
@@ -1323,6 +1345,42 @@ class FishPlayer(TYPlayer):
         except Exception, e:
             ftlog.error("getGunConf error", self.userId, fire, traceback.format_exc())
         return {}
+
+    def getBulletDisappearSeconds(self):
+        """
+        获取子弹消失的剩余秒数
+        """
+        interval = 0
+        maxTstmp = 0
+        for k, v in self._fires.iteritems():
+            if v["receiveTimestamp"] > maxTstmp:
+                maxTstmp = v["receiveTimestamp"]
+        if maxTstmp > 0:
+            interval = 35 - (time.time() - maxTstmp)
+            if interval < 0:
+                interval = 0
+        return interval
+
+    def addTableChip(self, chip, eventId):
+        """添加桌子的金币"""
+        if chip > 0:
+            changed = self.economicData.addGain([{"name": "tableChip", "count": int(chip)}],
+                                                eventId, self.table.roomId)
+            if changed:
+                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+
+    def catchBudget(self, gainChip, gainCoupon, items, nowExp=0, wpId=0):
+        """
+        捕获添加奖励
+        :param gainChip:
+        :param gainCoupon:
+        :param items:
+        :param nowExp:
+        :param wpId:
+        :return:
+        """
+        self.reportBIFeatureData("BI_NFISH_GE_FT_CATCH", wpId, gainChip)
+
 
     def getFinalWpPower(self, bulletId):
         """

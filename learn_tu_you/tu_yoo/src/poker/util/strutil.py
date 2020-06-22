@@ -34,6 +34,40 @@ def cloneData(data):
     #     return deepcopy(data)
 
 
+def uuid():
+    '''
+    取得一个32位长的UUID字符串
+    '''
+    return str(uuid.uuid4()).replace('-', '')
+
+
+def dumps(obj):
+    '''
+    驳接JSON的dumps方法, 使用紧凑的数据格式(数据项之间无空格)
+    '''
+    return json.dumps(obj, separators=(',', ':'))
+
+
+def dumpsbase64(obj):
+    '''
+    驳接JSON的dumps方法,并对结果进行BASE64的编码
+    '''
+    jstr = json.dumps(obj, separators=(',', ':'))
+    return base64.b64encode(jstr)
+
+
+def loadsbase64(base64jsonstr, decodeutf8=False):
+    '''
+    驳接JSON的loads方法, 先对json串进行BASE64解密,再解析为JSON格式
+    若decodeutf8为真, 那么将所有的字符串转换为ascii格式
+    '''
+    jsonstr = b64decode(base64jsonstr)
+    datas = json.loads(jsonstr)
+    if decodeutf8:
+        datas = decodeObjUtf8(datas)
+    return datas
+
+
 def loads(jsonstr, decodeutf8=False, ignoreException=False, execptionValue=None):
     '''
     驳接JSON的loads方法
@@ -52,6 +86,38 @@ def loads(jsonstr, decodeutf8=False, ignoreException=False, execptionValue=None)
         datas = decodeObjUtf8(datas)
     return datas
 
+
+def b64decode(base64str):
+    '''
+    驳接BASE64的解密方法, 替换数据中的空格到+号后,再进行解密
+    '''
+    base64str = base64str.replace(' ', '+')
+    base64str = base64str.replace('%3d', '=')
+    return base64.b64decode(base64str)
+
+
+def b64encode(normalstr):
+    '''
+    驳接BASE64的加密方法
+    '''
+    return base64.b64encode(normalstr)
+
+
+def md5digest(md5str):
+    '''
+    计算一个字符串的MD5值, 返回32位小写的MD5值
+    '''
+    m = md5()
+    m.update(md5str)
+    md5code = m.hexdigest()
+    return md5code.lower()
+
+
+def urlencode(params):
+    '''
+    将params进行URL编码
+    '''
+    return urllib.urlencode(params)
 
 
 def decodeObjUtf8(datas):

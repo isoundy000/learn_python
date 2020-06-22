@@ -21,7 +21,7 @@ __author__ = 'ghou'
 # http://127.0.0.1:8888/login/?method=new_user&account=fake_account_hvxj49uv
 
 # 测试注册账号接口
-# http://127.0.0.1:8888/login/?method=register&account=ghou123&passwd=123456
+# http://127.0.0.1:8888/login/?method=register&account=ghou12356&passwd=1234567&user_token=h11234567
 
 
 

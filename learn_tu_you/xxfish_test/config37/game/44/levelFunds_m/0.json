@@ -1,0 +1,788 @@
+{
+    "canBuyIdx": [
+        1, 
+        2, 
+        3, 
+        4, 
+        6
+    ], 
+    "funds": [
+        {
+            "productId": "TY0044F00300001", 
+            "idx": 1, 
+            "type": 1, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_QIHANG", 
+            "buyType": "direct", 
+            "price_direct": 30, 
+            "price": 30, 
+            "price_diamond": 300, 
+            "otherBuyType": {
+                "voucher": 30
+            }, 
+            "title": "30,100万"
+        }, 
+        {
+            "productId": "TY0044F01980001", 
+            "idx": 2, 
+            "type": 2, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_ADVANCED", 
+            "buyType": "direct", 
+            "price_direct": 198, 
+            "price": 198, 
+            "price_diamond": 1980, 
+            "otherBuyType": {
+                "voucher": 198
+            }, 
+            "title": "198,600万"
+        }, 
+        {
+            "productId": "TY0044F03280001", 
+            "idx": 3, 
+            "type": 3, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_TALENT", 
+            "buyType": "direct", 
+            "price_direct": 328, 
+            "price": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "title": "328,1000万"
+        }, 
+        {
+            "productId": "TY0044F06480001", 
+            "idx": 4, 
+            "type": 4, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_REGAL", 
+            "buyType": "direct", 
+            "price_direct": 648, 
+            "price": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "title": "648,2000万"
+        }, 
+        {
+            "productId": "TY0044F03280002", 
+            "idx": 5, 
+            "type": 4, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_REGAL", 
+            "buyType": "direct", 
+            "price_direct": 328, 
+            "price": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "title": "328,1100万"
+        }, 
+        {
+            "productId": "TY0044F06480002", 
+            "idx": 6, 
+            "type": 5, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_KING", 
+            "buyType": "direct", 
+            "price_direct": 648, 
+            "price": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "title": "648,2500万"
+        }, 
+        {
+            "productId": "TY0044F03280003", 
+            "idx": 7, 
+            "type": 5, 
+            "name": "ID_CONFIG_LEVEL_FUNDS_NAME_KING", 
+            "buyType": "direct", 
+            "price_direct": 328, 
+            "price": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "title": "328,1300万"
+        }
+    ], 
+    "rewards": {
+        "1": [
+            {
+                "level": 10, 
+                "free_rewards": [
+                    {
+                        "count": 1, 
+                        "name": 1147
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 40000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 11, 
+                "free_rewards": [
+                    {
+                        "count": 2500, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 50000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 12, 
+                "free_rewards": [
+                    {
+                        "count": 3000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 60000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 13, 
+                "free_rewards": [
+                    {
+                        "count": 4000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 70000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 14, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "name": 1155
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 80000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 15, 
+                "free_rewards": [
+                    {
+                        "count": 5000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 90000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 16, 
+                "free_rewards": [
+                    {
+                        "count": 50, 
+                        "des": "比赛门票", 
+                        "name": 3106
+                    }
+                ], 
+                "rechargeBonus": 15000, 
+                "funds_rewards": [
+                    {
+                        "count": 100000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 17, 
+                "free_rewards": [
+                    {
+                        "count": 8000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 120000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 18, 
+                "free_rewards": [
+                    {
+                        "count": 1, 
+                        "name": 13560
+                    }
+                ], 
+                "rechargeBonus": 15000, 
+                "funds_rewards": [
+                    {
+                        "count": 150000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 19, 
+                "free_rewards": [
+                    {
+                        "count": 10000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 180000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 20, 
+                "free_rewards": [
+                    {
+                        "count": 15, 
+                        "des": "稀有技能", 
+                        "name": 1150
+                    }
+                ], 
+                "rechargeBonus": 15000, 
+                "funds_rewards": [
+                    {
+                        "count": 200000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "2": [
+            {
+                "level": 21, 
+                "free_rewards": [
+                    {
+                        "count": 15000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 800000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 22, 
+                "free_rewards": [
+                    {
+                        "count": 15, 
+                        "name": 1408
+                    }
+                ], 
+                "rechargeBonus": 20000, 
+                "funds_rewards": [
+                    {
+                        "count": 1000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 23, 
+                "free_rewards": [
+                    {
+                        "count": 20000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 1200000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 24, 
+                "free_rewards": [
+                    {
+                        "count": 72, 
+                        "des": "强力炮台", 
+                        "name": 1166
+                    }
+                ], 
+                "rechargeBonus": 20000, 
+                "funds_rewards": [
+                    {
+                        "count": 1500000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 25, 
+                "free_rewards": [
+                    {
+                        "count": 25000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 2000000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "3": [
+            {
+                "level": 26, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "des": "比赛门票", 
+                        "name": 3106
+                    }
+                ], 
+                "rechargeBonus": 30000, 
+                "funds_rewards": [
+                    {
+                        "count": 1500000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 27, 
+                "free_rewards": [
+                    {
+                        "count": 30000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 1800000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 28, 
+                "free_rewards": [
+                    {
+                        "count": 1, 
+                        "name": 13561
+                    }
+                ], 
+                "rechargeBonus": 30000, 
+                "funds_rewards": [
+                    {
+                        "count": 2100000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 29, 
+                "free_rewards": [
+                    {
+                        "count": 40000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 2400000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 30, 
+                "free_rewards": [
+                    {
+                        "count": 25, 
+                        "des": "稀有技能", 
+                        "name": 1152
+                    }
+                ], 
+                "rechargeBonus": 30000, 
+                "funds_rewards": [
+                    {
+                        "count": 3000000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "4": [
+            {
+                "level": 31, 
+                "free_rewards": [
+                    {
+                        "count": 50000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 3000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 32, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "name": 1162
+                    }
+                ], 
+                "rechargeBonus": 40000, 
+                "funds_rewards": [
+                    {
+                        "count": 3500000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 33, 
+                "free_rewards": [
+                    {
+                        "count": 60000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 4000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 34, 
+                "free_rewards": [
+                    {
+                        "count": 72, 
+                        "name": 1167
+                    }
+                ], 
+                "rechargeBonus": 40000, 
+                "funds_rewards": [
+                    {
+                        "count": 5000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 35, 
+                "free_rewards": [
+                    {
+                        "count": 80000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 6000000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "5": [
+            {
+                "level": 31, 
+                "free_rewards": [
+                    {
+                        "count": 50000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 1800000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 32, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "name": 1162
+                    }
+                ], 
+                "rechargeBonus": 40000, 
+                "funds_rewards": [
+                    {
+                        "count": 2000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 33, 
+                "free_rewards": [
+                    {
+                        "count": 60000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 2200000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 34, 
+                "free_rewards": [
+                    {
+                        "count": 72, 
+                        "name": 1167
+                    }
+                ], 
+                "rechargeBonus": 40000, 
+                "funds_rewards": [
+                    {
+                        "count": 2500000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 35, 
+                "free_rewards": [
+                    {
+                        "count": 80000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 3000000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "6": [
+            {
+                "level": 36, 
+                "free_rewards": [
+                    {
+                        "count": 1, 
+                        "name": 13562
+                    }
+                ], 
+                "rechargeBonus": 50000, 
+                "funds_rewards": [
+                    {
+                        "count": 3500000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 37, 
+                "free_rewards": [
+                    {
+                        "count": 100000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 4000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 38, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "name": 13543
+                    }
+                ], 
+                "rechargeBonus": 50000, 
+                "funds_rewards": [
+                    {
+                        "count": 5000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 39, 
+                "free_rewards": [
+                    {
+                        "count": 200000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 6000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 40, 
+                "free_rewards": [
+                    {
+                        "count": 72, 
+                        "des": "技能双倍！", 
+                        "name": 1290
+                    }
+                ], 
+                "rechargeBonus": 100000, 
+                "funds_rewards": [
+                    {
+                        "count": 7000000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "7": [
+            {
+                "level": 36, 
+                "free_rewards": [
+                    {
+                        "count": 1, 
+                        "name": 13562
+                    }
+                ], 
+                "rechargeBonus": 50000, 
+                "funds_rewards": [
+                    {
+                        "count": 2000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 37, 
+                "free_rewards": [
+                    {
+                        "count": 100000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 2200000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 38, 
+                "free_rewards": [
+                    {
+                        "count": 200, 
+                        "name": 13543
+                    }
+                ], 
+                "rechargeBonus": 50000, 
+                "funds_rewards": [
+                    {
+                        "count": 2400000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 39, 
+                "free_rewards": [
+                    {
+                        "count": 200000, 
+                        "name": 101
+                    }
+                ], 
+                "rechargeBonus": 0, 
+                "funds_rewards": [
+                    {
+                        "count": 3000000, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "level": 40, 
+                "free_rewards": [
+                    {
+                        "count": 72, 
+                        "des": "技能双倍！", 
+                        "name": 1290
+                    }
+                ], 
+                "rechargeBonus": 100000, 
+                "funds_rewards": [
+                    {
+                        "count": 3500000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ]
+    }
+}
