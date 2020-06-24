@@ -2,7 +2,15 @@
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
 # @Time: 2020/6/6
+import random
 
+from freetime.entity.msg import MsgPack
+from freetime.support.tcpagent import wrapper
+import freetime.util.log as ftlog
+from poker.entity.configure import gdata, pokerconf, configure
+from poker.protocol import oldcmd, _runenv
+import stackless
+from poker.util import strutil
 
 
 def sendToUsers(msgpack, userIdList):
@@ -21,3 +29,11 @@ def sendTableServer(msgpack, roomId):
 
 def _communicateTableServer(userId, roomId, msgpack, head1, isQuery, timeout=None, notimeoutex=0):
     pass
+
+
+def sendToUser(msgpack, userId):
+    '''
+    发送消息至用户的客户端
+    '''
+    if isinstance(msgpack, MsgPack):
+        msgpack = msgpack.pack()

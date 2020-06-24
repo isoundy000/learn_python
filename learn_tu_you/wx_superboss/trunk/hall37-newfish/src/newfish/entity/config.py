@@ -685,6 +685,26 @@ def getSpecialItemConf():
     return specialItemConf
 
 
+def loadMultiLangTextConf():
+    """
+    加载多语言文本
+    """
+    global multiLangTextConf
+    multiLangTextConf = rocopy(getGameConf("multiLangText"))
+
+
+def getMultiLangTextConf(id, lang="zh"):
+    """
+    获取多语言文本
+    getMultiLangTextConf(?!.*?lang).*$
+    """
+    global multiLangTextConf
+    conf = multiLangTextConf.get(id, {})
+    if not conf:
+        ftlog.error("getMultiLangTextConf error", id)
+    return conf.get(lang, "")
+
+
 def getIncrPearlDropRatio(userId):
     """
     获取可以增加的珍珠额外掉率
@@ -1296,25 +1316,6 @@ def getUserLevelConf():
     return userLevelConf
 
 
-def getGunLevelKeysConf(mode):
-    """
-    读取火炮等级配置
-    """
-    global gunLevelConf, gunLevelConf_m
-    if mode == CLASSIC_MODE:
-        return sorted(map(int, gunLevelConf.keys()))
-    else:
-        return sorted(map(int, gunLevelConf_m.keys()))
-
-
-def getGunMultipleConf():
-    """
-    返回火炮等级和解锁倍率配置
-    """
-    global gunMultipleConf
-    return gunMultipleConf
-
-
 def loadGunLevelConf():
     """
     加载火炮等级配置
@@ -1348,7 +1349,6 @@ def loadGunLevelConf_m():
     gunLevelConf_m = rocopy(gunLevelConf_m)
 
 
-
 def getGunLevelConf(gunLevel, mode):
     """
     读取火炮等级配置
@@ -1358,6 +1358,58 @@ def getGunLevelConf(gunLevel, mode):
         return gunLevelConf.get(str(gunLevel), {})
     else:
         return gunLevelConf_m.get(str(gunLevel), {})
+
+
+def getMaxGunLevel(mode):
+    """
+    获得最大火炮等级
+    """
+    global gunLevelConf, gunLevelConf_m
+    if mode == CLASSIC_MODE:
+        return int(sorted(gunLevelConf.keys())[-1])
+    else:
+        return int(sorted(gunLevelConf_m.keys())[-1])
+
+
+def getNextGunLevel(gunLevel, mode):
+    """
+    获得下个火炮等级
+    """
+    # gunLevel = int(gunLevel)
+    # global gunLevelConf, gunLevelConf_m
+    # if mode == CLASSIC_MODE:
+    #     gunLevelList = sorted(map(int, gunLevelConf.keys()))
+    # else:
+    #     gunLevelList = sorted(map(int, gunLevelConf_m.keys()))
+    # if gunLevel not in gunLevelList:
+    #     return -1
+    # idx = gunLevelList.index(gunLevel)
+    # if idx + 1 < len(gunLevelList):
+    #     return gunLevelList[idx + 1]
+    # else:
+    #     return gunLevelList[-1]
+    gunLevel += 1
+    gunLevel = min(gunLevel, getMaxGunLevel(mode))
+    return gunLevel
+
+
+def getGunLevelKeysConf(mode):
+    """
+    读取火炮等级配置
+    """
+    global gunLevelConf, gunLevelConf_m
+    if mode == CLASSIC_MODE:
+        return sorted(map(int, gunLevelConf.keys()))
+    else:
+        return sorted(map(int, gunLevelConf_m.keys()))
+
+
+def getGunMultipleConf():
+    """
+    返回火炮等级和解锁倍率配置
+    """
+    global gunMultipleConf
+    return gunMultipleConf
 
 
 def loadLotteryTicActConf(intClientId=0):

@@ -959,7 +959,7 @@ weaponSkillMap = {
 }
 
 
-def createSkill(table, player, skillId, skillStar, skillGrade, skillType):
+def createSkill(table, player, skillId, skillState, skillStar, skillGrade, skillType):
     """
     创建技能对象
     :return:
@@ -967,5 +967,5 @@ def createSkill(table, player, skillId, skillStar, skillGrade, skillType):
     skillClass = skillMap.get(skillId)
     skill = None
     if skillClass:
-        skill = skillClass(table, player, skillId, skillStar, skillGrade, skillType)
+        skill = skillClass(table, player, skillId, skillState, skillStar, skillGrade, skillType)
     return skill

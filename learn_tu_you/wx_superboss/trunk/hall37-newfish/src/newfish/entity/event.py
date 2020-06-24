@@ -45,6 +45,20 @@ class GameTimeEvent(UserEvent):
         self.isFinishRedTask = isFinishRedTask
 
 
+class LevelUpEvent(UserEvent):
+    """
+    火炮等级/倍率提升事件
+    """
+    def __init__(self, userId, gameId, level, gunLevel, mode):
+        super(LevelUpEvent, self).__init__(userId, gameId)
+        # 玩家等级
+        self.level = level
+        # 火炮等级
+        self.gunLevel = gunLevel
+        # 经典/千炮
+        self.gameMode = mode
+
+
 class UseSkillEvent(UserEvent):
     """
     使用技能事件

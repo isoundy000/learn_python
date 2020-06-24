@@ -384,7 +384,6 @@ class FishTable(TYTable):
         """
         return self._gameMode
 
-
     def insertFishGroup(self, groupName, position=None, HP=None, buffer=None, userId=None, score=None,
                         sendUserId=None, gameResolution=None):
         """召唤鱼群"""
@@ -392,15 +391,15 @@ class FishTable(TYTable):
                                                     sendUserId, gameResolution)
 
     def addNormalFishGroups(self, groupIds):
-        '''普通鱼群，一次生成多个鱼群，一起发给客户端'''
+        """普通鱼群，一次生成多个鱼群，一起发给客户端"""
         self.fishGroupSystem.addNormalFishGroups(groupIds)
 
     def deleteFishGroup(self, group):
-        '''删除单个鱼群'''
+        """删除单个鱼群"""
         self.fishGroupSystem.deleteFishGroup(group)
 
     def _clip_info(self, msg, userId, seatId):
-        '''显示弹药购买详情信息响应'''
+        """显示弹药购买详情信息响应"""
         player = self.players[seatId - 1]
         if player:
             message = MsgPack()
@@ -415,11 +414,11 @@ class FishTable(TYTable):
             message.setResult("multiple", self.runConfig.multiple)      # 渔场倍率
             message.setResult("fpMultiple", player.fpMultiple)          # 玩家实际选择的倍率
             GameMsg.sendMsg(message, userId)
-            if player.allChip < self.runConfig.minCoin:
+            if player.allChip < self.runConfig.minCoin:                 # 所有金币
                 user_rpc.sendTodoTaskBuyChip(userId, self.bigRoomId)
 
     def _clip_alms(self, msg, userId, seatId):
-        '''弹药救济金响应'''
+        """弹药救济金响应"""
         player = self.players[seatId - 1]
         # if player and player.level < 10 and self.runConfig.fishPool == 44001:
         #     almsCount = weakdata.incrDayFishData(userId, "almsCount", 1)
@@ -441,6 +440,7 @@ class FishTable(TYTable):
         #         GameMsg.sendMsg(message, userId)
 
     def _clip_add(self, msg, userId, seatId):
+        """购买弹药"""
         bullet = msg.getParam("bullet") or 0
         auto = msg.getParam("auto") or 0
         if ftlog.is_debug():
@@ -448,7 +448,7 @@ class FishTable(TYTable):
         self.clip_add(userId, seatId, bullet, auto)
 
     def clip_add(self, userId, seatId, bullet=0, auto=0):
-        '''弹药添加'''
+        """弹药添加"""
         player = self.players[seatId - 1]
         # if (bullet not in self.runConfig.bullets and not auto) or not player:
         #     return False
@@ -458,8 +458,8 @@ class FishTable(TYTable):
         message.setResult("gameId", FISH_GAMEID)
         message.setResult("userId", userId)
         message.setResult("seatId", seatId)
-        message.setResult("info", info)             # [使用金币数,购买子弹数]
-        message.setResult("chip", player.chip)      # 牌桌外金币
+        message.setResult("info", info)                     # [使用金币数,购买子弹数]
+        message.setResult("chip", player.chip)              # 牌桌外金币
         message.setResult("tableChip", player.tableChip)    # 牌桌内金币
         message.setResult("clip", player.clip)              # 剩余子弹数
         message.setResult("auto", auto)                     # 是否自动购买
@@ -470,7 +470,7 @@ class FishTable(TYTable):
         return False
 
     def _clip_clearing(self, msg, userId, seatId):
-        '''弹药结算'''
+        """弹药结算"""
         player = self.players[seatId - 1]
         reason = 0
         if not player:
@@ -505,8 +505,8 @@ class FishTable(TYTable):
         skinId = msg.getParam("skinId")
         player = self.getPlayer(userId)
         if player:
-            if gun_system.changeGunSkin(userId, gunId, skinId, self.gameMode): # 更改火炮皮肤
-                if int(gunId) == int(player.gunId): # 如果皮肤归属的火炮处于装备状态，则通知客户端火炮皮肤改变
+            if gun_system.changeGunSkin(userId, gunId, skinId, self.gameMode):  # 更改火炮皮肤
+                if int(gunId) == int(player.gunId):     # 如果皮肤归属的火炮处于装备状态，则通知客户端火炮皮肤改变
                     self.syncChgGunData(player, gunId)
 
     def _composeGunSin(self, msg, userId, seatId):
@@ -517,8 +517,8 @@ class FishTable(TYTable):
         skinId = msg.getParam("skinId")
         player = self.getPlayer(userId)
         if player:
-            if gun_system.composeGunSkin(userId, gunId, skinId, self.gameMode): # 合成火炮皮肤
-                if int(gunId) == int(player.gunId): # 如果皮肤归属的火炮处于装备状态，则通知客户端火炮皮肤改变
+            if gun_system.composeGunSkin(userId, gunId, skinId, self.gameMode):     # 合成火炮皮肤
+                if int(gunId) == int(player.gunId):     # 如果皮肤归属的火炮处于装备状态，则通知客户端火炮皮肤改变
                     self.syncChgGunData(player, gunId)
 
     def syncChgGunData(self, player, gunId):
@@ -801,8 +801,11 @@ class FishTable(TYTable):
             ftlog.info("_verifyCatch->", "userId =", userId, "msg =", msg)
 
     def getCostBullet(self, gunId, gunLevel, wpConf, clientId):
-        """根据炮的ID、炮的等级, 武器配置、
+        """
         获取武器消耗的子弹
+        :param gunId: 炮Id
+        :param gunLevel: 炮等级
+        :param wpConf: 武器配置
         """
         gunConf = config.getGunConf(gunId, clientId, gunLevel)
         costBullet = wpConf.get("costBullet", 1) * gunConf.get("multiple", 1)       # 消耗的子弹 * 单倍炮|双倍炮
@@ -1060,7 +1063,7 @@ class FishTable(TYTable):
             ftlog.info("_catchFish, fish order, userId =", player.userId, "wpType =", wpType, "fIdTypes =", fIdTypes,
                        "fIds =", fIds, "catch =", catch)
         return catch, gain, gainChip, exp
-    
+
     def _getNowTableTime(self):
         """获取桌子的在线时长"""
         return time.time() - self.startTime
@@ -1960,6 +1963,7 @@ class FishTable(TYTable):
     #             break
 
     def _sendEnterNextRoomMsg(self, roomId, player):
+        """进入下一个房间"""
         msg = MsgPack()
         msg.setCmd("enter_next_room")
         msg.setResult("gameId", FISH_GAMEID)
@@ -2124,6 +2128,14 @@ class FishTable(TYTable):
         self._miniMermaidStart(player.seatId, fishTypes)
 
     def _sendLed(self, player, gain, fIds, fpMultiple):
+        """
+        发送通讯
+        :param player: 玩家
+        :param gain: 获取奖励
+        :param fIds: 鱼ID
+        :param fpMultiple: 渔场倍率
+        :return:
+        """
         if self.runConfig.fishPool == 44001:
             return
         # 渔场倍率AB测试期间，B模式不开启捕获led
@@ -2262,12 +2274,14 @@ class FishTable(TYTable):
         return ret
 
     def _robotLeave(self, msg, userId, seatId):
+        """机器人离开房间"""
         if ftlog.is_debug():
             ftlog.debug("robot leave:", userId)
         clientId = msg.getParam("clientId")
         self._doLeave(msg, userId, clientId)
 
     def clearPlayer(self, player):
+        """玩家离开桌子 清理桌子上的玩家|玩家3分钟没有操作"""
         ftlog.info("clearPlayer->", player.userId, player.lastActionTime, self.runConfig.fishPool)
         msg = MsgPack()
         msg.setCmdAction("table_call", "leave")
@@ -2296,6 +2310,7 @@ class FishTable(TYTable):
         ftlog.info("user disconnect, userId:", userId, seatId)
 
     def _clearPlayer(self, msg, userId, seatId):
+        """玩家主动离开房间、换桌、换渔场"""
         if ftlog.is_debug():
             ftlog.debug("_clearPlayer now seats:", self.seats, "seatId =", seatId, "userId =", userId, self.players, self.runConfig.fishPool)
         if self.seats[seatId - 1].userId != userId:
@@ -2326,6 +2341,8 @@ class FishTable(TYTable):
     def _doTableManage(self, msg, action):
         """
         桌子内部处理所有的table_manage命令
+        桌子同步安全操作方法
+        桌子关闭, 此方法由安全进程结束的方法调用
         """
         result = {"action": action, "isOK": True}
         if action == "leave":
@@ -2359,7 +2376,6 @@ class FishTable(TYTable):
         """
         获取广播的玩家Uids
         :param filterUid: 过滤的Uid
-        :return:
         """
         uids = []
         for i in range(len(self.seats)):
@@ -2589,6 +2605,7 @@ class FishTable(TYTable):
         return info
 
     def _broadcastPlayerSit(self, userId, seatId):
+        """广播玩家坐下"""
         msg = MsgPack()
         msg.setCmd("sit")
         msg.setResult("gameId", FISH_GAMEID)
@@ -2603,6 +2620,7 @@ class FishTable(TYTable):
             GameMsg.sendMsg(msg, _uids)
 
     def _broadcastPlayerLeave(self, userId, seatId):
+        """广播玩家离开"""
         msg = MsgPack()
         msg.setCmd("leave")
         msg.setResult("gameId", FISH_GAMEID)
@@ -2611,6 +2629,7 @@ class FishTable(TYTable):
         GameMsg.sendMsg(msg, self.getBroadcastUids())
 
     def _findIdleSeatId(self):
+        """查询空座"""
         idleSids = []
         for i in range(len(self.seats)):
             if self.seats[i].userId == 0:
@@ -2621,7 +2640,7 @@ class FishTable(TYTable):
             return random.choice(idleSids)
 
     def _skill_use(self, msg, userId, seatId):
-        """使用技能"""
+        """使用技能 1使用 0取消"""
         skillId = msg.getParam("skillId")
         select = msg.getParam("select")
         skillType = msg.getParam("skillType", 0)
@@ -2995,12 +3014,21 @@ class FishTable(TYTable):
                 player.honorId = honorId
 
     def _guns_list(self, msg, userId, seatId):
+        """
+        发送火炮列表消息
+        :param msg: 信息
+        :param userId: 玩家Id
+        :param seatId: 座位Id
+        """
         player = self.getPlayer(userId)
         if player:
             player.dumpGunData()
             gun_system.sendGunListMsg(userId, self.gameMode)
 
     def _guns_pool(self, msg, userId, seatId):
+        """
+        炮的奖池信息
+        """
         player = self.getPlayer(userId)
         if player:
             gunId = msg.getParam("gunId")
@@ -3010,6 +3038,9 @@ class FishTable(TYTable):
             player.dumpGunData()
 
     def _gun_up(self, msg, userId, seatId):
+        """
+        普通炮升级
+        """
         protect = msg.getParam("protect")
         player = self.getPlayer(userId)
         player and player.gunUpgrade(protect)
@@ -3080,6 +3111,14 @@ class FishTable(TYTable):
         # player and player.achieveSystem and player.achieveSystem.sendAchievementTarget()
 
     def checkGrandPrize(self, fishScore, player, fId, fpMultiple):
+        """
+        只有普通鱼可以获得巨奖
+        :param fishScore: 鱼的分值
+        :param player: 玩家
+        :param fId: 鱼ID
+        :param fpMultiple: 渔场倍率
+        :return:
+        """
         if ftlog.is_debug():
             ftlog.debug("send grandPrizePool, userId =", player.userId, "fishScore =", fishScore, "fId =", fId)
         if not GrandPrizePool.isRoomEnable(self.roomId):

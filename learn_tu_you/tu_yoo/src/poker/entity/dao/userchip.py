@@ -29,6 +29,26 @@ def getTableChip(uid, gameid, tableId):
     return int(value)
 
 
+def delTableChips(uid, tableIdList):
+    '''
+    取得用户的table_chip
+    返回:
+        所有的tablechip
+    '''
+    value = 0
+    pass
+    return value
+
+
+def moveAllTableChipToChip(uid, gameid, eventId, intEventParam, clientId, tableId, extentId=0, roomId=0, roundId=0, param01=0, param02=0):
+    '''
+    转移用户所有的tablechip至chip
+    参考: set_tablechip_to_range
+    '''
+    return _setTableChipToRange(uid, gameid, 0, 0, eventId, intEventParam, clientId, tableId,
+                                extentId=extentId, roomId=roomId, roundId=roundId, param01=param01, param02=param02)
+
+
 def setTableChipToN(uid, gameid, tablechip, eventId, intEventParam, clientId, tableId, extentId=0, roomId=0, roundId=0, param01=0, param02=0):
     '''
     设置用户的tablechip至传入的值

@@ -310,6 +310,14 @@ def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, client
     ud = []     # 用户获得
     gd = []     # 游戏获得
     return {}
+
+
+def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, tableId=0, roomId=0):
+    """
+    添加奖励并立即刷新数据
+    """
+
+    return 0
         
 
 def getAssetKindId(kindId):
@@ -317,3 +325,39 @@ def getAssetKindId(kindId):
     通过kindId获得assetKindId
     """
     return config.customKindIdMap.get(kindId) or "item:%d" % kindId
+
+
+def getGunLevel(userId, mode):
+    """
+    获取火炮等级索引(21xx)
+    """
+    gunLevelKey = GameData.gunLevel if mode == config.CLASSIC_MODE else GameData.gunLevel_m
+    gunLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, gunLevelKey)
+    return gunLevel
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getGunLevelVal(userId, mode):
+    """
+    获取火炮等级/倍率
+    """
+    gunLevel = getGunLevel(userId, mode)
+    return config.getGunLevelConf(gunLevel, mode).get("levelValue", 1)
+
+
+def isInFishTable(userId):
+    """
+    判断用户是否在渔场中
+    """
+    isIn = False
+    roomId, tableId, seatId = 0, 0, 0
+    locList = onlinedata.getOnlineLocList(userId)
+    for roomId, tableId, seatId in locList:
+        try:
+            roomGameId = strutil.getGameIdFromInstanceRoomId(roomId)
+            if (roomGameId == FISH_GAMEID and tableId != 0 and seatId != 0):
+                isIn = True
+                break
+        except:
+            pass
+    return isIn, roomId, tableId, seatId

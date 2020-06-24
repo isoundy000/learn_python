@@ -60,7 +60,7 @@ class GameData:
     # # 已解锁千炮皮肤炮列表
     # unlockedGunSkins_m = "unlockedGunSkins_m"
     # 用户最大火炮等级
-    gunLevel = "gunLevel"
+    gunLevel = "gunLevel"                           # 用户最大火炮等级
     # 用户最大千炮倍率
     gunLevel_m = "gunLevel_m"
     # 用户当前皮肤炮ID

@@ -27,3 +27,26 @@ def getHonorList(userId, hasDesc=False, honorTypeList=None):
 
 
     return []
+
+
+def _getAllHonors(userId):
+    """
+    获得所有称号数据
+    """
+    assert (isinstance(userId, int) and userId > 0)
+    value = daobase.executeUserCmd(userId, "HGETALL", _buildUserHonorKey(userId))
+    if value:
+        honorIds = value[0::2]
+        infos = [strutil.loads(info, False, True) for info in value[1::2] if info]
+        return dict(zip(honorIds, infos))
+    return {}
+
+
+def getOwnedHonors(userId, allHonors=None):
+    """
+    获得已拥有称号数据
+    """
+    honors = {}
+    allHonors = allHonors or _getAllHonors(userId)
+    pass
+    return honors
