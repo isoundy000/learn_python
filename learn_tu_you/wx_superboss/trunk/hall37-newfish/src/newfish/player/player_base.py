@@ -478,9 +478,9 @@ class FishPlayer(TYPlayer):
         self.achieveSystem = AchievementTableSystem(self.table, self)               # 成就系统
         self.activitySystem = ActivityTableSystem(self.table, self)                 # 活动系统
 
-        self.refreshVipLevel()
-        self.refreshGunData()       # 刷新火炮数据
-        self.refreshHonor()
+        self.refreshVipLevel()                                                      # 刷新用户VIP等级
+        self.refreshGunData()                                                       # 刷新火炮数据
+        self.refreshHonor()                                                         # 刷新称号 称号
 
         self.incrPearlDropRatio = config.getIncrPearlDropRatio(self.userId)         # 获取可以增加的珍珠额外掉率
         self.incrCrystalDropRatio = config.getIncrCrystalDropRatio(self.userId)     # 获取可以增加的水晶额外掉率
@@ -697,10 +697,49 @@ class FishPlayer(TYPlayer):
         切换炮台
         """
         # 判断是否满足炮台装备条件.
-        pass
+        if not gun_system.isCanEquip(self.userId, gunId, self.table.gameMode):
+            ftlog.debug("chgGunData failed! userId =", self.userId, "gunId =", gunId, "mode =", self.table.gameMode)
+            return
+        if self.gunId == gunId:     # 当前火炮切换（升级、切换皮肤）
+            gunData = gun_system.getGunData(self.userId, self.gunId, self.table.gameMode)
+            self.skinId = gunData[gun_system.INDEX_SKINID]
+            gun_system.setGunData(self.userId, self.gunId, [self.gunLv, self.gunExp, self.skinId], self.table.gameMode)
+        else:
+            # 先保存原炮台数据
+            gun_system.setGunData(self.userId, self.gunId, [self.gunLv, self.gunExp, self.skinId], self.table.gameMode)
+            self.gunId = gunId
+            # 设置当前已装备火炮
+            gunSkinIdKey = GameData.gunSkinId if self.table.gameMode == config.CLASSIC_MODE else GameData.gunSkinId_m
+            gamedata.setGameAttr(self.userId, FISH_GAMEID, gunSkinIdKey, self.gunId)
+            # 获取当前已装备火炮详细数据
+            gunData = gun_system.getGunData(self.userId, self.gunId, self.table.gameMode)
+            self.gunLv = gunData[gun_system.INDEX_LEVEL]
+            self.gunExp = gunData[gun_system.INDEX_EXP]
+            self.skinId = gunData[gun_system.INDEX_SKINID]
 
     def sendChgGunInfo(self):
-        pass
+        """
+        发送火炮修改消息
+        """
+        message = MsgPack()
+        message.setCmd("chg_gun")
+        message.setResult("gameId", FISH_GAMEID)
+        message.setResult("userId", self.userId)
+        message.setResult("seatId", self.seatId)
+        message.setResult("gunId", self.gunId)
+        message.setResult("gunLevel", self.gunLv)
+        message.setResult("gameMode", self.table.gameMode)
+        # message.setResult("skinId", self.skinId)
+        # GameMsg.sendMsg(message, self.table.getBroadcastUids())
+        uids = self.table.getBroadcastUids()
+        clientUids = {}
+        for _uid in uids:
+            clientUids.setdefault(util.getClientId(_uid), []).append(_uid)
+        for _cli, _uids in clientUids.iteritems():
+            skins = config.getGunConf(self.gunId, _cli, mode=self.table.gameMode).get("skins")
+            skinId = self.skinId if self.skinId in skins else skins[0]
+            message.setResult("skinId", skinId)
+            GameMsg.sendMsg(message, _uids)
 
     def refreshHonor(self):
         """刷新称号 称号"""
@@ -708,14 +747,30 @@ class FishPlayer(TYPlayer):
         honorId, _ = honor_system.getInstalledHonor(self.userId, self.ownedHonors)
         self.honorId = honorId if honorId >= 0 else 0
 
+    def incrExp(self, gainExp):
+        """
+        增加玩家等级经验值
+        """
+        if gainExp > 0:
+            self.exp += gainExp
+        if ftlog.is_debug():
+            ftlog.debug("incrExp, userId =", self.userId, "level =", self.level, "gainExp =", gainExp, "exp =",
+                        self.exp)
+        return self.exp
+
+    def incExpLevel(self, nowExp):
+        """
+        玩家等级升级
+        """
+        userLevelConf = config.getUserLevelConf()
+        pass
 
 
+    def sendULevelUpMsg(self, level, exp):
+        pass
 
-
-
-
-
-
+    def incrGunExp(self, exp):
+        pass
 
     def dumpEconomicData(self):
         """保存渔场的缓存数据到数据库在重新载入"""
@@ -728,6 +783,7 @@ class FishPlayer(TYPlayer):
         data[str(self.table.bigRoomId)] = self.nowGunLevel
         gamedata.setGameAttrs(self.userId, FISH_GAMEID, [GameData.exp, nowGunLevelKey], [self.exp, json.dumps(data)])
         self.dumpGunData()
+        pass
 
     def dumpGunData(self):
         # 渔场中切换版本的断线重连可能会在玩家进入渔场前收到gunlist消息,此时需要更新clientId和皮肤数据.
@@ -738,130 +794,288 @@ class FishPlayer(TYPlayer):
             self.refreshGunSkin()
         gun_system.setGunData(self.userId, self.gunId, [self.gunLv, self.gunExp, self.skinId], self.table.gameMode)
         gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.gunSkinPool, json.dumps(self.gunPool))    # 皮肤炮奖池数据
+        pass
 
+    def changeConsumeClip(self, clip):
+        """
+        统计触发奖券鱼阵和活动鱼阵的子弹数量(使用渔场基础倍率转换子弹数量)
+        clip是子弹数
+        """
+        _clip = clip * self.fpMultiple // self.table.runConfig.multiple     # 子弹 * 10 / 10
+        self.couponConsumeClip += _clip
+        self.activityConsumeClip += _clip
 
+    def resetCouponConsumeClip(self):
+        """重置奖券消耗的子弹数"""
+        self.couponConsumeClip = 0
 
-    def getMatchingFishPool(self, fpMultiple):
-        """
-        获取玩家渔场倍率对应的fishPool
-        """
-        fishPool = self.table.runConfig.fishPool
-        if self.table.typeName not in config.NORMAL_ROOM_TYPE or not self.isFpMultipleMode():
-            return fishPool
-        fishPoolMultipleDict = {}
-        for v in gdata.roomIdDefineMap().values():
-            roomConf = v.configure
-            if roomConf.get("typeName") not in [config.FISH_FRIEND]:
-                continue
-            fishPoolMultipleDict[str(roomConf.get("fishPool"))] = roomConf.get("multiple", 1)
-        tmpList = sorted(fishPoolMultipleDict.items(), key=lambda x: x[1])
-        for v in tmpList:
-            if fpMultiple >= v[1]:
-                fishPool = int(v[0])
-        if ftlog.is_debug():
-            ftlog.debug("getFishPool, userId =", self.userId, "fishPool-multiple =", tmpList, "fpMultiple =",
-                        fpMultiple,
-                        "tableFishPool =", self.table.runConfig.fishPool, "matchingFishPool =", fishPool)
-        return fishPool
+    def resetActivityConsumeClip(self):
+        """重置活动消耗的子弹数"""
+        self.activityConsumeClip = 0
 
-    def isSupplyBulletPowerMode(self):
+    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None, clientFire=True, targetPos=None, fishType=None, costChip=0):
         """
-        是否为补足子弹威力的模式
-        """
-        return self.table.typeName == config.FISH_GRAND_PRIX
-        # if self.table.typeName not in config.NORMAL_ROOM_TYPE:
-        #     return False
-        # else:
-        #     return int(self.table.runConfig.fishPool) in config.getPublic("suppleBulletPowerFishPool", [])
-
-    def addBulletPowerPool(self, val, fpMultiple, gunMultiple, gunX):
-        """
-        增加子弹威力奖池
-        :param val: 炮的威力
+        添加开火信息
+        :param bulletId: 子弹Id
+        :param wpId: 武器Id
+        :param sendTimestamp: 时间
         :param fpMultiple: 渔场倍率
-        :param gunMultiple: 单倍|双倍炮
-        :param gunX: 千炮 炮的倍率 | 经典为1
+        :param skill: 技能对象
+        :param power: 威力
+        :param multiple: 单倍|双倍炮
+        :param clientFire:
+        :param targetPos: 目标位置
+        :param fishType:
+        :param costChip: 消耗的金币
+        """
+        if ftlog.is_debug():
+            ftlog.debug("getFireWpId->add", self.userId, bulletId, wpId, sendTimestamp, power, self.gunId, self.gunLv, fpMultiple)
+        nowTimestamp = int(time.time())
+        if bulletId in self._fires:
+            del self._fires[bulletId]
+            if ftlog.is_debug():
+                ftlog.debug("getFireWpId->add, delete repeat bullet, userId =", self.userId, "bulletId =", bulletId)
+        self._fires[bulletId] = {
+            "wpId": wpId,
+            "skill": skill,
+            "gunId": self.gunId,
+            "gunLevel": self.gunLv,
+            "sendTimestamp": sendTimestamp,
+            "receiveTimestamp": nowTimestamp,
+            "power": power,
+            "initPower": power,
+            "multiple": multiple,
+            "targetPos": targetPos,
+            "fishType": fishType,
+            "fpMultiple": fpMultiple,
+            "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0
+        }
+        self._fires[bulletId].update({"superBullet": self.isSuperBullet(bulletId)})     # 超级子弹 获取炮的配置
+        if clientFire:
+            from newfish.game import TGFish
+            event = FireEvent(self.userId, FISH_GAMEID, self.table.roomId, self.table.tableId, wpId, fpMultiple, costChip, self.holdCoin)
+            TGFish.getEventBus().publishEvent(event)
+            if hasattr(self, "fireCostChip"):
+                self.fireCostChip += costChip       # 开火消耗的总金币
+            wpType = util.getWeaponType(wpId)
+            if wpType == config.GUN_WEAPON_TYPE:
+                self.fireCount.setdefault(str(self.table.runConfig.fishPool), 0)        # 开火次数
+                self.fireCount[str(self.table.runConfig.fishPool)] += 1
+                if self.table.typeName in config.QUICK_START_ROOM_TYPE:
+                    self.lotteryFireCostChip.setdefault(str(self.table.runConfig.fishPool), 0)
+                    self.lotteryFireCostChip[str(self.table.runConfig.fishPool)] += costChip    # 开火消耗金币奖池
+
+    def delFire(self, bulletId=0, extendId=0, wpId=0):
+        """删除子弹"""
+        if ftlog.is_debug():
+            ftlog.debug("delFire, userId =", self.userId, "bulletId =", bulletId, "extendId =", extendId, "wpId =", wpId)
+        if bulletId in self._fires:
+            del self._fires[bulletId]
+        if extendId in self._fires:
+            del self._fires[extendId]
+        if wpId > 0:
+            delBulletId = []
+            for bulletId, fire in self._fires.iteritems():
+                if fire["wpId"] == wpId:
+                    delBulletId.append(bulletId)
+            for bulletId in delBulletId:
+                if bulletId in self._fires:
+                    del self._fires[bulletId]
+
+    def getFire(self, bulletId):
+        """获取一颗子弹的信息"""
+        return self._fires.get(bulletId, {})
+
+    def getFireWpId(self, bulletId):
+        """获取子弹的武器 有效期35s"""
+        wpId = None
+        fire = self._fires.get(bulletId)
+        if ftlog.is_debug():
+            ftlog.debug("getFireWpId->fire =", self.userId, bulletId, self._fires)
+        if fire:
+            nowTimestamp = int(time.time())
+            if nowTimestamp - fire["receiveTimestamp"] <= 35:
+                wpId = fire["wpId"]
+            else:
+                if ftlog.is_debug():
+                    ftlog.debug("getFireWpId->del", self.userId, bulletId, fire)
+                self.delFire(bulletId)
+        return wpId
+
+    def getFireSkill(self, bulletId):
+        """获取子弹的技能对象"""
+        return self._fires.get(bulletId, {}).get("skill")
+
+    def getFirePower(self, bulletId, stageId=0, wpId=0):
+        """获取子弹的威力 第几阶段"""
+        # power = self._fires.get(bulletId, {}).get("power") or [0]
+        # power = power[stageId] if 0 <= stageId < len(power) else power[0]
+        try:
+            power = self._fires.get(bulletId, {}).get("power")
+            power = power[stageId]
+        except Exception, e:
+            ftlog.error("getFirePower", "userId =", self.userId, "wpId =", wpId, "bulletId =", bulletId
+                        , "stageId =", stageId, "e =", e)
+            power = 0
+        return power
+
+    def getFireInitPower(self, bulletId, stageId=0):
+        """获取子弹初始化威力 第几阶段"""
+        power = self._fires.get(bulletId, {}).get("initPower") or [0]
+        power = power[stageId] if stageId < len(power) else power[0]
+        return power
+
+    def getFireMultiple(self, bulletId, extendId):
+        """
+        获取开火时的倍率
+        """
+        if extendId:
+            _fire = self._fires.get(extendId, {})
+        else:
+            _fire = self._fires.get(bulletId, {})
+        return _fire.get("multiple")
+
+    def getFireFpMultiple(self, bulletId, extendId):
+        """
+        获取开火时的渔场倍率
+        """
+        if extendId:
+            _fire = self._fires.get(extendId, {})
+        else:
+            _fire = self._fires.get(bulletId, {})
+        return _fire.get("fpMultiple", self.table.runConfig.multiple)
+
+    def decreaseFirePower(self, bulletId, val, stageId=0):
+        """减少子弹威力"""
+        if self._fires.get(bulletId, {}).get("power") and stageId < len(self._fires[bulletId]["power"]):
+            self._fires[bulletId]["power"][stageId] -= val
+            self._fires[bulletId]["power"][stageId] = max(0, self._fires[bulletId]["power"][stageId])
+            if ftlog.is_debug():
+                ftlog.debug("decreaseFirePower", self.userId, bulletId, val, self._fires[bulletId]["power"][stageId])
+
+    def getFireMaxStage(self, bulletId, extendId):
+        """
+        获取字段的最大阶段数值
+        """
+        if extendId:
+            _fire = self._fires.get(extendId, {})
+        else:
+            _fire = self._fires.get(bulletId, {})
+        return _fire.get("maxStage", 0)
+
+    def isSuperBullet(self, bulletId):
+        """子弹有几率变成超级子弹、提升威力"""
+        fire = self._fires.get(bulletId)
+        ftlog.debug("isSuperBullet->fire =", self.userId, bulletId, self._fires)
+        try:
+            if fire:
+                wpId = fire["wpId"]
+                gunId = fire["gunId"]
+                gunLv = fire["gunLevel"]
+                sendTimestamp = fire["sendTimestamp"]
+                if util.getWeaponType(wpId) != config.GUN_WEAPON_TYPE:  # 火炮/千炮
+                    return {}
+                gunConf = config.getGunConf(gunId, self.clientId, gunLv, self.table.gameMode)
+                if gunConf["effectType"] != 2:
+                    return {}
+                randInt = util.getSeedRandom(sendTimestamp)
+                if ftlog.is_debug():
+                    ftlog.debug("isSuperBullet->", randInt)
+                if sendTimestamp > 0 and randInt <= gunConf["effectProbb"]:
+                    if ftlog.is_debug():
+                        ftlog.debug("isSuperBullet True", bulletId)
+                    return gunConf
+        except Exception, e:
+            ftlog.error("isSuperBullet error", self.userId, fire, traceback.format_exc())
+        return {}
+
+    def getGunConf(self, bulletId, extendId=0):
+        """获取开火子弹 炮的配置"""
+        if extendId:
+            fire = self._fires.get(extendId)
+        else:
+            fire = self._fires.get(bulletId)
+        if not fire:
+            ftlog.info("getGunConf error", self.userId, self.gunId, bulletId, extendId)
+        try:
+            if fire:
+                wpId = fire["wpId"]
+                gunId = fire["gunId"]
+                gunLv = fire["gunLevel"]
+                if util.getWeaponType(wpId) != 1:
+                    if ftlog.is_debug():
+                        ftlog.debug("getGunConf->", self.userId, fire)
+                    return {}
+                return config.getGunConf(gunId, self.clientId, gunLv, self.table.gameMode)
+        except Exception, e:
+            ftlog.error("getGunConf error", self.userId, fire, traceback.format_exc())
+        return {}
+
+    def getBulletDisappearSeconds(self):
+        """
+        获取子弹消失的剩余秒数
+        """
+        interval = 0
+        maxTstmp = 0
+        for k, v in self._fires.iteritems():
+            if v["receiveTimestamp"] > maxTstmp:
+                maxTstmp = v["receiveTimestamp"]
+        if maxTstmp > 0:
+            interval = 35 - (time.time() - maxTstmp)
+            if interval < 0:
+                interval = 0
+        return interval
+
+    def addTableChip(self, chip, eventId):
+        """添加桌子的金币"""
+        if chip > 0:
+            changed = self.economicData.addGain([{"name": "tableChip", "count": int(chip)}],
+                                                eventId, self.table.roomId)
+            if changed:
+                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+
+    def catchBudget(self, gainChip, gainCoupon, items, nowExp=0, wpId=0):
+        """
+        捕获添加奖励
+        :param gainChip:
+        :param gainCoupon:
+        :param items:
+        :param nowExp:
+        :param wpId:
         :return:
         """
-        if not self.isSupplyBulletPowerMode():
-            return
-        val = val * fpMultiple * gunMultiple * gunX
-        self.bulletPowerPool += val                     # 增加子弹威力奖池
-        if ftlog.is_debug():
-            ftlog.debug("bulletPower, userId =", self.userId, "bulletPowerPool =", self.bulletPowerPool, "changed =", val,
-                    "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "gunX =", gunX)
+        self.reportBIFeatureData("BI_NFISH_GE_FT_CATCH", wpId, gainChip)
 
-    def reduceBulletPowerPool(self, val, fpMultiple, gunMultiple, gunX):
-        """
-        扣除子弹威力奖池
-        """
-        if not self.isSupplyBulletPowerMode():          # 是否为补足子弹威力的模式
-            return
-        val = val * fpMultiple * gunMultiple * gunX
-        self.bulletPowerPool -= val
-        if ftlog.is_debug():
-            ftlog.debug("bulletPower, userId =", self.userId, "bulletPowerPool =", self.bulletPowerPool, "changed =", val,
-                    "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "gunX =", gunX)
+    def addCombo(self):
+        pass
 
-    def processBulletPower(self, curPower, totalFishScore, fpMultiple, gunMultiple, cnt, bulletPowerPool, gunX):
-        """
-        处理子弹威力
-        :param curPower: 当前子弹的威力
-        :param totalFishScore: 鱼的总积分
-        :param fpMultiple: 渔场倍率
-        :param gunMultiple: 炮的倍率 单倍炮|双倍炮
-        :param cnt: 一网打的鱼
-        :param bulletPowerPool: 子弹能量池
-        :param gunX: 炮的倍数
-        """
-        finalPower = curPower
-        if self.isSupplyBulletPowerMode():      # 是否为补足子弹威力的模式
-            if ftlog.is_debug():
-                ftlog.debug("1 bulletPower, process =", self.isSupplyBulletPowerMode(), "userId =", self.userId,
-                        "curPower =", curPower, "totalFishScore =", totalFishScore, "fpMultiple =", fpMultiple,
-                        "gunMultiple =", gunMultiple, "cnt =", cnt, "bulletPowerPool =", bulletPowerPool, "gunX =", gunX)
-            if curPower > totalFishScore:
-                self.addBulletPowerPool((curPower - totalFishScore) / cnt, fpMultiple, gunMultiple, gunX)
-            elif curPower == totalFishScore:
-                pass
-            else:
-                poolPower = bulletPowerPool // (fpMultiple * gunMultiple)
-                maxPower = min(2 * curPower, totalFishScore)
-                _power = poolPower if maxPower - curPower > poolPower else maxPower - curPower
-                self.reduceBulletPowerPool(_power / cnt, fpMultiple, gunMultiple, gunX)
-                finalPower += _power
-                if ftlog.is_debug():
-                    ftlog.debug("bulletPower, process =", self.isSupplyBulletPowerMode(), "userId =", self.userId,
-                            "curPower =", curPower, "maxPower =", maxPower, "totalFishScore =", totalFishScore,
-                            "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "finalPower =", finalPower, "gunX =", gunX)
-        return finalPower
+    def _comboBudget(self):
+        pass
 
-    def isFpMultipleMode(self):
-        """
-        是否为渔场倍率模式
-        """
-        if self.table.typeName not in config.NORMAL_ROOM_TYPE:
-            return False
-        return self.fpMultipleTestMode in ["b"]
+    def checkConnect(self, isInvalid):
+        pass
 
-    def getCoinAddition(self, weaponId):
+    def gunChange(self, gLv):
         """
-        获取金币加成
-        :param weaponId: 武器ID
+        切换火炮等级
         """
-        percent = 1
-        for bufferInfo in self.usedBufferInfos:
-            percent += bufferInfo.getCoinNumPercent(weaponId)
-        return percent
+        pass
 
-    def getPowerAddition(self, weaponId):
+    def gunUpgrade(self, protect):
         """
-        获取武器威力加成
+        普通炮升级
         """
-        percent = 1
-        for bufferInfo in self.usedBufferInfos:
-            percent += bufferInfo.getPowerPercent(weaponId)
-        return percent
+        pass
+
+    def incrGunLevel(self, nowExp):
+        """
+        提升皮肤炮熟练度等级
+        """
+
+    def sendGunLevelUpMsg(self, level):
+        """
+        发送皮肤炮升级成功消息
+        """
 
     def addProfitCoin(self, coin):
         """
@@ -1120,9 +1334,8 @@ class FishPlayer(TYPlayer):
         msg.setResult("auxiliarySkillSlots", self.getSkillSlotsInfo(1))
         GameMsg.sendMsg(msg, self.table.getBroadcastUids())
 
-
     def useBullet(self, bulletKindId):
-        pas
+        pass
 
     def addCatchFishes(self, fishTypes):
         """
@@ -1134,6 +1347,46 @@ class FishPlayer(TYPlayer):
             if fishType not in self._catchFishes:
                 self._catchFishes[fishType] = 0
             self._catchFishes[fishType] += 1
+
+    def addAttackBossNum(self, fishMap, wpId=0):
+        pass
+
+    def dealCatchBoss(self, fishMap, catchUserId):
+        pass
+
+    def sendBufferInfos(self, isBroadcast=True):
+        pass
+
+    def getSkillCDAddition(self, weaponId):
+        pass
+
+    def getCoinAddition(self, weaponId):
+        """
+        获取金币加成
+        :param weaponId: 武器ID
+        """
+        percent = 1
+        for bufferInfo in self.usedBufferInfos:
+            percent += bufferInfo.getCoinNumPercent(weaponId)
+        return percent
+
+    def getPowerAddition(self, weaponId):
+        """
+        获取武器威力加成
+        """
+        percent = 1
+        for bufferInfo in self.usedBufferInfos:
+            percent += bufferInfo.getPowerPercent(weaponId)
+        return percent
+
+    def bufferRemove(self, bufferId):
+        pass
+
+    def addOneBufferId(self, bufferId):
+        pass
+
+    def getCatchBufferId(self, bufferIds):
+        return 0
 
     def getTargetFishs(self):
         """
@@ -1197,256 +1450,152 @@ class FishPlayer(TYPlayer):
         event = NetIncomeChangeEvent(self.userId, FISH_GAMEID, self.netIncome, self.table.bigRoomId)    # 渔场净收益变化事件
         TGFish.getEventBus().publishEvent(event)
 
-    def changeConsumeClip(self, clip):
-        """
-        统计触发奖券鱼阵和活动鱼阵的子弹数量(使用渔场基础倍率转换子弹数量)
-        clip是子弹数
-        """
-        _clip = clip * self.fpMultiple // self.table.runConfig.multiple     # 子弹 * 10 / 10
-        self.couponConsumeClip += _clip
-        self.activityConsumeClip += _clip
+    def triggerCatchFishEvent(self, event):
+        pass
 
-    def resetCouponConsumeClip(self):
-        """重置奖券消耗的子弹数"""
-        self.couponConsumeClip = 0
+    def triggerComboEvent(self, event):
+        pass
 
-    def resetActivityConsumeClip(self):
-        """重置活动消耗的子弹数"""
-        self.activityConsumeClip = 0
+    def triggerUseSkillEvent(self, event):
+        pass
 
-    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None, clientFire=True, targetPos=None, fishType=None, costChip=0):
+    def refreshHoldCoin(self):
+        pass
+
+    def getPearlDropRatio(self, fpMultiple):
+        pass
+
+    def _addPearlDropCount(self, count):
+        pass
+
+    def reportBIFeatureData(self, eventId, wpId, changeCoin):
         """
-        添加开火信息
-        :param bulletId: 子弹Id
-        :param wpId: 武器Id
-        :param sendTimestamp: 时间
+        用户特征BI数据
+        """
+        pass
+
+    def sendRoomUnlockMsg(self, roomId):
+        """
+        发送解锁新渔场弹窗
+        """
+        pass
+
+    def isFpMultipleMode(self):
+        """
+        是否为渔场倍率模式
+        """
+        if self.table.typeName not in config.NORMAL_ROOM_TYPE:
+            return False
+        return self.fpMultipleTestMode in ["b"]
+
+    def clipToTableChip(self):
+        """
+        子弹兑换成桌内金币
+        """
+        pass
+
+    def changeFpMultiple(self, fpMultiple, ignoreFailed=False):
+        pass
+
+    def checkChgFpMultiple(self, multiple):
+        """
+        切换玩家渔场倍率
+        """
+
+    def getMatchingFishPool(self, fpMultiple):
+        """
+        获取玩家渔场倍率对应的fishPool
+        """
+        fishPool = self.table.runConfig.fishPool
+        if self.table.typeName not in config.NORMAL_ROOM_TYPE or not self.isFpMultipleMode():
+            return fishPool
+        fishPoolMultipleDict = {}
+        for v in gdata.roomIdDefineMap().values():
+            roomConf = v.configure
+            if roomConf.get("typeName") not in [config.FISH_FRIEND]:
+                continue
+            fishPoolMultipleDict[str(roomConf.get("fishPool"))] = roomConf.get("multiple", 1)
+        tmpList = sorted(fishPoolMultipleDict.items(), key=lambda x: x[1])
+        for v in tmpList:
+            if fpMultiple >= v[1]:
+                fishPool = int(v[0])
+        if ftlog.is_debug():
+            ftlog.debug("getFishPool, userId =", self.userId, "fishPool-multiple =", tmpList, "fpMultiple =",
+                        fpMultiple,
+                        "tableFishPool =", self.table.runConfig.fishPool, "matchingFishPool =", fishPool)
+        return fishPool
+
+    def isSupplyBulletPowerMode(self):
+        """
+        是否为补足子弹威力的模式
+        """
+        return self.table.typeName == config.FISH_GRAND_PRIX
+        # if self.table.typeName not in config.NORMAL_ROOM_TYPE:
+        #     return False
+        # else:
+        #     return int(self.table.runConfig.fishPool) in config.getPublic("suppleBulletPowerFishPool", [])
+
+    def addBulletPowerPool(self, val, fpMultiple, gunMultiple, gunX):
+        """
+        增加子弹威力奖池
+        :param val: 炮的威力
         :param fpMultiple: 渔场倍率
-        :param skill: 技能对象
-        :param power: 威力
-        :param multiple: 单倍|双倍炮
-        :param clientFire:
-        :param targetPos: 目标位置
-        :param fishType:
-        :param costChip: 消耗的金币
-        """
-        if ftlog.is_debug():
-            ftlog.debug("getFireWpId->add", self.userId, bulletId, wpId, sendTimestamp, power, self.gunId, self.gunLv, fpMultiple)
-        nowTimestamp = int(time.time())
-        if bulletId in self._fires:
-            del self._fires[bulletId]
-            if ftlog.is_debug():
-                ftlog.debug("getFireWpId->add, delete repeat bullet, userId =", self.userId, "bulletId =", bulletId)
-        self._fires[bulletId] = {
-            "wpId": wpId,
-            "skill": skill,
-            "gunId": self.gunId,
-            "gunLevel": self.gunLv,
-            "sendTimestamp": sendTimestamp,
-            "receiveTimestamp": nowTimestamp,
-            "power": power,
-            "initPower": power,
-            "multiple": multiple,
-            "targetPos": targetPos,
-            "fishType": fishType,
-            "fpMultiple": fpMultiple,
-            "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0
-        }
-        self._fires[bulletId].update({"superBullet": self.isSuperBullet(bulletId)})     # 超级子弹 获取炮的配置
-        if clientFire:
-            from newfish.game import TGFish
-            event = FireEvent(self.userId, FISH_GAMEID, self.table.roomId, self.table.tableId, wpId, fpMultiple, costChip, self.holdCoin)
-            TGFish.getEventBus().publishEvent(event)
-            if hasattr(self, "fireCostChip"):
-                self.fireCostChip += costChip       # 开火消耗的总金币
-            wpType = util.getWeaponType(wpId)
-            if wpType == config.GUN_WEAPON_TYPE:
-                self.fireCount.setdefault(str(self.table.runConfig.fishPool), 0)        # 开火次数
-                self.fireCount[str(self.table.runConfig.fishPool)] += 1
-                if self.table.typeName in config.QUICK_START_ROOM_TYPE:
-                    self.lotteryFireCostChip.setdefault(str(self.table.runConfig.fishPool), 0)
-                    self.lotteryFireCostChip[str(self.table.runConfig.fishPool)] += costChip    # 开火消耗金币奖池
-
-    def delFire(self, bulletId=0, extendId=0, wpId=0):
-        """删除子弹"""
-        if ftlog.is_debug():
-            ftlog.debug("delFire, userId =", self.userId, "bulletId =", bulletId, "extendId =", extendId, "wpId =", wpId)
-        if bulletId in self._fires:
-            del self._fires[bulletId]
-        if extendId in self._fires:
-            del self._fires[extendId]
-        if wpId > 0:
-            delBulletId = []
-            for bulletId, fire in self._fires.iteritems():
-                if fire["wpId"] == wpId:
-                    delBulletId.append(bulletId)
-            for bulletId in delBulletId:
-                if bulletId in self._fires:
-                    del self._fires[bulletId]
-
-    def getFire(self, bulletId):
-        """获取一颗子弹的信息"""
-        return self._fires.get(bulletId, {})
-
-    def getFireWpId(self, bulletId):
-        """获取子弹的武器 有效期35s"""
-        wpId = None
-        fire = self._fires.get(bulletId)
-        if ftlog.is_debug():
-            ftlog.debug("getFireWpId->fire =", self.userId, bulletId, self._fires)
-        if fire:
-            nowTimestamp = int(time.time())
-            if nowTimestamp - fire["receiveTimestamp"] <= 35:
-                wpId = fire["wpId"]
-            else:
-                if ftlog.is_debug():
-                    ftlog.debug("getFireWpId->del", self.userId, bulletId, fire)
-                self.delFire(bulletId)
-        return wpId
-
-    def getFireSkill(self, bulletId):
-        """获取子弹的技能对象"""
-        return self._fires.get(bulletId, {}).get("skill")
-
-    def getFirePower(self, bulletId, stageId=0, wpId=0):
-        """获取子弹的威力 第几阶段"""
-        # power = self._fires.get(bulletId, {}).get("power") or [0]
-        # power = power[stageId] if 0 <= stageId < len(power) else power[0]
-        try:
-            power = self._fires.get(bulletId, {}).get("power")
-            power = power[stageId]
-        except Exception, e:
-            ftlog.error("getFirePower", "userId =", self.userId, "wpId =", wpId, "bulletId =", bulletId
-                        , "stageId =", stageId, "e =", e)
-            power = 0
-        return power
-
-    def getFireInitPower(self, bulletId, stageId=0):
-        """获取子弹初始化威力 第几阶段"""
-        power = self._fires.get(bulletId, {}).get("initPower") or [0]
-        power = power[stageId] if stageId < len(power) else power[0]
-        return power
-
-    def getFireMultiple(self, bulletId, extendId):
-        """
-        获取开火时的倍率
-        """
-        if extendId:
-            _fire = self._fires.get(extendId, {})
-        else:
-            _fire = self._fires.get(bulletId, {})
-        return _fire.get("multiple")
-
-    def getFireFpMultiple(self, bulletId, extendId):
-        """
-        获取开火时的渔场倍率
-        """
-        if extendId:
-            _fire = self._fires.get(extendId, {})
-        else:
-            _fire = self._fires.get(bulletId, {})
-        return _fire.get("fpMultiple", self.table.runConfig.multiple)
-
-    def decreaseFirePower(self, bulletId, val, stageId=0):
-        """减少子弹威力"""
-        if self._fires.get(bulletId, {}).get("power") and stageId < len(self._fires[bulletId]["power"]):
-            self._fires[bulletId]["power"][stageId] -= val
-            self._fires[bulletId]["power"][stageId] = max(0, self._fires[bulletId]["power"][stageId])
-            if ftlog.is_debug():
-                ftlog.debug("decreaseFirePower", self.userId, bulletId, val, self._fires[bulletId]["power"][stageId])
-
-    def getFireMaxStage(self, bulletId, extendId):
-        """
-        获取字段的最大阶段数值
-        """
-        if extendId:
-            _fire = self._fires.get(extendId, {})
-        else:
-            _fire = self._fires.get(bulletId, {})
-        return _fire.get("maxStage", 0)
-
-    def isSuperBullet(self, bulletId):
-        """子弹有几率变成超级子弹、提升威力"""
-        fire = self._fires.get(bulletId)
-        ftlog.debug("isSuperBullet->fire =", self.userId, bulletId, self._fires)
-        try:
-            if fire:
-                wpId = fire["wpId"]
-                gunId = fire["gunId"]
-                gunLv = fire["gunLevel"]
-                sendTimestamp = fire["sendTimestamp"]
-                if util.getWeaponType(wpId) != config.GUN_WEAPON_TYPE:  # 火炮/千炮
-                    return {}
-                gunConf = config.getGunConf(gunId, self.clientId, gunLv, self.table.gameMode)
-                if gunConf["effectType"] != 2:
-                    return {}
-                randInt = util.getSeedRandom(sendTimestamp)
-                if ftlog.is_debug():
-                    ftlog.debug("isSuperBullet->", randInt)
-                if sendTimestamp > 0 and randInt <= gunConf["effectProbb"]:
-                    if ftlog.is_debug():
-                        ftlog.debug("isSuperBullet True", bulletId)
-                    return gunConf
-        except Exception, e:
-            ftlog.error("isSuperBullet error", self.userId, fire, traceback.format_exc())
-        return {}
-
-    def getGunConf(self, bulletId, extendId=0):
-        """获取开火子弹 炮的配置"""
-        if extendId:
-            fire = self._fires.get(extendId)
-        else:
-            fire = self._fires.get(bulletId)
-        if not fire:
-            ftlog.info("getGunConf error", self.userId, self.gunId, bulletId, extendId)
-        try:
-            if fire:
-                wpId = fire["wpId"]
-                gunId = fire["gunId"]
-                gunLv = fire["gunLevel"]
-                if util.getWeaponType(wpId) != 1:
-                    if ftlog.is_debug():
-                        ftlog.debug("getGunConf->", self.userId, fire)
-                    return {}
-                return config.getGunConf(gunId, self.clientId, gunLv, self.table.gameMode)
-        except Exception, e:
-            ftlog.error("getGunConf error", self.userId, fire, traceback.format_exc())
-        return {}
-
-    def getBulletDisappearSeconds(self):
-        """
-        获取子弹消失的剩余秒数
-        """
-        interval = 0
-        maxTstmp = 0
-        for k, v in self._fires.iteritems():
-            if v["receiveTimestamp"] > maxTstmp:
-                maxTstmp = v["receiveTimestamp"]
-        if maxTstmp > 0:
-            interval = 35 - (time.time() - maxTstmp)
-            if interval < 0:
-                interval = 0
-        return interval
-
-    def addTableChip(self, chip, eventId):
-        """添加桌子的金币"""
-        if chip > 0:
-            changed = self.economicData.addGain([{"name": "tableChip", "count": int(chip)}],
-                                                eventId, self.table.roomId)
-            if changed:
-                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
-
-    def catchBudget(self, gainChip, gainCoupon, items, nowExp=0, wpId=0):
-        """
-        捕获添加奖励
-        :param gainChip:
-        :param gainCoupon:
-        :param items:
-        :param nowExp:
-        :param wpId:
+        :param gunMultiple: 单倍|双倍炮
+        :param gunX: 千炮 炮的倍率 | 经典为1
         :return:
         """
-        self.reportBIFeatureData("BI_NFISH_GE_FT_CATCH", wpId, gainChip)
+        if not self.isSupplyBulletPowerMode():
+            return
+        val = val * fpMultiple * gunMultiple * gunX
+        self.bulletPowerPool += val                     # 增加子弹威力奖池
+        if ftlog.is_debug():
+            ftlog.debug("bulletPower, userId =", self.userId, "bulletPowerPool =", self.bulletPowerPool, "changed =", val,
+                    "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "gunX =", gunX)
 
+    def reduceBulletPowerPool(self, val, fpMultiple, gunMultiple, gunX):
+        """
+        扣除子弹威力奖池
+        """
+        if not self.isSupplyBulletPowerMode():          # 是否为补足子弹威力的模式
+            return
+        val = val * fpMultiple * gunMultiple * gunX
+        self.bulletPowerPool -= val
+        if ftlog.is_debug():
+            ftlog.debug("bulletPower, userId =", self.userId, "bulletPowerPool =", self.bulletPowerPool, "changed =", val,
+                    "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "gunX =", gunX)
+
+    def processBulletPower(self, curPower, totalFishScore, fpMultiple, gunMultiple, cnt, bulletPowerPool, gunX):
+        """
+        处理子弹威力
+        :param curPower: 当前子弹的威力
+        :param totalFishScore: 鱼的总积分
+        :param fpMultiple: 渔场倍率
+        :param gunMultiple: 炮的倍率 单倍炮|双倍炮
+        :param cnt: 一网打的鱼
+        :param bulletPowerPool: 子弹能量池
+        :param gunX: 炮的倍数
+        """
+        finalPower = curPower
+        if self.isSupplyBulletPowerMode():      # 是否为补足子弹威力的模式
+            if ftlog.is_debug():
+                ftlog.debug("1 bulletPower, process =", self.isSupplyBulletPowerMode(), "userId =", self.userId,
+                        "curPower =", curPower, "totalFishScore =", totalFishScore, "fpMultiple =", fpMultiple,
+                        "gunMultiple =", gunMultiple, "cnt =", cnt, "bulletPowerPool =", bulletPowerPool, "gunX =", gunX)
+            if curPower > totalFishScore:
+                self.addBulletPowerPool((curPower - totalFishScore) / cnt, fpMultiple, gunMultiple, gunX)
+            elif curPower == totalFishScore:
+                pass
+            else:
+                poolPower = bulletPowerPool // (fpMultiple * gunMultiple)
+                maxPower = min(2 * curPower, totalFishScore)
+                _power = poolPower if maxPower - curPower > poolPower else maxPower - curPower
+                self.reduceBulletPowerPool(_power / cnt, fpMultiple, gunMultiple, gunX)
+                finalPower += _power
+                if ftlog.is_debug():
+                    ftlog.debug("bulletPower, process =", self.isSupplyBulletPowerMode(), "userId =", self.userId,
+                            "curPower =", curPower, "maxPower =", maxPower, "totalFishScore =", totalFishScore,
+                            "fpMultiple =", fpMultiple, "gunMultiple =", gunMultiple, "finalPower =", finalPower, "gunX =", gunX)
+        return finalPower
 
     def getFinalWpPower(self, bulletId):
         """
@@ -1463,8 +1612,6 @@ class FishPlayer(TYPlayer):
         if wpType == config.GUN_WEAPON_TYPE:  # 火炮
             wpPower = _fire.get("power", 0) * effectAddition * honorAddition * bufferAddition
         return wpPower
-
-
 
     def checkCanFire(self, fPos, wpId, bulletId, skillId, skillType):
         """
