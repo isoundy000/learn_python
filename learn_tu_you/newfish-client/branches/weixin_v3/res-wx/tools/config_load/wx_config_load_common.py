@@ -117,6 +117,74 @@ def item_config(clientId=0):
     print "item_config, end"
 
 
+def vip_config():
+    print "vip_config, start"
+    outPath = getOutPath("vip")
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    ws = getWorkBook().get_sheet_by_name("Vip")
+    config = collections.OrderedDict()
+    startRowNum = 4
+
+    expStartIdx = 11
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            if i != startRowNum:
+                break
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["vipLv"] = int(cols[0])
+        one["vipPresentCount:1137"] = int(cols[1])
+        one["vipPresentCount:1193"] = int(cols[2])
+        one["vipPresentCount:1194"] = int(cols[3])
+        one["vipPresentCount:1426"] = int(cols[4])
+        one["vipPresentCount:1408"] = int(cols[5])
+        one["vipPresentCount:1429"] = int(cols[6])
+        one["vipPresentCount:1430"] = int(cols[7])
+        one["vipPresentCount:1431"] = int(cols[8])
+        one["vipReceiveCount:1194"] = int(cols[9])
+        one["vipReceiveCount:1193"] = int(cols[10])
+        one["vipExp"] = int(cols[expStartIdx])
+        one["freeRouletteTimes"] = int(cols[expStartIdx + 1])
+        one["dropPearlTotalCount"] = int(cols[expStartIdx + 2])
+        one["dropPearlRatioLimit"] = cols[expStartIdx + 3]
+        one["vipDesc"] = unicode(cols[expStartIdx + 4]) or ""
+        one["vipGift"] = json.loads(cols[expStartIdx + 5])
+        one["originalPrice"] = int(cols[expStartIdx + 6])
+        one["price"] = int(cols[expStartIdx + 7])
+        one["pearlMultiple"] = float(cols[expStartIdx + 8])
+        one["matchAddition"] = float(cols[expStartIdx + 9])
+        one["setVipShow"] = int(cols[expStartIdx + 10])
+        one["almsRate"] = float(cols[expStartIdx + 11])
+        one["autoSupply:101"] = int(cols[expStartIdx + 12])
+        one["initLuckyValue:44102"] = int(cols[expStartIdx + 13])
+        one["inviterReward"] = json.loads(cols[expStartIdx + 14])
+        one["contFire"] = int(cols[expStartIdx + 15])
+        one["enableChat"] = int(cols[expStartIdx + 16])
+        one["limitChatTip"] = unicode(cols[expStartIdx + 17] or "")
+        one["convert1137ToDRate"] = json.loads(cols[expStartIdx + 18])
+        one["convert1429ToDRate"] = json.loads(cols[expStartIdx + 19])
+        one["convert1430ToDRate"] = json.loads(cols[expStartIdx + 20])
+        one["convert1431ToDRate"] = json.loads(cols[expStartIdx + 21])
+        one["grandPrixFreeTimes"] = int(cols[expStartIdx + 22])
+        one["grandPrixAddition"] = float(cols[expStartIdx + 23])
+        one["checkinRechargeBonus"] = int(cols[expStartIdx + 24])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "vip_config, end"
+
+
 def getWorkBook(filename="newfish_common.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -182,7 +250,7 @@ config_list = [
     # (exchange_store_config, None),
     # (piggy_bank_config, None),
     # (checkin_config, None),
-    # (vip_config, None),
+    (vip_config, None),
     # (treasure_config, None),
     # (main_quest_config, None),
     # (daily_quest_config, None),

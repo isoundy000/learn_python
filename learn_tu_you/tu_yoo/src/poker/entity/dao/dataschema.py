@@ -183,7 +183,7 @@ def DATA_TYPE_BOOLEAN(field, value, defaultVal, recovers):
 
 
 def redisDataSchema(cls):
-    pass
+    return ""
 
 
 class DataSchema():
@@ -192,3 +192,15 @@ class DataSchema():
     FIELDS_ALL_SET = set()
     WRITES_FIELDS = set()
     READ_ONLY_FIELDS = ()  # 只读字段集合, 由redisDataSchema修饰符自动赋值, 即 检测方法名称以_ATOMIC为结尾的字段集合
+
+    @staticmethod
+    def checkData(field, value, recovers=None):
+        '''
+        检测对应的字段的数据格式, 此方法由redisDataSchema修饰符自动生成
+        '''
+
+    @classmethod
+    def mkey(*argl):
+        '''
+        返回数据中的主键的值, 此方法由redisDataSchema修饰符自动生成
+        '''

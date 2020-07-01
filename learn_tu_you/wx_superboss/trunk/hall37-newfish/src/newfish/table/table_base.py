@@ -111,12 +111,12 @@ class FishTable(TYTable):
             "treasure_rewards": self._getTreasureRewards,
             "task_update": self._taskUpdate,
             "main_reward": self._getMainQuestRewards,
-            "prize_wheel_info": self._prizeWheelInfo,  # 渔场内经典转盘
-            "prize_wheel_bet": self._prizeWheelBet,  # 确定轮盘最终奖励
-            "prize_wheel_info_m": self._prizeWheelInfo,  # 渔场内千炮转盘
-            "prize_wheel_bet_m": self._prizeWheelBet,  # 确定轮盘最终奖励
+            "prize_wheel_info": self._prizeWheelInfo,   # 渔场内经典转盘
+            "prize_wheel_bet": self._prizeWheelBet,     # 确定轮盘最终奖励
+            "prize_wheel_info_m": self._prizeWheelInfo, # 渔场内千炮转盘
+            "prize_wheel_bet_m": self._prizeWheelBet,   # 确定轮盘最终奖励
             "chg_multiple": self._chgMultiple,
-            "start_grand_prix": self._startGrandPrix,
+            "start_grand_prix": self._startGrandPrix,   # 大奖赛开赛
             "end_grand_prix": self._endGrandPrix,
             "comp_act_notify": self._inspireNotify,
             "lottery_ticket_info": self._lotteryTicketInfo,

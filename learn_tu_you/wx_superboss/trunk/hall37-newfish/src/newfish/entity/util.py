@@ -49,6 +49,49 @@ def getClientId(userId):
     return clientId
 
 
+def getClientIdVer(userId):
+    """
+    获得客户端标识版本
+    """
+    if userId < 10000:
+        clientIdVer = config.CLIENT_VERSION_ROBOT
+    else:
+        clientIdVer = sessiondata.getClientIdVer(userId)
+    return clientIdVer
+
+
+def getClientIdNum(userId, clientId=None):
+    """
+    获得客户端数字标识
+    """
+    clientId = clientId or getClientId(userId)
+    return sessiondata.getClientIdNum(userId, clientId)[1]
+
+
+def getClientIdSys(userId):
+    """
+    获得客户端运行系统
+    """
+    clientOs = sessiondata.getClientIdSys(userId)
+    return clientOs.lower()
+
+
+def isAppClient(userId):
+    """
+    判断是否为单包客户端
+    """
+    clientId = getClientId(userId).lower()
+    return clientId.startswith(CLIENT_SYS_ANDROID.lower() or clientId.startswith(CLIENT_SYS_IOS.lower()))
+    # return getClientIdSys(userId) in [CLIENT_SYS_ANDROID.lower(), CLIENT_SYS_IOS.lower()]
+
+
+def isChannel(userId, channel):
+    """
+    客户端是否为指定渠道
+    """
+    return sessiondata.getClientIdMainChannel(getClientId(userId)) == channel
+
+
 def getLanguage(userId, clientId=None):
     """
     获取玩家手机语言
@@ -170,17 +213,6 @@ def formatScore(score, lang="zh"):
     return str(score)
 
 
-def getNickname(userId):
-    """
-    获取玩家昵称
-    """
-    nickname = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.nickname)
-    if not nickname:
-        nickname = userdata.getAttr(userId, "name")
-    nickname = str(nickname) if nickname else ""
-    return keywords.replace(nickname)
-
-
 def isVipShow(userId):
     """
     判断是否显示VIP
@@ -196,6 +228,41 @@ def getVipShowLevel(userId):
     if isVipShow(userId) == 0:
         return 0
     return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+
+
+def getVipRealLevel(userId):
+    """
+    获取VIP真实等级
+    """
+    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+
+
+def modifyVipShow(userId, modify):
+    """
+    修改VIP可见性
+    """
+    vipShow = isVipShow(userId)
+    modify = int(modify)
+    pass
+
+
+def canSetVipShow(userId):
+    """
+    判断能否设置VIP可见性
+    """
+    vipLevel = hallvip.userVipSystem.getUserVip(userId).get("level", 0)
+    return config.getVipConf(vipLevel).get("setVipShow", 0)
+
+
+def getNickname(userId):
+    """
+    获取玩家昵称
+    """
+    nickname = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.nickname)
+    if not nickname:
+        nickname = userdata.getAttr(userId, "name")
+    nickname = str(nickname) if nickname else ""
+    return keywords.replace(nickname)
 
 
 def getWeaponType(wpId):
@@ -309,16 +376,405 @@ def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, client
     """
     ud = []     # 用户获得
     gd = []     # 游戏获得
-    return {}
+    items = []
+    # 竞赛积分，只用于处理addRewards逻辑以免返回错误占位使用!
+    compPoints = []
+    if not clientId:
+        clientId = getClientId(userId)
+    for item in gain:
+        count = item["count"]
+        assetKindId = item["name"]
+        if assetKindId == "tableChip" or assetKindId == "bulletChip" or assetKindId == CHIP_KINDID:
+            if type == 0:
+                # 对用户的金币进行INCR操作
+                delta, finalChip = userchip.incrChip(userId, FISH_GAMEID, count, 0,
+                                                     eventId, intEventParam, clientId, roomId=roomId,
+                                                     tableId=tableId, param01=param01, param02=param02)
+                ud.append({"name": "chip", "count": finalChip, "delta": delta})
+            else:
+                # 用户的tablechip进行INCR操作
+                delta, finalChip = userchip.incrTableChip(userId, FISH_GAMEID, count, 1,
+                                                          eventId, intEventParam, clientId, tableId,
+                                                          roomId=roomId, param01=param01, param02=param02)
+                ud.append({"name": "tableChip", "count": finalChip, "delta": delta})
+            if delta != count:
+                ud = []
+                if type != 0:
+                    ftlog.error("addItemsErrorLog add user chip error,", userId, eventId, count, delta)
+        elif assetKindId == COUPON_KINDID:          # 增加奖券
+            delta, finalCoupon = userchip.incrCoupon(userId, FISH_GAMEID, count, 0,
+                                                     eventId, intEventParam, clientId, roomId=roomId,
+                                                     tableId=tableId, param01=param01, param02=param02)
+            if delta == count:
+                ud.append({"name": "coupon", "count": finalCoupon, "delta": delta})
+            else:
+                ftlog.error("addItemsErrorLog add user coupon error,", userId, eventId, count, delta)
+        elif assetKindId == DIAMOND_KINDID:         # 增加钻石
+            delta, finalDiamond = userchip.incrDiamond(userId, FISH_GAMEID, count, 0,
+                                                     eventId, intEventParam, clientId, roomId=roomId,
+                                                     tableId=tableId, param01=param01, param02=param02)
+            if delta == count:
+                ud.append({"name": "diamond", "count": finalDiamond, "delta": delta})
+            else:
+                ftlog.error("addItemsErrorLog add user diamond error,", userId, eventId, count, delta)
+        # 竞赛活动积分道具
+        elif assetKindId in config.COMP_ACT_POINT_KINDID_LIST:  # 竞赛活动积分
+            from newfish.entity.fishactivity import competition_activity
+            teamId = competition_activity._getCompTeamId(userId)
+            if teamId >= 0 and count > 0:
+                compPoints.append(count)
+                competition_activity._addCompTeamPoint(userId, teamId, count)
+            else:
+                ftlog.error("addItemsErrorLog add user comp act point error,", userId, eventId, count, teamId)
+        else:
+            from hall.entity import hallitem
+            userAssets = hallitem.itemSystem.loadUserAssets(userId)
+            timestamp = pktimestamp.getCurrentTimestamp()
+            if ":" not in str(assetKindId):
+                assetKindId = "item:" + str(assetKindId)
+            if count == 0:
+                continue
+            if count > 0:
+                assetTuple = userAssets.addAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
+                                                 eventId, intEventParam, roomId=roomId, tableId=tableId,
+                                                 param01=param01, param02=param02)
+            else:
+                assetTuple = userAssets.consumeAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
+                                                     eventId, intEventParam, roomId=roomId, tableId=tableId,
+                                                     param01=param01, param02=param02)
+
+            assetKindId = int(assetKindId.split(":")[1])
+            delta = assetTuple[1]
+            if delta == abs(count):
+                items.append({"name": assetKindId, "count": assetTuple[2], "delta": count})
+            else:
+                ftlog.error("addItemsErrorLog add user item error,", assetKindId, userId, count, delta)
+
+    changed = {}
+    from newfish.game import TGFish
+    if ud:
+        changed["ud"] = ud
+    if gd:
+        changed["gd"] = gd
+    if items:
+        changed["items"] = items
+        isUpSkillItem = False
+        isUpGunItem = False
+        for item in items:
+            if item["name"] in config.upgradeSkillKindIds:
+                isUpSkillItem = True
+            if item["name"] in config.upgradeGunKindIds:
+                isUpGunItem = True
+        if isUpSkillItem:   # 存在技能升级所需物品
+            event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        if isUpGunItem:     # 存在普通炮升级所需物品
+            event = GunItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        # 道具监控
+        event = ItemMonitorEvent(userId, FISH_GAMEID, changed, eventId)
+        TGFish.getEventBus().publishEvent(event)
+
+    # 资产/道具变化
+    event = ItemChangeEvent(userId, FISH_GAMEID, gain, changed, type)
+    TGFish.getEventBus().publishEvent(event)
+    if compPoints:
+        changed["comPoints"] = compPoints
+    if changeNotify:
+        datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
+    return changed
 
 
 def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, tableId=0, roomId=0):
     """
     添加奖励并立即刷新数据
     """
-
+    clientId = getClientId(userId)
+    from newfish.entity.skill import skill_system
+    if not rewards:
+        ftlog.error("addReward->not rewards", userId, rewards)
+        return 4
+    changed = addItems(userId, rewards, eventId, intEventParam, param01=param01, param02=param02, tableId=tableId, roomId=roomId)
+    if not changed:
+        ftlog.error("addReward->not changed", userId, rewards)
+        return 5
+    for item in rewards:
+        kindId = dict(item)["name"]
+        if kindId in config.skillCardKindIdMap:                                 # 技能提示和事件
+            skillId = config.skillCardKindIdMap[kindId]
+            skill = skill_system.getSkill(userId, skillId)
+            if skill[skill_system.INDEX_ORIGINAL_LEVEL] == 0:
+                # skill_system.setSkill(userId, skillId, [1, 1, 1, 0])
+                module_tip.addModuleTipEvent(userId, "newskill", skillId)
+                from newfish.game import TGFish
+                event = NewSkillEvent(userId, FISH_GAMEID, skillId, eventId)
+                TGFish.getEventBus().publishEvent(event)
+        elif kindId in config.getAllGunIds(clientId, config.CLASSIC_MODE):      # 经典火炮的提示和事件
+            from newfish.game import TGFish
+            from newfish.entity.gun import gun_system
+            event = AddGunSkinEvent(userId, FISH_GAMEID, kindId, int(item["count"]), intEventParam, config.CLASSIC_MODE)
+            TGFish.getEventBus().publishEvent(event)
+            gunIds = gun_system.getGunIds(userId, config.CLASSIC_MODE)
+            if kindId not in gunIds:
+                module_tip.addModuleTipEvent(userId, "gunskin", kindId)
+        elif kindId in config.getAllGunIds(clientId, config.MULTIPLE_MODE):     # 千炮火炮的提示和事件
+            from newfish.game import TGFish
+            from newfish.entity.gun import gun_system
+            event = AddGunSkinEvent(userId, FISH_GAMEID, kindId, int(item["count"]), intEventParam,
+                                    config.MULTIPLE_MODE)
+            TGFish.getEventBus().publishEvent(event)
+            gunIds = gun_system.getGunIds(userId, config.MULTIPLE_MODE)
+            if kindId not in gunIds:
+                module_tip.addModuleTipEvent(userId, "gunskin", kindId)
+        elif kindId in [BRONZE_BULLET_KINDID, SILVER_BULLET_KINDID, GOLD_BULLET_KINDID]:    # 青铜、白银、黄金招财珠
+            from newfish.game import TGFish
+            event = BulletChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        elif (kindId == STARFISH_KINDID and int(item["count"]) > 0 and eventId not in
+            ["BI_NFISH_BUY_ITEM_GAIN", "BI_NFISH_ACTIVITY_REWARDS", "BI_NFISH_MAIL_REWARDS"]):  # 海星
+            from newfish.game import TGFish
+            event = StarfishChangeEvent(userId, FISH_GAMEID, int(item["count"]))
+            TGFish.getEventBus().publishEvent(event)
+        elif config.getTreasureConf(kindId):                                                # 获取宝藏配置
+            from newfish.entity import treasure_system
+            treasure_system.refreshTreasureState(userId, kindId)
+    datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
     return 0
-        
+
+
+def doSendFishNotice(userId):
+    """
+    请求最新消息
+    """
+    noticeUrl = config.getNoticeUrl()
+    noticeVersion = config.getNoticeVersion()
+    message = MsgPack()
+    message.setCmd("fishNotice")
+    message.setResult("gameId", FISH_GAMEID)
+    message.setResult("noticeUrl", noticeUrl)
+    message.setResult("noticeVersion", noticeVersion)
+    router.sendToUser(message, userId)
+
+
+def loadAllRoomInfo():
+    """
+    读取所有房间信息
+    """
+    ret = {}
+    roomInfoMap = roominfo.loadAllRoomInfo(FISH_GAMEID)
+    for roomId, roomInfo in roomInfoMap.iteritems():
+        bigRoomId = gdata.getBigRoomId(roomId)
+        if not bigRoomId:
+            continue
+        bigRoomInfo = ret.get(bigRoomId)
+        if bigRoomInfo:
+            bigRoomInfo.signinCount += max(0, roomInfo.signinCount)
+            bigRoomInfo.playerCount += max(0, roomInfo.playerCount)
+        else:
+            roomInfo.roomId = bigRoomId
+            ret[bigRoomId] = roomInfo
+    return ret
+
+
+def getFishMatchSigninInfo(userId):
+    """
+    获取比赛报名信息
+    """
+    from newfish.servers.room.rpc import room_remote
+    # 44411 * 10000 + 1000
+    ctrlRoomIds = [bigRoomId * 10000 + 1000 for bigRoomId in gdata.gameIdBigRoomidsMap()[FISH_GAMEID]]
+    for ctrlRoomId in ctrlRoomIds:
+        roomConfig = gdata.getRoomConfigure(ctrlRoomId)
+        if roomConfig.get('isMatch', 0):
+            startTime = room_remote.getUserMatchSignin(userId, ctrlRoomId)      # 获取比赛的开始时间
+            if startTime > 0:
+                return ctrlRoomId, startTime
+    return None, None
+
+
+def isChestRewardId(itemId):
+    """
+    判断道具ID是否为宝箱
+    """
+    chestType = int(itemId) // 1000
+    if 31 <= chestType <= 38:
+        return True
+    return False
+
+
+def isCrystalChest(itemId):
+    """
+    判断是否为水晶宝箱
+    """
+    chestType = int(itemId) // 1000
+    return chestType == 38
+
+
+def isSkillCardItemId(itemId):
+    """
+    是否为技能相关卡片(升级卡/升星卡)
+    """
+    cardType = int(itemId) // 1000
+    if cardType == 47 or cardType == 49:
+        return True
+    else:
+        return False
+
+
+def convertToFishItems(hallItems):
+    """
+    把大厅的道具列表数据格式转换为捕鱼的道具列表数据格式
+    """
+    hallItems = hallItems if isinstance(hallItems, list) else [hallItems]
+    fishItems = []
+    for item in hallItems:
+        name = item["itemId"]
+        if name == "user:chip":
+            name = CHIP_KINDID
+        elif name == "user:coupon":
+            name = COUPON_KINDID
+        elif str(name).startswith("item:"):
+            name = int(name.split(":")[1])
+        if not isinstance(name, int):
+            ftlog.error("convertToFishItems", hallItems)
+        fishItems.append({"name": name, "count": item["count"]})
+    return fishItems
+
+
+def buildRewardsDesc(rewardList, lang):
+    """
+    构建奖励描述
+    """
+    if rewardList:
+        moreStr = u""
+        if len(rewardList) > 1:
+            moreStr = config.getMultiLangTextConf("ID_MORE_REWARDS_DESC", lang=lang)
+            # moreStr = u"等奖励"
+        r = rewardList[0]
+        count = r["count"]
+        rewardId = "item:" + str(r["name"])
+        if r["name"] == config.COUPON_KINDID:       # 红包券
+            rewardId = "user:coupon"
+            count *= config.COUPON_DISPLAY_RATE     # 红包券:奖券 比率
+            count = "%.2f" % count
+        elif r["name"] == config.CHIP_KINDID:       # 金币
+            rewardId = "user:chip"
+        elif r["name"] == config.DIAMOND_KINDID:    # 钻石
+            rewardId = "user:diamond"
+        if lang == "zh":
+            assetKind = hallitem.itemSystem.findAssetKind(rewardId)
+            return u"%sx%s%s%s" % (assetKind.displayName, count, assetKind.units, moreStr)
+        else:
+            displayName = config.getMultiLangTextConf("ID_CONFIG_KINDID_%s" % rewardId.upper(), lang=lang)
+            return u"%s x%s%s" % (displayName, count, moreStr)
+    return u""
+
+
+def buildRewards(rewardList):
+    """
+    构建奖励列表
+    :param rewardList:[{"name":xx, "count":xx},...]
+    :return:
+    """
+    rewards = []
+    for r in rewardList:
+        count = r["count"]
+        if count <= 0:
+            continue
+        rewardId = "item:" + str(r["name"])
+        if r["name"] == config.COUPON_KINDID:           # 红包券
+            rewardId = "user:coupon"
+            count *= config.COUPON_DISPLAY_RATE         # 红包券:奖券 比率
+            count = "%.2f" % count
+        elif r["name"] == config.CHIP_KINDID:           # 金币
+            rewardId = "user:chip"
+        elif r["name"] == config.DIAMOND_KINDID:        # 钻石
+            rewardId = "user:diamond"
+        assetKind = hallitem.itemSystem.findAssetKind(rewardId)
+        if assetKind:
+            rewards.append({
+                "name": assetKind.displayName,
+                "kindId": assetKind.kindId,             # 道具ID
+                "count": count,                         # 数量
+                "unit": assetKind.units,
+                "desc": u"%sx%s" % (assetKind.displayName, count),
+                "img": assetKind.pic
+            })
+    ftlog.debug("_buildRewards", rewards)
+    return rewards
+
+
+def buildActivityRewards(rewardList):
+    """
+    构建活动奖励列表
+    """
+    rewards = []
+    for r in rewardList:
+        rewardId = "item:" + str(r["name"])
+        if isChestRewardId(r["name"]):              # 判断道具ID是否为宝箱
+            rewards.append({
+                "name": r["name"],
+                "count": r["count"],
+                "desc": r.get("desc", "")
+            })
+            continue
+        count = r["count"]
+        if count <= 0:
+            continue
+        if r["name"] == config.COUPON_KINDID:
+            rewardId = "user:coupon"
+            count *= config.COUPON_DISPLAY_RATE
+            count = "%.2f" % count
+        elif r["name"] == config.CHIP_KINDID:
+            rewardId = "user:chip"
+        elif r["name"] == config.DIAMOND_KINDID:
+            rewardId = "user:diamond"
+        assetKind = hallitem.itemSystem.findAssetKind(rewardId)
+        if assetKind:
+            rewards.append({
+                "name": r["name"],
+                "count": r["count"],
+                "desc": r.get("desc", ""),
+                "img": assetKind.pic,
+                "unit": assetKind.units,
+                "title": "%sx%s" % (assetKind.displayName, count),
+                "rare": r.get("rare", 0)
+            })
+    ftlog.debug("buildActivityRewards", rewards)
+    return rewards
+
+
+def sendToHall51GameOverEvent(userId, roomId, tableId, fishes):
+    """
+    hall5游戏结束事件
+    """
+    ftlog.info("sendToHall51GameOverEvent->", userId, roomId, tableId, fishes)
+    if hall51event.ISHALL51:
+        hall51event.sendToHall51GameOverEvent(userId, FISH_GAMEID, roomId, tableId, **fishes)
+
+
+def sendToHall51MatchOverEvent(userId, roomId):
+    """
+    hall5比赛结束事件
+    """
+    ftlog.info("sendToHall51MatchOverEvent->", userId, roomId)
+    if hall51event.ISHALL51:
+        hall51event.sendToHall51MatchOverEvent(userId, FISH_GAMEID, roomId)
+
+
+def getClientVersion(userId):
+    """
+    获取玩家客户端版本号
+    """
+    return gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)        # 获取用户单个域游戏属性
+
+
+def addGuideStep(userId, step, clientId):
+    """
+    添加引导步骤
+    """
+    pass
+
 
 def getAssetKindId(kindId):
     """
@@ -361,3 +817,21 @@ def isInFishTable(userId):
         except:
             pass
     return isIn, roomId, tableId, seatId
+
+
+_inited = False
+_processInterval = 10
+_prevProcessRebootLedTime = None
+_timeStampFromStrCache = {}
+
+
+def initialize(isCenter):
+    ftlog.debug("newfish util initialize begin")
+    global _inited
+    if not _inited:
+        _inited = True
+        if isCenter:
+            from poker.entity.events.tyeventbus import globalEventBus
+            from poker.entity.events.tyevent import EventHeartBeat
+            globalEventBus.subscribe(EventHeartBeat, _triggerHeartBeatEvent)
+    ftlog.debug("newfish util initialize end")

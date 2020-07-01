@@ -19,9 +19,14 @@ from newfish.entity.quest.main_quest import MainQuest
 
 
 class FishNormalPlayer(FishPlayer):
+
     """普通渔场玩家"""
     def __init__(self, table, seatIndex, clientId=None):
-        pass
+        super(FishNormalPlayer, self).__init__(table, seatIndex, clientId)
+        if "user" in table.runConfig.taskSystemType:
+            self.taskSystemUser = TaskSystemUser(self.table, self)
+        self.mainQuestSystem = MainQuest(self)
+        self.refreshHoldCoin()
 
     def refreshSkillCD(self):
         """

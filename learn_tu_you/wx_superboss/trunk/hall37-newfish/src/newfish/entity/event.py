@@ -59,6 +59,15 @@ class LevelUpEvent(UserEvent):
         self.gameMode = mode
 
 
+class UserLevelUpEvent(UserEvent):
+    """
+    玩家等级提升事件
+    """
+    def __init__(self, userId, gameId, level):
+        super(UserLevelUpEvent, self).__init__(userId, gameId)
+        self.level = level
+
+
 class UseSkillEvent(UserEvent):
     """
     使用技能事件
@@ -154,6 +163,24 @@ class CheckLimitTimeGiftEvent(UserEvent):
         self.clientId = clientId
 
 
+class SendMailEvent(UserEvent):
+    """
+    发送邮件事件
+    """
+    def __init__(self, userId, gameId, receiveUserId, reward):
+        super(SendMailEvent, self).__init__(userId, gameId)
+        self.receiveUserId = receiveUserId
+        self.reward = reward
+
+
+class ReceiveMailEvent(UserEvent):
+    """
+    收取邮件事件
+    """
+    def __init__(self, userId, gameId):
+        super(ReceiveMailEvent, self).__init__(userId, gameId)
+
+
 class StarfishChangeEvent(UserEvent):
     """
     海星数量变化事件
@@ -175,6 +202,30 @@ class BulletChangeEvent(UserEvent):
         self.roomId = roomId
 
 
+class SuperbossPointChangeEvent(UserEvent):
+    """
+    超级boss积分变化事件
+    """
+    def __init__(self, userId, gameId, bigRoomId, point):
+        super(SuperbossPointChangeEvent, self).__init__(userId, gameId)
+        self.bigRoomId = bigRoomId
+        self.point = point
+
+
+class ActivityItemChangeEvent(UserEvent):
+    """
+    活动中道具变化事件（道具）
+    """
+    def __init__(self, userId, gameId, rewards=None):
+        super(ActivityItemChangeEvent, self).__init__(userId, gameId)
+        self.rewards = rewards
+
+
+
+
+
+
+
 class MatchWinloseEvent(UserEvent):
     """
     回馈赛胜负事件
@@ -188,6 +239,18 @@ class MatchWinloseEvent(UserEvent):
         self.signinUserCount = signinUserCount
         self.rewards = rewards
         self.luckyValue = luckyValue
+
+
+class ItemChangeEvent(UserEvent):
+    """
+    资产/道具变化事件
+    :param type: 0：渔场外 1：渔场内
+    """
+    def __init__(self, userId, gameId, itemInfo, changed, type=0):
+        super(ItemChangeEvent, self).__init__(userId, gameId)
+        self.itemInfo = itemInfo
+        self.changed = changed
+        self.type = type
 
 
 class AddGunSkinEvent(UserEvent):
@@ -214,6 +277,25 @@ class FireEvent(UserEvent):
         self.costChip = costChip
         self.holdCoin = holdCoin
         self.fpMultiple = fpMultiple
+
+
+class ItemMonitorEvent(UserEvent):
+    """
+    道具检测事件
+    """
+    def __init__(self, userId, gameId, changed, changeEventId):
+        super(ItemMonitorEvent, self).__init__(userId, gameId)
+        self.changed = changed
+        self.changeEventId = changeEventId
+
+
+class PrizeWheelSpinEvent(UserEvent):
+    """
+    渔场转盘转动事件
+    """
+    def __init__(self, userId, gameId, roomId):
+        super(PrizeWheelSpinEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
 
 
 class NetIncomeChangeEvent(UserEvent):

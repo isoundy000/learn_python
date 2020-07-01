@@ -391,6 +391,77 @@ def dynamic_odds_config():
     print u"end 动态概率配置 DynamicOdds"
 
 
+def vip_config():
+    print "vip_config, start"
+    outPath = getOutPath("vip")
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    ws = getWorkBook().get_sheet_by_name("Vip")
+    config = collections.OrderedDict()
+    startRowNum = 4
+
+    expStartIdx = 11
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            if i != startRowNum:
+                break
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["vipLv"] = int(cols[0])
+        one["vipPresentCount:1137"] = int(cols[1])      # 赠送珍珠数
+        one["vipPresentCount:1193"] = int(cols[2])      # 赠送银弹头数
+        one["vipPresentCount:1194"] = int(cols[3])      # 赠送金弹头数
+        one["vipPresentCount:1426"] = int(cols[4])      # 赠送代购券数
+        one["vipPresentCount:1408"] = int(cols[5])      # 赠送冷却道具数量
+        one["vipPresentCount:1429"] = int(cols[6])      # 赠送紫水晶数量
+        one["vipPresentCount:1430"] = int(cols[7])      # 赠送黄水晶数量
+        one["vipPresentCount:1431"] = int(cols[8])      # 赠送五彩水晶数量
+        one["vipReceiveCount:1194"] = int(cols[9])      # 可接收金珠数量
+        one["vipReceiveCount:1193"] = int(cols[10])     # 可接收银珠数量
+        one["vipExp"] = int(cols[expStartIdx])          # VIP经验值
+        one["freeRouletteTimes"] = int(cols[expStartIdx + 1])   # 免费海星许愿次数
+        one["dropPearlTotalCount"] = int(cols[expStartIdx + 2]) # 掉落珍珠累计总量限制
+        one["dropPearlRatioLimit"] = cols[expStartIdx + 3]      # 掉落总量超出后Level表中系数
+        one["vipDesc"] = unicode(cols[expStartIdx + 4]) or ""   # VIP描述
+        one["vipGift"] = json.loads(cols[expStartIdx + 5])      # VIP礼包
+        one["originalPrice"] = int(cols[expStartIdx + 6])       # VIP礼包原价
+        one["price"] = int(cols[expStartIdx + 7])               # VIP礼包现价
+        one["pearlMultiple"] = float(cols[expStartIdx + 8])     # 任务珍珠加成倍率
+        one["matchAddition"] = float(cols[expStartIdx + 9])     # 比赛分数加成
+        one["setVipShow"] = int(cols[expStartIdx + 10])         # 设置vip展示
+        one["almsRate"] = float(cols[expStartIdx + 11])         # 救济金倍率
+        one["autoSupply:101"] = int(cols[expStartIdx + 12])     # 每日金币补足
+        one["initLuckyValue:44102"] = int(cols[expStartIdx + 13])   # 比赛初始幸运值
+        one["inviterReward"] = json.loads(cols[expStartIdx + 14])   # 给邀请人的奖励
+        one["contFire"] = int(cols[expStartIdx + 15])               # 是否可以连发
+        one["enableChat"] = int(cols[expStartIdx + 16])             # 是否可以聊天
+        one["limitChatTip"] = unicode(cols[expStartIdx + 17] or "") # 限制聊天提示
+        one["convert1137ToDRate"] = json.loads(cols[expStartIdx + 18])  # 珍珠换钻石比例
+        one["convert1429ToDRate"] = json.loads(cols[expStartIdx + 19])  # 紫水晶换钻石比例
+        one["convert1430ToDRate"] = json.loads(cols[expStartIdx + 20])  # 黄水晶换钻石比例
+        one["convert1431ToDRate"] = json.loads(cols[expStartIdx + 21])  # 五彩水晶换钻石比例
+        one["grandPrixFreeTimes"] = int(cols[expStartIdx + 22])         # 大奖赛免费次数
+        one["grandPrixAddition"] = float(cols[expStartIdx + 23])        # 大奖赛分数加成
+        one["checkinRechargeBonus"] = int(cols[expStartIdx + 24])       # 签到增加奖池额度
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "vip_config, end"
+
+
+
+
+
 def fixed_multiple_fish():
     """固定倍率鱼"""
     outPath = getOutPath("fixedMultipleFish")
@@ -598,6 +669,95 @@ def store_config():
     pass
 
 
+def grandPrix_config():
+    """
+    大奖赛配置
+    """
+    # reload(sys)
+    # sys.setdefaultencoding("utf-8")
+    print "grandPrix_config, start"
+    outPath = getOutPath("grandPrix")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("GrandPrix")
+    config = collections.OrderedDict()
+    config["info"] = collections.OrderedDict()
+    config["playAddition"] = []
+    config["openTimeRange"] = []
+    config["fireCount"] = 0
+    config["fee"] = collections.OrderedDict()
+    config["pointRewards"] = []
+    config["group"] = {}
+    config["target"] = {}
+    config["robotData"] = []
+    config["surpassTarget"] = []
+
+    startRowNum = 4
+
+    playConfCols = 6
+    openRangeConfCols = 11
+    fireConfCols = 14
+    feeConfCols = 16
+    pointConfCols = 18
+    groupConfCols = 21
+    fakeDataConfCols = 28
+    surpassDataCols = 33
+
+    h = 0
+    cnt = 1
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0] is not None:
+            config["info"]["enable"] = int(cols[0])         # 是否开启
+            config["info"]["startDay"] = str(cols[1])       # 开启时间
+            config["info"]["msg"] = str(cols[2])            # 邮件内容
+            config["info"]["des"] = str(cols[3])            # 提示
+            config["info"]["endDes"] = str(cols[4])         # 结束页面提示
+            config["info"]["robot"] = json.loads(cols[5])   # [是否启用，多久后添加，[最小间隔，最大间隔]](分钟)
+            config["info"]["level"] = int(cols[6])          # 最低等级
+
+        if cols[playConfCols] is not None:
+            one = collections.OrderedDict()
+            config["playAddition"].append(one)
+            one["playTimes"] = int(cols[playConfCols])          # 重新挑战次数
+            one["addition"] = float(cols[playConfCols + 1])     # 积分加成 0.1
+
+        if cols[openRangeConfCols] is not None:
+            config["openTimeRange"].extend([str(cols[openRangeConfCols]), str(cols[openRangeConfCols + 1])])    # 开始时间、结束时间
+
+        if cols[fireConfCols] is not None:                      # 开火，技能使用次数
+            config["fireCount"] = json.loads(cols[fireConfCols])
+
+        if cols[feeConfCols] is not None:
+            config["fee"] = json.loads(cols[feeConfCols])       # 报名费
+
+        if cols[pointConfCols] is not None:                     # 积分、奖励
+            config["pointRewards"].append({"point": int(cols[pointConfCols]), "rewards": json.loads(cols[pointConfCols + 1])})
+
+        if cols[groupConfCols] is not None:                     # 任务鱼、数量、积分
+            config["group"].setdefault(str(cols[groupConfCols + 3]), [])
+            config["group"][str(cols[groupConfCols + 3])].append(int(cols[groupConfCols + 1]))
+            config["target"][str(cols[groupConfCols + 1])] = {"count": int(cols[groupConfCols + 4]), "point": int(cols[groupConfCols + 5])}
+
+        if cols[fakeDataConfCols] is not None:                  # 假数据数量、最低积分、最高积分
+            config["robotData"].append({"count": int(cols[fakeDataConfCols + 1]), "points": [int(cols[fakeDataConfCols + 2]), int(cols[fakeDataConfCols + 3])]})
+
+        if cols[surpassDataCols] is not None:                   # 名次
+            config["surpassTarget"].append(int(cols[surpassDataCols]))
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "grandPrix_config, end"
+
+
 def getWorkBook(filename="newfish.xlsm"):
     '''
     获取工作sheet
@@ -688,7 +848,7 @@ config_list = [
     # (level_funds_config, 25794),
     # (super_egg_config, None),
     # (updateVerRewards_config, None),
-    # (grandPrix_config, None),
+    (grandPrix_config, None),
     # (bigPrize_config, None),
     # (compAct_config, None),
     # # (checkin_config, None),
@@ -717,7 +877,7 @@ config_list = [
     # # (gift_config, 26121),
     # # (gift_config, 26122),
     # (item_drop_config, None),
-    # # (vip_config, None),
+    (vip_config, None),
     (fixed_multiple_fish, None),
     # (call_multiple_fish, None),
     # (fishBonus_config, None),

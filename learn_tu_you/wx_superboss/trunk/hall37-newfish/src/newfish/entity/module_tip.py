@@ -93,6 +93,16 @@ def handleEvent(event):
             pass
 
 
+def addModuleTipEvent(userId, moduleName, value):
+    """
+    添加对应的提示信息
+    """
+    from newfish.game import TGFish
+    tip = FishModuleTipEvent(userId, FISH_GAMEID, 1, moduleName, value)
+    TGFish.getEventBus().publishEvent(tip)
+    ftlog.debug("newfish addModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
+
+
 def cancelModuleTipEvent(userId, moduleName, value):
     """
     取消对应的提示信息

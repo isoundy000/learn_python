@@ -11,3 +11,28 @@ class AchievementTableSystem(object):
         self.player = player
         self.achieveTasks = []
         self.holdAssetTasks = []
+
+    def _clearTimer(self):
+        pass
+
+    # 初始化用户成就任务
+    def _initPlayerAchieveTasks(self, userId):
+        pass
+
+
+
+
+    def updateStateAndSave(self):
+        if ftlog.is_debug():
+            ftlog.debug("updateStateAndSave", self.achieveTasks)
+        pass
+
+    def refreshAchievementTask(self):
+        pass
+
+    def dealLeaveTable(self):
+        """
+        处理离开桌子
+        """
+        self.updateStateAndSave()
+        self._clearTimer()

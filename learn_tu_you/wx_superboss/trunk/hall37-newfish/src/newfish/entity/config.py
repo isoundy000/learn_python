@@ -669,72 +669,6 @@ def getPublic(key, defaultValue=None):
     return publicConf.get(str(key), defaultValue)
 
 
-def loadSpecialItemConf():
-    """
-    加载特殊物品配置
-    """
-    global specialItemConf
-    specialItemConf = rocopy(getGameConf("specialItem"))
-
-
-def getSpecialItemConf():
-    """
-    获取特殊物品配置
-    """
-    global specialItemConf
-    return specialItemConf
-
-
-def loadMultiLangTextConf():
-    """
-    加载多语言文本
-    """
-    global multiLangTextConf
-    multiLangTextConf = rocopy(getGameConf("multiLangText"))
-
-
-def getMultiLangTextConf(id, lang="zh"):
-    """
-    获取多语言文本
-    getMultiLangTextConf(?!.*?lang).*$
-    """
-    global multiLangTextConf
-    conf = multiLangTextConf.get(id, {})
-    if not conf:
-        ftlog.error("getMultiLangTextConf error", id)
-    return conf.get(lang, "")
-
-
-def getIncrPearlDropRatio(userId):
-    """
-    获取可以增加的珍珠额外掉率
-    """
-    global specialItemConf
-    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
-    ratio = 0.
-    for k, v in specialItemConf.iteritems():
-        if v.get("incrPearlDropRate", 0):
-            item = userBag.getItemByKindId(int(k))
-            if item and not item.isDied(int(time.time())):
-                ratio += v["incrPearlDropRate"]
-    return ratio
-
-
-def getIncrCrystalDropRatio(userId):
-    """
-    获取可以增加的水晶额外掉率
-    """
-    global specialItemConf
-    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
-    ratio = 0.
-    for k, v in specialItemConf.iteritems():
-        if v.get("incrCrystalDropRate", 0):
-            item = userBag.getItemByKindId(int(k))
-            if item and not item.isDied(int(time.time())):
-                ratio += v["incrCrystalDropRate"]
-    return ratio
-
-
 def loadCheckinConf():
     """
     加载签到配置
@@ -846,6 +780,45 @@ def getNcmpttTaskConf(fishPool):
     """
     global ncmpttTaskConf
     return rwcopy(ncmpttTaskConf.get(str(fishPool), []))
+
+
+def loadBonusTaskConf():
+    """
+    加载奖金赛配置
+    """
+    global bonusTaskConf
+    bonusTaskConfTmp = getGameConf("bonusTask")
+    bonusTaskConf = {}
+    for key, value in bonusTaskConfTmp.iteritems():
+        fishPool = value["fishPool"]
+        if fishPool not in bonusTaskConf:
+            bonusTaskConf[fishPool] = []
+        bonusTaskConf[fishPool].append(value)
+    bonusTaskConf = rocopy(bonusTaskConf)
+
+
+def getBonusTaskConf(fishPool):
+    """
+    获取奖金赛配置
+    """
+    global bonusTaskConf
+    return rwcopy(bonusTaskConf.get(str(fishPool), []))
+
+
+def loadGuideTaskConf():
+    """
+    加载新手任务配置
+    """
+    global guideTaskConf
+    guideTaskConf = rocopy(getGameConf("guideTask"))
+
+
+def getGuideTaskConf(taskId):
+    """
+    获取新手任务配置
+    """
+    global guideTaskConf
+    return rwcopy(guideTaskConf.get(str(taskId), {}))
 
 
 def loadFishConf():
@@ -982,6 +955,92 @@ def getWeaponPowerRateConf(wpId):
     """
     global weaponPowerRateConf
     return weaponPowerRateConf.get(str(wpId), [])
+
+
+def getMinWeaponId():
+    """
+    获取最小武器ID
+    """
+    global minWeaponId
+    return minWeaponId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def loadSpecialItemConf():
+    """
+    加载特殊物品配置
+    """
+    global specialItemConf
+    specialItemConf = rocopy(getGameConf("specialItem"))
+
+
+def getSpecialItemConf():
+    """
+    获取特殊物品配置
+    """
+    global specialItemConf
+    return specialItemConf
+
+
+def loadMultiLangTextConf():
+    """
+    加载多语言文本
+    """
+    global multiLangTextConf
+    multiLangTextConf = rocopy(getGameConf("multiLangText"))
+
+
+def getMultiLangTextConf(id, lang="zh"):
+    """
+    获取多语言文本
+    getMultiLangTextConf(?!.*?lang).*$
+    """
+    global multiLangTextConf
+    conf = multiLangTextConf.get(id, {})
+    if not conf:
+        ftlog.error("getMultiLangTextConf error", id)
+    return conf.get(lang, "")
+
+
+def getIncrPearlDropRatio(userId):
+    """
+    获取可以增加的珍珠额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrPearlDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrPearlDropRate"]
+    return ratio
+
+
+def getIncrCrystalDropRatio(userId):
+    """
+    获取可以增加的水晶额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrCrystalDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrCrystalDropRate"]
+    return ratio
 
 
 def loadProbabilityConf():
@@ -1122,21 +1181,55 @@ def getCatchDropConf(fpMultiple, fishType, uid):
     _conf = _getCatchDropGroupConf(fpMultiple, fishType)
     if _conf:
         kindId = _getCatchDropKindId(int(_conf["dropGroupId"]), uid)
+    pass
 
+
+def loadGrandPrixConf():
+    """
+    加载大奖赛配置
+    """
+    global grandPrixConf
+    grandPrixConf = rocopy(getGameConf("grandPrix"))
+
+
+def getGrandPrixConf(key_=None):
+    """
+    获取大奖赛配置
+    """
+    global grandPrixConf
+    if key_ is None:
+        return grandPrixConf
+    return rwcopy(grandPrixConf.get(str(key_)))
 
 
 def _getCatchDropKindId(groupId, uid):
     """
     根据玩家uid和掉落组返回掉落kindId
     """
-
+    pass
 
 def _getCatchDropGroupConf(fpMultiple, fishType):
     """
     根据渔场和捕到的鱼的类型获得掉落组
     """
+    pass
+
+def loadVipConf():
+    """
+    加载VIP配置
+    """
+    global vipConf
+    vipConf = rocopy(getGameConf("vip"))
 
 
+def getVipConf(vipLevel=None):
+    """
+    读取VIP配置
+    """
+    global vipConf
+    if vipLevel is None:
+        return vipConf
+    return vipConf.get(str(vipLevel), {})
 
 
 def loadFixedMultipleFishConf():
@@ -1432,6 +1525,34 @@ def getLotteryTicActConf(clientId=None):
     if lotteryTicketConf.get(intClientId):
         return lotteryTicketConf[intClientId]
     return lotteryTicketConf[defaultIntClientId]
+
+
+def loadTreasureConf():
+    """
+    加载宝藏配置
+    """
+    global treasureConf
+    treasureConf = rocopy(getGameConf("treasure"))
+
+
+def getTreasureConf(kindId=None, effectType=None, level=None):
+    """
+    获取宝藏配置
+    """
+    global treasureConf
+    _conf = {}
+    if kindId:
+        _conf = treasureConf.get(str(kindId), {})
+    elif effectType:
+        for _, conf in treasureConf.iteritems():
+            if conf["effectType"] == effectType:
+                _conf = conf
+                break
+    if kindId or effectType:
+        if level:
+            return _conf.get("levels", {}).get(str(level))
+        return _conf
+    return treasureConf
 
 
 def loadSkillCompenConf():

@@ -10,8 +10,8 @@ from poker.servers.util.direct import dbuser
 
 def getAttrs(userId, filedList):
     '''
-        取得用户的主账户数据
-        '''
+    取得用户的主账户数据
+    '''
     assert (isinstance(userId, int))
     assert (userId > 0)
     return dbuser._getUserDatas(userId, filedList)
@@ -23,3 +23,12 @@ def getAttr(userId, field):
     '''
     vals = getAttrs(userId, [field])
     return vals[0]
+
+
+def getSessionData(userId):
+    '''
+    取得用户的session数据
+    '''
+    assert (isinstance(userId, int))
+    assert (userId > 0)
+    return dbuser._getSessionDatas(userId)
