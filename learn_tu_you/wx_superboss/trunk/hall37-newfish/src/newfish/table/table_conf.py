@@ -36,7 +36,7 @@ class FishTableConf(object):
         self.allRainbowGroupIds = []
         self.allTerrorGroupIds = {}
         self.allAutofillGroupIds = {}
-        self.allGrandPrixGroupIds = {}
+        self.allGrandPrixGroupIds = {}                      # 大奖所有鱼群
         self.allSuperBossGroupIds = {}
         self.allSuperBossBornGroupIds = {}
         self.allSuperBossFastMoveGroupIds = {}

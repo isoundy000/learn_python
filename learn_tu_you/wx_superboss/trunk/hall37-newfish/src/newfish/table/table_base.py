@@ -3094,6 +3094,7 @@ class FishTable(TYTable):
         player and player.upgradeSkill(skillId, actionType, skillType)
 
     def _refresh_skill_cd(self, msg, userId, seatId):
+        """刷新cd时间"""
         # 比赛中不可用冷却
         if not self.taskSystemTable or self.taskSystemTable.getTaskState(userId) == 0:
             player = self.getPlayer(userId)

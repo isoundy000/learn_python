@@ -91,7 +91,7 @@ class FishGrandPrixPlayer(FishFriendPlayer):
 
         self._rankListCache = []
         self._surpassUser = {}
-        self.grandPrixSurpassCount = weakdata.getDayFishData(self.userId, WeakData.grandPrix_surpassCount, 0)
+        self.grandPrixSurpassCount = weakdata.getDayFishData(self.userId, WeakData.grandPrix_surpassCount, 0)   # 大奖赛超越自己次数
         self.bestPoint = weakdata.getDayFishData(self.userId, WeakData.grandPrix_point, 0)
 
         self.prizeWheel = GrandPrixPrizeWheel(self.userId, table.runConfig.fishPool, self.table.roomId)
@@ -255,6 +255,13 @@ class FishGrandPrixPlayer(FishFriendPlayer):
 
 
 
+    def isGrandPrixMode(self):
+        """
+        大奖赛比赛模式
+        """
+        return self.grandPrixStartTS > 0
+
+
 
 
     def startGrandPrix(self, signUp):
@@ -269,10 +276,117 @@ class FishGrandPrixPlayer(FishFriendPlayer):
         curTime = int(time.time())
         dayStartTimestamp = util.getDayStartTimestamp(curTime)
 
-
-
     def endGrandPrix(self):
         """
         大奖赛结束
         """
         pass
+
+    def _resetGrandPrixData(self):
+        """
+        重置大奖赛相关数据
+        """
+        self.grandPrixStartTS = 0
+        self.grandPrixFireCount = 0
+        self.grandPrixTargetFish = {}
+        self.grandPrixUseSkillTimes = []
+        self.grandPrixFishPoint = 0
+        self.grandPrixSurpassCount = 0              # 大奖赛超越自己次数
+        self.grandPrixLevelFpMultiple = None        # 大奖赛火炮等级和倍率
+        self._rankListCache = []
+        self._surpassUser = {}
+        self._saveGrandPrixData()
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_surpassCount, 0)
+
+    def _saveGrandPrixData(self):
+        """
+        保存大奖赛数据
+        """
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_startTS, self.grandPrixStartTS)
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_fireCount, self.grandPrixFireCount)
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_fishPoint, self.grandPrixFishPoint)
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_surpassCount, self.grandPrixSurpassCount)
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_useSkillTimes, json.dumps(self.grandPrixUseSkillTimes))
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_targetFish, json.dumps(self.grandPrixTargetFish))
+        weakdata.setDayFishData(self.userId, WeakData.grandPrix_levelFpMultiple, json.dumps(self.grandPrixLevelFpMultiple))
+
+    def sendGrandPrixInfo(self):
+        """
+        发送大奖赛信息
+        """
+        if not grand_prix.isGrandPrixOpenTime():
+            self._resetGrandPrixData()
+            self._freeTimes = self._paidTimes = 0
+            weakdata.setDayFishData(self.userId, WeakData.grandPrix_freeTimes, 0)
+            weakdata.setDayFishData(self.userId, WeakData.grandPrix_paidTimes, 0)
+
+        signUpState = 1 if self.isGrandPrixMode() else 0
+        playTimes = self._freeTimes + self._paidTimes
+        playAddition = grand_prix.getPlayAddition(playTimes) if signUpState == 1 else grand_prix.getPlayAddition(playTimes + 1)
+        remainFreeTimes = config.getVipConf(self.vipLevel).get("grandPrixFreeTimes", 0) - self._freeTimes
+        openTime = "-".join(config.getGrandPrixConf("openTimeRange"))
+
+        mo = MsgPack()
+        mo.setCmd("grand_prix_info")
+        mo.setResult("gameId", FISH_GAMEID)
+        mo.setResult("userId", self.userId)
+        mo.setResult("seatId", self.seatId)
+        mo.setResult("remainFreeTimes", remainFreeTimes)
+        mo.setResult("fee", config.getGrandPrixConf("fee"))
+        mo.setResult("playAddition", ("%d%%" % int(playAddition * 100)))
+        mo.setResult("openTime", openTime)
+        mo.setResult("isInOpenTime", 1 if grand_prix.isGrandPrixOpenTime() else 0)
+        mo.setResult("signUpState", signUpState)
+        weekPointList = json.loads(weakdata.getWeekFishData(self.userId, WeakData.grandPrix_weekPointList, "[0, 0, 0, 0, 0, 0, 0]"))
+        weekPoint = sum(sorted(weekPointList)[-3:])
+        mo.setResult("weekPoint", weekPoint)
+        mo.setResult("todayRankType", RankType.TodayGrandPrix)
+        mo.setResult("todayDate", util.timestampToStr(int(time.time()), "%m/%d"))
+        mo.setResult("yesterdayRankType", RankType.LastGrandPrix)
+        mo.setResult("yesterdayDate", util.timestampToStr(int(time.time() - 86400), "%m/%d"))
+        mo.setResult("weekRankType", RankType.WeekGrandPrix)
+        mo.setResult("des", config.getMultiLangTextConf(config.getGrandPrixConf("info").get("des"), lang=self.lang))
+        # mo.setResult("des", config.getGrandPrixConf("info").get("des"))
+        st = time.localtime(int(time.time()))
+        monday = date.today() - timedelta(days=st.tm_wday)
+        mondayTimestamp = int(time.mktime(monday.timetuple()))  # 周一
+        mondayStr = util.timestampToStr(mondayTimestamp, "%m/%d")
+        sundayStr = util.timestampToStr((mondayTimestamp + 86400 * 6), "%m/%d")
+        mo.setResult("weekDate", "%s-%s" % (mondayStr, sundayStr))
+        GameMsg.sendMsg(mo, self.userId)
+        if ftlog.is_debug():
+            ftlog.debug("FishGrandPrixPlayer, userId =", self.userId, "mo =", mo)
+        # 已经报名则直接开始大奖赛
+        if signUpState == 1:
+            self.startGrandPrix(signUpState)
+
+
+
+
+
+    def setTipTimer(self):
+        """
+        设置比赛开始和结束的通知消息
+        """
+        if self.grandPrixTipTimer:
+            self.grandPrixTipTimer.cancel()
+            self.grandPrixTipTimer = None
+            if ftlog.is_debug():
+                ftlog.debug("FishGrandPrixPlayer, userId =", self.userId)
+            self.sendGrandPrixInfo()                                        # 发送大奖赛信息
+        curTime = int(time.time())
+        dayStartTS = util.getDayStartTimestamp(curTime)
+        openTimeRange = config.getGrandPrixConf("openTimeRange")
+        pastTime = curTime - dayStartTS
+        beginTime = util.timeStrToInt(openTimeRange[0])
+        endTime = util.timeStrToInt(openTimeRange[1])
+        if pastTime < beginTime:
+            interval = beginTime - pastTime + 5
+        elif beginTime <= pastTime <= endTime:
+            interval = endTime - pastTime + 5
+        else:
+            interval = 86400 + beginTime - pastTime + 5
+        self.grandPrixTipTimer = FTLoopTimer(interval, 0, self.setTipTimer)
+        self.grandPrixTipTimer.start()
+        if ftlog.is_debug():
+            ftlog.debug("FishGrandPrixPlayer, userId =", self.userId, "interval =", interval)
