@@ -52,7 +52,6 @@ class SignupCode:           # 注册
     SC_UNFINISH = 3         # 存在未完成的比赛
 
 
-
 class FishGrandPrixPlayer(FishFriendPlayer):
 
     def __init__(self, table, seatIndex, clientId):
@@ -253,7 +252,26 @@ class FishGrandPrixPlayer(FishFriendPlayer):
         super(FishGrandPrixPlayer, self).gunChange(gLv)
         self.levelAddition = config.getGunLevelConf(self.nowGunLevel, self.table.gameMode).get("levelAddition", 0.)
 
+    def checkCanFire(self, fPos, wpId, bulletId, skillId, skillType):
+        """
+        检测玩家是否可以开火
+        """
+        canFire, reason, clip, costBullet, extends, skill = \
+            super(FishGrandPrixPlayer, self).checkCanFire(fPos, wpId, bulletId, skillId, skillType)
+        if canFire and self.isGrandPrixMode() and self.grandPrixFireCount <= 0:
+            canFire, reason = False, 8
+        return canFire, reason, clip, costBullet, extends, skill
 
+    def sendFireMsg(self, userId, seatId, extends, params):
+        """
+        发送开火确认消息
+        """
+
+    def getMatchingFishPool(self, fpMultiple):
+        """
+        获取玩家渔场倍率对应的fishPool
+        """
+        return self.table.runConfig.fishPool
 
     def isGrandPrixMode(self):
         """

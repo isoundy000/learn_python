@@ -13,3 +13,11 @@ class RankType:
     TodayGrandPrix = 16  # 大奖赛今日榜
     LastGrandPrix = 17  # 大奖赛昨日榜
     WeekGrandPrix = 18  # 大奖赛周榜
+
+
+class RankingBase:
+    pass
+
+
+class RankDefineIndex:
+    pass

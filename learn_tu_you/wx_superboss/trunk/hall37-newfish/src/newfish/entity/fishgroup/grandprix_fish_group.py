@@ -38,6 +38,7 @@ class GrandPrixFishGroup(object):
         self._idx = 0
         self.clearTimer()
         self._nextGrandPrixTimer = FTLoopTimer(self._interval, -1, self._addGrandPrixFishGroup)
+        self._nextGrandPrixTimer.start()
 
     def _addGrandPrixFishGroup(self):
         """增加大奖赛鱼群"""

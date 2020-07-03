@@ -308,6 +308,67 @@ class NetIncomeChangeEvent(UserEvent):
         self.roomId = roomId
 
 
+
+
+
+
+
+
+
+
+
+
+
+class JoinGrandPrixEvent(UserEvent):
+    """
+    参加大奖赛事件
+    """
+    def __init__(self, userId, gameId, roomId):
+        super(JoinGrandPrixEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+
+
+class FinishGrandPrixEvent(UserEvent):
+    """
+    完成大奖赛事件
+    """
+    def __init__(self, userId, gameId, roomId, grandPrixFinalPoint):
+        super(FinishGrandPrixEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.grandPrixFinalPoint = grandPrixFinalPoint
+
+
+class ProductBuyEvent(UserEvent):
+    """
+    商品购买事件
+    """
+    def __init__(self, userId, gameId, productId, clientId, buyCount):
+        super(ProductBuyEvent, self).__init__(userId, gameId)
+        self.productId = productId
+        self.clientId = clientId
+        self.buyCount = buyCount
+
+
+class BuyInspireGift(UserEvent):
+    """
+    购买鼓舞礼包事件
+    """
+    def __init__(self, userId, gameId, teamId, ratio, remainTime):
+        super(BuyInspireGift, self).__init__(userId, gameId)
+        self.teamId = teamId
+        self.ratio = ratio
+        self.remainTime = remainTime
+
+
+class HitPoseidonEvent(UserEvent):
+    """
+    击中波塞冬事件
+    """
+    def __init__(self, userId, gameId, count):
+        super(HitPoseidonEvent, self).__init__(userId, gameId)
+        self.count = count
+
+
 class ChangeGunLevelEvent(UserEvent):
     """
     切换火炮等级事件

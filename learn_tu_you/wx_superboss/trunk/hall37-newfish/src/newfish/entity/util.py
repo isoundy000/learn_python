@@ -92,16 +92,26 @@ def isChannel(userId, channel):
     return sessiondata.getClientIdMainChannel(getClientId(userId)) == channel
 
 
-def getLanguage(userId, clientId=None):
+def getFishPoolByBigRoomId(bigRoomId):
     """
-    获取玩家手机语言
+    :param bigRoomId:
+    :return:
     """
-    clientId = clientId or getClientId(userId)
-    if clientId and config.getPublic("multipleLangClientIds", []):
-        lang = userdata.getAttr(userId, "lang")
-        if lang and not str(lang).startswith("zh"):
-            return "en"
-    return "zh"
+    if bigRoomId == 44499:
+        return 44001
+    elif 44405 >= bigRoomId >= 44401:
+        return 44000 + bigRoomId % 44400
+    else:
+        return bigRoomId
+
+
+def getBigRoomId(roomId):
+    """获取大房间"""
+    if not roomId:
+        return 0, 0
+    pass
+
+
 
 
 def verifyPhoneNumber(phoneNumber):
@@ -263,6 +273,77 @@ def getNickname(userId):
         nickname = userdata.getAttr(userId, "name")
     nickname = str(nickname) if nickname else ""
     return keywords.replace(nickname)
+
+
+def getLanguage(userId, clientId=None):
+    """
+    获取玩家手机语言
+    """
+    clientId = clientId or getClientId(userId)
+    if clientId in config.getPublic("multipleLangClientIds", []):
+        lang = userdata.getAttr(userId, "lang")
+        if lang and not str(lang).startswith("zh"):
+            return "en"
+    return "zh"
+
+
+def getAllLanguage():
+    """
+    获取服务器所有语言
+    """
+    return ["zh", "en"]
+
+
+
+
+
+
+def isNumber(str):
+    try:
+        float(str)
+        return True
+    except ValueError:
+        pass
+
+    try:
+        import unicodedata
+        unicodedata.numeric(str)
+        return True
+    except (TypeError, ValueError):
+        pass
+
+    return False
+
+
+def getItemPresentTestMode(userId):
+    """
+    获取物品赠送测试模式
+    """
+    itemPresentTestMode = config.getPublic("itemPresentTestMode")
+    return itemPresentTestMode or gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.itemPresentTestMode)
+
+
+def selectIdxByWeight(weightList):
+    """
+    根据权重选择索引位置
+    """
+    try:
+        totalWeight = sum(weightList)
+        weight = random.randint(1, totalWeight)
+        for i, w in enumerate(weightList):
+            if weight > w:
+                weight -= w
+            else:
+                return i
+        return -1
+    except:
+        ftlog.error("selectIdxByWeight, weightList =", weightList)
+        return -1
+
+
+
+
+
 
 
 def getWeaponType(wpId):

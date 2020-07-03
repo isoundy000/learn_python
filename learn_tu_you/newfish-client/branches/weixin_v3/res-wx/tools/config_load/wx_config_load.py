@@ -669,6 +669,141 @@ def store_config():
     pass
 
 
+def prizewheel_config():
+    """
+    渔场轮盘配置
+    """
+    print "prizewheel_config, start"
+    outPath = getOutPath("prizeWheel")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("PrizeWheel")
+    config = collections.OrderedDict()
+    config["maxSpinTimes"] = 1
+    config["energy"] = []
+    config["prize"] = collections.OrderedDict()
+    config["bet"] = collections.OrderedDict()
+    startRowNum = 4
+    h = 0
+
+    wheelIdx = 16
+    betIdx = 51
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["maxSpinTimes"] = int(cols[0])
+
+        if cols[2]:
+            one = collections.OrderedDict()
+            config["energy"].append(one)
+            for i in range(3, 14, 3):
+                one[str(cols[i])] = collections.OrderedDict()
+                one[str(cols[i])]["fishPool"] = int(cols[i])
+                one[str(cols[i])]["cost"] = int(cols[i + 1])
+                one[str(cols[i])]["add"] = json.loads(cols[i + 2])
+
+        if cols[wheelIdx]:
+            config["prize"].setdefault(str(cols[wheelIdx]), collections.OrderedDict())
+            config["prize"][str(cols[wheelIdx])]["nextRoomId"] = int(cols[wheelIdx + 1])
+            config["prize"][str(cols[wheelIdx])]["nextRoomMultiple"] = int(cols[wheelIdx + 2])
+            config["prize"][str(cols[wheelIdx])]["betList"] = json.loads(cols[wheelIdx + 3])
+            wheel = []
+            for i in range(wheelIdx + 4, wheelIdx + 34, 3):
+                one = collections.OrderedDict()
+                one["rewards"] = json.loads(cols[i])
+                one["rate"] = int(cols[i + 1])
+                one["reset"] = int(cols[i + 2])
+                wheel.append(one)
+            config["prize"][str(cols[wheelIdx])]["wheel"] = wheel
+
+        if cols[betIdx]:
+            one = collections.OrderedDict()
+            config["bet"][str(cols[betIdx])] = one
+            for i in range(betIdx + 1, betIdx + 2, 2):
+                one[str(cols[i])] = json.loads(cols[i + 1])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "prizewheel_config, end"
+
+
+def grandPrixPrizewheel_config():
+    """
+    渔场轮盘配置
+    """
+    print "grandPrixPrizewheel_config, start"
+    outPath = getOutPath("grandPrixPrizeWheel")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("GrandPrixPrizeWheel")
+    config = collections.OrderedDict()
+    config["maxSpinTimes"] = 1
+    config["ratio"] = {}
+    config["energy"] = []
+    config["prize"] = collections.OrderedDict()
+    config["bet"] = collections.OrderedDict()
+    startRowNum = 4
+    h = 0
+
+    wheelIdx = 18
+    betIdx = 51
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["maxSpinTimes"] = int(cols[0])
+
+        if cols[2]:
+            config["ratio"] = {"fire": float(cols[2]), "loss": float(cols[3])}      # 开火充能系数 亏损充能系数
+
+        if cols[5]:
+            one = collections.OrderedDict()
+            config["energy"].append(one)
+            for i in range(5, 16, 3):
+                one[str(cols[i])] = collections.OrderedDict()
+                one[str(cols[i])]["fpMultiple"] = int(cols[i])                      # 倍率
+                one[str(cols[i])]["addUnit"] = int(cols[i + 1])                     # 单次充能
+                one[str(cols[i])]["cost"] = int(cols[i + 2])                        # 单次耗能
+                one[str(cols[i])]["add"] = {}                                       #
+
+        if cols[wheelIdx]:
+            config["prize"].setdefault(str(cols[wheelIdx]), collections.OrderedDict())
+            config["prize"][str(cols[wheelIdx])]["nextRoomId"] = 0
+            config["prize"][str(cols[wheelIdx])]["nextRoomMultiple"] = 0
+            config["prize"][str(cols[wheelIdx])]["betList"] = json.loads(cols[wheelIdx + 1])
+            wheel = []
+            for i in range(wheelIdx + 2, wheelIdx + 32, 3):
+                one = collections.OrderedDict()
+                one["rewards"] = json.loads(cols[i])
+                one["rate"] = int(cols[i + 1])
+                one["reset"] = int(cols[i + 2])
+                wheel.append(one)
+            config["prize"][str(cols[wheelIdx])]["wheel"] = wheel
+
+        if cols[betIdx]:
+            one = collections.OrderedDict()
+            config["bet"][str(cols[betIdx])] = one
+            for i in range(betIdx + 1, betIdx + 2, 2):
+                one[str(cols[i])] = json.loads(cols[i + 1])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "grandPrixPrizewheel_config, end"
+
+
 def grandPrix_config():
     """
     大奖赛配置
@@ -840,8 +975,8 @@ config_list = [
     # (skill_compen_config, None),
     # (grand_prize_pool_config, None),
     # # (piggy_bank_config, None),
-    # (prizewheel_config, None),
-    # (grandPrixPrizewheel_config, None),
+    (prizewheel_config, None),
+    (grandPrixPrizewheel_config, None),
     # # (time_limited_store_config, None),
     # (levelRewards_config, None),
     # (level_funds_config, None),

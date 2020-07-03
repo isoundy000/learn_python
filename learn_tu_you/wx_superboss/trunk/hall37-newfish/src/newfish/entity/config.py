@@ -1202,6 +1202,43 @@ def getGrandPrixConf(key_=None):
     return rwcopy(grandPrixConf.get(str(key_)))
 
 
+
+
+
+
+
+def loadPrizeWheelConf():
+    """
+    加载渔场轮盘配置
+    """
+    global prizeWheelConf
+    prizeWheelConf = rocopy(getGameConf("prizeWheel"))
+
+
+def getPrizeWheelConf():
+    """
+    获取渔场轮盘配置
+    """
+    global prizeWheelConf
+    return prizeWheelConf
+
+
+def loadGrandPrixPrizeWheelConf():
+    """
+    加载渔场轮盘配置
+    """
+    global grandPrixPrizeWheelConf
+    grandPrixPrizeWheelConf = rocopy(getGameConf("grandPrixPrizeWheel"))
+
+
+def getGrandPrixPrizeWheelConf():
+    """
+    获取渔场轮盘配置
+    """
+    global grandPrixPrizeWheelConf
+    return grandPrixPrizeWheelConf
+
+
 def _getCatchDropKindId(groupId, uid):
     """
     根据玩家uid和掉落组返回掉落kindId

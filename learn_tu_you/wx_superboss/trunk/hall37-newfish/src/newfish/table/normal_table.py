@@ -23,11 +23,53 @@ from newfish.entity.fishgroup.tt_autofill_fish_group import TTAutofillFishGroup
 from newfish.player.normal_player import FishNormalPlayer
 
 
-
 class FishNormalTable(FishTable):
-
+    """普通桌子"""
     def _doTableCall(self, msg, userId, seatId, action, clientId):
         try:
-            pass
+            if not super(FishNormalTable, self)._doTableCall(msg, userId, seatId, action, clientId):
+                if seatId == 0 and action not in ["task_ready",
+                                                  "task_start",
+                                                  "task_end"]:
+                    ftlog.warn("invalid seatId")
+                    return
+                func = self.systemTableActionMap.get(action) if hasattr(self, "systemTableActionMap") else None
+                if func:
+                    func(msg, userId, seatId)
+                else:
+                    ftlog.warn("not reconized action:", action)
         except:
             ftlog.error("_doTableCall error clear table", userId, msg, traceback.format_exc())
+
+    def startFishGroup(self):
+        """
+        启动鱼阵
+        """
+        super(FishNormalTable, self).startFishGroup()
+        # Boss鱼初始化
+        if self.runConfig.allBossGroupIds:
+            self.bossFishGroup = BossFishGroup(self)
+        # 奖券鱼初始化
+        if self.runConfig.allCouponGroupIds:
+            self.couponFishGroup = CouponFishGroup(self)
+        # 金币宝箱鱼初始化
+        if self.runConfig.allChestGroupIds:
+            self.chestFishGroup = ChestFishGroup(self)
+        # 活动鱼初始化
+        if self.runConfig.allActivityGroupIds:
+            self.activityFishGroup = ActivityFishGroup(self)
+        # terror鱼初始化
+        if self.runConfig.allTerrorGroupIds:
+            self.terrorFishGroup = TerrorFishGroup(self)
+        # autofill鱼初始化
+        if self.runConfig.allAutofillGroupIds:
+            self.autofillFishGroup = AutofillFishGroup(self)
+        # ttautofill鱼初始化
+        if self.runConfig.allAutofillGroupIds:
+            self.ttAutofillFishGroup = TTAutofillFishGroup(self)
+
+    def createPlayer(self, table, seatIndex, clientId):
+        """
+        新创建Player对象
+        """
+        return FishNormalPlayer(table, seatIndex, clientId)
