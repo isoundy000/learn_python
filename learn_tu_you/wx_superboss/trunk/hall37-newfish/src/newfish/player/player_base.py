@@ -116,7 +116,7 @@ class FishPlayer(TYPlayer):
         self.resetTime = 0
         self._fires = {}                            # 子弹
         self._catchFishes = {}                      # 捕获的鱼ID: 条数
-        self._comboBudgetTime = 1.2
+        self._comboBudgetTime = 1.2                 # 连击奖励的定时器时间间隔
         self.clip = 0
         self.combo = 0
         self.invalidCatch = 0
@@ -1125,6 +1125,7 @@ class FishPlayer(TYPlayer):
         self.reportBIFeatureData("BI_NFISH_GE_FT_CATCH", wpId, gainChip)
 
     def addCombo(self):
+        """添加连击数 添加定时器"""
         self.combo += 1
         if self.comboTimer:
             self.comboTimer.cancel()
@@ -1132,9 +1133,44 @@ class FishPlayer(TYPlayer):
         self.comboTimer.start()
 
     def _comboBudget(self):
+        """连击奖励"""
         baseNum = 0
         addition = 0
+        if self.combo >= 20:
+            baseNum = self.combo // 5 * 5
+        elif self.combo >= 15:
+            baseNum = 13
+        elif self.combo >= 10:
+            baseNum = 8
+        elif self.combo >= 5:
+            baseNum = 3
+        gunConf = config.getGunConf(self.gunId, self.clientId, self.gunLv, self.table.gameMode)
+        if gunConf and gunConf["effectType"] == 1 and random.randint(1, 10000) <= gunConf["effectProbb"]:
+            addition = gunConf["effectAddition"]
+        gainChip = int(baseNum * self.fpMultiple)
+        extraChip = max(int(gainChip * addition), 1) if gainChip > 0 and addition > 0 else 0
+        comboChip = gainChip + extraChip
+        if comboChip > 0:
+            msg = MsgPack()
+            msg.setCmd("comboReward")
+            msg.setResult("gameId", FISH_GAMEID)
+            msg.setResult("userId", self.userId)
+            msg.setResult("combo", self.combo)
+            msg.setResult("gainChip", gainChip)         # 连击奖励
+            msg.setResult("extraChip", extraChip)       # 额外加成金币
+            GameMsg.sendMsg(msg, self.userId)
+            changed = self.economicData.addGain([{"name": "tableChip", "count": int(comboChip)}],
+                                                "BI_NFISH_CATCH_GAIN", self.table.roomId)
+            change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+            self.addProfitCoin(comboChip)               # 增加收益
 
+            if self.table.typeName in config.NORMAL_ROOM_TYPE:
+                from newfish.entity.event import ComboEvent
+                from newfish.game import TGFish
+                event = ComboEvent(self.userId, FISH_GAMEID, self.combo, comboChip)
+                TGFish.getEventBus().publishEvent(event)
+                self.triggerComboEvent(event)
+        self.combo = 0
 
     def checkConnect(self, isInvalid):
         pass
@@ -1165,9 +1201,9 @@ class FishPlayer(TYPlayer):
         """
         玩家金币增加
         """
-        self.addLotteryPoolCoin(-coin)
+        self.addLotteryPoolCoin(-coin)          # 增加房间金币总奖池
         self.addProfitChest(coin)
-        self.recordProfitCoin(coin)
+        self.recordProfitCoin(coin)             # 记录玩家在该房间的盈亏
 
     def addLossCoin(self, coin):
         """
@@ -1563,6 +1599,7 @@ class FishPlayer(TYPlayer):
         pass
 
     def triggerComboEvent(self, event):
+        """触发连击奖励事件"""
         pass
 
     def triggerUseSkillEvent(self, event):
@@ -1607,7 +1644,37 @@ class FishPlayer(TYPlayer):
         self.economicData.chgBulletChip(-_chip)
 
     def changeFpMultiple(self, fpMultiple, ignoreFailed=False):
-        pass
+        """修改渔场倍率"""
+        if isinstance(fpMultiple, (int, str)):
+            fpMultiple = int(fpMultiple)
+            code = self.checkChgFpMultiple(fpMultiple)
+        else:
+            code = 1
+        mo = MsgPack()
+        mo.setCmd("chg_multiple")
+        mo.setResult("gameId", FISH_GAMEID)
+        mo.setResult("userId", self.userId)
+        mo.setResult("code", code)
+        mo.setResult("fpMultiple", fpMultiple)
+        if code == 0:
+            GameMsg.sendMsg(mo, self.table.getBroadcastUids())
+            # 中断combo 中断连击奖励
+            if self.combo > 0 and self.comboTimer:
+                self.comboTimer.cancel()
+                if ftlog.is_debug():
+                    ftlog.debug("changeFpMultiple, cease combo, userId =", self.userId, "combo =", self.combo)
+                self._comboBudget()
+            # 调整子弹数量.
+            self.clipToTableChip()              # 子弹兑换成桌内金币
+            self.fpMultiple = fpMultiple
+            self.matchingFishPool = self.getMatchingFishPool(self.fpMultiple)
+            self.table.clip_add(self.userId, self.seatId, auto=1)   # 弹药添加
+            self.dynamicOdds.changeOdds()       # 切换动态概率曲线
+            if self.prizeWheel:
+                fishPool = self.table.runConfig.fishPool if self.table.runConfig.fishPool not in [44601, 44501] else 44501
+                self.prizeWheel.sendEnergyProgress(fishPool, self.fpMultiple, self.table.roomId, 0)
+        elif not ignoreFailed:
+            GameMsg.sendMsg(mo, self.userId)
 
     def checkChgFpMultiple(self, multiple):
         """
@@ -1652,8 +1719,7 @@ class FishPlayer(TYPlayer):
             if fpMultiple >= v[1]:
                 fishPool = int(v[0])
         if ftlog.is_debug():
-            ftlog.debug("getFishPool, userId =", self.userId, "fishPool-multiple =", tmpList, "fpMultiple =",
-                        fpMultiple,
+            ftlog.debug("getFishPool, userId =", self.userId, "fishPool-multiple =", tmpList, "fpMultiple =", fpMultiple,
                         "tableFishPool =", self.table.runConfig.fishPool, "matchingFishPool =", fishPool)
         return fishPool
 

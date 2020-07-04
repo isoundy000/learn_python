@@ -265,6 +265,16 @@ class AddGunSkinEvent(UserEvent):
         self.mode = mode        # 模式
 
 
+class ComboEvent(UserEvent):
+    """
+    combo奖励 连击奖励
+    """
+    def __init__(self, userId, gameId, comboNum, chipNum):
+        super(ComboEvent, self).__init__(userId, gameId)
+        self.comboNum = comboNum        # 连击数
+        self.chipNum = chipNum          # 金币数量
+
+
 class FireEvent(UserEvent):
     """
     开火事件

@@ -91,7 +91,6 @@ class FishGrandPrixTable(FishFriendTable):
         GameMsg.sendMsg(msg, userId)
         ftlog.debug("broadcastSkillUse, userId =", userId, int(skill.skillId), skill.skillType, select, orgState)
 
-
     def _skill_install(self, msg, userId, seatId):
         """技能装备:1、卸下:0"""
         player = self.getPlayer(userId)

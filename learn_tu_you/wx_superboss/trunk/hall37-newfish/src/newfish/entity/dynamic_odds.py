@@ -217,3 +217,15 @@ class DynamicOdds(object):
                 aloofFish = True
             else:
                 return 1
+
+    def changeOdds(self):
+        """
+        切换曲线
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        fishPool = self.player.matchingFishPool
+        if fishPool == self.fishPool:
+            return
+        ftlog.debug("changeOdds, userId =", self.player.userId, "lastFishPool =", self.fishPool, "curFishPool =", fishPool)
+        pass
