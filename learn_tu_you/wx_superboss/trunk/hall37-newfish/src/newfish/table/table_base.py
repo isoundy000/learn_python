@@ -2518,8 +2518,24 @@ class FishTable(TYTable):
             _player.compAct.sendInspireInfo()
         if _player and hasattr(_player, "lotteryTicket") and _player.lotteryTicket:
             _player.lotteryTicket.sendProgress(1, isSend=1)             # 红包券
+        self._afterSendTableInfo(userId)
+
+    def _afterSendTableInfo(self, userId):
+        """
+        发送桌子信息之后
+        """
+        player = self.getPlayer(userId)
+        if player and hasattr(player, "prizeWheel") and player.prizeWheel:  # 转盘
+            player.prizeWheel.sendEnergyProgress(self.runConfig.fishPool, player.fpMultiple, self.roomId, 0)
+        if player and player.compAct:                                       # 竞赛活动
+            player.compAct.sendInspireInfo()
+        # if player and hasattr(player, "lotteryTicket") and player.lotteryTicket:
+        #     player.lotteryTicket.sendProgress(1, isSend=1)                                 # 红包券
+        if player and hasattr(player, "gunEffect") and player.gunEffect:
+            player.gunEffect.sendProgress(player.gunId)                     # 狂暴炮的状态和时间进度
+        player.gunEffectState(5)
         # 发送断线后的小游戏进度信息
-        mini_game.sendMiniGameProgress(self, userId, self.roomId, seatId)
+        mini_game.sendMiniGameProgress(self, userId, self.roomId)
 
     def _getGroupInfo(self, group):
         """

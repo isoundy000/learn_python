@@ -27,6 +27,18 @@ from newfish.entity import level_rewards, level_funds
 class GameTcpHandler(BaseMsgPackChecker):
 
 
+    @markCmdActionMethod(cmd="activity_fish", action="fishGift", clientIdVer=0, scope="game", lockParamName="userId")
+    def doGetFishGift(self, userId, gameId, clientId, giftId, buyType, rebateItemId=0):
+        """发送礼包消息"""
+        ftlog.debug("doGetFishGift", userId, gameId)
+        gift_system.doSendFishGift(userId, clientId)
+
+    @markCmdActionMethod(cmd="activity_fish", action="buyFishGift", clientIdVer=0, scope="game", lockParamName="userId")
+    def doBuyFishGift(self, userId, gameId, clientId, giftId, buyType, rebateItemId=0):
+        """购买礼包"""
+        ftlog.debug("doBuyFishGift", userId, gameId, clientId, giftId, buyType, rebateItemId)
+        if buyType:
+            gift_system.doBuyFishGift(userId, clientId, giftId, buyType, rebateItemId)
 
 
 

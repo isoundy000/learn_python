@@ -748,17 +748,28 @@ class FishGrandPrixPlayer(FishFriendPlayer):
                 self.grandPrixSurpassCount += 1             # 大奖赛超越自己次数
                 self._surpassTarget()
 
+            # if fishType in self.grandPrixTargetFish and self.grandPrixTargetFish[fishType][0] < self.grandPrixTargetFish[fishType][1]:
+            #     self.grandPrixTargetFish[fishType][0] += 1
+        else:
+            fishPoint = 0
 
-
-
-
+        return fishPoint
 
     def sendGrandPrixCatch(self, catchFishPoints):
         """
         大奖赛捕获消息
         """
-        pass
-
+        mo = MsgPack()
+        mo.setCmd("catch_grand_prix")
+        mo.setResult("gameId", FISH_GAMEID)
+        mo.setResult("userId", self.userId)
+        mo.setResult("seatId", self.seatId)
+        mo.setResult("catchFishPoints", catchFishPoints)        # [{"fId": 10010, "point": 5},], # 捕鱼积分
+        mo.setResult("fishPoint", self.grandPrixFishPoint)      # 捕鱼积分
+        mo.setResult("targetFish", self.grandPrixTargetFish)    # {"11011": [0, 10],},# 大奖赛目标鱼:[捕获数量, 目标数量]
+        GameMsg.sendMsg(mo, self.userId)
+        if ftlog.is_debug():
+            ftlog.debug("FishGrandPrixPlayer, userId =", self.userId, "mo =", mo)
 
     def setTipTimer(self):
         """

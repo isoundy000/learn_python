@@ -97,3 +97,41 @@ me.hair()
 # 深度继承，如果子类有方法执行自己的方法，如果子类没有父类有则执行父类的方法；
 # 如果否继承自Object,第一个没有方法执行第二个，第一个有限原则
 # 经典类和新式类的继承方向不同 继承搜索的顺序发生了改变,经典类多继承属性搜索顺序: 先深入继承树左侧，再返回，开始找右侧;新式类多继承属性搜索顺序: 先水平搜索，然后再向上移动
+
+
+
+class A(object):
+
+    def __init__(self, userId, activityId, inTable):
+        self._initData(userId, activityId, inTable)
+        print 'kkkkkkkkkkkk'
+        self.dealActivity()
+        print 'ggggggggg'
+
+    def _initData(self, userId, activityId, inTable):
+        print 'aaaaaaaaa', userId, activityId, inTable
+        print 'zzzzzzz'
+
+    def dealActivity(self):
+        pass
+
+
+class B(A):
+
+    def _initData(self, userId, activityId, inTable):
+        super(B, self)._initData(userId, activityId, inTable)
+        print 'bbbbbbbbbbbb', userId, activityId, inTable
+        self.taskReceiveNum = {}
+
+    def dealActivity(self):
+        print 'bbbbbbbbbbbbb111111111'
+
+
+class C(B):
+
+    def _initData(self, userId, activityId, inTable):
+        super(C, self)._initData(userId, activityId, inTable)
+        print 'cccccccccccccccccc', userId, activityId, inTable
+
+
+c = C(1, 2, 3)

@@ -66,3 +66,61 @@ class FishQuickStart(BaseQuickStart):
                     else:
                         表示玩家选择了桌子，将请求转给GR
         """
+
+
+
+
+
+
+
+
+    @classmethod
+    def getFailedInfo(cls, reason, userId, roomId):
+        """
+        获取失败提示信息
+        """
+        lang = util.getLanguage(userId)
+        testMode = util.getNewbieABCTestMode(userId)
+        roomConf = {}
+        if gdata.roomIdDefineMap().get(roomId):
+            roomConf = gdata.roomIdDefineMap()[roomId].configure
+        info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON", lang=lang)
+        if reason == cls.ENTER_ROOM_REASON_LESS_LEVEL:              # 等级过低
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_LEVE", lang=lang) % util.getRoomMinLevel(roomId, testMode)    # roomConf["minLevel"]
+        elif reason == cls.ENTER_ROOM_REASON_MAINTENANCE:           # 系统维护
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_MAINTENANCE", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_VERSION_DISABLE:       # 版本过低
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_VERSION_DISABLE", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_LESS_FEES:             # 钥匙不够
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_FEES", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_LESS_BULLET:           # 招财珠不够
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_BULLET", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_LESS_COIN:             # 金币不足
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_COIN", lang=lang) % util.formatScore(util.getRoomMinCoin(roomId, testMode), lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_TIME_LIMIT:            # 未到开放时间
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_NOT_OPEN", lang=lang)
+            if roomConf.get("typeName") == config.FISH_ROBBERY:     # 招财模式渔场
+                info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_TIME_LIMIT", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_EXCESSIVE_LOSS:        # 亏损过多
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_EXCESSIVE_LOSS", lang=lang) % config.getMultiLangTextConf(roomConf["name"], lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_NOT_OPEN:              # 房间暂未开放
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_NOT_OPEN", lang=lang)
+        return info
+
+    @classmethod
+    def canQuickEnterRoom(cls, userId, gameId, roomId, kindId):
+        """
+        判断能否进入房间
+        """
+        try:
+            pass
+        except Exception as e:
+            ftlog.error("canQuickEnterRoom error", userId, e)
+            return cls.ENTER_ROOM_REASON_INNER_ERROR
+
+    @classmethod
+    def _chooseRoom(cls, userId, gameId):
+        """
+        服务端为玩家选择房间
+        """
+        pass

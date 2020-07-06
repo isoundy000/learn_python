@@ -51,9 +51,11 @@ class FishGrandPrixTable(FishFriendTable):
         """
         return FishGrandPrixPlayer(table, seatIndex, clientId)
 
-    def _sendTableInfo(self, userId, seatId):
-        """发送桌子信息"""
-        super(FishGrandPrixTable, self)._sendTableInfo(userId, seatId)
+    def _afterSendTableInfo(self, userId):
+        """
+        发送桌子信息之后
+        """
+        super(FishGrandPrixTable, self)._afterSendTableInfo(userId)
         player = self.getPlayer(userId)
         if player:
             player.sendGrandPrixInfo()          # 发送大奖赛信息

@@ -133,6 +133,25 @@ def getGunX(wpId, mode):
     return gunX
 
 
+def isUsableClientVersion(userId):
+    """
+    判断客户端版本是否可用
+    """
+    from distutils.version import StrictVersion
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)   # 客户端当前版本号
+    if clientVersion:
+        disableClientVersion = config.getDisableClientVersion()                 # 获取客户端禁止使用版本号
+        usableClientVersion = config.getUsableClientVersion()                   # 获取客户端可用版本号
+        if clientVersion in disableClientVersion:
+            return False
+        minimumVersion = usableClientVersion.get("minimumVersion", "0.0.0")     # 最小版本
+        specialVersion = usableClientVersion.get("specialVersion", [])
+        if StrictVersion(str(clientVersion)) >= StrictVersion(str(minimumVersion)):
+            return True
+        elif clientVersion in specialVersion:
+            return True
+    return False
+
 def isFinishAllRedTask(userId):
     """
     获得所有已完成的引导
@@ -855,6 +874,19 @@ def addGuideStep(userId, step, clientId):
     添加引导步骤
     """
     pass
+
+def getNewbieABCTestMode(userId):
+    """
+    获取玩家新手ABC测试模式
+    """
+    testMode = gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.newbiewABCTestMode)
+    if testMode is None:
+        return testMode
+    # 苹果版本使用a模式.
+    if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
+        return "a"
+    testMode = config.getABTestConf("abcTest").get("mode") or testMode
+    return testMode
 
 
 def getAssetKindId(kindId):

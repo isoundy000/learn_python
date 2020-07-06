@@ -135,3 +135,11 @@ GAME_STATUS_SHUTDOWN_GO = 80            # 进程接收到了关闭命令，停�
 GAME_STATUS_SHUTDOWN_ERROR = 90         # 进程接收到了关闭命令，停止接收例如quickstart等消息，进行关闭处理,但是关闭过程中出现了异常
 GAME_STATUS_SHUTDOWN_DONE = 100         # 进程接收到了关闭命令，并且已经处理完成
 _gameStatus = GAME_STATUS_RUN
+
+
+def isShutDown():
+    '''
+    判定当前进程是否处于正常服务状态
+    '''
+    global _gameStatus
+    return _gameStatus != GAME_STATUS_RUN
