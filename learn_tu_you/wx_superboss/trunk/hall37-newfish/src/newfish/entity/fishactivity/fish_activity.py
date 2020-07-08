@@ -28,7 +28,9 @@ class ActivityState:
 # 28、版本更新
 # 32、公告图
 class ActivityType:
-    OneDayClearAc = 30  # 招财送大奖
+    ExchangeBonusTask = 21      # 河马活动 兑换红利任务
+    OneDayClearAc = 30          # 招财送大奖
+
 
 
 # 活动任务类型

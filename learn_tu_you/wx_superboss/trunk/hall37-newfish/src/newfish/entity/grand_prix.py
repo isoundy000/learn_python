@@ -36,9 +36,9 @@ def getPlayAddition(playTimes):
     获取游戏次数积分加成 1: 0.01, 2: 0.02, ... 5: 0.05
     """
     playAddition = 0
-    for val in config.getGrandPrixConf("playAddition"):
-        if playTimes >= val["playTimes"]:
-            playAddition = val["addition"]
+    # for val in config.getGrandPrixConf("playAddition"):
+    #     if playTimes >= val["playTimes"]:
+    #         playAddition = val["addition"]
     return playAddition
 
 
@@ -52,7 +52,6 @@ def saveGrandPrixData(userId, startTs, fireCount, fishPoint, useSkillTimes, targ
     :param useSkillTimes: 大奖赛剩余技能使用次数
     :param targetFish: 大奖赛目标鱼捕获数量
     :param levelFpMultiple: 大奖赛火炮等级和倍率
-    :return:
     """
     weakdata.setDayFishData(userId, WeakData.grandPrix_startTS, startTs)
     weakdata.setDayFishData(userId, WeakData.grandPrix_fireCount, fireCount)
@@ -97,8 +96,8 @@ def sendGrandPrixInfo(userId):
 
     vipLevel = util.getVipRealLevel(userId)
     signUpState = 1 if grandPrixStartTS > 0 else 0
-    playTimes = _freeTimes + _paidTimes
-    playAddition = getPlayAddition(playTimes) if signUpState == 1 else getPlayAddition(playTimes + 1)
+    # playTimes = _freeTimes + _paidTimes
+    # playAddition = getPlayAddition(playTimes) if signUpState == 1 else getPlayAddition(playTimes + 1)
     remainFreeTimes = config.getVipConf(vipLevel).get("grandPrixFreeTimes", 0) - _freeTimes
     openTime = "-".join(config.getGrandPrixConf("openTimeRange"))
 
@@ -108,7 +107,7 @@ def sendGrandPrixInfo(userId):
     mo.setResult("userId", userId)
     mo.setResult("remainFreeTimes", remainFreeTimes)
     mo.setResult("fee", config.getGrandPrixConf("fee"))
-    mo.setResult("playAddition", ("%d%%" % int(playAddition * 100)))
+    # mo.setResult("playAddition", ("%d%%" % int(playAddition * 100)))
     mo.setResult("openTime", openTime)
     mo.setResult("isInOpenTime", 1 if isGrandPrixOpenTime() else 0)
     mo.setResult("signUpState", signUpState)                            # 注册状态

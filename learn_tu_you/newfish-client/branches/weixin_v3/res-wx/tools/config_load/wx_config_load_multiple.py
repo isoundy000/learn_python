@@ -140,12 +140,13 @@ def superboss_common_config():
 
         if cols[0]:                                 # 房间ID
             one = collections.OrderedDict()
-            config[str(cols[0])] = one
-            one["tabs"] = json.loads(cols[1])       # 房间的游戏玩法
-            one["poolPct"] = float(cols[2])         # 奖池占房间奖池比例
-            one["nextDayPoolPct"] = float(cols[3])  # 第二天奖池占房间奖池比例
-            one["mgType"] = str(cols[4])            # 类型
-            one["rule"] = json.loads(cols[5])       # 规则
+            key = "%s_%d" % (str(cols[0]), int(cols[1]))
+            config[key] = one
+            one["tabs"] = json.loads(cols[2])		# 房间的游戏玩法
+            one["poolPct"] = float(cols[3])			# 奖池占房间奖池比例
+            one["nextDayPoolPct"] = float(cols[4])	# 第二天奖池占房间奖池比例
+            one["mgType"] = str(cols[5])			# 类型
+            one["rule"] = json.loads(cols[6])		# 规则
 
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
@@ -360,7 +361,10 @@ def gunLevel():
 
 
 def gunskin_config(clientId=0):
-    """炮和皮肤的配置"""
+    """
+    火炮和皮肤信息
+    """
+    print "gunskin_config, start"
     sn = "Gun" if clientId == 0 else "Gun" + "_" + str(clientId)
     sn2 = "GunSkin" if clientId == 0 else "GunSkin" + "_" + str(clientId)
     fn = "0.json" if clientId == 0 else str(clientId) + ".json"
@@ -406,11 +410,15 @@ def gunskin_config(clientId=0):
         one["effectProbb"] = int(cols[12])      # 触发概率
         one["unlockDesc"] = unicode(cols[13] or "")
         one["equipDesc"] = unicode(cols[14] or "")
-        one["unitPrice"] = int(cols[15])        # 单价
-        one["skins"] = json.loads(str(cols[16]))    # 对应皮肤的Id
+        one["unitPrice"] = int(cols[15])
+        one["skins"] = json.loads(str(cols[16]))
+        one["fire_count"] = int(cols[17])
+        one["power_rate"] = int(cols[18])
+        one["duration"] = int(cols[19])
+        one["percent"] = int(cols[20])
         aloofOdds = []
         one["aloofOdds"] = aloofOdds
-        for m in range(17, len(cols), 2):
+        for m in range(21, len(cols), 2):
             if cols[m] is None:
                 break
             oddsMap = {}
@@ -437,6 +445,7 @@ def gunskin_config(clientId=0):
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+    print "gunskin_config, end"
 
 
 def superboss_power_config():
@@ -501,9 +510,10 @@ def weapon_config():
         oneWeapon["power"] = cols[4]
         oneWeapon["matchAddition"] = cols[5]
         oneWeapon["wpRatio"] = cols[12]
+        oneWeapon["singlePower"] = cols[13]
 
+    print "weapon_config, end"
     result = json.dumps(weaponConfig, indent=4)
-
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
@@ -669,69 +679,6 @@ def time_point_match_skill():
     print "time_point_match_skill, end"
 
 
-def autofill_fish_m():
-    """
-    填充鱼配置
-    """
-    def parse(saveDict, cols):
-        if cols[0] and cols[0] not in saveDict:
-            saveDict[cols[0]] = collections.OrderedDict()       # 渔场ID
-        if cols[2] and cols[2] not in saveDict[cols[0]]:
-            fishCategory = collections.OrderedDict()
-            saveDict[cols[0]][cols[2]] = fishCategory           # 渔场ID: {鱼种类别: {}}
-            fishCategory["categoryId"] = str(cols[2])           # 鱼种类别
-            fishCategory["supplyInterval"] = int(cols[1])       # 填充时间间隔
-            fishCategory["groups"] = []                         # 鱼群
-        group = collections.OrderedDict()
-        group["groupType"] = int(cols[3])                       # 分组类型
-        group["fishes"] = []                                    # 鱼
-        for x in xrange(4, len(cols), 6):
-            if not cols[x] or not cols[x + 1]:
-                continue
-            fish = collections.OrderedDict()
-            fish["fishType"] = str(cols[x + 1])
-            fish["weight"] = int(cols[x + 2])
-            fish["fishCount"] = int(cols[x + 3])
-            fish["minCount"] = int(cols[x + 4])
-            fish["maxCount"] = int(cols[x + 5])
-            group["fishes"].append(fish)
-        saveDict[cols[0]][cols[2]]["groups"].append(group)
-        return saveDict
-
-    outPath = getOutPath("autofillFish_m")
-    wb = getWorkBook()
-    ws = wb.get_sheet_by_name("AutofillFish")
-    config = collections.OrderedDict()
-    startRowNum = 4
-    i = 0
-    isFindBlank = False
-    defaultDict = collections.OrderedDict()
-    bossDict = collections.OrderedDict()
-    for row in ws.rows:
-        i = i + 1
-        if i < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-        if not cols[0]:
-            isFindBlank = True
-            startRowNum += i
-            print startRowNum, '8888888888', cols
-            continue
-        print cols, '99999999999999'
-        if not isFindBlank:             # 是否发现空行
-            defaultDict = parse(defaultDict, cols)
-        else:
-            bossDict = parse(bossDict, cols)
-    config["default"] = defaultDict
-    config["superBoss"] = bossDict
-    result = json.dumps(config, indent=4)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
-    outHandle.close()
-
-
 def terror_fish_m():
     """特殊鱼出现的概率和间隔"""
     outPath = getOutPath("terrorFish_m")
@@ -765,6 +712,67 @@ def terror_fish_m():
             probb += itemProbb
             one.append(fish)
     config["terrorFish"] = terrorFish
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def autofill_fish_m():
+    """
+    填充鱼配置
+    """
+    def parse(saveDict, cols):
+        if cols[0] and cols[0] not in saveDict:
+            saveDict[cols[0]] = collections.OrderedDict()       # 渔场ID
+        if cols[2] and cols[2] not in saveDict[cols[0]]:
+            fishCategory = collections.OrderedDict()
+            saveDict[cols[0]][cols[2]] = fishCategory           # 渔场ID: {鱼种类别: {}}
+            fishCategory["categoryId"] = str(cols[2])           # 鱼种类别
+            fishCategory["supplyInterval"] = int(cols[1])       # 填充时间间隔
+            fishCategory["groups"] = []                         # 鱼群
+        group = collections.OrderedDict()
+        group["groupType"] = int(cols[3])                       # 分组类型
+        group["fishes"] = []                                    # 鱼
+        for x in xrange(4, len(cols), 6):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = collections.OrderedDict()
+            fish["fishType"] = int(cols[x + 1])
+            fish["weight"] = int(cols[x + 2])
+            fish["fishCount"] = int(cols[x + 3])
+            fish["minCount"] = int(cols[x + 4])
+            fish["maxCount"] = int(cols[x + 5])
+            group["fishes"].append(fish)
+        saveDict[cols[0]][cols[2]]["groups"].append(group)
+        return saveDict
+
+    outPath = getOutPath("autofillFish_m")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("AutofillFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    isFindBlank = False
+    defaultDict = collections.OrderedDict()
+    bossDict = collections.OrderedDict()
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            isFindBlank = True
+            startRowNum += i
+            continue
+        if not isFindBlank:             # 是否发现空行
+            defaultDict = parse(defaultDict, cols)
+        else:
+            bossDict = parse(bossDict, cols)
+    config["default"] = defaultDict
+    config["superBoss"] = bossDict
     result = json.dumps(config, indent=4)
     outHandle = open(outPath, "w")
     outHandle.write(result)
@@ -824,7 +832,7 @@ def getOutPath(dirname, filename="0.json"):
 
 
 def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
-    '''
+    """
     处理单个配置文件
     :param idx: 进程编号1、2、3、4、5、6、7、8
     :param task_queue: 任务队列
@@ -832,7 +840,7 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
     :param err_queue: 出错队列
     :param sp: 文件路径
     :return:
-    '''
+    """
     reload(sys)
     sys.setdefaultencoding("utf-8")
     print "---- %d cpu start!" % idx
@@ -852,8 +860,8 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
             else:
                 cost_queue.put((confFunc.__name__ + "_" + str(arg), _costTime))
         except Exception, e:
-            print "=========== export ", confFunc.__name__, " failed ! ", e
-            err_queue.put((confFunc.__name__ + "_" + str(arg), e))
+            print "=========== export ", confFunc.__name__, " failed ! ", e, traceback.format_exc()
+            err_queue.put((confFunc.__name__ + "_" + str(arg), traceback.format_exc()))
 
 
 # 配置列表
@@ -864,10 +872,10 @@ config_list = [
     (fish_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
-    (gunLevel, None),                   # 千炮升级
-    (gunskin_config, None),             # 炮和皮肤的配置
+    (gunLevel, None),                       # 火炮倍率
+    (gunskin_config, None),                 # 火炮和皮肤
     (superboss_power_config, None),
-    (weapon_config, None),
+    (weapon_config, None),                  # 武器配置
     (level_funds_config, None),
     (level_funds_config, 25794),
     (prizewheel_m_config, None),
@@ -878,7 +886,7 @@ config_list = [
 ]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TestConfPath = ""
     RealeaseConfPath = ""
     print "begin"
@@ -907,9 +915,7 @@ if __name__ == '__main__':
     isUseMultiProcess = len(sys.argv) > 2 and sys.argv[2] == "-m" and cpu_count() > 1
     if isUseMultiProcess:
         freeze_support()
-        processList = [
-            Process(target=process_single_config, args=(i + 1, conf_queue, cost_queue, err_queue, ServerPath)) for i in
-            range(cpu_count())]
+        processList = [Process(target=process_single_config, args=(i + 1, conf_queue, cost_queue, err_queue, ServerPath)) for i in range(cpu_count())]
         for p in processList:
             p.start()  # 开始时间
         for p in processList:
@@ -937,7 +943,6 @@ if __name__ == '__main__':
     if _system == "Windows":
         print "json format: windows->unix, start"
         import os
-
         if TestConfPath:
             os.system(r".\jsonDos2Unix.bat %s" % TestConfPath)
         if RealeaseConfPath:

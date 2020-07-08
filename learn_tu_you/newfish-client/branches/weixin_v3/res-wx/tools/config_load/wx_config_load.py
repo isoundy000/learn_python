@@ -32,7 +32,6 @@ def drop_config():
             continue
         for cell in row:
             cols.append(cell.value)
-        print cols
         if len(cols) < 5:
             continue
         oneDrop = {}
@@ -82,7 +81,6 @@ def fish_config():
             cols.append(cell.value)
         if not cols[3]:                 # 鱼种ID
             continue
-        print cols
         one = collections.OrderedDict()
         if str(cols[0]) in config:
             raise KeyError("fishId %d repeat" % int(cols[0]))
@@ -149,7 +147,6 @@ def match_fish_config():
             cols.append(cell.value)
         if not cols[2]:
             continue
-        print cols
         one = collections.OrderedDict()
         if str(cols[0]) in config:
             raise KeyError("fishId %d repeat" % int(cols[0]))
