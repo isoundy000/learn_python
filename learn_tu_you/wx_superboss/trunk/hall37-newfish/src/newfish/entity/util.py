@@ -92,6 +92,17 @@ def isChannel(userId, channel):
     return sessiondata.getClientIdMainChannel(getClientId(userId)) == channel
 
 
+def isReviewLimitClient(userId):
+    """
+    是否为提审限制版本的客户端
+    """
+    pass
+
+
+def getReviewVersionList(userId):
+    pass
+
+
 def getFishPoolByBigRoomId(bigRoomId):
     """
     :param bigRoomId:
@@ -110,8 +121,6 @@ def getBigRoomId(roomId):
     if not roomId:
         return 0, 0
     pass
-
-
 
 
 def verifyPhoneNumber(phoneNumber):
@@ -152,12 +161,50 @@ def isUsableClientVersion(userId):
             return True
     return False
 
+
 def isFinishAllRedTask(userId):
     """
     获得所有已完成的引导
     """
     userGuideStep = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.userGuideStep, [])
     return userGuideStep
+
+
+def isRedRoom(typeName):
+    """
+    是否为新手场
+    """
+    return typeName == config.FISH_NEWBIE
+
+
+def isInWhiteList(userId):
+    """
+    判断是否属于白名单用户
+    """
+    return int(userId) in config.getPublic("whiteList", [])
+
+
+def isLocationLimit(userId, location=None):
+    """
+    判断客户端版本是否存在地区限制
+    """
+    if isInWhiteList(userId):
+        return False
+    if location:
+        requestUrl = "http://iploc.ywdier.com/api/iploc5/search/city"
+    pass
+
+
+def isVersionLimit(userId, clientVersion=None):
+    """
+    判断客户端版本是否属于提审版本
+    """
+    if isInWhiteList(userId):
+        return False
+    clientVersion = clientVersion or gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    if clientVersion in getReviewVersionList(userId):       # config.getPublic("reviewClientVersion", []):
+        return True
+    return False
 
 
 def timestampToStr(timestamp, formatTime="%Y-%m-%d %H:%M:%S"):

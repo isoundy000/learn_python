@@ -977,6 +977,33 @@ def getMinWeaponId():
 
 
 
+
+
+
+def loadRankRewardConf():
+    """
+    加载排行榜配置
+    """
+    global rankRewardConf
+    rankRewardConf = rocopy(getGameConf("rankReward"))
+
+
+def getAllRankConfs():
+    """
+    获取排行榜配置
+    """
+    global rankRewardConf
+    return rankRewardConf
+
+
+def getRankRewardConf(rankType):
+    """
+    获取排行榜配置
+    """
+    global rankRewardConf
+    return rankRewardConf.get("ranks", {}).get(str(rankType), {})
+
+
 def loadSpecialItemConf():
     """
     加载特殊物品配置

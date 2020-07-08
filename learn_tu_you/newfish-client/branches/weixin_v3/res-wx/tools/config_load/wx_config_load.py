@@ -352,6 +352,50 @@ def chest_drop_config():
     print u"end 宝箱掉落配置ChestDrop"
 
 
+def probability_config():
+    """概率配置"""
+    outPath = getOutPath("probability")
+    wb = getWorkBook()
+    ws1 = wb.get_sheet_by_name("CouponFish")
+    ws2 = wb.get_sheet_by_name("MultipleFish")
+    ws3 = wb.get_sheet_by_name("HitBoss")
+    ws4 = wb.get_sheet_by_name("BossFish")
+    ws5 = wb.get_sheet_by_name("ChestFish")
+    ws6 = wb.get_sheet_by_name("ActivityFish")
+    ws7 = wb.get_sheet_by_name("MatchBufferFish")
+    ws8 = wb.get_sheet_by_name("ShareFish")
+    # ws9 = wb.get_sheet_by_name("TerrorFish")
+    ws10 = wb.get_sheet_by_name("AutofillFish")
+    ws11 = wb.get_sheet_by_name("HippoFish")
+    ws12 = wb.get_sheet_by_name("UserCouponFish")
+    config = collections.OrderedDict()
+    couponFish = collections.OrderedDict()
+    multipleFish = collections.OrderedDict()
+    bossFish = collections.OrderedDict()
+    chestFish = collections.OrderedDict()
+    activityFish = collections.OrderedDict()
+    bufferFish = collections.OrderedDict()
+    hippoFish = collections.OrderedDict()
+    shareFish = collections.OrderedDict()
+    # terrorFish = collections.OrderedDict()
+    autofillFish = collections.OrderedDict()
+    hippoFish = collections.OrderedDict()
+    userCouponFish = collections.OrderedDict()
+    hitBoss = []
+    startRowNum = 4
+    i = 0
+    for row in ws1.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+
+
 def dynamic_odds_config():
     print u"start 动态概率配置 DynamicOdds"
     outPath = getOutPath("dynamicOdds")
@@ -999,7 +1043,7 @@ config_list = [
     # (ncmptt_task_config, None),
     # (bonus_task_config, None),
     # (guide_task_config, None),
-    # (probability_config, None),
+    (probability_config, None),
     (dynamic_odds_config, None),
     # (lottery_pool_config, None),
     # # (gift_config, None),
