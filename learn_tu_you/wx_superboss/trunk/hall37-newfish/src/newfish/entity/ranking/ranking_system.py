@@ -57,6 +57,17 @@ def getRankingTabs(userId, clientId, rankType, httpRequest=False):
         return tabs
     if util.isVersionLimit(userId) and rankRewardConf.get("reviewVerLimit", 0) == 1:  # 提审版本不可见
         return tabs
+    lang = util.getLanguage(userId, clientId)
+    ranking["rankType"] = rankType
+    rankNameId = rankRewardConf.get("rankName")
+    rankDescId = rankRewardConf.get("rankDesc")
+    ranking["rankName"] = config.getMultiLangTextConf(str(rankNameId), lang=lang)
+    if rankDescId:
+        ranking["rankDesc"] = config.getMultiLangTextConf(str(rankDescId), lang=lang)
+    else:
+        ranking["rankDesc"] = ""
+    # rankClass = _getRankingClass(rankType, userId, clientId, httpRequest)
+    # ranking = rankClass.getRankingInfo()
 
 
 

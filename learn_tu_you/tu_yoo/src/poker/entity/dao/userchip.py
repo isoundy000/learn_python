@@ -45,6 +45,22 @@ def getCoupon(uid):
     return userdata.getAttr(uid, daoconst.ATT_COUPON)
 
 
+def getUserChipAll(uid):
+    '''
+        取得用户的所有金币, 包含被带入的金币
+        '''
+    uchip = userdata.getAttr(uid, daoconst.ATT_CHIP)
+    gchip1 = gamedata.getGameAttrInt(uid, 1, daoconst.ATT_TABLE_CHIP)  # TODO 就代码数据兼容, 可删除
+    gchip8 = gamedata.getGameAttrInt(uid, 8, daoconst.ATT_TABLE_CHIP)  # TODO 就代码数据兼容, 可删除
+    tchips = daobase.executeUserCmd(uid, 'HVALS', daoconst.HKEY_TABLECHIP + str(uid))
+    allchip = uchip + gchip1 + gchip8
+    if tchips:
+        for x in tchips:
+            if isinstance(x, (int, float)):
+                allchip += int(x)
+    return allchip
+
+
 def getTableChip(uid, gameid, tableId):
     '''
     取得用户的table_chip

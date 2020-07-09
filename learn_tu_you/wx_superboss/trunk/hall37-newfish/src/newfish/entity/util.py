@@ -207,6 +207,42 @@ def isVersionLimit(userId, clientVersion=None):
     return False
 
 
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getLevelByGunLevel(userId):
+    """
+    获取火炮等级对应的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    uLevel = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.level)
+    return uLevel
+
+
+def getRoomMinLevel(roomId, abcTestMode):
+    """
+    获取房间最小等级
+    """
+    bigRoomId, _ = getBigRoomId(roomId)
+    fishPool = getFishPoolByBigRoomId(bigRoomId)
+    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
+    if abcTestConf and abcTestConf.get("minLevel"):
+        return abcTestConf["minLevel"]
+    roomConf = gdata.roomIdDefineMap()[roomId].configure
+    return roomConf.get("minLevel", 0)
+
+
+def getRoomMinCoin(roomId, abcTestMode):
+    """
+    获取房间最小金币
+    """
+    bigRoomId, _ = getBigRoomId(roomId)
+    fishPool = getFishPoolByBigRoomId(bigRoomId)
+    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
+    if abcTestConf and abcTestConf.get("minCoin"):
+        return abcTestConf["minCoin"]
+    roomConf = gdata.roomIdDefineMap()[roomId].configure
+    return roomConf.get("minCoin", 0)
+
+
 def timestampToStr(timestamp, formatTime="%Y-%m-%d %H:%M:%S"):
     """
     时间戳转字符串
@@ -252,6 +288,23 @@ def getTimeDescStrFromStr(timeStr, formatTime="%Y年%m月%d日"):
     """
     intTime = getTimestampFromStr(timeStr)
     return timestampToStr(intTime, formatTime)
+
+
+def getTimestampFromStr(strTime, formatTime="%Y-%m-%d %H:%M:%S"):
+    """
+    字符串转时间戳
+    """
+    isDefaultFormat = (formatTime == "%Y-%m-%d %H:%M:%S")
+    global _timeStampFromStrCache
+    if isDefaultFormat and strTime in _timeStampFromStrCache:
+        return _timeStampFromStrCache[strTime]
+    timeArray = time.strptime(strTime, formatTime)
+    ts = int(time.mktime(timeArray))
+    if isDefaultFormat:
+        if len(_timeStampFromStrCache) > 200:
+            _timeStampFromStrCache.clear()
+        _timeStampFromStrCache[strTime] = ts
+    return ts
 
 
 def timeStrToInt(strTime):

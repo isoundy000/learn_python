@@ -453,8 +453,6 @@ class WeakData:
     grandPrix_startTS = "grandPrix_startTS"
     # 大奖赛免费游戏次数
     grandPrix_freeTimes = "grandPrix_freeTimes"
-    # 大奖赛付费游戏次数
-    grandPrix_paidTimes = "grandPrix_paidTimes"
     # 大奖赛开火次数
     grandPrix_fireCount = "grandPrix_fireCount"
     # 大奖赛捕鱼积分值
@@ -467,8 +465,6 @@ class WeakData:
     grandPrix_useSkillTimes = "grandPrix_useSkillTimes"
     # 大奖赛目标鱼
     grandPrix_targetFish = "grandPrix_targetFish"
-    # 今日是否已领取积分奖励
-    grandPrix_hasTakePointRewards = "grandPrix_hasTakePointRewards"
     # 大奖赛火炮等级渔场倍率, [nowGunLevel, fpMultiple]
     grandPrix_levelFpMultiple = "grandPrix_levelFpMultiple"
     # 大奖赛超越自己次数

@@ -43,7 +43,6 @@ class FishGrandPrixTable(FishFriendTable):
         # grandprix鱼初始化
         if self.runConfig.allGrandPrixGroupIds:
             self.grandPrixFishGroup = GrandPrixFishGroup(self)
-        ftlog.debug("FishGrandPrixTable, startFishGroups, ", self.runConfig.allNormalGroupIds, self.runConfig.allGrandPrixGroupIds)
 
     def createPlayer(self, table, seatIndex, clientId):
         """
@@ -58,8 +57,9 @@ class FishGrandPrixTable(FishFriendTable):
         super(FishGrandPrixTable, self)._afterSendTableInfo(userId)
         player = self.getPlayer(userId)
         if player:
-            player.sendGrandPrixInfo()          # 发送大奖赛信息
-            player.setTipTimer()                # 设置比赛开始和结束的通知消息
+            signUpState = 1 if player.isGrandPrixMode() else 0
+            player.startGrandPrix(signUpState)
+            player.setTipTimer()                    # 设置比赛开始和结束的通知消息
 
     def broadcastSkillUse(self, skill, select, userId, orgState):
         """

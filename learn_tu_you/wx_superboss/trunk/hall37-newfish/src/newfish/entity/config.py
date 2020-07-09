@@ -977,7 +977,20 @@ def getMinWeaponId():
 
 
 
+def loadCommonConf():
+    """
+    加载通用配置
+    """
+    global commonConf
+    commonConf = rocopy((getGameConf("common")))
 
+
+def getCommonValueByKey(key_, default=0):
+    """
+    获取通用数据
+    """
+    global commonConf
+    return commonConf.get(key_, default)
 
 
 def loadRankRewardConf():

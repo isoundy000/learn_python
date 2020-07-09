@@ -37,3 +37,20 @@ def sendToUser(msgpack, userId):
     '''
     if isinstance(msgpack, MsgPack):
         msgpack = msgpack.pack()
+
+
+def isQuery():
+    return wrapper.isQuery()
+
+
+def responseQurery(msgpack, userheader1=None, userheader2=None):
+    '''
+    响应"查询请求"的进程内部消息命令, 即: query->response
+    '''
+    taskarg = stackless.getcurrent()._fttask.run_args
+    if not 'responsed' in taskarg:
+        taskarg['responsed'] = 1
+    if isinstance(msgpack, MsgPack):
+        msgpack = msgpack.pack()
+    assert (isinstance(msgpack, basestring))
+    wrapper.response(msgpack, userheader1, userheader2)
