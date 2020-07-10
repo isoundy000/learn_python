@@ -195,7 +195,7 @@ class BulletChangeEvent(UserEvent):
     """
     招财珠数量变化事件
     """
-    def __int__(self, userId, gameId, itemId=None, itemCount=None, roomId=None):
+    def __init__(self, userId, gameId, itemId=None, itemCount=None, roomId=None):
         super(BulletChangeEvent, self).__init__(userId, gameId)
         self.itemId = itemId
         self.itemCount = itemCount

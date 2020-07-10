@@ -17,4 +17,22 @@ class BossFishGroup(object):
     """
     def __init__(self, table):
         self.table = table
+        self._interval = 300
+        self._bossGroupId = None            # boss鱼群Id
+        self._nextBossTimer = None
+        self._setBossTimer()
+        self._fishType = 0
+        self._bossAppearTS = 0
+        self._autofillTimer = None
+        self._group = None
+
+    def clearTimer(self):
+        if self._nextBossTimer:
+            self._nextBossTimer.cancel()
+            self._nextBossTimer = None
+        if self._autofillTimer:
+            self._autofillTimer.cancel()
+            self._autofillTimer = None
+
+    def _setBossTimer(self):
         pass

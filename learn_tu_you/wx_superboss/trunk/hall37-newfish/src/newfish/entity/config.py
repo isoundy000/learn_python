@@ -1179,6 +1179,22 @@ def getAutofillFishConf(fishPool):
     return probabilityConf.get("autofillFish", {}).get(str(fishPool), [])
 
 
+def loadAutofillFishConf_m():
+    """
+    加载自动填充鱼配置
+    """
+    global autofillFishConf_m
+    autofillFishConf_m = rocopy(getGameConf("autofillFish_m"))
+
+
+def getAutofillFishConf_m(mode, fishPool):
+    """
+    获取自动填充鱼配置
+    """
+    global autofillFishConf_m
+    return autofillFishConf_m.get(mode, {}).get(str(fishPool), {})
+
+
 def getUserCouponFishConf(fishPool):
     """
     获取个人可见奖券鱼配置
@@ -1468,6 +1484,30 @@ def getExpressionConf(bigRoomId):
 
 def isClientIgnoredConf(key, val, clientId=""):
     pass
+
+
+def loadUlevelConf():
+    """
+    加载用户等级配置
+    """
+    global ulevelConf
+    ulevelConf = rocopy(getGameConf("ulevel"))
+
+
+def getUlevelNum():
+    """
+    获取用户最大等级
+    """
+    global ulevelConf
+    return len(ulevelConf)
+
+
+def getUlevel(levelId):
+    """
+    获取用户等级配置
+    """
+    global ulevelConf
+    return ulevelConf.get(str(levelId), {})
 
 
 def loadUserLevelConf():

@@ -70,18 +70,21 @@ class FishPlayer(TYPlayer):
         self.prizeWheel = None
         if self.table.typeName in config.DYNAMIC_ODDS_ROOM_TYPE:
             self.prizeWheel = PrizeWheel(self.userId, table.runConfig.fishPool, self.table.roomId)
-        if self.table.gameMode == config.MULTIPLE_MODE:     # 千炮转盘
+        if self.table.gameMode == config.MULTIPLE_MODE and self.table.typeName not in [config.FISH_TIME_MATCH, config.FISH_TIME_POINT_MATCH]:   # 千炮转盘
             self.prizeWheel = LevelPrizeWheel(self.userId, table.runConfig.fishPool, self.table.roomId)
         self.vipLevel = 0
         self.clientId = ""
         if clientId:
             self.clientId = clientId                        # 此client是字符串
         self.lang = util.getLanguage(self.userId, self.clientId)
-        self.skills = {}                                    # 主技能
-        self.skillSlots = {}                                # 技能槽
-        self.auxiliarySkills = {}                           # 辅助技能
-        self.auxiliarySkillSlots = {}                       # 辅助技能槽
-        self.usingSkill = []                                # 处于选中或使用中的技能([{skillId:xx, type:0/1}])
+        # 主技能
+        self.skills = {}                                            # 技能ID: 对象
+        self.skillSlots = {}                                        # 技能槽 [skill_Id: [0, 0, 0, 0, 0]]
+        # 辅助技能
+        self.auxiliarySkills = {}
+        self.auxiliarySkillSlots = {}
+        # 处于选中或使用中的技能([{skillId:xx, type:0/1}])
+        self.usingSkill = []
         # 竞赛活动模块
         if table.runConfig.typeName != config.FISH_NEWBIE and table.runConfig.typeName in config.NORMAL_ROOM_TYPE:
             self.compAct = CompAct(self.userId, self.seatId, self.clientId)
@@ -93,17 +96,17 @@ class FishPlayer(TYPlayer):
             self.lotteryTicket = LotteryTicket(self, table.runConfig.fishPool, self.table.roomId)
         self.skill_item = {}                        # 道具技能对象 item_id: skill_item
         self.skills_item_slots = {}                 # 道具技能槽item_id: {"cost": xxx, "progress": [0, 10], "state": 0}
-        self.gunId_effect = {}                      # 皮肤炮的使用效果
         self._onInit()
         self.robotScript = None
-        
+
     def _onInit(self):
         """
         初始化
         """
-        self._initVarData()                         # 初始化变量
-        self._loadUserData()                        # 读取玩家数据
-        self.loadAllSkillData()                     # 读取并初始化所有技能数据
+        self._initVarData()
+        self._loadUserData()
+        self.loadAllSkillData()
+        self.loadAllSkillItemData()
 
     def _initVarData(self):
         """
@@ -111,10 +114,10 @@ class FishPlayer(TYPlayer):
         """
         self.lastActionTime = int(time.time())      # 最后一次请求时间
         self.lastCatchTime = int(time.time())       # 最后一次捕鱼时间
-        self.isFinishRedTask = False
+        self.isFinishRedTask = False                # 是否完成新手任务
         self.isBankrupt = False                     # 是否破产
         self.resetTime = 0
-        self._fires = {}                            # 子弹
+        self._fires = {}                            # 子弹信息
         self._catchFishes = {}                      # 捕获的鱼ID: 条数
         self._comboBudgetTime = 1.2                 # 连击奖励的定时器时间间隔
         self.clip = 0
@@ -123,7 +126,7 @@ class FishPlayer(TYPlayer):
         self.enterTime = 0
         self.offline = 0
         self.rank = 0
-        self.couponConsumeClip = 0                 # 奖券消耗的金币
+        self.couponConsumeClip = 0                  # 奖券消耗的金币
         self.activityConsumeClip = 0
         self.energy = 0
         self.maxEnergy = 0
@@ -135,7 +138,7 @@ class FishPlayer(TYPlayer):
         self.activitySystem = None
         self.mainQuestSystem = None                 # 主线任务
         self.totalGainChip = 0
-        self.catchBonus = 0
+        self.catchBonus = 0                         # 捕获收益
         # 开火消耗的金币，用于红包券抽奖
         self.lotteryFireCostChip = {}               # 开火消耗的金币，用于红包券抽奖
         self.gameTime = 0                           # 玩的分钟数
@@ -180,6 +183,7 @@ class FishPlayer(TYPlayer):
             if self.prizeWheel:
                 self.prizeWheel.dumpData()
                 self.prizeWheel = None
+            self.gunEffectState(4)                                  # 清理定时器
             self.clearTimer()
             self.clearingClip()
             self.clearData()
@@ -210,8 +214,8 @@ class FishPlayer(TYPlayer):
             self.dumpEconomicData()
             self.dumpGameData()
             self.clip = 0
-            userchip.moveAllTableChipToChip(self.userId, FISH_GAMEID, "BI_NFISH_TCHIP_TO_CHIP", self.table.roomId,
-                                            self.clientId, self.table.tableId, roomId=self.table.roomId)
+            userchip.moveAllTableChipToChip(self.userId, FISH_GAMEID, "BI_NFISH_TCHIP_TO_CHIP",  self.table.roomId,
+                self.clientId, self.table.tableId, roomId=self.table.roomId)
             userchip.delTableChips(self.userId, [self.table.tableId])
             self.hallCoin = self.chip
         return self.chip
@@ -272,11 +276,11 @@ class FishPlayer(TYPlayer):
 
     def costClip(self, bullet, eventId):
         """
-        消耗子弹
-        :param bullet: 子弹
+        消耗渔场内的子弹
+        :param bullet: 子弹数量
         :param eventId: 事件
         """
-        lastCoin = self.hallCoin
+        lastCoin = self.holdCoin
         self.clip -= bullet
         if self.table.typeName in config.NORMAL_ROOM_TYPE:
             chip = int(bullet * self.fpMultiple)
@@ -307,7 +311,7 @@ class FishPlayer(TYPlayer):
     def addClip(self, bullet=0, auto=0, skillId=0):
         """
         添加子弹
-        :param bullet: 子弹
+        :param bullet: 子弹数量
         :param auto: 是否子弹购买弹药
         :param skillId: 技能ID
         """
@@ -371,6 +375,7 @@ class FishPlayer(TYPlayer):
         weakdata.incrDayFishData(self.userId, "gameTime", 1)
         if util.getDayStartTimestamp(self.resetTime) != util.getDayStartTimestamp(int(time.time())):
             self.resetTime = weakdata.getDayFishData(self.userId, "resetTime", 0)
+        self.activitySystem and self.activitySystem.incrGameTime()
         from newfish.game import TGFish
         event = GameTimeEvent(self.userId, FISH_GAMEID, self.table.roomId, self.table.tableId,
                               self.table.runConfig.fishPool, 1, self.fpMultiple, self.isFinishRedTask)
@@ -436,7 +441,7 @@ class FishPlayer(TYPlayer):
         # 玩家每日数据
         dayFishData = weakdata.getDayFishDataAll(self.userId, FISH_GAMEID)
         self.resetTime = dayFishData.get(WeakData.resetTime, 0)
-        self.starfish = dayFishData.get(WeakData.starfish, 0)
+        self.starfish = dayFishData.get(WeakData.starfish, 0)                   # 海星数量
         # 玩家珍珠数（用于控制珍珠掉率）
         self.pearlCount = util.balanceItem(self.userId, PEARL_KINDID)
         self.isFinishRedTask = util.isFinishAllRedTask(self.userId)
@@ -473,9 +478,9 @@ class FishPlayer(TYPlayer):
             _gunLevelKeys = config.getGunLevelKeysConf(self.table.gameMode)
             _gunLevelList = [lv for lv in _gunLevelKeys if self.table.runConfig.minGunLevel <= lv <= self.table.runConfig.maxGunLevel]
             if _gunLevelList:
-                self.gunLevel = self.nowGunLevel = random.choice(_gunLevelList)     # 随机一个炮的等级
+                self.gunLevel = self.nowGunLevel = random.choice(_gunLevelList)     # gunLevel炮的最大等级 self.nowGunLevel现在渔场中使用的火炮等级
 
-        self.matchingFishPool = self.getMatchingFishPool(self.fpMultiple)
+        self.matchingFishPool = 44005                           # self.getMatchingFishPool(self.fpMultiple)
         self.dynamicOdds = DynamicOdds(self.table, self)
         self.achieveSystem = AchievementTableSystem(self.table, self)               # 成就系统
         self.activitySystem = ActivityTableSystem(self.table, self)                 # 活动系统
@@ -504,19 +509,21 @@ class FishPlayer(TYPlayer):
 
         self.skills = {}
         self._refreshSkillSlots(0)
-        for skillId in self.skillSlots.keys():
+        for skillId in self.skillSlots:
             self._loadSkillData(skillId, 0)
+
 
     def loadAllSkillItemData(self):
         """
         加载所有道具技能的数据
         """
-        if self.table.gameMode == config.MULTIPLE_MODE:
-            for item_id in self.table.runConfig.skill_item.keys():
-                if item_id in self.skill_item:
-                    continue
-                skillItem = SkillItem(self.table, self, item_id)
-                self.skill_item[item_id] = skillItem
+        if self.table.gameMode != config.MULTIPLE_MODE:
+            return
+        for item_id in self.table.runConfig.skill_item.keys():
+            if item_id in self.skill_item:
+                continue
+            skillItem = SkillItem(self.table, self, item_id)
+            self.skill_item[item_id] = skillItem
 
     def getSkillItemInfo(self, kindId=0):
         """
@@ -558,7 +565,10 @@ class FishPlayer(TYPlayer):
         刷新技能数据 {5101: [star_level, current_level]}
         """
         if skillType == 0:
-            self.skillSlots = skill_system.getInstalledSkill(self.userId, self.table.gameMode)
+            if self.table.typeName == config.FISH_NEWBIE:
+                self.skillSlots = skill_system.getNewbieSkill(self.userId)
+            else:
+                self.skillSlots = skill_system.getInstalledSkill(self.userId, self.table.gameMode)
         ftlog.info("_refreshSkillSlots, userId =", self.userId, "skillType =", skillType, "skillSlots =", self.skillSlots)
 
     def _loadSkillData(self, skillId, skillType):
@@ -593,7 +603,8 @@ class FishPlayer(TYPlayer):
                 skillGrade = skillSlots[skillId][2]
                 cdTimeLeft = self.skills[skillId].cdTimeLeft
                 coolDown = self.skills[skillId].coolDown
-                skillSlots[skillId].extend([cdTimeLeft, coolDown])
+                dayFreeUse = 1 if self.skills[skillId].checkIfDayFree() else 0
+                skillSlots[skillId].extend([cdTimeLeft, coolDown, dayFreeUse])
                 totalSkillGrade += skillGrade
             self.maxEnergy = 50 + totalSkillGrade * 50
             return skillSlots
@@ -613,9 +624,9 @@ class FishPlayer(TYPlayer):
         """
         刷新技能CD开始时间
         """
-        for skillId in self.skillSlots.keys():
+        for skillId in self.skillSlots:
             self.skills[skillId].changeCDStartTime()
-        for skillId in self.auxiliarySkillSlots.keys():
+        for skillId in self.auxiliarySkillSlots:
             self.auxiliarySkills[skillId].changeCDStartTime()
 
     def getUsingSkillInfo(self):
@@ -706,7 +717,7 @@ class FishPlayer(TYPlayer):
             gunData = gun_system.getGunData(self.userId, self.gunId, self.table.gameMode)
             self.skinId = gunData[gun_system.INDEX_SKINID]
             gun_system.setGunData(self.userId, self.gunId, [self.gunLv, self.gunExp, self.skinId], self.table.gameMode)
-        else:
+        else:                       # 切换至其他火炮
             # 先保存原炮台数据
             gun_system.setGunData(self.userId, self.gunId, [self.gunLv, self.gunExp, self.skinId], self.table.gameMode)
             self.gunId = gunId
@@ -812,7 +823,7 @@ class FishPlayer(TYPlayer):
             exp *= 3
         self.gunExp += int(exp)
         maxLevelConf = config.getGunConf(self.gunId, self.clientId,
-                          config.getGunMaxLevel(self.gunId, self.clientId, self.table.gameMode), self.table.gameMode)
+                config.getGunMaxLevel(self.gunId, self.clientId, self.table.gameMode), self.table.gameMode)
         self.gunExp = maxLevelConf["totalExp"] if self.gunExp > maxLevelConf["totalExp"] else self.gunExp
         return self.gunExp
 
@@ -901,9 +912,9 @@ class FishPlayer(TYPlayer):
         :param skill: 技能对象
         :param power: 威力
         :param multiple: 单倍|双倍炮
-        :param clientFire:
+        :param clientFire: 客户端开火
         :param targetPos: 目标位置
-        :param fishType:
+        :param fishType: 鱼的Id
         :param costChip: 消耗的金币
         """
         if ftlog.is_debug():
@@ -914,19 +925,19 @@ class FishPlayer(TYPlayer):
             if ftlog.is_debug():
                 ftlog.debug("getFireWpId->add, delete repeat bullet, userId =", self.userId, "bulletId =", bulletId)
         self._fires[bulletId] = {
-            "wpId": wpId,
-            "skill": skill,
-            "gunId": self.gunId,
-            "gunLevel": self.gunLv,
-            "sendTimestamp": sendTimestamp,
-            "receiveTimestamp": nowTimestamp,
-            "power": power,
-            "initPower": power,
-            "multiple": multiple,
-            "targetPos": targetPos,
-            "fishType": fishType,
-            "fpMultiple": fpMultiple,
-            "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0
+            "wpId": wpId,                           # 武器ID
+             "skill": skill,                        # 技能对象
+             "gunId": self.gunId,                   # 炮Id
+             "gunLevel": self.gunLv,                # 皮肤炮等级
+             "sendTimestamp": sendTimestamp,        # 发送时间
+             "receiveTimestamp": nowTimestamp,      # 接收时间
+             "power": power,                        # 威力
+             "initPower": power,                    # 初始威力
+             "multiple": multiple,                  # 单倍|双倍炮
+             "targetPos": targetPos,                # 目标位置
+             "fishType": fishType,                  # 鱼的Id
+             "fpMultiple": fpMultiple,              # 渔场倍率
+             "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0    # 最大阶段
         }
         self._fires[bulletId].update({"superBullet": self.isSuperBullet(bulletId)})     # 超级子弹 获取炮的配置
         if clientFire:
@@ -942,6 +953,7 @@ class FishPlayer(TYPlayer):
                 if self.table.typeName in config.QUICK_START_ROOM_TYPE:
                     self.lotteryFireCostChip.setdefault(str(self.table.runConfig.fishPool), 0)
                     self.lotteryFireCostChip[str(self.table.runConfig.fishPool)] += costChip    # 开火消耗金币奖池
+                self.gunEffectState(3, costChip)                              # 只有千炮渔场才有此对象
 
     def delFire(self, bulletId=0, extendId=0, wpId=0):
         """删除子弹"""
@@ -1123,6 +1135,52 @@ class FishPlayer(TYPlayer):
         :return:
         """
         self.reportBIFeatureData("BI_NFISH_GE_FT_CATCH", wpId, gainChip)
+        if gainChip > 0:
+            self.addTableChip(gainChip, "BI_NFISH_CATCH_GAIN")
+            self.totalGainChip += gainChip
+            self.catchBonus += gainChip * config.getCommonValueByKey("friendHelpCoinMultiple")
+        if gainCoupon > 0:              # 红包券
+            changed = util.addItems(self.userId,
+                                    [{"name": COUPON_KINDID, "count": int(gainCoupon)}],
+                                    "BI_NFISH_CATCH_GAIN",
+                                    self.table.roomId,
+                                    roomId=self.table.roomId,
+                                    tableId=self.table.tableId,
+                                    clientId=self.clientId)
+            change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+            datachangenotify.sendDataChangeNotify(FISH_GAMEID, self.userId, ["chip"])
+        from newfish.game import TGFish
+        for item in items:
+            if util.isChestRewardId(item["itemId"]):    # 判断道具ID是否为宝箱
+                from newfish.entity.chest import chest_system
+                if chest_system.getChestIdleOrder(self.userId) == -1:       # 得到空闲的宝箱栏位置
+                    pass
+                else:
+                    chest_system.newChestItem(self.userId, item["itemId"], "BI_NFISH_CATCH_GAIN")
+            else:
+                changed = util.addItems(self.userId,
+                                        [{"name": item["itemId"], "count": int(item["count"])}],
+                                        "BI_NFISH_CATCH_GAIN",
+                                        self.table.roomId,
+                                        roomId=self.table.roomId,
+                                        tableId=self.table.tableId,
+                                        clientId=self.clientId)
+                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+            if item["itemId"] in [BRONZE_BULLET_KINDID, SILVER_BULLET_KINDID, GOLD_BULLET_KINDID]:  # 青铜、白银、黄金招财珠
+                bulletCoin = int(item["count"]) * BULLET_KINDIDS[item["itemId"]]
+                self.totalGainChip += bulletCoin
+                event = BulletChangeEvent(self.userId, FISH_GAMEID, item["itemId"], int(item["count"]), self.table.roomId)
+                TGFish.getEventBus().publishEvent(event)
+            elif item["itemId"] == STARFISH_KINDID:     # 海星
+                starfishCount = int(item["count"])
+                self.starfish += starfishCount
+                event = StarfishChangeEvent(self.userId, FISH_GAMEID, starfishCount, self.table.bigRoomId)
+                TGFish.getEventBus().publishEvent(event)
+            elif item["itemId"] == PEARL_KINDID:        # 珍珠
+                pearl = int(item["count"])
+                self.pearlCount += pearl
+                self.taskSystemUser and self.taskSystemUser.dealGetPearl(pearl)
+                self._addPearlDropCount(pearl)
 
     def addCombo(self):
         """添加连击数 添加定时器"""
@@ -1173,29 +1231,164 @@ class FishPlayer(TYPlayer):
         self.combo = 0
 
     def checkConnect(self, isInvalid):
-        pass
+        """
+        检查连接
+        :param isInvalid: 是否是合法的捕获
+        :return:
+        """
+        if self.invalidCatch >= 2 and ftlog.is_debug():
+            ftlog.debug("checkConnect", self.userId, self.invalidCatch)
+        if isInvalid:
+            self.invalidCatch += 1
+            if self.invalidCatch >= 10:
+                msg = MsgPack()
+                msg.setCmd("reset_connect")
+                msg.setResult("gameId", FISH_GAMEID)
+                msg.setResult("userId", self.userId)
+                GameMsg.sendMsg(msg, self.userId)
+                self.invalidCatch = 0
+        else:
+            self.invalidCatch = 0
 
     def gunChange(self, gLv):
         """
         切换火炮等级
         """
-        pass
+        reason = 0
+        if gLv > self.gunLevel or not config.getGunLevelConf(gLv, self.table.gameMode):
+            reason = 1
+        else:
+            if gLv < self.table.runConfig.minGunLevel:
+                if self.nowGunLevel >= gLv:
+                    reason = 2
+            elif gLv > self.table.runConfig.maxGunLevel:
+                return
+            elif self.getUsingSkillInfo():      # 获取使用中的技能数据
+                self.nowGunLevel = gLv
+                return
+        retMsg = MsgPack()
+        retMsg.setCmd("gchg")
+        retMsg.setResult("gameId", FISH_GAMEID)
+        retMsg.setResult("gLv", gLv)
+        retMsg.setResult("userId", self.userId)
+        retMsg.setResult("seatId", self.seatId)
+        retMsg.setResult("reason", reason)
+        retMsg.setResult("gameMode", self.table.gameMode)
+        GameMsg.sendMsg(retMsg, self.userId)
+        if reason == 0:
+            self.nowGunLevel = gLv
+            result = retMsg.getKey("result")
+            del result["reason"]
+            GameMsg.sendMsg(retMsg, self.table.getBroadcastUids(self.userId))
+            from newfish.game import TGFish
+            event = ChangeGunLevelEvent(self.userId, FISH_GAMEID, self.table.bigRoomId, self.nowGunLevel)
+            TGFish.getEventBus().publishEvent(event)
 
     def gunUpgrade(self, protect):
         """
         普通炮升级
         """
-        pass
+        lastFpMultiple = 1
+        if self.isFpMultipleMode():
+            lastFpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)
+        isUpgrade = gun_system.upgradeGun(self.userId, protect, self.table.gameMode)
+        if isUpgrade:
+            # if self.isFpMultipleMode():
+            #     lastFpMultiple = config.getGunLevelConf(self.nowGunLevel).get("unlockMultiple", 1)
+            self.upGunLevel()               # 更新用户等和炮的等级
+            # 处理解锁渔场倍率红点提示
+            if self.isFpMultipleMode():
+                fpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)
+                if ftlog.is_debug():
+                    ftlog.debug("gunUpgrade, userId =", self.userId, lastFpMultiple, fpMultiple)
+                if lastFpMultiple < fpMultiple:     # 上次渔场倍率 < 现在渔场倍率
+                    if self.table.runConfig.minMultiple <= fpMultiple <= self.table.runConfig.maxMultiple:
+                        module_tip.addModuleTipEvent(self.userId, "fpmultiple", fpMultiple)
+                    else:
+                        unlockedFpMultiples = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, [])
+                        unlockedFpMultiples.append(fpMultiple)
+                        gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, json.dumps(unlockedFpMultiples))
+                    ownedFpMultiples = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.ownedFpMultiples, [])
+                    ownedFpMultiples.append(fpMultiple)
+                    gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.ownedFpMultiples, json.dumps(ownedFpMultiples))
+            self.gunChange(self.gunLevel)
+            # # 升级后切换倍率
+            # if self.isFpMultipleMode():
+            #     fpMultiple = config.getGunLevelConf(self.nowGunLevel).get("unlockMultiple", 1)
+            #     if False and lastFpMultiple < fpMultiple:
+            #         self.changeFpMultiple(fpMultiple, True)
+
+            # 渔场解锁提示.
+            # nextRoomId = config.getCommonValueByKey("unlockNextRoomId")
+            # if self.newbieMode in ["b", "c"] and self.level == 15 and nextRoomId:
+            #     self.sendRoomUnlockMsg(nextRoomId)
+            # else:# 渔场解锁提示.
+            #     nextRoomKey = "unlockNextRoomIdLevel%d" % self.level
+            #     nextRoomId = config.getCommonValueByKey(nextRoomKey)
+            #     if nextRoomId:
+            #         self.sendRoomUnlockMsg(nextRoomId)
+            testMode = util.getNewbieABCTestMode(self.userId)
+            unlockNextRoomIdList = config.getCommonValueByKey("unlockNextRoomIdList", [])
+            for nextRoomId in unlockNextRoomIdList:
+                minLevel = util.getRoomMinLevel(nextRoomId, testMode)
+                minCoin = util.getRoomMinCoin(nextRoomId, testMode)
+                if minLevel == self.level:
+                    # 渔场解锁时自动补齐金币.
+                    delta = 0
+                    if minCoin > 0 and self.allChip < minCoin + 10000:
+                        delta = minCoin + 10000 - self.allChip
+                    if delta > 0:
+                        util.addRewards(self.userId, [{"name": config.CHIP_KINDID, "count": delta}],
+                                        "BI_NFISH_COMPENSTAE_UNLOCK_NEXT_ROOM_COIN", self.level)
+                        self.addProfitCoin(delta)
+                    if ftlog.is_debug():
+                        ftlog.debug("unlock next room, userId =", self.userId, minLevel, minCoin, delta, self.allChip)
+                    self.sendRoomUnlockMsg(nextRoomId)
+            # # 使用B模式
+            # # 50倍场，玩家升到17级，处于A测试模式时曲线设为9.
+            # if self.table.runConfig.fishPool == 44003 and self.level == 17 and self.initCurve5017TestMode in ["a"]:
+            #     if gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.setUserCurve5017) == 0:
+            #         gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.setUserCurve5017, 1)
+            #         _cnt = self.bankruptCount.get(str(self.table.runConfig.fishPool), 0)
+            #         if _cnt == 0:
+            #             _waveId = 9
+            #         elif 0 < _cnt <= 2:
+            #             _waveId = 6
+            #         else:
+            #             _waveId = 0
+            #         if _waveId > 0:
+            #             self.dynamicOdds.resetOdds(_waveId)
 
     def incrGunLevel(self, nowExp):
         """
         提升皮肤炮熟练度等级
         """
+        oldLevel = self.gunLv
+        maxLevel = config.getGunMaxLevel(self.gunId, self.clientId, self.table.gameMode)
+        if oldLevel == maxLevel:
+            return
+        for x in range(1, maxLevel + 1):
+            levelConf = config.getGunConf(self.gunId, self.clientId, x, self.table.gameMode)
+            if nowExp <= levelConf["totalExp"]:
+                break
+        if x != oldLevel:
+            self.gunLv = x
+            self.chgGunData(self.gunId)                 # 更新皮肤炮数据
+            if x > oldLevel:
+                for level in range(oldLevel + 1, x + 1):
+                    self.sendGunLevelUpMsg(level)
 
     def sendGunLevelUpMsg(self, level):
         """
         发送皮肤炮升级成功消息
         """
+        msg = MsgPack()
+        msg.setCmd("gun_lvup")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("userId", self.userId)
+        msg.setResult("gunId", self.gunId)
+        msg.setResult("gunLevel", level)
+        GameMsg.sendMsg(msg, self.table.getBroadcastUids())
 
     def addProfitCoin(self, coin):
         """
@@ -1314,22 +1507,22 @@ class FishPlayer(TYPlayer):
                     if (lastSkillId != skillId or lastSkillType != skillType) and lastSkill and lastSkill.state == 1:
                         if lastSkill.getCost + self.clip + bullet >= skill.getCost:
                             lastSkill.use(0)
-                    if self.clip < skill.getCost:
-                        if self.clip + bullet >= skill.getCost:
-                            isOK = self.table.clip_add(self.userId, self.seatId, auto=1)
-                            if not isOK:
-                                reason = 1
-                        else:
-                            reason = 1  # 使用技能所需子弹不足
-                    elif skill.cdTimeLeft > 0 and self.isFinishRedTask:
-                        reason = 2      # 技能正在冷却
-                    elif skill.state == 1:
-                        reason = 3      # 技能正在装备中，选中失败
+                if self.clip < skill.getCost:
+                    if self.clip + bullet >= skill.getCost:
+                        isOK = self.table.clip_add(self.userId, self.seatId, auto=1)
+                        if not isOK:
+                            reason = 1
+                    else:
+                        reason = 1  # 使用技能所需子弹不足
+                elif skill.cdTimeLeft > 0 and self.isFinishRedTask:
+                    reason = 2  # 技能正在冷却
+                elif skill.state == 1:
+                    reason = 3  # 技能正在装备中，选中失败
             else:
                 if skill.state == 2:
-                    reason = 4          # 技能正在使用中，取消失败
+                    reason = 4  # 技能正在使用中，取消失败
         else:
-            reason = 5                  # 技能槽没有该技能
+            reason = 5  # 技能槽没有该技能
         return reason
 
     def useSkill(self, skillId, select, skillType):
@@ -1337,24 +1530,24 @@ class FishPlayer(TYPlayer):
         使用技能
         """
         reason = self._checkSkillCondition(skillId, select, skillType)
-        if reason:
+        if reason == 0:
             currSkill = self.getSkill(skillId, skillType)
-            if select:              # 选中技能(装备技能)
-                currSkill.use(1)    # 无之前技能记录或者已经被取消了上一个技能，直接装备技能
-            else:                   # 取消技能
+            if select:  # 选中技能(装备技能)
+                currSkill.use(1)  # 无之前技能记录或者已经被取消了上一个技能，直接装备技能
+            else:  # 取消技能
                 if len(self.usingSkill) == 1 and skillId == self.usingSkill[-1].get("skillId") \
-                        and skillType == self.usingSkill[-1].get("skillType", 0):       # 只有当前技能
+                        and skillType == self.usingSkill[-1].get("skillType", 0):  # 只有当前技能
                     currSkill.use(0)
                     self.table.broadcastGunChange(self)
                 elif len(self.usingSkill) > 1 and skillId == self.usingSkill[-1].get("skillId") \
-                        and skillType == self.usingSkill[-1].get("skillType", 0):   # 存在技能使用记录
+                        and skillType == self.usingSkill[-1].get("skillType", 0):  # 存在技能使用记录
                     lastSkillId = self.usingSkill[-2].get("skillId")
                     lastSkillType = self.usingSkill[-2].get("skillType", 0)
                     lastSkill = self.getSkill(lastSkillId, lastSkillType)
-                    currSkill.use(0)    # 取消当前技能， 并切换到上一个技能
+                    currSkill.use(0)  # 取消当前技能， 并切换到上一个技能
                     if lastSkill:
                         lastSkill.use(1)
-                else:                   # 无之前技能使用记录或技能顺序错误，技能取消失败
+                else:  # 无之前技能使用记录或技能顺序错误，技能取消失败
                     reason = 6
         if reason != 0:
             msg = MsgPack()
@@ -1375,13 +1568,13 @@ class FishPlayer(TYPlayer):
         code = 0
         # 使用中的技能不可卸载.
         if len(self.usingSkill) >= 1 and skillId == self.usingSkill[-1].get("skillId") \
-            and skillType == self.usingSkill[-1].get("skillType"):
+                and skillType == self.usingSkill[-1].get("skillType"):
             code = 1
         # 捕鱼机器人存活时不可卸载.
         elif self.getSkill(skillId, skillType) and self.getSkill(skillId, skillType).getSkillFishesAlive():
             code = 1
         elif len(self.usingSkill) > 1 and skillId == self.usingSkill[0].get("skillId") \
-            and skillType == self.usingSkill[0].get("skillType"):
+                and skillType == self.usingSkill[0].get("skillType"):
             self.removeUsingSkill(skillId, skillType)
         if code == 0:
             code = skill_system.installSkill(self.userId, skillId, self.table.gameMode, install)
@@ -1416,8 +1609,8 @@ class FishPlayer(TYPlayer):
         code = 0
         # 使用中的技能不可替换.
         if len(self.usingSkill) >= 1 and \
-            (installSkillId == self.usingSkill[-1].get("skillId") or
-             uninstallSkillId == self.usingSkill[-1].get("skillId")):
+                (installSkillId == self.usingSkill[-1].get("skillId") or
+                 uninstallSkillId == self.usingSkill[-1].get("skillId")):
             code = 1
         # 捕鱼机器人存活时不可替换.
         elif self.getSkill(uninstallSkillId, skillType) and self.getSkill(uninstallSkillId, skillType).getSkillFishesAlive():
@@ -1456,12 +1649,12 @@ class FishPlayer(TYPlayer):
         """
         for skillId in self.skills:
             skill = self.getSkill(skillId, 0)
-            if skill.state == 1:                 # 选中但未使用
+            if skill.state == 1:    # 选中但未使用
                 self.useSkill(skill.skillId, 0, 0)
             skill.clear()
         for skillId in self.auxiliarySkills:
             skill = self.getSkill(skillId, 1)
-            if skill.state == 1:                # 选中但未使用
+            if skill.state == 1:    # 选中但未使用
                 self.useSkill(skill.skillId, 0, 1)
             skill.clear()
 
@@ -1480,7 +1673,46 @@ class FishPlayer(TYPlayer):
         GameMsg.sendMsg(msg, self.table.getBroadcastUids())
 
     def useBullet(self, bulletKindId):
-        pass
+        """
+        使用招财珠
+        :param bulletKindId: 青铜、白银、黄金
+        """
+        msg = MsgPack()
+        msg.setCmd("bullet_use")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("userId", self.userId)
+        msg.setResult("seatId", self.seatId)
+        msg.setResult("bullet", bulletKindId)
+        if util.balanceItem(self.userId, bulletKindId) and \
+                bulletKindId in [BRONZE_BULLET_KINDID, SILVER_BULLET_KINDID, GOLD_BULLET_KINDID]:
+            changed = util.addItems(self.userId,
+                                    [{"name": bulletKindId, "count": -1}],
+                                    "ITEM_USE",
+                                    roomId=self.table.roomId,
+                                    tableId=self.table.tableId,
+                                    clientId=self.clientId,
+                                    changeNotify=True)
+            if changed:
+                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.userId)
+                bulletChip = BULLET_KINDIDS[bulletKindId]
+                changed = self.economicData.addGain([{"name": "tableChip", "count": bulletChip}], "ITEM_USE", self.table.roomId)
+                change_notify.changeNotify(self.userId, FISH_GAMEID, changed, self.table.getBroadcastUids())
+                msg.setResult("chip", bulletChip)
+                msg.setResult("code", 0)
+                GameMsg.sendMsg(msg, self.table.getBroadcastUids())
+                from newfish.game import TGFish
+                event = BulletChangeEvent(self.userId, FISH_GAMEID)
+                TGFish.getEventBus().publishEvent(event)
+                return
+        msg.setResult("code", 1)
+        GameMsg.sendMsg(msg, self.userId)
+        # 使用招财珠进入时，指定概率曲线
+        # if self.table.runConfig.fishPool == 44005:
+            # limitedDynamicOdds = gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.limitedDynamicOdds)
+            # if limitedDynamicOdds == 0 and self.allChip < self.table.runConfig.minCoin and self.vipLevel <= 1:
+            #     sectionId = 5
+            #     self.dynamicOdds.resetOdds(sectionId)
+            #     gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.limitedDynamicOdds, 1)
 
     def addCatchFishes(self, fishTypes):
         """
@@ -1500,10 +1732,42 @@ class FishPlayer(TYPlayer):
         pass
 
     def sendBufferInfos(self, isBroadcast=True):
-        pass
+        """
+        发送玩家的buff信息
+        """
+        msg = MsgPack()
+        msg.setCmd("buffer_infos")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("userId", self.userId)
+        msg.setResult("seatId", self.seatId)
+        bufferInfos = []
+        for bufferInfo in self.usedBufferInfos:
+            if bufferInfo.isStart():
+                buffer_ = {}
+                buffer_["bufferId"] = bufferInfo.getBufferId()
+                buffer_["startTime"] = bufferInfo.startTime
+                buffer_["leftTime"] = bufferInfo.startTime + bufferInfo.getTotalEffectTime() - int(time.time())
+                buffer_["totalTime"] = bufferInfo.getTotalEffectTime()
+                buffer_["state"] = bufferInfo.getBufferState()
+                bufferInfos.append(buffer_)
+        msg.setResult("bufferInfos", bufferInfos)
+        if bufferInfos:
+            uIds = [self.userId]
+            if isBroadcast:
+                uIds = self.table.getBroadcastUids()
+            GameMsg.sendMsg(msg, uIds)
 
     def getSkillCDAddition(self, weaponId):
-        pass
+        """
+        获取技能cd的加成
+        :param weaponId: 武器ID
+        """
+        percent = 0
+        for bufferInfo in self.usedBufferInfos:
+            percent += bufferInfo.getSkillCDPercent(weaponId)
+        if ftlog.is_debug():
+            ftlog.debug("getSkillCDAddition", percent)
+        return percent
 
     def getCoinAddition(self, weaponId):
         """
@@ -1525,7 +1789,11 @@ class FishPlayer(TYPlayer):
         return percent
 
     def bufferRemove(self, bufferId):
-        pass
+        """删除玩家的buffer"""
+        for bufferInfo in self.usedBufferInfos:
+            if bufferInfo.getBufferId() == bufferId:
+                bufferInfo.endBuffer()
+                self.usedBufferInfos.remove(bufferInfo)
 
     def addOneBufferId(self, bufferId):
         pass
@@ -1551,7 +1819,7 @@ class FishPlayer(TYPlayer):
 
     def dealEnterTable(self):
         """处理进入桌子"""
-        self.sendBufferInfos()
+        self.sendBufferInfos(isBroadcast=False)
         gun_system.sendGunInfoMsg(self.userId, self.table.gameMode)     # 发送普通炮信息
         self.taskSystemUser and self.taskSystemUser.dealEnterTable(self.offline)    # 渔场内任务管理系统
         self.activitySystem and self.activitySystem.enterRoom(self.offline)     # 活动系统
@@ -1578,7 +1846,7 @@ class FishPlayer(TYPlayer):
                                             self.table.bigRoomId, self._catchFishes)
         # util.sendToHall51GameOverEvent(self.userId, self.table.roomId, self.table.tableId, fishes)
         bireport.reportGameEvent("BI_NFISH_GAME_TIME", self.userId, FISH_GAMEID, self.table.roomId,
-                                 self.table.tableId, self.gameTime, 0, 0, 0, [], self.clientId, 0, self.allChip)
+                                self.table.tableId, self.gameTime, 0, 0, 0, [], self.clientId, 0, self.allChip)
         self._catchFishes = {}
         self.totalGainChip = 0
         self.gameTime = 0
@@ -1586,7 +1854,12 @@ class FishPlayer(TYPlayer):
     def saveUserData(self):
         """保存用户数据"""
         gamedata.setGameAttrs(self.userId, FISH_GAMEID,
-            [GameData.profitChest, GameData.profitCoin, GameData.bankruptCount, GameData.realProfitCoin],
+            [
+                GameData.profitChest,                   # 玩家在各场次的金币宝箱奖池
+                GameData.profitCoin,                    # 玩家在各场次的盈亏金币
+                GameData.bankruptCount,                 # 玩家各场次累计破产次数
+                GameData.realProfitCoin                 # 各场次真实盈亏
+            ],
             [json.dumps(self.profitForChest), json.dumps(self.profitForCoin), json.dumps(self.bankruptCount),
             json.dumps(self.realProfitCoin)]
         )
@@ -1605,26 +1878,61 @@ class FishPlayer(TYPlayer):
     def triggerUseSkillEvent(self, event):
         pass
 
-    def refreshHoldCoin(self):
+    def triggerUseSkillItemEvent(self, event):
+        """触发使用技能道具事件"""
         pass
+
+    def refreshHoldCoin(self):
+        """刷新大厅金币"""
+        if self.userId > 0:
+            self.hallCoin = self.chip
+            self.taskSystemUser and self.taskSystemUser.refreshHoldCoin(self.holdCoin)
 
     def getPearlDropRatio(self, fpMultiple):
-        pass
+        """获取珍珠掉落基数"""
+        vipConf = config.getVipConf(self.vipLevel)
+        ratio = None
+        dropCount = vipConf.get("dropPearlTotalCount", 0) if vipConf else 0
+        if 0 <= dropCount <= self.dropPearlCount:
+            ratio = vipConf.get("dropPearlRatioLimit")
+        if ratio is None:
+            ratio = config.getUlevel(self.level).get(str(fpMultiple), 0)
+            ratio += self.incrPearlDropRatio
+        if ftlog.is_debug():
+            ftlog.debug("getPearlDropRatio===>", "userId=", self.userId, "fpMultiple =", fpMultiple, "vip=", self.vipLevel,
+                    "dropCount=", self.dropPearlCount, "dropLimit=", dropCount,
+                    "ratio", ratio, "incrRato=", self.incrPearlDropRatio)
+        return ratio
 
     def _addPearlDropCount(self, count):
-        pass
+        """增加珍珠掉落数量"""
+        self.dropPearlCount += count
+        if ftlog.is_debug():
+            ftlog.debug("addPearlDropCount===>", self.userId, count, self.dropPearlCount)
 
     def reportBIFeatureData(self, eventId, wpId, changeCoin):
         """
         用户特征BI数据
         """
-        pass
+        if self.table.typeName in config.NORMAL_ROOM_TYPE and time.time() - self.registTime <= 24 * 3600:
+            changeCoin = int(changeCoin)
+            bireport.reportGameEvent(eventId, self.userId, FISH_GAMEID, self.table.roomId,
+                                     self.table.tableId, self.level, changeCoin, int(wpId),
+                                     0, [], self.clientId, 0, self.holdCoin)
 
     def sendRoomUnlockMsg(self, roomId):
         """
         发送解锁新渔场弹窗
         """
-        pass
+        roomConf = gdata.getRoomConfigure(roomId)
+        msg = MsgPack()
+        msg.setCmd("room_unlock")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("userId", self.userId)
+        msg.setResult("nextRoomId", roomId)
+        # msg.setResult("nextRoomName", roomConf["name"])
+        msg.setResult("nextRoomName", config.getMultiLangTextConf(roomConf["name"], lang=self.lang))
+        GameMsg.sendMsg(msg, self.userId)
 
     def isFpMultipleMode(self):
         """
@@ -1644,7 +1952,7 @@ class FishPlayer(TYPlayer):
         self.economicData.chgBulletChip(-_chip)
 
     def changeFpMultiple(self, fpMultiple, ignoreFailed=False):
-        """修改渔场倍率"""
+        """改变渔场倍率"""
         if isinstance(fpMultiple, (int, str)):
             fpMultiple = int(fpMultiple)
             code = self.checkChgFpMultiple(fpMultiple)
@@ -1692,7 +2000,7 @@ class FishPlayer(TYPlayer):
             code = 4
         elif self.fpMultiple == multiple:
             code = 5
-        elif multiple < self.table.runConfig.minGunLevel or multiple > self.table.runConfig.maxMultiple:
+        elif multiple < self.table.runConfig.minMultiple or multiple > self.table.runConfig.maxMultiple:
             code = 6
         # 判断倍率是否已解锁.
         elif lv and lv <= self.gunLevel:
@@ -1707,7 +2015,7 @@ class FishPlayer(TYPlayer):
         """
         fishPool = self.table.runConfig.fishPool
         if self.table.typeName not in config.NORMAL_ROOM_TYPE or not self.isFpMultipleMode():
-            return fishPool
+            return 44005
         fishPoolMultipleDict = {}
         for v in gdata.roomIdDefineMap().values():
             roomConf = v.configure
@@ -1720,8 +2028,8 @@ class FishPlayer(TYPlayer):
                 fishPool = int(v[0])
         if ftlog.is_debug():
             ftlog.debug("getFishPool, userId =", self.userId, "fishPool-multiple =", tmpList, "fpMultiple =", fpMultiple,
-                        "tableFishPool =", self.table.runConfig.fishPool, "matchingFishPool =", fishPool)
-        return fishPool
+                    "tableFishPool =", self.table.runConfig.fishPool, "matchingFishPool =", fishPool)
+        return 44005
 
     def isSupplyBulletPowerMode(self):
         """
@@ -1740,7 +2048,6 @@ class FishPlayer(TYPlayer):
         :param fpMultiple: 渔场倍率
         :param gunMultiple: 单倍|双倍炮
         :param gunX: 千炮 炮的倍率 | 经典为1
-        :return:
         """
         if not self.isSupplyBulletPowerMode():
             return
@@ -1834,7 +2141,7 @@ class FishPlayer(TYPlayer):
                 skill = self.getSkill(skillId, skillType)
                 if skill and skillId == skill_release.weaponSkillMap.get(wpId):                     # 根据武器ID获取 技能炮
                     usingSkill = [val.get("skillId") for val in self.usingSkill]
-                    if skill in usingSkill:
+                    if skillId in usingSkill:
                         if ftlog.is_debug():
                             ftlog.debug("player.usingSkill, userId =", self.userId, self.usingSkill, skillId, skillType)
                         isOK = skill.costClip(bulletId, fPosx, fPosy)
@@ -1920,3 +2227,7 @@ class FishPlayer(TYPlayer):
         获取玩家渔场倍率对应的基础倍率
         """
         return self.table.runConfig.multiple
+
+    def gunEffectState(self, _type=1, *args):
+        """千炮场狂暴效果"""
+        pass

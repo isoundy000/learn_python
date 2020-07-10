@@ -413,6 +413,20 @@ def getAllLanguage():
     return ["zh", "en"]
 
 
+def getOneResultByWeight(_list, _key="weight"):
+    """
+    根据权重获得随机1次的结果
+    """
+    totalWeight = sum([dict(_conf)[_key] for _conf in _list if _conf])
+    if totalWeight > 0:
+        randInt = random.randint(1, totalWeight)
+        for _, _conf in enumerate(_list):
+            randInt -= _conf[_key]
+            if randInt <= 0:
+                return _conf
+    return None
+
+
 
 
 
