@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-__author__ = 'ghou'
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 from newfish.entity import config
 
@@ -34,7 +34,7 @@ class FishTableConf(object):
         self.allMultipleGroupIds = {}
         self.allShareGroupIds = {}
         self.allRainbowGroupIds = []
-        self.allTerrorGroupIds = {}
+        self.allTerrorGroupIds = {}                         # terror鱼初始化
         self.allAutofillGroupIds = {}
         self.allGrandPrixGroupIds = {}                      # 大奖所有鱼群
         self.allSuperBossGroupIds = {}
@@ -44,8 +44,8 @@ class FishTableConf(object):
             fishType = key.split("_")[1]
             if key.startswith("group_"):                    # 普通鱼
                 self.allNormalGroupIds.append(key)
-            elif key.startswith("boss_"):                   # boss鱼阵
-                self.allBossGroupIds.setdefault(int(fishType), []).append(fishType)
+            elif key.startswith("boss_"):
+                self.allBossGroupIds.setdefault(int(fishType), []).append(key)
             elif key.startswith("call_"):
                 self.allCallGroupIds.append(key)
             elif key.startswith("tide_"):
@@ -90,7 +90,6 @@ class FishTableConf(object):
     def name(self):
         """
         渔场名
-        :return:
         """
         return self.datas.get("name", "")       # ID_ROOM_NAME_44402
 
@@ -105,7 +104,6 @@ class FishTableConf(object):
     def fishGroups(self):
         """
         该场次可使用的所有鱼阵
-        :return:
         """
         return self.datas.get("fishGroups", {})
 
@@ -135,7 +133,6 @@ class FishTableConf(object):
         """
         最小场次倍率
         """
-
         return self.datas.get("minMultiple", 0) or self.datas.get("multiple", 1)
 
     @property
@@ -397,3 +394,10 @@ class FishTableConf(object):
         海皇来袭中的充能金币档位
         """
         return self.datas.get("towerConf", {}).get("maxBet", 5000000)
+
+    @property
+    def skill_item(self):
+        """
+        道具的技能
+        """
+        return self.datas.get("skill_item", {})

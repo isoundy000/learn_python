@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/29
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import traceback
 from datetime import datetime
@@ -40,6 +40,7 @@ class FishNormalTable(FishTable):
                     ftlog.warn("not reconized action:", action)
         except:
             ftlog.error("_doTableCall error clear table", userId, msg, traceback.format_exc())
+            self._clearTable()
 
     def startFishGroup(self):
         """

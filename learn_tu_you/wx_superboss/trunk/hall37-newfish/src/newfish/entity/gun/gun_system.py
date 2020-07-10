@@ -1,8 +1,6 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/4
+# -*- coding=utf-8 -*-
 """
+Created by lichen on 2017/11/28.
 0 默认炮
 1288: 飓风 1等级 0经验 1352默认皮肤
 1165: 霜冻
@@ -11,6 +9,7 @@
 1289: 光辉
 1290: 暮刃
 """
+
 import time
 import json
 import random
@@ -26,7 +25,6 @@ from newfish.entity import config, util, module_tip
 from newfish.entity.config import FISH_GAMEID, CLASSIC_MODE, MULTIPLE_MODE
 from newfish.entity.redis_keys import GameData, UserData
 from newfish.entity import store
-
 
 INDEX_LEVEL = 0         # 第0位:皮肤炮熟练等级
 INDEX_EXP = 1           # 第1位:皮肤炮经验值
@@ -274,6 +272,14 @@ def sendGunListMsg(userId, mode):
                 gun["state"] = 3
         gun["equipState"] = 1 if isCanEquip(userId, gunId, mode) else 0
         guns.append(gun)
+
+    mo = MsgPack()
+    mo.setCmd("guns_list")
+    mo.setResult("gameId", FISH_GAMEID)
+    mo.setResult("userId", userId)
+    mo.setResult("gameMode", mode)
+    mo.setResult("guns", guns)
+    router.sendToUser(mo, userId)
 
 
 def sendGunInfoMsg(userId, mode):
@@ -551,7 +557,7 @@ def isUnlock(userId, gunId, gunConf, mode):
     _isUnlocked = False
     if gunId == 0 or gunId in unlockedGuns:
         _isUnlocked = True
-    elif gunId["unlockType"] == 0:
+    elif gunConf["unlockType"] == 0:
         _isUnlocked = True
     elif gunConf["unlockType"] == 1 and vipLevel >= gunConf["unlockValue"]:
         _isUnlocked = True
@@ -704,8 +710,8 @@ def _triggerAddGunSkinEvent(event):
     # 添加新得到的皮肤炮，同时从过期提示中移除它
     gunId = event.gunId
     mode = event.mode
-    ownGunSkinsKey = GameData.ownGunSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkins_m
-    promptedGunSkinsKey = GameData.promptedGunSkins  # if mode == CLASSIC_MODE else GameData.promptedGunSkins_m
+    ownGunSkinsKey = GameData.ownGunSkins               # if mode == CLASSIC_MODE else GameData.ownGunSkins_m
+    promptedGunSkinsKey = GameData.promptedGunSkins     # if mode == CLASSIC_MODE else GameData.promptedGunSkins_m
     ownGuns = gamedata.getGameAttrJson(event.userId, FISH_GAMEID, ownGunSkinsKey, [])
     if gunId not in ownGuns:
         ownGuns.append(gunId)

@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/29
+# -*- coding=utf-8 -*-
 """
 大奖赛table逻辑
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/10/08
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
@@ -57,9 +56,9 @@ class FishGrandPrixTable(FishFriendTable):
         super(FishGrandPrixTable, self)._afterSendTableInfo(userId)
         player = self.getPlayer(userId)
         if player:
-            signUpState = 1 if player.isGrandPrixMode() else 0
-            player.startGrandPrix(signUpState)
-            player.setTipTimer()                    # 设置比赛开始和结束的通知消息
+            # player.sendGrandPrixInfo()
+            player.startGrandPrix()
+            player.setTipTimer()
 
     def broadcastSkillUse(self, skill, select, userId, orgState):
         """
@@ -72,24 +71,23 @@ class FishGrandPrixTable(FishFriendTable):
         msg.setResult("seatId", skill.player.seatId)
         msg.setResult("skillId", int(skill.skillId))
         msg.setResult("skillType", skill.skillType)
-        msg.setResult("select", select)
-        msg.setResult("clip", skill.player.clip)                    # 玩家子弹数
-        msg.setResult("skillClip", skill.clip)                      # 技能子弹数
+        msg.setResult("select", select)                         # 1选中|0取消
+        msg.setResult("clip", skill.player.clip)                # 玩家子弹数
+        msg.setResult("skillClip", skill.clip)                  # 技能子弹数
         GameMsg.sendMsg(msg, self.getBroadcastUids(userId))
         player = self.getPlayer(userId)
         if player and player.isGrandPrixMode():
             for idx, val in enumerate(player.grandPrixUseSkillTimes):
                 if isinstance(val, dict) and val.get("skillId") == int(skill.skillId) and val.get("skillType", 0) == skill.skillType:
                     if select and orgState == 0:
-                        player.grandPrixUseSkillTimes[idx]["count"] -= 1
+                        player.grandPrixUseSkillTimes[idx]["count"] -= 1    # 使用减少一次
                     elif not select and orgState == 1:
-                        player.grandPrixUseSkillTimes[idx]["count"] += 1
-                    player.grandPrixUseSkillTimes[idx]["count"] = min(player.grandPrixUseSkillTimes[idx]["count"],
-                                                                      config.getGrandPrixConf("fireCount")[1])
+                        player.grandPrixUseSkillTimes[idx]["count"] += 1    # 增加一次
+                    player.grandPrixUseSkillTimes[idx]["count"] = min(player.grandPrixUseSkillTimes[idx]["count"], config.getGrandPrixConf("fireCount")[1])
                     player.grandPrixUseSkillTimes[idx]["count"] = max(player.grandPrixUseSkillTimes[idx]["count"], 0)
                     break
             useSkillTimes = [val.get("count", 0) for val in player.grandPrixUseSkillTimes]
-            msg.setResult("useSkillTimes", useSkillTimes)
+            msg.setResult("useSkillTimes", useSkillTimes)       # 可使用的次数
         GameMsg.sendMsg(msg, userId)
         ftlog.debug("broadcastSkillUse, userId =", userId, int(skill.skillId), skill.skillType, select, orgState)
 
@@ -120,20 +118,3 @@ class FishGrandPrixTable(FishFriendTable):
         if player and player.isGrandPrixMode():
             return
         super(FishGrandPrixTable, self)._refresh_skill_cd(msg, userId, seatId)
-
-    def _startGrandPrix(self, msg, userId, seatId):
-        """
-        开始大奖赛或是直接进入渔场
-        """
-        signUp = msg.getParam("signUp", 0)
-        player = self.getPlayer(userId)
-        if player:
-            player.startGrandPrix(signUp)
-
-    def _endGrandPrix(self, msg, userId, seatId):
-        """
-        结束大奖赛
-        """
-        player = self.getPlayer(userId)
-        if player:
-            player.endGrandPrix()
