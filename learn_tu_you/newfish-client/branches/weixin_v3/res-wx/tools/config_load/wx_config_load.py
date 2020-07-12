@@ -79,16 +79,16 @@ def fish_config():
         cols = []
         for cell in row:
             cols.append(cell.value)
-        if not cols[3]:                 # 鱼种ID
+        if not cols[3]:                             # 鱼种ID
             continue
         one = collections.OrderedDict()
         if str(cols[0]) in config:
             raise KeyError("fishId %d repeat" % int(cols[0]))
-        config[str(cols[3])] = one          # {11001: {}}
-        one["name"] = unicode(cols[1])      # 鱼的名字
-        one["type"] = int(cols[4])          # 鱼的类别
+        config[str(cols[3])] = one                  # {11001: {}}
+        one["name"] = unicode(cols[1])              # 鱼的名字
+        one["type"] = int(cols[4])                  # 鱼的类别
         if is_number(cols[5]):
-            one["itemId"] = int(cols[5])    # 捕鱼掉道具 数字
+            one["itemId"] = int(cols[5])            # 捕鱼掉道具 数字
         else:
             one["itemId"] = json.loads(cols[5])     # [10000,10002]
         one["score"] = int(cols[6])                 # 分值
@@ -122,7 +122,6 @@ def is_number(s):
         return True
     except (TypeError, ValueError):
         pass
-
     return False
 
 
@@ -204,6 +203,439 @@ def weapon_config():
 
     result = json.dumps(weaponConfig, indent=4)
 
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def skill_grade_config():
+    """技能升级"""
+    outPath = getOutPath("skillGrade")
+    ws = getWorkBook().get_sheet_by_name("SkillGrade")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    skillId = collections.OrderedDict()
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        if row[1].value not in config.keys():
+            skillId = collections.OrderedDict()
+            config[row[1].value] = skillId              # 技能Id
+        one = collections.OrderedDict()
+        skillId[str(row[2].value)] = one                # 技能等级
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        one["cost"] = int(cols[3])                      # 消耗子弹
+        one["power"] = int(cols[4])                     # 单发威力
+        one["HP"] = int(cols[5])                        # HP
+        one["impale"] = int(cols[6])                    # 贯穿力
+        one["clip"] = int(cols[7])                      # 技能子弹数
+        one["interval"] = float(cols[8])                # 每发间隔时间
+        one["duration"] = float(cols[9])                # 效果时间
+        one["coolDown"] = int(cols[10])                 # 冷却时间
+        one["weaponId"] = int(cols[11])                 # 对应武器
+        one["double"] = json.loads(str(cols[12]))       # 双倍皮肤炮ID
+        one["isReturn"] = int(cols[13])                 # 打空是否返还子弹
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def skill_star_config():
+    """技能升星"""
+    outPath = getOutPath("skillStar")
+    ws = getWorkBook().get_sheet_by_name("SkillStar")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    skillId = collections.OrderedDict()
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        if row[1].value not in config.keys():
+            skillId = collections.OrderedDict()
+            config[row[1].value] = skillId                  # 技能ID
+        one = collections.OrderedDict()
+        skillId[str(row[2].value)] = one                    # 技能星级1-5
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        abilities = []
+        one["abilities"] = abilities
+        for x in xrange(3, len(cols), 3):
+            if not cols[x]:
+                continue
+            ability = collections.OrderedDict()
+            ability["ability"] = int(cols[x])               # 提升能力类型
+            ability["valueType"] = int(cols[x+1])           # 数值类型
+            ability["value"] = int(cols[x+2])               # 数值
+            abilities.append(ability)
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def main_quest_config():
+    """主线任务"""
+    outPath = getOutPath("mainQuest")
+    ws = getWorkBook().get_sheet_by_name("MainQuest")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    tasks = collections.OrderedDict()
+    sections = collections.OrderedDict()
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        task = collections.OrderedDict()
+        tasks[int(cols[0])] = task                          # 任务ID 641001
+        task["taskId"] = int(cols[0])                       # 任务ID
+        task["title"] = str(cols[1])                        # 任务标题
+        task["desc"] = unicode(cols[2])                     # 任务描述
+        task["num"] = int(cols[3])                          # 目标数量
+        task["normalRewards"] = json.loads(cols[4])         # 普通奖励
+        task["chestRewards"] = json.loads(cols[5])          # 宝箱奖励
+        task["type"] = int(cols[6])                         # 任务类型
+
+        if cols[8]:
+            section = collections.OrderedDict()
+            sections[int(cols[8])] = section                # 章节ID 641000、642000 -- 645000
+            section["sectionId"] = int(cols[8])
+            section["sortId"] = int(cols[9])                # 章节顺序
+            section["taskIds"] = json.loads(cols[10])       # 章节下属任务ID
+            section["rewards"] = json.loads(cols[11])       # 章节奖励
+            section["honorId"] = int(cols[12])              # 勋章奖励
+            section["display"] = int(cols[13])              # 默认追踪
+    config["tasks"] = tasks
+    config["sections"] = sections
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def ulevel_config():
+    """用户等级"""
+    outPath = getOutPath("ulevel")
+    ws = getWorkBook().get_sheet_by_name("Level")
+    uLevelConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        oneLevel = collections.OrderedDict()
+        uLevelConfig[int(cols[0])] = oneLevel
+        oneLevel["1"] = cols[1]
+        oneLevel["10"] = cols[2]
+        oneLevel["15"] = cols[3]
+        oneLevel["20"] = cols[4]
+        oneLevel["30"] = cols[5]
+        oneLevel["40"] = cols[6]
+        oneLevel["50"] = cols[7]
+        oneLevel["60"] = cols[8]
+        oneLevel["80"] = cols[9]
+        oneLevel["100"] = cols[10]
+        oneLevel["120"] = cols[11]
+        oneLevel["150"] = cols[12]
+        oneLevel["180"] = cols[13]
+        oneLevel["200"] = cols[14]
+        oneLevel["300"] = cols[15]
+        oneLevel["400"] = cols[16]
+        oneLevel["500"] = cols[17]
+        oneLevel["600"] = cols[18]
+        oneLevel["800"] = cols[19]
+        oneLevel["1000"] = cols[20]
+    result = json.dumps(uLevelConfig, indent=4)
+
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def cmptt_task_config():
+    """加载宝藏争夺赛配置"""
+    outPath = getOutPath("cmpttTask")
+    ws = getWorkBook().get_sheet_by_name("Cmptt")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("taskId %d repeat" % int(cols[0]))
+        if cols[0] == None:
+            break
+        config[str(cols[0])] = one                                  # 任务Id
+        one["taskId"] = cols[0]
+        one["fishPool"] = cols[1]                                   # 渔场
+        assert int(cols[2]) in [1, 2]
+        one["taskType"] = cols[2]                                   # 任务类型
+        one["desc"] = unicode(cols[3] or "")                        # 任务描述
+        one["timeLong"] = cols[4]                                   # 任务时长
+        one["chestReward"] = cols[11].split("|")                    # 宝箱奖励
+        # one["coinReward"] = cols[10]
+        # one["pearlReward"] = cols[11]
+        # one["couponReward"] = cols[12]
+        one["readySeconds"] = 10
+        targets = collections.OrderedDict()
+        one["targets"] = targets
+        if cols[5]:
+            targets["target1"] = cols[5]                            # 目标1
+        if cols[6]:
+            targets["number1"] = cols[6]                            # 目标1数量
+        if cols[5] and cols[7]:
+            targets["inter1"] = cols[7]                             # 自动填充间隔1（秒）
+        if cols[8]:
+            targets["target2"] = cols[8]                            # 目标2
+        if cols[9]:
+            targets["number2"] = cols[9]                            # 目标2数量
+        if cols[8] and cols[10]:
+            targets["inter2"] = cols[10]                            # 自动填充间隔2（秒）
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def ncmptt_task_config():
+    """获取限时任务配置"""
+    outPath = getOutPath("ncmpttTask")
+    ws = getWorkBook().get_sheet_by_name("Ncmptt")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("taskId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one                              # 任务Id
+        one["taskId"] = cols[0]
+        one["fishPool"] = cols[1]                               # 渔场Id
+        assert int(cols[2]) in [1, 2, 3, 4, 5]
+        one["taskType"] = cols[2]                               # 任务类型
+        one["desc"] = unicode(cols[3] or "")                    # 任务描述
+        one["timeLong"] = cols[4]                               # 任务时长
+        one["chestReward"] = cols[11]                           # 宝箱奖励
+        # one["coinReward"] = cols[10]
+        one["readySeconds"] = 3
+        targets = collections.OrderedDict()
+        one["targets"] = targets
+        if cols[5]:
+            targets["target1"] = cols[5]                        # 目标1
+        if cols[6]:
+            targets["number1"] = cols[6]                        # 目标1数量
+        if cols[5] and cols[7]:
+            targets["inter1"] = cols[7]                         # 自动填充间隔1（秒）
+        if cols[8]:
+            targets["target2"] = cols[8]
+        if cols[9]:
+            targets["number2"] = cols[9]
+        if cols[8] and cols[10]:
+            targets["inter2"] = cols[10]
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def bonus_task_config():
+    """收益任务"""
+    outPath = getOutPath("bonusTask")
+    ws = getWorkBook().get_sheet_by_name("Bonus")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        if len(cols) < 7 or cols[0] is None:
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("taskId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one                                  # 任务ID
+        one["taskId"] = cols[0]
+        one["fishPool"] = cols[1]                                   # 所在渔场
+        assert int(cols[2]) in [1, 2, 4]
+        one["taskType"] = cols[2]                                   # 任务类型
+        one["desc"] = unicode(cols[3] or "")                        # 任务描述
+        one["timeLong"] = cols[4]                                   # 任务时长
+        # one["firstChestReward"] = cols[7]
+        # one["secondChestReward"] = cols[8]
+        one["readySeconds"] = 10
+        targets = collections.OrderedDict()
+        one["targets"] = targets
+        if cols[5]:
+            targets["target1"] = cols[5]                            # 目标1
+        if cols[5] and cols[6]:
+            targets["inter1"] = cols[6]                             # 自动填充间隔1（秒）
+        if cols[7]:
+            targets["target2"] = cols[7]
+        if cols[7] and cols[8]:
+            targets["inter2"] = cols[8]
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def guide_task_config():
+    """新手引导任务"""
+    outPath = getOutPath("guideTask")
+    ws = getWorkBook().get_sheet_by_name("Guide")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("taskId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one                                  # 任务ID
+        one["taskId"] = cols[0]
+        assert int(cols[1]) in [1, 2, 3, 4, 5, 6]
+        one["taskType"] = cols[1]                                   # 任务类型
+        one["coinReward"] = cols[7]                                 # 金币奖励
+        one["pearlReward"] = cols[8]                                # 珍珠奖励
+        one["skillReward"] = cols[9]                                # 技能卡奖励
+        one["chestReward"] = cols[10]                               # 宝箱奖励
+        one["steps"] = eval(cols[11])                               # 新手引导
+        targets = collections.OrderedDict()
+        one["targets"] = targets
+        if cols[3]:
+            targets["target1"] = cols[3]                            # 目标1
+        if cols[4]:
+            targets["number1"] = cols[4]                            # 目标1数量
+        if cols[5]:
+            targets["target2"] = cols[5]
+        if cols[6]:
+            targets["number2"] = cols[6]
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def daily_quest_config():
+    """每日任务"""
+    outPath = getOutPath("dailyQuest")
+    ws = getWorkBook().get_sheet_by_name("DailyQuest")
+    conf = collections.OrderedDict()
+    conf["questData"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        conf["questData"][cols[0]] = one
+        one["taskId"] = cols[0]                         # 任务Id
+        one["taskType"] = cols[1]                       # 任务类型
+        one["des"] = unicode(cols[2] or "")             # 任务描述
+        one["lv"] = cols[3]                             # 难度等级
+        one["activeLv"] = cols[4]                       # 活跃等级
+        one["unlockUserLv"] = cols[5]                   # 任务解锁等级
+        one["taskLevel"] = cols[6]                      # 任务星级
+        one["groupId"] = cols[7]                        # 分组
+        one["targetsNum"] = cols[8]                     # 目标数量
+        one["fishPool"] = json.loads(cols[9])           # 渔场
+        one["fpMultiple"] = int(cols[10])               # 渔场倍率
+        showDay = cols[11]                              # 出现日
+        if isinstance(showDay, unicode):
+            showDay = showDay.split("|")
+            showDay = [int(x) for x in showDay]
+        else:
+            showDay = [showDay]
+        one["showDay"] = showDay
+        if cols[12]:                                    # 任务奖励
+            one["rewards"] = json.loads(cols[12])
+
+        if cols[14]:                                    # 分组顺序
+            conf["questOrder"] = json.loads(cols[14])
+
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    daily_quest_reward_config()
+
+
+def daily_quest_reward_config():
+    """每日任务奖励"""
+    outPath = getOutPath("dailyQuestReward")
+    ws = getWorkBook().get_sheet_by_name("DailyQuestReward")
+    conf = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        conf[cols[0]] = collections.OrderedDict()                   # 活跃等级
+        for k in range(1, len(cols), 5):
+            one = collections.OrderedDict()
+            conf[cols[0]][cols[k]] = one                            # 星级
+            one["finishedStar"] = cols[k]
+            one["type"] = str(cols[k + 1])                          # 类型 day
+            one["rewards"] = [{
+                "itemId": cols[k + 3],                              # id
+                "count": 1,
+                "name": cols[k + 2],                                # 描述
+                "reward": json.loads(cols[k + 4])                   # 最大奖
+            }]
+
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
@@ -353,21 +785,21 @@ def chest_drop_config():
 
 
 def probability_config():
-    """概率配置"""
+    """概率鱼的配置"""
     outPath = getOutPath("probability")
     wb = getWorkBook()
-    ws1 = wb.get_sheet_by_name("CouponFish")
-    ws2 = wb.get_sheet_by_name("MultipleFish")
-    ws3 = wb.get_sheet_by_name("HitBoss")
-    ws4 = wb.get_sheet_by_name("BossFish")
-    ws5 = wb.get_sheet_by_name("ChestFish")
-    ws6 = wb.get_sheet_by_name("ActivityFish")
-    ws7 = wb.get_sheet_by_name("MatchBufferFish")
-    ws8 = wb.get_sheet_by_name("ShareFish")
-    # ws9 = wb.get_sheet_by_name("TerrorFish")
-    ws10 = wb.get_sheet_by_name("AutofillFish")
-    ws11 = wb.get_sheet_by_name("HippoFish")
-    ws12 = wb.get_sheet_by_name("UserCouponFish")
+    ws1 = wb.get_sheet_by_name("CouponFish")                    # 奖券鱼 [44001-44005、44501渔场]
+    ws2 = wb.get_sheet_by_name("MultipleFish")                  # 倍率鱼
+    ws3 = wb.get_sheet_by_name("HitBoss")                       # 获取击伤Boss配置
+    ws4 = wb.get_sheet_by_name("BossFish")                      # Boss鱼
+    ws5 = wb.get_sheet_by_name("ChestFish")                     # 宝箱鱼
+    ws6 = wb.get_sheet_by_name("ActivityFish")                  # 活动鱼
+    ws7 = wb.get_sheet_by_name("MatchBufferFish")               # 比赛buffer鱼 回馈赛
+    ws8 = wb.get_sheet_by_name("ShareFish")                     # 分享鱼
+    # ws9 = wb.get_sheet_by_name("TerrorFish")                  # 特殊鱼
+    ws10 = wb.get_sheet_by_name("AutofillFish")                 # 填充鱼
+    ws11 = wb.get_sheet_by_name("HippoFish")                    # 河马鱼
+    ws12 = wb.get_sheet_by_name("UserCouponFish")               # 用户自己的奖券鱼
     config = collections.OrderedDict()
     couponFish = collections.OrderedDict()
     multipleFish = collections.OrderedDict()
@@ -383,6 +815,7 @@ def probability_config():
     userCouponFish = collections.OrderedDict()
     hitBoss = []
     startRowNum = 4
+    # 奖券鱼
     i = 0
     for row in ws1.rows:
         i = i + 1
@@ -394,6 +827,408 @@ def probability_config():
         if not cols[0]:
             continue
         one = collections.OrderedDict()
+        couponFish[str(cols[0])] = one
+        one["fishPool"] = int(cols[0])                          # 渔场ID 44001
+        one["totalBullet"] = int(cols[1])                       # 累计子弹数
+        one["minSecond"] = int(cols[2])                         # 最小时间
+        one["maxSecond"] = int(cols[3])                         # 最大时间
+        one["couponRange"] = json.loads(cols[4])                # 已捕获红包券范围(真实价值)
+        fishes = []
+        probb = 0
+        for x in xrange(5, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                     # 鱼ID
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率范围
+            probb += itemProbb
+            fishes.append(fish)
+        one["fishes"] = fishes
+    # 倍率鱼
+    i = 0
+    for row in ws2.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols:
+            continue
+        if not cols[0]:
+            continue
+        one = []
+        multipleFish[str(cols[0])] = one                        # 倍率鱼所在的渔场 [44001-44005、44201、44301、44501、44601]
+        probb = 0
+        highProbb = 0
+        rechargeProbb = 0
+        for x in xrange(1, len(cols), 4):
+            multiple = collections.OrderedDict()
+            itemProbb = int(cols[x + 1])                        # 概率 1800
+            itemHighProbb = int(cols[x + 2])                    # 倍率奖池高概率 500
+            itemRechargeProbb = int(cols[x + 3])                # 充值奖池高概率 3000
+            if itemProbb <= 0 and itemHighProbb <= 0 and itemRechargeProbb <= 0:
+                continue
+            multiple["multiple"] = int(cols[x])                 # 倍率2、3、5、10、20、50
+            if itemProbb:
+                multiple["probb"] = [probb + 1, probb + itemProbb]
+            if itemHighProbb:
+                multiple["highProbb"] = [highProbb + 1, highProbb + itemHighProbb]
+            if itemRechargeProbb:
+                multiple["rechargeProbb"] = [rechargeProbb + 1, rechargeProbb + itemRechargeProbb]
+            probb += itemProbb
+            highProbb += itemHighProbb
+            rechargeProbb += itemRechargeProbb
+            one.append(multiple)
+    # 获取击伤Boss配置
+    i = 0
+    for row in ws3.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        probb = 0
+        for x in xrange(0, len(cols), 2):
+            if not cols[x]:
+                continue
+            one = collections.OrderedDict()
+            oneProbb = int(cols[x])
+            one["probb"] = [probb + 1, probb + oneProbb]        # 概率
+            one["multiple"] = float(cols[x + 1])                # 倍率
+            probb += oneProbb
+            hitBoss.append(one)
+    # Boss鱼
+    i = 0
+    for row in ws4.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        bossFish[str(cols[0])] = one                            # 渔场Id
+        probb = 0
+        for x in xrange(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                     # BossId
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率
+            probb += itemProbb
+            one.append(fish)
+    # 宝箱鱼
+    i = 0
+    for row in ws5.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        chestFish[str(cols[0])] = one                           # 渔场ID
+        one["maxCoin"] = cols[1]                                # 用户盈利最大值
+        one["minCoin"] = cols[2]                                # 用户盈利最小值
+        one["probbs"] = []
+        probb = 0
+        for x in xrange(3, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["score"] = int(cols[x])                        # 宝箱鱼的分值
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率
+            probb += itemProbb
+            one["probbs"].append(fish)
+    # 活动鱼
+    i = 0
+    for row in ws6.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        activityFish[str(cols[0])] = one                        # 渔场Id
+        one["fishPool"] = int(cols[0])
+        one["totalBullet"] = int(cols[1])                       # 累计子弹数
+        one["minSecond"] = int(cols[2])                         # 最小时间
+        one["maxSecond"] = int(cols[3])                         # 最大时间
+        fishes = []
+        probb = 0
+        for x in xrange(4, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                     # 鱼ID
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率
+            probb += itemProbb
+            fishes.append(fish)
+        one["fishes"] = fishes
+    # 比赛buffer鱼 回馈赛
+    i = 0
+    for row in ws7.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        bufferFish[str(cols[0])] = one                          # 渔场Id
+        probb = 0
+        for x in xrange(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                     # 鱼Id
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率
+            probb += itemProbb
+            one.append(fish)
+    # 分享鱼
+    i = 0
+    for row in ws8.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        shareFish[str(cols[0])] = one                           # 渔场Id
+        one["fishPool"] = int(cols[0])
+        one["totalBullet"] = int(cols[1])                       # 累计子弹数
+        one["minSecond"] = int(cols[2])                         # 最小时间
+        one["maxSecond"] = int(cols[3])                         # 最大时间
+        fishes = []
+        probb = 0
+        for x in xrange(4, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                     # 鱼Id
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]      # 概率
+            probb += itemProbb
+            fishes.append(fish)
+        one["fishes"] = fishes
+    # 特殊鱼
+    # i = 0
+    # for row in ws9.rows:
+    #     i = i + 1
+    #     if i < startRowNum:
+    #         continue
+    #     cols = []
+    #     for cell in row:
+    #         cols.append(cell.value)
+    #     if not cols[0]:
+    #         continue
+    #     one = []
+    #     terrorFish[str(cols[0])] = one                        # 渔场Id
+    #     interval = int(cols[1])                               # 间隔(秒)
+    #     probb = 0
+    #     for x in xrange(2, len(cols), 2):
+    #         if not cols[x] or not cols[x + 1]:
+    #             continue
+    #         fish = {}
+    #         fish["fishType"] = int(cols[x])                   # 鱼Id
+    #         fish["interval"] = interval                       # 时间间隔
+    #         itemProbb = int(cols[x + 1])
+    #         fish["probb"] = [probb + 1, probb + itemProbb]    # 概率
+    #         probb += itemProbb
+    #         one.append(fish)
+    # 填充鱼
+    i = 0
+    isFindBlank = False
+    for row in ws10.rows:
+        i = i + 1
+        cols = []
+        if not isFindBlank and i >= startRowNum:
+            for cell in row:
+                cols.append(cell.value)
+            if not cols[0]:
+                isFindBlank = True
+                continue
+            one = collections.OrderedDict()
+            autofillFish[str(cols[0])] = []                     # 渔场
+            autofillFish[str(cols[0])].append(one)
+            one["supplyInterval"] = int(cols[1])                # 补充鱼时间
+            one["minCount"] = int(cols[2])                      # 最少条数
+            one["maxCount"] = int(cols[3])                      # 最多条数
+            one["minInterval"] = int(cols[4])                   # 最小时间
+            one["maxInterval"] = int(cols[5])                   # 最大时间
+            one["fish"] = []
+            probb = 0
+            for x in xrange(6, len(cols), 2):
+                if not cols[x]:
+                    continue
+                fish = {}
+                fish["fishType"] = int(cols[x])                 # 鱼Id
+                itemProbb = int(cols[x + 1])
+                fish["probb"] = [probb + 1, probb + itemProbb]  # 概率
+                probb += itemProbb
+                one["fish"].append(fish)
+
+        if isFindBlank:
+            for cell in row:
+                cols.append(cell.value)
+            if not cols[0]:
+                continue
+            try:
+                supplyInterval = int(cols[1])                   # 补充鱼时间
+            except:
+                continue
+            for x in xrange(2, len(cols), 5):
+                if not cols[x]:
+                    continue
+                one = collections.OrderedDict()
+                fish = {}
+                fish["fishType"] = int(cols[x])                 # 鱼Id
+                fish["probb"] = [0, 10000]                      # 概率范围
+                one["fish"] = []
+                one["fish"].append(fish)
+                one["minCount"] = int(cols[x + 1])              # 最少条数
+                one["maxCount"] = int(cols[x + 2])              # 最大条数
+                one["minInterval"] = int(cols[x + 3])           # 最小时间
+                one["maxInterval"] = int(cols[x + 4])           # 最大时间
+                one["supplyInterval"] = supplyInterval          # 补充鱼时间
+                autofillFish[str(cols[0])].append(one)
+    # 河马鱼
+    i = 0
+    for row in ws11.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = {}
+        hippoFish[str(cols[0])] = one                           # 渔场
+        one["fishType"] = int(cols[1])                          # 鱼Id
+        one["minTime"] = int(cols[2])                           # 最小时间间隔
+        one["maxTime"] = int(cols[3])                           # 时间间隔
+        one["rewards"] = []
+        probb = 0
+        for x in xrange(4, len(cols), 3):
+            if not cols[x] or not cols[x + 1] or not cols[x + 2]:
+                continue
+            itemInfo = {}
+            itemInfo["name"] = int(cols[x])
+            itemInfo["count"] = int(cols[x + 1])
+            itemProbb = int(cols[x + 2])
+            itemInfo["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one["rewards"].append(itemInfo)
+    # 用户自己的奖券鱼
+    i = 0
+    for row in ws12.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        userCouponFish.setdefault(str(cols[0]), []).append(one)     # 渔场Id
+        # userCouponFish[str(cols[0])] = one
+        one["fishPool"] = int(cols[0])
+        one["limitCount"] = int(cols[1])                            # 捕获次数上限
+        one["sections"] = json.loads(cols[2])                       # [充值总额, 可获得min红包券数(元), 可获得max红包券数(元)]
+        one["totalBullet"] = int(cols[3])                           # 累计子弹数
+        one["minSecond"] = int(cols[4])                             # 最小时间
+        one["maxSecond"] = int(cols[5])                             # 最大时间
+        fishes = []
+        probb = 0
+        for x in xrange(6, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])                         # 鱼ID
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]          # 概率
+            probb += itemProbb
+            fishes.append(fish)
+        one["fishes"] = fishes
+
+    config["couponFish"] = couponFish
+    config["multipleFish"] = multipleFish
+    config["bossFish"] = bossFish
+    config["hitBoss"] = hitBoss
+    config["chestFish"] = chestFish
+    config["activityFish"] = activityFish
+    config["bufferFish"] = bufferFish
+    config["shareFish"] = shareFish
+    # config["terrorFish"] = terrorFish
+    config["autofillFish"] = autofillFish
+    config["hippoFish"] = hippoFish
+    config["userCouponFish"] = userCouponFish
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def terror_fish():
+    """特殊鱼出现的概率和间隔"""
+    outPath = getOutPath("terrorFish")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("TerrorFish")
+    config = collections.OrderedDict()
+    terrorFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        terrorFish[str(cols[0])] = one
+        interval = int(cols[1])
+        probb = 0
+        for x in xrange(2, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])
+            fish["interval"] = interval
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one.append(fish)
+    config["terrorFish"] = terrorFish
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
 
 
 def dynamic_odds_config():
@@ -430,6 +1265,10 @@ def dynamic_odds_config():
     outHandle.write(result)
     outHandle.close()
     print u"end 动态概率配置 DynamicOdds"
+
+
+def lottery_pool_config():
+    pass
 
 
 def vip_config():
@@ -1033,8 +1872,8 @@ config_list = [
     (match_fish_config, None),
     (weapon_config, None),
     # (ulevel_config, None),
-    # (skill_grade_config, None),
-    # (skill_star_config, None),
+    (skill_grade_config, None),
+    (skill_star_config, None),
     # # (main_quest_config, None),
     # # (daily_quest_config, None),
     (chest_config, None),               # 宝箱配置

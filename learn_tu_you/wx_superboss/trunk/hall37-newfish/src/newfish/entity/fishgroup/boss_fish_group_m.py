@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
-# @Time: 2020/7/1
+# @Time: 2020/7/11
 
 import random
 import time
@@ -10,21 +10,34 @@ from freetime.util import log as ftlog
 from freetime.core.timer import FTLoopTimer
 from newfish.entity import config
 
+interval = {
+    "days": {
+        "count": 365,
+        "first": "",
+        "interval": "1d"
+    },
+    "times_in_day": {
+        "count": 10000,
+        "first": "0:00",
+        "interval": 6
+    }
+}
+
 
 class BossFishGroup(object):
     """
-    boss鱼群
+    千炮模式boss鱼群
     """
     def __init__(self, table):
         self.table = table
-        self._interval = 300                # 时间间隔
-        self._bossGroupId = None            # boss鱼群Id
-        self._nextBossTimer = None          # boss定时器
-        self._setBossTimer()                # 启动定时器
-        self._fishType = 0                  # bossId
-        self._bossAppearTS = 0              # boss出现的时间
-        self._autofillTimer = None          # 自动填充的时间
-        self._group = None                  # 鱼群对象
+        self._interval = 300
+        self._bossGroupId = None
+        self._nextBossTimer = None
+        self._setBossTimer()
+        self._fishType = 0
+        self._bossAppearTS = 0
+        self._autofillTimer = None
+        self._group = None
 
     def clearTimer(self):
         if self._nextBossTimer:
@@ -35,19 +48,14 @@ class BossFishGroup(object):
             self._autofillTimer = None
 
     def _setBossTimer(self):
-        """启动定时器"""
-        if self._setBossTimer:
+        if self._nextBossTimer:
             self._nextBossTimer.cancel()
             self._nextBossTimer = None
-        self._nextBossTimer = FTLoopTimer(self._interval, -1, self._addBossFishGroup)
+        self._nextBossTimer = FTLoopTimer(self._interval, -1,  self._addBossFishGroup)
         self._nextBossTimer.start()
 
     def _addBossFishGroup(self, isSysTimerCall=True, isKilled=False):
-        """
-        添加boss鱼群
-        :param isSysTimerCall: 系统自己调用的
-        :param isKilled: 是否杀死了boss
-        """
+        """添加boss鱼群"""
         if self._autofillTimer:
             self._autofillTimer.cancel()
             self._autofillTimer = None
@@ -57,9 +65,9 @@ class BossFishGroup(object):
                     if ftlog.is_debug():
                         ftlog.debug("BossFishGroup._addBossFishGroup, delay !", self.table.tableId, self._bossGroupId,
                                 self._group.extendGroupTime)
-                        self._autofillTimer = FTLoopTimer(self._group.extendGroupTime, 0, self._addBossFishGroup, False, False)
-                        self._autofillTimer.start()
-                        self._group.extendGroupTime = 0
+                    self._autofillTimer = FTLoopTimer(self._group.extendGroupTime, 0, self._addBossFishGroup, False, False)
+                    self._autofillTimer.start()
+                    self._group.extendGroupTime = 0
                 else:
                     if ftlog.is_debug():
                         ftlog.debug("BossFishGroup._addBossFishGroup, cancel insert !", self.table.tableId, self._bossGroupId)

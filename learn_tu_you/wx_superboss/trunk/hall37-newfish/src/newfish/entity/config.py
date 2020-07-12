@@ -1622,28 +1622,6 @@ def getGunMultipleConf():
     return gunMultipleConf
 
 
-def loadLotteryTicActConf(intClientId=0):
-    """
-    加载渔场红包券抽奖配置
-    """
-    global lotteryTicketConf
-    _conf = getGameConf("lotteryTicket", intClientidNum=intClientId)
-    lotteryTicketConf[intClientId] = rocopy(_conf) if _conf else {}
-
-
-def getLotteryTicActConf(clientId=None):
-    """
-    获取渔场红包券抽奖配置
-    """
-    global lotteryTicketConf
-    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
-    if lotteryTicketConf.get(intClientId) is None:
-        loadLotteryTicActConf(intClientId)
-    if lotteryTicketConf.get(intClientId):
-        return lotteryTicketConf[intClientId]
-    return lotteryTicketConf[defaultIntClientId]
-
-
 def loadTreasureConf():
     """
     加载宝藏配置
@@ -1672,6 +1650,120 @@ def getTreasureConf(kindId=None, effectType=None, level=None):
     return treasureConf
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def loadBigPrizeConf():
+    """
+    加载幸运降临配置
+    """
+    global bigPrizeConf
+    bigPrizeConf = rocopy(getGameConf("bigPrize"))
+
+
+def getBigPrizeConf():
+    """
+    获取幸运降临配置
+    """
+    global bigPrizeConf
+    return bigPrizeConf
+
+
+def loadCompActConf(intClientId=0):
+    """
+    加载竞赛活动配置
+    """
+    global compActConf
+    _conf = getGameConf("competition", intClientidNum=intClientId)
+    compActConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getCompActConf(clientId=None):
+    """
+    获取竞赛活动配置
+    """
+    global compActConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if compActConf.get(intClientId) is None:
+        loadCompActConf(intClientId)
+    if compActConf.get(intClientId):
+        return compActConf[intClientId]
+    return compActConf[defaultIntClientId]
+
+
+def loadNewbie7DaysGfitConf():
+    """
+    加载默认商店配置
+    """
+    global newbie7DaysGiftConf
+    newbie7DaysGiftConf = rocopy(getGameConf("newbie7DaysGift"))
+
+
+def getNewbie7DaysGiftConf():
+    global newbie7DaysGiftConf
+    return newbie7DaysGiftConf
+
+
+def loadLotteryTicActConf(intClientId=0):
+    """
+    加载渔场红包券抽奖配置
+    """
+    global lotteryTicketConf
+    _conf = getGameConf("lotteryTicket", intClientidNum=intClientId)
+    lotteryTicketConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getLotteryTicActConf(clientId=None):
+    """
+    获取渔场红包券抽奖配置
+    """
+    global lotteryTicketConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if lotteryTicketConf.get(intClientId) is None:
+        loadLotteryTicActConf(intClientId)
+    if lotteryTicketConf.get(intClientId):
+        return lotteryTicketConf[intClientId]
+    return lotteryTicketConf[defaultIntClientId]
+
+
+def loadPassCardConf(intClientId=0):
+    """
+    加载通行证活动配置
+    """
+    global passCardConf
+    _conf = getGameConf("passCard", intClientidNum=intClientId)
+    passCardConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getPassCardConf(clientId):
+    """
+    获取通行证活动配置
+    """
+    global passCardConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if passCardConf.get(intClientId) is None:
+        loadPassCardConf(intClientId)
+    if passCardConf.get(intClientId):
+        return passCardConf[intClientId]
+    return passCardConf[defaultIntClientId]
+
+
 def loadSkillCompenConf():
     """
     加载技能补偿配置
@@ -1688,6 +1780,126 @@ def getSkillCompenConf(key_=None):
     if key_ is None:
         return skillCompenConf
     return skillCompenConf.get(str(key_))
+
+
+def loadABTestConf():
+    """
+    加载ab test配置
+    """
+    global abTestConf
+    abTestConf = rocopy(getGameConf("abTest"))
+
+
+def getABTestConf(key_=None):
+    """
+    获取ab test配置
+    """
+    global abTestConf
+    if key_ is None:
+        return abTestConf
+    return abTestConf.get(str(key_), {})
+
+
+def loadReturnerMissionConf():
+    """
+    加载回归豪礼配置
+    """
+    global returnerMissionConf
+    returnerMissionConf = rocopy(getGameConf("returnerMission"))
+
+
+def getReturnerMissionConf(key_=None):
+    """
+    获取回归豪礼配置
+    """
+    global returnerMissionConf
+    if key_ is None:
+        return rwcopy(returnerMissionConf)
+    return rwcopy(returnerMissionConf).get(str(key_))
+
+
+def loadMiniGameConf():
+    """
+    加载小游戏配置（美人鱼的馈赠，宝箱）
+    """
+    global miniGameConf
+    global miniGameLevelMap
+    miniGameConfTmp = getGameConf("miniGame")
+    miniGameConf = {}
+    miniGameLevelMap = {}
+    for key, value in miniGameConfTmp.items():
+        miniGameConf[int(key)] = value
+        level = value["level"]
+        if level not in miniGameLevelMap:
+            miniGameLevelMap[level] = []
+        miniGameLevelMap[level].append(int(key))
+
+
+def getMiniGameConf(miniGameId):
+    """
+    获取小游戏配置（美人鱼的馈赠，宝箱）
+    """
+    global miniGameConf
+    return miniGameConf.get(miniGameId)
+
+
+def loadLuckyTreeConf():
+    """
+    加载免费金币摇钱树配置
+    """
+    global luckyTreeConf
+    luckyTreeConf = rocopy(getGameConf("luckyTree"))
+
+
+def getLuckyTreeConf(key=None):
+    """
+    获取免费金币摇钱树配置
+    :return:
+    """
+    global luckyTreeConf
+    if key is None:
+        return luckyTreeConf
+    return luckyTreeConf.get(str(key))
+
+
+def loadSuperbossPowerConf():
+    """
+    加载超级boss威力配置
+    """
+    global superbossPowerConf
+    superbossPowerConf = rocopy(getGameConf("superbossPower"))
+
+
+def getSuperbossPowerConf():
+    """
+    获取超级boss威力配置
+    """
+    global superbossPowerConf
+    return superbossPowerConf
+
+
+def loadLevelPrizeWheelConf():
+    """
+    加载等级转盘(青铜、白银、黄金、铂金、钻石)
+    :return:
+    """
+    global levelPrizeWheelConf
+    levelPrizeWheelConf = rocopy(getGameConf("prizeWheel_m"))
+
+
+def getLevelPrizeWheelConf():
+    """
+    获取等级转盘的配置
+    :return:
+    """
+    global levelPrizeWheelConf
+    return levelPrizeWheelConf
+
+
+def getTimePointMatchSkillConf():
+    '''回馈赛的随机固定技能配置'''
+    global timePointMatchSkillConf
+    timePointMatchSkillConf = rocopy(getGameConf("timePointMatchSkill_m"))
 
 
 def initConfig():
@@ -1788,17 +2000,17 @@ def initConfig():
     loadBigPrizeConf()
     loadCompActConf()
     loadNewbie7DaysGfitConf()
-    loadLotteryTicActConf()
-    loadPassCardConf()
+    loadLotteryTicActConf()                                 # 加载渔场红包券抽奖配置
+    loadPassCardConf()                                      # 加载通行证活动配置
     loadSkillCompenConf()                                   # 加载技能补偿配置
-    loadABTestConf()
+    loadABTestConf()                                        #  加载ab test配置
     loadGiftAbcTestConf()
-    loadReturnerMissionConf()
+    loadReturnerMissionConf()                               # 加载回归豪礼配置
     loadMiniGameConf()
-    loadLuckyTreeConf()
+    loadLuckyTreeConf()                                     # 加载免费金币摇钱树配置
     loadExchangeStoreConf()
-    loadSuperbossPowerConf()
-    loadLevelPrizeWheelConf()
+    loadSuperbossPowerConf()                                # 加载超级boss威力配置
+    loadLevelPrizeWheelConf()                               # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
 
 
 def registerConfigEvent():
@@ -1906,18 +2118,18 @@ def reloadConfig(event):
         getConfigPath("poseidon"): loadPoseidonConf,
         getConfigPath("bigPrize"): loadBigPrizeConf,
         getConfigPath("competition"): loadCompActConf,
-        getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,
-        getConfigPath("lotteryTicket"): loadLotteryTicActConf,
-        getConfigPath("passCard"): loadPassCardConf,
+        getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,      # 加载默认商店配置
+        getConfigPath("lotteryTicket"): loadLotteryTicActConf,          # 加载渔场红包券抽奖配置
+        getConfigPath("passCard"): loadPassCardConf,                    # 加载通行证活动配置
         getConfigPath("skillCompensate"): loadSkillCompenConf,          # 加载技能补偿配置
-        getConfigPath("abTest"): loadABTestConf,
+        getConfigPath("abTest"): loadABTestConf,                        # 加载ab test配置
         getConfigPath("giftAbcTest"): loadGiftAbcTestConf,
-        getConfigPath("returnerMission"): loadReturnerMissionConf,
+        getConfigPath("returnerMission"): loadReturnerMissionConf,      # 加载回归豪礼配置
         getConfigPath("miniGame"): loadMiniGameConf,
-        getConfigPath("luckyTree"): loadLuckyTreeConf,
+        getConfigPath("luckyTree"): loadLuckyTreeConf,                  # 加载免费金币摇钱树配置
         getConfigPath("exchangeStore"): loadExchangeStoreConf,
-        getConfigPath("superbossPower"): loadSuperbossPowerConf,
-        getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,
+        getConfigPath("superbossPower"): loadSuperbossPowerConf,        # 加载超级boss威力配置
+        getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,         # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
     }
     try:
         for keyName in event.keylist:
