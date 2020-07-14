@@ -1219,6 +1219,21 @@ def getDynamicOddsConf(fishPool):
     return dynamicOddsConf.get(str(fishPool), {})
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def loadCatchDropConf():
     """
     加载捕获掉率配置
@@ -1240,22 +1255,16 @@ def getCatchDropConf(fpMultiple, fishType, uid):
     pass
 
 
-def loadGrandPrixConf():
-    """
-    加载大奖赛配置
-    """
-    global grandPrixConf
-    grandPrixConf = rocopy(getGameConf("grandPrix"))
 
 
-def getGrandPrixConf(key_=None):
-    """
-    获取大奖赛配置
-    """
-    global grandPrixConf
-    if key_ is None:
-        return grandPrixConf
-    return rwcopy(grandPrixConf.get(str(key_)))
+
+
+
+
+
+
+
+
 
 
 
@@ -1668,6 +1677,127 @@ def getTreasureConf(kindId=None, effectType=None, level=None):
 
 
 
+def loadGrandPrixConf():
+    """
+    加载大奖赛配置
+    """
+    global grandPrixConf
+    grandPrixConf = rocopy(getGameConf("grandPrix"))
+
+
+def getGrandPrixConf(key_=None):
+    """
+    获取大奖赛配置
+    """
+    global grandPrixConf
+    if key_ is None:
+        return grandPrixConf
+    return rwcopy(grandPrixConf.get(str(key_)))
+
+
+def loadFestivalTurntableConf():
+    """
+    加载节日转盘抽大奖活动配置
+    """
+    global festivalTurntableConf
+    festivalTurntableConf = rocopy(getGameConf("festivalTurntable"))
+
+
+def getFestivalTurntableItemConf(key_=None):
+    """
+    获取节日转盘抽大奖配置
+    """
+    global festivalTurntableConf
+    if key_ is None:
+        return festivalTurntableConf
+    return rwcopy(festivalTurntableConf.get(str(key_)))
+
+
+def loadSuperbossExchangeConf():
+    """
+    加载超级boss兑换配置
+    """
+    global superbossExchangeConf
+    superbossExchangeConf = rocopy(getGameConf("superbossExchange"))
+
+
+def getSuperbossExchangeConf(fishPool=None):
+    """
+    获取超级boss兑换配置
+    """
+    global superbossExchangeConf
+    if fishPool is None:
+        return superbossExchangeConf
+    return rwcopy(superbossExchangeConf.get(str(fishPool)))
+
+
+def loadSuperbossMinigameConf():
+    """
+    加载超级boss小游戏配置
+    """
+    global superbossMinigameConf
+    superbossMinigameConf = rocopy(getGameConf("superbossMinigame"))
+
+
+def getSuperbossMinigameConf():
+    """
+    获取超级boss小游戏配置
+    """
+    global superbossMinigameConf
+    return superbossMinigameConf
+
+
+def loadSuperbossCommonConf():
+    """
+    加载超级boss通用配置
+    """
+    global superbossCommonConf
+    superbossCommonConf = rocopy(getGameConf("superbossCommon"))
+
+
+def getSuperbossCommonConf():
+    """
+    获取超级boss通用配置
+    """
+    global superbossCommonConf
+    return superbossCommonConf
+
+
+def loadCollectItemConf():
+    """
+    加载收集xx道具领奖活动配置(赢永久魅影皮肤)
+    """
+    global collectItemConf
+    collectItemConf = rocopy(getGameConf("collectItem"))
+
+
+def getCollectItemConf(key_=None):
+    """
+    获取收集xx道具领奖活动配置
+    """
+    global collectItemConf
+    if key_ is None:
+        return collectItemConf
+    return rwcopy(collectItemConf.get(str(key_)))
+
+
+def loadPoseidonConf():
+    """
+    加载海皇来袭配置
+    """
+    global poseidonConf
+    poseidonConf = rocopy(getGameConf("poseidon"))
+
+
+def getPoseidonConf(key_=None):
+    """
+    获取海皇来袭配置
+    """
+    global poseidonConf
+    if key_ is None:
+        return poseidonConf
+    return poseidonConf.get(str(key_))
+
 
 def loadBigPrizeConf():
     """
@@ -1770,7 +1900,7 @@ def loadSkillCompenConf():
     """
     global skillCompenConf
     skillCompenConf = rocopy(getGameConf("skillCompensate"))
-    
+
 
 def getSkillCompenConf(key_=None):
     """

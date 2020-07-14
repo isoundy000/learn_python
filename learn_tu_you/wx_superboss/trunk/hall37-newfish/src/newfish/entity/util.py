@@ -429,6 +429,17 @@ def getOneResultByWeight(_list, _key="weight"):
 
 
 
+def saveRankInfo(userId, score, rankingId, time_, expireTime=None, updateTime=None):
+    """保存排行榜信息"""
+    time_ = timestampToStr(time_, "%Y-%m-%d")
+    expireTime = expireTime or 24 * 3600
+    updateTime = updateTime or pktimestamp.getCurrentTimestamp()
+    key_ = UserData.rankingInfo % (str(rankingId), time_, FISH_GAMEID, userId)
+    daobase.executeUserCmd(userId, "SETEX", key_, expireTime, json.dumps({
+        "score": score,
+        "time": updateTime
+    }))
+
 
 
 def isNumber(str):

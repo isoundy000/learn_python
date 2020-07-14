@@ -22,3 +22,12 @@ def getMsgPack():
 
 def newOkMsgPack(code=1):
     pass
+
+
+
+def getClientId(msg=None):
+    '''
+    获取当前命令的clientId的大版本号,
+    如果消息中没有clientId,那么取用户的登录时的clientId
+    '''
+    pass

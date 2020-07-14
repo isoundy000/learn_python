@@ -289,6 +289,43 @@ class FireEvent(UserEvent):
         self.fpMultiple = fpMultiple
 
 
+class UseCoolDownEvent(UserEvent):
+    """
+    使用冷却事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId):
+        super(UseCoolDownEvent, self).__init__(userId, tableId)
+        self.roomId = roomId
+        self.tableId = tableId
+
+
+class NFChargeNotifyEvent(ChargeNotifyEvent):
+    """
+    充值通知事件
+    """
+    def __init__(self, userId, gameId, rmbs, diamonds, productId, clientId, isAddVipExp):
+        super(NFChargeNotifyEvent, self).__init__(userId, gameId, rmbs, diamonds, productId, clientId)
+        self.isAddVipExp = isAddVipExp
+
+
+class RankOverEvent(UserEvent):
+    """
+    排行榜结算事件
+    """
+    def __init__(self, userId, gameId, rankId, rankType, rank, params=None):
+        super(RankOverEvent, self).__init__(userId, gameId)
+        self.rankId = rankId
+        self.rankType = rankType
+        self.rank = rank
+        self.params = params
+
+
+
+
+
+
+
+
 class ItemMonitorEvent(UserEvent):
     """
     道具检测事件

@@ -218,3 +218,14 @@ def ensureString(val, defVal=''):
     if val is None:
         return defVal
     return str(val)
+
+
+def replaceParams(string, params):
+    """替换参数"""
+    if string:
+        for k, v in params.iteritems():
+            k = '${%s}' % k
+            if not isstring(v):
+                v = str(v)
+            string = string.replace(k, v)
+    return string

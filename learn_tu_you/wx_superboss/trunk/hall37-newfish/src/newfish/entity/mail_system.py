@@ -26,9 +26,26 @@ class MailSenderType:
 
 # 邮件奖励类型
 class MailRewardType:
-
+    SystemReward = 0  # 系统奖励
+    Present = 1  # 赠送
+    StarRank = 2  # 海星榜奖励
+    SystemCompensate = 3  # 系统补偿
+    HonorReward = 4  # 称号奖励
+    FriendReward = 5  # 渔友对战胜利奖励
+    FriendUnbind = 6  # 渔友对战房间解散退还
+    RobberyRank = 7  # 招财赢家榜奖励
+    RobberyCompensate = 8  # 招财补偿
+    ChestReward = 9  # 宝箱兑换奖励
+    ShareReward = 10  # 分享奖励
+    MatchReward = 11  # 比赛奖励
+    InviteReward = 12  # 邀请有礼
+    ActivityReward = 13  # 活动奖励
+    TreasureReward = 14  # 宝藏奖励
+    SystemInfo = 15  # 系统通知
+    FishCanReturn = 16  # 鱼罐头返还
     GrandPrixReward = 17  # 大奖赛奖励
-
+    PoseidonRank = 18  # 海皇赢家榜奖励
+    PoseidonCompensate = 19  # 海皇补偿
 
 
 def addOneMail(senderUserId, receiverUserId, mailRewardType, rewards=None, message=None, title=None):
