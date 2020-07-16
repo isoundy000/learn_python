@@ -5,6 +5,17 @@
 
 
 
+def markHttpHandler(clazz):
+    '''
+    标记一个class为HTTP命令的入口类
+    '''
+    pass
+
+
+def markHttpMethod(httppath, jsonp=False, ip_filter=False, responseType='json', scope='global'):
+    pass
+
+
 def markCmdActionHandler(clazz):
     '''
     标记一个class为客户端发送的TCPCMD命令的入口类

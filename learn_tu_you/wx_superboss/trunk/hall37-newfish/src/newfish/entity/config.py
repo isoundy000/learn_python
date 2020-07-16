@@ -977,6 +977,13 @@ def getMinWeaponId():
 
 
 
+
+
+
+
+
+
+
 def loadCommonConf():
     """
     加载通用配置
@@ -1533,6 +1540,44 @@ def getUserLevelConf():
     """
     global userLevelConf
     return userLevelConf
+
+
+
+
+
+
+
+
+def loadRobotConf():
+    """
+    加载机器人配置
+    """
+    global robotConf
+    robotConf = rocopy(getGameConf("robot"))
+
+
+def getRobotConf(key):
+    """
+    读取机器人配置
+    """
+    global robotConf
+    return robotConf.get(str(key))
+
+
+def loadRandomMultipleFishConf():
+    """
+    加载随机倍率鱼出现概率配置
+    """
+    global randomMultipleFishConf
+    randomMultipleFishConf = rocopy(getGameConf("randomMultipleFish"))
+
+
+def getRandomMultipleFishConf(fishPool):
+    """
+    读取随机倍率鱼出现概率配置
+    """
+    global randomMultipleFishConf
+    return randomMultipleFishConf.get(str(fishPool), [])
 
 
 def loadGunLevelConf():

@@ -132,7 +132,7 @@ class FishPlayer(TYPlayer):
         self.maxEnergy = 0
         self.luckyNum = 0
         self.luckyCount = 0
-        self.currentTask = None
+        self.currentTask = None                     # 玩家当前任务[任务名、任务Id、类型、条数]
         self.taskSystemUser = None
         self.taskSystemTable = self.table.taskSystemTable
         self.activitySystem = None

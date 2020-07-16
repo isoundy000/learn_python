@@ -23,9 +23,9 @@ class FishTableConf(object):
         self.allNormalGroupIds = []                         # 普通鱼
         self.allBossGroupIds = {}                           # boss鱼阵
         self.allCallGroupIds = []
-        self.allTideGroupIds = []
-        self.allActTideGroupIds = []
-        self.allActTide2GroupIds = []
+        self.allTideGroupIds = []                           # 普通鱼潮
+        self.allActTideGroupIds = []                        # 活动鱼潮1
+        self.allActTide2GroupIds = []                       # 活动鱼潮2
         self.allChestGroupIds = []
         self.allCouponGroupIds = {}
         self.allActivityGroupIds = {}

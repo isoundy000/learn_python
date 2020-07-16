@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
-
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 18/03/15.
+"""
 import time
 import copy
 import math
-import random
 import json
 from datetime import date, datetime, timedelta
 
@@ -17,15 +15,15 @@ from poker.entity.biz import bireport
 from poker.entity.dao import userdata, gamedata, daobase
 from poker.entity.configure import gdata
 from hall.entity.hallconf import HALL_GAMEID
-from hall.entity import hallranking, hallconf, hallvip, hallitem
+from hall.entity import hallranking, hallconf, hallitem
 from newfish.entity import config, util, weakdata
 from newfish.entity.config import CLIENTID_ROBOT, FISH_GAMEID, \
     BRONZE_BULLET_KINDID, SILVER_BULLET_KINDID, GOLD_BULLET_KINDID, \
-    CHIP_KINDID, COUPON_KINDID, BULLET_KINDIDS, BULLET_VALUE
+    CHIP_KINDID, COUPON_KINDID, BULLET_KINDIDS
 from newfish.entity.redis_keys import GameData, WeakData, UserData
 from newfish.entity.event import BulletChangeEvent, RankOverEvent
-from newfish.entity import mail_system, robbery_lottery_pool, poseidon_lottery_pool
-from newfish.entity.honor import honor_system
+from newfish.entity import mail_system
+from newfish.entity.lotterypool import poseidon_lottery_pool, robbery_lottery_pool
 from newfish.entity.fishactivity import fish_activity_system
 from newfish.entity.mail_system import MailRewardType
 
@@ -219,11 +217,9 @@ class RankingBase(object):
         rankRewardConf = self.rankConf
         ranking["order"] = self.rankType
         ranking["rankType"] = self.rankType
-        rankingNameId = rankRewardConf.get("rankName")
-        ranking["rankName"] = config.getMultiLangTextConf(str(rankingNameId), lang=self.lang)
-        rankingDescId = rankRewardConf.get("rankDesc")
-        if rankingDescId:
-            ranking["rankDesc"] = config.getMultiLangTextConf(str(rankingDescId), lang=self.lang)
+        ranking["rankName"] = config.getMultiLangTextConf(str(rankRewardConf.get("rankName")), lang=self.lang)
+        if rankRewardConf.get("rankDesc"):
+            ranking["rankDesc"] = config.getMultiLangTextConf(str(rankRewardConf.get("rankDesc")), lang=self.lang)
         cacheRanking = self.getRanking(self._getRankTimestamp())
         cacheRanking = copy.deepcopy(cacheRanking[2])
         ownRanking = self._getOwnRanking(self.userId, cacheRanking["rankData"])                 # 自己的排名信息
@@ -413,7 +409,7 @@ class RankingBase(object):
 
     def getTopNUserRank(self, userId, _timestamp, _rankDefine=None):
         """
-        获取topN玩家排名
+        获取指定玩家排名
         """
         rankingList = self._getTopN(_timestamp, _rankDefine)
         for index, user in enumerate(rankingList.rankingUserList):
@@ -782,8 +778,7 @@ class TodayGrandPrixRanking(RankingBase):
                         while idx >= rankingListLen:
                             idx -= 1
                         user = rankingList.rankingUserList[idx]                                     # 6-10第十名玩家
-                        name = config.getMultiLangTextConf("ID_RANK_INFO_1", lang=self.lang) % \
-                               (rankRewards["ranking"]["start"], rankRewards["ranking"]["end"])     # %d-%d名
+                        name = config.getMultiLangTextConf("ID_RANK_INFO_1", lang=self.lang) % (rankRewards["ranking"]["start"], rankRewards["ranking"]["end"])     # %d-%d名
                         userId = sex = vipLevel = 0
                         avatar = ""
                     userRank = user.rank + 1
@@ -792,8 +787,7 @@ class TodayGrandPrixRanking(RankingBase):
                     if rankRewards["ranking"]["start"] == rankRewards["ranking"]["end"]:
                         name = config.getMultiLangTextConf("ID_HAS_NO_DATA", lang=self.lang)        # 暂无数据
                     else:
-                        name = config.getMultiLangTextConf("ID_RANK_INFO_1", lang=self.lang) % \
-                               (rankRewards["ranking"]["start"], rankRewards["ranking"]["end"])
+                        name = config.getMultiLangTextConf("ID_RANK_INFO_1", lang=self.lang) % (rankRewards["ranking"]["start"], rankRewards["ranking"]["end"])
                     userId = sex = vipLevel = score = userRank = 0
                     avatar = ""
                 rewards = self._buildRewards(rankRewards["rewards"]) if rankRewards["rewards"] else []
@@ -811,6 +805,7 @@ class TodayGrandPrixRanking(RankingBase):
             if ftlog.is_debug():
                 for idx, user in enumerate(rankingList.rankingUserList):
                     ftlog.debug("TodayGrandPrixRanking, rank =", idx + 1, user.rank + 1, user.userId, user.score)
+
         return (rankingList, int(time.time()), {
             "rankId": self.rankDefine.rankingId,
             "issueNum": rankingList.issueNumber,
@@ -821,6 +816,85 @@ class TodayGrandPrixRanking(RankingBase):
             "bonusPool": bonusPool,
             "superbossPool": 0
         })
+
+    def _getRankingDetail(self, timestamp):
+        """
+        获取所有用户排行榜数据
+        :param rankingDefine: 数值配置
+        :param timestamp: 时间戳
+        :return:  排行榜所有数据
+        """
+        rankingList = self.getTopNRankUsers(timestamp)
+        rankData = []
+        if ftlog.is_debug():
+            ftlog.debug("_getRankingDetail, rankType =", self.rankType, "rankingList =", len(rankingList.rankingUserList))
+        for index, user in enumerate(rankingList.rankingUserList):
+            if user.userId == 0:
+                continue
+            name = util.getNickname(user.userId)
+            sex, avatar = userdata.getAttrs(user.userId, ["sex", "purl"])
+            score = self._getOneUserScore(user.userId, user.score)                                  # 获取排名积分
+            rewards = self._getOneUserReward(user.userId, user.rank + 1, 0, user.score)             # 获取排名的奖励
+            vipLevel = util.getVipShowLevel(user.userId)
+            oneUserRankData = {
+                "userId": user.userId,
+                "name": name,
+                "sex": sex,
+                "score": score,
+                "rank": user.rank + 1,
+                "avatar": avatar,
+                "vip": vipLevel,
+                "rewards": rewards
+            }
+            rankData.append(oneUserRankData)
+
+        return (rankingList, int(time.time()), {                # 获取topN玩家列表、时间
+            "rankId": self.rankDefine.rankingId,                # 大厅排行榜Id
+            "issueNum": rankingList.issueNumber,                #
+            "name": rankingList.rankingDefine.name,             # 大厅排行榜名
+            "desc": rankingList.rankingDefine.desc,             # 排行榜描述
+            "type": rankingList.rankingDefine.rankingType,      # 排行榜类型
+            "rankData": rankData,                               # 排行榜数据
+        })
+
+    def getRankingDetail(self, timestamp=None, refresh=False):
+        """
+        @return: (TYRankingList, timestamp, rankingList)
+        获取榜单数据
+        """
+        global cacheRankings
+        if not timestamp:
+            timestamp = pktimestamp.getCurrentTimestamp()
+        cacheRanking = cacheRankings.get(self.rankDefine.rankingId)
+        rankRewardConf = self.rankConf
+        # 更新排行榜缓存.
+        if (refresh or not cacheRanking or (int(time.time()) - cacheRanking[1]) >= rankRewardConf.get("cacheTime", 0) or
+            pktimestamp.getDayStartTimestamp(timestamp) != pktimestamp.getDayStartTimestamp(cacheRanking[1])):
+            cacheRanking = self._getRankingDetail(timestamp)
+            if cacheRanking:
+                cacheRankings[self.rankDefine.rankingId] = cacheRanking
+            else:
+                if self.rankDefine.rankingId in cacheRankings:
+                    del cacheRankings[self.rankDefine.rankingId]
+        return cacheRanking
+
+    def getRankingInfo2(self):
+        """
+        获取排行榜相关数据
+        """
+        ranking = {}
+        rankRewardConf = self.rankConf
+        ranking["order"] = self.rankType
+        ranking["rankType"] = self.rankType
+        ranking["rankName"] = config.getMultiLangTextConf(str(rankRewardConf.get("rankName")), lang=self.lang)
+        if rankRewardConf.get("rankDesc"):
+            ranking["rankDesc"] = config.getMultiLangTextConf(str(rankRewardConf.get("rankDesc")), lang=self.lang)
+        cacheRanking = self.getRankingDetail(self._getRankTimestamp())
+        cacheRanking = copy.deepcopy(cacheRanking[2])
+        ownRanking = self._getOwnRanking(self.userId, cacheRanking["rankData"])                 # 自己的排名信息
+        cacheRanking["rankData"].insert(0, ownRanking)                                          # 排名信息在第一位
+        ranking["rankData"] = cacheRanking["rankData"]                                          # 排名详细数据
+        return ranking
 
     def _getOneUserScore(self, userId, score, isOwner=False):
         """获取玩家自己的积分"""

@@ -81,6 +81,110 @@ class UseSkillEvent(UserEvent):
         self.fpMultiple = fpMultiple
 
 
+class UseSkillItemEvent(UserEvent):
+    """
+    使用技能道具事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId, kindId):
+        super(UseSkillItemEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+        self.kindId = kindId
+
+
+class UseSmiliesEvent(UserEvent):
+    """
+    使用表情事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId, smilieId):
+        super(UseSmiliesEvent, self).__init__(userId, gameId)
+        self.smilieId = smilieId
+
+
+class OpenChestEvent(UserEvent):
+    """
+    打开宝箱事件
+    """
+    def __init__(self, userId, gameId, chestId, atOnce):
+        super(OpenChestEvent, self).__init__(userId, gameId)
+        self.chestId = chestId
+        self.atOnce = atOnce
+
+
+class ShopBuyEvent(UserEvent):
+    """
+    购买商品事件
+    """
+    def __init__(self, userId, gameId, productId, buyType, itemId, shopType):
+        super(ShopBuyEvent, self).__init__(userId, gameId)
+        self.productId = productId
+        self.buyType = buyType
+        self.itemId = itemId
+        self.shopType = shopType
+
+
+class GiftBuyEvent(UserEvent):
+    """
+    购买礼包事件
+    """
+    def __init__(self, userId, gameId, productId, buyType, giftId):
+        super(GiftBuyEvent, self).__init__(userId, gameId)
+        self.productId = productId
+        self.buyType = buyType
+        self.giftId = giftId
+
+
+class BuyChestEvent(UserEvent):
+    """
+    购买宝箱事件
+    """
+    def __init__(self, userId, gameId, chestId, buyType):
+        super(BuyChestEvent, self).__init__(userId, gameId)
+        self.chestId = chestId
+        self.buyType = buyType
+
+
+class BulletBuyEvent(UserEvent):
+    """
+    购买招财珠事件
+    """
+    def __init__(self, userId, gameId, itemId, count):
+        super(BulletBuyEvent, self).__init__(userId, gameId)
+        self.itemId = itemId
+        self.count = count
+
+
+class WinCmpttTaskEvent(UserEvent):
+    """
+    夺宝赛获奖事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId):
+        super(WinCmpttTaskEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+
+
+class WinNcmpttTaskEvent(UserEvent):
+    """
+    限时任务获奖事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId):
+        super(WinNcmpttTaskEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+
+
+class WinBonusTaskEvent(UserEvent):
+    """
+    奖金赛获奖事件
+    """
+    def __init__(self, userId, gameId, roomId, tableId, rank):
+        super(WinBonusTaskEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+        self.rank = rank
+
+
 class EnterTableEvent(UserEvent):
     """
     进入桌子事件
@@ -318,6 +422,16 @@ class RankOverEvent(UserEvent):
         self.rankType = rankType
         self.rank = rank
         self.params = params
+
+
+class GainChestEvent(UserEvent):
+    """
+    领取宝箱奖励事件 需要的获取奖励的宝箱处理 目前只把需要的地方处理了一下
+    """
+    def __init__(self, userId, gameId, chestId, chestFrom):
+        super(GainChestEvent, self).__init__(userId, gameId)
+        self.chestFrom = chestFrom      # 渔场比赛获得
+        self.chestId = chestId          # dropItem
 
 
 

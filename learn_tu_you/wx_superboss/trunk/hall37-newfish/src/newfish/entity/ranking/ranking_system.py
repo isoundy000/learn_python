@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/7/24.
+"""
 
 import random
 import json
@@ -50,13 +50,16 @@ def getAllTabs(userId):
     return confs
 
 
-def getRankingInfoByType(userId, clientId, rankType, httpRequest=False):
+def getRankingInfoByType(userId, clientId, rankType, httpRequest=False, rankDetail=False):
     """通过排行榜类型获取排行榜信息"""
     rankClass = _getRankingClass(rankType, userId, clientId, httpRequest)
-    return rankClass.getRankingInfo() if rankClass else {}
+    if rankDetail:
+        return rankClass.getRankingInfo2()
+    else:
+        return rankClass.getRankingInfo() if rankClass else {}
 
 
-def getRankingTabs(userId, clientId, rankType, httpRequest=False):
+def getRankingTabs(userId, clientId, rankType, httpRequest=False, rankDetail=False):
     """
     获取指定排行榜信息
     :param userId:
@@ -74,14 +77,13 @@ def getRankingTabs(userId, clientId, rankType, httpRequest=False):
         return tabs
     lang = util.getLanguage(userId, clientId)
     ranking["rankType"] = rankType
-    rankNameId = rankRewardConf.get("rankName")
+    ranking["rankName"] = config.getMultiLangTextConf(str(rankRewardConf.get("rankName")), lang=lang)
     rankDescId = rankRewardConf.get("rankDesc")
-    ranking["rankName"] = config.getMultiLangTextConf(str(rankNameId), lang=lang)
     if rankDescId:
         ranking["rankDesc"] = config.getMultiLangTextConf(str(rankDescId), lang=lang)
     else:
         ranking["rankDesc"] = ""
-    ranking = getRankingInfoByType(userId, clientId, rankType, httpRequest) or ranking
+    ranking = getRankingInfoByType(userId, clientId, rankType, httpRequest, rankDetail) or ranking
     tabs.append(ranking)
     ftlog.debug("getrankingtabs", tabs, "ranking =", ranking)
     return tabs
