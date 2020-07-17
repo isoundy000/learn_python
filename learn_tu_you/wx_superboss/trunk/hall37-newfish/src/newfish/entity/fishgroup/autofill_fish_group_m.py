@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/10
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2020/6/16.
+"""
 
 import random
 import math
@@ -74,8 +74,8 @@ class AutofillFishGroup(object):
         """
         检测该鱼种类别是否需要填充鱼
         """
-        grounIndex = self._categoryGroupConf[categoryConf["categoryId"]]
-        group = categoryConf["groups"][grounIndex]
+        groupIndex = self._categoryGroupConf[categoryConf["categoryId"]]
+        group = categoryConf["groups"][groupIndex]
         groupType = group["groupType"]
         if groupType == 1:
             for fishConf in group["fishes"]:

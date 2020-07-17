@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/15
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/6/19.
+"""
 
 import random
 
@@ -14,7 +14,6 @@ class MultipleFishGroup(object):
     """
     倍率鱼群（比赛场专用）
     """
-
     def __init__(self, table):
         self.table = table
         self._tableRank = 0

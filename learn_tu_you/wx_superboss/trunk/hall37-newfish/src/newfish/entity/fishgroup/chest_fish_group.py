@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/2
-
+# -*- coding=utf-8 -*-
+"""
+Created by haohongxian on 2017/8/1.
+"""
 
 import random
 import math

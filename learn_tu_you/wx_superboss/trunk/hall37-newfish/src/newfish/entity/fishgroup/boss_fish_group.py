@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/1
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/4/12.
+"""
 
 import random
 import time
@@ -36,7 +36,7 @@ class BossFishGroup(object):
 
     def _setBossTimer(self):
         """启动定时器"""
-        if self._setBossTimer:
+        if self._nextBossTimer:
             self._nextBossTimer.cancel()
             self._nextBossTimer = None
         self._nextBossTimer = FTLoopTimer(self._interval, -1, self._addBossFishGroup)
@@ -57,9 +57,9 @@ class BossFishGroup(object):
                     if ftlog.is_debug():
                         ftlog.debug("BossFishGroup._addBossFishGroup, delay !", self.table.tableId, self._bossGroupId,
                                 self._group.extendGroupTime)
-                        self._autofillTimer = FTLoopTimer(self._group.extendGroupTime, 0, self._addBossFishGroup, False, False)
-                        self._autofillTimer.start()
-                        self._group.extendGroupTime = 0
+                    self._autofillTimer = FTLoopTimer(self._group.extendGroupTime, 0, self._addBossFishGroup, False, False)
+                    self._autofillTimer.start()
+                    self._group.extendGroupTime = 0
                 else:
                     if ftlog.is_debug():
                         ftlog.debug("BossFishGroup._addBossFishGroup, cancel insert !", self.table.tableId, self._bossGroupId)

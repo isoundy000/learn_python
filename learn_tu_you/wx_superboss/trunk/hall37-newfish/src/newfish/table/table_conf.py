@@ -32,10 +32,10 @@ class FishTableConf(object):
         self.allRobberyBossGroupIds = []
         self.allBufferGroupIds = []
         self.allMultipleGroupIds = {}
-        self.allShareGroupIds = {}
-        self.allRainbowGroupIds = []
+        self.allShareGroupIds = {}                          # 所有分享宝箱鱼
+        self.allRainbowGroupIds = []                        # 所有的彩虹鱼鱼群
         self.allTerrorGroupIds = {}                         # terror鱼初始化
-        self.allAutofillGroupIds = {}
+        self.allAutofillGroupIds = {}                       # 所有自动填充鱼
         self.allGrandPrixGroupIds = {}                      # 大奖所有鱼群
         self.allSuperBossGroupIds = {}
         self.allSuperBossBornGroupIds = {}

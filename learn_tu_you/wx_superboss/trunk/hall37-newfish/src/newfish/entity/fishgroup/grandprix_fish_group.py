@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/1
-
+# -*- coding=utf-8 -*-
 """
 大奖赛鱼阵
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/10/12
+
 
 import random
 
@@ -18,7 +17,6 @@ class GrandPrixFishGroup(object):
     """
     grandprix鱼群
     """
-
     def __init__(self, table):
         self._fishTypes = config.getGrandPrixConf("group").values()
         self._interval = 60

@@ -379,6 +379,76 @@ class ComboEvent(UserEvent):
         self.chipNum = chipNum          # 金币数量
 
 
+class RobberyBulletChangeEvent(UserEvent):
+    """
+    招财模式招财珠变化
+    """
+    def __init__(self, userId, gameId, kindId, count, cost):
+        super(RobberyBulletChangeEvent, self).__init__(userId, gameId)
+        self.kindId = kindId
+        self.count = count
+        self.cost = cost
+
+
+class RobberyBulletProfitEvent(UserEvent):
+    """
+    招财模式结算时盈利金币数
+    """
+    def __init__(self, userId, gameId, coin):
+        super(RobberyBulletProfitEvent, self).__init__(userId, gameId)
+        self.coin = coin
+
+
+class NewbieTaskCompleteEvent(UserEvent):
+    """
+    新手任务完成事件
+    """
+
+    def __init__(self, userId, gameId):
+        super(NewbieTaskCompleteEvent, self).__init__(userId, gameId)
+
+
+class StoreBuyEvent(UserEvent):
+    """
+    商城购买事件
+    """
+
+    def __init__(self, userId, gameId, actionType, productId):
+        super(StoreBuyEvent, self).__init__(userId, gameId)
+        self.actionType = actionType
+        self.productId = productId
+
+
+class TableTaskStartEvent(UserEvent):
+    """
+    渔场任务开始事件
+    """
+
+    def __init__(self, userId, gameId, tableId, taskId):
+        super(TableTaskStartEvent, self).__init__(userId, gameId)
+        self.tableId = tableId
+        self.taskId = taskId
+
+
+class TableTaskEndEvent(UserEvent):
+    """
+    渔场任务结束事件
+    """
+
+    def __init__(self, userId, gameId, tableId, taskId, isComplete, isLimitTime, rewards):
+        super(TableTaskEndEvent, self).__init__(userId, gameId)
+        self.tableId = tableId
+        self.taskId = taskId
+        self.isComplete = isComplete
+        self.isLimitTime = isLimitTime
+        self.rewards = rewards
+
+
+
+
+
+
+
 class FireEvent(UserEvent):
     """
     开火事件

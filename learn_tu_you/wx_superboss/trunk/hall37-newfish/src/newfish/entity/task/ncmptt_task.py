@@ -35,6 +35,8 @@ class NcmpttTask(TableMatchTask):
         self.usersData = {}                                 # {"uid": {"uid": uid, "task": task, "targets": targets, "state": state, "rewardType": 1, "results": {}}}
         self.userStartTimer = {}                            # {"uid": startTimer}
         self.userEndTimer = {}
+        # self.readyTimer = FishTableTimer(self.table)
+        # self.readyTimer.setup(self.taskInterval, "task_ready", {"task": self.taskName})
         self.recordStartTime = 0
         self.taskId = "%d-%d" % (self.table.tableId, 0)     # 任务Id
 
@@ -45,6 +47,8 @@ class NcmpttTask(TableMatchTask):
         self.userIds = []
         self.usersData = {}
         self.recordStartTime = 0
+        # if self.readyTimer:
+        #     self.readyTimer.cancel()
 
     def getTaskState(self, userId):
         """获取任务状态"""

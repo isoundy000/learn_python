@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/13
-
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 2018/4/18.
+"""
 
 import random
 
@@ -51,7 +50,8 @@ class BufferFishGroup(object):
             self._nextBufferTimer = None
         interval_ = random.randint(int(25 + (1 - self._tableRank) * 20), int((1 - self._tableRank) * 40 + 35))
         ftlog.debug("_setBufferTimer========>", self.table.tableId, interval_, self._tableRank)
-        self._nextBufferTimer = FTLoopTimer(interval_, 0, self._addBufferFishGroup)
+        self._nextBufferTimer = FTLoopTimer(interval_, 0,  self._addBufferFishGroup)
+        self._nextBufferTimer.start()
 
     def _addBufferFishGroup(self):
         """添加buffer鱼群"""
@@ -112,4 +112,4 @@ class BufferFishGroup(object):
 
 
 def cmpGroupId(key1, key2):
-    return cmp(int(key1[01]), int(key2[-1]))
+    return cmp(int(key1[-1]), int(key2[-1]))

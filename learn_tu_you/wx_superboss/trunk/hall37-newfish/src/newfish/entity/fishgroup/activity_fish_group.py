@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/9/21.
+"""
 
 import time
 import random
@@ -48,8 +48,7 @@ class ActivityFishGroup(object):
             minTime = hippoFishConf["minTime"]
             maxTime = hippoFishConf["maxTime"]
             randomTime = random.randint(minTime, maxTime)
-            ftlog.debug("HippoFishGroup->_nextHippoGroup->", self.table.runConfig.fishPool, minTime, maxTime,
-                        randomTime)
+            ftlog.debug("HippoFishGroup->_nextHippoGroup->", self.table.runConfig.fishPool, minTime, maxTime, randomTime)
             self._nextHippoTimer = FTLoopTimer(randomTime, 0, self._checkHippoCondition)
             self._nextHippoTimer.start()
 
@@ -78,8 +77,7 @@ class ActivityFishGroup(object):
             ftlog.debug("ActivityFishGroup->_checkCondition->totalBullet =", totalBullet, self.table.bigRoomId)
             interval = time.time() - self._lastAppearTime
             if (totalBullet >= activityFishConf["totalBullet"] and interval >= activityFishConf["minSecond"]) or \
-                            interval >= activityFishConf[
-                        "maxSecond"]:  # 子弹大于配置表中的子弹数且时间间隔大于等于最小配置间隔 或者间隔大于等于最大时间，添加活动鱼阵
+                    interval >= activityFishConf["maxSecond"]:  # 子弹大于配置表中的子弹数且时间间隔大于等于最小配置间隔 或者间隔大于等于最大时间，添加活动鱼阵
                 randInt = random.randint(1, 10000)
                 for fish in activityFishConf["fishes"]:
                     probb = fish["probb"]

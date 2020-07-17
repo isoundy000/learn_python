@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/2
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/4/12.
+"""
 
 import time
 import random
@@ -126,7 +126,6 @@ class CouponFishGroup(object):
         if ftlog.is_debug():
             ftlog.debug("_isAppearUserCouponFish->userId =", userId, groupId, catchCountDict, rechargeAmount, totalEntityAmount)
         return groupId
-
 
     def _addUtilCouponFishGroup(self, groupId):
         """

@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
 """
 超级boss
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/11/26
+
+
 import random
 import time
 
@@ -83,9 +84,9 @@ def createSuperBoss(table):
     """
     超级boss鱼阵
     """
-    from newfish.entity.fishgroup.box_fish_group import BoxFishGroup
-    from newfish.entity.fishgroup.octopus_fish_group import OctopusFishGroup        # 巨型章鱼Boss鱼群
-    from newfish.entity.fishgroup.queen_fish_group import QueenFishGroup
+    from newfish.entity.fishgroup.superboss.box_fish_group import BoxFishGroup
+    from newfish.entity.fishgroup.superboss.octopus_fish_group import OctopusFishGroup		# 巨型章鱼Boss鱼群
+    from newfish.entity.fishgroup.superboss.queen_fish_group import QueenFishGroup
     superbossCls = {
         "44411": BoxFishGroup,
         "44412": OctopusFishGroup,

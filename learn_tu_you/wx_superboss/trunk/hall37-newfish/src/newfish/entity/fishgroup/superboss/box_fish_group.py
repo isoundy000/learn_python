@@ -1,10 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/12
+# -*- coding=utf-8 -*-
 """
 宝箱怪
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2020/5/25
+
 
 import random
 import time
@@ -14,7 +14,7 @@ from freetime.core.timer import FTLoopTimer
 from freetime.entity.msg import MsgPack
 from newfish.entity.msg import GameMsg
 from newfish.entity import config
-from newfish.entity.fishgroup.superboss_fish_group import SuperBossFishGroup
+from newfish.entity.fishgroup.superboss.superboss_fish_group import SuperBossFishGroup
 
 
 class BoxFishGroup(SuperBossFishGroup):
@@ -143,7 +143,7 @@ class BoxFishGroup(SuperBossFishGroup):
             if not _bossGroupIds:
                 _bossGroupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
         else:
-            _bossGroupIds = self.table.runConfig.allSuperBossBornGroupIds[fishType]
+            _bossGroupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
         if _bossGroupIds:
             _bossGroupId = random.choice(_bossGroupIds)
             if ftlog.is_debug():

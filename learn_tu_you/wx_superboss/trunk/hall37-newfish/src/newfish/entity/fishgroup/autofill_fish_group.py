@@ -1,8 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/9
-
+# -*- coding=utf-8 -*-
+"""
+Autofill鱼群
+"""
+# @Author  : Kangxiaopeng
+# @Time    : 2019/1/17
 
 import random
 import time
@@ -123,7 +124,7 @@ class AutofillFishGroup(object):
         #     # if v["group"] and v["group"].isAlive(nowTableTime) is True and v["alive"] is True:
         #     #     fishType = v.get("conf", {}).get("fishType", 0)
         #     #     if fishType in self.fishTypeList[idx]:
-        #     #
+        #     #         totalCount += 1
         tc = 0
         for ft in self.fishTypeList[idx]:
             if ft in self.table.fishCountMap:
@@ -167,7 +168,6 @@ class AutofillFishGroup(object):
             if isSupplyNow:
                 self._addAutofillFishGroup(idx)
             if ftlog.is_debug():
-                ftlog.debug("_checkFishTypeCount, supply !!", "tableId =", self.table.tableId, "idx =", idx,
-                            isSupplyNow)
+                ftlog.debug("_checkFishTypeCount, supply !!", "tableId =", self.table.tableId, "idx =", idx, isSupplyNow)
         if ftlog.is_debug():
             ftlog.debug("_checkFishTypeCount", "tableId =", self.table.tableId, "idx =", idx, "totalCount =", totalCount)

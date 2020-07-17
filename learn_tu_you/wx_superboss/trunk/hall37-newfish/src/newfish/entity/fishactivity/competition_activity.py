@@ -24,6 +24,13 @@ from newfish.entity.fishactivity.fish_activity import ActivityType
 from newfish.servers.table.rpc import table_remote
 
 
+
+class CompActState:
+    CAS_NOTOPEN = 0  # 未开启
+    CAS_INPROGRESS = 1  # 进行中
+    CAS_END = 2  # 已结束
+
+
 class CompAct(object):
     """
     竞赛活动
@@ -45,4 +52,17 @@ class CompAct(object):
         """
         # 更新间隔不小于30秒
         curTime = int(time.time())
-        
+
+
+
+
+
+
+
+def isActEnable(userId=None):
+    pass
+
+
+
+def _getCompStateAndRemainTime():
+    pass

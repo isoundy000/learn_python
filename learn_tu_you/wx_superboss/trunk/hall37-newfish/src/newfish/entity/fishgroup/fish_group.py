@@ -56,6 +56,7 @@ class FishGroup(object):
         """
         该鱼群是否存活（包含特殊鱼及已生成但即将出现的鱼群）
         """
+        # 客户端特殊处理的鱼群且鱼群中鱼的数量不多时，判断鱼群是否存活看其中鱼的存活状态
         if table and (self.type == "robot" or self.type == "piton" or self.type == "boss"):
             isOK = False
             for fId in xrange(self.startFishId, self.endFishId + 1):
@@ -82,6 +83,12 @@ class FishGroup(object):
             return False
         return True
 
+    def isCleared(self):
+        """
+        该鱼群是否已被清除
+        """
+        return self.isClear
+
     def _getMaxEnterTime(self):
         """
         获得该鱼群最后一条鱼在该鱼阵文件中的入场时间
@@ -89,12 +96,12 @@ class FishGroup(object):
         fishEnterTimes = []
         for fish in self.fishes:
             fishEnterTimes.append(fish.get("enterTime"))
-        fishEnterTimes.sort()
+        fishEnterTimes.sort() 
         return fishEnterTimes[-1]
 
     def getNextGroupTime(self):
         """
-        获得下个鱼群的入场时间戳
+        获得下个鱼群的入场时间
         """
         return round(self.maxEnterTime + self.enterTime, 2)
 
