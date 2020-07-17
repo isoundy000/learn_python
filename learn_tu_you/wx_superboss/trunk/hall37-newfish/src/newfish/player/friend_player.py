@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/29
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/1/12.
+"""
 
 import random
 
@@ -25,7 +25,9 @@ class FishFriendPlayer(FishNormalPlayer):
                 player.taskSystemUser.dealCatchEvent(event, coinAddition)
 
     def triggerComboEvent(self, event):
-        """触发连击事件"""
+        """
+        触发连击事件
+        """
         for player in self.table.players:
             if player and player.taskSystemUser:
                 player.taskSystemUser.dealComboEvent(event)

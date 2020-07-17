@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 18/04/13.
+"""
+
 import time
 import random
 
@@ -23,7 +24,6 @@ class FishPlayerBuffer(object):
         self.player = player
         self.bufferId = bufferId
         self._state = BUFFER_STATE.NOEFFECT
-        self.startTime = 0
         self.startTime = 0
         self.bufferConf = config.getPlayerBufferConf(bufferId)
         self.checkTimer = FTLoopTimer(self.bufferConf["delayTime"], -1, self._bufferStart)

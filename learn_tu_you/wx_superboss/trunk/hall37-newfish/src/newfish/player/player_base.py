@@ -1,15 +1,13 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import copy
 import json
 import time
 import random
 import traceback
-from collections import OrderedDict
 
 from freetime.core.timer import FTLoopTimer
 from freetime.entity.msg import MsgPack
@@ -25,7 +23,7 @@ from newfish.entity.gun import gun_system
 from newfish.entity.config import FISH_GAMEID, COUPON_KINDID, STARFISH_KINDID, \
     SILVER_BULLET_KINDID, GOLD_BULLET_KINDID, BRONZE_BULLET_KINDID, BULLET_KINDIDS, PEARL_KINDID
 from newfish.entity.redis_keys import GameData, WeakData, ABTestData
-from newfish.entity.dynamic_odds import DynamicOdds
+from newfish.entity.catchfish.dynamic_odds import DynamicOdds
 from newfish.entity.event import GameTimeEvent, StarfishChangeEvent, BulletChangeEvent, FireEvent, \
     NetIncomeChangeEvent, ChangeGunLevelEvent
 from newfish.entity.msg import GameMsg
@@ -37,7 +35,6 @@ from newfish.entity.fishactivity.activity_table_system import ActivityTableSyste
 from newfish.entity.prize_wheel import PrizeWheel
 # from newfish.entity.grand_prize_pool import GrandPrizePool
 from newfish.entity.fishactivity.competition_activity import CompAct    # 竞赛活动
-from newfish.entity.lottery_ticket import LotteryTicket
 from newfish.entity.level_prize_wheel import LevelPrizeWheel
 from newfish.entity.skill.skill_item import SkillItem, State
 
@@ -91,9 +88,6 @@ class FishPlayer(TYPlayer):
         else:
             self.compAct = None
         self.fireCount = {}                                 # {fishPool: times}
-        self.lotteryTicket = None
-        if self.table.typeName in config.QUICK_START_ROOM_TYPE:
-            self.lotteryTicket = LotteryTicket(self, table.runConfig.fishPool, self.table.roomId)
         self.skill_item = {}                        # 道具技能对象 item_id: skill_item
         self.skills_item_slots = {}                 # 道具技能槽item_id: {"cost": xxx, "progress": [0, 10], "state": 0}
         self._onInit()
@@ -192,9 +186,6 @@ class FishPlayer(TYPlayer):
                 self.robotScript = None
             if self.compAct:
                 self.compAct = None
-            if self.lotteryTicket:
-                self.lotteryTicket.clearTimer()
-                self.lotteryTicket = None
         except Exception, e:
             ftlog.error(self.userId, traceback.format_exc())
 
@@ -245,7 +236,14 @@ class FishPlayer(TYPlayer):
         所有金币（实时数据库+内存金币）  self.tableChip渔场金币  self.bulletChip 渔场内子弹价值金币
         """
         return self.chip + self.tableChip + self.bulletChip
-    
+
+    @property
+    def holdCoin(self):
+        """
+        持有金币（非实时数据库+内存金币）  self.hallCoin渔场外大厅金币(内存金币) self.tableChip渔场金币  self.bulletChip子弹价值的金币
+        """
+        return self.hallCoin + self.tableChip + self.bulletChip
+
     @property
     def chip(self):
         """
@@ -266,13 +264,6 @@ class FishPlayer(TYPlayer):
         渔场内子弹价值金币
         """
         return self.economicData.bulletChip
-
-    @property
-    def holdCoin(self):
-        """
-        持有金币（非实时数据库+内存金币）  self.hallCoin渔场外大厅金币(内存金币) self.tableChip渔场金币  self.bulletChip子弹价值的金币
-        """
-        return self.hallCoin + self.tableChip + self.bulletChip
 
     def costClip(self, bullet, eventId):
         """
@@ -454,26 +445,6 @@ class FishPlayer(TYPlayer):
                                   gamedata.getGameAttr(self.userId, FISH_GAMEID, ABTestData.fpMultipleTestMode)
         self._refreshFpMultiple()
 
-        # 渔场倍率AB测试玩家需要设置此数据.
-        if self.isFpMultipleMode():
-            # 进入渔场时提示此渔场可以使用的倍率红点
-            tipVal = module_tip.getTipValue(self.userId, module_tip.findModuleTip("fpmultiple"))
-            unlockedFpMultiples = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, [])
-            if tipVal:
-                unlockedFpMultiples.extend(tipVal)
-                unlockedFpMultiples = list(set(unlockedFpMultiples))
-            tipVal2 = []
-            for idx in range(len(unlockedFpMultiples) - 1, -1, -1):
-                if self.table.runConfig.minMultiple <= unlockedFpMultiples[idx] <= self.table.runConfig.maxMultiple:
-                    tipVal2.append(unlockedFpMultiples[idx])
-                    del unlockedFpMultiples[idx]
-            if set(tipVal) != set(tipVal2):
-                if tipVal:
-                    module_tip.resetModuleTipEvent(self.userId, "fpmultiple")
-                gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, json.dumps(unlockedFpMultiples))
-                if tipVal2:
-                    module_tip.addModuleTipEvent(self.userId, "fpmultiple", tipVal2)
-
         if self.isRobotUser:                                                        # 是机器人
             _gunLevelKeys = config.getGunLevelKeysConf(self.table.gameMode)
             _gunLevelList = [lv for lv in _gunLevelKeys if self.table.runConfig.minGunLevel <= lv <= self.table.runConfig.maxGunLevel]
@@ -571,26 +542,17 @@ class FishPlayer(TYPlayer):
                 self.skillSlots = skill_system.getInstalledSkill(self.userId, self.table.gameMode)
         ftlog.info("_refreshSkillSlots, userId =", self.userId, "skillType =", skillType, "skillSlots =", self.skillSlots)
 
-    def _loadSkillData(self, skillId, skillType):
+    def _loadSkillData(self, skillId, skillType=0):
         """
         读取单个技能数据
         """
-        if skillType == 0:
-            if skillId in self.skillSlots:
-                self.skillSlots[skillId][2] = min(self.skillSlots[skillId][2], self.table.runConfig.maxSkillLevel)
-                skillState = self.skillSlots[skillId][0]
-                skillStar = self.skillSlots[skillId][1]
-                skillGrade = self.skillSlots[skillId][2]
-                skill = skill_release.createSkill(self.table, self, skillId, skillState, skillStar, skillGrade, 0)
-                self.skills[skillId] = skill
-        # else:
-        #     if skillId in self.auxiliarySkillSlots:
-        #         if self.auxiliarySkillSlots[skillId][1] > self.table.runConfig.maxSkillLevel:
-        #             self.auxiliarySkillSlots[skillId][1] = self.table.runConfig.maxSkillLevel
-        #         skillStar = self.auxiliarySkillSlots[skillId][0]
-        #         skillGrade = self.auxiliarySkillSlots[skillId][1]
-        #         skill = skill_release.createSkill(self.table, self, skillId, skillStar, skillGrade, 1)
-        #         self.auxiliarySkills[skillId] = skill
+        if skillId in self.skillSlots:
+            self.skillSlots[skillId][2] = min(self.skillSlots[skillId][2], self.table.runConfig.maxSkillLevel)
+            skillState = self.skillSlots[skillId][0]
+            skillStar = self.skillSlots[skillId][1]
+            skillGrade = self.skillSlots[skillId][2]
+            skill = skill_release.createSkill(self.table, self, skillId, skillState, skillStar, skillGrade, 0)
+            self.skills[skillId] = skill
 
     def getSkillSlotsInfo(self, skillType):
         """
@@ -860,11 +822,6 @@ class FishPlayer(TYPlayer):
             gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.dailyProfitCoin, json.dumps(self.dailyProfitCoin))
         if self.table.typeName in [config.FISH_GRAND_PRIX]:
             gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.grandPrixProfitCoin, json.dumps(self.grandPrixProfitCoin))  # 大奖赛盈亏金币量
-        # 渔场倍率AB测试玩家需要设置此数据.
-        if self.isFpMultipleMode():
-            data = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.nowFpMultiple, {})       # 当前玩家在渔场选择的倍率
-            data[str(self.table.bigRoomId)] = self.fpMultiple
-            gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.nowFpMultiple, json.dumps(data))
         if self.isSupplyBulletPowerMode():
             gamedata.setGameAttr(self.userId, FISH_GAMEID, ABTestData.bulletPowerPool, self.bulletPowerPool)    # 玩家子弹威力奖池.
         ts_keys = self.dailyFishPoolProfitCoin.get(str(self.table.runConfig.fishPool), {}).keys()               # 每日渔场盈亏金币量K
@@ -902,7 +859,8 @@ class FishPlayer(TYPlayer):
         """重置活动消耗的子弹数"""
         self.activityConsumeClip = 0
 
-    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None, clientFire=True, targetPos=None, fishType=None, costChip=0):
+    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None,
+                clientFire=True, targetPos=None, fishType=None, costChip=0):
         """
         添加开火信息
         :param bulletId: 子弹Id
@@ -925,19 +883,19 @@ class FishPlayer(TYPlayer):
             if ftlog.is_debug():
                 ftlog.debug("getFireWpId->add, delete repeat bullet, userId =", self.userId, "bulletId =", bulletId)
         self._fires[bulletId] = {
-            "wpId": wpId,                           # 武器ID
-             "skill": skill,                        # 技能对象
-             "gunId": self.gunId,                   # 炮Id
-             "gunLevel": self.gunLv,                # 皮肤炮等级
-             "sendTimestamp": sendTimestamp,        # 发送时间
-             "receiveTimestamp": nowTimestamp,      # 接收时间
-             "power": power,                        # 威力
-             "initPower": power,                    # 初始威力
-             "multiple": multiple,                  # 单倍|双倍炮
-             "targetPos": targetPos,                # 目标位置
-             "fishType": fishType,                  # 鱼的Id
-             "fpMultiple": fpMultiple,              # 渔场倍率
-             "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0    # 最大阶段
+            "wpId": wpId,                          # 武器ID
+            "skill": skill,                        # 技能对象
+            "gunId": self.gunId,                   # 皮肤炮Id
+            "gunLevel": self.gunLv,                # 皮肤炮等级
+            "sendTimestamp": sendTimestamp,        # 发送时间
+            "receiveTimestamp": nowTimestamp,      # 接收时间
+            "power": power,                        # 威力
+            "initPower": power,                    # 初始威力
+            "multiple": multiple,                  # 单倍|双倍炮
+            "targetPos": targetPos,                # 目标位置
+            "fishType": fishType,                  # 鱼的Id
+            "fpMultiple": fpMultiple,              # 渔场倍率
+            "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0    # 最大阶段
         }
         self._fires[bulletId].update({"superBullet": self.isSuperBullet(bulletId)})     # 超级子弹 获取炮的配置
         if clientFire:
@@ -987,8 +945,6 @@ class FishPlayer(TYPlayer):
             if nowTimestamp - fire["receiveTimestamp"] <= 35:
                 wpId = fire["wpId"]
             else:
-                if ftlog.is_debug():
-                    ftlog.debug("getFireWpId->del", self.userId, bulletId, fire)
                 self.delFire(bulletId)
         return wpId
 
@@ -998,12 +954,10 @@ class FishPlayer(TYPlayer):
 
     def getFirePower(self, bulletId, stageId=0, wpId=0):
         """获取子弹的威力 第几阶段"""
-        # power = self._fires.get(bulletId, {}).get("power") or [0]
-        # power = power[stageId] if 0 <= stageId < len(power) else power[0]
         try:
             power = self._fires.get(bulletId, {}).get("power")
             power = power[stageId]
-        except Exception, e:
+        except Exception as e:
             ftlog.error("getFirePower", "userId =", self.userId, "wpId =", wpId, "bulletId =", bulletId
                         , "stageId =", stageId, "e =", e)
             power = 0
@@ -1036,7 +990,9 @@ class FishPlayer(TYPlayer):
         return _fire.get("fpMultiple", self.table.runConfig.multiple)
 
     def decreaseFirePower(self, bulletId, val, stageId=0):
-        """减少子弹威力"""
+        """
+        扣减子弹威力
+        """
         if self._fires.get(bulletId, {}).get("power") and stageId < len(self._fires[bulletId]["power"]):
             self._fires[bulletId]["power"][stageId] -= val
             self._fires[bulletId]["power"][stageId] = max(0, self._fires[bulletId]["power"][stageId])
@@ -1063,7 +1019,7 @@ class FishPlayer(TYPlayer):
                 gunId = fire["gunId"]
                 gunLv = fire["gunLevel"]
                 sendTimestamp = fire["sendTimestamp"]
-                if util.getWeaponType(wpId) != config.GUN_WEAPON_TYPE:  # 火炮/千炮
+                if util.getWeaponType(wpId) != config.GUN_WEAPON_TYPE:
                     return {}
                 gunConf = config.getGunConf(gunId, self.clientId, gunLv, self.table.gameMode)
                 if gunConf["effectType"] != 2:
@@ -1289,28 +1245,9 @@ class FishPlayer(TYPlayer):
         普通炮升级
         """
         lastFpMultiple = 1
-        if self.isFpMultipleMode():
-            lastFpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)
         isUpgrade = gun_system.upgradeGun(self.userId, protect, self.table.gameMode)
         if isUpgrade:
-            # if self.isFpMultipleMode():
-            #     lastFpMultiple = config.getGunLevelConf(self.nowGunLevel).get("unlockMultiple", 1)
-            self.upGunLevel()               # 更新用户等和炮的等级
-            # 处理解锁渔场倍率红点提示
-            if self.isFpMultipleMode():
-                fpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)
-                if ftlog.is_debug():
-                    ftlog.debug("gunUpgrade, userId =", self.userId, lastFpMultiple, fpMultiple)
-                if lastFpMultiple < fpMultiple:     # 上次渔场倍率 < 现在渔场倍率
-                    if self.table.runConfig.minMultiple <= fpMultiple <= self.table.runConfig.maxMultiple:
-                        module_tip.addModuleTipEvent(self.userId, "fpmultiple", fpMultiple)
-                    else:
-                        unlockedFpMultiples = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, [])
-                        unlockedFpMultiples.append(fpMultiple)
-                        gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.unlockedFpMultiples, json.dumps(unlockedFpMultiples))
-                    ownedFpMultiples = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.ownedFpMultiples, [])
-                    ownedFpMultiples.append(fpMultiple)
-                    gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.ownedFpMultiples, json.dumps(ownedFpMultiples))
+            self.upGunLevel()
             self.gunChange(self.gunLevel)
             # # 升级后切换倍率
             # if self.isFpMultipleMode():
@@ -1599,7 +1536,8 @@ class FishPlayer(TYPlayer):
                     del self.auxiliarySkills[skillId]
             elif install:
                 self._loadSkillData(skillId, skillType)         # 读取单个技能数据 技能对象
-            ftlog.info("installSkill->skills =", skillType,
+            ftlog.info("installSkill->skills =",
+                       self.userId, skillType,
                        self.skills, self.skillSlots,
                        self.auxiliarySkills, self.auxiliarySkillSlots)
             self.syncSkillSlots()
@@ -2210,7 +2148,7 @@ class FishPlayer(TYPlayer):
             retMsg.setResult("seatId", seatId)
             GameMsg.sendMsg(retMsg, self.table.getBroadcastUids(userId))
 
-    def addGrandPrixFishPoint(self, fishPoint, fishType):
+    def addGrandPrixFishPoint(self, fishPoint, fishType, gunLevel):
         return 0
 
     def sendGrandPrixCatch(self, catchFishPoints):
