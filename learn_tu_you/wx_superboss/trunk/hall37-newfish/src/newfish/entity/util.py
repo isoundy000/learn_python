@@ -488,6 +488,19 @@ def selectIdxByWeight(weightList):
 
 
 
+def httpParamsSign(params):
+    """
+    http参数GDSS加密（用于GDSS等请求加密校验）
+    """
+    keys = sorted(params.keys())
+    checkstr = ""
+    for k in keys:
+        checkstr += str(k) + "=" + str(params[k]) + "&"
+    checkstr = checkstr[:-1]
+    apikey = "www.tuyoo.com-api-6dfa879490a249be9fbc92e97e4d898d-www.tuyoo.com"
+    checkstr = checkstr + apikey
+    return strutil.md5digest(checkstr)
+
 
 
 def getWeaponType(wpId):

@@ -3,29 +3,19 @@
 Created by lichen on 2020/3/27.
 """
 
+import random
+
 from freetime.util import log as ftlog
-from freetime.entity.msg import MsgPack
-from poker.entity.dao import userdata
-from newfish.entity import config
-from newfish.entity.config import FISH_GAMEID
-from newfish.entity.msg import GameMsg
-from newfish.table.normal_table import FishNormalTable                      # 普通桌子
-from newfish.table.friend_table import FishFriendTable
+from newfish.table.normal_table import FishNormalTable
 from newfish.entity.fishgroup.fish_group_system import FishGroupSystem
-from newfish.entity.fishgroup.boss_fish_group import BossFishGroup
-from newfish.entity.fishgroup.coupon_fish_group import CouponFishGroup
-from newfish.entity.fishgroup.chest_fish_group import ChestFishGroup
-from newfish.entity.fishgroup.activity_fish_group import ActivityFishGroup
-from newfish.entity.fishgroup.share_fish_group import ShareFishGroup
-from newfish.entity.fishgroup.rainbow_fish_group import RainbowFishGroup
 from newfish.entity.fishgroup.terror_fish_group import TerrorFishGroup
 from newfish.entity.fishgroup.autofill_fish_group_m import AutofillFishGroup
-from newfish.entity.fishgroup.tt_autofill_fish_group import TTAutofillFishGroup
-from newfish.entity.fishgroup import superboss_fish_group
+from newfish.entity.fishgroup.superboss import superboss_fish_group
+from newfish.entity import config, util
 from newfish.player.multiple_player import FishMultiplePlayer
 
 
-class FishMultipleTable(FishFriendTable):
+class FishMultipleTable(FishNormalTable):
 
     def createPlayer(self, table, seatIndex, clientId):
         """
@@ -37,18 +27,14 @@ class FishMultipleTable(FishFriendTable):
         """
         启动鱼阵
         """
-        # if self.bigRoomId != 44412:
-        #     super(FishNormalTable, self).startFishGroup()
-        # else:
         self.fishGroupSystem = FishGroupSystem(self)
         # terror鱼初始化
         if self.runConfig.allTerrorGroupIds and not self.terrorFishGroup:
             self.terrorFishGroup = TerrorFishGroup(self)
-        # if self.bigRoomId == 44412:
-        # autofill鱼初始化
+        # 自动填充鱼初始化
         if self.runConfig.allAutofillGroupIds and not self.autofillFishGroup:
             self.autofillFishGroup = AutofillFishGroup(self)
-        # superboss鱼初始化
+        # 超级Boss初始化
         if self.runConfig.allSuperBossGroupIds and not self.superBossFishGroup:
             self.superBossFishGroup = superboss_fish_group.createSuperBoss(self)
 
@@ -58,3 +44,37 @@ class FishMultipleTable(FishFriendTable):
         """
         super(FishMultipleTable, self)._afterSendTableInfo(userId)
         self.superBossFishGroup and self.superBossFishGroup.dealEnterTable(userId)
+
+    def _catchFish(self, player, bulletId, wpId, fIds, extends, stageId):
+        """
+        检测能否捕到鱼
+        :param player: 玩家
+        :param bulletId: 子弹Id
+        :param wpId: 武器ID
+        :param fIds: 鱼
+        :param extends: 扩展数据
+        :param stageId: 阶段Id
+        """
+        catch, gain, gainChip, exp = [], [], 0, 0
+        isInvalid, notCatchFids, fIdTypes = False, [], {}
+        # 扩展Id（用于获取特殊武器的子弹数据，一般为特殊鱼的fId）
+        extendId = extends[0] if extends else 0
+        wpConf = config.getWeaponConf(wpId, mode=self.gameMode)
+        wpType = util.getWeaponType(wpId)
+        # 子弹所属渔场倍率
+        fpMultiple = player.getFireFpMultiple(bulletId, extendId)
+        # 子弹所属火炮倍数（1-10000倍炮）
+        gunX = util.getGunX(wpId, self.gameMode)
+        # 子弹所属火炮倍率（单|双倍炮）
+        gunMultiple = player.getFireMultiple(bulletId, extendId)
+        # 普通火炮一网单鱼，特殊武器一网多鱼
+        fIds = fIds[-1:] if wpType == config.GUN_WEAPON_TYPE else fIds
+        # 普通火炮概率系数
+        gunOdds = player.dynamicOdds.getOdds()
+        for fId in fIds:
+            isOK, catchUserId, _buffer = self.verifyFish(player.userId, fId)
+            if isOK:
+                pass
+            else:
+                isInvalid = True
+            catchMap, catchMap["fId"], catchMap["reason"] = {}, fId, 1      # catchMap = {"fId": fId, "reason": 1}
