@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/15
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2020/6/12.
+"""
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
@@ -49,6 +49,7 @@ class Dragon(HeartbeatAble):
     ST_APPEARED = 3
     ST_LEAVE = 4
     ST_FINAL = 5
+
     def __init__(self, table):
         super(Dragon, self).__init__(1)
         self.table = table
@@ -83,3 +84,138 @@ class Dragon(HeartbeatAble):
                 self.postCall(self._doNext)
         return 1
 
+    def _doIdle(self):
+        """
+        空闲状态
+        """
+        self.dragonConf = self.table.room.roomConf["dragonConf"]
+        self._state = Dragon.ST_IDLE
+        # 空闲状态开始时间戳
+        self.idleTime = self.calcIdleTime()
+        # 出场前状态开始时间戳
+        self.prepareTime = self.calcPrepareTime()
+        # 出场中状态开始时间戳
+        self.appearingTime = self.calcAppearingTime()
+        # 已出现状态开始时间戳
+        self.appearedTime = self.calcAppearedTime()
+        # 退场中状态开始时间戳
+        self.leaveTime = self.calcLeaveTime()
+        # 结束状态开始时间戳
+        self.finalTime = self.calcFinalTime()
+        # 下一只冰龙空闲状态开始时间戳
+        self.nextTime = self.finalTime
+        if ftlog.is_debug():
+            ftlog.debug("Dragon._doIdle->", self.idleTime, self.prepareTime, self.appearingTime,
+                        self.appearedTime, self.leaveTime, self.finalTime)
+
+    def _doPrepare(self):
+        """
+        出场前状态
+        """
+        self._state = Dragon.ST_PREPARE
+        self.syncDragonState()
+
+    def _doAppearing(self):
+        """
+        出场中状态
+        """
+        self._state = Dragon.ST_APPEARING
+        self.syncDragonState()
+
+    def _doAppeared(self):
+        """
+        已出现状态
+        """
+        self._state = Dragon.ST_APPEARED
+        self.syncDragonState()
+
+    def _doLeave(self, isNow=False):
+        """
+        退场中状态
+        """
+        self._state = Dragon.ST_LEAVE
+        if isNow:
+            self.leaveTime = pktimestamp.getCurrentTimestamp()
+            self.finalTime = self.calcFinalTime()
+        self.syncDragonState()
+
+    def _doFinal(self):
+        """
+        结束状态
+        """
+        self._state = Dragon.ST_FINAL
+
+    def _doNext(self):
+        """
+        下一只巨型章鱼空闲状态
+        """
+        self._doIdle()
+
+    def calcIdleTime(self):
+        """
+        计算空闲状态开始时间戳
+        """
+        return pktimestamp.getCurrentTimestamp() + 1
+
+    def calcPrepareTime(self):
+        """
+        计算出场前状态开始时间戳
+        """
+        return self.idleTime + self.dragonConf["idle.times"]
+
+    def calcAppearingTime(self):
+        """
+        计算出场中状态开始时间戳
+        """
+        return self.prepareTime + self.dragonConf["prepare.times"]
+
+    def calcAppearedTime(self):
+        """
+        计算已出现状态开始时间戳
+        """
+        return self.appearingTime + self.dragonConf["appearing.times"]
+
+    def calcLeaveTime(self):
+        """
+        计算退场中状态开始时间戳
+        """
+        return self.appearedTime + self.dragonConf["appeared.times"]
+
+    def calcFinalTime(self):
+        """
+        计算结束状态开始时间戳
+        """
+        return self.leaveTime + self.dragonConf["leave.times"]
+
+    def getCurrentStateStageTime(self):
+        """
+        获取当前状态开始结束时间
+        """
+        stateTime = {
+            Dragon.ST_IDLE: self.idleTime,
+            Dragon.ST_PREPARE: self.prepareTime,
+            Dragon.ST_APPEARING: self.appearingTime,
+            Dragon.ST_APPEARED: self.appearedTime,
+            Dragon.ST_LEAVE: self.leaveTime,
+            Dragon.ST_FINAL: self.finalTime
+        }
+        return stateTime[self._state], stateTime[self._state + 1]
+
+    def syncDragonState(self, userId=0):
+        """
+        向玩家同步冰龙状态
+        """
+        if Dragon.ST_IDLE < self._state < Dragon.ST_FINAL:
+            msg = MsgPack()
+            msg.setCmd("dragon_info")
+            msg.setResult("gameId", FISH_GAMEID)
+            msg.setResult("roomId", self.table.roomId)
+            msg.setResult("tableId", self.table.tableId)
+            msg.setResult("state", self.state)
+            startTime, endTime = self.getCurrentStateStageTime()
+            ftlog.debug("syncDragonState", self.table.tableId, msg)
+            if startTime and endTime:
+                msg.setResult("progress", [startTime, endTime])
+                GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
+            else:
+                ftlog.error("syncDragonState error", self.table.tableId, msg)

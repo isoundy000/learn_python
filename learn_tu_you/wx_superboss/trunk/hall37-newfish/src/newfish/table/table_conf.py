@@ -37,9 +37,9 @@ class FishTableConf(object):
         self.allTerrorGroupIds = {}                         # terror鱼初始化
         self.allAutofillGroupIds = {}                       # 所有自动填充鱼
         self.allGrandPrixGroupIds = {}                      # 大奖所有鱼群
-        self.allSuperBossGroupIds = {}
+        self.allSuperBossGroupIds = {}                      # 超级boss鱼群
         self.allSuperBossBornGroupIds = {}
-        self.allSuperBossFastMoveGroupIds = {}
+        self.allSuperBossFastMoveGroupIds = {}              # 没有保护罩的超级boss
         for key in self.allGroupIds:
             fishType = key.split("_")[1]
             if key.startswith("group_"):                    # 普通鱼

@@ -40,7 +40,7 @@ class FishHttpGdssHandler(BaseHttpMsgChecker):
             return None, punishState
         return "ERROR of punishState !" + str(punishState), None
 
-    
+
 
 
 
