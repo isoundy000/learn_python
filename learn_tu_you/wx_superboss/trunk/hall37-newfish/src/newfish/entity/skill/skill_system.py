@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/2/16.
+"""
 
 import json
 from copy import deepcopy
@@ -42,7 +42,7 @@ def initSkill(userId):
 
 def updateSkill(userId, skillId):
     """
-    更新新增技能数据  如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令。
+    更新新增技能数据
     """
     assert str(skillId) in config.getAllSkillId()
     daobase.executeUserCmd(userId, "HSETNX", _getUserSkillKey(userId), str(skillId), json.dumps(DEFAULT_VALUE))

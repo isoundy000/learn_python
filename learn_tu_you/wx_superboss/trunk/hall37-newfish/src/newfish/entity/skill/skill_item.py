@@ -160,6 +160,9 @@ class SkillItem(object):
         endTime = time.time() + duration
         buffer = [5104, endTime, self.userId, 1, 1, duration, 0]
         for fId in map(int, fIds):
+            isOK = self.table.findFish(fId)
+            if not isOK:
+                continue
             buffers = self.table.fishMap[fId]["buffer"]
             if ftlog.is_debug():
                 ftlog.debug("dealSkillItemEffect->buffers", buffers)

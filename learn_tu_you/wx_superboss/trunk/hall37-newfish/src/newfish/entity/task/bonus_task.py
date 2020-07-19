@@ -26,7 +26,7 @@ class BonusTask(TableMatchTask):
     奖金赛任务
     """
     def __init__(self, table, taskName, taskInterval):
-        super(BonusTask, self).__init__(table, taskName, taskInterval)
+        super(BonusTask, self).__init__(table, taskName, taskInterval)      # taskName: bonus
         self._reload()
 
     def _reload(self):
@@ -54,22 +54,105 @@ class BonusTask(TableMatchTask):
         """
         清除所有公共数据
         """
-        pass
+        self.currentTask = {}
+        self.userIds = []
+        self.usersData = {}
+        self.state = 0
+        self.bonusPool = 0
+        self.recordStartTime = 0
+        self.recordReloadTime = 0
+        # if self.readyTimer:
+        #     self.readyTimer.cancel()
+        if self.startTimer:
+            self.startTimer.cancel()
+        if self.endTimer:
+            self.endTimer.cancel()
+        if self.sendInfoTimer:
+            self.sendInfoTimer.cancel()
 
     def taskReady(self, *args):
-        pass
+        """
+        任务准备
+        """
+        if self.sendInfoTimer:
+            self.sendInfoTimer.cancel()
+        self.state = 1
+        tasks = config.getBonusTaskConf(self.table.runConfig.fishPool)
+        self.bonusPool = self.table.room.lotteryPool.getBonusPoolCoin(self.table.tableId)
+        if len(tasks) == 0 or len(self.table.getBroadcastUids()) == 0:
+            self.state = 0
+            pass
+        if self.bonusPool < self.table.runConfig.minBonus:
+            ftlog.debug("bonus->taskReady pool", self.bonusPool)
+            if self.table.runConfig.systemBonus <= 0:
+                self.state = 0
+                endTimer = FishTableTimer(self.table)
+                endTimer.setup(0, "task_end", {"uid": 0, "task": self.taskName})
+                # ftlog.debug("bonus->BonusPool too little")
+                # msg = MsgPack()
+                # msg.setCmd("bonus_task")
+                # msg.setResult("gameId", FISH_GAMEID)
+                # msg.setResult("action", "fail")
+                # msg.setResult("reason", 1)
+                # GameMsg.sendMsg(msg, self.table.getBroadcastUids())
+                return
+            else:
+                self.bonusPool = self.table.runConfig.systemBonus
+        self.bonusPool = self.bonusPool if self.bonusPool < self.table.runConfig.multiple * 5000 else self.table.runConfig.multiple * 5000
+        self.taskId = "%d-%d" % (self.table.tableId, int(time.time()))
+        self.currentTask = random.choice(tasks)
+        for uid in self.table.getBroadcastUids():
+            if util.isFinishAllRedTask(uid):
+                self.userIds.append(uid)
+        ftlog.debug("bonus-->taskReady userIds:", self.userIds, self.taskId)
+        for uid in self.userIds:
+            self.usersData[uid] = {"uid": uid, "task": self.currentTask, "score": 0, "lastCatchId": 0}
+        readySeconds = self.currentTask["readySeconds"]
+        msg = MsgPack()
+        msg.setCmd("bonus_task")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("action", "ready")
+        msg.setResult("taskId", self.currentTask["taskId"])
+        msg.setResult("bonusPool", self.bonusPool)
+        msg.setResult("taskType", self.currentTask["taskType"])
+        msg.setResult("targets", self.currentTask["targets"])
+        GameMsg.sendMsg(msg, self.userIds)
+        self.startTimer.setup(readySeconds, "task_start", {"task": self.taskName})
 
     def taskStart(self, *args):
         """
         任务开始
         """
-        pass
+        if not self.currentTask:
+            return 0
+        self.state = 2
+        ftlog.debug("bonus-->taskStart", self.userIds, self.taskId)
+        for userId in self.userIds:
+            player = self.table.getPlayer(userId)
+            if player:
+                self.sendBonusTaskStartInfo(userId, self.currentTask["timeLong"])
+                player.currentTask = [self.taskName, self.currentTask["taskId"], self.currentTask["taskType"], self.currentTask["targets"]]
+        self.recordStartTime = int(time.time())
+        self.endTimer.setup(self.currentTask["timeLong"], "task_end", {"task": self.taskName})
+        self.sendBonusTaskInfo()
+        return self.currentTask["taskId"]
 
     def taskEnd(self, *args, **kwargs):
         """
         任务结束
         """
-        pass
+        ftlog.debug("bonus->taskEnd")
+        if self.state == 0:
+            self.clear()
+            return
+        self.state = 0
+        if self.currentTask:
+            ranks = self._getRanks()
+            reward = False
+            rewardData = {}
+            if ranks:
+                reward = True
+                rewardData = self._getReward()
 
     def clearTaskData(self, uid=None):
         """
@@ -80,10 +163,26 @@ class BonusTask(TableMatchTask):
         """
         发送奖金赛任务倒计时信息
         """
+        pass
+
+
     def sendBonusTaskStartInfo(self, userId, timeLeft):
         """
         发送奖金赛开始消息
         """
+        msg = MsgPack()
+        msg.setCmd("bonus_task")
+        msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("action", "start")
+        msg.setResult("taskId", self.currentTask["taskId"])
+        msg.setResult("desc", config.getMultiLangTextConf(str(self.currentTask["desc"]), lang=util.getLanguage(userId)))
+        msg.setResult("timeLeft", timeLeft)
+        msg.setResult("timeLong", self.currentTask["timeLong"])
+        msg.setResult("taskType", self.currentTask["taskType"])
+        msg.setResult("rewardType", 2)
+        msg.setResult("targets", self.currentTask["targets"])
+        msg.setResult("reward", {"name": config.CHIP_KINDID, "count": self.bonusPool})
+        GameMsg.sendMsg(msg, userId)
 
     def newJoinTask(self, userId):
         """
@@ -124,6 +223,13 @@ class BonusTask(TableMatchTask):
         """
         获得排名信息
         """
+        udatas = self.usersData.values()
+        udatas.sort(key=lambda x: (x["score"], x["lastCatchId"]), reverse=True)
+        ranks = {}
+        rank1 = []
+        rank2 = []
+        score = 0
+
 
     def _getScores(self):
         """

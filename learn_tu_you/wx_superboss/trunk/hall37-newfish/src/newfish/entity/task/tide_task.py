@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/13
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/1/12.
+"""
 
 import random
 import time
@@ -17,28 +17,27 @@ from newfish.entity.timer import FishTableTimer
 from newfish.entity import change_notify
 from newfish.entity import drop_system
 from newfish.entity.chest import chest_system
-from newfish.entity.task.table_task_base import TableMatchTask, TaskState
+from newfish.entity.task.table_task_base import TaskState
+from freetime.core.timer import FTLoopTimer
 
 
-class NcmpttTask(TableMatchTask):
+class TideTask(object):
     """
-    非竞争性任务(限时任务)
+    非竞争性任务(鱼潮任务)
     """
-    def __init__(self, table, taskName, taskInterval):
-        super(NcmpttTask, self).__init__(table, taskName, taskInterval)     # taskName: "ncmptt"
+    def __init__(self, table):
+        self.table = table
+        self.conf = config.getTideTask(self.table.runConfig.fishPool)
         self._reload()
 
     def _reload(self):
-        """重新加载"""
-        self.wpFishNumScale = {11: 0.9, 14: 0.8, 15: 0.7}   # 火炮效果(降低任务鱼数量)
-        self.userIds = []                                   # 玩家uids列表
-        self.usersData = {}                                 # {"uid": {"uid": uid, "task": task, "targets": targets, "state": state, "rewardType": 1, "results": {}}}
-        self.userStartTimer = {}                            # 开始定时器 {"uid": startTimer}
-        self.userEndTimer = {}                              # 结束定时器
-        # self.readyTimer = FishTableTimer(self.table)
-        # self.readyTimer.setup(self.taskInterval, "task_ready", {"task": self.taskName})
-        self.recordStartTime = 0                            # 开始时间
-        self.taskId = "%d-%d" % (self.table.tableId, 0)     # 任务Id
+        self.userIds = []
+        self.usersData = {}
+        self.userStartTimer = {}
+        self.userEndTimer = {}
+        self.recordStartTime = 0
+        self.taskId = 0
+        self.state = 0
 
     def clear(self):
         """
@@ -47,48 +46,47 @@ class NcmpttTask(TableMatchTask):
         self.userIds = []
         self.usersData = {}
         self.recordStartTime = 0
-        # if self.readyTimer:
-        #     self.readyTimer.cancel()
 
-    def getTaskState(self, userId):
+    def getTaskState(self):
         """获取任务状态"""
-        return 0
+        return self.state
+
+    def taskInit(self, *args):
+        """提示消息"""
+        tideId = args[0]
+        task_conf = self.conf.get(tideId)
+        if len(task_conf) == 0 or len(self.table.getBroadcastUids()) == 0:
+            return
+        self.taskId = task_conf["taskId"]
+        for uid in self.table.getBroadcastUids():
+            if util.isFinishAllRedTask(uid):
+                self.userIds.append(uid)
+        ftlog.debug("tideTask->taskInit userIds:", self.userIds, self.taskId)
+        self.state = TaskState.TS_TIP
+        for uid in self.userIds:
+
+
 
     def taskReady(self, *args):
         """
         任务准备
-        :param args:
         """
-        tasks = config.getNcmpttTaskConf(self.table.runConfig.fishPool)
+        tideId = args[0]
+        tasks = self.conf.get(tideId)
         if len(tasks) == 0 or len(self.table.getBroadcastUids()) == 0:
-            if len(tasks) == 0:
-                ftlog.debug("ncmptt->tasks empty")
-            else:
-                ftlog.debug("ncmptt->players empty")
-            endTimer = FishTableTimer(self.table)
-            endTimer.setup(0, "task_end", {"uid": 0, "task": self.taskName})
             return
-        self.taskId = "%d-%d" % (self.table.tableId, int(time.time()))
+        self.taskId = tasks["taskId"]
         for uid in self.table.getBroadcastUids():
-            if util.isFinishAllRedTask(uid):                                    # 获得所有已完成的引导
+            if util.isFinishAllRedTask(uid):
                 self.userIds.append(uid)
         ftlog.debug("ncmptt->taskReady userIds:", self.userIds, self.taskId, self.taskName, self.taskInterval)
         for uid in self.userIds:
             randTask = random.choice(tasks)
             task = copy.deepcopy(randTask)
             ftlog.debug("taskReady->task =", task)
-            # player = self.table.getPlayer(uid)                                # 火炮装扮减少任务鱼数量(暂时不用)
-            # if player:
-            # if player.gunSkinId in self.wpFishNumScale.keys():
-            #     fNumScale = self.wpFishNumScale.get(player.gunSkinId, 1)
-            #     for fId in task["targets"]:
-            #         fNum = task["targets"][fId]["fishNum"]
-            #         fNum = int(round(int(fNum) * fNumScale))
-            #         fNum = fNum if fNum >= 1 else 1
-            #         task["targets"][fId]["fishNum"] = fNum
             targets = task["targets"]
             readySeconds = task["readySeconds"]
-            state = TaskState.TS_Ready                                          # 任务即将开始
+            state = TaskState.TS_Ready
             self.usersData[uid] = {"uid": uid, "task": task, "targets": targets, "state": state, "rewardType": 1, "results": {}}
             msg = MsgPack()
             msg.setCmd("ncmptt_task")
@@ -100,7 +98,7 @@ class NcmpttTask(TableMatchTask):
             GameMsg.sendMsg(msg, uid)
             startTimer = FishTableTimer(self.table)
             self.userStartTimer[uid] = startTimer
-            startTimer.setup(readySeconds, "task_start", {"uid": uid, "task": self.taskName})
+            FTLoopTimer(readySeconds, "task_start", {"uid": uid, "task": self.taskName})
 
     def taskStart(self, uid):
         """
@@ -130,6 +128,7 @@ class NcmpttTask(TableMatchTask):
         """
         任务结束
         """
+        ftlog.debug("ncmptt->taskEnd = ", args[0], kwargs, self.userIds)
         if int(args[0]) in self.userIds:
             uid = int(args[0])
             ranks = self._getRanks(uid)
@@ -160,7 +159,7 @@ class NcmpttTask(TableMatchTask):
             msg.setCmd("ncmptt_task")
             msg.setResult("gameId", FISH_GAMEID)
             msg.setResult("userId", uid)
-            msg.setResult("action", "finish")                   # 完成奖励
+            msg.setResult("action", "finish")
             msg.setResult("taskId", task["taskId"])
             msg.setResult("taskType", task["taskType"])
             msg.setResult("ranks", ranks)
@@ -169,6 +168,7 @@ class NcmpttTask(TableMatchTask):
                     msg.setResult("reward", dropItems)
                 else:
                     ftlog.warn("ncmptt->taskEnd cannot get player taskId =", self.taskId, "ranks =", ranks)
+            ftlog.debug("ncmptt->taskEnd userId", uid, self.taskId, ranks, _taskId)
             GameMsg.sendMsg(msg, uid)
             self.clearTaskData(uid)
             if _taskId and self.table.ttAutofillFishGroup:
@@ -213,16 +213,19 @@ class NcmpttTask(TableMatchTask):
             msg.setResult("userId", userId)
             msg.setResult("action", "start")
             msg.setResult("taskId", task["taskId"])
-            desc = config.getMultiLangTextConf(str(task["desc"]), lang=util.getLanguage(userId))
+            #msg.setResult("desc", task["desc"])
+            descId = task["desc"]
+            desc = config.getMultiLangTextConf(str(descId), lang=util.getLanguage(userId))
             if desc.find("%d") >= 0:
-                desc = desc % (task["targets"].get("target1") or task["targets"].get("number1", 0))
+                cnt = task["targets"].get("target1") or task["targets"].get("number1", 0)
+                desc = desc % cnt
             msg.setResult("desc", desc)
             msg.setResult("timeLeft", timeLeft)
             msg.setResult("timeLong", task["timeLong"])
             msg.setResult("taskType", task["taskType"])
             msg.setResult("rewardType", userData["rewardType"])
             msg.setResult("targets", task["targets"])
-            msg.setResult("reward", {"name": task["chestReward"], "count": 1})
+            msg.setResult("reward", {"name":task["chestReward"], "count":1})
             GameMsg.sendMsg(msg, userId)
 
     def newJoinTask(self, userId):
@@ -254,8 +257,9 @@ class NcmpttTask(TableMatchTask):
         """
         发送任务奖励
         """
+        ftlog.debug("doNcmpttTaskReward:", player.userId, dropType, dropItem)
         dropItems = None
-        if dropType == 1:       # 宝箱
+        if dropType == 1:   # 宝箱
             chestRewards = chest_system.getChestRewards(player.userId, dropItem)
             util.addRewards(player.userId, chestRewards, "BI_NFISH_NCMPTT_TASK_REWARDS", roomId=self.table.roomId, tableId=self.table.tableId)
             dropItems = {"chest": dropItem, "chestRewards": chestRewards, "chip": 0, "type": 0}
@@ -265,10 +269,11 @@ class NcmpttTask(TableMatchTask):
             event = GainChestEvent(player.userId, FISH_GAMEID, dropItem, ChestFromType.Cmptt_Ncmptt_Bonus_Task)
             TGFish.getEventBus().publishEvent(event)
             # chest_system.newChestItem(player.userId, dropItem["name"], "BI_NFISH_NCMPTT_TASK_REWARDS", self.table.roomId)
-        elif dropType == 2:     # 金币
+        elif dropType == 2: # 金币
             dropItems = {"chest": 0, "chip": dropItem["count"], "type": 1}
             rewards = [{"name": "tableChip", "count": dropItem["count"]}]
             util.addRewards(player.userId, rewards, "BI_NFISH_NCMPTT_TASK_REWARDS", self.table.roomId)
+        ftlog.debug("doNcmpttTaskReward end ...............", dropItems)
         return dropItems
 
     def _sendRanksInfo(self, userId):
@@ -293,8 +298,10 @@ class NcmpttTask(TableMatchTask):
         处理离开事件
         """
         uid = event.userId
+        ftlog.debug("ncmptt->xxootask user leave1:", event.userId, self.taskId)
         if uid not in self.usersData:
             return
+        ftlog.debug("ncmptt->xxootask user leave2:", event.userId, self.taskId)
         self.clearTaskData(uid)
 
     def dealCatchEvent(self, event):
@@ -304,11 +311,15 @@ class NcmpttTask(TableMatchTask):
         fpMultiple = self.getEventFpMultiple(event)
         uid = event.userId
         fishTypes = event.fishTypes
+        ftlog.debug("ncmptt->dealCatchEvent:", str(event.__dict__))
         if uid not in self.userIds:
+            ftlog.debug("ncmptt->invalid userId", uid, self.userIds)
             return
         usersData = self.usersData.get(uid, {})
         if usersData and usersData["state"] != TaskState.TS_Start:
+            ftlog.debug("ncmptt->invalid state", usersData["state"])
             return
+        ftlog.debug("ncmptt->valid event", str(event.__dict__))
         score = 0
         for fishType in fishTypes:
             fishConf = config.getFishConf(fishType, self.table.typeName, fpMultiple)
@@ -331,14 +342,17 @@ class NcmpttTask(TableMatchTask):
         if taskType != 1 and "progress" not in usersData["results"]:
             usersData["results"]["progress"] = 0
             _isUserDataUpdate = True
-        if taskType == 1:  # 指定数量特定鱼
-            if target1 not in fishTypes and target2 not in fishTypes and multipleTarget1 not in fishTypes and multipleTarget2 not in fishTypes:
+        if taskType == 1:      # 指定数量特定鱼
+            if target1 not in fishTypes and target2 not in fishTypes and \
+               multipleTarget1 not in fishTypes and multipleTarget2 not in fishTypes:
+                ftlog.debug("ncmptt->invalid fishTypes", fishTypes)
                 return
             if (target1 in fishTypes or multipleTarget1 in fishTypes) and target1 not in usersData["results"]:
                 usersData["results"][target1] = 0
             if (target2 in fishTypes or multipleTarget2 in fishTypes) and target2 not in usersData["results"]:
                 usersData["results"][target2] = 0
             if self._checkFinished(usersData):
+                ftlog.debug("already full", uid, target1, target2)
                 return
             if target1 in fishTypes or multipleTarget1 in fishTypes:
                 score = fishTypes.count(target1) + fishTypes.count(multipleTarget1)
@@ -360,23 +374,26 @@ class NcmpttTask(TableMatchTask):
                     if player.currentTask[3].has_key("target2"):
                         player.currentTask[3].pop("target2")
                 ftlog.debug("dealCatchEvent->player.currentTask", player.currentTask)
-        elif taskType == 2:  # 指定分数
+
+        elif taskType == 2:    # 指定分数
             usersData["results"]["progress"] += score
             _isUserDataUpdate = True
-        elif taskType == 3:  # 一炮指定分数
+        elif taskType == 3:    # 一炮指定分数
             if score >= usersData["targets"]["target1"]:
                 usersData["results"]["progress"] += 1
                 _isUserDataUpdate = True
-        elif taskType == 4:  # 指定数量任意鱼
+        elif taskType == 4:    # 指定数量任意鱼
             usersData["results"]["progress"] += len(fishTypes)
             _isUserDataUpdate = True
-        elif taskType == 5:  # 指定Combo数
+        elif taskType == 5:    # 指定Combo数
             if player and player.combo >= target1:
                 usersData["results"]["progress"] += 1
                 _isUserDataUpdate = True
+
         if _isUserDataUpdate:
             self._sendRanksInfo(uid)
-
+        else:
+            ftlog.debug("ncmptt->dealCatchEvent, task data not changed! uid =", uid)
         if self._checkFinished(usersData):
             if uid not in self.userEndTimer:
                 return
