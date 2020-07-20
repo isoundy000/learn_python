@@ -61,10 +61,6 @@ class NcmpttTask(TableMatchTask):
         """
         tasks = config.getNcmpttTaskConf(self.table.runConfig.fishPool)
         if len(tasks) == 0 or len(self.table.getBroadcastUids()) == 0:
-            if len(tasks) == 0:
-                ftlog.debug("ncmptt->tasks empty")
-            else:
-                ftlog.debug("ncmptt->players empty")
             endTimer = FishTableTimer(self.table)
             endTimer.setup(0, "task_end", {"uid": 0, "task": self.taskName})
             return
@@ -72,11 +68,9 @@ class NcmpttTask(TableMatchTask):
         for uid in self.table.getBroadcastUids():
             if util.isFinishAllRedTask(uid):                                    # 获得所有已完成的引导
                 self.userIds.append(uid)
-        ftlog.debug("ncmptt->taskReady userIds:", self.userIds, self.taskId, self.taskName, self.taskInterval)
         for uid in self.userIds:
             randTask = random.choice(tasks)
             task = copy.deepcopy(randTask)
-            ftlog.debug("taskReady->task =", task)
             # player = self.table.getPlayer(uid)                                # 火炮装扮减少任务鱼数量(暂时不用)
             # if player:
             # if player.gunSkinId in self.wpFishNumScale.keys():

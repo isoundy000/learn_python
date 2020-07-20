@@ -2077,6 +2077,20 @@ def getTimePointMatchSkillConf():
     timePointMatchSkillConf = rocopy(getGameConf("timePointMatchSkill_m"))
 
 
+def loadTideTask():
+    """加载鱼潮任务"""
+    global tideTaskConf
+    tideTaskConf = rocopy(getGameConf("tideTask"))
+
+
+def getTideTask(key):
+    """获取渔潮任务"""
+    global tideTaskConf
+    if key is None:
+        return tideTaskConf
+    return tideTaskConf.get(str(key))
+
+
 def initConfig():
     """
     初始化所有配置
