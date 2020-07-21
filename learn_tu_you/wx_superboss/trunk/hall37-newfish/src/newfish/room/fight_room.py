@@ -5,3 +5,11 @@
 
 class FishFightRoom:
     pass
+
+
+
+
+class FTConf(object):
+    def __init__(self, fee=None, gameTime=120):
+        self.fee = fee or []
+        self.gameTime = gameTime

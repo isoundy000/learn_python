@@ -47,6 +47,13 @@ def updateLoginData(userId):
 
 
 
+def getChatPunish(userId):
+    pass
+
+
+def setChatPunish(userId, punishState):
+    pass
+
 
 _inited = False
 

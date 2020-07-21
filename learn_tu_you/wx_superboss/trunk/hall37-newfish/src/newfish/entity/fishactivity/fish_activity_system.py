@@ -24,6 +24,12 @@ def isActivityOpen(acType):
     return False
 
 
+def doGetFishOneActivity(userId, acId, extend):
+    """
+    获取单个活动数据
+    """
+    pass
+
 
 
 def initialize():

@@ -48,3 +48,19 @@ def sendTodoTaskBuyChip(userId, roomId):
 
 
     return 0
+
+
+@markRpcCall(groupName="userId", lockName="userId", syncCall=1)
+def removeUserMail(userId, mailId):
+    pass
+
+
+@markRpcCall(groupName="userId", lockName="userId", syncCall=1)
+def getUserMailList(userId):
+    """获取玩家邮件列表"""
+    ftlog.debug("getUserMailList", userId)
+    from newfish.entity import mail_system
+    mailList = []
+    for mailType, mails in mail_system.getAllMail(userId):
+        mailList.extend(mails)
+    return mailList

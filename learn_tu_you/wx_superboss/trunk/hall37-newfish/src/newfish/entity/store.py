@@ -5,5 +5,15 @@
 
 
 
+
+class DiamondStoreShop():
+    pass
+
+
+
+class StoreTabType():
+    pass
+
+
 def initialize(a):
     pass

@@ -21,4 +21,14 @@ class TableTcpHandler(BaseMsgPackChecker):
     def doTableCall2(self, userId, roomId, tableId, clientId):
         if strutil.getGameIdFromInstanceRoomId(roomId) == FISH_GAMEID:
             table = None
-            pass
+            msg = runcmd.getMsgPack()
+            try:
+                room = gdata.rooms()[roomId]
+                table = room.maptable[tableId]
+                action = msg.getParam("action")
+                seatId = msg.getParam("seatId", -1)     # 旁观时没有seatId参数
+                assert isinstance(seatId, int)
+                table.doTableCallOwn(msg, userId, seatId, action, clientId)
+            except:
+                ftlog.error("doTableCall2 error clear table", userId, msg, traceback.format_exc())
+                table and table._clearTable()

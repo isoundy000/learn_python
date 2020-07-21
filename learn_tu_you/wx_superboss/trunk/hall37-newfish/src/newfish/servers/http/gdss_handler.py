@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2019-11-11.
+"""
 
 import freetime.util.log as ftlog
 from freetime.entity.msg import MsgPack
@@ -35,12 +35,69 @@ class FishHttpGdssHandler(BaseHttpMsgChecker):
         return "ERROR of mailId !" + str(mailId), None
 
     def _check_param_punishState(self, key, params):
+        """检查惩罚状态的参数"""
         punishState = runhttp.getParamInt(key, "")
         if isinstance(punishState, int):
             return None, punishState
         return "ERROR of punishState !" + str(punishState), None
 
+    @markHttpMethod(httppath='/_gdss/newfish/user/mail/list')
+    def doGetUserMailList(self, userId):
+        """
+        GM工具查询玩家邮件接口
+        """
+        mo = MsgPack()
+        ec, result = self.checkCode()
+        if ec == 0:
+            result = user_rpc.getUserMailList(userId)
+            ftlog.debug("doGetUserMailList->", result)
+        if ec != 0:
+            mo.setError(ec, result)
+        else:
+            mo.setResult("mails", result)
+        return mo
 
+    @markHttpMethod(httppath="/_gdss/newfish/user/mail/remove")
+    def doRemoveUserMail(self, userId, mailId):
+        """
+        GM工具删除玩家邮件接口
+        """
+        mo = MsgPack()
+        ec, result = self.checkCode()
+        if ec == 0:
+            result = user_rpc.removeUserMail(userId, mailId)
+        if ec != 0:
+            mo.setError(ec, result)
+        else:
+            mo.setResult("mails", result)
+        return mo
 
+    @markHttpMethod(httppath="/_gdss/newfish/user/getChatPunish")
+    def doGetChatPunish(self, userId):
+        """
+        GM工具获取玩家聊天惩罚状态
+        """
+        mo = MsgPack()
+        ec, result = self.checkCode()
+        if ec == 0:
+            result = user_system.getChatPunish(userId)
+        if ec != 0:
+            mo.setError(ec, result)
+        else:
+            mo.setResult("punishState", result)
+        return mo
 
-
+    @markHttpMethod(httppath="/_gdss/newfish/user/setChatPunish")
+    def doSetChatPunish(self, userId, punishState):
+        """
+        GM工具设置玩家聊天惩罚状态
+        """
+        mo = MsgPack()
+        ec, result = self.checkCode()
+        if ec == 0:
+            result = user_system.setChatPunish(userId, punishState)
+        if ec != 0:
+            mo.setError(ec, result)
+        else:
+            mo.setResult("code", result)
+        return mo

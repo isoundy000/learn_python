@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
 """
 概述模块或脚本
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/5/14
 
 import freetime.util.log as ftlog
 from poker.protocol.rpccore import markRpcCall

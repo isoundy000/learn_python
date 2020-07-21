@@ -116,7 +116,10 @@ class TaskBase(object):
             "target": self.taskConfig["target"]
         }
 
-    #  增加任务进度
+    def _addProgress(self, value, isMe, progress=0, isTargetAddition=False):
+        """增加任务进度"""
+        pass
+
 
 
 
@@ -135,8 +138,8 @@ class TaskBase(object):
             self.taskActivateTimer = FTLoopTimer(taskActivateInterval, 0, self._taskActivate, delay)
             self.taskActivateTimer.start()
         elif self.taskConfig["timeLong"] > 0:
+            # if self.taskSystem
             pass
-
 
     def isTaskSuccess(self):
         """

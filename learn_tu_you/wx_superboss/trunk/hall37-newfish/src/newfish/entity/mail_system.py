@@ -70,5 +70,13 @@ def sendSystemMail(userId, mailRewardType, rewards=None, message=None, title=Non
 
 
 
+def getAllMail(userId):
+    """
+    获取收件箱所有邮件
+    """
+    tempMail = {}
+    return tempMail
+
+
 def initialize():
     pass
