@@ -121,6 +121,7 @@ def isControlProcess():
 
 
 def isHttpProcess():
+    """是http进程"""
     return _datas['is_http_process']
 
 
@@ -219,11 +220,54 @@ def getBigRoomId(roomId):
     return 0
 
 
+def getRoomConfigure(roomId):
+    """获取房间的配置"""
+    if roomId in bigRoomidsMap():
+        # roomId是一个bigRoomId
+        ctlRoomId = bigRoomidsMap()[roomId][0]
+        return roomIdDefineMap()[ctlRoomId].configure
+    elif roomId in roomIdDefineMap():
+        # roomId是一个ctrlRoomId或者是一个桌子房间ID,
+        return roomIdDefineMap()[roomId].configure
+    return None
+
+
+def getRoomMinCoin(roomId):
+    """获取房间进入最小金币"""
+    roomConf = getRoomConfigure(roomId)
+    return roomConf['minCoin'] if roomConf else None
+
+
+def getRoomMaxCoin(roomId):
+    """获取房间进入最大金币"""
+    roomConf = getRoomConfigure(roomId)
+    return roomConf['maxCoin'] if roomConf else None
+
+
+def getRoomMutil(roomId):
+    roomConf = getRoomConfigure(roomId)
+    return roomConf['roomMutil'] if roomConf else None
+
+
 def globalConfig():
     '''
     取得global.json的配置内容
     '''
     return ftcon.global_config
+
+
+def serverTypeMap():
+    '''
+    取得服务类型和服务ID的配置, key为服务类型(SRV_TYPE_XXX), value 为服务ID的list
+    '''
+    return ftcon.server_type_map
+
+
+def allServersMap():
+    '''
+    取得全部进程的定义,key为进程ID, value为进程信息的dict
+    '''
+    return ftcon.server_map
 
 
 def serverId():
@@ -281,3 +325,150 @@ def mode():
     参考: RUN_MODE_ONLINE, RUN_MODE_SIMULATION, RUN_MODE_RICH_TEST, RUN_MODE_TINY_TEST
     '''
     return _datas['mode']
+
+
+def pathBin():
+    '''
+    在poker.json中定义的output.path的值加上bin
+    即PY文件的编译输出路径
+    '''
+    return _datas['bin_path']
+
+
+def pathWebroot():
+    '''
+    在poker.json中定义的output.path的值加上webroot
+    即WEBROOT的编译输出路径
+    '''
+    return _datas['webroot_path']
+
+
+def httpDownload():
+    '''
+    在poker.json中定义的http.download的值
+    '''
+    return _datas['http_download']
+
+
+def httpGame():
+    '''
+    在poker.json中定义的http.game的值
+    '''
+    return _datas['http_game']
+
+
+def httpSdk():
+    '''
+    在poker.json中定义的http.sdk的值
+    '''
+    return _datas['http_sdk']
+
+
+def httpSdkInner():
+    '''
+    在poker.json中定义的http.sdk.inner的值
+    '''
+    return _datas['http_sdk_inner']
+
+
+def httpAvatar():
+    '''
+    在poker.json中定义的http.sdk.inner的值
+    '''
+    return _datas['http_avatar']
+
+
+def httpGdss():
+    '''
+    全局数据同步中心的HTTP地址,例如: clientid的同步地址
+    '''
+    return _datas.get('http_gdss', 'http://gdss.touch4.me')
+
+
+def httpOnlieGateWay():
+    '''
+    全局数据同步中心的HTTP地址,例如: clientid的同步地址
+    '''
+    return _datas.get('http_gateway', 'http://open.touch4.me')
+
+
+def biReportGroupInfo():
+    '''
+    取得BI汇报的配置中, 对应汇报类型rec_type的分组个数
+    '''
+    return _datas['bireportgroup']
+
+
+def enableTestHtml():
+    '''
+    判定是否开启测试页面, 通常线上服务是关闭的
+    '''
+    return _datas.get('enable_test_html', 0)
+
+
+def cloudId():
+    '''
+    判定是否开启测试页面, 通常线上服务是关闭的
+    '''
+    return _datas.get('cloud_id', 0)
+
+
+def isH5():
+    '''
+    判定是否运行于H5服务模式, H5模式TCP接入的是WEBSOCKET
+    '''
+    return ftcon.global_config.get('is_h5', 0)
+
+
+def getUserConnIpPortList():
+    '''
+    取得客户端可接入的TCPIP的IP和端口号列表[(ip, port),(ip, port),(ip, port)...]
+    '''
+    srvs = serverTypeMap()
+    ipports = srvs.getExtendAttr('ipports')
+    if not ipports:
+        ipdict = {}
+        machines = ftcon.getConf('poker:machine')
+        for m in machines.values() :
+            ipdict[m['internet']] = m['internet']
+            ipdict[m['intranet']] = m['internet']
+
+        ipports = []
+        connids = srvs[SRV_TYPE_CONN][:]
+        connids.sort()
+        servers = allServersMap()
+        for connid in connids:
+            srvconn = servers[connid]
+            ip = ipdict[srvconn['ip']]
+            port = srvconn['protocols']['server']['co-tcp']
+            ipports.append((ip, port))
+        srvs.setExtendAttr('ipports', ipports)
+    return ipports
+
+
+def _dumpGdataInfo():
+    ftlog.info('GLOBAL Setting Dump Begin')
+    ftlog.info('GLOBAL name                    = %s' % (name()))
+    ftlog.info('GLOBAL mode                    = %d' % (mode()))
+    ftlog.info('GLOBAL corporation             = %s' % (corporation()))
+    ftlog.info('GLOBAL server tid              = %s' % (serverId()))
+    ftlog.info('GLOBAL server type             = %s' % (serverType()))
+    ftlog.info('GLOBAL server num              = %s' % (serverNum()))
+    ftlog.info('GLOBAL path bin                = %s' % (pathBin()))
+    ftlog.info('GLOBAL path webroot            = %s' % (pathWebroot()))
+    ftlog.info('GLOBAL http sdk                = %s' % (httpSdk()))
+    ftlog.info('GLOBAL http sdk inner          = %s' % (httpSdkInner()))
+    ftlog.info('GLOBAL http game               = %s' % (httpGame()))
+    ftlog.info('GLOBAL http download           = %s' % (httpDownload()))
+    ftlog.info('GLOBAL http gdss center        = %s' % (httpGdss()))
+    ftlog.info('GLOBAL http gateway            = %s' % (httpOnlieGateWay()))
+
+#     for k, v in srvIdRoomIdListMap().items() :
+#         ftlog.info('GLOBAL serverid-roomid %s = %s\n' % (str(k), str(v)))
+#
+#     for k, v in roomIdDefineMap().items() :
+#         ftlog.info('GLOBAL roomid-define   %s = %s\n' % (str(k), str(v)))
+#
+#     for k, v in bigRoomidsMap().items() :
+#         ftlog.info('GLOBAL bigroomidmap    %s = %s\n' % (str(k), str(v)))
+    ftlog.info('GLOBAL Setting Dump End')

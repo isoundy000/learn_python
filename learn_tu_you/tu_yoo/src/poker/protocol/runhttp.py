@@ -49,6 +49,34 @@ def getDict():
     return rparam
 
 
+def setParam(key, val):
+    '''
+    设置当前HTTP请求参数的键值对
+    注: 此方法仅在某些特殊需求下才会被调用
+    '''
+    request = getRequest()
+    request.args[key] = [val]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def addWebRoot(webroot):
+    '''
+    添加静态资源查找路径
+    '''
+    pass
+
+
 def getParamStr(key, defaultVal=None):
     pass
 

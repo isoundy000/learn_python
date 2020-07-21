@@ -1,0 +1,81 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44601",
+    "title": "ID_ROOM_NAME_44601",
+    "sceneName": "string_44601",
+    "fishPool": 44601,
+    "bullets": [
+        2000,
+        5000,
+        10000,
+        50000
+    ],
+    "multiple": 50,
+    "minMultiple": 50,
+    "maxMultiple": 500,
+    "lack": 100,
+    "showLevel": 1,
+    "minLevel": 18,
+    "maxLevel": 999,
+    "expLimitLevel": 999,
+    "minCoin": 500000,
+    "maxCoin": -1,
+    "minGunLevel": 2118,
+    "maxGunLevel": 2140,
+    "maxSkillLevel": 25,
+    "minWaveRadix": 200000,
+    "maxWaveRadix": 1000000,
+    "minWaveRadix_b": 200000,
+    "maxWaveRadix_b": 2000000,
+    "waveRadixRate": 0.14,
+    "bankruptcyCoin": 3999,
+    "coinShortage": 3000,
+    "lossRebate": {
+        "lossCoin": -9000000,
+        "rebateCoin": 1800000
+    },
+    "occupyMax": 0.5,
+    "typeName": "fish_poseidon",
+    "tableConf": {
+        "fishGroupsName": "string_44601",
+        "maxSeatN": 4
+    },
+    "openTime": "2019-12-20 00:00:00",
+    "protectionLimit": {
+        "dailyLoss": -150000000,
+        "monthlyLoss": -4500000000
+    },
+    "poseidonConf": {
+        "times": {
+            "days": {
+                "count": 365,
+                "first": "",
+                "interval": "1d"
+            },
+            "times_in_day": {
+                "count": 10000,
+                "first": "0:00",
+                "interval": 6
+            }
+        },
+        "idle.times": 174,
+        "prepare.times": 3,
+        "appear.times": 180,
+        "leave.times": 3
+    },
+    "towerConf": {
+        "charge.times": 20,
+        "attack.times": 5,
+        "award.times": 5,
+        "allBets": [
+            5000,
+            [
+                10000,
+                50000,
+                100000
+            ]
+        ],
+        "maxBet": 5000000
+    }
+}

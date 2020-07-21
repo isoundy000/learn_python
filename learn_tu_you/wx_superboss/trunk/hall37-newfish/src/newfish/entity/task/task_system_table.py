@@ -31,11 +31,11 @@ class TaskSystemTable(object):
 
     def _reload(self):
         self.showCmpttInfo = False                              # 展示夺宝赛
-        self.showBonusInfo = False                              # 奖金赛
-        self.openCmpttPool = True
-        self.openBonusPool = True
+        self.showBonusInfo = False                              # 展示奖金赛
+        self.openCmpttPool = True                               # 开启夺宝赛奖池
+        self.openBonusPool = True                               # 开启奖金赛奖池
         self.currTask = None                                    # 当前任务
-        self.currTaskState = 0
+        self.currTaskState = 0                                  # 当前任务状态
         self.taskLoopInterval = self.table.runConfig.taskLoopInterval   # 循环间隔
         self.taskLoopStart()                                    # 任务结束
         self._ncmpttTask = None                                 # 限时任务
@@ -67,20 +67,21 @@ class TaskSystemTable(object):
         }
 
     def taskLoopStart(self):
+        """任务循环开始"""
         ftlog.debug("taskStart->Loop->Start", self.table.tableId)
         self.endTimer.setup(self.taskLoopInterval, "task_end", {}, True)
 
     def _getCurTask(self, userIds):
         """获取当前的任务"""
         if len(userIds) < 2:
-            self.currTask = "ncmptt"
+            self.currTask = "ncmptt"                                                            # 小于2个玩家 限时任务
         else:
             self.bonusPool = self.table.room.lotteryPool.getBonusPoolCoin(self.table.tableId)   # 金币奖池
             ftlog.debug("taskReady->msg 11=", self.bonusPool, self.table.runConfig.minBonus)
-            if self.bonusPool < self.table.runConfig.minBonus:
+            if self.bonusPool < self.table.runConfig.minBonus:                                  # 夺宝赛
                 self.currTask = "cmptt"
             else:
-                self.currTask = random.choice(["cmptt", "bonus"])
+                self.currTask = random.choice(["cmptt", "bonus"])                               # 夺宝赛|奖金赛
 
     def taskReady(self, msg, userId, seatId):
         """
@@ -93,7 +94,6 @@ class TaskSystemTable(object):
         self.showBonusInfo = False
         self.showCmpttInfo = False
         if len(self.table.getBroadcastUids()) == 0:
-            ftlog.debug("taskReady->msg =1", "no user", self.table.tableId)
             return
         # 竞赛活动开启期间暂停比赛.
         from newfish.entity.fishactivity import competition_activity
@@ -136,7 +136,7 @@ class TaskSystemTable(object):
             if fun:
                 taskId = fun.taskStart(uid)
                 if taskId > 0 and self.table.ttAutofillFishGroup:
-                    self.table.ttAutofillFishGroup.startAutofill(uid, taskId)
+                    self.table.ttAutofillFishGroup.startAutofill(uid, taskId)       # 开始加入任务填充的鱼
 
     def taskEnd(self, msg, userId, seatId):
         """
@@ -159,11 +159,11 @@ class TaskSystemTable(object):
                 self._cmpttTask.clear()
             if self._bonusTask:                     # 奖金赛
                 self._bonusTask.clear()
-            if self.endTimer:
+            if self.endTimer:                       # 结束定时器
                 self.endTimer.cancel()
-            if self.readyTimer:
+            if self.readyTimer:                     # 准备定时器
                 self.readyTimer.cancel()
-            self._reload()
+            self._reload()                          # 重载配置
             return
         self.currTask = None
         self.currTaskState = 0
@@ -243,7 +243,6 @@ class TaskSystemTable(object):
         处理进入事件
         """
         if event.tableId == self.table.tableId:
-            ftlog.debug("_dealEnterTable->currTask =", event.userId, self.currTask, self.currTaskState)
             if event.reconnect:
                 self._sendTaskInfoForReconnect(event.userId)
             else:

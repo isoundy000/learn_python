@@ -1,0 +1,108 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44412",
+    "title": "ID_ROOM_NAME_44412",
+    "sceneName": "string_44412",
+    "fishPool": 44412,
+    "bullets": [
+        2000,
+        5000,
+        10000,
+        50000
+    ],
+    "multiple": 1,
+    "minMultiple": 1,
+    "maxMultiple": 1,
+    "lack": 100,
+    "showLevel": 1,
+    "minLevel": 15,
+    "maxLevel": 999,
+    "expLimitLevel": 999,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2110,
+    "maxGunLevel": 2125,
+    "maxSkillLevel": 14,
+    "matchingType": 2,
+    "matchingIntervalTime": 30,
+    "taskSystemType": ["table"],
+    "taskLoopInterval": 900,
+    "bonusTaskInterval": 705,
+    "minBonus": 20000,
+    "systemBonus": 0,
+    "minWaveRadix": 50000,
+    "maxWaveRadix": 200000,
+    "minWaveRadix_b": 50000,
+    "maxWaveRadix_b": 400000,
+    "waveRadixRate": 0.16,
+    "bankruptcyCoin": 999,
+    "coinShortage": 1250,
+    "lossRebate": {
+        "lossCoin": -1800000,
+        "rebateCoin": 360000
+    },
+    "superBossMinSeatN": 0,
+    "octopusConf": {
+        "idle.times": 60,
+        "prepare.times": 7,
+        "appearing.times": 2,
+        "appeared.times": 150,
+        "leave.times": 3,
+        "laughTimeRange": [10, 20]
+    },
+    "tentacleConf": {
+        "totalTentacleCount": {
+            "73204": 6,
+            "73205": 1,
+            "73206": 1
+        },
+        "initTentacles": [
+            {
+                "posId": 2,
+                "fishType": 73206,
+                "delayTime": 0
+            },
+            {
+                "posId": 4,
+                "fishType": 73204,
+                "delayTime": 0
+            },
+            {
+                "posId": 6,
+                "fishType": 73205,
+                "delayTime": 0
+            }
+        ],
+        "delayTimeRange": [[1, 3], [3, 10]],
+        "swingTimeRange": [8, 15],
+        "retractTime": 1.6
+    },
+    "occupyMax": 0.3,
+    "typeName": "fish_multiple",
+    "tableConf": {
+        "fishGroupsName": "string_44412",
+        "maxSeatN": 4,
+        "groupMode": 1
+    },
+    "skill_item": {
+        "14120": {
+            "name": 14120,
+            "count_0": 1,
+            "duration": 18,
+            "cd_time": 18,
+            "replace_name": 1137,
+            "count_1": 200,
+            "play_times": 444
+        },
+        "14119": {
+            "name": 14119,
+            "count_0": 1,
+            "duration": 10,
+            "cd_time": 1,
+            "replace_name": 1137,
+            "count_1": 100,
+            "play_times": 444
+        }
+    }
+}

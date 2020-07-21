@@ -1,0 +1,28 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44201",
+    "sceneName": "string_44201",
+    "fishPool": 44201,
+    "multiple": 1,
+    "showLevel": 1,
+    "minLevel": 1,
+    "maxLevel": 999,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2101,
+    "maxGunLevel": 2120,
+    "maxSkillLevel": 10,
+    "typeName": "fish_fight",
+    "matchConf": {
+        "desc": "",
+        "fishPool": 44201,
+        "playingTime": 120,
+        "bullet": 5000,
+        "table.seat.count": 2
+    },
+    "tableConf": {
+        "maxSeatN": 4,
+        "fishGroupsName": "string_44201"
+    }
+}

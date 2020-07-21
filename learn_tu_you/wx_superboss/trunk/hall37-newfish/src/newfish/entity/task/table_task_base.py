@@ -23,7 +23,7 @@ class TableMatchTask(object):
         self.taskInterval = taskInterval                    # 任务间隔
         self.state = 0                                      # 状态
         self.currentTask = None                             # 当前任务
-        self.usersData = {}
+        self.usersData = {}                                 # 任务数据
 
     def getTaskState(self, userId):
         """获取任务状态"""

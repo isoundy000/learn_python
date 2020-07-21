@@ -1,0 +1,58 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44301",
+    "sceneName": "string_44301",
+    "fishPool": 44301,
+    "multiple": 1,
+    "showLevel": 1,
+    "minLevel": 16,
+    "maxLevel": 999,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2501,
+    "maxGunLevel": 2510,
+    "usableBullets": [
+        1301,
+        1193,
+        1194
+    ],
+    "maxGunLevelLimit": {
+        "1194": 2505
+    },
+    "bulletLimit": {
+        "1301": 1,
+        "1193": 1,
+        "1194": 1
+    },
+    "timeLimit": [
+        [
+            "00:00",
+            "23:54"
+        ]
+    ],
+    "protectionLimit": {
+        "dailyLoss": -150000000,
+        "monthlyLoss": -4500000000
+    },
+    "playTime": 300,
+    "fee": {
+        "kindId": 1306,
+        "count": 1
+    },
+    "fee_14091": {
+        "kindId": 14091,
+        "count": 1,
+        "rewards": [
+            {
+                "name": 1301,
+                "count": 20
+            }
+        ]
+    },
+    "typeName": "fish_robbery",
+    "tableConf": {
+        "fishGroupsName": "string_44301",
+        "maxSeatN": 4
+    }
+}

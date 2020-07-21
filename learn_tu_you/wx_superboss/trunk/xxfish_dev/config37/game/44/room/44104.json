@@ -255,5 +255,25 @@
     "tableConf": {
         "maxSeatN": 4,
         "fishGroupsName": "string_44104"
+    },
+    "skill_item": {
+        "14120": {
+            "name": 14120,
+            "count_0": 1,
+            "duration": 18,
+            "cd_time": 18,
+            "replace_name": 1137,
+            "count_1": 200,
+            "play_times": 444
+        },
+        "14119": {
+            "name": 14119,
+            "count_0": 1,
+            "duration": 10,
+            "cd_time": 1,
+            "replace_name": 1137,
+            "count_1": 100,
+            "play_times": 444
+        }
     }
 }

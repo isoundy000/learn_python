@@ -24,6 +24,13 @@ _DEBUG = 0
 debug = ftlog.info
 
 
+def getProtoClassByName(protoname):
+    '''
+    扑克大厅系统的协议层支持设定
+    '''
+
+
+
 def initialize():
     '''
     扑克大厅系统的初始化入口
@@ -81,3 +88,89 @@ def initialize():
         _loadRoomDefines(gdatas)
     except:
         pass
+
+
+
+def _doServertHeartBeat():
+    '''
+    每秒钟一次的心跳事件广播, 执行之后间隔一秒再次启动, 即: 这个每秒心跳是个大约值,非准确值
+    '''
+    pass
+
+
+def _auto_change_room_count(roomDict):
+    '''
+    此方法和webmgr中mode1～mode4的削减标准一致
+    '''
+    pass
+
+
+def _loadRoomDefines(gdatas):
+    '''
+    需要整理一个全局的 serverid-roomid-roombaseinfo的大集合
+    取得server_rooms.json的配置内容, key为服务ID, value为房间配置内容
+    '''
+    pass
+
+
+def _loadTYGames(gdatas):
+    '''
+    装载挂接的游戏PLUGIN, 挂接多少PLUGIN由配置: poker:global中的game_packages决定
+    '''
+    pass
+
+
+def _initializeRooms(gdatas):
+    '''
+    初始化所有的房间对象
+    '''
+    pass
+
+
+def _initializeTables(gdatas):
+    '''
+    初始化所有的桌子对象
+    '''
+    if _DEBUG:
+        debug('initializeTables begin')
+
+
+
+def _initializePoker(gdatas):
+    '''
+    初始化服务的基本(大厅通用)的HTTP和TCP命令入口
+    '''
+    if _DEBUG:
+        debug('initializePoker begin')
+    stype = gdata.serverType()
+
+    # 启动全局配置系统的同步
+    from poker.entity.configure import synccenter
+    synccenter._initialize()
+    globalEventBus.subscribe(EventHeartBeat, synccenter.doSyncData)
+
+    from poker.entity.biz import integrate
+    integrate._initialize()
+
+    # 如果是CONN进程, 那么启动空闲TCP链接的检查
+    if stype == gdata.SRV_TYPE_CONN:
+        from poker.protocol.conn.protocols import doCleanUpEmptyTcp
+        globalEventBus.subscribe(EventHeartBeat, doCleanUpEmptyTcp)
+
+    # 如果是AGENT进程, 那么启用自身的命令处理器
+    if stype == gdata.SRV_TYPE_AGENT:
+        from poker.protocol.common.protocols import onAgentSelfCommand
+        from freetime.support.tcpagent.protocol import A2SProtocol, A2AProtocol
+        A2SProtocol.onCommand = onAgentSelfCommand
+        A2AProtocol.onCommand = onAgentSelfCommand
+
+    if gdata.isHttpProcess():
+        from poker.protocol import runhttp
+        runhttp.addWebRoot(gdata.pathWebroot())
+
+    if stype == gdata.SRV_TYPE_UTIL:
+        from poker.entity.dao import datasubscribe
+        datasubscribe._initialize()
+
+    if _DEBUG:
+        debug('initializePoker end')

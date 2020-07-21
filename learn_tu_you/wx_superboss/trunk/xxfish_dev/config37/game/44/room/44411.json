@@ -1,0 +1,71 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44411",
+    "title": "ID_ROOM_NAME_44411",
+    "sceneName": "string_44411",
+    "fishPool": 44411,
+    "bullets": [
+        2000,
+        5000,
+        10000,
+        50000
+    ],
+    "multiple": 1,
+    "lack": 100,
+    "showLevel": 1,
+    "minLevel": 1,
+    "maxLevel": 999,
+    "expLimitLevel": 25,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2101,
+    "maxGunLevel": 2130,
+    "maxSkillLevel": 9,
+    "matchingType": 1,
+    "matchingIntervalTime": 30,
+    "taskSystemType": [],
+    "taskLoopInterval": 900,
+    "bonusTaskInterval": 720,
+    "minBonus": 1500,
+    "systemBonus": 0,
+    "minWaveRadix": 10000,
+    "maxWaveRadix": 30000,
+    "minWaveRadix_b": 10000,
+    "maxWaveRadix_b": 60000,
+    "waveRadixRate": 0.24,
+    "bankruptcyCoin": 149,
+    "coinShortage": 150,
+    "lossRebate": {
+        "lossCoin": -300000,
+        "rebateCoin": 150000
+    },
+    "superBossMinSeatN": 0,
+    "occupyMax": 0.3,
+    "typeName": "fish_multiple",
+    "tableConf": {
+        "fishGroupsName": "string_44411",
+        "maxSeatN": 4,
+        "groupMode": 1
+    },
+    "skill_item": {
+        "14120": {
+            "name": 14120,
+            "count_0": 1,
+            "duration": 18,
+            "cd_time": 18,
+            "replace_name": 1137,
+            "count_1": 200,
+            "play_times": 444
+        },
+        "14119": {
+            "name": 14119,
+            "count_0": 1,
+            "duration": 10,
+            "cd_time": 1,
+            "replace_name": 1137,
+            "count_1": 100,
+            "play_times": 444
+        }
+    }
+}

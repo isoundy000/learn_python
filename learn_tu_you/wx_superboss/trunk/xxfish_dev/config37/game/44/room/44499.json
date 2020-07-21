@@ -1,0 +1,59 @@
+{
+    "hasrobot": 0,
+    "isMatch": 0,
+    "name": "ID_ROOM_NAME_44499",
+    "sceneName": "string_44499",
+    "fishPool": 44001,
+    "bullets": [
+        300,
+        1000,
+        5000,
+        10000
+    ],
+    "multiple": 1,
+    "minMultiple": 1,
+    "maxMultiple": 1,
+    "lack": 50,
+    "showLevel": 1,
+    "minLevel": 1,
+    "maxLevel": 999,
+    "expLimitLevel": 20,
+    "minCoin": -1,
+    "maxCoin": -1,
+    "minGunLevel": 2101,
+    "maxGunLevel": 2110,
+    "maxSkillLevel": 5,
+    "minWaveRadix": 1500,
+    "maxWaveRadix": 3000,
+    "waveRadixRate": 0.2,
+    "bankruptcyCoin": 9,
+    "taskSystemType": ["user"],
+    "occupyMax": [0.1,0.2,0.3],
+    "ignoreShadowRoomList": [],
+    "typeName": "fish_newbie",
+    "tableConf": {
+        "fishGroupsName": "string_44499",
+        "maxSeatN": 1
+    },
+    "coinShortage": 10,
+    "skill_item": {
+        "14120": {
+            "name": 14120,
+            "count_0": 1,
+            "duration": 18,
+            "cd_time": 0,
+            "replace_name": 1137,
+            "count_1": 200,
+            "play_times": 444
+        },
+        "14119": {
+            "name": 14119,
+            "count_0": 1,
+            "duration": 10,
+            "cd_time": 0,
+            "replace_name": 1137,
+            "count_1": 100,
+            "play_times": 444
+        }
+    }
+}

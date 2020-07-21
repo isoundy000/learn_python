@@ -1,6 +1,6 @@
 {
-    "hasrobot": 1,    //是否存在机器人
-    "isMatch": 1,     //是否为比赛
+    "hasrobot": 1,                  //是否存在机器人
+    "isMatch": 1,                   //是否为比赛
     "name": "ID_ROOM_NAME_44101",   //房间名   回馈赛水上乐园
     "sceneName": "string_44101",    //场景名
     "fishPool": 44101,              //渔场id
@@ -244,5 +244,25 @@
     "tableConf": {                                //桌子配置
         "maxSeatN": 4,                            //最大位置
         "fishGroupsName": "string_44101"          //鱼阵名字
+    },
+    "skill_item": {
+        "14120": {
+            "name": 14120,
+            "count_0": 1,
+            "duration": 18,
+            "cd_time": 18,
+            "replace_name": 1137,
+            "count_1": 200,
+            "play_times": 444
+        },
+        "14119": {
+            "name": 14119,
+            "count_0": 1,
+            "duration": 10,
+            "cd_time": 1,
+            "replace_name": 1137,
+            "count_1": 100,
+            "play_times": 444
+        }
     }
 }
