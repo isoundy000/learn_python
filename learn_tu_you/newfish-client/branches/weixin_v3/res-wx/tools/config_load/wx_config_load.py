@@ -1935,7 +1935,7 @@ if __name__ == '__main__':
     RealeaseConfPath = ""
     print "begin"
     t1 = int(time.time())
-    ServerPath = '/../../../../../../xxfish_test/config37/game/44'          # 默认练习路径
+    ServerPath = '/../../../../../../wx_superboss/trunk/xxfish_dev/config37/game/44'          # 默认练习路径
     if len(sys.argv) > 1 and sys.argv[1] == '-d':
         ServerPath = '/../../../../../../xxfish_test/config37/game/44'
     # else:

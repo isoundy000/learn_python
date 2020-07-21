@@ -881,7 +881,7 @@ config_list = [
     (prizewheel_m_config, None),
     (time_point_match_skill, None),
     (terror_fish_m, None),
-    (autofill_fish_m, None),
+    # (autofill_fish_m, None),
     (special_fish_effect_count, None)
 ]
 
@@ -891,9 +891,9 @@ if __name__ == "__main__":
     RealeaseConfPath = ""
     print "begin"
     t1 = int(time.time())
-    ServerPath = '/../../../../../../xxfish_test/config37/game/44'  # 默认练习路径
+    ServerPath = '/../../../../../../wx_superboss/trunk/xxfish_dev/config37/game/44'  # 默认练习路径
     if len(sys.argv) > 1 and sys.argv[1] == '-d':
-        ServerPath = '/../../../../../../xxfish_test/config37/game/44'
+        ServerPath = '/../../../../../../wx_superboss/xxfish_dev/config37/game/44'
     # else:
     #     ServerPath = "/../../../../../../../gameServer/hall37/newfish-py/wx_superboss/xxfish_dev/config37/game/44"
 

@@ -1,0 +1,182 @@
+{
+    "1145": {
+        "kindId": 1145, 
+        "type": 1, 
+        "rare": 1, 
+        "level": 1, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 200
+    }, 
+    "1146": {
+        "kindId": 1146, 
+        "type": 1, 
+        "rare": 1, 
+        "level": 4, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 200
+    }, 
+    "1147": {
+        "kindId": 1147, 
+        "type": 1, 
+        "rare": 1, 
+        "level": 1, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 200
+    }, 
+    "1148": {
+        "kindId": 1148, 
+        "type": 1, 
+        "rare": 2, 
+        "level": 5, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1149": {
+        "kindId": 1149, 
+        "type": 1, 
+        "rare": 1, 
+        "level": 1, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 200
+    }, 
+    "1150": {
+        "kindId": 1150, 
+        "type": 1, 
+        "rare": 2, 
+        "level": 2, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1152": {
+        "kindId": 1152, 
+        "type": 1, 
+        "rare": 2, 
+        "level": 3, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1153": {
+        "kindId": 1153, 
+        "type": 1, 
+        "rare": 3, 
+        "level": 6, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 2000
+    }, 
+    "1154": {
+        "kindId": 1154, 
+        "type": 1, 
+        "rare": 3, 
+        "level": 7, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 2000
+    }, 
+    "1155": {
+        "kindId": 1155, 
+        "type": 2, 
+        "rare": 1, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1156": {
+        "kindId": 1156, 
+        "type": 2, 
+        "rare": 1, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1157": {
+        "kindId": 1157, 
+        "type": 2, 
+        "rare": 1, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1158": {
+        "kindId": 1158, 
+        "type": 2, 
+        "rare": 2, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1159": {
+        "kindId": 1159, 
+        "type": 2, 
+        "rare": 1, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1160": {
+        "kindId": 1160, 
+        "type": 2, 
+        "rare": 2, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1162": {
+        "kindId": 1162, 
+        "type": 2, 
+        "rare": 2, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1163": {
+        "kindId": 1163, 
+        "type": 2, 
+        "rare": 3, 
+        "level": 9, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1164": {
+        "kindId": 1164, 
+        "type": 2, 
+        "rare": 3, 
+        "level": 10, 
+        "unlock": 1, 
+        "weight": 1000, 
+        "convertCoin": 600
+    }, 
+    "1429": {
+        "kindId": 1429, 
+        "type": 4, 
+        "rare": 1, 
+        "level": 11, 
+        "unlock": 25, 
+        "weight": 1000, 
+        "convertCoin": 0
+    }, 
+    "1430": {
+        "kindId": 1430, 
+        "type": 4, 
+        "rare": 1, 
+        "level": 11, 
+        "unlock": 25, 
+        "weight": 1000, 
+        "convertCoin": 0
+    }
+}

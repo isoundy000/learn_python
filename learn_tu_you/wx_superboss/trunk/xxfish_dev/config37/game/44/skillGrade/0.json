@@ -1,0 +1,3295 @@
+{
+    "5101": {
+        "1": {
+            "cost": 200, 
+            "power": 200, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 260, 
+            "power": 260, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 320, 
+            "power": 320, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 360, 
+            "power": 360, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 400, 
+            "power": 400, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 440, 
+            "power": 440, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 480, 
+            "power": 480, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 520, 
+            "power": 520, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 560, 
+            "power": 560, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 600, 
+            "power": 600, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 640, 
+            "power": 640, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 680, 
+            "power": 680, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 720, 
+            "power": 720, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 760, 
+            "power": 760, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 800, 
+            "power": 800, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 840, 
+            "power": 840, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 880, 
+            "power": 880, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 920, 
+            "power": 920, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 960, 
+            "power": 960, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 1000, 
+            "power": 1000, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 1040, 
+            "power": 1040, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 1080, 
+            "power": 1080, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 1120, 
+            "power": 1120, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 1160, 
+            "power": 1160, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 1200, 
+            "power": 1200, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.2, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2201, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }, 
+    "5102": {
+        "1": {
+            "cost": 60, 
+            "power": 1, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 61, 
+            "power": 2, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 62, 
+            "power": 3, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 63, 
+            "power": 4, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 65, 
+            "power": 5, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 66, 
+            "power": 6, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 67, 
+            "power": 7, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 68, 
+            "power": 8, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 69, 
+            "power": 9, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 70, 
+            "power": 10, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 71, 
+            "power": 11, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 72, 
+            "power": 12, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 73, 
+            "power": 13, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 74, 
+            "power": 14, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 75, 
+            "power": 15, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 76, 
+            "power": 16, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 77, 
+            "power": 17, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 78, 
+            "power": 18, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 79, 
+            "power": 19, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 80, 
+            "power": 20, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 81, 
+            "power": 21, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 82, 
+            "power": 22, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 83, 
+            "power": 23, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 84, 
+            "power": 24, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 85, 
+            "power": 25, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 3.0, 
+            "coolDown": 60, 
+            "weaponId": 2202, 
+            "double": [], 
+            "isReturn": 0
+        }
+    }, 
+    "5103": {
+        "1": {
+            "cost": 200, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 20, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 260, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 26, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 320, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 32, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 360, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 36, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 400, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 40, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 440, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 44, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 480, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 48, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 520, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 52, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 560, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 56, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 600, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 60, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 640, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 64, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 680, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 68, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 720, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 72, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 760, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 76, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 800, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 80, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 840, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 84, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 880, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 88, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 920, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 92, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 960, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 96, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 1000, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 100, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 1040, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 104, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 1080, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 108, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 1120, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 112, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 1160, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 116, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 1200, 
+            "power": 0, 
+            "HP": 0, 
+            "impale": 120, 
+            "clip": 10, 
+            "interval": 0.3, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2203, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }, 
+    "5104": {
+        "1": {
+            "cost": 80, 
+            "power": 0, 
+            "HP": 50, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 81, 
+            "power": 0, 
+            "HP": 70, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 10.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 82, 
+            "power": 0, 
+            "HP": 90, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 11.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 82, 
+            "power": 0, 
+            "HP": 115, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 11.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 83, 
+            "power": 0, 
+            "HP": 140, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 12.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 83, 
+            "power": 0, 
+            "HP": 160, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 12.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 84, 
+            "power": 0, 
+            "HP": 180, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 13.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 84, 
+            "power": 0, 
+            "HP": 200, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 13.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 85, 
+            "power": 0, 
+            "HP": 220, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 14.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 85, 
+            "power": 0, 
+            "HP": 240, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 14.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 86, 
+            "power": 0, 
+            "HP": 260, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 15.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 86, 
+            "power": 0, 
+            "HP": 280, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 15.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 87, 
+            "power": 0, 
+            "HP": 300, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 16.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 87, 
+            "power": 0, 
+            "HP": 320, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 16.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 88, 
+            "power": 0, 
+            "HP": 340, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 17.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 88, 
+            "power": 0, 
+            "HP": 360, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 17.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 89, 
+            "power": 0, 
+            "HP": 380, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 18.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 89, 
+            "power": 0, 
+            "HP": 400, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 18.5, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 90, 
+            "power": 0, 
+            "HP": 420, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 19.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 90, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 20.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 91, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 21.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 92, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 22.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 93, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 23.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 94, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 24.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 95, 
+            "power": 0, 
+            "HP": 450, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 1.0, 
+            "duration": 25.0, 
+            "coolDown": 60, 
+            "weaponId": 2204, 
+            "double": [], 
+            "isReturn": 0
+        }
+    }, 
+    "5105": {
+        "1": {
+            "cost": 200, 
+            "power": 10, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "2": {
+            "cost": 260, 
+            "power": 13, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "3": {
+            "cost": 320, 
+            "power": 16, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "4": {
+            "cost": 360, 
+            "power": 18, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "5": {
+            "cost": 400, 
+            "power": 20, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "6": {
+            "cost": 440, 
+            "power": 22, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "7": {
+            "cost": 480, 
+            "power": 24, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "8": {
+            "cost": 520, 
+            "power": 26, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "9": {
+            "cost": 560, 
+            "power": 28, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "10": {
+            "cost": 600, 
+            "power": 30, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "11": {
+            "cost": 640, 
+            "power": 32, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "12": {
+            "cost": 680, 
+            "power": 34, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "13": {
+            "cost": 720, 
+            "power": 36, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "14": {
+            "cost": 760, 
+            "power": 38, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "15": {
+            "cost": 800, 
+            "power": 40, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "16": {
+            "cost": 840, 
+            "power": 42, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "17": {
+            "cost": 880, 
+            "power": 44, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "18": {
+            "cost": 920, 
+            "power": 46, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "19": {
+            "cost": 960, 
+            "power": 48, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "20": {
+            "cost": 1000, 
+            "power": 50, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "21": {
+            "cost": 1040, 
+            "power": 52, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "22": {
+            "cost": 1080, 
+            "power": 54, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "23": {
+            "cost": 1120, 
+            "power": 56, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "24": {
+            "cost": 1160, 
+            "power": 58, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }, 
+        "25": {
+            "cost": 1200, 
+            "power": 60, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 20, 
+            "interval": 0.33, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2205, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 1
+        }
+    }, 
+    "5106": {
+        "1": {
+            "cost": 300, 
+            "power": 100, 
+            "HP": 0, 
+            "impale": 50, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 350, 
+            "power": 113, 
+            "HP": 0, 
+            "impale": 62, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 400, 
+            "power": 126, 
+            "HP": 0, 
+            "impale": 74, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 450, 
+            "power": 139, 
+            "HP": 0, 
+            "impale": 86, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 500, 
+            "power": 152, 
+            "HP": 0, 
+            "impale": 98, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 550, 
+            "power": 165, 
+            "HP": 0, 
+            "impale": 110, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 600, 
+            "power": 178, 
+            "HP": 0, 
+            "impale": 122, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 650, 
+            "power": 191, 
+            "HP": 0, 
+            "impale": 134, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 700, 
+            "power": 204, 
+            "HP": 0, 
+            "impale": 146, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 750, 
+            "power": 217, 
+            "HP": 0, 
+            "impale": 158, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 800, 
+            "power": 230, 
+            "HP": 0, 
+            "impale": 170, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 850, 
+            "power": 243, 
+            "HP": 0, 
+            "impale": 182, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 900, 
+            "power": 256, 
+            "HP": 0, 
+            "impale": 194, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 950, 
+            "power": 269, 
+            "HP": 0, 
+            "impale": 206, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 1000, 
+            "power": 282, 
+            "HP": 0, 
+            "impale": 218, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 1050, 
+            "power": 295, 
+            "HP": 0, 
+            "impale": 230, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 1100, 
+            "power": 308, 
+            "HP": 0, 
+            "impale": 242, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 1150, 
+            "power": 321, 
+            "HP": 0, 
+            "impale": 254, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 1200, 
+            "power": 334, 
+            "HP": 0, 
+            "impale": 266, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 1250, 
+            "power": 347, 
+            "HP": 0, 
+            "impale": 278, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 1300, 
+            "power": 360, 
+            "HP": 0, 
+            "impale": 290, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 1350, 
+            "power": 373, 
+            "HP": 0, 
+            "impale": 302, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 1400, 
+            "power": 386, 
+            "HP": 0, 
+            "impale": 314, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 1450, 
+            "power": 399, 
+            "HP": 0, 
+            "impale": 326, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 1500, 
+            "power": 412, 
+            "HP": 0, 
+            "impale": 338, 
+            "clip": 2, 
+            "interval": 1.0, 
+            "duration": 0.0, 
+            "coolDown": 70, 
+            "weaponId": 2206, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }, 
+    "5108": {
+        "1": {
+            "cost": 300, 
+            "power": 300, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 350, 
+            "power": 350, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 400, 
+            "power": 400, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 450, 
+            "power": 450, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 500, 
+            "power": 500, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 550, 
+            "power": 550, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 600, 
+            "power": 600, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 650, 
+            "power": 650, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 700, 
+            "power": 700, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 750, 
+            "power": 750, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 800, 
+            "power": 800, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 850, 
+            "power": 850, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 900, 
+            "power": 900, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 950, 
+            "power": 950, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 1000, 
+            "power": 1000, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 1050, 
+            "power": 1050, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 1100, 
+            "power": 1100, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 1150, 
+            "power": 1150, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 1200, 
+            "power": 1200, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 1250, 
+            "power": 1250, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 1300, 
+            "power": 1300, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 1350, 
+            "power": 1350, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 1400, 
+            "power": 1400, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 1450, 
+            "power": 1450, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 1500, 
+            "power": 1500, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 3.6, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2208, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }, 
+    "5109": {
+        "1": {
+            "cost": 360, 
+            "power": 12, 
+            "HP": 180, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 420, 
+            "power": 14, 
+            "HP": 205, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 480, 
+            "power": 16, 
+            "HP": 230, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 540, 
+            "power": 18, 
+            "HP": 260, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 600, 
+            "power": 20, 
+            "HP": 310, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 660, 
+            "power": 22, 
+            "HP": 340, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 720, 
+            "power": 24, 
+            "HP": 370, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 780, 
+            "power": 26, 
+            "HP": 400, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 840, 
+            "power": 28, 
+            "HP": 470, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 900, 
+            "power": 30, 
+            "HP": 500, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 960, 
+            "power": 32, 
+            "HP": 530, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 1020, 
+            "power": 34, 
+            "HP": 560, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 1080, 
+            "power": 36, 
+            "HP": 640, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 1140, 
+            "power": 38, 
+            "HP": 680, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 1200, 
+            "power": 40, 
+            "HP": 720, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 1260, 
+            "power": 42, 
+            "HP": 760, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 1320, 
+            "power": 44, 
+            "HP": 850, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 1380, 
+            "power": 46, 
+            "HP": 900, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 1440, 
+            "power": 48, 
+            "HP": 950, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 1500, 
+            "power": 50, 
+            "HP": 1000, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 1560, 
+            "power": 52, 
+            "HP": 1080, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 1620, 
+            "power": 54, 
+            "HP": 1180, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 1680, 
+            "power": 56, 
+            "HP": 1280, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 1740, 
+            "power": 58, 
+            "HP": 1380, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 1800, 
+            "power": 60, 
+            "HP": 1480, 
+            "impale": 0, 
+            "clip": 1, 
+            "interval": 0.333, 
+            "duration": 10.0, 
+            "coolDown": 60, 
+            "weaponId": 2209, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }, 
+    "5110": {
+        "1": {
+            "cost": 720, 
+            "power": 9, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "2": {
+            "cost": 880, 
+            "power": 11, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "3": {
+            "cost": 1040, 
+            "power": 13, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "4": {
+            "cost": 1200, 
+            "power": 15, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "5": {
+            "cost": 1360, 
+            "power": 17, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "6": {
+            "cost": 1520, 
+            "power": 19, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "7": {
+            "cost": 1680, 
+            "power": 21, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "8": {
+            "cost": 1840, 
+            "power": 23, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "9": {
+            "cost": 2000, 
+            "power": 25, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "10": {
+            "cost": 2160, 
+            "power": 27, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "11": {
+            "cost": 2320, 
+            "power": 29, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "12": {
+            "cost": 2480, 
+            "power": 31, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "13": {
+            "cost": 2640, 
+            "power": 33, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "14": {
+            "cost": 2720, 
+            "power": 34, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "15": {
+            "cost": 2800, 
+            "power": 35, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "16": {
+            "cost": 2880, 
+            "power": 36, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "17": {
+            "cost": 2960, 
+            "power": 37, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "18": {
+            "cost": 3040, 
+            "power": 38, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "19": {
+            "cost": 3120, 
+            "power": 39, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "20": {
+            "cost": 3200, 
+            "power": 40, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "21": {
+            "cost": 3280, 
+            "power": 41, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "22": {
+            "cost": 3360, 
+            "power": 42, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "23": {
+            "cost": 3440, 
+            "power": 43, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "24": {
+            "cost": 3520, 
+            "power": 44, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }, 
+        "25": {
+            "cost": 3600, 
+            "power": 45, 
+            "HP": 0, 
+            "impale": 0, 
+            "clip": 40, 
+            "interval": 0.15, 
+            "duration": 0.0, 
+            "coolDown": 60, 
+            "weaponId": 2210, 
+            "double": [
+                1290
+            ], 
+            "isReturn": 0
+        }
+    }
+}

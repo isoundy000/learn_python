@@ -32,15 +32,11 @@
                     1366, 
                     -1
                 ], 
+                "fire_count": 1, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 1, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2.4, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -71,15 +67,11 @@
                     1395, 
                     -1
                 ], 
+                "fire_count": 0, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 0.95, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2.8, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -110,15 +102,11 @@
                     1472, 
                     -1
                 ], 
+                "fire_count": 0, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 0.95, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2.8, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -149,15 +137,11 @@
                     1473, 
                     -1
                 ], 
+                "fire_count": 1, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 1, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0.2, 
                         "probb": 0.2
@@ -188,15 +172,11 @@
                     1476, 
                     -1
                 ], 
+                "fire_count": 0, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 0.96, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2.2, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0.2, 
                         "probb": 0.2
@@ -227,15 +207,11 @@
                     1478, 
                     -1
                 ], 
+                "fire_count": 0, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 0.96, 
-                        "probb": 0.7
-                    }, 
-                    {
-                        "odds": 2, 
-                        "probb": 0.1
-                    }, 
                     {
                         "odds": 0.25, 
                         "probb": 0.2
@@ -266,15 +242,11 @@
                     -1, 
                     -1
                 ], 
+                "fire_count": 0, 
+                "power_rate": 0, 
+                "duration": 2, 
+                "percent": 0, 
                 "aloofOdds": [
-                    {
-                        "odds": 0.96, 
-                        "probb": 0.72
-                    }, 
-                    {
-                        "odds": 2.4, 
-                        "probb": 0.08
-                    }, 
                     {
                         "odds": 0.25, 
                         "probb": 0.2

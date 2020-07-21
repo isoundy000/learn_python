@@ -1,0 +1,453 @@
+{
+    "maxSpinTimes": 9, 
+    "ratio": {
+        "fire": 0.01, 
+        "loss": 0.3
+    }, 
+    "energy": [
+        {
+            "50": {
+                "fpMultiple": 50, 
+                "addUnit": 10800, 
+                "cost": 108000, 
+                "add": {}
+            }, 
+            "100": {
+                "fpMultiple": 100, 
+                "addUnit": 28800, 
+                "cost": 288000, 
+                "add": {}
+            }, 
+            "200": {
+                "fpMultiple": 200, 
+                "addUnit": 57600, 
+                "cost": 576000, 
+                "add": {}
+            }, 
+            "500": {
+                "fpMultiple": 500, 
+                "addUnit": 216000, 
+                "cost": 2160000, 
+                "add": {}
+            }
+        }
+    ], 
+    "prize": {
+        "50": {
+            "nextRoomId": 0, 
+            "nextRoomMultiple": 0, 
+            "betList": [], 
+            "wheel": [
+                {
+                    "rewards": {
+                        "count": 100, 
+                        "name": 1301
+                    }, 
+                    "rate": 50, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 10, 
+                        "name": 1301
+                    }, 
+                    "rate": 30000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 30, 
+                        "name": 1301
+                    }, 
+                    "rate": 1600, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 6, 
+                        "name": 1301
+                    }, 
+                    "rate": 6000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 15, 
+                        "name": 1301
+                    }, 
+                    "rate": 6000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 0, 
+                        "name": 0
+                    }, 
+                    "rate": 2500, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 18, 
+                        "name": 1301
+                    }, 
+                    "rate": 3600, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 12, 
+                        "name": 1301
+                    }, 
+                    "rate": 25000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 60, 
+                        "name": 1301
+                    }, 
+                    "rate": 250, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 8, 
+                        "name": 1301
+                    }, 
+                    "rate": 25000, 
+                    "reset": 1
+                }
+            ]
+        }, 
+        "100": {
+            "nextRoomId": 0, 
+            "nextRoomMultiple": 0, 
+            "betList": [], 
+            "wheel": [
+                {
+                    "rewards": {
+                        "count": 20, 
+                        "name": 1193
+                    }, 
+                    "rate": 50, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 2, 
+                        "name": 1193
+                    }, 
+                    "rate": 25000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 10, 
+                        "name": 1193
+                    }, 
+                    "rate": 700, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 1, 
+                        "name": 1193
+                    }, 
+                    "rate": 2000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 3, 
+                        "name": 1193
+                    }, 
+                    "rate": 18000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 0, 
+                        "name": 0
+                    }, 
+                    "rate": 2000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 5, 
+                        "name": 1193
+                    }, 
+                    "rate": 9000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 3, 
+                        "name": 1193
+                    }, 
+                    "rate": 25000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 15, 
+                        "name": 1193
+                    }, 
+                    "rate": 250, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 2, 
+                        "name": 1193
+                    }, 
+                    "rate": 18000, 
+                    "reset": 1
+                }
+            ]
+        }, 
+        "200": {
+            "nextRoomId": 0, 
+            "nextRoomMultiple": 0, 
+            "betList": [], 
+            "wheel": [
+                {
+                    "rewards": {
+                        "count": 50, 
+                        "name": 1193
+                    }, 
+                    "rate": 50, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 5, 
+                        "name": 1193
+                    }, 
+                    "rate": 35000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 20, 
+                        "name": 1193
+                    }, 
+                    "rate": 700, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 3, 
+                        "name": 1193
+                    }, 
+                    "rate": 4000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 8, 
+                        "name": 1193
+                    }, 
+                    "rate": 10000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 0, 
+                        "name": 0
+                    }, 
+                    "rate": 4000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 10, 
+                        "name": 1193
+                    }, 
+                    "rate": 4000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 6, 
+                        "name": 1193
+                    }, 
+                    "rate": 32000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 30, 
+                        "name": 1193
+                    }, 
+                    "rate": 250, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 4, 
+                        "name": 1193
+                    }, 
+                    "rate": 10000, 
+                    "reset": 1
+                }
+            ]
+        }, 
+        "500": {
+            "nextRoomId": 0, 
+            "nextRoomMultiple": 0, 
+            "betList": [], 
+            "wheel": [
+                {
+                    "rewards": {
+                        "count": 50, 
+                        "name": 1194
+                    }, 
+                    "rate": 50, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 4, 
+                        "name": 1194
+                    }, 
+                    "rate": 36000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 10, 
+                        "name": 1194
+                    }, 
+                    "rate": 700, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 2, 
+                        "name": 1194
+                    }, 
+                    "rate": 5000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 6, 
+                        "name": 1194
+                    }, 
+                    "rate": 7000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 0, 
+                        "name": 0
+                    }, 
+                    "rate": 4000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 8, 
+                        "name": 1194
+                    }, 
+                    "rate": 2000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 5, 
+                        "name": 1194
+                    }, 
+                    "rate": 30000, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 20, 
+                        "name": 1194
+                    }, 
+                    "rate": 250, 
+                    "reset": 1
+                }, 
+                {
+                    "rewards": {
+                        "count": 3, 
+                        "name": 1194
+                    }, 
+                    "rate": 15000, 
+                    "reset": 1
+                }
+            ]
+        }
+    }, 
+    "bet": {
+        "2": {
+            "0": [
+                {
+                    "rate": "50%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "50%", 
+                    "ratio": 2, 
+                    "weight": 100, 
+                    "extra": 0
+                }
+            ]
+        }, 
+        "3": {
+            "0": [
+                {
+                    "rate": "33%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "33%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "34%", 
+                    "ratio": 3, 
+                    "weight": 100, 
+                    "extra": 0
+                }
+            ]
+        }, 
+        "4": {
+            "0": [
+                {
+                    "rate": "25%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "25%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "25%", 
+                    "ratio": 0, 
+                    "weight": 100, 
+                    "extra": 0
+                }, 
+                {
+                    "rate": "25%", 
+                    "ratio": 4, 
+                    "weight": 100, 
+                    "extra": 0
+                }
+            ]
+        }
+    }
+}
