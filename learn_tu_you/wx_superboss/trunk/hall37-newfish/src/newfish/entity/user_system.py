@@ -44,3 +44,20 @@ def updateLoginData(userId):
     elif todayStartTime - lastLoginTime == 24 * 3600:  # 正好一天
         gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.loginDays, 1)
         gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.continuousLogin, 1)
+
+
+
+
+_inited = False
+
+
+def initialize():
+    ftlog.info("newfish user_system initialize begin")
+    global _inited
+    if not _inited:
+        _inited = True
+        from poker.entity.events.tyevent import ChargeNotifyEvent
+        from poker.entity.events.tyevent import EventUserLogin
+        from hall.game import TGHall
+        from newfish.game import TGFish
+        pass

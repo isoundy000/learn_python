@@ -37,3 +37,17 @@ def getGameInfo(userId, clientId):
     获取玩家的游戏数据
     """
     pass
+
+
+
+def createGameData(userId, gameId):
+    pass
+
+
+def loginGame(userId, gameId, clientId, iscreate, isdayfirst):
+    pass
+
+
+
+def getDaShiFen(userId, clientId):
+    pass

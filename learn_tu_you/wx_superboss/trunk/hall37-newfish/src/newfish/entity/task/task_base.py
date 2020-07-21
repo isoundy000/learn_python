@@ -130,7 +130,12 @@ class TaskBase(object):
 
         if self.taskActivateTimer:
             self.taskActivateTimer.cancel()
-        pass
+        if delay:
+            taskActivateInterval = max(interval, Task_Delay_Ready_Time)
+            self.taskActivateTimer = FTLoopTimer(taskActivateInterval, 0, self._taskActivate, delay)
+            self.taskActivateTimer.start()
+        elif self.taskConfig["timeLong"] > 0:
+            pass
 
 
     def isTaskSuccess(self):
