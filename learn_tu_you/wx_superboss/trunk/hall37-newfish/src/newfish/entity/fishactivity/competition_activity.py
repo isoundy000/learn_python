@@ -66,3 +66,9 @@ def isActEnable(userId=None):
 
 def _getCompStateAndRemainTime():
     pass
+
+
+
+
+def initialize(a):
+    pass

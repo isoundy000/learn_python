@@ -38,3 +38,7 @@ def fireCostChip(userId, clientId, vipLevel, chip):
         addCount = chip * v.get("firePct", 0)
         if addCount > 0:
             addMoneyToPiggyBank(userId, clientId, k, addCount)
+
+
+def initialize():
+    pass

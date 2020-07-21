@@ -26,3 +26,10 @@ class MatchRecord(object):
             jstr = '1'
         except:
             pass
+
+
+
+
+
+    def initialize(a):
+        pass

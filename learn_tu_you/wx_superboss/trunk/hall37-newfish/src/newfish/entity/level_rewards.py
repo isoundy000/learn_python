@@ -2,3 +2,8 @@
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
 # @Time: 2020/6/30
+
+
+
+def initialize():
+    pass

@@ -50,3 +50,9 @@ def getOwnedHonors(userId, allHonors=None):
     allHonors = allHonors or _getAllHonors(userId)
     pass
     return honors
+
+
+
+
+def initialize():
+    pass

@@ -67,3 +67,8 @@ def sendSystemMail(userId, mailRewardType, rewards=None, message=None, title=Non
     发送系统邮件
     """
     addOneMail(config.ROBOT_MAX_USER_ID, userId, mailRewardType, rewards, message, title)
+
+
+
+def initialize():
+    pass

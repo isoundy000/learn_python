@@ -65,3 +65,7 @@ class RandomChest(FishShare):
     随机分享宝箱
     """
     pass
+
+
+def initialize():
+    pass

@@ -115,3 +115,8 @@ def getChestRewards(userId, chestId):
     """
     rewards = []
     return rewards
+
+
+
+def initialize():
+    pass

@@ -22,3 +22,9 @@ def isActivityOpen(acType):
         if acInfo["type"] == acType and util.isTimeEffective(acInfo["effectiveTime"]):
             return True
     return False
+
+
+
+
+def initialize():
+    pass

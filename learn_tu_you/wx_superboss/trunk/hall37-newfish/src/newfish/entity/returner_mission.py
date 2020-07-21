@@ -12,3 +12,8 @@ def refreshReturnerMissionData(userId, lastLoginTime):
     刷新回归豪礼数据
     """
     pass
+
+
+
+def initialize():
+    pass
