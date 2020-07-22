@@ -9,10 +9,10 @@ from poker.entity.dao import userdata, onlinedata
 import random
 
 # rooms = gdata.rooms()
-#ftlog.info('kkkkkkkkkkkkk', rooms.keys())
+# ftlog.info('kkkkkkkkkkkkk', rooms.keys())
 onlineLocList = onlinedata.getOnlineLocList(116009)[0]
 room = gdata.rooms()[onlineLocList[0]]
 table = room.maptable[onlineLocList[1]]
 table.tideTaskSystem.taskReady(random.choice(range(1, 9)))
-#ftlog.info('fffffffffffff', room.maptable.keys())
-#ftlog.info('sssssssssssss', table.tideTaskSystem.usersData)
+# ftlog.info('fffffffffffff', room.maptable.keys())
+# ftlog.info('sssssssssssss', table.tideTaskSystem.usersData)
