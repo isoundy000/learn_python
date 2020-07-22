@@ -110,6 +110,16 @@ def cancelModuleTipEvent(userId, moduleName, value):
     pass
 
 
+def resetModuleTipEvent(userId, moduleName):
+    """
+    重置提示信息
+    """
+    from newfish.game import TGFish
+    tip = FishModuleTipEvent(userId, FISH_GAMEID, -1, moduleName, None)
+    TGFish.getEventBus().publishEvent(tip)
+    ftlog.debug("newfish resetModuleTipEvent name=", moduleName, "userId=", userId)
+
+
 def _buildModuleTipKey(moduleTip):
     """生成模块红点的redis域"""
     return "moduletip:%s" % (moduleTip.name)

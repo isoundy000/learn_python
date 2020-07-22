@@ -1684,6 +1684,64 @@ def grandPrixPrizewheel_config():
     print "grandPrixPrizewheel_config, end"
 
 
+def level_funds_config(clientId=0):
+    """
+    成长基金奖励配置
+    """
+    sn = "LevelFunds" if clientId == 0 else "LevelFunds" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    print "level_funds_config, start, ", sn, fn
+    outPath = getOutPath("levelFunds", fn)
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    config["canBuyIdx"] = []
+    config["funds"] = []
+    config["rewards"] = collections.OrderedDict()
+    startRowNum = 4
+    fundIdx = 2
+    rewardsIdx = 12
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["canBuyIdx"] = json.loads(cols[0])
+
+        if cols[fundIdx]:
+            one = collections.OrderedDict()
+            config["funds"].append(one)
+            one["productId"] = cols[fundIdx + 1]
+            one["idx"] = cols[fundIdx + 0]
+            one["type"] = cols[fundIdx + 2]
+            one["name"] = cols[fundIdx + 3]
+            one["buyType"] = cols[fundIdx + 4]
+            one["price_direct"] = one["price"] = cols[fundIdx + 5]
+            one["price_diamond"] = cols[fundIdx + 6]
+            one["otherBuyType"] = json.loads(cols[fundIdx + 7])
+            one["title"] = cols[fundIdx + 8]
+
+        if cols[rewardsIdx]:
+            config["rewards"].setdefault(str(cols[rewardsIdx + 1]), [])
+            one = collections.OrderedDict()
+            config["rewards"][str(cols[rewardsIdx + 1])].append(one)
+            one["level"] = int(cols[rewardsIdx + 0])
+            one["free_rewards"] = json.loads(cols[rewardsIdx + 3])
+            one["rechargeBonus"] = int(cols[rewardsIdx + 4])
+            one["funds_rewards"] = json.loads(cols[rewardsIdx + 6])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "level_funds_config, end"
+
+
 def grandPrix_config():
     """
     大奖赛配置
@@ -1859,8 +1917,8 @@ config_list = [
     (grandPrixPrizewheel_config, None),
     # # (time_limited_store_config, None),
     # (levelRewards_config, None),
-    # (level_funds_config, None),
-    # (level_funds_config, 25794),
+    (level_funds_config, None),
+    (level_funds_config, 25794),        # 基金
     # (super_egg_config, None),
     # (updateVerRewards_config, None),
     (grandPrix_config, None),

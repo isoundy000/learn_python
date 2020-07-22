@@ -1722,6 +1722,90 @@ def getTreasureConf(kindId=None, effectType=None, level=None):
 
 
 
+
+
+
+
+
+
+
+
+
+def loadLevelFundsConf(intClientId=0):
+    """
+    加载成长基金配置
+    """
+    global levelFundsConf
+    _conf = getGameConf("levelFunds", intClientidNum=intClientId)
+    levelFundsConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def loadLevelFundsConf_m(intClientId=0):
+    """
+    加载成长基金配置
+    """
+    global levelFundsConf_m
+    _conf = getGameConf("levelFunds_m", intClientidNum=intClientId)
+    levelFundsConf_m[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getLevelFundsConf(clientId, mode):
+    """
+    获取成长基金配置
+    """
+    global levelFundsConf, levelFundsConf_m
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    _conf = levelFundsConf if mode == CLASSIC_MODE else levelFundsConf_m
+    if _conf.get(intClientId) is None:
+        if mode == CLASSIC_MODE:
+            loadLevelFundsConf(intClientId)
+        else:
+            loadLevelFundsConf_m(intClientId)
+    if _conf.get(intClientId):
+        return _conf[intClientId]
+    return _conf[defaultIntClientId]
+
+
+def loadSuperEggsConf(intClientId=0):
+    """
+    加载超级扭蛋配置
+    """
+    global superEggsConf
+    _conf = getGameConf("superEggs", intClientidNum=intClientId)
+    superEggsConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getSuperEggsConf(clientId):
+    """
+    获取超级扭蛋配置
+    """
+    global superEggsConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if superEggsConf.get(intClientId) is None:
+        loadSuperEggsConf(intClientId)
+    if superEggsConf.get(intClientId):
+        return superEggsConf[intClientId]
+    return superEggsConf[defaultIntClientId]
+
+
+def loadSupplyBoxConf():
+    """
+    加载补给箱活动配置
+    """
+    global supplyBoxConf
+    supplyBoxConf = rocopy(getGameConf("supplyBox"))
+
+
+def getSupplyBoxConf(key_=None):
+    """
+    获取补给箱活动配置
+    """
+    global supplyBoxConf
+    if key_ is None:
+        return supplyBoxConf
+    return rwcopy(supplyBoxConf.get(str(key_)))
+
+
 def loadGrandPrixConf():
     """
     加载大奖赛配置

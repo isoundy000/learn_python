@@ -219,3 +219,9 @@ Hmset key field1 value1 field2 value2
 6 更新hall37配置、更新hall5配置，表示道具生效
 7 重启进程/game.sh
 
+
+# pycharm激活方法
+https://macwk.com/article/jetbrains-crack
+# mac安装软件的网站
+https://macwk.com/
+
