@@ -8,7 +8,7 @@ from freetime.core.exception import FTException
 from freetime.util import log as ftlog
 from freetime.util import performance
 from freetime.util.defertool import setDefaultCallbackSimple
-_NOWAITCMDS_ = frozenset([['SET', 'SETEX', 'HSET', 'HMSET', 'LPUSH', 'SREM', 'EXPIRE', 'set', 'setex', 'hset', 'hmset', 'lpush', 'srem', 'expire']])
+_NOWAITCMDS_ = frozenset(['SET', 'SETEX', 'HSET', 'HMSET', 'LPUSH', 'SREM', 'EXPIRE', 'set', 'setex', 'hset', 'hmset', 'lpush', 'srem', 'expire'])
 _REDIS_PERFORMANCE = 1
 
 

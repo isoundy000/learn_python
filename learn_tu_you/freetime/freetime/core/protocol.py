@@ -86,7 +86,7 @@ class _SocketOpt:
     TCP_LINE_MAX_LENGTH = (1024 * 63)
 
     @classmethod
-    def upd(cls, p):
+    def udp(cls, p):
         pass
 
     @classmethod

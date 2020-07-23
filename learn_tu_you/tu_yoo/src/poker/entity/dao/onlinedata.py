@@ -11,6 +11,13 @@ OFFLINE = daoconst.OFFLINE  # 用户不在线
 ONLINE = daoconst.ONLINE  # 用户在线
 
 
+def getOnlineRandUserIds(count):
+    '''
+    随机取得count个在线用户的ID列表, 如果集合的数量不足count个, 那么返回集合所有内容
+    '''
+    return dbonline._getOnlineRandUserIds(count)
+
+
 def addOnlineLoc(userId, roomId, tableId, seatId, checkConfict=True):
     '''
     添加一个用户的在线位置,

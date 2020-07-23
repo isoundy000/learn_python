@@ -17,7 +17,7 @@ from freetime.core.exception import FTException
 _init_fun = None
 
 
-def doMysql(poolname, sqlstr, sql_arg_list=[])
+def doMySql(poolname, sqlstr, sql_arg_list=[]):
     pass
 
 def doRedis(poolname, *argl, **argd):

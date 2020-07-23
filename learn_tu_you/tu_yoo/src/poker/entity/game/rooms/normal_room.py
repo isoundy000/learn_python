@@ -16,9 +16,8 @@ from poker.entity.dao.lua_scripts import room_scripts
 from poker.util import strutil
 
 
-
 class TYNormalRoom(TYRoom):
-    '''普通房间类'''
+    """普通房间类"""
 
     def __init__(self, roomDefine):
         super(TYNormalRoom, self).__init__(roomDefine)
@@ -48,8 +47,7 @@ class TYNormalRoom(TYRoom):
             return None
         allShadows = []
         for conf in dispatchConf:
-            if clientVer >= conf["version"]["start"] \
-                and clientVer < conf["version"]["end"]:
+            if clientVer >= conf["version"]["start"] and clientVer < conf["version"]["end"]:
                 for rid in range(conf["shadowRoomIds"]["start"], conf["shadowRoomIds"]["end"] + 1):
                     allShadows.append(rid)
                 break
@@ -120,7 +118,6 @@ class TYNormalRoom(TYRoom):
     def getBestTableId(self, userId, shadowRoomId, exceptTableId=None):
         """见getBestTableIdWithScore"""
         tableId, _ = self.getBestTableIdWithScore(userId, shadowRoomId, exceptTableId)
-
         return tableId
 
     def getBestTableIdWithScore(self, userId, shadowRoomId, exceptTableId=None):
@@ -134,7 +131,6 @@ class TYNormalRoom(TYRoom):
             tableId, tableScore = 0, 0
             datas = daobase.executeTableLua(shadowRoomId, 0, room_scripts.ALIAS_GET_BEST_TABLE_ID_LUA, 1,
                                             self.getTableScoresKey(shadowRoomId), 0)
-
             if datas and len(datas) == 2:
                 tableId, tableScore = datas[0], datas[1]
                 ftlog.info("getBestTableIdFromRedis <<|tableId, tableScore:", tableId, tableScore)
@@ -185,8 +181,7 @@ class TYNormalRoom(TYRoom):
             False: 重试超过次数
         '''
         if ftlog.is_debug():
-            ftlog.debug("<< |userId, roomId, shadowRoomId, tableId", userId, self.roomId, shadowRoomId, tableId,
-                    caller=self)
+            ftlog.debug("<< |userId, roomId, shadowRoomId, tableId", userId, self.roomId, shadowRoomId, tableId, caller=self)
 
         if gdata.roomIdDefineMap()[shadowRoomId].tableCount == 1:
             return tableId

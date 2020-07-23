@@ -44,6 +44,10 @@ class FTTasklet:
         pass
     
     @classmethod
+    def create(cls, argl, argd):
+        pass
+
+    @classmethod
     def _checkBusy(self):
         pass
     

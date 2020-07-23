@@ -1779,9 +1779,7 @@ class FishPlayer(TYPlayer):
         # 5.1大厅福袋任务
         fishes = {"totalFishCount": totalFishCount, "bossFishCount": bossFishCount}
         from newfish.entity.fishactivity import fish_activity_system
-        fish_activity_system.countTableData(self.userId, multipleFishCount, bossFishCount,
-                                            self.totalGainChip,
-                                            self.table.bigRoomId, self._catchFishes)
+        fish_activity_system.countTableData(self.userId, multipleFishCount, bossFishCount, self.totalGainChip, self.table.bigRoomId, self._catchFishes)
         # util.sendToHall51GameOverEvent(self.userId, self.table.roomId, self.table.tableId, fishes)
         bireport.reportGameEvent("BI_NFISH_GAME_TIME", self.userId, FISH_GAMEID, self.table.roomId,
                                 self.table.tableId, self.gameTime, 0, 0, 0, [], self.clientId, 0, self.allChip)

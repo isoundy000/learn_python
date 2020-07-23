@@ -247,6 +247,24 @@ class TYRoom(object):
         if not self._leave(userId, reason, needSendRes):
             reason = TYRoom.LEAVE_ROOM_REASON_FORBIT
 
+        TYPluginCenter.event(TYPluginUtils.updateMsg(cmd='EV_LEAVE_ROOM', params=TYPluginUtils.mkdict(
+            userId=userId, roomId=self.roomId, reason=reason)), self.gameId)
+
+        msgRes = MsgPack()
+        if not pokerconf.isOpenMoreTable(sessiondata.getClientId(userId)):
+            msgRes.setCmd("room_leave")
+        else:
+            msgRes.setCmd("room")
+            msgRes.setResult("action", "leave")
+
+        msgRes.setResult("reason", reason)
+        msgRes.setResult("gameId", self.gameId)
+        msgRes.setResult("roomId", clientRoomId)    # 处理结果返回给客户端时，部分游戏（例如德州、三顺）需要判断返回的roomId是否与本地一致
+        msgRes.setResult("userId", userId)
+
+        if needSendRes or TYPlayer.isRobot(userId):  # 需要通知机器人stop
+            router.sendToUser(msgRes, userId)
+
     def _leave(self, userId, reason, needSendRes):
         if ftlog.is_debug():
             ftlog.debug("<< |roomId, userId:", self.roomId, userId, caller=self)

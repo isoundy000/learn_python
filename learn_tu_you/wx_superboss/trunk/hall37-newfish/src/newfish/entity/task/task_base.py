@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 17/11/30.
+"""
 
 import time
 import random
@@ -350,6 +350,57 @@ class TaskBase(object):
                     redPacketNum += 1
             self._addProgress(redPacketNum, isMe, progress=progress, isTargetAddition=isTargetAddition)
 
+    def dealUseSkillEvent(self, event):
+        """使用技能事件"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        if self.taskConfig["type"] == TaskType.UseSkillNum:
+            target = self.taskConfig["target"]
+            if target == 0:
+                self._addProgress(1, event.userId == self.userId)
+            else:
+                if event.kindId == str(target):
+                    self._addProgress(1, event.userId == self.userId)
+
+    def dealUseSkillItem(self, event):
+        """使用技能道具"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        if self.taskConfig["type"] == TaskType.UserSkillItem:
+            self._addProgress(1, event.userId == self.userId)
+
+    def dealGetPearl(self, pearl):
+        """获得珍珠"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        ftlog.debug("task, type", self.taskConfig["type"], TaskType.CatchPearlNum, self.taskConfig["type"] == TaskType.CatchPearlNum)
+        if self.taskConfig["type"] == TaskType.CatchPearlNum:
+            self._addProgress(pearl, True)
+
+    def dealCommboEvent(self, event):
+        """处理连击事件"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        if self.taskConfig["type"] == TaskType.ComboNum:
+            if event.comboNum >= self.taskConfig["target"]:
+                self._addProgress(1, event.userId == self.userId)
+
+    def refreshHoldCoin(self, coin):
+        """刷新持有金币数量"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        ftlog.debug("refreshHoldCoin", self.userId, coin)
+        if self.taskConfig["type"] == TaskType.HoldCoin:
+            self._updateProgress(coin, True)
+
+    def refreshLevel(self, level):
+        """刷新等级"""
+        if self.taskData["state"] != TaskState.Update:
+            return
+        ftlog.debug("refreshLevel", self.userId, level)
+        if self.taskConfig["type"] == TaskType.UpgradeLevel:
+            self._updateProgress(level, True)
+
     def getTaskId(self):
         """
         获取任务Id
@@ -364,13 +415,13 @@ class TaskBase(object):
 
         if self.taskActivateTimer:
             self.taskActivateTimer.cancel()
-        if delay:
+        if delay > 0:
             taskActivateInterval = max(interval, Task_Delay_Ready_Time)
             self.taskActivateTimer = FTLoopTimer(taskActivateInterval, 0, self._taskActivate, delay)
             self.taskActivateTimer.start()
         elif self.taskConfig["timeLong"] > 0:
             if self.taskSystem.isRedRoom() and self.taskSystem.taskModel == TaskModel.Main:
-                time_ = Task_Delay_Ready_Time
+                time_ = Task_Red_Ready_Time
             else:
                 time_ = Task_Normal_Ready_Time
             taskActivateInterval = max(interval, time_)
@@ -385,51 +436,6 @@ class TaskBase(object):
         from newfish.entity.event import TableTaskStartEvent
         event = TableTaskStartEvent(self.userId, FISH_GAMEID, self.taskSystem.table.tableId, self.getTaskId())
         TGFish.getEventBus().publishEvent(event)
-
-    def dealUseSkillEvent(self, event):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        if self.taskConfig["type"] == TaskType.UseSkillNum:
-            target = self.taskConfig["target"]
-            if target == 0:
-                self._addProgress(1, event.userId == self.userId)
-            else:
-                if event.kindId == str(target):
-                    self._addProgress(1, event.userId == self.userId)
-
-    def dealUseSkillItem(self, event):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        if self.taskConfig["type"] == TaskType.UserSkillItem:
-            self._addProgress(1, event.userId == self.userId)
-
-    def dealGetPearl(self, pearl):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        ftlog.debug("task, type", self.taskConfig["type"], TaskType.CatchPearlNum, self.taskConfig["type"] == TaskType.CatchPearlNum)
-        if self.taskConfig["type"] == TaskType.CatchPearlNum:
-            self._addProgress(pearl, True)
-
-    def dealCommboEvent(self, event):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        if self.taskConfig["type"] == TaskType.ComboNum:
-            if event.comboNum >= self.taskConfig["target"]:
-                self._addProgress(1, event.userId == self.userId)
-
-    def refreshHoldCoin(self, coin):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        ftlog.debug("refreshHoldCoin", self.userId, coin)
-        if self.taskConfig["type"] == TaskType.HoldCoin:
-            self._updateProgress(coin, True)
-
-    def refreshLevel(self, level):
-        if self.taskData["state"] != TaskState.Update:
-            return
-        ftlog.debug("refreshLevel", self.userId, level)
-        if self.taskConfig["type"] == TaskType.UpgradeLevel:
-            self._updateProgress(level, True)
 
     def _taskActivate(self, delay=0):
         """任务激活"""
@@ -614,6 +620,15 @@ class TaskBase(object):
 
     def getTaskState(self):
         return self.taskData["state"]
+
+    def getTaskTargets(self):
+        if self.taskData["state"] != TaskState.Update:
+            return []
+        if self.taskConfig["type"] in [TaskType.CatchFishNum, TaskType.CatchFishCoin,
+                                       TaskType.UseSkillCatchFishNum, TaskType.UseSkillCatchFishCoin]:
+            if self.taskConfig["target"] != 0:
+                return [self.taskConfig["target"]]
+        return []
 
     def isLimitTime(self):
         """是否限制了时间"""

@@ -139,3 +139,10 @@ class ChargeNotifyEvent(UserEvent):
         self.diamonds = diamonds
         self.productId = productId
         self.clientId = clientId
+
+
+class OnLineGameChangedEvent(UserEvent):
+    def __init__(self, userId, gameId, isEnter, clientId=None):
+        super(OnLineGameChangedEvent, self).__init__(userId, gameId)
+        self.isEnter = isEnter
+        self.clientId = clientId

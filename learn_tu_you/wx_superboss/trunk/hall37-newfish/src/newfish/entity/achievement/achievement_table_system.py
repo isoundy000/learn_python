@@ -3,6 +3,11 @@
 # @Auther: houguangdong
 # @Time: 2020/6/6
 
+import freetime.util.log as ftlog
+from newfish.entity import config,  module_tip
+from newfish.entity.achievement.fish_achievement_task import FishAchievementTask
+from newfish.entity.achievement.fish_achievement_task import AchieveType
+
 
 class AchievementTableSystem(object):
     """成就系统"""
