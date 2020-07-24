@@ -74,3 +74,47 @@ class FishRobberyTable(FishTable):
         """
         return FishRobberyPlayer(table, seatIndex, clientId)
 
+    def _verifyFire(self, msg, userId, seatId):
+        """验证开火"""
+        wpId = msg.getParam("wpId")
+        fPosx = msg.getParam("fPosx")
+        fPosy = msg.getParam("fPosy")
+        bulletId = msg.getParam("bulletId")
+        skillId = msg.getParam("skillId")
+        timestamp = msg.getParam("timestamp", 0)
+        wpConf = config.getWeaponConf(wpId, mode=self.gameMode)
+        reason = 0
+        player = self.players[seatId - 1]
+        wpType = util.getWeaponType(wpId)
+        if wpType != config.ROBBERY_WEAPON_TYPE:                                # 招财模式火炮
+            reason = 1
+        retMsg = MsgPack()
+        retMsg.setCmd("fire")
+        retMsg.setResult("gameId", FISH_GAMEID)
+        retMsg.setResult("wpId", wpId)
+        retMsg.setResult("bulletId", bulletId)
+        retMsg.setResult("skillId", skillId)
+        retMsg.setResult("timestamp", timestamp)
+        retMsg.setResult("reason", reason)
+        GameMsg.sendMsg(retMsg, userId)
+        if reason == 0:
+            retMsg.setResult("fPosx", fPosx)
+            retMsg.setResult("fPosy", fPosy)
+            retMsg.setResult("seatId", seatId)
+            GameMsg.sendMsg(retMsg, self.getBroadcastUids(userId))
+            player.addFire(bulletId, wpId, timestamp, player.fpMultiple)
+
+    def _verifyCatch(self, msg, userId, seatId):
+        """验证捕获"""
+        wpId = msg.getParam("wpId")
+        fIds = msg.getParam("fIds")
+        skillId = msg.getParam("skillId")
+        bulletId = msg.getParam("bulletId")
+        player = self.players[seatId - 1]
+        wpIdFire = player.getFireWpId(bulletId)
+        wpType = util.getWeaponType(wpId)
+        if ftlog.is_debug():
+            ftlog.debug("_verifyCatch->msg =", msg, userId, wpIdFire, wpType)
+        reason = 0
+        if not fIds or len(fIds) > 1:
+            reason = 1

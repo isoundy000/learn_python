@@ -9,14 +9,14 @@ from poker.entity.dao import userdata, onlinedata
 from newfish.entity import config, util
 import random
 
-# # rooms = gdata.rooms()
-# # ftlog.info('kkkkkkkkkkkkk', rooms.keys())
-# onlineLocList = onlinedata.getOnlineLocList(116009)[0]
-# room = gdata.rooms()[onlineLocList[0]]
-# table = room.maptable[onlineLocList[1]]
-# table.tideTaskSystem.taskReady(random.choice(range(1, 9)))
-# # ftlog.info('fffffffffffff', room.maptable.keys())
-# # ftlog.info('sssssssssssss', table.tideTaskSystem.usersData)
+# rooms = gdata.rooms()
+# ftlog.info('kkkkkkkkkkkkk', rooms.keys())
+onlineLocList = onlinedata.getOnlineLocList(116009)[0]
+room = gdata.rooms()[onlineLocList[0]]
+table = room.maptable[onlineLocList[1]]
+table.tideTaskSystem.taskReady(random.choice(range(1, 9)))
+# ftlog.info('fffffffffffff', room.maptable.keys())
+# ftlog.info('sssssssssssss', table.tideTaskSystem.usersData)
 
 
 # FISH_GAMEID = 44

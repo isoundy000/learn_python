@@ -2,51 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/hall_clipboardhaner.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/hall_friend_table.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/hallevent.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/halluser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/game.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/servers/util/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/servers/util/util_helper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/servers/rpc/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/servers/rpc/roommgr.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fight_history.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishactivity/slot_machine_activity.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishactivity/starfish_turntable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishactivity/super_egg_activity.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/free_coin_lucky_tree.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gift/newbie_7days_gift.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/led.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/roomIdDefineMap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/file.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/file.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/redis.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/redis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/bireport.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/bireport.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/dao/onlinedata.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/dao/onlinedata.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/events/tyevent.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/events/tyevent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/plugin.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/plugin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/normal_room.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/normal_room.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/room.py" afterPath="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/room.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_table_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_table_system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/lotterypool/robbery_lottery_pool.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/lotterypool/robbery_lottery_pool.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/task_base.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/task_base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/task_system_user.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/task_system_user.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/robbery_player.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/robbery_player.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/xxfish_dev/config37/game/44/room/readme.txt" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/xxfish_dev/config37/game/44/room/readme.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -215,8 +174,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="db.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/misc/config/dev/freetime/db.json">
+      <file leaf-file-name="robbery_table.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="565">
+              <caret line="111" column="43" lean-forward="true" selection-start-line="111" selection-start-column="43" selection-end-line="111" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="player_base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="936" column="8" lean-forward="false" selection-start-line="936" selection-start-column="8" selection-end-line="936" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tide_task.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="549">
+              <caret line="25" column="58" lean-forward="false" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
+              <folding>
+                <element signature="e#89#122#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="time_point_match_table.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_point_match_table.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="505" column="4" lean-forward="false" selection-start-line="505" selection-start-column="4" selection-end-line="505" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fight_room.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -225,8 +236,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="global.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/misc/config/dev/freetime/global.json">
+      <file leaf-file-name="friend_room.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/friend_room.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -235,8 +246,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/misc/config/dev/freetime/server.json">
+      <file leaf-file-name="poseidon_room.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="38" column="12" lean-forward="false" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+              <folding>
+                <element signature="e#89#105#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grand_prix_table.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/grand_prix_table.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -245,71 +268,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/shell/game.sh">
+      <file leaf-file-name="robbery_room.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logTest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/test/logTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lockTest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/test/lockTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="metaclassesTest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/test/metaclassesTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="timerTest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/test/timerTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="INSTALL" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freetime/INSTALL">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/freetime/README">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1672">
+              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -328,9 +291,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ConfigDBTest</find>
-      <find>allServersMap</find>
-      <find>getDict</find>
       <find>getProtoClassByName</find>
       <find>taskSystemType</find>
       <find>autofill_fish_m</find>
@@ -358,6 +318,9 @@
       <find>getTimeOut</find>
       <find>sendCountdown</find>
       <find>bulletInitCount</find>
+      <find>hall51</find>
+      <find>FishRobberyPlayer</find>
+      <find>TODO</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -371,7 +334,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/table_handler.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/rpc/table_remote.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gift_system.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fish_notice_system.py" />
@@ -410,18 +372,19 @@
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/task_system_user.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/hall_friend_table.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/roomIdDefineMap.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/bireport.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/normal_room.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/plugin.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/room.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/lotterypool/robbery_lottery_pool.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/robbery_player.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/xxfish_dev/config37/game/44/room/readme.txt" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" />
       </list>
     </option>
   </component>
@@ -431,11 +394,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="276" />
-    <option name="y" value="82" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1680" />
-    <option name="height" value="986" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -452,7 +413,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -461,10 +421,100 @@
               <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
               <item name="learn_python" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="hotfix" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="room" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="table" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -652,7 +702,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="276" y="82" width="1680" height="986" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -660,7 +711,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1929182" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1953602" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16352202" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -693,7 +744,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1929182" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1953602" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -726,103 +777,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/freetime/demo/script/stat.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/demo/script/tweb.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/demo/script/udpcli.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-400">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/demo/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-257">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/doc/coding.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/doc/performance.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/freetime/aio/file.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/freetime/aio/http.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2633">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/freetime/aio/mysql.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-389">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/freetime/aio/tcp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/freetime/aio/udp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/freetime/freetime/entity/clients.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5845">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -830,7 +788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4657">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -838,7 +795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2545">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -846,7 +802,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1299">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -854,7 +809,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -862,7 +816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-191">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -870,7 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -878,7 +830,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,7 +837,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -894,7 +844,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,9 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -912,7 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -920,7 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -928,7 +872,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -936,7 +879,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -944,7 +886,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1841">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -952,7 +893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1489">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -960,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -968,7 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-132">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -976,7 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -984,7 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4239">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -992,7 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1000,7 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1008,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1016,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1024,9 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1034,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1042,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1050,7 +977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,15 +984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freetime/misc/config/dev/freetime/db.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1074,7 +991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1082,7 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1090,7 +1005,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1098,7 +1012,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1106,7 +1019,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1114,7 +1026,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1122,7 +1033,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1130,7 +1040,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1138,6 +1047,104 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freetime/misc/config/dev/freetime/db.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/grand_prix_table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/friend_room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="38" column="12" lean-forward="false" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+          <folding>
+            <element signature="e#89#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="505" column="4" lean-forward="false" selection-start-line="505" selection-start-column="4" selection-end-line="505" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/Readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="216" column="23" lean-forward="false" selection-start-line="216" selection-start-column="17" selection-end-line="216" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="936" column="8" lean-forward="false" selection-start-line="936" selection-start-column="8" selection-end-line="936" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="25" column="58" lean-forward="false" selection-start-line="25" selection-start-column="58" selection-end-line="25" selection-end-column="58" />
+          <folding>
+            <element signature="e#89#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_point_match_table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="565">
+          <caret line="111" column="43" lean-forward="true" selection-start-line="111" selection-start-column="43" selection-end-line="111" selection-end-column="43" />
           <folding />
         </state>
       </provider>
