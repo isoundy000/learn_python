@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/1/12.
+"""
 
 import time
 
@@ -41,8 +40,8 @@ class GameTimeEvent(UserEvent):
         self.tableId = tableId
         self.fishPool = fishPool
         self.gameTime = gameTime
-        self.fpMultiple = fpMultiple
         self.isFinishRedTask = isFinishRedTask
+        self.fpMultiple = fpMultiple
 
 
 class LevelUpEvent(UserEvent):
@@ -191,6 +190,10 @@ class EnterTableEvent(UserEvent):
     """
     def __init__(self, userId, gameId, roomId, tableId, seatId, reconnect=0):
         super(EnterTableEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.tableId = tableId
+        self.seatId = seatId
+        self.reconnect = reconnect
 
 
 class LeaveTableEvent(UserEvent):
@@ -203,7 +206,7 @@ class LeaveTableEvent(UserEvent):
         self.tableId = tableId
         self.seatId = seatId
         if enterTime:
-            self.gameTime = int((time.time()) - enterTime) / 60
+            self.gameTime = int(time.time() - enterTime) / 60
         else:
             self.gameTime = 0
 
@@ -325,9 +328,14 @@ class ActivityItemChangeEvent(UserEvent):
         self.rewards = rewards
 
 
-
-
-
+class MatchOverEvent(UserEvent):
+    """
+    回馈赛结束事件
+    """
+    def __init__(self, userId, gameId, bigRoomId, rank):
+        super(MatchOverEvent, self).__init__(userId, gameId)
+        self.bigRoomId = bigRoomId
+        self.rank = rank
 
 
 class MatchWinloseEvent(UserEvent):
@@ -345,6 +353,46 @@ class MatchWinloseEvent(UserEvent):
         self.luckyValue = luckyValue
 
 
+class MatchGiveUpEvent(UserEvent):
+    """
+    回馈赛放弃事件
+    """
+    def __init__(self, userId, gameId, roomId):
+        super(MatchGiveUpEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+
+
+class MatchRewardEvent(UserEvent):
+    """
+    回馈赛结算发奖事件
+    """
+    def __init__(self, userId, gameId, roomId, rank, rewards):
+        super(MatchRewardEvent, self).__init__(userId, gameId)
+        self.roomId = roomId
+        self.rank = rank
+        self.rewards = rewards
+
+
+class DailyTaskFinishEvent(UserEvent):
+    """
+    完成单个每日任务事件
+    """
+    def __init__(self, userId, gameId, taskId, taskLevel):
+        super(DailyTaskFinishEvent, self).__init__(userId, gameId)
+        self.taskId = taskId
+        self.taskLevel = taskLevel
+
+
+class DailyTaskRewardEvent(UserEvent):
+    """
+    领取单个每日任务奖励事件
+    """
+    def __init__(self, userId, gameId, taskId, taskLevel):
+        super(DailyTaskRewardEvent, self).__init__(userId, gameId)
+        self.taskId = taskId
+        self.taskLevel = taskLevel
+
+
 class ItemChangeEvent(UserEvent):
     """
     资产/道具变化事件
@@ -357,6 +405,55 @@ class ItemChangeEvent(UserEvent):
         self.type = type
 
 
+class GetActivityRewardEvent(UserEvent):
+    """
+    领取活动奖励事件
+    """
+    def __init__(self, userId, gameId, activityId, taskId, rewards):
+        super(GetActivityRewardEvent, self).__init__(userId, gameId)
+        self.activityId = activityId
+        self.taskId = taskId
+        self.rewards = rewards
+
+
+class GetAchievementTaskRewardEvent(UserEvent):
+    """
+    领取荣耀任务奖励事件
+    """
+    def __init__(self, userId, gameId, taskId, honorId, level):
+        super(GetAchievementTaskRewardEvent, self).__init__(userId, gameId)
+        self.taskId = taskId
+        self.honorId = honorId
+        self.level = level
+
+
+class AchievementLevelUpEvent(UserEvent):
+    """
+    荣耀任务升级事件
+    """
+    def __init__(self, userId, gameId, level):
+        super(AchievementLevelUpEvent, self).__init__(userId, gameId)
+        self.level = level
+
+
+class GetHonorEvent(UserEvent):
+    """
+    获得称号事件
+    """
+    def __init__(self, userId, gameId, honorId):
+        super(GetHonorEvent, self).__init__(userId, gameId)
+        self.honorId = honorId
+
+
+class AddCharmEvent(UserEvent):
+    """
+    魅力值增加事件
+    """
+    def __init__(self, userId, gameId, charmNum):
+        super(AddCharmEvent, self).__init__(userId, gameId)
+        self.charmNum = charmNum
+
+
 class AddGunSkinEvent(UserEvent):
     """
     皮肤炮增加事件
@@ -367,6 +464,33 @@ class AddGunSkinEvent(UserEvent):
         self.count = count      # 炮的个数
         self.type = type        # 参数
         self.mode = mode        # 模式
+
+
+class GameTimeLuckyAddEvent(UserEvent):
+    """
+    玩家抽奖事件
+    """
+    def __init__(self, userId, gameId, coinNum):
+        super(GameTimeLuckyAddEvent, self).__init__(userId, gameId)
+        self.coinNum = coinNum
+
+
+class OpenEggsEvent(UserEvent):
+    """
+    开启扭蛋事件
+    """
+    def __init__(self, userId, gameId, coinNum):
+        super(OpenEggsEvent, self).__init__(userId, gameId)
+        self.coinNum = coinNum
+
+
+class GuideChangeEvent(UserEvent):
+    """
+    新手引导增加事件
+    """
+    def __init__(self, userId, gameId, isGuideOver):
+        super(GuideChangeEvent, self).__init__(userId, gameId)
+        self.isGuideOver = isGuideOver
 
 
 class ComboEvent(UserEvent):
@@ -403,7 +527,6 @@ class NewbieTaskCompleteEvent(UserEvent):
     """
     新手任务完成事件
     """
-
     def __init__(self, userId, gameId):
         super(NewbieTaskCompleteEvent, self).__init__(userId, gameId)
 
@@ -444,9 +567,69 @@ class TableTaskEndEvent(UserEvent):
         self.rewards = rewards
 
 
+class CheckinEvent(UserEvent):
+    """
+    签到事件
+    """
+    def __init__(self, userId, gameId, day, rewards):
+        super(CheckinEvent, self).__init__(userId, gameId)
+        self.day = day
+        self.rewards = rewards
 
 
+class NewSkillEvent(UserEvent):
+    """
+    获得新技能事件
+    """
+    def __init__(self, userId, gameId, skillId, eventId):
+        super(NewSkillEvent, self).__init__(userId, gameId)
+        self.skillId = skillId
+        self.eventId = eventId
 
+
+class RandomChestShareEvent(UserEvent):
+    """
+    随机宝箱分享弹出事件
+    """
+    def __init__(self, userId, gameId):
+        super(RandomChestShareEvent, self).__init__(userId, gameId)
+
+
+class ShareFinishEvent(UserEvent):
+    """
+    分享完成事件
+    """
+    def __init__(self, userId, gameId, shareId, typeId, shareMode):
+        super(ShareFinishEvent, self).__init__(userId, gameId)
+        self.shareId = shareId
+        self.typeId = typeId
+        self.shareMode = shareMode
+
+
+class InvitedFinishEvent(UserEvent):
+    """
+    邀请完成事件
+    """
+    def __init__(self, userId, gameId):
+        super(InvitedFinishEvent, self).__init__(userId, gameId)
+
+
+class AddInvitedNewUserEvent(UserEvent):
+    """
+    添加新的邀请人
+    """
+    def __init__(self, userId, gameId, invitedUserId):
+        super(AddInvitedNewUserEvent, self).__init__(userId, gameId)
+        self.invitedUserId = invitedUserId
+
+
+class UserVipExpChangeEvent(UserEvent):
+    """
+    用户vip经验值变化通知
+    """
+    def __init__(self, userId, gameId, toAddExp):
+        super(UserVipExpChangeEvent, self).__init__(userId, gameId)
+        self.toAddExp = toAddExp
 
 
 class FireEvent(UserEvent):
@@ -468,7 +651,7 @@ class UseCoolDownEvent(UserEvent):
     使用冷却事件
     """
     def __init__(self, userId, gameId, roomId, tableId):
-        super(UseCoolDownEvent, self).__init__(userId, tableId)
+        super(UseCoolDownEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.tableId = tableId
 
@@ -504,10 +687,14 @@ class GainChestEvent(UserEvent):
         self.chestId = chestId          # dropItem
 
 
-
-
-
-
+class MainQuestSectionFinishEvent(UserEvent):
+    """
+    主线任务章节完成事件
+    """
+    def __init__(self, userId, gameId, sectionId, honorId):
+        super(MainQuestSectionFinishEvent, self).__init__(userId, gameId)
+        self.sectionId = sectionId                  # 章节ID
+        self.honorId = honorId
 
 
 class ItemMonitorEvent(UserEvent):
@@ -529,6 +716,24 @@ class PrizeWheelSpinEvent(UserEvent):
         self.roomId = roomId
 
 
+class SlotMachineAddIntegralEvent(UserEvent):
+    """
+    老虎机活动积分增加事件
+    """
+    def __init__(self, userId, gameId, integral):
+        super(SlotMachineAddIntegralEvent, self).__init__(userId, gameId)
+        self.integral = integral
+
+
+class MoneyTreeAddCountEvent(UserEvent):
+    """
+    摇钱树活动摇动次数增加事件
+    """
+    def __init__(self, userId, gameId, count):
+        super(MoneyTreeAddCountEvent, self).__init__(userId, gameId)
+        self.count = count
+
+
 class NetIncomeChangeEvent(UserEvent):
     """
     渔场净收益变化事件
@@ -539,15 +744,22 @@ class NetIncomeChangeEvent(UserEvent):
         self.roomId = roomId
 
 
+class FestivalTurntableAddIntegralEvent(UserEvent):
+    """
+    节日转盘抽大奖活动积分增加事件
+    """
+    def __init__(self, userId, gameId, integral):
+        super(FestivalTurntableAddIntegralEvent, self).__init__(userId, gameId)
+        self.integral = integral
 
 
-
-
-
-
-
-
-
+class PoseidonProfitAndLossEvent(UserEvent):
+    """
+    海皇来袭单轮Boss结算事件
+    """
+    def __init__(self, userId, gameId, coin):
+        super(PoseidonProfitAndLossEvent, self).__init__(userId, gameId)
+        self.coin = coin
 
 
 class JoinGrandPrixEvent(UserEvent):
@@ -608,4 +820,3 @@ class ChangeGunLevelEvent(UserEvent):
         super(ChangeGunLevelEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.gLev = gLev
-

@@ -18,7 +18,7 @@ class FishTableConf(object):
             # string_44002 += (common = [boss_12027_1、call_11002_lv3、coupon_15033_32、
             # red_27079_7、random_29054_15、activity_44001_4、multiple_14020_14、share_58110_9、
             # terror_68119_3、autofill_11002_1_4、platter_76224_1、terror_77228_2])
-            self.datas["fishGroups"] = config.getFishGroups(fishGroupsName, self.datas.get("groupMode", 0))     # scene下面 groupMode 0经典 1千炮
+            self.datas["fishGroups"] = config.getFishGroups(fishGroupsName, self.datas.get("gameMode", 0))     # scene下面 gameMode 0经典 1千炮
         self.allGroupIds = self.fishGroups.keys()           # 该场次可使用的所有鱼阵 [tide_44002_1: {id: xx, fishes: {'xxx': xx}, total_time: xxx}、call_11002_lv3]
         self.allNormalGroupIds = []                         # 普通鱼
         self.allBossGroupIds = {}                           # boss鱼阵
@@ -127,20 +127,6 @@ class FishTableConf(object):
         场次倍率
         """
         return self.datas.get("multiple", 1)
-
-    @property
-    def minMultiple(self):
-        """
-        最小场次倍率
-        """
-        return self.datas.get("minMultiple", 0) or self.datas.get("multiple", 1)
-
-    @property
-    def maxMultiple(self):
-        """
-        最大场次倍率
-        """
-        return self.datas.get("maxMultiple", 0) or self.datas.get("multiple", 1)
 
     @property
     def lack(self):
@@ -255,6 +241,13 @@ class FishTableConf(object):
         return self.datas.get("typeName", config.FISH_NORMAL)
 
     @property
+    def gameMode(self):
+        """
+        游戏模式
+        """
+        return self.datas.get("gameMode", 0)
+
+    @property
     def hasRobot(self):
         """
         是否存在机器人
@@ -284,6 +277,9 @@ class FishTableConf(object):
 
     @property
     def coinShortage(self):
+        """
+        破产线
+        """
         return self.datas.get("coinShortage", -1)
 
     @property

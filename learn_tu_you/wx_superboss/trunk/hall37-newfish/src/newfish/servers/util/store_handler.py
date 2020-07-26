@@ -21,12 +21,10 @@ from poker.entity.events.tyevent import ChargeNotifyEvent
 from poker.protocol import router, runcmd
 from poker.protocol.decorator import markCmdActionHandler, markCmdActionMethod
 from poker.util import strutil
-from hall.entity import hallstore, hallitem, datachangenotify, \
-    hall_first_recharge, hallvip
+from hall.entity import hallstore, hallitem, datachangenotify, hall_first_recharge, hallvip
 from hall.entity.hallconf import HALL_GAMEID
 from hall.entity.hallusercond import UserConditionRegister
-from hall.entity.todotask import TodoTaskPayOrder, TodoTaskShowInfo, \
-    TodoTaskHelper, TodoTaskGotoShop, TodoTaskRegister
+from hall.entity.todotask import TodoTaskPayOrder, TodoTaskShowInfo, TodoTaskHelper, TodoTaskGotoShop, TodoTaskRegister
 from hall.entity.hallpopwnd import findTodotaskTemplate
 from hall.game import TGHall
 from hall.servers.common.base_checker import BaseMsgPackChecker

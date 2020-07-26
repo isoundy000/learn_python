@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/5
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/6/21.
+"""
+
 import traceback
 from random import choice
 
@@ -91,11 +92,8 @@ class FishNormalRoom(TYNormalRoom):
                 continue
             choiceShadowRoomId = shadowRoomIdList[index][0]
             break
-        ftlog.debug("FishNormalRoom._choiceTableRoom",
-                    "roomId=", self.roomId,
-                    "userId=", userId,
-                    "choiceShadowRoomId=", choiceShadowRoomId,
-                    "shadowRoomIdList=", shadowRoomIdList,
+        ftlog.debug("FishNormalRoom._choiceTableRoom", "roomId=", self.roomId, "userId=", userId,
+                    "choiceShadowRoomId=", choiceShadowRoomId, "shadowRoomIdList=", shadowRoomIdList,
                     "shadowRoomIdOccupyList=", self.shadowRoomIdOccupyList)
         return choiceShadowRoomId
 

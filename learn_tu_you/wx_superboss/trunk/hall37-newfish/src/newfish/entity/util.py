@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/3
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
+
 import time
 import json
 import random
@@ -81,7 +82,7 @@ def isAppClient(userId):
     判断是否为单包客户端
     """
     clientId = getClientId(userId).lower()
-    return clientId.startswith(CLIENT_SYS_ANDROID.lower() or clientId.startswith(CLIENT_SYS_IOS.lower()))
+    return clientId.startswith(CLIENT_SYS_ANDROID.lower()) or clientId.startswith(CLIENT_SYS_IOS.lower())
     # return getClientIdSys(userId) in [CLIENT_SYS_ANDROID.lower(), CLIENT_SYS_IOS.lower()]
 
 
@@ -96,151 +97,165 @@ def isReviewLimitClient(userId):
     """
     是否为提审限制版本的客户端
     """
-    pass
+    intClientId = configure.clientIdToNumber(getClientId(userId))
+    return intClientId in config.getCommonValueByKey("reviewLimitClientIds", [])
 
 
 def getReviewVersionList(userId):
-    pass
+    """
+    获取review版本号列表
+    """
+    reviewClientVersion = []
+    # 单包和白名单用户不受提审版本限制.
+    if isInWhiteList(userId) or (not isReviewLimitClient(userId)):
+        return reviewClientVersion
+    reviewClientVersion = config.getPublic("reviewClientVersion", [])
+    return reviewClientVersion
+
+
+def isInFishTable(userId):
+    """
+    判断用户是否在渔场中
+    """
+    isIn = False
+    roomId, tableId, seatId = 0, 0, 0
+    locList = onlinedata.getOnlineLocList(userId)
+    for roomId, tableId, seatId in locList:
+        try:
+            roomGameId = strutil.getGameIdFromInstanceRoomId(roomId)
+            if (roomGameId == FISH_GAMEID and tableId != 0 and seatId != 0):
+                isIn = True
+                break
+        except:
+            pass
+    return isIn, roomId, tableId, seatId
 
 
 def getFishPoolByBigRoomId(bigRoomId):
     """
-    :param bigRoomId:
-    :return:
+    根据bigRoomId获取渔场id FishPool
     """
     if bigRoomId == 44499:
         return 44001
-    elif 44405 >= bigRoomId >= 44401:
+    elif 44405 >= bigRoomId >= 44401:       # [44001, 44002, ... 44005]
         return 44000 + bigRoomId % 44400
     else:
         return bigRoomId
 
 
+def itemListTransfer(items):
+    """把道具奖励转化一下"""
+    ret = {}
+    for item in items:
+        if item["name"] == "tableChip":
+            ret["tableChip"] = item["count"]
+        else:
+            ret[item["name"]] = item["count"]
+    return ret
+
+
+def hasChip(items):
+    """道具中是否有金币奖励"""
+    itemNames = [x["name"] for x in items]
+    if "user:chip" in itemNames:
+        return True
+    return False
+
+
+def getChip(items):
+    """获取配置道具奖励中的金币数"""
+    hasChip = False
+    chipFinal = 0
+    for item in items:
+        if item["name"] == "user:chip":
+            chipFinal = item["count"]
+            hasChip = True
+            break
+    return hasChip, chipFinal
+
+
+def getRoomTypeName(roomId):
+    """获取房间名"""
+    if not roomId:
+        return ""
+    bigRoomId = gdata.getBigRoomId(roomId)
+    return gdata.getRoomConfigure(bigRoomId).get("typeName")
+
+
 def getBigRoomId(roomId):
-    """获取大房间"""
+    """获取大房间和是否是比赛房间"""
     if not roomId:
         return 0, 0
-    pass
+    bigRoomId = gdata.getBigRoomId(roomId)
+    typeName = gdata.getRoomConfigure(bigRoomId).get("typeName")
+    isMatch = 0
+    if typeName in [config.FISH_TIME_MATCH, config.FISH_TIME_POINT_MATCH]:
+        isMatch = 1
+    return bigRoomId, isMatch
 
 
-def verifyPhoneNumber(phoneNumber):
+def getWeek1DateStr(nowts):
     """
-    验证手机号是否合法
+    获取周一时间戳
     """
-    import re
-    pattern = re.compile(r"^[1]([3-9])[0-9]{9}$")
-    if pattern.search(str(phoneNumber)):
+    week = int(time.strftime("%w", time.localtime(nowts)))
+    if week == 0:
+        week = 7
+    week1 = time.strftime("%Y-%m-%d", time.localtime(nowts - (int(week) - 1) * 3600 * 24))
+    return week1
+
+
+def getWeek7DateStr(nowts):
+    """
+    获取周日时间戳
+    """
+    week = int(time.strftime("%w", time.localtime(nowts)))
+    if week == 0:
+        week = 7
+    week7 = time.strftime("%Y-%m-%d", time.localtime(nowts + (7 - int(week)) * 3600 * 24))
+    return week7
+
+
+def getWeekDay(nowts):
+    """
+    获取是周几
+    """
+    week = int(time.strftime("%w", time.localtime(nowts)))
+    if week == 0:
+        return 7
+    return week
+
+
+def isTimeEffective(timeMap, curTime=None):
+    """
+    判断当前时间是否处在有效期内
+    :param curTime: "%Y-%m-%d %H:%M:%S"
+    """
+    if not timeMap or not isinstance(timeMap, dict):
+        return True
+    curTime = curTime or int(time.time())
+    startTime = getTimestampFromStr(timeMap["start"])
+    endTime = getTimestampFromStr(timeMap["end"])
+    if startTime <= curTime <= endTime:
         return True
     return False
 
 
-def getGunX(wpId, mode):
+def getTimestampFromStr(strTime, formatTime="%Y-%m-%d %H:%M:%S"):
     """
-    获取炮台的倍数(经典模式为1:千炮为炮台倍数)
+    字符串转时间戳
     """
-    gunX = 1 if mode != config.MULTIPLE_MODE else config.getGunLevelConf(wpId, mode).get("levelValue", 1)
-    return gunX
-
-
-def isUsableClientVersion(userId):
-    """
-    判断客户端版本是否可用
-    """
-    from distutils.version import StrictVersion
-    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)   # 客户端当前版本号
-    if clientVersion:
-        disableClientVersion = config.getDisableClientVersion()                 # 获取客户端禁止使用版本号
-        usableClientVersion = config.getUsableClientVersion()                   # 获取客户端可用版本号
-        if clientVersion in disableClientVersion:
-            return False
-        minimumVersion = usableClientVersion.get("minimumVersion", "0.0.0")     # 最小版本
-        specialVersion = usableClientVersion.get("specialVersion", [])
-        if StrictVersion(str(clientVersion)) >= StrictVersion(str(minimumVersion)):
-            return True
-        elif clientVersion in specialVersion:
-            return True
-    return False
-
-
-def isFinishAllRedTask(userId):
-    """
-    获得所有已完成的引导
-    """
-    userGuideStep = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.userGuideStep, [])
-    return userGuideStep
-
-
-def isRedRoom(typeName):
-    """
-    是否为新手场
-    """
-    return typeName == config.FISH_NEWBIE
-
-
-def isInWhiteList(userId):
-    """
-    判断是否属于白名单用户
-    """
-    return int(userId) in config.getPublic("whiteList", [])
-
-
-def isLocationLimit(userId, location=None):
-    """
-    判断客户端版本是否存在地区限制
-    """
-    if isInWhiteList(userId):
-        return False
-    if location:
-        requestUrl = "http://iploc.ywdier.com/api/iploc5/search/city"
-    pass
-
-
-def isVersionLimit(userId, clientVersion=None):
-    """
-    判断客户端版本是否属于提审版本
-    """
-    if isInWhiteList(userId):
-        return False
-    clientVersion = clientVersion or gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
-    if clientVersion in getReviewVersionList(userId):       # config.getPublic("reviewClientVersion", []):
-        return True
-    return False
-
-
-# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
-def getLevelByGunLevel(userId):
-    """
-    获取火炮等级对应的等级
-    """
-    # 需要注意游戏中已有的升级相关的等级含义.
-    uLevel = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.level)
-    return uLevel
-
-
-def getRoomMinLevel(roomId, abcTestMode):
-    """
-    获取房间最小等级
-    """
-    bigRoomId, _ = getBigRoomId(roomId)
-    fishPool = getFishPoolByBigRoomId(bigRoomId)
-    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
-    if abcTestConf and abcTestConf.get("minLevel"):
-        return abcTestConf["minLevel"]
-    roomConf = gdata.roomIdDefineMap()[roomId].configure
-    return roomConf.get("minLevel", 0)
-
-
-def getRoomMinCoin(roomId, abcTestMode):
-    """
-    获取房间最小金币
-    """
-    bigRoomId, _ = getBigRoomId(roomId)
-    fishPool = getFishPoolByBigRoomId(bigRoomId)
-    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
-    if abcTestConf and abcTestConf.get("minCoin"):
-        return abcTestConf["minCoin"]
-    roomConf = gdata.roomIdDefineMap()[roomId].configure
-    return roomConf.get("minCoin", 0)
+    isDefaultFormat = (formatTime == "%Y-%m-%d %H:%M:%S")
+    global _timeStampFromStrCache
+    if isDefaultFormat and strTime in _timeStampFromStrCache:
+        return _timeStampFromStrCache[strTime]
+    timeArray = time.strptime(strTime, formatTime)
+    ts = int(time.mktime(timeArray))
+    if isDefaultFormat:
+        if len(_timeStampFromStrCache) > 200:
+            _timeStampFromStrCache.clear()
+        _timeStampFromStrCache[strTime] = ts
+    return ts
 
 
 def timestampToStr(timestamp, formatTime="%Y-%m-%d %H:%M:%S"):
@@ -290,23 +305,6 @@ def getTimeDescStrFromStr(timeStr, formatTime="%Y年%m月%d日"):
     return timestampToStr(intTime, formatTime)
 
 
-def getTimestampFromStr(strTime, formatTime="%Y-%m-%d %H:%M:%S"):
-    """
-    字符串转时间戳
-    """
-    isDefaultFormat = (formatTime == "%Y-%m-%d %H:%M:%S")
-    global _timeStampFromStrCache
-    if isDefaultFormat and strTime in _timeStampFromStrCache:
-        return _timeStampFromStrCache[strTime]
-    timeArray = time.strptime(strTime, formatTime)
-    ts = int(time.mktime(timeArray))
-    if isDefaultFormat:
-        if len(_timeStampFromStrCache) > 200:
-            _timeStampFromStrCache.clear()
-        _timeStampFromStrCache[strTime] = ts
-    return ts
-
-
 def timeStrToInt(strTime):
     """
     "xx:xx"转成对应秒数
@@ -342,190 +340,36 @@ def formatScore(score, lang="zh"):
     return str(score)
 
 
-def isVipShow(userId):
-    """
-    判断是否显示VIP
-    """
-    vipShow = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.vipShow)
-    return vipShow
-
-
-def getVipShowLevel(userId):
-    """
-    获得VIP显示等级
-    """
-    if isVipShow(userId) == 0:
-        return 0
-    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
-
-
-def getVipRealLevel(userId):
-    """
-    获取VIP真实等级
-    """
-    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
-
-
-def modifyVipShow(userId, modify):
-    """
-    修改VIP可见性
-    """
-    vipShow = isVipShow(userId)
-    modify = int(modify)
-    pass
-
-
-def canSetVipShow(userId):
-    """
-    判断能否设置VIP可见性
-    """
-    vipLevel = hallvip.userVipSystem.getUserVip(userId).get("level", 0)
-    return config.getVipConf(vipLevel).get("setVipShow", 0)
-
-
-def getNickname(userId):
-    """
-    获取玩家昵称
-    """
-    nickname = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.nickname)
-    if not nickname:
-        nickname = userdata.getAttr(userId, "name")
-    nickname = str(nickname) if nickname else ""
-    return keywords.replace(nickname)
-
-
-def getLanguage(userId, clientId=None):
-    """
-    获取玩家手机语言
-    """
-    clientId = clientId or getClientId(userId)
-    if clientId in config.getPublic("multipleLangClientIds", []):
-        lang = userdata.getAttr(userId, "lang")
-        if lang and not str(lang).startswith("zh"):
-            return "en"
-    return "zh"
-
-
-def getAllLanguage():
-    """
-    获取服务器所有语言
-    """
-    return ["zh", "en"]
-
-
-def getOneResultByWeight(_list, _key="weight"):
-    """
-    根据权重获得随机1次的结果
-    """
-    totalWeight = sum([dict(_conf)[_key] for _conf in _list if _conf])
-    if totalWeight > 0:
-        randInt = random.randint(1, totalWeight)
-        for _, _conf in enumerate(_list):
-            randInt -= _conf[_key]
-            if randInt <= 0:
-                return _conf
-    return None
-
-
-
-
-def saveRankInfo(userId, score, rankingId, time_, expireTime=None, updateTime=None):
-    """保存排行榜信息"""
-    time_ = timestampToStr(time_, "%Y-%m-%d")
-    expireTime = expireTime or 24 * 3600
-    updateTime = updateTime or pktimestamp.getCurrentTimestamp()
-    key_ = UserData.rankingInfo % (str(rankingId), time_, FISH_GAMEID, userId)
-    daobase.executeUserCmd(userId, "SETEX", key_, expireTime, json.dumps({
-        "score": score,
-        "time": updateTime
-    }))
-
-
-
-def isNumber(str):
-    try:
-        float(str)
-        return True
-    except ValueError:
-        pass
-
-    try:
-        import unicodedata
-        unicodedata.numeric(str)
-        return True
-    except (TypeError, ValueError):
-        pass
-
-    return False
-
-
-def getItemPresentTestMode(userId):
-    """
-    获取物品赠送测试模式
-    """
-    itemPresentTestMode = config.getPublic("itemPresentTestMode")
-    return itemPresentTestMode or gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.itemPresentTestMode)
-
-
-def selectIdxByWeight(weightList):
-    """
-    根据权重选择索引位置
-    """
-    try:
-        totalWeight = sum(weightList)
-        weight = random.randint(1, totalWeight)
-        for i, w in enumerate(weightList):
-            if weight > w:
-                weight -= w
-            else:
-                return i
-        return -1
-    except:
-        ftlog.error("selectIdxByWeight, weightList =", weightList)
-        return -1
-
-
-
-
-
-def httpParamsSign(params):
-    """
-    http参数GDSS加密（用于GDSS等请求加密校验）
-    """
-    keys = sorted(params.keys())
-    checkstr = ""
-    for k in keys:
-        checkstr += str(k) + "=" + str(params[k]) + "&"
-    checkstr = checkstr[:-1]
-    apikey = "www.tuyoo.com-api-6dfa879490a249be9fbc92e97e4d898d-www.tuyoo.com"
-    checkstr = checkstr + apikey
-    return strutil.md5digest(checkstr)
-
-
-
 def getWeaponType(wpId):
     """
     获得武器类型
     """
     if isinstance(wpId, int):
-        if wpId // 100 == 21:
+        if wpId // 100 == 21:       # 火炮
             return config.GUN_WEAPON_TYPE
-        elif wpId // 100 == 22: # 技能
+        elif wpId // 100 == 22:     # 技能
             return config.SKILL_WEAPON_TYPE
-        elif wpId == 2301:      # 机器人开火
+        elif wpId == 2301:          # 机器人开火
             return config.RB_FIRE_WEAPON_TYPE
-        elif wpId == 2302:      # 机器人爆炸
+        elif wpId == 2302:          # 机器人爆炸
             return config.RB_BOMB_WEAPON_TYPE
-        elif wpId // 100 == 24: # 炸弹鱼爆炸
+        elif wpId // 100 == 24:     # 炸弹鱼爆炸
             return config.BOMB_WEAPON_TYPE
-        elif wpId // 100 == 25: # 招财模式火炮
+        elif wpId // 100 == 25:     # 招财模式火炮
             return config.ROBBERY_WEAPON_TYPE
-        elif wpId // 100 == 27: # 电鳗死亡
+        elif wpId // 100 == 27:     # 电鳗死亡
             return config.NUMB_WEAPON_TYPE
-        elif wpId // 100 == 28: # 钻头鱼死亡
+        elif wpId // 100 == 28:     # 钻头鱼死亡
             return config.DRILL_WEAPON_TYPE
-        elif wpId // 100 == 29: # 超级boss:宝箱怪,龙女王,大冰龙
-            return config.SUPERBOSS_WEAPON_TYPE
+        elif wpId // 100 == 29:     # 超级boss:宝箱怪,龙女王,大冰龙
+            return config.SUPER_BOSS_WEAPON_TYPE
+        elif wpId // 100 == 32:     # 能量宝珠
+            return config.ENERGY_ORB
+        elif wpId // 100 == 33:     # 三叉戟
+            return config.TRIDENT
+        elif wpId // 100 == 34:     # 金钱箱
+            return config.MONEY_BOX
+
     return 0
 
 
@@ -564,8 +408,8 @@ def consumeItems(userId, items, eventId, intEventParam=0, param01=0, param02=0):
         kindId = item["name"]
         count = item["count"]
         assetKind, consumeCount, final = userAssets.consumeAsset(FISH_GAMEID, "item:" + str(kindId), count,
-                                 pktimestamp.getCurrentTimestamp(), str(eventId),
-                                 intEventParam, param01=param01, param02=param02)
+                                                                 pktimestamp.getCurrentTimestamp(), str(eventId),
+                                                                 intEventParam, param01=param01, param02=param02)
         if consumeCount == item["count"]:
             ret.append((assetKind, consumeCount, final))
 
@@ -579,8 +423,8 @@ def consumeItems(userId, items, eventId, intEventParam=0, param01=0, param02=0):
             isUpSkillItem = True
         if assetKind.kindId in config.upgradeGunKindIds:
             isUpGunItem = True
-    
-    if isUpSkillItem:       # 存在技能升级所需物品
+
+    if isUpSkillItem:   # 存在技能升级所需物品
         event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
         TGFish.getEventBus().publishEvent(event)
     if isUpGunItem:     # 存在普通炮升级所需物品
@@ -717,7 +561,7 @@ def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, client
     event = ItemChangeEvent(userId, FISH_GAMEID, gain, changed, type)
     TGFish.getEventBus().publishEvent(event)
     if compPoints:
-        changed["comPoints"] = compPoints
+        changed["compPoints"] = compPoints
     if changeNotify:
         datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
     return changed
@@ -758,8 +602,7 @@ def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, 
         elif kindId in config.getAllGunIds(clientId, config.MULTIPLE_MODE):     # 千炮火炮的提示和事件
             from newfish.game import TGFish
             from newfish.entity.gun import gun_system
-            event = AddGunSkinEvent(userId, FISH_GAMEID, kindId, int(item["count"]), intEventParam,
-                                    config.MULTIPLE_MODE)
+            event = AddGunSkinEvent(userId, FISH_GAMEID, kindId, int(item["count"]), intEventParam, config.MULTIPLE_MODE)
             TGFish.getEventBus().publishEvent(event)
             gunIds = gun_system.getGunIds(userId, config.MULTIPLE_MODE)
             if kindId not in gunIds:
@@ -768,8 +611,9 @@ def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, 
             from newfish.game import TGFish
             event = BulletChangeEvent(userId, FISH_GAMEID)
             TGFish.getEventBus().publishEvent(event)
-        elif (kindId == STARFISH_KINDID and int(item["count"]) > 0 and eventId not in
-            ["BI_NFISH_BUY_ITEM_GAIN", "BI_NFISH_ACTIVITY_REWARDS", "BI_NFISH_MAIL_REWARDS"]):  # 海星
+        elif (kindId == STARFISH_KINDID and int(item["count"]) > 0 and
+              eventId not in ["BI_NFISH_BUY_ITEM_GAIN", "BI_NFISH_ACTIVITY_REWARDS",
+                              "BI_NFISH_MAIL_REWARDS"]):									# 海星
             from newfish.game import TGFish
             event = StarfishChangeEvent(userId, FISH_GAMEID, int(item["count"]))
             TGFish.getEventBus().publishEvent(event)
@@ -823,7 +667,7 @@ def getFishMatchSigninInfo(userId):
     ctrlRoomIds = [bigRoomId * 10000 + 1000 for bigRoomId in gdata.gameIdBigRoomidsMap()[FISH_GAMEID]]
     for ctrlRoomId in ctrlRoomIds:
         roomConfig = gdata.getRoomConfigure(ctrlRoomId)
-        if roomConfig.get('isMatch', 0):
+        if roomConfig.get("isMatch", 0):
             startTime = room_remote.getUserMatchSignin(userId, ctrlRoomId)      # 获取比赛的开始时间
             if startTime > 0:
                 return ctrlRoomId, startTime
@@ -891,13 +735,13 @@ def buildRewardsDesc(rewardList, lang):
         r = rewardList[0]
         count = r["count"]
         rewardId = "item:" + str(r["name"])
-        if r["name"] == config.COUPON_KINDID:       # 红包券
+        if r["name"] == config.COUPON_KINDID:           # 红包券
             rewardId = "user:coupon"
-            count *= config.COUPON_DISPLAY_RATE     # 红包券:奖券 比率
+            count *= config.COUPON_DISPLAY_RATE         # 红包券:奖券 比率
             count = "%.2f" % count
-        elif r["name"] == config.CHIP_KINDID:       # 金币
+        elif r["name"] == config.CHIP_KINDID:           # 金币
             rewardId = "user:chip"
-        elif r["name"] == config.DIAMOND_KINDID:    # 钻石
+        elif r["name"] == config.DIAMOND_KINDID:        # 钻石
             rewardId = "user:diamond"
         if lang == "zh":
             assetKind = hallitem.itemSystem.findAssetKind(rewardId)
@@ -1011,7 +855,688 @@ def addGuideStep(userId, step, clientId):
     """
     添加引导步骤
     """
-    pass
+    userGuideStep = getAllUserGuideStep(userId)
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    if step not in userGuideStep and step in config.getPublic("allGuideIds", []):   # config.ALL_GUIDE_IDS:
+        userGuideStep.append(step)
+        gamedata.setGameAttr(userId, FISH_GAMEID, GameData.userGuideStep, json.dumps(userGuideStep))
+        bireport.reportGameEvent("BI_NFISH_GE_GUIDE_STEP", userId, FISH_GAMEID, 0,
+                                 0, int(step), 0, 0, 0, [], clientId)
+        # 完成新手任务即可
+        isGuideOver = isFinishAllRedTask(userId)                        # isFinishAllGuide(userId, userGuideStep)
+        from newfish.entity.event import GuideChangeEvent
+        from newfish.game import TGFish
+        event = GuideChangeEvent(userId, FISH_GAMEID, isGuideOver)
+        TGFish.getEventBus().publishEvent(event)
+    elif clientVersion in getReviewVersionList(userId):                 # config.getPublic("reviewClientVersion"):
+        userGuideStep.append(step)
+    return userGuideStep
+
+
+def isFinishAllGuide(userId, userGuideStep=None):
+    """
+    判断是否完成所有引导
+    """
+    userGuideStep = userGuideStep or getAllUserGuideStep(userId)
+    totalGuide = config.getPublic("allGuideIds", [])                    # config.ALL_GUIDE_IDS
+    leftStep = list(set(totalGuide) - set(userGuideStep))
+    return len(leftStep) <= 0 and isFinishAllRedTask(userId)
+
+
+def getAllUserGuideStep(userId):
+    """
+    获得所有已完成的引导
+    """
+    userGuideStep = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.userGuideStep, [])
+    return userGuideStep
+
+
+def isFinishAllRedTask(userId):
+    """
+    判断是否完成所有新手任务
+    """
+    redState = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.redState)
+    if not redState:
+        return False
+    return True
+
+
+def isRedRoom(typeName):
+    """
+    是否为新手场
+    """
+    return typeName == config.FISH_NEWBIE
+
+
+def isInWhiteList(userId):
+    """
+    判断是否属于白名单用户
+    """
+    return int(userId) in config.getPublic("whiteList", [])
+
+
+def isLocationLimit(userId, location=None):
+    """
+    判断客户端版本是否存在地区限制
+    """
+    if isInWhiteList(userId):
+        return False
+    if location:
+        requestUrl = "http://iploc.ywdier.com/api/iploc5/search/city"
+        postData = {"ip": sessiondata.getClientIp(userId)}
+        result = doHttpQuery(requestUrl, postData)
+        if not result or set(location) & set(result.get("loc", [])):
+            return True
+        return False
+    else:
+        isLocationLimit = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.isLocationLimit)
+        return isLocationLimit == 1
+
+
+def isVersionLimit(userId, clientVersion=None):
+    """
+    判断客户端版本是否属于提审版本
+    """
+    if isInWhiteList(userId):
+        return False
+    clientVersion = clientVersion or gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    if clientVersion in getReviewVersionList(userId):   # config.getPublic("reviewClientVersion", []):
+        return True
+    return False
+
+
+def isUsableClientVersion(userId):
+    """
+    判断客户端版本是否可用
+    """
+    from distutils.version import StrictVersion
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)   # 客户端当前版本号
+    if clientVersion:
+        disableClientVersion = config.getDisableClientVersion()                 # 获取客户端禁止使用版本号
+        usableClientVersion = config.getUsableClientVersion()                   # 获取客户端可用版本号
+        if clientVersion in disableClientVersion:
+            return False
+        minimumVersion = usableClientVersion.get("minimumVersion", "0.0.0")     # 最小版本
+        specialVersion = usableClientVersion.get("specialVersion", [])
+        if StrictVersion(str(clientVersion)) >= StrictVersion(str(minimumVersion)):
+            return True
+        elif clientVersion in specialVersion:
+            return True
+    return False
+
+
+def isPurchaseLimit(userId):
+    """
+    判断客户端版本是否存在购买限制（iOS用户等级小于12级的用户）
+    """
+    if isInWhiteList(userId):
+        return False
+    from poker.util.constants import CLIENT_SYS_IOS
+    platformOS = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.platformOS)
+    if platformOS == CLIENT_SYS_IOS.lower():
+        level = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+        if level < 12:
+            return True
+    return False
+
+
+def isProtectionLimit(userId):
+    """
+    该玩家是否存在健康保护限制
+    """
+    protectionLimit = config.getCommonValueByKey("protectionLimit", {})
+    if protectionLimit:
+        isProtectionLimit = weakdata.getMonthFishData(userId, WeakData.isProtectionLimit, 0)
+        if isProtectionLimit:
+            return True
+        dailyProfitCoin, monthlyProfitCoin = getRobberyProfitCoin(userId)
+        if (dailyProfitCoin <= protectionLimit["dailyLoss"] or monthlyProfitCoin <= protectionLimit["monthlyLoss"]):
+            weakdata.setMonthFishData(userId, WeakData.isProtectionLimit, 1)
+            return True
+    return False
+
+
+def isTextCensorLimit(text):
+    """
+    文本内容是否违规
+    """
+    if keywords.isContains(text):
+        return True
+    requestUrl = "http://text-cansoring.tuyoo.com" + "/textcansoring/v1/spam/sync.json"
+    postData = {
+        "access_id": "15a8d9001040d1ae",
+        "algorithm": "sha256",
+        "secret_type": "forever",
+        "ts": int(time.time()),
+        "content": str(text)
+    }
+    argsStr = sorted([("%s=%s" % (key, str(postData[key]))) for key in postData.keys()])
+    signStr = "&".join(argsStr) + ":6tgxG9VMLehtC6pZKniOw0KmSPOo6RtF"
+    signStr = hashlib.sha256(signStr).hexdigest().lower()
+    postData["sign"] = signStr
+    try:
+        result = doHttpQuery(requestUrl, postData)
+        if result and result.get("result", {}).get("spam") == 1:
+            return True
+    except:
+        ftlog.error("isTextCensorLimit error", text)
+    return False
+
+
+def getRobberyProfitCoin(userId):
+    """
+    获得玩家招财模式下每日、每月盈亏金币
+    """
+    dailyBulletProfitCoin = weakdata.getDayRobberyData(userId, WeakData.bulletProfitCoin, 0)
+    monthlyBulletProfitCoin = weakdata.getMonthFishData(userId, WeakData.bulletProfitCoin, 0)
+    return dailyBulletProfitCoin, monthlyBulletProfitCoin
+
+
+def getPoseidonProfitCoin(userId):
+    """
+    获得玩家海皇来袭下每日、每月盈亏金币
+    """
+    dailyPoseidonProfitCoin = weakdata.getDayPoseidonData(userId, WeakData.poseidonProfitCoin, 0)
+    monthlyPoseidonProfitCoin = weakdata.getMonthFishData(userId, WeakData.poseidonProfitCoin, 0)
+    return dailyPoseidonProfitCoin, monthlyPoseidonProfitCoin
+
+
+def getProtectionProftCoin(userId):
+    """
+    获取玩家归属于健康保护限制渔场（招财、海皇）下的每日、每月盈亏金币（暂时无用）
+    """
+    dailyBulletProfitCoin, dailyPoseidonProfitCoin = getRobberyProfitCoin(userId)
+    monthlyBulletProfitCoin, monthlyPoseidonProfitCoin = getPoseidonProfitCoin(userId)
+    dailyProfitCoin = dailyBulletProfitCoin + dailyPoseidonProfitCoin
+    monthlyProfitCoin = monthlyBulletProfitCoin + monthlyPoseidonProfitCoin
+    return dailyProfitCoin, monthlyProfitCoin
+
+
+def sendTodoTaskMsg(userId, message):
+    """
+    发送todoTask消息给客户端
+    """
+    todoTask = TodoTaskShowInfo(message)
+    TodoTaskHelper.sendTodoTask(FISH_GAMEID, userId, todoTask)
+
+
+def doHttpQuery(requestUrl, data, timeout=1, method="GET"):
+    """
+    http请求接口
+    """
+    querys, postData, response, result = None, None, None, None
+    requestTime = time.time()
+    try:
+        if method == "GET":
+            querys = data
+        else:
+            postData = data
+        response, _ = webpage.webget(requestUrl, querys=querys, postdata_=postData,
+                                     method_=method, connect_timeout=timeout, timeout=timeout+1)
+        if response:
+            result = json.loads(response)
+            ftlog.info(requestUrl, "data =", data, "result =", result, "runtime =", time.time() - requestTime)
+    except:
+        ftlog.error(requestUrl, "data =", data, "response =", response)
+    return result
+
+
+def getOneResultByWeight(_list, _key="weight"):
+    """
+    根据权重获得随机1次的结果
+    """
+    totalWeight = sum([dict(_conf)[_key] for _conf in _list if _conf])
+    if totalWeight > 0:
+        randInt = random.randint(1, totalWeight)
+        for _, _conf in enumerate(_list):
+            randInt -= _conf[_key]
+            if randInt <= 0:
+                return _conf
+    return None
+
+
+def getGameTimePoolKey():
+    """
+    在线奖池数据库key
+    """
+    return "gametimepool:%d:%s" % (FISH_GAMEID, config.getGameTimePoolIssue())
+
+
+def incrGameTimePool(coin):
+    """
+    增减在线奖池
+    """
+    assert (isinstance(coin, int))
+    daobase.executeMixCmd("INCRBY", getGameTimePoolKey(), coin)
+
+
+def getEggsOneResultByConfig(keyName, userId):
+    """
+    扭蛋抽奖、免费游戏时长抽奖
+    """
+    bonusConfig = config.getBonusConf(keyName)
+    _bonusInfo = getOneResultByWeight(bonusConfig)
+    coinNum = 0
+    if _bonusInfo:
+        coinNum = random.randint(_bonusInfo["minCoin"], _bonusInfo["maxCoin"])
+        totalPoolNum = daobase.executeMixCmd("GET", getGameTimePoolKey())
+        isLucky, curLuckyNum = isEggsLuckyPlayer(coinNum)
+        ftlog.debug("getEggsOneResultByConfig->userId =", userId, "keyName =", keyName, "coinNum =", coinNum,
+                    "isLucky =", isLucky, "curLuckyNum =", curLuckyNum)
+        if isLucky:  # 幸运玩家
+            if totalPoolNum >= coinNum:
+                # reducePoolNum = min(totalPoolNum, coinNum)   # 减池子的钱不能减成负
+                incrGameTimePool(-abs(coinNum))  # 减池子的钱
+        else:   # 非幸运玩家，奖池金币不够，则从奖池金币和最小扭蛋金币中取最大值，
+            if totalPoolNum < coinNum:
+                minCoinRange = config.getEggsMinCoinRangeConf(keyName)
+                minCoin = random.randint(minCoinRange[0], minCoinRange[1])
+                coinNum = max(totalPoolNum, minCoin)
+            incrGameTimePool(-abs(coinNum))  # 减池子的钱
+        _addEggsLuckyUser(coinNum, curLuckyNum)
+    return int(coinNum)
+
+
+def isEggsLuckyPlayer(coinNum):
+    """
+    判断今日是否存在幸运玩家
+    """
+    isLucky = False
+    mixEggsKey = "eggsLucky:%d" % FISH_GAMEID
+    curValue = daobase.executeMixCmd("GET", mixEggsKey)
+    timeRange = config.getCommonValueByKey("eggsLuckyResetTime", ["00:00", "20:00"])
+    startTime = getTodayTimestampFromStr(timeRange[0])
+    endTime = getTodayTimestampFromStr(timeRange[1])
+    luckyTime = random.randint(startTime, endTime)
+    # 每天刷新指定幸运时间
+    if not curValue or isinstance(curValue, int):
+        curValue = [luckyTime, 0, 0, 0]
+        daobase.executeMixCmd("SET", mixEggsKey, json.dumps(curValue))
+    else:
+        curValue = json.loads(curValue)
+        lastStartTime = getDayStartTimestamp(curValue[0])
+        todayStartTime = getDayStartTimestamp(int(time.time()))
+        if lastStartTime != todayStartTime:
+            curValue = [luckyTime, 0, 0, 0]
+            daobase.executeMixCmd("SET", mixEggsKey, json.dumps(curValue))
+
+    if int(time.time()) >= curValue[0]: # 从指定时间开始发放超级大奖
+        index_ = 1
+        # 各超级大奖限制个数
+        luckyEggsSuperPrize = config.getCommonValueByKey("luckyEggsSuperPrize", {})
+        for superPrizeNum in sorted(map(int, luckyEggsSuperPrize), reverse=True):
+            if coinNum >= superPrizeNum:
+                if curValue[index_] >= luckyEggsSuperPrize[str(superPrizeNum)]:
+                    isLucky = False
+                else:
+                    isLucky = True
+                break
+            index_ += 1
+    return isLucky, curValue
+
+
+def _addEggsLuckyUser(coinNum, curLuckyNum):
+    mixEggsKey = "eggsLucky:%d" % FISH_GAMEID
+    index_ = 1
+    isSave = False
+    luckyEggsSuperPrize = config.getCommonValueByKey("luckyEggsSuperPrize", {})
+    for superPrizeNum in sorted(map(int, luckyEggsSuperPrize), reverse=True):
+        if coinNum >= superPrizeNum:
+            if curLuckyNum[index_] < luckyEggsSuperPrize[str(superPrizeNum)]:
+                curLuckyNum[index_] += 1
+                isSave = True
+            break
+        index_ += 1
+    if isSave:
+        daobase.executeMixCmd("SET", mixEggsKey, json.dumps(curLuckyNum))
+
+
+def getMainTaskId(userId, fishPool):
+    """
+    获得用户主线任务ID
+    """
+    keyName = GameData.tableTask % fishPool
+    tableTaskData = gamedata.getGameAttrJson(userId, FISH_GAMEID, keyName, {})
+    return int(tableTaskData.get("mainTask", {}).get("taskId", 0))
+
+
+def isVipShow(userId):
+    """
+    判断是否显示VIP
+    """
+    vipShow = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.vipShow)
+    return vipShow
+
+
+def getVipShowLevel(userId):
+    """
+    获得VIP显示等级
+    """
+    if isVipShow(userId) == 0:
+        return 0
+    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+
+
+def getVipRealLevel(userId):
+    """
+    获取VIP真实等级
+    """
+    return hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+
+
+def modifyVipShow(userId, modify):
+    """
+    修改VIP可见性
+    """
+    vipShow = isVipShow(userId)
+    modify = int(modify)
+    if canSetVipShow(userId) == 0:
+        code = -2                       # return None
+    else:
+        if modify not in [0, 1]:
+            code = -1
+        elif vipShow == modify:         # 相同，不修改
+            code = 1
+        else:
+            gamedata.setGameAttr(userId, FISH_GAMEID, GameData.vipShow, modify)
+            vipShow = modify
+            code = 0
+    return vipShow, code
+
+
+def canSetVipShow(userId):
+    """
+    判断能否设置VIP可见性
+    """
+    vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
+    return config.getVipConf(vipLevel).get("setVipShow", 0)
+
+
+def getNickname(userId):
+    """
+    获取玩家昵称
+    """
+    nickname = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.nickname)
+    if not nickname:
+        nickname = userdata.getAttr(userId, "name")
+    nickname = str(nickname) if nickname else ""
+    return keywords.replace(nickname)
+
+
+def getLanguage(userId, clientId=None):
+    """
+    获取玩家手机语言
+    """
+    clientId = clientId or getClientId(userId)
+    if clientId in config.getPublic("multipleLangClientIds", []):
+        lang = userdata.getAttr(userId, "lang")
+        if lang and not str(lang).startswith("zh"):
+            return "en"
+    return "zh"
+
+
+def getAllLanguage():
+    """
+    获取服务器所有语言
+    """
+    return ["zh", "en"]
+
+
+def sendUserLed(msg, userId):
+    """
+    发送只有此用户可见的LED
+    """
+    if msg.get("msg", ""):
+        mo = MsgPack()
+        mo.setCmd("led")
+        mo.setResult("type", msg.get("type", ""))
+        mo.setResult("msg", msg.get("msg", ""))
+        mo.setResult("gameId", FISH_GAMEID)
+        mo.setResult("scope", str(FISH_GAMEID))
+        router.sendToUser(mo, userId)
+    ftlog.debug("sendUserLed", userId, msg)
+
+
+def adjustPearlCount(userId):
+    """
+    旧版本升级，调整珍珠数量
+    """
+    from newfish.entity import mail_system
+    pearlCount = balanceItem(userId, config.PEARL_KINDID)
+    adjustCount = pearlCount // 1000
+    if adjustCount > 0:
+        userAssets = hallitem.itemSystem.loadUserAssets(userId)
+        userAssets.consumeAsset(FISH_GAMEID, "item:" + str(config.PEARL_KINDID), pearlCount - adjustCount, pktimestamp.getCurrentTimestamp(), "ITEM_USE", 0)
+        message = config.getMultiLangTextConf("ID_ADJUST_PEARL_COUNT_MESSAGE", lang=getLanguage(userId))
+        mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, message=message)
+
+
+def processRebootLed(event):
+    """
+    处理停服维护时的全服LED
+    """
+    global _processInterval, _prevProcessRebootLedTime
+    if event.count % _processInterval:
+        return
+    ftlog.debug("processRebootLed", event.count)
+    currTime = int(time.time())
+    rebootLedConf = config.getPublic("rebootLedConf", {})
+    if not rebootLedConf:
+        return
+    startTime = getTimestampFromStr(rebootLedConf["startTime"])
+    endTime = getTimestampFromStr(rebootLedConf["endTime"])
+    urgentTime = getTimestampFromStr(rebootLedConf.get("urgentTime") or rebootLedConf["endTime"])
+    urgentInterval = rebootLedConf.get("urgentInterval") or rebootLedConf["interval"]               # 紧急的间隔
+    interval = rebootLedConf["interval"] if currTime < urgentTime else urgentInterval
+    duration = rebootLedConf["duration"]
+    if not (startTime <= currTime <= endTime):
+        return
+    if not _prevProcessRebootLedTime or int(currTime - _prevProcessRebootLedTime) / _processInterval >= interval:
+        ledStrId = rebootLedConf.get("led_str_id", "ID_LED_REBOOT")
+        for lang in getAllLanguage():
+            if lang != "zh":
+                continue
+            leftMinutes = (getTimestampFromStr(rebootLedConf["rebootTime"]) - currTime) // 60
+            msg = config.getMultiLangTextConf(ledStrId, lang=lang) % (leftMinutes, duration)
+            user_rpc.sendLed(FISH_GAMEID, msg, isMatch=1, id=ledStrId, lang=lang)
+        _prevProcessRebootLedTime = currTime
+
+
+def saveRankInfo(userId, score, rankingId, time_, expireTime=None, updateTime=None):
+    """保存排行榜信息"""
+    time_ = timestampToStr(time_, "%Y-%m-%d")
+    expireTime = expireTime or 24 * 3600
+    updateTime = updateTime or pktimestamp.getCurrentTimestamp()
+    key_ = UserData.rankingInfo % (str(rankingId), time_, FISH_GAMEID, userId)
+    daobase.executeUserCmd(userId, "SETEX", key_, expireTime, json.dumps({
+        "score": score,
+        "time": updateTime
+    }))
+
+
+def incrUserRechargeBonus(userId, bonus):
+    # 增加充值奖池
+    try:
+        final = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.rechargeBonus)            # 充值奖池数据
+        bonus = int(bonus)
+        if bonus > 0:
+            final = int(final + bonus)
+            gamedata.setGameAttr(userId, FISH_GAMEID, GameData.rechargeBonus, final)
+            isIn, roomId, tableId, seatId = isInFishTable(userId)
+            if isIn:
+                mo = MsgPack()
+                mo.setCmd("table_call")
+                mo.setParam("action", "recharge_notify")
+                mo.setParam("gameId", FISH_GAMEID)
+                mo.setParam("clientId", getClientId(userId))
+                mo.setParam("userId", userId)
+                mo.setParam("roomId", roomId)
+                mo.setParam("tableId", tableId)
+                mo.setParam("seatId", seatId)
+                router.sendTableServer(mo, roomId)
+        ftlog.info("incrUserRechargeBonus, userId =", userId, "bonus =", bonus, "final =", final)
+        return final
+    except Exception, e:
+        ftlog.error("incrUserRechargeBonus, userId =", userId, "bonus =", bonus, "e =", e)
+    return 0
+
+
+def isNumber(str):
+    try:
+        float(str)
+        return True
+    except ValueError:
+        pass
+
+    try:
+        import unicodedata
+        unicodedata.numeric(str)
+        return True
+    except (TypeError, ValueError):
+        pass
+
+    return False
+
+
+def getItemPresentTestMode(userId):
+    """
+    获取物品赠送测试模式
+    """
+    itemPresentTestMode = config.getPublic("itemPresentTestMode")
+    return itemPresentTestMode or gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.itemPresentTestMode)
+
+
+def selectIdxByWeight(weightList):
+    """
+    根据权重选择索引位置
+    """
+    try:
+        totalWeight = sum(weightList)
+        weight = random.randint(1, totalWeight)
+        for i, w in enumerate(weightList):
+            if weight > w:
+                weight -= w
+            else:
+                return i
+        return -1
+    except:
+        ftlog.error("selectIdxByWeight, weightList =", weightList)
+        return -1
+
+
+def mergeItemList(itemList, newItemList):
+    """
+    合并相同道具
+    """
+    ftlog.debug("_mergeItemList->", itemList, newItemList)
+    if not newItemList:
+        return itemList
+    kindIdList = [item["name"] for item in itemList if item]
+    newKindIdList = [item["name"] for item in newItemList if item]
+    sameKindIdList = set(kindIdList) & set(newKindIdList)
+    if sameKindIdList:
+        for kindId in sameKindIdList:
+            index = kindIdList.index(kindId)
+            newIndex = newKindIdList.index(kindId)
+            item = itemList[index]
+            newItem = newItemList[newIndex]
+            if item["name"] == newItem["name"]:
+                item["count"] += newItem["count"]
+    else:
+        itemList.extend(newItemList)
+    ftlog.debug("_mergeItemList->", itemList)
+    return itemList
+
+
+def httpParamsSign(params):
+    """
+    http参数GDSS加密（用于GDSS等请求加密校验）
+    """
+    keys = sorted(params.keys())
+    checkstr = ""
+    for k in keys:
+        checkstr += str(k) + "=" + str(params[k]) + "&"
+    checkstr = checkstr[:-1]
+    apikey = "www.tuyoo.com-api-6dfa879490a249be9fbc92e97e4d898d-www.tuyoo.com"
+    checkstr = checkstr + apikey
+    return strutil.md5digest(checkstr)
+
+
+def chatReport(*argList):
+    """
+    渔场内聊天日志记录
+    """
+    from freetime5._tyserver._entity import ftglobal
+    global _CHATLOGER
+    if _CHATLOGER is None:
+        logFileFullpath = gdata.globalConfig()['log_path']
+        logFileFullpath = logFileFullpath + '/chat.log'
+        _CHATLOGER = ftlog.openNormalLogfile(logFileFullpath)
+    logData = [ftglobal.cloudId, bireport._generateRecordId()]
+    logData.extend(list(argList))
+    msg = '\t'.join(map(bireport._getFBRecordField, logData))
+    _CHATLOGER.info(msg)
+
+
+def getAssetKindId(kindId):
+    """
+    通过kindId获得assetKindId
+    """
+    return config.customKindIdMap.get(kindId) or "item:%d" % kindId
+
+
+def _triggerHeartBeatEvent(event):
+    """
+    服务器心跳事件
+    """
+    processRebootLed(event)
+
+
+# 测试代码
+def testEggsResult(userId, itemId, count):
+    num = 0
+    for _ in xrange(count):
+        result = getEggsOneResultByConfig(str(itemId), userId)
+        if result >= 10000000:
+            num += 1
+    ftlog.debug("test1000EggsResult", num)
+
+
+def addProductBuyEvent(userId, productId, clientId, buyCount=1):
+    """
+    商品购买完成事件
+    """
+    ftlog.debug("addProductBuyEvent, userId =", userId, productId, clientId, buyCount)
+    from newfish.game import TGFish
+    from newfish.entity.event import ProductBuyEvent
+    event = ProductBuyEvent(userId, FISH_GAMEID, productId, clientId, buyCount)
+    TGFish.getEventBus().publishEvent(event)
+
+
+def increaseExtraRechargeBonus(userId, bonus):
+    """
+    给玩家添加额外充值奖池
+    """
+    # 新手abc测试a模式不增加额外奖池.
+    testMode = getNewbieABCTestMode(userId)
+    if testMode == "a":
+        return
+    extraRechargePool = config.getPublic("extraRechargePool", 0)
+    lastCount = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.extraRechargePool)
+    curCount = lastCount
+    if lastCount < extraRechargePool and bonus > 0:
+        curCount = gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.extraRechargePool, min(bonus, extraRechargePool - lastCount))
+        incrUserRechargeBonus(userId, curCount - lastCount)
+
+
+def decreaseExtraceRechargeBonus(userId, count):
+    """
+    减少玩家额外充值奖池
+    """
+    lastCount = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.extraRechargePool)
+    if count > 0 and lastCount > 0:
+        gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.extraRechargePool, -abs(min(count, lastCount)))
+
 
 def getNewbieABCTestMode(userId):
     """
@@ -1027,11 +1552,110 @@ def getNewbieABCTestMode(userId):
     return testMode
 
 
-def getAssetKindId(kindId):
+def getGiftAbcTestMode(userId):
     """
-    通过kindId获得assetKindId
+    获取玩家礼包abc测试模式
     """
-    return config.customKindIdMap.get(kindId) or "item:%d" % kindId
+    # 苹果版本使用a模式.
+    if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
+        return "a"
+    giftAbcTestConf = config.getGiftAbcTestConf(getClientId(userId))
+    if giftAbcTestConf.get("mode"):
+        return giftAbcTestConf.get("mode")
+    mode = ["a", "b", "c"]
+    idx = int(userId) % len(mode) if giftAbcTestConf.get("enable") else 0
+    return mode[idx]
+
+
+def getRoomMinLevel(roomId, abcTestMode):
+    """
+    获取房间最小等级
+    """
+    bigRoomId, _ = getBigRoomId(roomId)
+    fishPool = getFishPoolByBigRoomId(bigRoomId)
+    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
+    if abcTestConf and abcTestConf.get("minLevel"):
+        return abcTestConf["minLevel"]
+    roomConf = gdata.roomIdDefineMap()[roomId].configure
+    return roomConf.get("minLevel", 0)
+
+
+def getRoomMinCoin(roomId, abcTestMode):
+    """
+    获取房间最小金币
+    """
+    bigRoomId, _ = getBigRoomId(roomId)
+    fishPool = getFishPoolByBigRoomId(bigRoomId)
+    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
+    if abcTestConf and abcTestConf.get("minCoin"):
+        return abcTestConf["minCoin"]
+    roomConf = gdata.roomIdDefineMap()[roomId].configure
+    return roomConf.get("minCoin", 0)
+
+
+def sendSmsCode(userId, mobile):
+    """
+    发送短信验证码接口
+    """
+    clientId = getClientId(userId)
+    deviceId = sessiondata.getDeviceId(userId)
+    requestUrl = gdata.httpGame() + "/open/v5/user/sendSmsCode"
+    postData = {
+        "appId": 9999,
+        "userId": userId,
+        "clientId": clientId,
+        "deviceId": deviceId,
+        "mobile": mobile,
+        "imei": "null"
+    }
+    result = doHttpQuery(requestUrl, postData)
+    if result and result.get("result", {}).get("code") is 0:
+        return True
+    return False
+
+
+def verifySmsCode(userId, mobile, vcode):
+    """
+    验证短信验证码接口
+    """
+    clientId = getClientId(userId)
+    deviceId = sessiondata.getDeviceId(userId)
+    requestUrl = gdata.httpGame() + "/open/v6/user/checkSmsCodeOnly"
+    postData = {
+        "appId": 9999,
+        "userId": userId,
+        "clientId": clientId,
+        "deviceId": deviceId,
+        "mobile": mobile,
+        "vcode": vcode,
+        "snsId": "mobile:%d" % mobile,
+        "imei": "null"
+    }
+    result = doHttpQuery(requestUrl, postData)
+    if result:
+        if result.get("result", {}).get("code") is 0:
+            return True
+        return False
+    return None
+
+
+def verifyPhoneNumber(phoneNumber):
+    """
+    验证手机号是否合法
+    """
+    import re
+    pattern = re.compile(r"^[1]([3-9])[0-9]{9}$")
+    if pattern.search(str(phoneNumber)):
+        return True
+    return False
+
+
+def getGunX(wpId, mode):
+    """
+    获取炮台的倍数(经典模式为1:千炮为炮台倍数)
+    """
+    gunX = 1 if mode != config.MULTIPLE_MODE else config.getGunLevelConf(wpId, mode).get("levelValue", 1)
+    return gunX
 
 
 def getGunLevel(userId, mode):
@@ -1052,22 +1676,66 @@ def getGunLevelVal(userId, mode):
     return config.getGunLevelConf(gunLevel, mode).get("levelValue", 1)
 
 
-def isInFishTable(userId):
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getStoreCheckLevel(userId):
     """
-    判断用户是否在渔场中
+    获取玩家商城需要检测的等级
     """
-    isIn = False
-    roomId, tableId, seatId = 0, 0, 0
-    locList = onlinedata.getOnlineLocList(userId)
-    for roomId, tableId, seatId in locList:
-        try:
-            roomGameId = strutil.getGameIdFromInstanceRoomId(roomId)
-            if (roomGameId == FISH_GAMEID and tableId != 0 and seatId != 0):
-                isIn = True
-                break
-        except:
-            pass
-    return isIn, roomId, tableId, seatId
+    # 使用玩家等级.
+    level = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    return level
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getLevelByGunLevel(userId):
+    """
+    获取火炮等级对应的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    uLevel = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.level)
+    return uLevel
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getDailyQuestCheckLevel(userId):
+    """
+    获取每日任务需要检测的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    userLv = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    return userLv
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getActivityCheckLevel(userId):
+    """
+    获取活动需要检测的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    # 应使用千炮等级
+    userLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    return userLevel
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getUnlockCheckLevel(userId):
+    """
+    获取解锁模块需要检测的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    # 应使用千炮等级
+    userLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    return userLevel
+
+
+# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
+def getUserValidCheckLevel(userId):
+    """
+    获取检测玩家有效性需要检测的等级
+    """
+    # 需要注意游戏中已有的升级相关的等级含义.
+    level = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    return level
 
 
 _inited = False

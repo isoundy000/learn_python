@@ -551,14 +551,17 @@ class UserTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="user", action="fishMailList", clientIdVer=0, scope="game", lockParamName="userId")
     def doGetAllMails(self, userId, gameId, clientId, mailType):
+        """发送收件箱邮件列表消息"""
         mail_system.doGetAllMails(userId, mailType)
 
     @markCmdActionMethod(cmd="user", action="fishMailReceive", clientIdVer=0, scope="game", lockParamName="userId")
     def doDealMail(self, userId, gameId, clientId, mailIds, mailType):
+        """领取邮件奖励"""
         mail_system.doReceiveMail(userId, mailIds, mailType)
 
     @markCmdActionMethod(cmd="user", action="fishMailDelete", clientIdVer=0, scope="game", lockParamName="userId")
     def doDeleteMail(self, userId, gameId, clientId, mailIds, mailType):
+        """执行删除邮件并发送消息"""
         mail_system.doDeleteMail(userId, mailIds, mailType)
 
     @markCmdActionMethod(cmd="user", action="fishFightHistory", clientIdVer=0, scope="game", lockParamName="userId")

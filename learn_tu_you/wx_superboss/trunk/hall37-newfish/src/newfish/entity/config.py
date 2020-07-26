@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-__author__ = 'ghou'
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import time
 import random
@@ -10,6 +10,7 @@ from collections import OrderedDict
 from copy import deepcopy
 
 from freetime.util import log as ftlog
+from freetime.core.timer import FTLoopTimer
 from poker.entity.configure import configure, gdata
 from poker.entity.events import tyeventbus
 from poker.entity.events.tyevent import EventConfigure
@@ -47,6 +48,8 @@ PEARL_KINDID = 1137
 STARFISH_KINDID = 3106
 # 海星抽奖券
 STARFISH_TICKET_KINDID = 1380
+# 海洋之星
+OCEANSTAR_KINDID = 3157
 # 代购券
 VOUCHER_KINDID = 1426
 # 青铜招财珠
@@ -131,6 +134,8 @@ TOWERIDS = [ICE_TOWERID, FIRE_TOWERID, ELEC_TOWERID]
 # 以下type为鱼种类别
 # 普通金币鱼
 NORMAL_FISH_TYPE = [1, 3]
+# 千炮模式下普通鱼
+NORMAL_FISH_TYPE_M = [1]
 # 道具鱼
 ITEM_FISH_TYPE = [4, 11, 12, 13, 14, 15, 16]
 # 捕获后掉口红的鱼
@@ -184,11 +189,11 @@ RAINBOW_BONUS_FISH_TYPE = [5, 26, 28, 29]
 # 日志专用鱼种类别
 # 需要输出日志的鱼
 LOG_OUTPUT_FISH_TYPE = [2, 3, 5, 8, 9, 10, 11, 13, 14, 15, 18, 19, 20, 28, 29]
-
+# -------------------------
 
 # -------------------------
 # 以下type为武器类别
-# 火炮/千炮
+# 普通火炮
 GUN_WEAPON_TYPE = 1
 # 技能
 SKILL_WEAPON_TYPE = 2
@@ -204,9 +209,17 @@ ROBBERY_WEAPON_TYPE = 6
 NUMB_WEAPON_TYPE = 7
 # 钻头鱼
 DRILL_WEAPON_TYPE = 8
-# 超级boss
-SUPERBOSS_WEAPON_TYPE = 9
-
+# 超级Boss
+SUPER_BOSS_WEAPON_TYPE = 9
+# 能量宝珠
+ENERGY_ORB = 10
+# 三叉戟
+TRIDENT = 11
+# 金钱箱
+MONEY_BOX = 12
+# 特殊武器类别集合
+SPECIAL_WEAPON_TYPE_SET = (BOMB_WEAPON_TYPE, NUMB_WEAPON_TYPE, DRILL_WEAPON_TYPE,
+                           SUPER_BOSS_WEAPON_TYPE, ENERGY_ORB, TRIDENT)
 # -------------------------
 
 # 红包券:奖券 比率
@@ -295,7 +308,7 @@ FISH_FIGHT = "fish_fight"
 FISH_ROBBERY = "fish_robbery"
 # 好友模式渔场
 FISH_FRIEND = "fish_friend"
-# 新手(万元红包)渔场
+# 新手渔场
 FISH_NEWBIE = "fish_newbie"
 # 定时积分赛渔场
 FISH_TIME_POINT_MATCH = "fish_time_point_match"
@@ -305,7 +318,6 @@ FISH_GRAND_PRIX = "fish_grand_prix"
 FISH_POSEIDON = "fish_poseidon"
 # 千炮模式渔场
 FISH_MULTIPLE = "fish_multiple"
-
 # 快速开始自动分配房间类型
 QUICK_START_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND)
 # 普通房间类型
@@ -314,6 +326,10 @@ NORMAL_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH
 DYNAMIC_ODDS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_POSEIDON)
 # 使用充值奖池房间类型
 RECHARGE_BONUS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH_POSEIDON)
+# 冰冻道具冻住的概率
+FREEZE_PROBB = 10000
+# 锁定道具ID
+LOCK_ITEM = "14120"
 
 # 购买类型
 BT_COIN = "coin"
@@ -323,20 +339,27 @@ BT_COUPON = "coupon"
 BT_DIRECT = "direct"
 BT_VOUCHER = "voucher"
 BT_RUBY = "ruby"
+BT_OCEANSTAR = "oceanStar"
 
 # 千炮游戏模式
-GOLDEN_COIN = 0                 # 金币模式
-GOLDEN_RING = 1                 # 金环模式
+GOLDEN_COIN = 0     # 金币模式
+GOLDEN_RING = 1     # 金环模式
 
 # 千炮游戏模式列表
 MULTIPLE_MODES_LIST = [GOLDEN_COIN, GOLDEN_RING]
 
 # 游戏玩法
-CLASSIC_MODE = 0                # 经典玩法
-MULTIPLE_MODE = 1               # 千炮玩法
+CLASSIC_MODE = 0        # 经典玩法
+MULTIPLE_MODE = 1       # 千炮玩法
 
 # 游戏玩法列表
 GAME_MODES = [CLASSIC_MODE, MULTIPLE_MODE]
+
+# 新手引导步骤
+NEWBIE_GUIDE_GUN_UP = 1003      # 升级
+NEWBIE_GUIDE_LOCK = 1004        # 锁定
+NEWBIE_GUIDE_FREEZE = 1005      # 冰冻
+NEWBIE_GUIDE_MISSILE = 1006     # 合金弹头
 
 # 游戏配置数据
 defaultIntClientId = 0
@@ -377,8 +400,12 @@ dailyQuestRewardConf = {}
 dailyQuestRewardFinishedStars = {}
 expressionConf = {}
 probabilityConf = {}
+probabilityConf_m = {}
+terrorFishConf = {}
+terrorFishConf_m = {}
 dynamicOddsConf = {}
 lotteryPoolConf = {}
+ringLotteryPoolConf = {}
 giftConf = {}
 giftAbcTestConf = {}
 activityConf = {}
@@ -401,7 +428,6 @@ gunTypeConf = {}
 gunTypeConf_m = {}
 gunLevelConf = {}
 gunLevelConf_m = {}
-gunMultipleConf = {}
 tableTaskConf = {}
 inviteTaskConf = {}
 rechargePoolConf = {}
@@ -433,7 +459,6 @@ superEggsConf = {}
 supplyBoxConf = {}
 grandPrixConf = {}
 festivalTurntableConf = {}
-grandPrixPrizeWheelConf = {}
 superbossExchangeConf = {}
 superbossMinigameConf = {}
 superbossCommonConf = {}
@@ -442,7 +467,6 @@ poseidonConf = {}
 bigPrizeConf = {}
 compActConf = {}
 newbie7DaysGiftConf = {}
-lotteryTicketConf = {}
 passCardConf = {}
 skillCompenConf = {}
 abTestConf = {}
@@ -452,6 +476,9 @@ miniGameLevelMap = {}
 luckyTreeConf = {}
 superbossPowerConf = {}
 levelPrizeWheelConf = {}
+timePointMatchSkillConf = {}
+autofillFishConf_m = {}
+tideTaskConf = {}
 
 
 def getGameConf(key, defaultValue=None, intClientidNum=0):
@@ -580,7 +607,7 @@ def getSkillGradeConf(skillId, level, skillMode):
     """
     global skillGradeConf, skillGradeConf_m
     if skillMode == MULTIPLE_MODE:
-        skillGradeConf_m.get(str(skillId), {}).get(str(level), {})
+        return skillGradeConf_m.get(str(skillId), {}).get(str(level), {})
     return skillGradeConf.get(str(skillId), {}).get(str(level), {})
 
 
@@ -851,7 +878,7 @@ def getFishConf(fishType, typeName, multiple=1):
     if typeName in [FISH_TIME_MATCH, FISH_FIGHT, FISH_TIME_POINT_MATCH]:    # 回馈赛渔场、渔友竞技渔场、定时积分赛渔场
         return getMatchFishConf(fishType)
     else:
-        conf = fishConf_m.get(str(fishType), {}) if fishType == FISH_MULTIPLE else fishConf.get(str(fishType), {})
+        conf = fishConf_m.get(str(fishType), {}) if typeName != FISH_FRIEND else fishConf.get(str(fishType), {})
         if multiple != 1 and conf.get("type", 0) in ITEM_FISH_TYPE:
             conf = rwcopy(conf)
             conf["probb1"] /= multiple
@@ -965,129 +992,359 @@ def getMinWeaponId():
     return minWeaponId
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def loadCommonConf():
+def loadTimeLimitedStoreConf():
     """
-    加载通用配置
+    加载限时商城
     """
-    global commonConf
-    commonConf = rocopy((getGameConf("common")))
+    global timeLimitedStoreConf
+    timeLimitedStoreConf = rocopy(getGameConf("timeLimitedStore"))
 
 
-def getCommonValueByKey(key_, default=0):
+def getTimeLimitedStoreConf():
     """
-    获取通用数据
+    获取限时商城配置
     """
-    global commonConf
-    return commonConf.get(key_, default)
+    global timeLimitedStoreConf
+    return timeLimitedStoreConf
 
 
-def loadRankRewardConf():
+def loadExchangeStoreConf():
     """
-    加载排行榜配置
+    加载兑换商城
     """
-    global rankRewardConf
-    rankRewardConf = rocopy(getGameConf("rankReward"))
+    global exchangeStoreConf
+    exchangeStoreConf = rocopy(getGameConf("exchangeStore"))
 
 
-def getAllRankConfs():
+def getExchangeStoreConf():
     """
-    获取排行榜配置
+    获取兑换商城配置
     """
-    global rankRewardConf
-    return rankRewardConf
+    global exchangeStoreConf
+    return exchangeStoreConf
 
 
-def getRankRewardConf(rankType):
+def loadStoreConf(intClientId=0):
     """
-    获取排行榜配置
+    加载默认商店配置
     """
-    global rankRewardConf
-    return rankRewardConf.get("ranks", {}).get(str(rankType), {})
+    global storeConf
+    _conf = getGameConf("store", intClientidNum=intClientId)
+    storeConf[intClientId] = rocopy(generateStoreConf(_conf)) if _conf else {}
 
 
-def loadSpecialItemConf():
+def generateStoreConf(conf):
     """
-    加载特殊物品配置
+    生成clientId对应的商店配置
     """
-    global specialItemConf
-    specialItemConf = rocopy(getGameConf("specialItem"))
+    coinStoreConfTmp = conf.get("coinStore", {}).get("items", {})
+    coinStoreConf = OrderedDict(sorted(coinStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    diamondStoreConfTmp = conf.get("diamondStore", {}).get("items", {})
+    diamondStoreConf = OrderedDict(sorted(diamondStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    pearlStoreConfTmp = conf.get("pearlStore", {})
+    pearlStoreConf = OrderedDict(sorted(pearlStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    itemStoreConfTmp = conf.get("itemStore", {}).get("items", {})
+    itemStoreConf = OrderedDict(sorted(itemStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    chestStoreConfTmp = conf.get("chestStore").get("items")
+    chestStoreConf = OrderedDict()
+
+    chestStoreConf["items"] = OrderedDict(sorted(chestStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+    chestStoreConf["ads"] = conf.get("chestStore").get("ads")
+
+    couponStoreConfTmp = conf.get("couponStore", {}).get("items", {})
+    couponStoreConf = OrderedDict(sorted(couponStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    gunSkinStoreConfTmp = conf.get("gunSkinStore", {})
+    gunSkinStoreConf = OrderedDict(sorted(gunSkinStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+
+    bulletStoreConfTmp = conf.get("bulletStore", {})
+    bulletStoreConf = OrderedDict()
+    for platform, _conf in bulletStoreConfTmp.iteritems():
+        _conf = OrderedDict(sorted(_conf.iteritems(), key=lambda d: d[1]["order"]))
+        bulletStoreConf[platform] = _conf
+
+    # 处理热卖商城商品配置.
+    hotStoreConfTmp = conf.get("hotStore", {}).get("items", {})
+    hotStoreConfTmp = OrderedDict(sorted(hotStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
+    hotStoreConf = OrderedDict()
+    hotStoreConf["items"] = OrderedDict()
+    for productId, v in hotStoreConfTmp.iteritems():
+        if v.get("pt") == "coin":
+            product = coinStoreConf.get(str(productId))
+        elif v.get("pt") == "diamondStore":
+            product = diamondStoreConf.get(str(productId))
+        elif v.get("pt") == "chestStore":
+            product = chestStoreConf["items"].get(str(productId))
+        elif v.get("pt") == "itemStore":
+            product = itemStoreConf.get(str(productId))
+        else:
+            product = None
+        if product:
+            productConf = deepcopy(product)
+            productConf["pt"] = v["pt"]
+            productConf["extendData"].update(v.get("extendData", {}))
+            productConf["limitCond"].update(v.get("limitCond", {}))
+            hotStoreConf["items"][str(productId)] = productConf
+    hotStoreConf["shop"] = conf.get("hotStore", {}).get("shop", {})
+
+    generateConf = OrderedDict()
+    generateConf["coinStore"] = {}                                          # 金币商店商品
+    generateConf["diamondStore"] = {}
+    generateConf["itemStore"] = {}
+    generateConf["chestStore"] = {}
+    generateConf["couponStore"] = {}
+    generateConf["coinStore"].setdefault("items", coinStoreConf)
+    generateConf["diamondStore"].setdefault("items", diamondStoreConf)
+    generateConf["pearlStore"] = pearlStoreConf
+    generateConf["itemStore"].setdefault("items", itemStoreConf)
+    generateConf["chestStore"] = chestStoreConf
+    generateConf["couponStore"].setdefault("items", couponStoreConf)
+    generateConf["gunSkinStore"] = gunSkinStoreConf
+    generateConf["bulletStore"] = bulletStoreConf
+    generateConf["hotStore"] = hotStoreConf
+    return generateConf
 
 
-def getSpecialItemConf():
+def getStoreConf(clientId=None):
     """
-    获取特殊物品配置
+    获取clientId对应的商店配置
     """
-    global specialItemConf
-    return specialItemConf
+    global storeConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if storeConf.get(intClientId) is None:
+        loadStoreConf(intClientId)
+    if storeConf.get(intClientId):
+        return storeConf[intClientId]
+    return storeConf[defaultIntClientId]
 
 
-def loadMultiLangTextConf():
+def loadUlevelConf():
     """
-    加载多语言文本
+    加载用户等级配置
     """
-    global multiLangTextConf
-    multiLangTextConf = rocopy(getGameConf("multiLangText"))
+    global ulevelConf
+    ulevelConf = rocopy(getGameConf("ulevel"))
 
 
-def getMultiLangTextConf(id, lang="zh"):
+def getUlevelNum():
     """
-    获取多语言文本
-    getMultiLangTextConf(?!.*?lang).*$
+    获取用户最大等级
     """
-    global multiLangTextConf
-    conf = multiLangTextConf.get(id, {})
-    if not conf:
-        ftlog.error("getMultiLangTextConf error", id)
-    return conf.get(lang, "")
+    global ulevelConf
+    return len(ulevelConf)
 
 
-def getIncrPearlDropRatio(userId):
+def getUlevel(levelId):
     """
-    获取可以增加的珍珠额外掉率
+    获取用户等级配置
     """
-    global specialItemConf
-    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
-    ratio = 0.
-    for k, v in specialItemConf.iteritems():
-        if v.get("incrPearlDropRate", 0):
-            item = userBag.getItemByKindId(int(k))
-            if item and not item.isDied(int(time.time())):
-                ratio += v["incrPearlDropRate"]
-    return ratio
+    global ulevelConf
+    return ulevelConf.get(str(levelId), {})
 
 
-def getIncrCrystalDropRatio(userId):
+def loadUserLevelConf():
     """
-    获取可以增加的水晶额外掉率
+    加载用户等级配置
     """
-    global specialItemConf
-    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
-    ratio = 0.
-    for k, v in specialItemConf.iteritems():
-        if v.get("incrCrystalDropRate", 0):
-            item = userBag.getItemByKindId(int(k))
-            if item and not item.isDied(int(time.time())):
-                ratio += v["incrCrystalDropRate"]
-    return ratio
+    global userLevelConf
+    userLevelConf = rocopy(getGameConf("userLevel"))
+
+
+def getUserLevelConf():
+    """
+    获取用户等级配置
+    """
+    global userLevelConf
+    return userLevelConf
+
+
+def loadMainQuestConf(intClientId=0):
+    """
+    加载主线任务配置
+    """
+    global mainQuestConf
+    _conf = getGameConf("mainQuest", intClientidNum=intClientId)
+    if _conf:
+        tasks = OrderedDict(sorted(_conf.get("tasks", {}).iteritems()))
+        sections = OrderedDict(sorted(_conf.get("sections", {}).iteritems()))
+        _mainQuestConf = OrderedDict()
+        _mainQuestConf["tasks"] = rocopy(tasks)
+        _mainQuestConf["sections"] = rocopy(sections)
+        mainQuestConf[intClientId] = rocopy(_mainQuestConf)
+    else:
+        mainQuestConf[intClientId] = {}
+
+
+def _getMainQuestTaskConfByClientId(clientId):
+    """
+    获取clientId对应的主线任务中章节任务配置
+    """
+    global mainQuestConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if mainQuestConf.get(intClientId) is None:
+        loadMainQuestConf(intClientId)
+    if mainQuestConf.get(intClientId):
+        return mainQuestConf[intClientId]
+    return mainQuestConf[defaultIntClientId]
+
+
+def getMainQuestTaskConf(clientId, taskId=None):
+    """
+    获取主线任务中章节任务配置
+    """
+    _mainQuestConf = _getMainQuestTaskConfByClientId(clientId)
+    if taskId is None:
+        return _mainQuestConf.get("tasks", {})
+    return _mainQuestConf.get("tasks", {}).get(str(taskId), {})
+
+
+def getMainQuestTasksConfByType(clientId, questType):
+    """
+    获取主线任务中指定任务类型的所有任务配置
+    """
+    _mainQuestConf = _getMainQuestTaskConfByClientId(clientId)
+    tasksConf = []
+    for _, _taskConf in _mainQuestConf.get("tasks", {}).iteritems():
+        if _taskConf["type"] == questType:
+            tasksConf.append(_taskConf)
+    return tasksConf
+
+
+def getMainQuestSectionConf(clientId, sectionId=None):
+    """
+    获取主线任务中章节配置
+    """
+    _mainQuestConf = _getMainQuestTaskConfByClientId(clientId)
+    if sectionId is None:
+        return _mainQuestConf.get("sections", {})
+    return _mainQuestConf.get("sections", {}).get(str(sectionId), {})
+
+
+def loadDailyQuestConf():
+    """
+    加载每日任务配置
+    """
+    global dailyQuestConf
+    dailyQuestConf = rocopy(getGameConf("dailyQuest"))
+    global dailyQuestsByTypeConf
+    dailyQuestsByTypeConf = {}
+    for _, dailyQuest in dailyQuestConf.get("questData", {}).iteritems():
+        dailyQuestsByTypeConf.setdefault(dailyQuest.get("taskType"), []).append(rwcopy(dailyQuest))
+
+
+def getDailyQuestConf(taskId=None):
+    """
+    获取每日任务配置
+    """
+    global dailyQuestConf
+    if taskId is None:
+        return dailyQuestConf.get("questData", {})
+    return dailyQuestConf.get("questData", {}).get(str(taskId), {})
+
+
+def getDailyQuestGroupOrder():
+    """
+    获取每日任务分组排序
+    """
+    global dailyQuestConf
+    return dailyQuestConf.get("questOrder", [])
+
+
+def getDailyQuestConfsByType(taskType):
+    """
+    获取该任务类型下的所有每日任务
+    """
+    global dailyQuestsByTypeConf
+    return dailyQuestsByTypeConf.get(taskType, [])
+
+
+def getDailyQuestRefreshConf():
+    """
+    获取每日任务刷新数据
+    """
+    global dailyQuestConf
+    return dailyQuestConf.get("refreshData", {})
+
+
+def loadDailyQuestRewardConf():
+    """
+    加载每日任务奖励配置
+    """
+    global dailyQuestRewardConf, dailyQuestRewardFinishedStars
+    rewardConf = getGameConf("dailyQuestReward").values()[-1]
+    for k, v in rewardConf.iteritems():
+        dailyQuestRewardFinishedStars.setdefault(v.get("type"), {})
+        stars = json.loads(v.get("finishedStar", "[0, 0]"))
+        dailyQuestRewardFinishedStars[v.get("type")].setdefault(0, []).append(stars[0])
+        dailyQuestRewardFinishedStars[v.get("type")].setdefault(1, []).append(stars[1])
+    for k in dailyQuestRewardFinishedStars.keys():
+        for k1 in dailyQuestRewardFinishedStars[k].keys():
+            dailyQuestRewardFinishedStars[k][k1].sort()
+
+    dailyQuestRewardConf = {}
+    for key, val in getGameConf("dailyQuestReward").iteritems():
+        dailyQuestRewardConf[key] = {}
+        for k1, v1 in val.iteritems():
+            k1 = json.loads(k1)
+            dailyQuestRewardConf[key].setdefault(0, {})
+            dailyQuestRewardConf[key][0][str(k1[0])] = rwcopy(v1)
+            dailyQuestRewardConf[key][0][str(k1[0])]["finishedStar"] = int(k1[0])
+            dailyQuestRewardConf[key].setdefault(1, {})
+            dailyQuestRewardConf[key][1][str(k1[1])] = rwcopy(v1)
+            dailyQuestRewardConf[key][1][str(k1[1])]["finishedStar"] = int(k1[1])
+    if ftlog.is_debug():
+        ftlog.debug("loadDailyQuestRewardConf", dailyQuestRewardFinishedStars, dailyQuestRewardConf)
+
+
+def getDailyQuestRewardConf(activeLv=None, all=True):
+    """
+    获取每日任务奖励配置
+    """
+    global dailyQuestRewardConf
+    if activeLv:
+        if all:
+            return dailyQuestRewardConf.get(str(activeLv), {}).get(1, {})
+        else:
+            return dailyQuestRewardConf.get(str(activeLv), {}).get(0, {})
+    else:
+        return dailyQuestRewardConf
+
+
+def getDailyQuestRewardFinishedStars(type, all=True):
+    """
+    获取每日任务阶段奖励对应星星数
+    """
+    global dailyQuestRewardFinishedStars
+    if all:
+        finishedStars = dailyQuestRewardFinishedStars.get(type).get(1, [])
+    else:
+        finishedStars = dailyQuestRewardFinishedStars.get(type).get(0, [])
+    if ftlog.is_debug():
+        ftlog.debug("getDailyQuestRewardFinishedStars", type, all, finishedStars)
+    return finishedStars
+
+
+def loadExpressionConf():
+    """
+    加载表情配置
+    """
+    global expressionConf
+    expressionConf = rocopy(getGameConf("expression"))
+
+
+def getExpressionConf(bigRoomId):
+    """
+    获取表情配置
+    """
+    global expressionConf
+    conf = expressionConf.get("rooms", {}).get(str(bigRoomId), None)
+    if conf:
+        return expressionConf.get("templates", {}).get(conf, {})
+    return {}
 
 
 def loadProbabilityConf():
@@ -1098,6 +1355,14 @@ def loadProbabilityConf():
     probabilityConf = rocopy(getGameConf("probability"))
 
 
+def loadProbabilityConf_m():
+    """
+    加载概率配置
+    """
+    global probabilityConf_m
+    probabilityConf_m = rocopy(getGameConf("probability_m"))
+
+
 def getCouponFishConf(fishPool):
     """
     获取奖券鱼配置
@@ -1106,20 +1371,24 @@ def getCouponFishConf(fishPool):
     return probabilityConf.get("couponFish", {}).get(str(fishPool), {})
 
 
-def getMultipleFishConf(fishPool):
+def getMultipleFishConf(fishPool, mode=CLASSIC_MODE):
     """
     获取倍率鱼配置
     """
-    global probabilityConf
-    return probabilityConf.get("multipleFish", {}).get(str(fishPool), [])
+    global probabilityConf, probabilityConf_m
+    if mode == CLASSIC_MODE:
+        return probabilityConf.get("multipleFish", {}).get(str(fishPool), [])
+    return probabilityConf_m.get("multipleFish", {}).get(str(fishPool), [])
 
 
-def getBossFishConf(fishPool):
+def getBossFishConf(fishPool, mode=CLASSIC_MODE):
     """
     获取Boss鱼配置
     """
-    global probabilityConf
-    return probabilityConf.get("bossFish", {}).get(str(fishPool), [])
+    global probabilityConf, probabilityConf_m
+    if mode == CLASSIC_MODE:
+        return probabilityConf.get("bossFish", {}).get(str(fishPool), [])
+    return probabilityConf_m.get("bossFish", {}).get(str(fishPool), [])
 
 
 def getChestFishConf(fishPool):
@@ -1154,12 +1423,14 @@ def getHitBossConf():
     return probabilityConf.get("hitBoss", [])
 
 
-def getBufferFishConf(fishPool):
+def getBufferFishConf(fishPool, mode=CLASSIC_MODE):
     """
     获取Buffer鱼配置
     """
-    global probabilityConf
-    return probabilityConf.get("bufferFish", {}).get(str(fishPool), [])
+    global probabilityConf, probabilityConf_m
+    if mode == CLASSIC_MODE:
+        return probabilityConf.get("bufferFish", {}).get(str(fishPool), [])
+    return probabilityConf_m.get("bufferFish", {}).get(str(fishPool), [])
 
 
 def getHippoFishConf(fishPool):
@@ -1170,20 +1441,47 @@ def getHippoFishConf(fishPool):
     return probabilityConf.get("hippoFish", {}).get(str(fishPool), [])
 
 
-def getTerrorFishConf(fishPool):
-    """
-    获取恐怖鱼配置
-    """
-    global probabilityConf
-    return probabilityConf.get("terrorFish", {}).get(str(fishPool), [])
-
-
 def getAutofillFishConf(fishPool):
     """
     获取autofill鱼配置
     """
     global probabilityConf
     return probabilityConf.get("autofillFish", {}).get(str(fishPool), [])
+
+
+def getUserCouponFishConf(fishPool):
+    """
+    获取个人可见奖券鱼配置
+    """
+    global probabilityConf
+    return probabilityConf.get("userCouponFish", {}).get(str(fishPool), {})
+
+
+def loadTerrorFishConf():
+    """
+    加载特殊鱼
+    """
+    global terrorFishConf
+    terrorFishConf = rocopy(getGameConf("terrorFish"))
+
+
+def loadTerrorFishConf_m():
+    """
+    加载特殊鱼
+    """
+    global terrorFishConf_m
+    terrorFishConf_m = rocopy(getGameConf("terrorFish_m"))
+
+
+def getTerrorFishConf(fishPool, mode=CLASSIC_MODE):
+    """
+    获取恐怖鱼配置
+    """
+    global terrorFishConf, terrorFishConf_m
+    if mode == CLASSIC_MODE:
+        return terrorFishConf.get("terrorFish", {}).get(str(fishPool), [])
+    else:
+        return terrorFishConf_m.get("terrorFish_m", {}).get(str(fishPool), [])
 
 
 def loadAutofillFishConf_m():
@@ -1202,14 +1500,6 @@ def getAutofillFishConf_m(mode, fishPool):
     return autofillFishConf_m.get(mode, {}).get(str(fishPool), {})
 
 
-def getUserCouponFishConf(fishPool):
-    """
-    获取个人可见奖券鱼配置
-    """
-    global probabilityConf
-    return probabilityConf.get("userCouponFish", {}).get(str(fishPool), {})
-
-
 def loadDynamicOddsConf():
     """
     加载动态概率配置
@@ -1226,19 +1516,188 @@ def getDynamicOddsConf(fishPool):
     return dynamicOddsConf.get(str(fishPool), {})
 
 
+def loadLotteryPoolConf():
+    """
+    加载普通渔场金币奖池配置
+    """
+    global lotteryPoolConf
+    lotteryPoolConf = rocopy(getGameConf("lotteryPool"))
+
+
+def getLotteryPoolConf(fishPool):
+    """
+    获取普通渔场金币奖池配置
+    """
+    global lotteryPoolConf
+    return lotteryPoolConf.get(str(fishPool), {})
+
+def loadRingLotteryPoolConf():
+    """
+    加载普通渔场金币奖池配置
+    """
+    global ringLotteryPoolConf
+    ringLotteryPoolConf = rocopy(getGameConf("ringLotteryPool"))
+
+def getRingLotteryPoolConf(fishPool):
+    """
+    获取普通渔场金环奖池配置
+    """
+    global ringLotteryPoolConf
+    return ringLotteryPoolConf.get(str(fishPool), {})
+
+
+def loadGiftConf(intClientId=0):
+    """
+    加载所有礼包配置
+    """
+    global giftConf
+    _conf = getGameConf("gift", intClientidNum=intClientId)
+    giftConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def _getGiftConfByClientId(clientId):
+    """
+    获取clientId对应的礼包配置
+    """
+    global giftConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if giftConf.get(intClientId) is None:
+        loadGiftConf(intClientId)
+    if giftConf.get(intClientId):
+        return giftConf[intClientId]
+    return giftConf[defaultIntClientId]
+
+
+def getGiftConf(clientId, giftId=None):
+    """
+    获取礼包配置
+    """
+    _giftConf = _getGiftConfByClientId(clientId)
+    if giftId is None:
+        return _giftConf.get("gift", {})
+    return _giftConf.get("gift", {}).get(str(giftId), {})
+
+
+def loadGiftAbcTestConf(intClientId=0):
+    """
+    加载礼包abc测试配置
+    """
+    global giftAbcTestConf
+    _conf = getGameConf("giftAbcTest", intClientidNum=intClientId)
+    giftAbcTestConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def getGiftAbcTestConf(clientId):
+    """
+    获取礼包abc测试配置
+    """
+    global giftAbcTestConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if giftAbcTestConf.get(intClientId) is None:
+        loadGiftAbcTestConf(intClientId)
+    if giftAbcTestConf.get(intClientId):
+        return giftAbcTestConf[intClientId]
+    return giftAbcTestConf[defaultIntClientId]
 
 
 
+def getLimitTimeGiftConf(clientId, fishPool):
+    """
+    加载限时礼包配置
+    """
+    _giftConf = _getGiftConfByClientId(clientId)
+    for giftId, gift in _giftConf.get("gift", {}).iteritems():
+        if gift.get("fishPool") == fishPool and gift.get("giftType") == 1:
+            return gift
+    return None
 
 
+def getGiftListConf(clientId, giftType):
+    """
+    获取礼包种类列表配置
+    """
+    _giftConf = _getGiftConfByClientId(clientId)
+    gifts = []
+    for giftId in sorted(_giftConf.get("gift", {}).keys()):
+        if _giftConf.get("gift", {}).get(giftId).get("giftType") == giftType:
+            gifts.append(int(giftId))
+    return gifts
 
 
+def getDailyGiftConf(clientId):
+    """
+    获取每日礼包配置
+    """
+    _giftConf = _getGiftConfByClientId(clientId)
+    return _giftConf.get("dailyGift", {})
 
 
+def fromStrToJson(strInfo):
+    try:
+        jsStr = json.loads(strInfo)
+    except:
+        jsStr = strInfo
+    return jsStr
 
 
+def loadActivityConf():
+    """
+    加载活动配置
+    """
+    from newfish.entity.fishactivity.fish_activity import AcTableTypes
+    global activityConf
+    _activityConf = getGameConf("activity")
+    activityInfoConf = _activityConf.get("activityInfo", {})
+    for acInfo in activityInfoConf.values():
+        acInfo["reward"] = fromStrToJson(acInfo.get("reward", ""))
+        if "task" in acInfo:
+            for taskInfo in acInfo.get("task", {}).values():
+                taskInfo["value"] = fromStrToJson(taskInfo.get("value", ""))
+                taskInfo["reward"] = fromStrToJson(taskInfo.get("reward", ""))
+                taskInfo["frontTasks"] = fromStrToJson(taskInfo.get("frontTasks", ""))
+                if taskInfo.get("spareReward"):
+                    taskInfo["spareReward"] = fromStrToJson(taskInfo.get("spareReward", ""))
+                if taskInfo["type"] in AcTableTypes and not acInfo.get("hasTableTask", False):
+                    acInfo["hasTableTask"] = True
+    activityConf = rocopy(_activityConf)
+    if gdata.serverType() == gdata.SRV_TYPE_UTIL:
+        FTLoopTimer(300, 0, checkActivityItemConf).start()
 
 
+def getActivityConfig():
+    """
+    获取所有活动配置
+    """
+    global activityConf
+    return activityConf.get("activityInfo", {})
+
+
+def getNoticeConf(noticeId=None):
+    """
+    获取公告配置
+    """
+    global activityConf
+    if noticeId:
+        return activityConf.get("notice", {}).get(str(noticeId))
+    else:
+        return activityConf.get("notice", {})
+
+
+def getActivityTemplateByClientIdNum(clientIdNum, lang):
+    """
+    获取ClientId对应活动模板
+    """
+    global activityConf
+    clientInfos = activityConf.get("activityClient", {}).get(lang, {})
+    return clientInfos.get(str(clientIdNum), 1)
+
+
+def getActivityConfigById(acId):
+    """
+    获取活动配置
+    """
+    global activityConf
+    return activityConf.get("activityInfo", {}).get(str(acId), {})
 
 
 def loadCatchDropConf():
@@ -1259,69 +1718,81 @@ def getCatchDropConf(fpMultiple, fishType, uid):
     _conf = _getCatchDropGroupConf(fpMultiple, fishType)
     if _conf:
         kindId = _getCatchDropKindId(int(_conf["dropGroupId"]), uid)
-    pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def loadPrizeWheelConf():
-    """
-    加载渔场轮盘配置
-    """
-    global prizeWheelConf
-    prizeWheelConf = rocopy(getGameConf("prizeWheel"))
-
-
-def getPrizeWheelConf():
-    """
-    获取渔场轮盘配置
-    """
-    global prizeWheelConf
-    return prizeWheelConf
-
-
-def loadGrandPrixPrizeWheelConf():
-    """
-    加载渔场轮盘配置
-    """
-    global grandPrixPrizeWheelConf
-    grandPrixPrizeWheelConf = rocopy(getGameConf("grandPrixPrizeWheel"))
-
-
-def getGrandPrixPrizeWheelConf():
-    """
-    获取渔场轮盘配置
-    """
-    global grandPrixPrizeWheelConf
-    return grandPrixPrizeWheelConf
+        if kindId:
+            dropConf = {}
+            dropConf["kindId"] = kindId
+            dropConf["min"] = _conf["min"]
+            dropConf["max"] = _conf["max"]
+            dropConf["probability"] = _conf["probability"]
+    if ftlog.is_debug():
+        ftlog.debug("getCatchDropConf===>", fpMultiple, fishType, uid, dropConf)
+    return dropConf
 
 
 def _getCatchDropKindId(groupId, uid):
     """
     根据玩家uid和掉落组返回掉落kindId
     """
-    pass
+    groupId = str(groupId)
+    kindId = None
+    global catchDropConf
+    if catchDropConf.get("dropGroup"):
+        dropList = catchDropConf["dropGroup"].get(groupId, [])
+        idx = int(uid) % 2
+        if len(dropList) > idx:
+            total = 0
+            for item in dropList[idx]:
+                total += item["poss"]
+            ret = random.randint(1, total)
+            old_ret = ret
+            for item in dropList[idx]:
+                if item["poss"] >= ret:
+                    kindId = int(item["kindId"])
+                    break
+                else:
+                    ret -= item["poss"]
+            if ftlog.is_debug():
+                ftlog.debug("_getCatchDropKindId===>", groupId, uid, dropList[idx], idx, total, old_ret, kindId)
+    return kindId
+
 
 def _getCatchDropGroupConf(fpMultiple, fishType):
     """
     根据渔场和捕到的鱼的类型获得掉落组
     """
-    pass
+    global catchDropConf
+    fpList = catchDropConf.get("fishDrop").keys()
+    fpList = sorted([int(val) for val in fpList])
+    finalFp = fpMultiple
+    for val in fpList:
+        if fpMultiple >= val:
+            finalFp = val
+    finalFp = str(finalFp)
+    fishType = str(fishType)
+    dropConf = None
+    if catchDropConf.get("fishDrop") and catchDropConf["fishDrop"].get(finalFp) \
+            and catchDropConf["fishDrop"][finalFp].get(fishType):
+        dropGroupList = catchDropConf["fishDrop"][finalFp][fishType]
+        if len(dropGroupList) > 1:
+            total = 0
+            for item in dropGroupList:
+                total += item["dropGroupPoss"]
+            ret = random.randint(1, total)
+            old_ret = ret
+            for item in dropGroupList:
+                if item["dropGroupPoss"] >= ret:
+                    dropConf = item# rocopy(item)
+                    break
+                else:
+                    ret -= item["dropGroupPoss"]
+            if ftlog.is_debug():
+                ftlog.debug("_getCatchDropGroupId 2 ===>", fpMultiple, finalFp, fishType, total, old_ret, dropGroupList)
+        elif len(dropGroupList) == 1:
+            dropConf = dropGroupList[0]# rocopy(dropGroupList[0])
+    if ftlog.is_debug():
+        ftlog.debug("_getCatchDropGroupId===>", fpMultiple, finalFp, fishType, dropConf)
+    return dropConf
+
 
 def loadVipConf():
     """
@@ -1357,6 +1828,279 @@ def getFixedMultipleFishConf(fishPool):
     return fixedMultipleFishConf.get(str(fishPool), {})
 
 
+def loadCallMultipleFishConf():
+    """
+    加载召唤鱼配置
+    """
+    global callMultipleFishConf
+    callMultipleFishConf = rocopy(getGameConf("callMultipleFish"))
+
+
+def getCallMultipleFishConf(skillGrade, typeName, fishPool):
+    """
+    获取召唤鱼配置
+    """
+    global callMultipleFishConf
+    if typeName in [FISH_TIME_MATCH, FISH_TIME_POINT_MATCH]:
+        fishConf = rwcopy(callMultipleFishConf.get("match", {}).get(str(skillGrade), []))
+    else:
+        fishConf = rwcopy(callMultipleFishConf.get("normal", {}).get(str(skillGrade), []))
+    validFishList = callMultipleFishConf.get("validGroup", {}).get(str(fishPool), None)
+    # ftlog.debug("getCallMultipleFishConf 1", validFishList, fishConf, fishPool)
+    if validFishList is not None:
+        for fish in fishConf:
+            if fish["fishType"] not in validFishList:
+                fish["weight"] = 0
+    # ftlog.debug("getCallMultipleFishConf 2", validFishList, fishConf, fishPool)
+    return fishConf
+
+
+def loadMatchMultipleFishConf():
+    """
+    加载比赛倍率鱼配置
+    """
+    global matchMultipleFishConf
+    matchMultipleFishConf = rocopy(getGameConf("matchMultipleFish"))
+
+
+def getMatchMultipleFishConf(fishPool, luckyValue):
+    """
+    获取比赛倍率鱼配置
+    """
+    global matchMultipleFishConf
+    for d in matchMultipleFishConf.get(str(fishPool), []):
+        if luckyValue <= d["luckyValue"]:
+            if ftlog.is_debug():
+                ftlog.debug("getMatchMultipleFishConf->", luckyValue, d)
+            return d["multiples"]
+    return []
+
+
+def loadRankRewardConf():
+    """
+    加载排行榜配置
+    """
+    global rankRewardConf
+    rankRewardConf = rocopy(getGameConf("rankReward"))
+
+
+def getAllRankConfs():
+    """
+    获取排行榜配置
+    """
+    global rankRewardConf
+    return rankRewardConf
+
+
+def getRankRewardConf(rankType):
+    """
+    获取排行榜配置
+    """
+    global rankRewardConf
+    return rankRewardConf.get("ranks", {}).get(str(rankType), {})
+
+
+def loadBounsGameConf():
+    """
+    加载海星抽奖配置
+    """
+    global bonusGameConf
+    bonusGameConf = rocopy(getGameConf("fishBonusGame"))
+
+
+def loadStarfishRouletteConf():
+    """
+    加载海星转盘抽奖配置
+    """
+    global starfishRouletteConf
+    starfishRouletteConf = rocopy(getGameConf("starfishRoulette"))
+
+
+def getStarfishBonusConf():
+    """
+    获取海星抽奖配置
+    """
+    global bonusGameConf
+    starfishBonusConfig = bonusGameConf.get("starfishBonus", [])
+    starfishBonusConfig = sorted(starfishBonusConfig, key=lambda rewardInfo: rewardInfo["Id"])
+    return starfishBonusConfig
+
+
+def getStarfishRouletteConf():
+    """
+    获取海星转盘抽奖配置
+    """
+    global starfishRouletteConf
+    starfishConf = starfishRouletteConf.get("starfishRoulette", [])
+    starfishConf = sorted(starfishConf, key=lambda rewardInfo: rewardInfo["Id"])
+    return starfishConf
+
+
+def getStarfishRoulettePriceConf():
+    """
+    获取海星转盘价格配置
+    """
+    global starfishRouletteConf
+    priceConf = starfishRouletteConf.get("priceInfo", {})
+    return priceConf
+
+
+def getStarfishRouletteLevelConf():
+    """
+    获取海星转盘等级配置
+    """
+    global starfishRouletteConf
+    levelConf = starfishRouletteConf.get("rouletteLevel", [])
+    return levelConf
+
+
+def getStarfishRouletteUnlockConf():
+    """
+    获取海星转盘解锁等级配置
+    """
+    global starfishRouletteConf
+    unlockLevel = starfishRouletteConf.get("unlockLevel", 0)
+    return unlockLevel
+
+
+def getStarfishRouletteRuleConf():
+    """
+    获取海星转盘规则
+    """
+    global starfishRouletteConf
+    rule = starfishRouletteConf.get("rule", "")
+    return rule
+
+
+def getBonusConf(keyName, sortKey="weight"):
+    """
+    获取扭蛋抽奖配置
+    """
+    global bonusGameConf
+    gameTimeBonusConfig = bonusGameConf.get(str(keyName), [])
+    gameTimeBonusConfig = sorted(gameTimeBonusConfig, key=lambda bonusInfo: bonusInfo[sortKey])
+    return gameTimeBonusConfig
+
+
+def getBonusHashConf(keyName):
+    """
+    获取抽奖配置
+    """
+    global bonusGameConf
+    gameTimeBonusConfig = bonusGameConf.get(str(keyName), {})
+    return gameTimeBonusConfig
+
+
+def getEggsBonusDropConf():
+    """
+    获取扭蛋奖励列表配置
+    """
+    global bonusGameConf
+    return bonusGameConf.get("eggs_dropConf", {})
+
+
+def getEggsMinCoinRangeConf(kindId):
+    """
+    获取扭蛋最小值配置
+    """
+    global bonusGameConf
+    return bonusGameConf.get("eggs_minCoinRange", {}).get(str(kindId), [100, 100])
+
+
+def loadSurpassTargetConf():
+    """
+    加载比赛超越目标配置
+    """
+    global surpassTargetConf
+    surpassTargetConf = rocopy(getGameConf("surpassTarget"))
+
+
+def getSurpassTargetConf():
+    """
+    获取比赛超越目标配置
+    """
+    global surpassTargetConf
+    return surpassTargetConf
+
+
+def loadSpecialItemConf():
+    """
+    加载特殊物品配置
+    """
+    global specialItemConf
+    specialItemConf = rocopy(getGameConf("specialItem"))
+
+
+def getSpecialItemConf():
+    """
+    获取特殊物品配置
+    """
+    global specialItemConf
+    return specialItemConf
+
+
+def getIncrPearlDropRatio(userId):
+    """
+    获取可以增加的珍珠额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrPearlDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrPearlDropRate"]
+    return ratio
+
+
+def getIncrCrystalDropRatio(userId):
+    """
+    获取可以增加的水晶额外掉率
+    """
+    global specialItemConf
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    ratio = 0.
+    for k, v in specialItemConf.iteritems():
+        if v.get("incrCrystalDropRate", 0):
+            item = userBag.getItemByKindId(int(k))
+            if item and not item.isDied(int(time.time())):
+                ratio += v["incrCrystalDropRate"]
+    return ratio
+
+
+def loadAchievementConf():
+    """
+    加载荣耀任务配置
+    """
+    global achievementConf
+    achievementConf = rocopy(getGameConf("achievement"))
+
+
+def getAchievementConf():
+    """
+    获取荣耀任务配置
+    """
+    global achievementConf
+    return achievementConf
+
+
+def getAchievementTaskInfo(keyName):
+    """
+    获取荣耀任务信息
+    """
+    global achievementConf
+    return achievementConf.get("tasks", {}).get(keyName)
+
+
+def getAchievementLevelConfig(keyName):
+    """
+    获取荣耀任务信息
+    """
+    global achievementConf
+    return achievementConf.get("level", {}).get(str(keyName))
+
+
 def loadItemConf(intClientId=0):
     """
     加载道具配置
@@ -1375,7 +2119,7 @@ def _getItemConfByClientId(clientId):
     获取clientId对应的道具配置
     """
     global itemConf
-    intClientId = configure.clientIdToNumber((clientId) if clientId else defaultIntClientId)
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
     if itemConf.get(intClientId) is None:
         loadItemConf(intClientId)
     if itemConf.get(intClientId):
@@ -1391,6 +2135,24 @@ def getItemConf(clientId, kindId=None):
     if kindId is None:
         return _itemConf
     return rwcopy(_itemConf.get(str(kindId), {}))
+
+
+def loadHonorConf():
+    """
+    加载称号配置
+    """
+    global honorConf
+    honorConf = rocopy(getGameConf("honor"))
+
+
+def getHonorConf(honorId=None):
+    """
+    获取称号配置
+    """
+    global honorConf
+    if honorId is None:
+        return honorConf
+    return honorConf.get(str(honorId), {})
 
 
 def loadGunTypeConf(intClientId=0):
@@ -1479,73 +2241,86 @@ def getGunSkinConf(gunSkinId, clientId, mode):
     return typeConf.get(defaultIntClientId, {}).get("skin", {}).get(str(gunSkinId))
 
 
-def loadExpressionConf():
+def loadRobberyConf():
     """
-    加载表情配置
+    加载招财模式配置
     """
-    global expressionConf
-    expressionConf = rocopy(getGameConf("expression"))
+    global robberyConf
+    robberyConf = rocopy(getGameConf("robbery"))
 
 
-def getExpressionConf(bigRoomId):
+def getRobberyConf():
     """
-    获取表情配置
+    获取招财模式配置
     """
-    global expressionConf
-    conf = expressionConf.get("rooms", {}).get(str(bigRoomId), None)
-    if conf:
-        return expressionConf.get("templates", {}).get(conf, {})
-    return {}
+    global robberyConf
+    return robberyConf
+
+
+def loadCommonConf():
+    """
+    加载通用配置
+    """
+    global commonConf
+    commonConf = rocopy((getGameConf("common")))
+
+
+def getCommonValueByKey(key_, default=0):
+    """
+    获取通用数据
+    """
+    global commonConf
+    return commonConf.get(key_, default)
+
+
+def getIgnoreConf(key, clientId=""):
+    """
+    获取屏蔽数据
+    """
+    global commonConf
+    _confList = commonConf.get("ignoreConf", [])
+    for _conf in _confList:
+        if clientId in _conf.get("clientIds", []):
+            return _conf.get(key)
+    return None
 
 
 def isClientIgnoredConf(key, val, clientId=""):
-    pass
-
-
-def loadUlevelConf():
     """
-    加载用户等级配置
+    数据是否对客户端被屏蔽
     """
-    global ulevelConf
-    ulevelConf = rocopy(getGameConf("ulevel"))
+    _conf = getIgnoreConf(key, clientId)
+    if _conf is None:
+        return False
+    if isinstance(_conf, int):
+        return _conf == val
+    else:
+        return val in _conf
 
 
-def getUlevelNum():
+def loadPlayerBufferConf():
     """
-    获取用户最大等级
+    加载用户buffer配置
     """
-    global ulevelConf
-    return len(ulevelConf)
+    global playerBufferConf
+    playerBufferConf = rocopy(getGameConf("playerBuffer"))
 
 
-def getUlevel(levelId):
+def getPlayerBufferConf(bufferId):
     """
-    获取用户等级配置
+    获取buffer配置
     """
-    global ulevelConf
-    return ulevelConf.get(str(levelId), {})
+    global playerBufferConf
+    return playerBufferConf.get(str(bufferId), {})
 
 
-def loadUserLevelConf():
+def getAllBufferIds():
     """
-    加载用户等级配置
+    获取buffer配置
     """
-    global userLevelConf
-    userLevelConf = rocopy(getGameConf("userLevel"))
-
-
-def getUserLevelConf():
-    """
-    获取用户等级配置
-    """
-    global userLevelConf
-    return userLevelConf
-
-
-
-
-
-
+    global playerBufferConf
+    allKeys = playerBufferConf.keys()
+    return allKeys
 
 
 def loadRobotConf():
@@ -1584,20 +2359,13 @@ def loadGunLevelConf():
     """
     加载火炮等级配置
     """
-    global gunMultipleConf
-    gunMultipleConf = OrderedDict()
     global gunLevelConf
     gunLevelConfTmp = getGameConf("gunLevel")
     gunLevels = sorted(gunLevelConfTmp.iteritems(), key=lambda d: d[0])
     gunLevelConf = OrderedDict()
     for key, value in gunLevels:
         gunLevelConf[key] = value
-        unlockMultiple = value.get("unlockMultiple")    # 解锁倍率
-        if unlockMultiple and unlockMultiple not in gunMultipleConf:
-            gunMultipleConf[unlockMultiple] = int(key)
     gunLevelConf = rocopy(gunLevelConf)
-    gunMultipleConf = rocopy(gunMultipleConf)
-    # print "gunMultipleConf =", gunMultipleConf
 
 
 def loadGunLevelConf_m():
@@ -1668,12 +2436,210 @@ def getGunLevelKeysConf(mode):
         return sorted(map(int, gunLevelConf_m.keys()))
 
 
-def getGunMultipleConf():
+def loadTableTaskConf():
     """
-    返回火炮等级和解锁倍率配置
+    加载主线任务配置
     """
-    global gunMultipleConf
-    return gunMultipleConf
+    global tableTaskConf
+    tableTaskConf = rocopy(getGameConf("tableTask"))
+
+
+def getAllTableTaskIds(roomId):
+    """
+    加载主线任务配置
+    """
+    global tableTaskConf
+    idsConfs = tableTaskConf.get("roomTask", {}).get(str(roomId), {})
+    return idsConfs
+
+
+def getTableTaskConfById(taskId):
+    global tableTaskConf
+    return tableTaskConf.get("tasks", {}).get(str(taskId), {})
+
+
+def loadInviteTaskConf():
+    """
+    加载邀请奖励配置
+    """
+    global inviteTaskConf
+    inviteTaskConf = rocopy(getGameConf("inviteTask"))
+
+
+def getInviteTasks(actionType):
+    """
+    获取邀请任务数值
+    """
+    global inviteTaskConf
+    return inviteTaskConf.get("inviteTask", {}) if actionType == 0 else inviteTaskConf.get("recallTask", {})
+
+
+def getInviteTaskConf(taskId, actionType):
+    """
+    获取邀请任务数值
+    """
+    global inviteTaskConf
+    if actionType == 0:
+        return inviteTaskConf.get("inviteTask", {}).get(str(taskId))
+    return inviteTaskConf.get("recallTask", {}).get(str(taskId))
+
+
+def loadRechargePoolConf():
+    """
+    加载充值奖池配置
+    """
+    global rechargePoolConf
+    rechargePoolConf = rocopy(getGameConf("rechargePool"))
+
+
+def getRechargePoolConf(productId):
+    """
+    获取充值奖池配置
+    """
+    global rechargePoolConf
+    return rechargePoolConf.get(productId, {})
+
+
+def loadShareConf():
+    """
+    加载分享配置
+    """
+    global shareConf
+    shareConf = rocopy(getGameConf("share"))
+
+
+def getShareConf(shareId=None, typeId=None):
+    """
+    获取分享配置
+    """
+    global shareConf
+    if shareId:
+        return shareConf.get(str(shareId), {})
+    elif typeId:
+        for _, conf in shareConf.iteritems():
+            if conf["typeId"] == typeId:
+                return conf
+    return shareConf
+
+
+def loadFlyPigRewardConf():
+    """
+    加载金猪分享奖励配置
+    """
+    global flyPigRewardConf
+    flyPigRewardConf = rocopy(getGameConf("flyPigReward"))
+
+
+def getFlyPigRewardConf(fishPool):
+    """
+    获取金猪分享奖励配置
+    """
+    global flyPigRewardConf
+    return flyPigRewardConf.get(str(fishPool), [])
+
+
+def loadMultiLangTextConf():
+    """
+    加载多语言文本
+    """
+    global multiLangTextConf
+    multiLangTextConf = rocopy(getGameConf("multiLangText"))
+
+
+def getMultiLangTextConf(id, lang="zh"):
+    """
+    获取多语言文本
+    getMultiLangTextConf(?!.*?lang).*$
+    """
+    global multiLangTextConf
+    conf = multiLangTextConf.get(id, {})
+    if not conf:
+        ftlog.error("getMultiLangTextConf error", id)
+    return conf.get(lang, "")
+
+
+def loadReportFishCBConf():
+    """
+    加载上报捕鱼成本配置
+    """
+    global reportFishCBConf
+    reportFishCBConf = rocopy(getGameConf("reportFishCB"))
+
+
+def getReportFishCBConf(fishPool):
+    global reportFishCBConf
+    return reportFishCBConf.get(str(fishPool), {})
+
+
+def loadIdCardAreaConf():
+    """
+    加载身份证地区配置
+    """
+    global idCardAreaConf
+    idCardAreaConf = rocopy(getGameConf("idCard"))
+
+
+def getIdCardAreaConf(areaId):
+    global idCardAreaConf
+    return areaId in idCardAreaConf
+
+
+def loadGrandPrizeConf():
+    """
+    加载巨奖奖池配置
+    """
+    global grandPrizeConf
+    grandPrizeConf = rocopy(getGameConf("grandPrize"))
+
+
+def getGrandPrizeConf():
+    """
+    获取巨奖奖池配置
+    """
+    global grandPrizeConf
+    return grandPrizeConf
+
+
+def loadPiggyBankConf(intClientId=0):
+    """
+    加载存钱罐配置
+    """
+    global piggyBankConf
+    _conf = getGameConf("piggyBank", intClientidNum=intClientId)
+    piggyBankConf[intClientId] = rocopy(_conf) if _conf else {}
+
+
+def _getPiggyBankConfByClientId(clientId):
+    """
+    根据clientId找到对应存钱罐配置
+    """
+    global piggyBankConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if piggyBankConf.get(intClientId) is None:
+        loadPiggyBankConf(intClientId)
+    if piggyBankConf.get(intClientId):
+        return piggyBankConf[intClientId]
+    return piggyBankConf[defaultIntClientId]
+
+
+def getPiggyBankConf(clientId, vipLevel):
+    """
+    获取存钱罐配置
+    """
+    _piggyBankConf = _getPiggyBankConfByClientId(clientId)
+    return _piggyBankConf.get(str(vipLevel), {})
+
+
+def getPiggyBankProduct(clientId, productId):
+    """
+    获取存钱罐商品数据
+    """
+    _piggyBankConf = _getPiggyBankConfByClientId(clientId)
+    for _, v in _piggyBankConf.iteritems():
+        for _, v1 in v.iteritems():
+            if v1.get("productId", "") == productId:
+                return v1
+    return None
 
 
 def loadTreasureConf():
@@ -1698,37 +2664,256 @@ def getTreasureConf(kindId=None, effectType=None, level=None):
                 _conf = conf
                 break
     if kindId or effectType:
-        if level:
+        if level is not None:
             return _conf.get("levels", {}).get(str(level))
         return _conf
     return treasureConf
 
 
+def loadBuyTypeConf():
+    """
+    加载支付方式配置
+    """
+    global buyTypeConf
+    buyTypeConf = rocopy(getGameConf("buyType"))
 
 
+def isThirdBuyType(buyType):
+    """
+    是否为第三方渠道支付
+    """
+    return buyType in buyTypeConf.get("thirdBuyType", {})
 
 
+def getBuyTypeConf(buyType):
+    """
+    获取支付方式配置
+    """
+    global buyTypeConf
+    return buyTypeConf.get("defaultBuyType", {}).get(buyType) or \
+           buyTypeConf.get("thirdBuyType", {}).get(buyType)
 
 
+def loadLevelRewardsConf(intClientId=0):
+    """
+    加载等级奖励配置
+    """
+    global levelRewardsConf
+    _conf = getGameConf("levelRewards", intClientidNum=intClientId)
+    levelRewardsConf[intClientId] = rocopy(_conf) if _conf else {}
 
 
+def _getLevelRewardsConfByClientId(clientId):
+    """
+    获取clientId对应的等级奖励配置
+    """
+    global levelRewardsConf
+    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
+    if levelRewardsConf.get(intClientId) is None:
+        loadLevelRewardsConf(intClientId)
+    if levelRewardsConf.get(intClientId):
+        return levelRewardsConf[intClientId]
+    return levelRewardsConf[defaultIntClientId]
 
 
+def getLevelRewards(clientId, level=None):
+    """
+    获取等级奖励配置
+    """
+    _levelRewardsConf = _getLevelRewardsConfByClientId(clientId)
+    if level is None:
+        return _levelRewardsConf
+    return _levelRewardsConf.get(str(level), {})
 
 
+def loadUpdateVerRewardsConf():
+    """
+    加载更版奖励配置
+    """
+    global updateVerRewardsConf
+    updateVerRewardsConf = rocopy(getGameConf("updateVerRewards"))
 
 
+def getUpdateVerRewardsConf():
+    """
+    获取更版奖励配置
+    """
+    global updateVerRewardsConf
+    return updateVerRewardsConf
 
 
+def loadItemMonitorConf():
+    """
+    加载物品监测配置
+    """
+    global itemMonitorConf
+    itemMonitorConf = rocopy(getGameConf("itemMonitor"))
 
 
+def getItemMonitorConf():
+    """
+    获取物品监测配置
+    """
+    global itemMonitorConf
+    return itemMonitorConf
 
 
+def loadPrizeWheelConf():
+    """
+    加载渔场轮盘配置
+    """
+    global prizeWheelConf
+    prizeWheelConf = rocopy(getGameConf("prizeWheel"))
 
 
+def getPrizeWheelConf():
+    """
+    获取渔场轮盘配置
+    """
+    global prizeWheelConf
+    return prizeWheelConf
 
 
+def loadSlotMachineConf():
+    """
+    加载老虎机活动配置
+    """
+    global slotMachineConf
+    slotMachineConf = rocopy(getGameConf("slotMachine"))
 
+
+def getSlotMachineConf():
+    """
+    获取老虎机活动转盘抽奖配置
+    """
+    global slotMachineConf
+    slotMachinePropConf = slotMachineConf.get("slotmachine", [])
+    return slotMachinePropConf
+
+
+def getSlotMachineIntegralConf():
+    """
+    获取老虎机活动积分奖励配置
+    """
+    global slotMachineConf
+    slotMachineIntegralConf = slotMachineConf.get("integralrewards", [])
+    return slotMachineIntegralConf
+
+
+def getSlotMachineFreeTimeConf():
+    """
+    获取老虎机活动免费抽奖时间配置
+    """
+    global slotMachineConf
+    slotMachineFreeTimeConf = slotMachineConf.get("freetime", [])
+    return slotMachineFreeTimeConf
+
+
+def getSlotMachineMaxPlayTimeConf():
+    """
+    获取老虎机活动抽奖次数配置
+    """
+    global slotMachineConf
+    maxPlayTimes = slotMachineConf.get("maxPlayTimes", -1)
+    return maxPlayTimes
+
+
+def getSlotMachineOutProductIdConf():
+    """
+    获取老虎机活动不记录抽奖次数的充值商品配置
+    """
+    global slotMachineConf
+    outProductId = slotMachineConf.get("outProductId", [])
+    return outProductId
+
+
+def loadStatisPropConf():
+    """
+    加载需要统计上报BI的道具配置
+    """
+    global statisPropConf
+    statisPropConf = rocopy(getGameConf("statisProp"))
+
+
+def getStatisPropConf():
+    """
+    获取需要统计并上报BI的道具配置
+    """
+    global statisPropConf
+    statisBiPropConf = statisPropConf.get("statisPropId", [])
+    return statisBiPropConf
+
+
+def loadMoneyTreeConf():
+    """
+    加载摇钱树活动配置
+    """
+    global moneyTreeConf
+    moneyTreeConf = rocopy(getGameConf("moneyTree"))
+
+
+def getMoneyTreeConf(key_=None):
+    """
+    获取摇钱树活动配置
+    """
+    global moneyTreeConf
+    if key_ is None:
+        return moneyTreeConf
+    return rwcopy(moneyTreeConf.get(str(key_)))
+
+
+def loadCannedFishConf():
+    """
+    加载鱼罐厂活动配置
+    """
+    global cannedFishConf
+    cannedFishConf = rocopy(getGameConf("cannedFish"))
+
+
+def getCannedFishConf(key_=None):
+    """
+    获取鱼罐厂配置
+    """
+    global cannedFishConf
+    if key_ is None:
+        return cannedFishConf
+    return rwcopy(cannedFishConf.get(str(key_)))
+
+
+def getWelfareCan():
+    """
+    获取鱼罐厂(世界工厂)中的福利罐头配置
+    """
+    global cannedFishConf
+    fishCanConf = cannedFishConf.get("welfareCan", {})
+    return fishCanConf
+
+
+def getCanProp():
+    """
+    获取鱼罐厂制作罐头需要消耗的道具配置
+    """
+    global cannedFishConf
+    canPropConf = cannedFishConf.get("canProp", [])
+    return canPropConf
+
+
+def loadCreditStoreConf():
+    """
+    加载积分商城配置
+    """
+    global creditStoreConf
+    creditStoreConf = rocopy(getGameConf("creditStore"))
+
+
+def getCreditStoreConf(key_=None):
+    """
+    获取积分商城配置
+    """
+    global creditStoreConf
+    if key_ is None:
+        return creditStoreConf
+    return rwcopy(creditStoreConf.get(str(key_)))
 
 
 def loadLevelFundsConf(intClientId=0):
@@ -1979,28 +3164,6 @@ def getNewbie7DaysGiftConf():
     return newbie7DaysGiftConf
 
 
-def loadLotteryTicActConf(intClientId=0):
-    """
-    加载渔场红包券抽奖配置
-    """
-    global lotteryTicketConf
-    _conf = getGameConf("lotteryTicket", intClientidNum=intClientId)
-    lotteryTicketConf[intClientId] = rocopy(_conf) if _conf else {}
-
-
-def getLotteryTicActConf(clientId=None):
-    """
-    获取渔场红包券抽奖配置
-    """
-    global lotteryTicketConf
-    intClientId = configure.clientIdToNumber(clientId) if clientId else defaultIntClientId
-    if lotteryTicketConf.get(intClientId) is None:
-        loadLotteryTicActConf(intClientId)
-    if lotteryTicketConf.get(intClientId):
-        return lotteryTicketConf[intClientId]
-    return lotteryTicketConf[defaultIntClientId]
-
-
 def loadPassCardConf(intClientId=0):
     """
     加载通行证活动配置
@@ -2102,6 +3265,14 @@ def getMiniGameConf(miniGameId):
     return miniGameConf.get(miniGameId)
 
 
+def getMiniGameLevelIds(level):
+    """
+    获取小游戏等级配置（美人鱼的馈赠，宝箱）
+    """
+    global miniGameLevelMap
+    return miniGameLevelMap.get(level, [])
+
+
 def loadLuckyTreeConf():
     """
     加载免费金币摇钱树配置
@@ -2155,16 +3326,33 @@ def getLevelPrizeWheelConf():
     return levelPrizeWheelConf
 
 
-def getTimePointMatchSkillConf():
-    '''回馈赛的随机固定技能配置'''
+def loadTimePointMatchSkillConf():
+    """回馈赛的随机固定技能配置"""
     global timePointMatchSkillConf
     timePointMatchSkillConf = rocopy(getGameConf("timePointMatchSkill_m"))
+
+
+def getTimePointMatchSkillConf():
+    """获取回馈赛的随机固定技能配置"""
+    global timePointMatchSkillConf
+    return timePointMatchSkillConf
 
 
 def loadTideTask():
     """加载鱼潮任务"""
     global tideTaskConf
-    tideTaskConf = rocopy(getGameConf("tideTask"))
+    tideTaskConfTmp = getGameConf("tideTask")
+    tideTaskConf = {}
+    for key, value in tideTaskConfTmp.iteritems():
+        fishPool = value["fishPool"]
+        group = value["group"]
+        if fishPool not in tideTaskConf:
+            tideTaskConf[fishPool] = {}
+            tideTaskConf[fishPool][group] = value
+        else:
+            if group not in tideTaskConf[fishPool]:
+                tideTaskConf[fishPool][group] = value
+    tideTaskConf = rocopy(tideTaskConf)
 
 
 def getTideTask(key):
@@ -2209,8 +3397,10 @@ def initConfig():
     loadChestConf()                         # 加载宝箱配置
     loadChestDropConf()                     # 加载宝箱掉落配置
     loadProbabilityConf()                   # 加载概率配置
+    loadProbabilityConf_m()
     loadDynamicOddsConf()                   # 加载动态概率配置
     loadLotteryPoolConf()
+    loadRingLotteryPoolConf()
     loadGiftConf()
     loadActivityConf()
     loadCatchDropConf()
@@ -2264,7 +3454,6 @@ def initConfig():
     loadSupplyBoxConf()
     loadGrandPrixConf()
     loadFestivalTurntableConf()
-    loadGrandPrixPrizeWheelConf()
     loadSuperbossExchangeConf()
     loadSuperbossMinigameConf()
     loadSuperbossCommonConf()
@@ -2273,7 +3462,6 @@ def initConfig():
     loadBigPrizeConf()
     loadCompActConf()
     loadNewbie7DaysGfitConf()
-    loadLotteryTicActConf()                                 # 加载渔场红包券抽奖配置
     loadPassCardConf()                                      # 加载通行证活动配置
     loadSkillCompenConf()                                   # 加载技能补偿配置
     loadABTestConf()                                        #  加载ab test配置
@@ -2284,6 +3472,11 @@ def initConfig():
     loadExchangeStoreConf()
     loadSuperbossPowerConf()                                # 加载超级boss威力配置
     loadLevelPrizeWheelConf()                               # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
+    loadTimePointMatchSkillConf()
+    loadTerrorFishConf()
+    loadTerrorFishConf_m()
+    loadAutofillFishConf_m()
+    loadTideTask()
 
 
 def registerConfigEvent():
@@ -2328,8 +3521,10 @@ def reloadConfig(event):
         getConfigPath("chest"): loadChestConf,              # 加载宝箱配置
         getConfigPath("chestDrop"): loadChestDropConf,      # 加载宝箱掉落配置
         getConfigPath("probability"): loadProbabilityConf,  # 加载概率配置
+        getConfigPath("probability_m"): loadProbabilityConf_m,
         getConfigPath("dynamicOdds"): loadDynamicOddsConf,  # 加载动态概率配置
         getConfigPath("lotteryPool"): loadLotteryPoolConf,
+        getConfigPath("ringLotteryPool"): loadRingLotteryPoolConf,
         getConfigPath("gift"): loadGiftConf,
         getConfigPath("activity"): loadActivityConf,
         getConfigPath("catchDrop"): loadCatchDropConf,
@@ -2383,7 +3578,6 @@ def reloadConfig(event):
         getConfigPath("supplyBox"): loadSupplyBoxConf,
         getConfigPath("grandPrix"): loadGrandPrixConf,
         getConfigPath("festivalTurntable"): loadFestivalTurntableConf,
-        getConfigPath("grandPrixPrizeWheel"): loadGrandPrixPrizeWheelConf,
         getConfigPath("superbossExchange"): loadSuperbossExchangeConf,
         getConfigPath("superbossMinigame"): loadSuperbossMinigameConf(),
         getConfigPath("superbossCommon"): loadSuperbossCommonConf(),
@@ -2392,7 +3586,6 @@ def reloadConfig(event):
         getConfigPath("bigPrize"): loadBigPrizeConf,
         getConfigPath("competition"): loadCompActConf,
         getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,      # 加载默认商店配置
-        getConfigPath("lotteryTicket"): loadLotteryTicActConf,          # 加载渔场红包券抽奖配置
         getConfigPath("passCard"): loadPassCardConf,                    # 加载通行证活动配置
         getConfigPath("skillCompensate"): loadSkillCompenConf,          # 加载技能补偿配置
         getConfigPath("abTest"): loadABTestConf,                        # 加载ab test配置
@@ -2403,6 +3596,11 @@ def reloadConfig(event):
         getConfigPath("exchangeStore"): loadExchangeStoreConf,
         getConfigPath("superbossPower"): loadSuperbossPowerConf,        # 加载超级boss威力配置
         getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,         # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
+        getConfigPath("timePointMatchSkill_m"): loadTimePointMatchSkillConf,
+        getConfigPath("terrorFish"): loadTerrorFishConf,
+        getConfigPath("terrorFish_m"): loadTerrorFishConf_m,
+        getConfigPath("autofillFish_m"): loadAutofillFishConf_m,
+        getConfigPath("tideTask"): loadTideTask,
     }
     try:
         for keyName in event.keylist:
@@ -2416,8 +3614,47 @@ def reloadConfig(event):
                 ftlog.info("reloadConfig->", keyName, config[configPath].__name__)
     except:
         ftlog.error()
-    from newfish.entity import grand_prize_pool
+    from newfish.entity.lotterypool import grand_prize_pool
     grand_prize_pool.reloadConfig(event)
+
+
+def checkActivityItemConf():
+    """
+    检查活动关联道具的有效期是否正确
+    """
+    _activityItemConf = {}
+    for acId, acConf in getActivityConfig().iteritems():
+        if isinstance(acConf.get("extends"), dict) and isinstance(acConf["extends"].get("checkKindIds"), list):
+            for kindId in acConf["extends"]["checkKindIds"]:
+                _activityItem = {}
+                _activityItem["acId"] = acId
+                _activityItem["expires"] = acConf.get("effectiveTime", {}).get("end")
+                _activityItemConf[kindId] = _activityItem
+    # config37配置
+    conf = hallconf.getItemConf()
+    itemKindConfList = conf.get("items", [])
+    checkItemHasExpired(itemKindConfList, _activityItemConf, "config37")
+    # config5配置
+    from tuyoo5.core import tyconfig
+    conf = tyconfig.getGameData("game5:9998:itemnew:sc")
+    itemKindConfList = conf.get("items", [])
+    checkItemHasExpired(itemKindConfList, _activityItemConf, "config5")
+
+
+def checkItemHasExpired(itemKindConfList, activityItemConf, tag):
+    """
+    检查道具是否过期并发出预警
+    """
+    from newfish.entity import util
+    for _, itemKindConf in enumerate(itemKindConfList):
+        if itemKindConf.get("expires") and itemKindConf["kindId"] in activityItemConf:
+            _activityItem = activityItemConf[itemKindConf["kindId"]]
+            itemExpires = util.getTimestampFromStr(itemKindConf["expires"])
+            activityExpires = util.getTimestampFromStr(_activityItem["expires"])
+            if itemExpires < activityExpires:
+                ftlog.error("%s item expired config error" % tag,
+                            _activityItem["acId"], _activityItem["expires"],
+                            itemKindConf["kindId"], itemKindConf["expires"])
 
 
 def getConfigPath(configName):
