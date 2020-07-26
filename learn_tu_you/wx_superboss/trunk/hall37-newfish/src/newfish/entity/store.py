@@ -890,23 +890,319 @@ def getPearlStore(userId, clientId):
     """
     珍珠商店
     """
-    pass
-
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    isVerLimited = util.isVersionLimit(userId) or util.isPurchaseLimit(userId)
+    lang = util.getLanguage(userId, clientId)
+    pearlItems = []
+    pearlStoreConf = config.getStoreConf(clientId).get("pearlStore", {})
+    pearlStoreTab = {"name": config.getMultiLangTextConf("ID_BUY_PEARL", lang=lang), "subStore": "pearl", "iconType": "pearl"}
+    vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
+    buyPearlCountDict = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyPearlCount, {})
+    level = util.getStoreCheckLevel(userId)
+    platformOS = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.platformOS)
+    if not isVerLimited or platformOS == "android":
+        for productId, product in pearlStoreConf.iteritems():
+            if isInvalidePruduct(isVerLimited, product, level, clientVersion):
+                continue
+            buyPearlCount = buyPearlCountDict.get(productId, 0)
+            if buyPearlCount > 0:
+                index = 1
+                if vipLevel >= product["additionVip"]:
+                    index = 2
+            else:
+                index = 0
+            data = {
+                "id": productId,
+                "name": config.getMultiLangTextConf(product["name"][index], lang=lang),
+                "price": product["price"],
+                "desc": "",
+                "pic": product["pic"],
+                "tag": product["tag"],
+                "buy_type": product["buyType"],
+                "price_direct": product.get("price_direct", 0),
+                "price_diamond": product.get("price_diamond", 0),
+                "addition": config.getMultiLangTextConf(product["addition"][index], lang=lang),
+                "item_id": product["itemId"],
+                "count": product["count"][index],
+                "other_buy_type": product.get("otherBuyType", {}),
+                "otherProductInfo": getOtherBuyProduct(product.get("otherBuyType", {}), product["buyType"])
+            }
+            pearlItems.append(data)
+    pearlStoreTab["items"] = pearlItems
+    return pearlStoreTab
 
 
 def getGunSkinStore(userId, clientId):
     """
     火炮皮肤商店
     """
-    pass
-
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    level = util.getStoreCheckLevel(userId)
+    isVerLimited = util.isVersionLimit(userId) or util.isPurchaseLimit(userId)
+    lang = util.getLanguage(userId, clientId)
+    gunSKinItems = []
+    gunSkinStoreConf = config.getStoreConf(clientId).get("gunSkinStore", {})
+    gunSkinStoreTab = {"name": config.getMultiLangTextConf("ID_BUY_GUN_SKIN", lang=lang), "subStore": "gunSkin", "iconType": "gunSkin"}
+    for productId, product in gunSkinStoreConf.iteritems():
+        if isInvalidePruduct(isVerLimited, product, level, clientVersion):
+            continue
+        discountPriceIndex = -1
+        additionIndex = -1
+        discountPrice = product["discountPrice"][discountPriceIndex]
+        addition = ""
+        if product["addition"][additionIndex]:
+            addition = config.getMultiLangTextConf(product["addition"][additionIndex], lang=lang)
+        desc = ""
+        if product["desc"]:
+            desc = config.getMultiLangTextConf(product["desc"], lang=lang)
+        data = {
+            "id": productId,
+            "name": config.getMultiLangTextConf(product["name"], lang=lang),
+            "price": product["price"],
+            "discountPrice": discountPrice,
+            "desc": desc,
+            "pic": product["pic"],
+            "tag": product["tag"],
+            "item_id": product["itemId"],
+            "count": product["count"],
+            "buy_type": product["buyType"],
+            "addition": addition
+        }
+        gunSKinItems.append(data)
+    gunSkinStoreTab["items"] = gunSKinItems
+    return gunSkinStoreTab
 
 
 def getBulletStore(userId, clientId):
     """
     招财珠商店
     """
-    pass
+    clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+    level = util.getStoreCheckLevel(userId)
+    isVerLimited = util.isVersionLimit(userId) or util.isPurchaseLimit(userId)
+    lang = util.getLanguage(userId, clientId)
+    bulletStoreConf = config.getStoreConf(clientId).get("bulletStore", {})
+    version = util.getClientIdVer(userId)
+    versionName = "hall37" if version < 5 else "hall51"
+    bulletStoreConf = bulletStoreConf.get(versionName, {})
+    bulletItems = []
+    bulletStoreTab = {"name": config.getMultiLangTextConf("ID_BUY_ROBBERY_BULLET", lang=lang), "subStore": "bullet", "iconType": "bullet"}
+    userVip = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
+    todayBuyInfo = weakdata.getDayFishData(userId, WeakData.shopBuyInfo, {})
+    for productId, product in bulletStoreConf.iteritems():
+        if isInvalidePruduct(isVerLimited, product, level, clientVersion):
+            continue
+        code, leftNum = canBuyResult(userId, "bulletStore", productId, product, userVip, todayBuyInfo)
+        if code != 0:
+            continue
+        additionIndex = -1
+        price = product["price"]
+        addition = ""
+        if product["addition"][additionIndex]:
+            addition = config.getMultiLangTextConf(product["addition"][additionIndex], lang=lang)
+            if product.get("limitCond", {}).get("userDailyCountLimit", 0) > 0:
+                addition = config.getMultiLangTextConf("ID_LEFT_NUM", lang=lang) % leftNum
+        data = {
+            "id": productId,
+            "name": config.getMultiLangTextConf(product["name"], lang=lang),
+            "price": price,
+            "desc": "",
+            "pic": product["pic"],
+            "tag": product["tag"],
+            "buy_type": product["buyType"],
+            "price_direct": product.get("price_direct", 0),
+            "price_diamond": product.get("price_diamond", 0),
+            "addition": addition,
+            "other_buy_type": product.get("otherBuyType", {}),
+            "item_id": product["itemId"],
+            "count": product["count"],
+            "otherProductInfo": getOtherBuyProduct(product.get("otherBuyType", {}), product["buyType"])
+        }
+        bulletItems.append(data)
+    bulletStoreTab["items"] = bulletItems
+    return bulletStoreTab
+
+
+def getTimeLimitedStoreRefreshInfo(userId):
+    """
+    获取限时商城刷新相关数据
+    """
+    timeLimitedStoreConf = config.getTimeLimitedStoreConf()
+
+    key = GameData.timeLimitedStore % (FISH_GAMEID, userId)
+    tls_nextRefreshTS = daobase.executeUserCmd(userId, "HGET", key, GameData.tls_nextRefreshTS) or 0
+    nextRefreshLeftTime = max(tls_nextRefreshTS - int(time.time()), 0)
+
+    tls_refreshedTimes = json.loads(daobase.executeUserCmd(userId, "HGET", key, GameData.tls_refreshedTimes) or "{}")
+    refreshedTimes = tls_refreshedTimes.get(str(util.getDayStartTimestamp(int(time.time()))), 0)
+
+    priceList = timeLimitedStoreConf.get("refresh", {}).get("price", [])
+    refreshPrice = priceList[-1]
+    if refreshedTimes < len(priceList):
+        refreshPrice = priceList[refreshedTimes]
+    if ftlog.is_debug():
+        ftlog.debug("getTimeLimitedStoreRefreshInfo, userId =", userId, nextRefreshLeftTime, refreshPrice, refreshedTimes,
+                len(priceList), priceList)
+    return nextRefreshLeftTime, refreshPrice, refreshedTimes, len(priceList)
+
+
+def getTimeLimitedStoreTab(userId, clientId, isRefresh):
+    """
+    获取玩家限时商城数据
+    """
+    code = 0
+    timeLimitedStoreConf = config.getTimeLimitedStoreConf()
+    buyTimeLimitedCountDict = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyTimeLimitedCount, {})
+
+    needRefresh = False
+    key = GameData.timeLimitedStore % (FISH_GAMEID, userId)
+    dayStartTS = util.getDayStartTimestamp(int(time.time()))
+    storeInfo = json.loads(daobase.executeUserCmd(userId, "HGET", key, GameData.tls_info) or "{}")
+    tls_refreshedTimes = json.loads(daobase.executeUserCmd(userId, "HGET", key, GameData.tls_refreshedTimes) or "{}")
+    # 手动刷新.
+    if isRefresh:
+        refreshedTimes = tls_refreshedTimes.get(str(dayStartTS), 0)
+        priceList = timeLimitedStoreConf.get("refresh", {}).get("price", [])
+        if len(priceList) > refreshedTimes >= 0:
+            refreshPrice = priceList[refreshedTimes]
+            if util.balanceItem(userId, config.RUBY_KINDID) >= refreshPrice > 0:
+                _consume = [{"name": config.RUBY_KINDID, "count": abs(refreshPrice)}]
+                _ret = util.consumeItems(userId, _consume, "BI_NFISH_BUY_ITEM_CONSUME", refreshedTimes)
+                if _ret:
+                    needRefresh = True
+                    code = 0
+                else:
+                    code = 1
+            else:
+                code = 2
+        else:
+            code = 3
+    else:# 检查自动刷新点
+        tls_nextRefreshTS = daobase.executeUserCmd(userId, "HGET", key, GameData.tls_nextRefreshTS) or 0
+        needRefresh = tls_nextRefreshTS <= int(time.time())
+    if needRefresh and code == 0:
+        storeInfo = {}
+        typeStores = timeLimitedStoreConf.get("types", {})
+        level = util.getStoreCheckLevel(userId)
+
+        idx = 0
+        _stores = []
+        _storeIds = []
+
+        # 选择slot中商品
+        def _isValidStore(_product):
+            if _product["levelRange"][0] <= level <= _product["levelRange"][1]:
+                if _product["maxBuyCount"] == -1 or buyTimeLimitedCountDict.get(_product["id"], 0) < _product["maxBuyCount"]:
+                    return _product["id"] not in _storeIds
+            return False
+
+        for val in config.getTimeLimitedStoreConf().get("slot", []):
+            idx += 1
+            storeList = []
+            for type in val.get("typeList", []):
+                if typeStores.get(str(type), []):
+                    storeList.extend(typeStores.get(str(type), []))
+            storeList = [_v for _v in storeList if _isValidStore(_v)]
+            if ftlog.is_debug():
+                ftlog.debug("getTimeLimitedStoreTab, userId =", userId, "slot =", idx, "storeList =", storeList)
+            totalRate = sum(map(lambda x: x.get("rate", 0), storeList), 0)
+            rand = random.randint(0, totalRate)
+            for item in storeList:
+                if rand > item.get("rate", 0):
+                    rand -= item.get("rate", 0)
+                else:
+                    _stores.append({"id": item["id"], "unlockLevel": val.get("unlockLevel", 0)})
+                    _storeIds.append(item.get("id"))
+                    break
+        storeInfo.setdefault("stores", _stores)
+        # 计算下个自动刷新时间点
+        ts = int(time.time())
+        nextRefreshTS = 0
+        while nextRefreshTS == 0:
+            _dayStartTS = util.getDayStartTimestamp(ts)
+            for val in config.getTimeLimitedStoreConf().get("refresh", {}).get("auto"):
+                if len(str(val).split(":")) >= 2:
+                    _hour = int(str(val).split(":")[0])
+                    _min = int(str(val).split(":")[1])
+                    _refreshTS = _dayStartTS + _hour * 3600 + _min * 60
+                    if int(time.time()) < _refreshTS:
+                        nextRefreshTS = _refreshTS
+                        if ftlog.is_debug():
+                            ftlog.debug("getTimeLimitedStoreTab, userId =", userId, util.timestampToStr(nextRefreshTS))
+                        break
+            ts += 86400
+        daobase.executeUserCmd(userId, "HSET", key, GameData.tls_nextRefreshTS, nextRefreshTS)
+        daobase.executeUserCmd(userId, "HSET", key, GameData.tls_buyCount, json.dumps({}))
+        daobase.executeUserCmd(userId, "HSET", key, GameData.tls_info, json.dumps(storeInfo))
+        if isRefresh:
+            for _k in tls_refreshedTimes.keys():
+                if int(_k) < dayStartTS:
+                    del tls_refreshedTimes[_k]
+            tls_refreshedTimes.setdefault(str(dayStartTS), 0)
+            tls_refreshedTimes[str(dayStartTS)] += 1
+            daobase.executeUserCmd(userId, "HSET", key, GameData.tls_refreshedTimes, json.dumps(tls_refreshedTimes))
+    if code == 0:
+        if ftlog.is_debug():
+            ftlog.debug("getTimeLimitedStoreTab, userId =", userId, code, storeInfo, isRefresh)
+    else:
+        ftlog.warn("getTimeLimitedStoreTab, userId =", userId, code, storeInfo, isRefresh)
+    return code, storeInfo
+
+
+def getTimeLimitedStore(userId, clientId, isRefresh):
+    """
+    限时商城商店
+    """
+    timeLimitedItems = []
+    code, storeInfo = getTimeLimitedStoreTab(userId, clientId, isRefresh)
+    lang = util.getLanguage(userId, clientId)
+    key = GameData.timeLimitedStore % (FISH_GAMEID, userId)
+    buyCount = json.loads(daobase.executeUserCmd(userId, "HGET", key, GameData.tls_buyCount) or "{}")
+    timeLimitedStoreTab = {"name": config.getMultiLangTextConf("ID_TIMED_STORE", lang=lang), "subStore": "ruby", "iconType": "ruby"}
+    nextRefreshLeftTime, refreshPrice, refreshedTimes, maxRefreshTimes = getTimeLimitedStoreRefreshInfo(userId)
+    timeLimitedStoreTab.setdefault("nextRefreshLeftTime", nextRefreshLeftTime)
+    timeLimitedStoreTab.setdefault("refreshPrice", refreshPrice)
+    timeLimitedStoreTab.setdefault("refreshedTimes", refreshedTimes)
+    timeLimitedStoreTab.setdefault("maxRefreshTimes", maxRefreshTimes)
+    timeLimitedStoreTab.setdefault("refresh", 1 if isRefresh else 0)
+    timeLimitedStoreTab.setdefault("code", code)
+    storeConf = config.getTimeLimitedStoreConf().get("stores", {})
+    for store in storeInfo.get("stores", []):
+        productId = store.get("id")
+        product = storeConf.get(productId)
+        if product is None:
+            continue
+        itemId = product["itemId"]
+        label2 = ""
+        if product.get("label2", ""):
+            label2 = config.getMultiLangTextConf(product.get("label2", ""), lang=lang)
+        data = {
+            "id": productId,
+            "name": config.getMultiLangTextConf(product["name"], lang=lang),
+            "price": product["price"],
+            "cur_price": product["price"],
+            "pic": product.get("pic", ""),
+            "buy_type": product["buyType"],
+            "addition": "",
+            "desc": label2,
+            "tag": product.get("tag", 0),
+            "grade": 1,
+            "item_id": itemId,
+            "count": product["count"],
+            "other_buy_type": product.get("otherBuyType", {}),
+            "otherProductInfo": getOtherBuyProduct(product.get("otherBuyType", {}), product["buyType"]),
+            "unlockLevel": store.get("unlockLevel"),
+            "label1": config.getMultiLangTextConf(product.get("label1"), lang=lang) if product.get("label1") else "",
+            "label2": label2,
+            "label3": config.getMultiLangTextConf(product.get("label3"), lang=lang) if product.get("label3") else "",
+            "label1BgType": product.get("labelBgType") if product.get("labelBgType") else "",
+            "label2BgType": product.get("label2BgType") if product.get("label2BgType") else "",
+            "label3BgType": product.get("label3BgType") if product.get("label3BgType") else "",
+            "info": chest_system.getChestInfo(itemId) if str(itemId).isdigit() and util.isChestRewardId(itemId) else {}
+        }
+        timeLimitedItems.append(data)
+    timeLimitedStoreTab["items"] = timeLimitedItems
+    return timeLimitedStoreTab
 
 
 def canBuyResult(userId, tabName, productId, productConf, userVip, todayBuyInfo=None):
@@ -931,7 +1227,194 @@ def canBuyResult(userId, tabName, productId, productConf, userVip, todayBuyInfo=
     return 0, max(todayBuyNumLimit - todayPurchasedNum, 0)
 
 
+def resetBuyData(userId):
+    """
+    重置所有宝箱购买次数数据
+    """
+    gamedata.setGameAttr(userId, FISH_GAMEID, GameData.buyChestCount, json.dumps([0, 0, 0, 0]))
 
+
+def updateChestStoreModuleTip(userId, level=0):
+    """
+    更新宝箱商城红点提示
+    """
+    # from newfish.entity import weakdata, module_tip
+    # buyChestCount = weakdata.getDayFishData(userId, WeakData.buyDailyChestCount)
+    # userLevel = level or util.getUnlockCheckLevel(userId)
+    # if not buyChestCount and userLevel >= config.getCommonValueByKey("chestStoreOpenLevel"):
+    #     module_tip.addModuleTipEvent(userId, "store", "chestStore")
+    # else:
+    #     module_tip.cancelModuleTipEvent(userId, "store", "chestStore")
+    from newfish.entity import weakdata, module_tip
+    userLevel = level or util.getUnlockCheckLevel(userId)
+    clientId = util.getClientId(userId)
+    items = config.getStoreConf(clientId).get("chestStore").get("items")
+    module_tip.resetModuleTipEvent(userId, "store")
+    # 检查宝箱商城和是否解锁.
+    if userLevel >= config.getCommonValueByKey("chestStoreOpenLevel"):
+        curTime = int(time.time())
+        # 检查每日宝箱是否有可以免费领取的.
+        productFreeTS = weakdata.getDayFishData(userId, WeakData.productFreeTS, {})
+        for productId, freeTS in productFreeTS.iteritems():
+            if items.get(str(productId)) and freeTS > curTime:
+                break
+        else:
+            module_tip.addModuleTipEvent(userId, "store", "chestStore1")
+        # 检查固定间隔宝箱是否有可领取的.
+        productFreeTS = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.productFreeTS, {})
+        for productId, freeTS in productFreeTS.iteritems():
+            if items.get(str(productId)) and freeTS > curTime:
+                break
+        else:
+            module_tip.addModuleTipEvent(userId, "store", "chestStore2")
+
+
+def convertItemByDiamond(userId, convertCount, itemId, sendMsg=True, rebateItemId=0, clientId=""):
+    """
+    使用钻石转换为物品
+    """
+    itemId = int(itemId)
+    convertCount = abs(convertCount)
+    convertCount, costDiamondCount = getConvertToDiamondCount(userId, itemId, convertCount)
+    if convertCount and rebateItemId and clientId:
+        costDiamondCount, _ = getUseRebateItemPrice(userId, rebateItemId, costDiamondCount, config.BT_DIAMOND, itemId, clientId)
+    if convertCount == 0:
+        reason = 0
+    elif userchip.getDiamond(userId) >= costDiamondCount >= 0 and convertCount > 0:
+        consume = {"name": config.DIAMOND_KINDID, "count": -costDiamondCount}
+        reward = {"name": itemId, "count": convertCount}
+        reason = util.addRewards(userId, [consume, reward], "ASSEMBLE_ITEM", config.DIAMOND_KINDID)
+    else:
+        reason = 1
+    if not sendMsg:
+        return
+    mo = MsgPack()
+    mo.setCmd("store_config_fish")
+    mo.setResult("action", "convertItem")
+    mo.setResult("code", reason)
+    router.sendToUser(mo, userId)
+
+
+def getConvertToDiamondCount(userId, itemId, itemCount):
+    """
+    获取物品等值的钻石数量
+    """
+    itemId = int(itemId)
+    userVip = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
+    key = "convert%dToDRate" % itemId
+    rate = config.getVipConf(userVip).get(key)
+    if isinstance(rate, list) and len(rate) == 2 and rate[0] and rate[1]:
+        if (rate[1] * itemCount) % rate[0] != 0:
+            import math
+            itemCount = int(math.ceil(rate[1] * itemCount * 1. / rate[0])) * rate[0] / rate[1]
+        return itemCount, (rate[1] * itemCount) / rate[0]
+    else:
+        return itemCount, 0
+
+
+def autoConvertVoucherToDiamond(userId, needDiamondCount):
+    """
+    代购券->钻石, 1:10
+    """
+    diamondCount = userchip.getDiamond(userId)
+    if diamondCount >= needDiamondCount or needDiamondCount <= 0:
+        return
+    rate = 10
+    costVoucherCount = (needDiamondCount - diamondCount) / rate
+    if (needDiamondCount - diamondCount) % rate != 0:
+        costVoucherCount += 1
+    if util.balanceItem(userId, config.VOUCHER_KINDID) >= costVoucherCount > 0:
+        consume = {"name": config.VOUCHER_KINDID, "count": -abs(costVoucherCount)}
+        reward = {"name": config.DIAMOND_KINDID, "count": abs(costVoucherCount * rate)}
+        vip_system.addUserVipExp(FISH_GAMEID, userId, abs(costVoucherCount) * 10, "BUY_PRODUCT", config.DIAMOND_KINDID, config.DIAMOND_KINDID, rmbs=abs(costVoucherCount))
+        util.addRewards(userId, [consume, reward], "ASSEMBLE_ITEM", config.DIAMOND_KINDID)
+        if ftlog.is_debug():
+            ftlog.debug("autoConvertVoucherToDiamond, userId =", userId, needDiamondCount, diamondCount, costVoucherCount, util.balanceItem(userId, config.VOUCHER_KINDID))
+
+
+def setAutoBuyAfterSDKPayData(userId, productIdA, productIdB, actionType, count):
+    """
+    设置sdk支付后自动购买商品的数据
+    """
+    from poker.entity.dao import daobase
+    key = GameData.autoBuyAfterSDKPay % (FISH_GAMEID, userId)
+    if len(str(productIdA)) == 0 or len(str(productIdB)) == 0 or count == 0:
+        daobase.executeUserCmd(userId, "DEL", key)
+    else:
+        daobase.executeUserCmd(userId, "SET", key, json.dumps([productIdA, productIdB, actionType, count]))
+
+
+def isBulletStore(storeId):
+    """招财商品"""
+    return storeId.find(str(config.BRONZE_BULLET_KINDID)) > -1 or storeId.find(str(config.SILVER_BULLET_KINDID)) > -1 \
+                or storeId.find(str(config.GOLD_BULLET_KINDID)) > -1 or storeId.find("TY0044B") > -1
+
+
+def getUseRebateItemPrice(userId, itemId, fullPrice, buyType, productId, clientId):
+    """
+    获取使用满减券后的价格
+    """
+    price = fullPrice
+    ret = False
+    if itemId == 0:
+        return price, True
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    item = userBag.findItem(itemId)
+    # 过期时间保留1分钟的余量.
+    if item and not item.isDied(int(time.time()) - 60):
+        actions = config.getItemConf(clientId, item.kindId).get("actions", [])
+        for action in actions:
+            if action["action"] != "rebate":
+                continue
+            for params in action["params"]:
+                if ftlog.is_debug():
+                    ftlog.debug("getUseRebateItemPrice, userId =", userId, "fullPrice =", fullPrice, "buyType =", buyType, "params =", params)
+                if params["minPrice"] <= fullPrice and params["buyType"] == buyType:
+                    _eventParam = int(productId) if str(productId).isdigit() else 0
+                    userBag.removeItem(FISH_GAMEID, item, pktimestamp.getCurrentTimestamp(), "BI_NFISH_BUY_ITEM_CONSUME", _eventParam)
+                    price = max(price - params["rebate"], 0)
+                    ret = True
+                    break
+    if ftlog.is_debug():
+        ftlog.debug("getUseRebateItemPrice, userId =", userId, "itemId =", itemId, "item =", item, "fullPrice =", fullPrice, "buyType =", buyType, "price =", price, "productId =", productId)
+    return price, ret
+
+
+def buyProductByDiamond(userId, productId, price, clientId, eventId, rebateItemId):
+    """
+    使用钻石购买商品
+    """
+    code = 1
+    from poker.entity.configure import pokerconf
+    productIdNumber = pokerconf.productIdToNumber(productId)
+    price, isSucc = getUseRebateItemPrice(userId, rebateItemId, price, config.BT_DIAMOND, productIdNumber, clientId)
+    # 不能出现使用满减券后不需要花钱的情况！！！
+    if price > 0 and isSucc:
+        autoConvertVoucherToDiamond(userId, price)
+        consumeCount, final = userchip.incrDiamond(userId, FISH_GAMEID, -abs(price), 0, eventId, productIdNumber, clientId, param01=productId)
+        if abs(consumeCount) != price:
+            code = 2
+        else:
+            code = 0
+    return code
+
+
+def doUserBuyProductRet(userId, productId, count, code, buyType, clientId):
+    """
+    商城以外购买商品返回的消息
+    """
+    mo = MsgPack()
+    mo.setCmd("product_buy")
+    mo.setResult("gameId", FISH_GAMEID)
+    mo.setResult("userId", userId)
+    mo.setResult("clientId", clientId)
+    mo.setResult("productId", productId)
+    mo.setResult("count", count)
+    mo.setResult("buyType", buyType)
+    mo.setResult("code", code)
+    router.sendToUser(mo, userId)
+    if ftlog.is_debug():
+        ftlog.debug("doUserBuyProductRet, userId =", userId, "mo =", mo)
 
 
 def _triggerLevelUpEvent(event):
@@ -955,7 +1438,20 @@ def onTimer(event):
     """
     计时器
     """
-    pass
+    global _lastRefreshTimestamp
+    timestamp = pktimestamp.getCurrentTimestamp()
+    if timestamp - _lastRefreshTimestamp >= 60:
+        if ftlog.is_debug():
+            ftlog.debug("store, timer")
+        couponStoreRefreshTime = config.getPublic("couponStoreRefreshTime", "00:00")
+        refreshTS = util.timeStrToInt(couponStoreRefreshTime) + util.getDayStartTimestamp(timestamp)
+        if _lastRefreshTimestamp < refreshTS <= timestamp:
+            if ftlog.is_debug():
+                ftlog.debug("store, refresh coupon store")
+            key = MixData.buyProductServerCount % FISH_GAMEID
+            daobase.executeMixCmd("DEL", key)
+
+        _lastRefreshTimestamp = timestamp
 
 
 _inited = False
