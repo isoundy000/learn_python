@@ -1,7 +1,10 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/11
+"""
+Created on 2017年12月26日
+
+@author: haohongxian
+"""
+
 import random
 from collections import OrderedDict
 
@@ -29,7 +32,12 @@ class FishFightRoom(TYRoom):
             self._initGR()
 
     def newTable(self, tableId):
-        pass
+        """
+        在GT中创建TYTable的实例
+        """
+        from newfish.table.fight_table import FishFightTable
+        table = FishFightTable(self, tableId)
+        return table
 
     def initializedGT(self, shadowRoomId, tableCount):
         pass
@@ -44,6 +52,19 @@ class FishFightRoom(TYRoom):
     def createFT(self, userId, ftConf):
         """创建房间"""
         ftId = self._genFTId()
+        isCollectFee = False
+        lang = util.getLanguage(userId)
+        try:
+            if self.runStatus != self.ROOM_STATUS_RUN:
+                # raise TYBizException(8, u"游戏维护中，请稍后再试!")
+                raise TYBizException(8, config.getMultiLangTextConf("ID_GAME_MAINTAIN_MSG", lang=lang))
+            isIn, roomId, tableId, seatId = util.isInFishTable(userId)
+            if isIn:
+                # raise TYBizException(6, u"您在其他房间中!")
+                raise TYBizException(6, config.getMultiLangTextConf("ID_CREAT_FT_IN_OTHER_ROOM", lang=lang))
+        except Exception, e:
+            if isCollectFee:
+                self._returnFee(userId, ftId, ftConf)
 
 
 
@@ -53,6 +74,13 @@ class FishFightRoom(TYRoom):
         self._ftMap = OrderedDict()
         self._tableCtrl = TableController()
 
+    def _genFTId(self):
+        """"""
+        for _ in xrange(10):
+            ftId = genFTId()
+            if not self.findFT(ftId):               # 找不到重复的房间号就是新房间
+                return ftId
+        return None
 
 
 def ftExists(ftId):
@@ -68,7 +96,12 @@ def ftBindRoomId(ftId, roomId):
 
 
 def genFTId():
-    pass
+    """生成房间Id"""
+    for _ in xrange(10):
+        ftId = hall_friend_table.createFriendTable(FISH_GAMEID)
+        if ftId:
+            return ftId
+    return None
 
 
 def releaseFTId(ftId):
@@ -188,10 +221,10 @@ class TableManager(object):
 
 
 class FTConf(object):
+
     def __init__(self, fee=None, gameTime=120):
         self.fee = fee or []
         self.gameTime = gameTime
-
 
 
 class FTTable(object):

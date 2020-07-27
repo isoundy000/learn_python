@@ -58,3 +58,46 @@ class FishGrandPrixRoom(FishFriendRoom):
         """选择一个桌子"""
         return super(FishGrandPrixRoom, self)._choiceTableRoom(userId)
 
+    def quickStartInGR(self, shadowRoomId, tableId, userId, clientId, extParams):
+        """快速进入房间进程"""
+        super(FishGrandPrixRoom, self).quickStartInGR(shadowRoomId, tableId, userId, clientId, extParams)
+
+    def quickStartInGT(self, shadowRoomId, tableId, userId, clientId, extParams):
+        """快速进入桌子GT进程"""
+        super(FishGrandPrixRoom, self).quickStartInGT(shadowRoomId, tableId, userId, clientId, extParams)
+
+    def _trySitDown(self, shadowRoomId, tableId, userId, clientId, extParams):
+        """尝试坐下 桌子的位置"""
+        return super(FishGrandPrixRoom, self)._trySitDown(shadowRoomId, tableId, userId, clientId, extParams)
+
+    def makeSitMsg(self, userId, shadowRoomId, tableId, clientId, extParams):
+        """生成落座的消息"""
+        return super(FishGrandPrixRoom, self).makeSitMsg(userId, shadowRoomId, tableId, clientId, extParams)
+
+    def roomUserOccupy(self, shadowRoomId, roomOccupy, extData=None):
+        """房间占用空间"""
+        return super(FishGrandPrixRoom, self).roomUserOccupy(shadowRoomId, roomOccupy, extData)
+
+    def _reportRoomUserOccupy(self):
+        """
+        向GR汇报当前GT容量
+        """
+        super(FishGrandPrixRoom, self)._reportRoomUserOccupy()
+
+    def _updateUsableTableList(self):
+        """
+        分桌匹配算法
+        """
+        super(FishGrandPrixRoom, self)._updateUsableTableList()
+
+    def _triggerEnterTableEvent(self, event):
+        """
+        玩家加入桌子
+        """
+        super(FishGrandPrixRoom, self)._triggerEnterTableEvent(event)
+
+    def _triggerLeaveTableEvent(self, event):
+        """
+        玩家离开桌子
+        """
+        super(FishGrandPrixRoom, self)._triggerLeaveTableEvent(event)
