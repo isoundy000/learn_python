@@ -38,3 +38,8 @@ table.tideTaskSystem.taskReady(random.choice(range(1, 9)))
 ftlog.info('zzzzzzzzzzzzzzccccccccc', gdata.srvIdRoomIdListMap())
 # {'GT0044001_999': [441011001, 441021001, 441031001, 441041001, 443011001, 443021001, 444021001, 444031001, 444041001, 444051001, 444111001, 444121001, 444141001, 444151001, 444991001, 445011001, 446011001]}
 ftlog.info("roomIdDefineMap", gdata.roomIdDefineMap())
+
+
+gdata.allServersMap()
+gdata.srvIdRoomIdListMap()
+gdata.serverId()

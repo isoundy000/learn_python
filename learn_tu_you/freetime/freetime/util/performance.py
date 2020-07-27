@@ -37,7 +37,7 @@ _ppsFunCounts = []
 
 
 def regPPSCounter(funCount):
-    pass
+    """注册性能"""
 
 
 def _ppsCounter():

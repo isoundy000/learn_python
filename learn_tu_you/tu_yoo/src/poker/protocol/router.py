@@ -13,6 +13,20 @@ import stackless
 from poker.util import strutil
 
 
+
+def _initialize():
+    '''
+    初始化命令路由
+    '''
+    ftlog.debug('router._initialize begin')
+    pass
+
+
+def _initialize_udp():
+    pass
+
+
+
 def sendToUsers(msgpack, userIdList):
     '''
     发送消息至一组用户的客户端

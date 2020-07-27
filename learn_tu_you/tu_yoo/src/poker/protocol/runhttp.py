@@ -37,6 +37,55 @@ def getRequest():
     return stackless.getcurrent()._fttask.run_args['data']
 
 
+def handlerHttpRequest(httprequest):
+    """
+    HTTP请求处理总入口
+    """
+    rpath = httprequest.path
+    try:
+        session = stackless.getcurrent()._fttask.session
+        session['ishttp'] = 1
+
+        if TRACE_RESPONSE:
+            ftlog.info('HTTPREQUEST', rpath, httprequest.args)
+
+        # 当前服务处理
+        markParams = _http_path_methods.get(rpath, None)
+        if markParams == None:
+            __handlerHttpStatic(httprequest)
+            return  # 查找静态资源返回
+
+
+
+
+def __handlerHttpStatic(httprequest):
+    '''
+        HTTP请求静态资源
+        '''
+    rpath = httprequest.path
+
+    fgmt, fcontent, fheads = None, None, None
+    for wpath in _path_webroots:
+        fpath = wpath + rpath
+        fpath = os.path.abspath(fpath)
+        if fpath.find(wpath) == 0 and os.path.isfile(fpath):
+            fgmt, fcontent, fheads = __loadResource(fpath)
+            if fgmt != None:
+                break
+
+    if fgmt == None:
+        httprequest.setResponseCode(404, 'Not Found')
+        doFinish('', {}, False)
+    elif httprequest.getHeader('If-Modified-Since') == fgmt:
+        httprequest.setResponseCode(304, 'Not Modified')
+        doFinish('', fheads, False)
+    elif httprequest.getHeader('If-None-Match') == fgmt:
+        httprequest.setResponseCode(304, 'Not Modified')
+        doFinish('', fheads, False)
+    else:
+        doFinish(fcontent, fheads, False)
+
+
 def getDict():
     '''
     将当前的HTTP请求的所有参数内容, 转换为一个dict

@@ -54,7 +54,12 @@ def _initMysqlPoolMap(sid, conf, mysqlconf):
 
 
 def getServerConf(sid):
-    pass
+    """获取服务器配置"""
+    try:
+        return server_map[sid]
+    except :
+        ftlog.error("undefined server_id:", sid)
+        return None
 
 
 @lfu_cache(maxsize=1000, cache_key_args_index=0)
@@ -63,7 +68,9 @@ def getConf(confname):
 
 
 def getConfNoCache(*cmds):
-    pass
+    """获取游戏的配置"""
+    value = ftred.runCmd(redis_pool_map["config"], *cmds)
+    return value
 
 
 def _init_query_udp(target_svr_id, target_pro_name):

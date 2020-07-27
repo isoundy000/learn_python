@@ -71,29 +71,29 @@ def _initialize():
         _datas = {}
         pgdict = ftcon.getConf('poker:global')
         sid = ftcon.global_config["server_id"]
-        _datas['server_type'] = sid[0:2]
-        _datas['server_num'] = sid[2:]
+        _datas['server_type'] = sid[0:2]                            # 服务类型
+        _datas['server_num'] = sid[2:]                              # 服务数量
         try:
-            _datas['server_num_idx'] = int(sid[2:]) - 1
+            _datas['server_num_idx'] = int(sid[2:]) - 1             # 服务的索引
         except:
             _datas['server_num_idx'] = -1
         _datas.update(pgdict)
-        _datas['game_packages'] = tuple(pgdict['game_packages'])
-        mincenter = min(ftcon.server_type_map.get(SRV_TYPE_HTTP))
+        _datas['game_packages'] = tuple(pgdict['game_packages'])    # 游戏包
+        mincenter = min(ftcon.server_type_map.get(SRV_TYPE_HTTP))   # 游戏的HTTP服务
         if mincenter == sid:
-            _datas['is_control_process'] = 1
+            _datas['is_control_process'] = 1                        # 是否控制处理服务器
         else:
             _datas['is_control_process'] = 0
 
         _datas['is_http_process'] = 0
         sdef = ftcon.server_map[sid]
-        protocols = sdef.get('protocols')
+        protocols = sdef.get('protocols')                           # 协议
         if protocols:
-            server = protocols.get('server')
+            server = protocols.get('server')                        # 服务器
             if server:
                 for p in server:
-                    if p.endswith('http') :
-                        _datas['is_http_process'] = 1
+                    if p.endswith('http'):
+                        _datas['is_http_process'] = 1               # 是否是http服务
                         break
 
         _dumpGdataInfo()
@@ -447,6 +447,7 @@ def getUserConnIpPortList():
 
 
 def _dumpGdataInfo():
+    """序列化全局数据信息"""
     ftlog.info('GLOBAL Setting Dump Begin')
     ftlog.info('GLOBAL name                    = %s' % (name()))
     ftlog.info('GLOBAL mode                    = %d' % (mode()))

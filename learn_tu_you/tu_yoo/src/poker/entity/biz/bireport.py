@@ -42,6 +42,8 @@ def reportGameEvent(eventId, user_id, gameId, roomId, tableId, roundId, detalChi
     pass
 
 
+def report(moduleName, *arglist, **argdict):
+    pass
 
 
 def getRoomOnLineUserCount(gameId, withShadowRoomInfo=0):

@@ -1015,12 +1015,14 @@ class UserTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="user", action="fish_vip_info", clientIdVer=0, scope="game", lockParamName="userId")
     def doGetFishVip(self, userId, gameId, clientId):
+        """发送VIP特权信息和道具流通数量限制信息"""
         ftlog.debug("doGetFishVip", gameId, userId)
         vip_system.sendFishVipInfo(userId)
         vip_system.sendVipCirculateInfo(userId)
 
     @markCmdActionMethod(cmd="user", action="buy_fish_vip_gift", clientIdVer=0, scope="game", lockParamName="userId")
     def doBuyFishVipGift(self, userId, gameId, clientId, level):
+        """购买特定VIP等级的礼包"""
         ftlog.debug("doBuyFishVipGift", gameId, userId, level)
         vip_system.buyFishVipGift(userId, level)
 

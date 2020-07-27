@@ -39,7 +39,9 @@ def getTaskPack():
     pass
 
 def getTaskRunArg():
-    pass
+    """获取运行的参数"""
+    _fttask = stackless.getcurrent()._fttask
+    return _fttask.run_args
 
 def getConcurrentTaskCount():
     pass

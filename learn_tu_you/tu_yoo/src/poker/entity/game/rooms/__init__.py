@@ -120,8 +120,8 @@ def getInstance(roomdefine):
             from poker.entity.configure import gdata
             roomClass = roomClass[0] if gdata.serverType() == gdata.SRV_TYPE_ROOM else roomClass[1]
         if not TYRoomMixin in roomClass.__bases__:
-            roomClass.__bases__ += (TYRoomMixin,)
-        return roomClass(roomdefine)
+            roomClass.__bases__ += (TYRoomMixin,)                   # 添加父类
+        return roomClass(roomdefine)                                # 获取房间的实例
     except:
         ftlog.info('create room error, please check bigRoomId:', roomdefine.bigRoomId, ' roomId:', roomdefine.roomId)
         raise

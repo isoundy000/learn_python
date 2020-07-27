@@ -141,6 +141,27 @@ def decodeObjUtf8(datas):
     return datas
 
 
+def getTableRoomId(tableId):
+    '''
+    解析大房间的roomId, 取得gameId和configId
+    '''
+    tableId = int(tableId)
+    assert(tableId > 0)
+    return tableId / 10000
+
+
+@lfu_cache(maxsize=1000, cache_key_args_index=0)
+def parseBigRoomId(roomId):
+    '''
+    解析大房间的roomId, 取得gameId和configId
+    '''
+    roomId = int(roomId)
+    assert(roomId > 0)
+    configid = roomId % 1000
+    gameid = roomId / 1000
+    return gameid, configid
+
+
 @lfu_cache(maxsize=1000, cache_key_args_index=0)
 def getGameIdFromInstanceRoomId(roomId):
     '''

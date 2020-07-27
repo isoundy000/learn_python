@@ -82,3 +82,14 @@ class FishFriendRoom(TYNormalRoom):
         self._allTableDict[table.tableId] = table
         self._usableTableList.append(table)
         ftlog.debug("_addTable->", self._allTableDict, self._usableTableList)
+
+    def _choiceTableRoom(self, userId):
+        """选择桌子Id"""
+        shadowRoomIdList = self.shadowRoomIdOccupyList
+        ignoreShadowRoomList = self.roomConf.get("ignoreShadowRoomList", [])
+        usebleShadowRoomIdList = [v[0] for v in shadowRoomIdList if v[0] not in ignoreShadowRoomList]
+        choiceShadowRoomId = usebleShadowRoomIdList[-1]
+        occupyData = self.roomConf.get("occupyMax", [0.9])
+        if not isinstance(occupyData, list):
+            occupyData = [occupyData]
+        occupy = occupyData[-1]

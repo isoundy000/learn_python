@@ -263,17 +263,20 @@ class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):
         pass
 
 
-class FTHttpRequest(twisted.web.http.Request, FTProtocolBase, ):
+class FTHttpRequest(twisted.web.http.Request, FTProtocolBase):
 
     def process(self):
-        pass
+        try:
+            _countProtocolPack(2, self, 1000)
+        except:
+            ftlog.error()
 
     def getTaskletFunc(self, pack):
-        pass
+        return self.handleRequest
 
     def handleRequest(self):
-        pass
+        raise NotImplementedError('Should override handleRequest')
 
 
-class FTHttpChannel(twisted.web.http.HTTPChannel, ):
+class FTHttpChannel(twisted.web.http.HTTPChannel):
     requestFactory = FTHttpRequest

@@ -1,7 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/3/23.
+"""
+
+
 import json
 from copy import deepcopy
 
@@ -32,6 +34,7 @@ class ModuleTip(object):
         self.name = d.get("name")
         if not isinstance(self.name, (str, unicode)) or not self.name:
             raise TYBizConfException(d, "ModuleTip.name must be not empty string")
+
         self.type = d.get("type", 0)
         if not isinstance(self.type, int):
             isinstance(self.name, str)
@@ -63,13 +66,13 @@ def initialize():
 def _reloadConf():
     global _moduleTipMap
     conf = config.getGameConf("moduleTip")
-    _moduleTipMap = {}
+    moduleTipMap = {}
     for moduleConf in conf.get("modules", []):
         moduleTip = ModuleTip().decodeFromDict(moduleConf)
-        if moduleTip.name in _moduleTipMap:
+        if moduleTip.name in moduleTipMap:
             raise TYBizConfException(moduleConf, "newfish Duplicate moduleTip %s" % (moduleTip.name))
-        _moduleTipMap[moduleTip.name] = moduleTip
-    _moduleTipMap = _moduleTipMap
+        moduleTipMap[moduleTip.name] = moduleTip
+    _moduleTipMap = moduleTipMap
     ftlog.debug("newfish moduletip._reloadConf successed modules=", _moduleTipMap.keys())
 
 
@@ -90,7 +93,22 @@ def handleEvent(event):
             return
         if event.type == 1:
             isChange = setTipValue(event.userId, moduleTip, event.value)
-            pass
+        elif event.type == 0:
+            isChange = delTipValue(event.userId, moduleTip, event.value)
+        else:
+            isChange = resetTipValue(event.userId, moduleTip)
+        if not isChange:
+            ftlog.debug("handleEvent->", event.userId, event.name, event.value)
+            return
+        from newfish.entity import util
+        level = util.getUnlockCheckLevel(event.userId)
+        if event.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
+            return
+        moduleNames = [event.name]
+        ftlog.debug("newfish module_tip modulename=", event.name, "value =", event.value, "userId=", event.userId, event.type)
+        modules = getInfo(event.userId, moduleNames)
+        mo = buildInfo(modules)
+        router.sendToUser(mo, event.userId)
 
 
 def addModuleTipEvent(userId, moduleName, value):
@@ -107,7 +125,10 @@ def cancelModuleTipEvent(userId, moduleName, value):
     """
     取消对应的提示信息
     """
-    pass
+    from newfish.game import TGFish
+    tip = FishModuleTipEvent(userId, FISH_GAMEID, 0, moduleName, value)
+    TGFish.getEventBus().publishEvent(tip)
+    ftlog.debug("newfish cancelModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
 
 
 def resetModuleTipEvent(userId, moduleName):
@@ -118,6 +139,24 @@ def resetModuleTipEvent(userId, moduleName):
     tip = FishModuleTipEvent(userId, FISH_GAMEID, -1, moduleName, None)
     TGFish.getEventBus().publishEvent(tip)
     ftlog.debug("newfish resetModuleTipEvent name=", moduleName, "userId=", userId)
+
+
+def buildInfo(modules):
+    """构建消息"""
+    mo = MsgPack()
+    mo.setCmd("module_tip")
+    mo.setResult("gameId", FISH_GAMEID)
+    mo.setResult("action", "fishUpdate")
+    modulesInfo = []
+    for module in modules:
+        modulesInfo.append({
+            "name": module.name,
+            "type": module.type,
+            "value": module.value,
+            "needReport": module.needReport
+        })
+    mo.setResult("modules", modulesInfo)
+    return mo
 
 
 def _buildModuleTipKey(moduleTip):
@@ -139,9 +178,108 @@ def getTipValue(userId, moduleTip):
     return value
 
 
-def setTipValue(userId, moduleTip):
+def setTipValue(userId, moduleTip, value):
     """设置提示的值"""
     oldValues = getTipValue(userId, moduleTip)
+    values = deepcopy(oldValues)
+    if isinstance(value, list):
+        values.extend(list(set(value)))
+        values = list(set(values))
+    elif value not in values:
+        values.append(value)
+    gamedata.setGameAttr(userId, FISH_GAMEID, _buildModuleTipKey(moduleTip), json.dumps(values))
+    return not values or oldValues != values
+
+
+def delTipValue(userId, moduleTip, value):
+    """删除提示红点"""
+    oldValues = getTipValue(userId, moduleTip)
+    values = deepcopy(oldValues)
+    if isinstance(value, list):
+        values = list(set(values) - set(value))
+        values = list(set(values))
+    elif value in values:
+        values.remove(value)
+    gamedata.setGameAttr(userId, FISH_GAMEID, _buildModuleTipKey(moduleTip), json.dumps(values))
+    return not values or oldValues != values
+
+
+def resetTipValue(userId, moduleTip):
+    """充值提示红点的值"""
+    gamedata.setGameAttr(userId, FISH_GAMEID, _buildModuleTipKey(moduleTip), json.dumps([]))
+    return True
+
+
+def getInfo(userId, moduleNames):
+    """
+    获取模块tip信息
+    """
+    if moduleNames:
+        return getModulesInfo(userId, moduleNames)
+    else:
+        return getAllModulesInfo(userId)
+
+
+def getModulesInfo(userId, moduleNames):
+    """
+    获取模块tip信息
+    @param userId: 用户Id
+    @param moduleNames: 模块名
+    @return: list<ModuleTip>
+    """
+    from newfish.entity import util
+    level = util.getUnlockCheckLevel(userId)
+    modules = []
+    for moduleName in moduleNames:
+        m = findModuleTip(moduleName)
+        if m:
+            module = strutil.cloneData(m)
+            if module.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
+                module.value = []
+            else:
+                module.value = getTipValue(userId, module)
+            modules.append(module)
+    return modules
+
+
+def getAllModulesInfo(userId):
+    """
+    获取所有模块tip信息
+    """
+    from newfish.entity import util
+    level = util.getUnlockCheckLevel(userId)
+    global _moduleTipMap
+    modules = []
+    for _key, value in _moduleTipMap.iteritems():
+        module = strutil.cloneData(value)
+        if module.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
+            module.value = []
+        else:
+            module.value = getTipValue(userId, module)
+        modules.append(module)
+    return modules
+
+
+def delModulesTipValue(userId, moduleNames, values):
+    """
+    删除模块tip信息中某个值
+    @param userId: 用户Id
+    @param moduleNames: 模块名
+    @param values: 模块信息中的值
+    """
+    moduleNames = moduleNames if isinstance(moduleNames, list) else [moduleNames]
+    values = values if isinstance(values, list) else [values]
+    moduleValues = zip(moduleNames, values)
+    for moduleValue in moduleValues:
+        moduleName = moduleValue[0]
+        value = moduleValue[1]
+        module = findModuleTip(moduleName)
+        if module:
+            if value == 0:
+                resetTipValue(userId, module)
+            else:
+                delTipValue(userId, module, value)
+    return getModulesInfo(userId, moduleNames)
 
 
 def resetModuleTip(userId, moduleName):
