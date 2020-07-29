@@ -301,31 +301,31 @@ class Octopus(HeartbeatAble):
         """
         计算出场前状态开始时间戳
         """
-        return self.idleTime + self.octopusConf["idle.times"]
+        return self.idleTime + self.octopusConf["idle.time"]
 
     def calcAppearingTime(self):
         """
         计算出场中状态开始时间戳
         """
-        return self.prepareTime + self.octopusConf["prepare.times"]
+        return self.prepareTime + self.octopusConf["prepare.time"]
 
     def calcAppearedTime(self):
         """
         计算已出现状态开始时间戳
         """
-        return self.appearingTime + self.octopusConf["appearing.times"]
+        return self.appearingTime + self.octopusConf["appearing.time"]
 
     def calcLeaveTime(self):
         """
         计算退场中状态开始时间戳
         """
-        return self.appearedTime + self.octopusConf["appeared.times"]
+        return self.appearedTime + self.octopusConf["appeared.time"]
 
     def calcFinalTime(self):
         """
         计算结束状态开始时间戳
         """
-        return self.leaveTime + self.octopusConf["leave.times"]
+        return self.leaveTime + self.octopusConf["leave.time"]
 
     def getCurrentStateStageTime(self):
         """

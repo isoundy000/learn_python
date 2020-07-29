@@ -26,7 +26,8 @@ class QueenFishGroup(SuperBossFishGroup):
         # boss出生间隔.
         self._interval = 90             # 600
         # boss的存在时间.
-        self._maxAliveTime = 150
+        self._maxAliveTime = 150        # 总时长
+        # 龙女王
         self._fishType = 74207
         # 女王保护罩.
         self._maskFishType = 74215
@@ -48,15 +49,13 @@ class QueenFishGroup(SuperBossFishGroup):
         """展示boss的状态"""
         self._isBossShowTimeStage |= val
         if ftlog.is_debug():
-            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId,
-                        hex(self._isBossShowTimeStage), hex(val))
+            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId, hex(self._isBossShowTimeStage), hex(val))
 
     def _removeBossShowTimeStage(self, val):
         """删除boss状态"""
         self._isBossShowTimeStage &= ~val
         if ftlog.is_debug():
-            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId,
-                        hex(self._isBossShowTimeStage), hex(val))
+            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId, hex(self._isBossShowTimeStage), hex(val))
 
     def _clearData(self, isSendMsg=True, fishType=0):
         """
@@ -74,8 +73,7 @@ class QueenFishGroup(SuperBossFishGroup):
             self.table.deleteFishGroup(self._group)
         self._group = None
         if ftlog.is_debug():
-            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId,
-                        ", isSendMsg =", isSendMsg, "fishType =", fishType)
+            ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId, ", isSendMsg =", isSendMsg, "fishType =", fishType)
         if isSendMsg:
             msg = MsgPack()
             msg.setCmd("superboss_end")
@@ -151,8 +149,8 @@ class QueenFishGroup(SuperBossFishGroup):
         """
         self._clearData(False)
         self._isBossShowTimeStage = 0
-        if self._interval - 30 > 0:
-            FTLoopTimer(self._interval - 30, 0, self._addBossShowTimeStage, 0x1000).start()
+        if self._interval - 7 > 0:
+            FTLoopTimer(self._interval - 7, 0, self._addBossShowTimeStage, 0x1000).start()
         # 渔场内人数不满足时不出生boss.
         # if self.table.playersNum < self.table.room.roomConf["superBossMinSeatN"]:
         #     return

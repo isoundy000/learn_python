@@ -89,7 +89,23 @@ class FishPoseidonRoom(TYNormalRoom):
             2> 为了防止同一张桌子同时被选出来分配座位，选桌时会把tableScore里选出的桌子删除，玩家坐下成功后再添加回去，添回去之前无需刷新该桌子的评分。
             3> 玩家自选桌时，可能选中一张正在分配座位的桌子，此时需要休眠后重试，只到该桌子完成分配或者等待超时。
         """
-        pass
+        assert self.roomId == msg.getParam("roomId")
+
+        userId = msg.getParam("userId")
+        shadowRoomId = msg.getParam("shadowRoomId")
+        tableId = msg.getParam("tableId")
+        clientId = msg.getParam("clientId")
+        ftlog.hinfo(getMethodName(), "->|userId, clientId, roomId, shadowRoomId, tableId:", userId, clientId, self.roomId, shadowRoomId, tableId)
+
+        if self.runStatus != self.ROOM_STATUS_RUN:
+            FishQuickStart.onQuickStartFailed(FishQuickStart.ENTER_ROOM_REASON_MAINTENANCE, userId, clientId, self.roomId)
+            return
+        if tableId == 0:                # 服务器为玩家选择桌子并坐下
+            details = bireport.getRoomOnLineUserCount(FISH_GAMEID, True)[2]
+            ftlog.debug("doQuickStart->", self.roomDefine.shadowRoomIds, details)
+            complete = False
+            roomIds = self.roomDefine.shadowRoomIds
+            pass
 
     def _reportRoomUserOccupy(self):
         """
