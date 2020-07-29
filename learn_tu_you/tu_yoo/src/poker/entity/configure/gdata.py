@@ -65,6 +65,7 @@ curProcess = psutil.Process()
 
 
 def _initialize():
+    """初始化全局配置"""
     global _datas
     if len(_datas) <= 0:
         ftlog.info('_initialize gdata begin.')

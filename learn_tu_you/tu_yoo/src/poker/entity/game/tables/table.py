@@ -26,8 +26,7 @@ class TYTable(object):
             tableId : 系统分配的唯一桌子ID
         '''
         if ftlog.is_debug():
-            ftlog.debug("<<", "|roomId:", room.roomId, "|talbeId:", tableId,
-                    "|tableConf", room.tableConf, caller=self)
+            ftlog.debug("<<", "|roomId:", room.roomId, "|talbeId:", tableId, "|tableConf", room.tableConf, caller=self)
         self.__gameId = room.gameId             # 当前桌子的GAMEID
         self.__tableId = tableId                # 当前桌子的唯一ID
         self.__room = room                      # 当前桌子隶属的房间
@@ -235,7 +234,7 @@ class TYTable(object):
     def _doTableManage(self, msg, action):
         '''
         桌子内部处理所有的table_manage命令
-         '''
+        '''
         return None
 
     @catchedmethod

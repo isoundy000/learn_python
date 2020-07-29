@@ -197,6 +197,7 @@ class TYRoom(object):
         pass
 
     def doQuickStart(self, msg):
+        """需要子类自行实现"""
         pass
 
     def doCheckUserLoc(self, userId, gameId, roomId, tableId, clientId):

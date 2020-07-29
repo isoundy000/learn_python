@@ -156,7 +156,7 @@ class FishNormalRoom(TYNormalRoom):
         return mpSitReq
 
     def roomUserOccupy(self, shadowRoomId, roomOccupy, extData=None):
-
+        """房间用户的容量"""
         for shadowRoomOccupy in self.shadowRoomIdOccupyList:
             if shadowRoomOccupy[0] == int(shadowRoomId):
                 shadowRoomOccupy[1] = roomOccupy

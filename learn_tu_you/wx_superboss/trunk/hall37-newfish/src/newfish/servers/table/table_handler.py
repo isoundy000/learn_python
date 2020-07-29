@@ -19,6 +19,7 @@ class TableTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="fish_table_call", action="*", clientIdVer=0, scope="game", lockParamName="userId")
     def doTableCall2(self, userId, roomId, tableId, clientId):
+        """渔场内的函数调用"""
         if strutil.getGameIdFromInstanceRoomId(roomId) == FISH_GAMEID:
             table = None
             msg = runcmd.getMsgPack()

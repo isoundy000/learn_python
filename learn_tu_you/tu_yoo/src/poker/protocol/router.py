@@ -14,6 +14,48 @@ from poker.util import strutil
 
 
 
+class _RouterServer():
+    """路由器服务器"""
+    def __init__(self, sids=None, srvType=None):
+        if not sids:
+            sids = []
+        self.srvType = srvType
+        self.sids = sids[:]
+        self.sidlen = len(self.sids)
+        if self.sidlen > 0:
+            self.sididx = random.randint(0, self.sidlen - 1)
+        else:
+            self.sididx = 0
+        self.sids.sort()
+        if sids:
+            ftlog.debug('ROUTER->', self.sids, self.sidlen, self.sididx, caller=self)
+
+
+_connServer = _RouterServer()               # CO路由
+_utilServer = _RouterServer()               # UT路由
+_httpServer = _RouterServer()               # HT路由
+_sdkHttpServer = _RouterServer()            # SDK HT路由
+_gatewayHttpServer = _RouterServer()        # 网关HTT路由
+_robotServer = _RouterServer()              # RO路由
+_centerServer = _RouterServer()             # CT路由
+_agentServer = _RouterServer()              # AG路由 带领路由
+
+_cmd_route_map = {}
+_cmd_notuse_map = set()
+_cmd_group_match_set = set()
+
+
+def _initialize():
+    '''
+    初始化命令路由
+    '''
+    ftlog.debug('router._initialize begin')
+    allsrv = gdata.serverTypeMap()
+    pass
+
+
+
+
 def _initialize():
     '''
     初始化命令路由

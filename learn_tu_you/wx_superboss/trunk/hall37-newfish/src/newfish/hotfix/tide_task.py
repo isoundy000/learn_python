@@ -40,6 +40,11 @@ ftlog.info('zzzzzzzzzzzzzzccccccccc', gdata.srvIdRoomIdListMap())
 ftlog.info("roomIdDefineMap", gdata.roomIdDefineMap())
 
 
-gdata.allServersMap()
-gdata.srvIdRoomIdListMap()
-gdata.serverId()
+import freetime.util.log as ftlog
+from freetime.core.timer import FTLoopTimer
+from poker.entity.configure import gdata
+def _main():
+    ftlog.info('zzzzzz', gdata.serverId())
+    ftlog.info('zzzzzz', gdata.srvIdRoomIdListMap())
+    ftlog.info('zzzzzz', gdata.allServersMap())
+FTLoopTimer(0, 0, _main)

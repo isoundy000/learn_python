@@ -45,10 +45,10 @@ from newfish.entity.task.tide_task import TideTask
 
 
 class FishTable(TYTable):
-
+    """捕鱼桌子基类"""
     def __init__(self, room, tableId):
         super(FishTable, self).__init__(room, tableId)
-        self.clear()
+        self.clear()                                                        # 清理桌子
         # 状态检查间隔时间
         self._checkStateSeconds = 60
         # 用户离线等待时间
@@ -63,16 +63,15 @@ class FishTable(TYTable):
         self.initFishGroupData()
         self.startFishGroup()
         # 循环检查牌桌内用户状态
-        FTLoopTimer(self._checkStateSeconds, -1, self.checkState).start()
+        FTLoopTimer(self._checkStateSeconds, -1, self.checkState).start()   # 检查玩家状态 60s检查一次 给玩家踢掉
         # 捕鱼成本收益
         self.cb_reporter = FishCostBenefitModule(self.roomId, tableId, self)
-
         # 循环检查渔场内用户活动开启状态
         FTLoopTimer(31, -1, self.checkActivity).start()
 
         self.actionMap = {
             "leave": self._clearPlayer,                                 # 玩家
-            "robot_leave": self._robotLeave,
+            "robot_leave": self._robotLeave,                            # 机器人离开房间
             "catch": self._verifyCatch,                                 # 验证该次捕获是否有效
             "skill_use": self._skill_use,                               # 使用技能 1使用 0取消
             "skill_install": self._skill_install,                       # 技能穿上1、卸下0
@@ -125,12 +124,12 @@ class FishTable(TYTable):
             "gun_change_skin": self._chgGunSkin,                        # 切换火炮皮肤
             "gun_compose_skin": self._composeGunSin,                    # 合成火炮皮肤
             "ping": self._ping,                                         # 心跳
-            "m_surpass": self._surpassTarget,
+            "m_surpass": self._surpassTarget,                           # 回馈赛需要超越的玩家
             "total_catch": self._totalCatch                             # 发送圆盘数据
         }
         self.tideTaskSystem = TideTask(self)                            # 鱼潮任务
         if "table" in self.runConfig.taskSystemType:                    # 使用的任务系统
-            self.taskSystemTable = TaskSystemTable(self)
+            self.taskSystemTable = TaskSystemTable(self)                # 渔场内任务管理系统
             self.systemTableActionMap = {
                 "task_ready": self.taskSystemTable.taskReady,           # 任务准备
                 "task_start": self.taskSystemTable.taskStart,           # 开始
@@ -144,12 +143,12 @@ class FishTable(TYTable):
 
     def _doTableCall(self, msg, userId, seatId, action, clientId):
         """
-        桌子内部处理所有的table_call命令
+        桌子内部处理所有的table_call命令  大厅转发过来的table_call
         子类需要自行判定userId和seatId是否吻合
         """
-        if 0 < seatId <= self.maxSeatN:
-            player = self.players[seatId - 1]
-            seat = self.seats[seatId - 1]
+        if 0 < seatId <= self.maxSeatN:                                 # 玩家在桌子内
+            player = self.players[seatId - 1]                           # 玩家数据
+            seat = self.seats[seatId - 1]                               # 座位数据
             if (not userId or not player or player.userId != userId or seat.userId != userId):
                 playerUid = player.userId if player else 0
                 ftlog.warn("_doTableCall, the userId is wrong !", playerUid, msg)
@@ -159,7 +158,7 @@ class FishTable(TYTable):
                 ftlog.warn("invalid seatId", userId, action)
                 return False
 
-        func = self.actionMap.get(action)
+        func = self.actionMap.get(action)                               # 获取渔场内的执行函数
         if ftlog.is_debug():
             ftlog.debug("_doTableCall", userId, action)
         if func:
@@ -178,7 +177,7 @@ class FishTable(TYTable):
             seat = self.seats[seatId - 1]
             # 开火时更新活动时间
             if player and action == "fire":
-                player.lastActionTime = int(time.time())    # 更新最后action的时间
+                player.lastActionTime = int(time.time())                                        # 更新最后action的时间
             if (not userId or not player or player.userId != userId or seat.userId != userId):
                 if action != "ping":
                     playerUid = player.userId if player else 0
@@ -239,10 +238,10 @@ class FishTable(TYTable):
 
     def startFishGroup(self):
         """
-        启动鱼阵
+        启动普通鱼的鱼阵
         """
         self.fishGroupSystem = FishGroupSystem(self)
-        if self.runConfig.allNormalGroupIds:
+        if self.runConfig.allNormalGroupIds:    # 普通鱼
             self.normalFishGroup = NormalFishGroup(self)
 
     def clearFishGroup(self):
@@ -272,8 +271,7 @@ class FishTable(TYTable):
         """
         self._resetTableConf()
         if ftlog.is_debug():
-            ftlog.debug("_checkReloadRunConfig->", self.tableId, self.playersNum,
-                        self.configChanged, self._runConfig)
+            ftlog.debug("_checkReloadRunConfig->", self.tableId, self.playersNum, self.configChanged, self._runConfig)
 
     def _resetTableConf(self):
         """
@@ -295,16 +293,17 @@ class FishTable(TYTable):
 
     def checkState(self):
         """
-        检查玩家状态
+        检查玩家状态 60s检查一次
         """
         for player in self.players:
-            if player and player.userId:
-                intervalTime = int(time.time()) - player.lastActionTime
-                # 用户空闲超时时间 3分钟 | 用户离线等待时间 1分钟 | 用户无子弹时超时时间 3分钟
-                if (intervalTime >= self._idleTimeOutSeconds) or \
-                   (intervalTime >= self._offlineWaitSeconds and player.offline) or \
-                   (intervalTime >= self._inactiveTimeOutSeconds and player.clip == 0):
-                    self.clearPlayer(player)
+            if not (player and player.userId):
+                continue
+            intervalTime = int(time.time()) - player.lastActionTime
+            # 用户空闲超时时间 3分钟 | 用户离线等待时间 1分钟 | 用户无子弹时超时时间 3分钟
+            if (intervalTime >= self._idleTimeOutSeconds) or \
+               (intervalTime >= self._offlineWaitSeconds and player.offline) or \
+               (intervalTime >= self._inactiveTimeOutSeconds and player.clip == 0):
+                self.clearPlayer(player)
 
     def getPlayer(self, userId):
         """
@@ -3009,6 +3008,7 @@ class FishTable(TYTable):
             player.prizeWheel.setRewards(player.fpMultiple, bet, betType)
 
     def checkActivity(self):
+        """检查活动是否开启"""
         pass
 
     def _activity_all_btns(self, msg, userId, seatId):

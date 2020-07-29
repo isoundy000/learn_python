@@ -67,6 +67,7 @@ def ftExists(roomId, ftId):
 
 @markRpcCall(groupName="roomId", lockName="", syncCall=1)
 def reportRoomUserOccupy(roomId, shadowRoomId, roomOccupy, extData=None):
+    """向GR汇报当前GT容量"""
     return gdata.rooms()[roomId].roomUserOccupy(shadowRoomId, roomOccupy, extData)
 
 

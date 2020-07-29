@@ -13,6 +13,15 @@ from freetime.core.lock import FTLock
 import freetime.entity.service as ftsvr
 
 
+
+def isCmdTask():
+    '''
+    判定当前是否是TCP命令,引发的tasklet
+    '''
+    session = stackless.getcurrent()._fttask.session
+    return session.get('iscmd', 0)
+
+
 def getMsgPack():
     '''
     取得当前TCP的消息
