@@ -44,7 +44,19 @@ import freetime.util.log as ftlog
 from freetime.core.timer import FTLoopTimer
 from poker.entity.configure import gdata
 def _main():
-    ftlog.info('zzzzzz', gdata.serverId())
-    ftlog.info('zzzzzz', gdata.srvIdRoomIdListMap())
+    ftlog.info('zzzzzz', gdata.serverId())                  # GT0044001_999
+    ftlog.info('zzzzzz', gdata.srvIdRoomIdListMap())        # {'GT0044001_999': [441011001, 441021001, 441031001, 441041001, 443011001, 443021001, 444021001, 444031001, 444041001, 444051001, 444111001, 444121001, 444141001, 444151001, 444991001, 445011001, 446011001]}
     ftlog.info('zzzzzz', gdata.allServersMap())
-FTLoopTimer(0, 0, _main)
+
+
+
+import freetime.util.log as ftlog
+from freetime.core.timer import FTLoopTimer
+from poker.entity.configure import gdata
+def _main1():
+    ftlog.info('ssssss')
+a = FTLoopTimer(20, -1, _main1)
+a.start()
+ftlog.info('cccccc', a.getTimeOut())
+a.reset(30)
+ftlog.info('dddddd', a.getTimeOut())

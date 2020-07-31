@@ -23,24 +23,18 @@ class QueenFishGroup(SuperBossFishGroup):
     def __init__(self, table):
         super(QueenFishGroup, self).__init__()
         self.table = table
-        # boss出生间隔.
-        self._interval = 90             # 600
-        # boss的存在时间.
-        self._maxAliveTime = 150        # 总时长
-        # 龙女王
-        self._fishType = 74207
-        # 女王保护罩.
-        self._maskFishType = 74215
-        # boss出现的时间戳.
-        self._startTS = 0
+        self._interval = 300            # boss出生间隔.
+        self._maxAliveTime = 150        # boss的存在时间. 总时长
+        self._fishType = 74207          # 龙女王
+        self._maskFishType = 74215      # 女王保护罩.
+        self._startTS = 0               # boss出现的时间戳.
         self._nextTimer = None
-        # showtime是boss出现前30秒(stage=0x1000), 有保护罩(0x1), 没有保护罩(0x10).
-        self._isBossShowTimeStage = 0
+        self._isBossShowTimeStage = 0   # showtime是boss出现前30秒(stage=0x1000), 有保护罩(0x1), 没有保护罩(0x10).
+        self._hasBorned = False
         self._autofillTimer = None
-        # 清理鱼阵的定时器.
-        self._clearTimer = None
+        self._clearTimer = None         # 清理鱼阵的定时器.
         self._group = None
-        self._setTimer()
+        self._setTimer()                # 设置定时器
 
     def addTestSuperBoss(self):
         self._addFishGroup()
@@ -62,6 +56,7 @@ class QueenFishGroup(SuperBossFishGroup):
         boss出生前清理相关数据
         """
         self._stageCount = 0
+        self._hasBorned = False
         if self._autofillTimer:
             self._autofillTimer.cancel()
         self._autofillTimer = None
@@ -124,10 +119,15 @@ class QueenFishGroup(SuperBossFishGroup):
             self._removeBossShowTimeStage(0x1)
             return
         self._group = None
-        # if self._isBossShowTimeStage & 0x1:# 有保护罩.
-        _bossGroupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
-        # else:# 无保护罩.
-        #     _bossGroupIds = self.table.runConfig.allSuperBossFastMoveGroupIds[fishType]
+        # 使用出生路径.
+        if not self._hasBorned:
+            self._hasBorned = True
+            _bossGroupIds = self.table.runConfig.allSuperBossBornGroupIds[fishType]
+        else:
+            if self._isBossShowTimeStage & 0x1:         # 有保护罩.
+                _bossGroupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
+            else:                                       # 无保护罩.
+                _bossGroupIds = self.table.runConfig.allSuperBossFastMoveGroupIds[fishType]
         if _bossGroupIds:
             _bossGroupId = random.choice(_bossGroupIds)
             if ftlog.is_debug():
@@ -141,7 +141,7 @@ class QueenFishGroup(SuperBossFishGroup):
                     self._addBossShowTimeStage(0x1)
                 return self._group
         ftlog.error("superboss_fish_group.QueenFishGroup, error, tableId =", self.table.tableId)
-        return None
+        return
 
     def _addFishGroup(self):
         """
@@ -149,11 +149,11 @@ class QueenFishGroup(SuperBossFishGroup):
         """
         self._clearData(False)
         self._isBossShowTimeStage = 0
-        if self._interval - 7 > 0:
-            FTLoopTimer(self._interval - 7, 0, self._addBossShowTimeStage, 0x1000).start()
+        if self._interval - 30 > 0:
+            FTLoopTimer(self._interval - 30, 0, self._addBossShowTimeStage, 0x1000).start()
         # 渔场内人数不满足时不出生boss.
-        # if self.table.playersNum < self.table.room.roomConf["superBossMinSeatN"]:
-        #     return
+        if self.table.playersNum < self.table.room.roomConf["superBossMinSeatN"]:
+            return
         if ftlog.is_debug():
             ftlog.debug("superboss_fish_group.QueenFishGroup, tableId =", self.table.tableId)
         self._startTS = int(time.time())

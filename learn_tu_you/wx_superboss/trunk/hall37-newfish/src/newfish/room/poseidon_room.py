@@ -40,9 +40,9 @@ class FishPoseidonRoom(TYNormalRoom):
         self.poseidon = None
         self.lastTowerTotalBets = [0, 0, 0]                     # 最后充能的电能倍率
         if gdata.serverType() == gdata.SRV_TYPE_ROOM:
-            self.allTableDict = {}
-            self.initialized = False
-            self.initializedRoomIds = set()
+            self.allTableDict = {}              # {roomId: {tableId: table, tableId1, table}}
+            self.initialized = False            # 初始化所有的影子房间
+            self.initializedRoomIds = set()     # roomId
             self.initPoseidon()
         if gdata.serverType() == gdata.SRV_TYPE_TABLE:
             self._allTableDict = {}
@@ -73,7 +73,16 @@ class FishPoseidonRoom(TYNormalRoom):
         """
         GT初始化完成
         """
-        pass
+        ftlog.debug("initializedGT->", shadowRoomId, tableCount)
+        for i in xrange(tableCount):
+            tableId = shadowRoomId * 10000 + i + 1
+            table = Table(self.gameId, shadowRoomId, tableId)
+            self.allTableDict.setdefault(shadowRoomId, {})
+            self.allTableDict[shadowRoomId][table.tableId] = table
+        self.initializedRoomIds.add(shadowRoomId)
+        if len(self.initializedRoomIds) == len(self.roomDefine.shadowRoomIds):
+            self.initialized = True
+        ftlog.debug("initializedGT->", self.initialized, self.allTableDict)
 
     def initPoseidon(self):
         """
@@ -105,7 +114,36 @@ class FishPoseidonRoom(TYNormalRoom):
             ftlog.debug("doQuickStart->", self.roomDefine.shadowRoomIds, details)
             complete = False
             roomIds = self.roomDefine.shadowRoomIds
-            pass
+            # 按VIP等级分桌
+            vipRoomConf = OrderedDict({6: -3, 3: -6, 1: -8, 0: -10})
+            vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
+            index = 0
+            for level in vipRoomConf:
+                if vipLevel >= level:
+                    index = vipRoomConf[level]
+                    break
+            for roomId in roomIds[index:]:
+                tableCount = self.roomDefine.configure["gameTableCount"]
+                maxSeatN = self.tableConf["maxSeatN"]
+                if details.get(str(roomId)) < int(tableCount * maxSeatN * self.roomConf.get("occupyMax", 0.9)):
+                    shadowRoomId = roomId
+                    complete = True
+                    break
+            if not complete:
+                shadowRoomId = choice(self.roomDefine.shadowRoomIds)
+            tableId = self.getBestTableId(userId, shadowRoomId)
+        else:                           # 玩家自选桌子坐下
+            assert isinstance(shadowRoomId, int) and gdata.roomIdDefineMap()[shadowRoomId].bigRoomId == self.roomDefine.bigRoomId
+            tableId = self.enterOneTable(userId, shadowRoomId, tableId)
+
+        if not tableId:
+            ftlog.error(getMethodName(), "getFreeTableId timeout", "|userId, roomId, tableId:", userId, self.roomId, tableId)
+            return
+
+        if ftlog.is_debug():
+            ftlog.info(getMethodName(), "after choose table", "|userId, shadowRoomId, tableId:", userId, shadowRoomId, tableId)
+        extParams = msg.getKey("params")
+        self.querySitReq(userId, shadowRoomId, tableId, clientId, extParams)
 
     def _reportRoomUserOccupy(self):
         """
@@ -291,6 +329,46 @@ class Poseidon(HeartbeatAble):
     @property
     def state(self):
         return self._state
+
+    def _doHeartbeat(self):
+        ftlog.is_debug() and ftlog.debug("Poseidon._doHeartbeat", "state=", self._state)
+        timestamp = pktimestamp.getCurrentTimestamp() + 1
+        if self._state is None and self.room.initialized:
+            self.postCall(self._doIdle)
+        elif self._state == Poseidon.ST_IDLE:
+            self._sendLed(timestamp, self.prepareTime)
+            if timestamp >= self.prepareTime:
+                self.postCall(self._doPrepare)
+        elif self._state == Poseidon.ST_PREPARE:
+            if timestamp >= self.appearTime:
+                self.postCall(self._doAppear)
+        elif self._state == Poseidon.ST_APPEAR:
+            if timestamp >= self.leaveTime:
+                self.postCall(self._doLeave)
+        elif self._state == Poseidon.ST_LEAVE:
+            if timestamp >= self.finalTime:
+                self.postCall(self._doFinal)
+        return 1
+
+    def _doIdle(self):
+        """
+        海皇空闲状态
+        """
+        self.poseidonConf = self.room.roomConf["poseidonConf"]
+        self._state = Poseidon.ST_IDLE
+        self._cron = FTCron(self.poseidonConf["times"])
+        self.appearTimeStrList = [time_.strftime("%R") for time_ in self._cron.getTimeList()]
+        # 海皇空闲状态开始时间戳
+        self.idleTime = self.calcIdleTime()
+
+
+
+    def calcIdleTime(self):
+        """
+        计算空闲时间戳
+        """
+        return pktimestamp.getCurrentTimestamp() + 1
+
 
 
 class Tower(HeartbeatAble):

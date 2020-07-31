@@ -72,7 +72,7 @@ class BossFishGroup(object):
             self._bossAppearTS = int(time.time())
             self._fishType = 0
             randomNum = random.randint(1, 10000)
-            for bossFishMap in config.getBossFishConf(self.table.runConfig.fishPool):
+            for bossFishMap in config.getBossFishConf(self.table.runConfig.fishPool, self.table.runConfig.gameMode):
                 probb = bossFishMap["probb"]
                 if probb[0] <= randomNum <= probb[-1]:
                     self._fishType = bossFishMap["fishType"]

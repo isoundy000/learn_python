@@ -22,7 +22,7 @@ import freetime.util.log as ftlog
 from tasklet import FTTasklet
 
 
-class FTTimeoutException(Exception,)
+class FTTimeoutException(Exception,):
     pass
 
 
@@ -38,7 +38,6 @@ def _countProtocolPack(ptype, proto, count_block=10000):
 
 def ppsCountProtocolPack():
     pass
-
 
 
 class FTProtocolBase(object):
@@ -60,16 +59,16 @@ class FTProtocolBase(object):
     """
 
     def lostHandler(self, reason):
-        pass
+        raise NotImplementedError('TCP protocol should create lostHandler')
 
     def madeHandler(self):
-        pass
+        raise NotImplementedError('Should create the method function')
 
     def getTaskletFunc(self, pack):
-        pass
+        raise NotImplementedError('Should create the method function')
 
     def parseData(self, data):
-        pass
+        return data
 
     def closeConnection(self, isabort=0):
         pass
@@ -141,7 +140,7 @@ class FTUDPQueryProtocol(DatagramProtocol, FTProtocolBase):
         pass
 
 
-class FTTCPServerProtocol(LineReceiver, FTProtocolBase,)
+class FTTCPServerProtocol(LineReceiver, FTProtocolBase):
 
     def connectionMade(self):
         pass
@@ -264,7 +263,7 @@ class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):
 
 
 class FTHttpRequest(twisted.web.http.Request, FTProtocolBase):
-
+    """http请求处理"""
     def process(self):
         try:
             _countProtocolPack(2, self, 1000)
@@ -279,4 +278,5 @@ class FTHttpRequest(twisted.web.http.Request, FTProtocolBase):
 
 
 class FTHttpChannel(twisted.web.http.HTTPChannel):
+    """http通道"""
     requestFactory = FTHttpRequest

@@ -35,7 +35,7 @@ class BufferFishGroup(object):
     def _initData(self):
         """初始化数据"""
         self.fishes = {}
-        for bufferFishMap in config.getBufferFishConf(self.table.runConfig.fishPool):
+        for bufferFishMap in config.getBufferFishConf(self.table.runConfig.fishPool, self.table.runConfig.gameMode):
             fishType = bufferFishMap["fishType"]
             self.fishes.setdefault(fishType, [])
             for groupId in self.table.runConfig.allBufferGroupIds:
@@ -58,7 +58,7 @@ class BufferFishGroup(object):
         fishType = 0
         randomNum = random.randint(1, 10000)
         ftlog.debug("_addBufferFishGroup", randomNum)
-        for bufferFishMap in config.getBufferFishConf(self.table.runConfig.fishPool):
+        for bufferFishMap in config.getBufferFishConf(self.table.runConfig.fishPool, self.table.runConfig.gameMode):
             probb = bufferFishMap["probb"]
             if probb[0] <= randomNum <= probb[-1]:
                 fishType = bufferFishMap["fishType"]

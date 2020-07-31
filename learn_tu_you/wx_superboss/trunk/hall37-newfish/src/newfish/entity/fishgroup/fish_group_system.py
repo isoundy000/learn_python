@@ -126,40 +126,45 @@ class FishGroupSystem(object):
         groupNames = groupNames if isinstance(groupNames, list) else [groupNames]
         allGroups = self.table.runConfig.fishGroups
         newGroups = []
-        for _, groupName in enumerate(groupNames):
-            if groupName not in allGroups:
-                ftlog.error("invalid fish groupType", groupName)
-                return None
-            groupConf = allGroups[groupName]
-            if ftlog.is_debug():
-                ftlog.debug("insertFishGroup->groupConf =", groupName, groupConf)
-            enterTime = time.time() - self.table.startTime
-            startFishId = self._getNewFishId(len(groupConf["fishes"]))
-            group = FishGroup(groupConf, enterTime, self._getNewGroupId(), startFishId, position, gameResolution,
-                              deadCallback=self.deleteFishGroup)
-            if ftlog.is_debug():
-                ftlog.debug("insertFishGroup:", group.desc(), self.table.tableId, enterTime)
-            for i in xrange(group.fishCount):
-                conf = group.fishes[i]
-                fishType = conf.get("fishType")
-                fishConf = config.getFishConf(fishType, self.table.typeName, self.table.runConfig.multiple)
-                HP = HP if HP else fishConf["HP"]
-                self.table.fishMap[startFishId + i] = {
-                    "group": group,
-                    "conf": conf,
-                    "HP": HP,
-                    "buffer": deepcopy(buffer),
-                    "multiple": 1,
-                    "alive": True,
-                    "owner": userId,
-                    "score": score,
-                    "fishType": fishType,
-                    "sendUsersList": sendUserId if isinstance(sendUserId, list) else None
-                }
-                self.table.fishCountMap[fishType] = self.table.fishCountMap.setdefault(fishType, 0) + 1
-            self.table.callFishGroups[group.serverGroupId] = group
-            # ftlog.debug("insertFishGroup", self.table.tableId, group.serverGroupId, self.table.callFishGroups.keys())
-            newGroups.append(group)
+        groupName = None
+        fishType = None
+        try:
+            for _, groupName in enumerate(groupNames):
+                if groupName not in allGroups:
+                    ftlog.error("invalid fish groupType", groupName)
+                    return None
+                groupConf = allGroups[groupName]
+                if ftlog.is_debug():
+                    ftlog.debug("insertFishGroup->groupConf =", groupName, groupConf)
+                enterTime = time.time() - self.table.startTime
+                startFishId = self._getNewFishId(len(groupConf["fishes"]))
+                group = FishGroup(groupConf, enterTime, self._getNewGroupId(), startFishId, position, gameResolution,
+                                  deadCallback=self.deleteFishGroup)
+                if ftlog.is_debug():
+                    ftlog.debug("insertFishGroup:", group.desc(), self.table.tableId, enterTime)
+                for i in xrange(group.fishCount):
+                    conf = group.fishes[i]
+                    fishType = conf.get("fishType")
+                    fishConf = config.getFishConf(fishType, self.table.typeName, self.table.runConfig.multiple)
+                    HP = HP if HP else fishConf["HP"]
+                    self.table.fishMap[startFishId + i] = {
+                        "group": group,
+                        "conf": conf,
+                        "HP": HP,
+                        "buffer": deepcopy(buffer),
+                        "multiple": 1,
+                        "alive": True,
+                        "owner": userId,
+                        "score": score,
+                        "fishType": fishType,
+                        "sendUsersList": sendUserId if isinstance(sendUserId, list) else None
+                    }
+                    self.table.fishCountMap[fishType] = self.table.fishCountMap.setdefault(fishType, 0) + 1
+                self.table.callFishGroups[group.serverGroupId] = group
+                # ftlog.debug("insertFishGroup", self.table.tableId, group.serverGroupId, self.table.callFishGroups.keys())
+                newGroups.append(group)
+        except:
+            ftlog.error("insertFishGroup error", self.table.tableId, groupName, fishType)
         self.broadcastAddGroup(newGroups, sendUserId)
         return newGroups[0] if len(newGroups) == 1 else newGroups
 
@@ -167,6 +172,7 @@ class FishGroupSystem(object):
         """
         普通鱼群（单个鱼群时长一般为1分钟左右，鱼群中含有多条鱼且可以延迟出现）
         """
+        groupName = None
         fishType = None
         try:
             nowTableTime = time.time() - self.table.startTime
@@ -217,7 +223,7 @@ class FishGroupSystem(object):
             self.deleteFishGroups(self.table.normalFishGroups, len(newGroups))
             self.broadcastAddGroup(newGroups)
         except:
-            ftlog.error("addNormalFishGroups error", fishType)
+            ftlog.error("addNormalFishGroups error", self.table.tableId, groupName, fishType)
 
     def sendAddGroupMsg(self, groups, userIds):
         """

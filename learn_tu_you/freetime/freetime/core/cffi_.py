@@ -8,15 +8,33 @@
 """
 from cffi import FFI
 import os
+
 _ft_cffi = {}
-_FT_CDEF = 'int ftcode(int seed, char *data, int datalen, char *out); \n    ssize_t ftpread(int fd, void *buf, size_t count, size_t offset); \n    ssize_t ftpwrite(int fd, const void *buf, size_t count, size_t offset);'
+
+_FT_CDEF = """int ftcode(int seed, char *data, int datalen, char *out); 
+    ssize_t ftpread(int fd, void *buf, size_t count, size_t offset); 
+    ssize_t ftpwrite(int fd, const void *buf, size_t count, size_t offset);"""
+
 
 def loadCffi(libname, cdef_text, libpath):
-    pass
+    if libname in _ft_cffi:
+        return _ft_cffi[libname]
+    _ffi = FFI()
+    _ffi.cdef(cdef_text)
+    sofile = libpath + "/" + libname + ".so"
+    _lib = _ffi.dlopen(sofile)
+    _ft_cffi[libname] = (_lib, _ffi)
+
 
 def loadFTCffi():
-    pass
+    sodir = os.path.dirname(os.path.abspath(__file__)) + "/cffi/"
+    return loadCffi("ft", _FT_CDEF, sodir)
+
 
 def getCffi(libname):
-    pass
+    if libname in _ft_cffi:
+        return _ft_cffi[libname]
+    return (None, None)
+
+
 loadFTCffi()

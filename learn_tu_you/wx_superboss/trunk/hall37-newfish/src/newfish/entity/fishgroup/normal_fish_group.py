@@ -38,14 +38,13 @@ class NormalFishGroup(object):
     def _initData(self):
         """初始化数据"""
         self.fishes = {}
-        if self.table.typeName != config.FISH_ROBBERY:                  # 招财模式boss鱼潮
-            return
-        for bossFishMap in config.getBossFishConf(self.table.runConfig.fishPool):
-            fishType = bossFishMap["fishType"]
-            self.fishes.setdefault(fishType, [])
-            for groupId in self.table.runConfig.allRobberyBossGroupIds:
-                if fishType and str(fishType) in groupId:
-                    self.fishes[fishType].append(groupId)
+        if self.table.typeName == config.FISH_ROBBERY:                  # 招财模式boss鱼潮
+            for bossFishMap in config.getBossFishConf(self.table.runConfig.fishPool, self.table.runConfig.gameMode):
+                fishType = bossFishMap["fishType"]
+                self.fishes.setdefault(fishType, [])
+                for groupId in self.table.runConfig.allRobberyBossGroupIds:
+                    if fishType and str(fishType) in groupId:
+                        self.fishes[fishType].append(groupId)
 
     def _addNormalFishGroups(self):
         """

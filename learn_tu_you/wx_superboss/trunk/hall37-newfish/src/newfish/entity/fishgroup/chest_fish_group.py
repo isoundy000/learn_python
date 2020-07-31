@@ -5,9 +5,9 @@ Created by haohongxian on 2017/8/1.
 
 import random
 import math
+import time
 
 from freetime.util import log as ftlog
-import poker.util.timestamp as pktimestamp
 from newfish.entity import config
 
 
@@ -23,23 +23,25 @@ class ChestFishGroup(object):
         pass
 
     def checkCondition(self, player, fishConf):
-        """检查条件"""
+        """
+        检查出现条件
+        """
         userId = player.userId
         chestFishInterval = int(config.getCommonValueByKey("chestFishInterval", 120))
-        chestPoolCoin = self.table.room.lotteryPool.getChestPoolCoin()
-        chestFishConf = config.getChestFishConf(self.table.runConfig.fishPool)
-        playerMaxCoin = chestFishConf["maxCoin"]
-        profitForChest = player.profitForChest.get(str(self.table.runConfig.fishPool), 0)
-        resultNum = (math.sqrt(fishConf["score"]) - 30 * math.pow(profitForChest / playerMaxCoin, 3)) / 500
-        randomNum = random.randint(1, 10000)
-        ftlog.debug("checkCondition======>", userId, fishConf["score"], chestPoolCoin, profitForChest, resultNum * 10000, randomNum)
-        if chestPoolCoin > 0 and randomNum <= resultNum * 10000 and \
-                pktimestamp.getCurrentTimestamp() - self.chestFishTime >= chestFishInterval:
-            chestScore = self._getChestScore(chestFishConf)
-            player.clearProfitChest()
-            ftlog.debug("ChestFishGroup->checkCondition", userId, chestPoolCoin, chestScore)
-            self._addChestFishGroup(userId, chestScore)
-            self.chestFishTime = pktimestamp.getCurrentTimestamp()
+        if time.time() - self.chestFishTime >= chestFishInterval:
+            chestPoolCoin = self.table.room.lotteryPool.getChestPoolCoin()
+            chestFishConf = config.getChestFishConf(self.table.runConfig.fishPool)
+            playerMaxCoin = chestFishConf["maxCoin"]
+            profitForChest = player.profitForChest.get(str(self.table.runConfig.fishPool), 0)
+            resultNum = (math.sqrt(fishConf["score"]) - 30 * math.pow(profitForChest / playerMaxCoin, 3)) / 500
+            randomNum = random.randint(1, 10000)
+            if chestPoolCoin > 0 and randomNum <= resultNum * 10000:
+                chestScore = self._getChestScore(chestFishConf)
+                player.clearProfitChest()
+                self._addChestFishGroup(userId, chestScore)
+                self.chestFishTime = time.time()
+                if ftlog.is_debug():
+                    ftlog.debug("ChestFishGroup->checkCondition", userId, chestPoolCoin, profitForChest, chestScore)
 
     def _getChestScore(self, chestFishConf):
         """

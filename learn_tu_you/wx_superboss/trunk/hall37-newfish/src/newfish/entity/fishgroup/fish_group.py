@@ -15,24 +15,27 @@ class FishGroup(object):
     """
     def __init__(self, conf, enterTime, serverGroupId, startFishId, position=None, gameResolution=None, deadCallback=None):
         """
-        :param conf: 鱼阵配置文件 group_44201_1: conf = {id: "group_44201_1", fishes: [{"fishType": 10002(fishid), "enterTime": 2:02, "exitTime": 10.03}], "totalTime": 10;03}
-        :param enterTime: 该鱼群入场时间戳 10s
-        :param serverGroupId: 鱼群ID 1、2、3、4、...
-        :param startFishId: 该鱼群第一条鱼的鱼ID、10001、10002、| 10400
+        :param conf: 鱼阵配置文件 {"id": "autofill_11092_21_3", "fishes": [{"fishType": 11092, "enterTime": 0.0, "exitTime": 25.0}], "totalTime": 25.0}
+        :param enterTime: 该鱼群入场时间（渔场运行后的第n秒）
+        :param serverGroupId: 鱼群ID（每新增一个鱼群自增加1）
+        :param startFishId: 该鱼群第一条鱼的鱼ID
         :param position: 指定出现位置
         :param gameResolution: 召唤该鱼群的玩家的游戏分辨率
+        :param deadCallback: 鱼群死亡回调函数
         """
         self.position = position if position else [0, 0]
         self.gameResolution = gameResolution if gameResolution else []
         self.enterTime = enterTime
-        self.id = conf.get("id")                # 鱼群id
+        # 鱼群文件名字
+        self.id = conf.get("id")
+        # 鱼群类型
         groupType = self.id.split("_")[0]
-        if self.id.startswith("call_"):         # call_11002_lv13
+        if self.id.startswith("call_"):
             groupType = self.id.split("_")[1]
-        self.serverGroupId = serverGroupId      # 鱼群Id
+        self.serverGroupId = serverGroupId
         self.type = groupType
         self.totalTime = conf.get("totalTime")
-        self.fishes = conf.get("fishes")        # 一个鱼群中的所有鱼
+        self.fishes = conf.get("fishes")
         self.fishCount = len(self.fishes)
         self.exitTime = self.enterTime + self.totalTime
         self.startFishId = startFishId

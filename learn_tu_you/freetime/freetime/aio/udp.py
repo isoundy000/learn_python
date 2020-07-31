@@ -7,4 +7,6 @@ import stackless
 
 
 def sendQuery(query_protocol, data, timeout=1):
-    pass
+    """发送查询"""
+    d = query_protocol.query(data, timeout)
+    return stackless.getcurrent()._fttask.waitDefer(d)

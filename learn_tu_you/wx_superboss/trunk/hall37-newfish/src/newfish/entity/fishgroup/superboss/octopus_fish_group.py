@@ -33,9 +33,7 @@ class OctopusFishGroup(SuperBossFishGroup):
 
     def triggerCatchFishEvent(self, event):
         """触发捕鱼事件"""
-        catch = event.catch
-        fIds = [catchMap["fId"] for catchMap in catch if catchMap["reason"] == 0]
-        self.octopus.catchTentacles(fIds)
+        self.octopus.catchTentacles(event)
 
     def dealEnterTable(self, userId):
         """进入桌子"""
@@ -203,11 +201,13 @@ class Octopus(HeartbeatAble):
             _tentacle.clear()
         self._tentacles = []
 
-    def catchTentacles(self, fIds):
+    def catchTentacles(self, event):
         """
         捕获触手
         """
         if self._state == Octopus.ST_APPEARED:
+            catch = event.catch
+            fIds = [catchMap["fId"] for catchMap in catch if catchMap["reason"] == 0]
             isCatch = False
             for _tentacle in self._tentacles:
                 if _tentacle.state == Tentacle.ST_SWING and _tentacle.fishId in fIds:
@@ -339,7 +339,7 @@ class Octopus(HeartbeatAble):
             Octopus.ST_LEAVE: self.leaveTime,
             Octopus.ST_FINAL: self.finalTime
         }
-        return stateTime[self._state], stateTime[self._state + 1]
+        return [stateTime[self._state], stateTime[self._state + 1]]
 
     def generateNewTentacleConf(self, oldPosId):
         """
@@ -387,13 +387,9 @@ class Octopus(HeartbeatAble):
             msg.setResult("roomId", self.table.roomId)
             msg.setResult("tableId", self.table.tableId)
             msg.setResult("state", self.state)
-            startTime, endTime = self.getCurrentStateStageTime()
+            msg.setResult("progress", self.getCurrentStateStageTime())
+            GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
             ftlog.debug("syncOctopusState", self.table.tableId, msg)
-            if startTime and endTime:
-                msg.setResult("progress", [startTime, endTime])
-                GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
-            else:
-                ftlog.error("syncOctopusState error", self.table.tableId, msg)
 
     def syncTentacleState(self, tentacle=None, userId=0):
         """
@@ -586,7 +582,8 @@ class Tentacle(object):
         self.finalTime = self.calcFinalTime()
         stageTime = self.getCurrentStateStageTime()
         interval = stageTime[1] - pktimestamp.getCurrentTimestamp()
-        ftlog.debug("frozenTentacleFish", self.frozenTime, self.retractTime, interval)
+        if ftlog.is_debug():
+            ftlog.debug("frozenTentacleFish", self.frozenTime, self.retractTime, interval)
         self._swingTimer and self._swingTimer.cancel()
         self._swingTimer = FTLoopTimer(interval, 0, self._doRetract)
         self._swingTimer.start()
@@ -598,6 +595,6 @@ class Tentacle(object):
                 "fishId": self.fishId,
                 "fishType": self.fishType,
                 "state": self.state,
-                "progress": list(self.getCurrentStateStageTime())
+                "progress": self.getCurrentStateStageTime()
             }
         return {}

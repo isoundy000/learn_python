@@ -37,7 +37,7 @@ class BoxFishGroup(SuperBossFishGroup):
         self._autofillTimer = {}        # 自动填充的时间
         self._clearTimer = None         # 清理宝箱的定时器.
         self._group = {}                # 渔群信息
-        self._setTimer()
+        self._setTimer()                # 启动定时器
 
     def addTestSuperBoss(self):
         """添加测试boss"""
@@ -177,12 +177,12 @@ class BoxFishGroup(SuperBossFishGroup):
         if ftlog.is_debug():
             ftlog.debug("superboss_fish_group.BoxFishGroup, tableId =", self.table.tableId)
 
-        self._startTS = int(time.time())
-        self._fBossAppearTS = self._startTS + 90
-        for _ft in [self._bBossFishType, self._mBossFishType]:      # 宝箱爸爸、宝箱妈妈
+        self._startTS = int(time.time())                            # 宝箱怪出现的时间
+        self._fBossAppearTS = self._startTS + 90                    # 宝箱爸爸出现的时间
+        for _ft in [self._bBossFishType, self._mBossFishType]:      # 宝箱儿子、宝箱妈妈
             self._addBoss(_ft)
         # 超出boss存活时间后清理boss.
-        if self._maxAliveTime > 0:
+        if self._maxAliveTime > 0:                                  # 最大的存活时长
             self._clearTimer = FTLoopTimer(self._maxAliveTime + 2, 0, self._clearData)
             self._clearTimer.start()
 

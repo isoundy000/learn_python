@@ -613,7 +613,7 @@ Sec-WebSocket-Accept: %s\r\n\r\n\
 
 
 class FTHttpRequest(twisted.web.http.Request, FTProtocolBase):
-
+    """http请求"""
     def process(self):
         try:
             _countProtocolPack(2, self, 1000)

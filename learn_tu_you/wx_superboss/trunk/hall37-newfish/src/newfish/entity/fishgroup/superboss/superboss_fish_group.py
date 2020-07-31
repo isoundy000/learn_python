@@ -90,10 +90,10 @@ def createSuperBoss(table):
     """
     超级boss鱼阵
     """
-    from newfish.entity.fishgroup.superboss.box_fish_group import BoxFishGroup
+    from newfish.entity.fishgroup.superboss.box_fish_group import BoxFishGroup              # 宝箱怪鱼阵
     from newfish.entity.fishgroup.superboss.octopus_fish_group import OctopusFishGroup		# 巨型章鱼Boss鱼群
-    from newfish.entity.fishgroup.superboss.queen_fish_group import QueenFishGroup
-    from newfish.entity.fishgroup.superboss.dragon_fish_group import DragonFishGroup
+    from newfish.entity.fishgroup.superboss.queen_fish_group import QueenFishGroup          # 龙女王鱼阵
+    from newfish.entity.fishgroup.superboss.dragon_fish_group import DragonFishGroup        # 远古寒龙Boss鱼群
     superbossCls = {
         "44411": BoxFishGroup,
         "44412": OctopusFishGroup,
