@@ -11,6 +11,9 @@ import random
 
 # rooms = gdata.rooms()
 # ftlog.info('kkkkkkkkkkkkk', rooms.keys())
+# [441011001, 441021001, 441031001, 441041001, 443011001, 443021001, 444021001, 444031001, 444041001, 444051001, 444111001, 444121001, 444141001, 444151001, 444991001, 445011001, 446011001]
+
+
 onlineLocList = onlinedata.getOnlineLocList(10013)[0]                # 116009
 room = gdata.rooms()[onlineLocList[0]]
 table = room.maptable[onlineLocList[1]]
@@ -60,3 +63,15 @@ a.start()
 ftlog.info('cccccc', a.getTimeOut())
 a.reset(30)
 ftlog.info('dddddd', a.getTimeOut())
+
+
+
+import freetime.util.log as ftlog
+from poker.entity.configure import gdata
+# ftlog.info('111111111111', gdata.rooms().keys())
+# [441011001, 441021001, 441031001, 441041001, 443011001, 443021001, 444021001, 444031001, 444041001, 444051001, 444111001, 444121001, 444141001, 444151001, 444991001, 445011001, 446011001]
+room = gdata.rooms()[444111001]
+# ftlog.info('111111111111', room.maptable.keys())
+# [4410410010001, 4410410010002, 4410410010003, 4410410010004, 4410410010005, 4410410010006, 4410410010007, 4410410010008, 4410410010009, 4410410010010]
+table = room.maptable[4410110010001]
+ftlog.info('111111111111', table.runConfig.allSuperBossGroupIds)

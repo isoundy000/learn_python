@@ -22,7 +22,7 @@ import freetime.util.log as ftlog
 from tasklet import FTTasklet
 
 
-class FTTimeoutException(Exception,):
+class FTTimeoutException(Exception):
     pass
 
 
@@ -33,11 +33,68 @@ _COUNT_PACKS = {}
 
 
 def _countProtocolPack(ptype, proto, count_block=10000):
-    pass
+    """计算协议包"""
+    try:
+        global _COUNT_COUNT, _COUNT_TIME, _COUNT_PACKS, _COUNT_PPS
+        if not _COUNT_PPS:
+            return
+        ckey = getattr(proto, '_count_key_', None)
+        if ckey == None:
+            if ptype == 1:      # tcp
+                host =proto.transport.getHost()
+                ckey = str(host.host) + ':' + str(host.port)
+            elif ptype == 2:   # udp
+                host = proto.transport.getHost()
+                ckey = str(host.host) + ':' + str(host.port)
+            elif ptype == 3:   # http
+                host = proto.transport.getHost()
+                ckey = str(host.host) + ':' + str(host.port)
+            else:
+                ckey = 'other'
+            # ckey = ckey + ':' + str(proto)
+            setattr(proto, '_count_key_', ckey)
+
+        if not ckey in _COUNT_PACKS:
+            _COUNT_PACKS[ckey] = 0
+        _COUNT_PACKS[ckey] += 1
+
+        _COUNT_COUNT += 1
+        # if _COUNT_COUNT % count_block == 0:
+        #     ct = datetime.now()
+        #     dt = ct - _COUNT_TIME
+        #     dt = dt.seconds + dt.microseconds / 1000000.0
+        #     pps = '%0.2f' % (count_block / dt)
+        #     _COUNT_TIME = ct
+        #     plist = []
+        #     for k, v in _COUNT_PACKS.items():
+        #         plist.append('%s=%0.2f|%d' % (k, v / dt, v))
+        #     _COUNT_PACKS = {}
+        #     ftlog.info("PPS", pps, 'TASKCOUNT', FTTasklet.concurrent_task_count, 'DT %0.2f' % (dt),
+        #                'TASKPEAK', FTTasklet.PEAKVALUE, 'PEAKTIME', FTTasklet.PEAKTIME.strftime('%m-%d %H:%M:%S'),
+        #                'ALLCOUNT', _COUNT_COUNT, 'PROTS', plist)
+    except:
+        ftlog.error()
 
 
 def ppsCountProtocolPack():
-    pass
+    """pps包每秒"""
+    global _COUNT_COUNT, _COUNT_TIME, _COUNT_PACKS
+    ct = datetime.now()
+    dt = ct - _COUNT_TIME
+    dt = dt.seconds + dt.microseconds / 1000000.0
+    pps = '%0.2f' % (_COUNT_COUNT / dt)
+    plist = []
+    for k, v in _COUNT_PACKS.items():
+        plist.append('%s=%0.2f|%d' % (k, v / dt, v))
+    plist = ','.join(plist)
+
+    ftlog.hinfo("NET_PPS", pps, 'TASKCOUNT', FTTasklet.concurrent_task_count, 'DT %0.2f' % (dt),
+                'TASKPEAK', FTTasklet.PEAKVALUE, 'PEAKTIME', FTTasklet.PEAKTIME.strftime('%m-%d %H:%M:%S'),
+                'ALLCOUNT', _COUNT_COUNT, 'PROTS', plist)
+    _COUNT_TIME = ct
+    _COUNT_PACKS = {}
+    _COUNT_COUNT = 0
+
 
 
 class FTProtocolBase(object):
@@ -71,13 +128,39 @@ class FTProtocolBase(object):
         return data
 
     def closeConnection(self, isabort=0):
-        pass
+        try:
+            if isabort:
+                self.transport.abortConnection()
+            else:
+                self.transport.loseConnection()
+        except:
+            pass
 
     def _runTasklet(self, *argl, **argd):
-        pass
+        try:
+            # Call user defined parseData method...
+            data = argd["data"]
+            pack = self.parseData(data)
+            if pack == None:
+                ftlog.error("_runTasklet: can't parseData received(%s....)" % data[0:64])
+                return
+            argd["pack"] = pack
+
+            # Call user defined getTaskletFunc...
+            taskf = self.getTaskletFunc(argd)
+            if taskf == None:
+                ftlog.error("_runTasklet: can't find tasklet func by pack:(%r....)" % pack[0:64])
+                return
+
+            argd["handler"] = taskf
+
+            # Create and run tasklet...
+            FTTasklet.create(argl, argd)
+        except:
+            ftlog.error()
 
 
-class _SocketOpt:
+class _SocketOpt():
     """
     常用socket设置
     """
@@ -86,35 +169,63 @@ class _SocketOpt:
 
     @classmethod
     def udp(cls, p):
-        pass
+        sock = p.transport.getHandle()
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, cls.UDP_BUFFER_SIZE)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, cls.UDP_BUFFER_SIZE)
 
     @classmethod
     def tcp(cls, p):
-        pass
+        try:
+            p.MAX_LENGTH = _SocketOpt.TCP_LINE_MAX_LENGTH
+        except:
+            ftlog.error()
+        try:
+            p.transport.setTcpNoDelay(1)
+        except:
+            ftlog.error()
+        try:
+            p.transport.setTcpKeepAlive(1)
+        except:
+            ftlog.error()
+        try:
+            p.transport.socket.setsockopt(socket.SOL_TCP, socket.TCP_KEEPIDLE, 180)
+        except:
+            ftlog.error()
+        try:
+            p.transport.socket.setsockopt(socket.SOL_TCP, socket.TCP_KEEPINTVL, 30)
+        except:
+            ftlog.error()
+        try:
+            p.transport.socket.setsockopt(socket.SOL_TCP, socket.TCP_KEEPCNT, 10)
+            # p.transport.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 128*1024)
+        except:
+            ftlog.error()
 
 
 class FTUDPSenderProtocol(DatagramProtocol, FTProtocolBase):
 
     def startProtocol(self):
-        pass
+        _SocketOpt.udp(self)
 
     def datagramReceived(self, data, address):
         pass
 
     def sendTo(self, data, toAddress):
-        pass
+        self.transport.write(data, toAddress)
 
 
 class FTUDPServerProtocol(DatagramProtocol, FTProtocolBase, ):
 
     def startProtocol(self):
-        pass
+        _SocketOpt.udp(self)
+        self.madeHandler()
 
     def stopProtocol(self):
-        pass
+        self.lostHandler(None)
 
     def datagramReceived(self, data, address):
-        pass
+        _countProtocolPack(2, self)
+        self._runTasklet(data=data, udpsrc=address)
 
 
 class FTUDPQueryProtocol(DatagramProtocol, FTProtocolBase):
@@ -122,37 +233,67 @@ class FTUDPQueryProtocol(DatagramProtocol, FTProtocolBase):
     QUERYID = 0
 
     def __init__(self, dsthost, dstport):
-        pass
+        self.dsthost = dsthost
+        self.dstport = dstport
 
     def startProtocol(self):
-        pass
+        _SocketOpt.udp(self)
+        self.live_msg_map = {}
 
     def stopProtocol(self):
-        pass
+        self.live_msg_map = {}
 
     def datagramReceived(self, data, address):
-        pass
+        try:
+            i = data.find('|', 0, 16)
+            qid = int(data[0:i])
+            ftlog.debug("udp query receive:", qid, data)
+            if qid in self.live_msg_map:
+                d, c = self.live_msg_map[qid]
+                del self.live_msg_map[qid]
+                c.cancel()
+                d.callback(data)
+            else:
+                ftlog.error('udp response msg id not in live table:', data[0:64], '....')
+        except:
+            ftlog.error()
 
     def query(self, data, timeout=1):
-        pass
+        try:
+            FTUDPQueryProtocol.QUERYID += 1
+            self.transport.write(str(FTUDPQueryProtocol.QUERYID) + '|' + data, (self.dsthost, self.dstport))
+            resultDeferred = defer.Deferred()
+            cancelCall = reactor.callLater(timeout, self._clearFailed, resultDeferred, FTUDPQueryProtocol.QUERYID)
+            self.live_msg_map[FTUDPQueryProtocol.QUERYID] = (resultDeferred, cancelCall)
+            return resultDeferred
+        except:
+            ftlog.error()
+        return None
 
     def _clearFailed(self, deferred, mid):
-        pass
+        try:
+            del self.live_msg_map[mid]
+        except KeyError:
+            pass
+        deferred.errback(failure.Failure(FTTimeoutException(str(mid))))
 
 
 class FTTCPServerProtocol(LineReceiver, FTProtocolBase):
 
     def connectionMade(self):
-        pass
+        _SocketOpt.tcp(self)
+        self.madeHandler()
 
     def connectionLost(self, reason):
-        pass
+        self.lostHandler(reason)
 
     def lineReceived(self, data):
-        pass
+        _countProtocolPack(1, self)
+        self._runTasklet(data=data)
 
     def lineLengthExceeded(self, line):
-        pass
+        super(FTTCPServerProtocol, self).lineLengthExceeded(line)
+        ftlog.error('the FTTCPServerProtocol lineLengthExceeded ERROR !!')
 
 
 class FTZipEncryServerProtocol(protocol.Protocol, FTProtocolBase):
@@ -165,25 +306,54 @@ class FTZipEncryServerProtocol(protocol.Protocol, FTProtocolBase):
     _buffer = ''
 
     def connectionMade(self):
-        pass
+        ftlog.debug('zipsocket: connectionMade')
+        _SocketOpt.tcp(self)
+        self.encry_seed = random.randint(100, 0xfffE)
+        self.transport.write("%04x" % self.encry_seed)
+        self.madeHandler()
 
     def connectionLost(self, reason):
-        pass
+        self.lostHandler(reason)
 
     def _encode(self, src):
-        pass
+        if not src:
+            return '0000'
+        zsrc = zlib.compress(src)
+        dlen = len(zsrc)
+        return '%04X' % dlen + ftenc.code(self.encry_seed + dlen, zsrc)
 
     def _decode(self, dst):
-        pass
+        # return zlib.decompress(ftenc.code(self.encry_seed + int(dst[:4], 16), dst[4:]))
+        return ftenc.code(self.encry_seed + int(dst[:4], 16), dst[4:])
 
     def clearLineBuffer(self):
-        pass
+        b = self._buffer
+        self._buffer = ""
+        return b
 
     def dataReceived(self, data):
-        pass
+        self._buffer = self._buffer + data
+        dlen = len(self._buffer)
+        while dlen > 4:
+            mlen = self._buffer[0:4]
+            try:
+                mlen = int(mlen, 16)
+            except:
+                self.transport.loseConnection()
+                return
+            if dlen < mlen + 4:
+                return
+            line = self._buffer[:mlen + 4]
+            self._buffer = self._buffer[mlen + 4:]
+            why = self.lineReceived(line)
+            if why or self.transport and self.transport.disconnecting:
+                return why
+            dlen = len(self._buffer)
 
     def lineReceived(self, data):
-        pass
+        _countProtocolPack(2, self)
+        data = self._decode(data)
+        self._runTasklet(data=data)
 
 
 class FTHead4ServerProtocol(protocol.Protocol, FTProtocolBase, ):
@@ -193,22 +363,44 @@ class FTHead4ServerProtocol(protocol.Protocol, FTProtocolBase, ):
     _buffer = ''
 
     def connectionMade(self):
-        pass
+        _SocketOpt.tcp(self)
+        self.madeHandler()
 
     def connectionLost(self, reason):
-        pass
+        self.lostHandler(reason)
 
     def _encode(self, src):
-        pass
+        if not src:
+            return '0000'
+        zsrc = zlib.compress(src)
+        dlen = len(zsrc)
+        return '%04X' % dlen + ftenc.code(self.encry_seed + dlen, zsrc)
 
     def clearLineBuffer(self):
-        pass
+        b = self._buffer
+        self._buffer = ""
+        return b
 
     def dataReceived(self, data):
-        pass
+        self._buffer = self._buffer + data
+        dlen = len(self._buffer)
+        while dlen > 4:
+            mlen = self._buffer[0:4]
+            try:
+                mlen = int(mlen, 16)
+            except:
+                self.transport.loseConnection()
+                return
+            if dlen < mlen + 4:
+                return
+            line = self._buffer[:mlen + 4]
+            self._buffer = self._buffer[mlen + 4:]
+            self.lineReceived(line)
+            dlen = len(self._buffer)
 
     def lineReceived(self, data):
-        pass
+        _countProtocolPack(2, self)
+        self._runTasklet(data=data)
 
 
 class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):

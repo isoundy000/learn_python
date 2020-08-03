@@ -33,7 +33,7 @@ class BoxFishGroup(SuperBossFishGroup):
         self._fBossAppearTS = 0         # 宝箱爸爸出现的最晚时间戳.
         self._nextTimer = None          # 下次填充鱼的时间戳
         self._isBossShowTimeStage = 0   # showtime是boss出现前30秒(stage=0x1000), bBoss(0x1), mBoss(0x10), fBoss(0x100).
-        self._hasBorned = []
+        self._hasBorned = []            # 已经出生的宝箱boss
         self._autofillTimer = {}        # 自动填充的时间
         self._clearTimer = None         # 清理宝箱的定时器.
         self._group = {}                # 渔群信息

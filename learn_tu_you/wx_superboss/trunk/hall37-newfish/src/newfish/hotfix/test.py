@@ -27,3 +27,14 @@ print a.d
 # a.clear()
 c = A()
 print c.d
+
+
+# hex() 函数用于将10进制整数转换成16进制，以字符串形式表示。
+a = 0x1000          # 1*16^3+0*16^2+0*16^1+0*16^0
+print bin(a)
+print bin(~a)
+c = 0
+c |= a
+print bin(c)
+c = c & ~a
+print int(c)

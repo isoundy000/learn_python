@@ -36,8 +36,23 @@ def getGameInfo(userId, clientId):
     """
     获取玩家的游戏数据
     """
+    from newfish.entity import user_system
+    ukeys = getInitDataKeys()
+    uvals = gamedata.getAllAttrs(userId, FISH_GAMEID, ukeys)
+    uvals = list(uvals)
+    values = getInitDataValues()
+    for x in xrange(len(uvals)):
+        if uvals[x] is None:
+            uvals[x] = values[x]
+    gdata = dict(zip(ukeys, uvals))
+    gdata["name"] = util.getNickname(userId)
+    gdata["userGuideStep"] = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.userGuideStep, [])
+    redState = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.redState)
+    gdata["redState"] = redState
+    gdata["giftState"] = newbie_7days_gift.checkNewbie7DaysGiftState(userId, redState)
     pass
 
+    return gdata
 
 
 def createGameData(userId, gameId):

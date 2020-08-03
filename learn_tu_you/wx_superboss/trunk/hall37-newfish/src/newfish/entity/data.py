@@ -32,6 +32,7 @@ class FishData():
 
     @classmethod
     def getGameDataKeys(cls):
+        """获取用户初始化的key"""
         keys = []
         for item in cls.config:
             keys.append(item[0])
@@ -39,6 +40,7 @@ class FishData():
 
     @classmethod
     def getGameDataValues(cls):
+        """获取玩家初始化的值"""
         values = []
         for item in cls.config:
             values.append(item[1])

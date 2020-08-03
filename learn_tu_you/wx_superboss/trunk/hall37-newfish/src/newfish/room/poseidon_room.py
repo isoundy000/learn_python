@@ -360,6 +360,8 @@ class Poseidon(HeartbeatAble):
         self.appearTimeStrList = [time_.strftime("%R") for time_ in self._cron.getTimeList()]
         # 海皇空闲状态开始时间戳
         self.idleTime = self.calcIdleTime()
+        # 海皇出现状态开始时间戳
+        self.appearTime = self.calcAppearTime()
 
 
 
@@ -368,6 +370,22 @@ class Poseidon(HeartbeatAble):
         计算空闲时间戳
         """
         return pktimestamp.getCurrentTimestamp() + 1
+
+    def calcPrepareTime(self, appearTime):
+        """
+        计算准备出现时间戳
+        """
+
+    def calcAppearTime(self, timestamp=None):
+        """
+        计算出现时间戳
+        """
+        timestamp = timestamp or pktimestamp.getCurrentTimestamp()
+        ntime = datetime.fromtimestamp(int(timestamp))
+        nexttime = None
+        if self._cron:
+            nexttime = self._cron.getNextTime(ntime)
+
 
 
 
