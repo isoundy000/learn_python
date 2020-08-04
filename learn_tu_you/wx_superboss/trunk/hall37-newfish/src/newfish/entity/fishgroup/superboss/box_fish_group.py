@@ -239,8 +239,8 @@ class BoxFishGroup(SuperBossFishGroup):
             if self._clearTimer:
                 self._clearTimer.cancel()
                 self._clearTimer = None
-            powerConf = config.getSuperbossPowerConf()
-            countPctList = powerConf.get("power", {}).get(str(self._fBossFishType), {}).get("countPct", [])
+            powerConf = config.getSpecialFishEffectCount()
+            countPctList = powerConf.get(str(self._fBossFishType), [])
             if countPctList and len(countPctList) >= self._stageCount > 1:
                 msg = MsgPack()
                 msg.setCmd("superboss_explosion_info")          # 爆炸信息

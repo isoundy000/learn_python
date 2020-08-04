@@ -30,7 +30,7 @@ class FishGroupSystem(object):
         重置鱼群数据
         """
         # 在所有鱼群中每条鱼的唯一标识
-        self._globalFishId = 10000          # 添加鱼生成的条数
+        self._globalFishId = 10000
         # 在所有鱼群中每个鱼群的唯一标识
         self._globalGroupId = 0
 

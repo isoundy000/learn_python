@@ -61,7 +61,7 @@ class NormalFishGroup(object):
                 if self._appearIndex >= len(self.fishes):
                     self._appearIndex = 0
         else:
-            if self._appearIndex >= len(self._appearTideMinute):        # 4
+            if self._appearIndex >= len(self._appearTideMinute):
                 self._appearIndex = 0
             currMinute = datetime.datetime.now().minute
             if currMinute in self._appearTideMinute[self._appearIndex] and not self.table.hasSuperBossFishGroup():

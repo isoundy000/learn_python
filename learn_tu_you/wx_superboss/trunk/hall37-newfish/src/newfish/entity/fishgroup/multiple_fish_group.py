@@ -12,7 +12,7 @@ from newfish.entity import config
 
 class MultipleFishGroup(object):
     """
-    倍率鱼群（比赛场专用）
+    倍率鱼群（回馈赛专用）
     """
     def __init__(self, table):
         self.table = table

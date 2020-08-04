@@ -48,27 +48,20 @@ class SuperBossFishGroup(object):
         """
         获取狂暴阶段数量
         """
-        powerConf = config.getSuperbossPowerConf()
-        countPctList = powerConf.get("power", {}).get(str(fishType), {}).get("countPct", [])
+        powerConf = config.getSpecialFishEffectCount()
+        countPctList = powerConf.get(str(fishType), [])
         if countPctList:
             idx = util.selectIdxByWeight(countPctList)
             return idx + 1 if idx >= 0 else 0
         else:
             return 0
 
-    def _getPower(self, fishType):
+    def _getPower(self, weaponId):
         """
         获取狂暴阶段威力值
         """
-        powerConf = config.getSuperbossPowerConf()
-        basePower = powerConf.get("power", {}).get(str(fishType), {}).get("basePower", 0)
-        if basePower:
-            pctList = [val["probb"] for val in powerConf.get("powerRange", [])]
-            idx = util.selectIdxByWeight(pctList)
-            if idx >= 0:
-                ratio = random.uniform(powerConf.get("powerRange")[idx]["min"], powerConf.get("powerRange")[idx]["max"])
-                return int(basePower * ratio + 0.5)
-        return 0
+        powerRateConfig = config.getWeaponConf(weaponId)
+        return powerRateConfig["power"]
 
     def addFire(self, player, fId, weaponId, fpMultiple, gunMultiple, fishType):
         """
@@ -78,7 +71,7 @@ class SuperBossFishGroup(object):
         if player and self._stageCount > 0:
             powerList = []
             for idx in range(self._stageCount):
-                powerList.append(self._getPower(fishType))                          # 狂暴威力值
+                powerList.append(self._getPower(weaponId))                          # 狂暴威力值
             if ftlog.is_debug():
                 ftlog.debug("SuperBossFishGroup, userId =", player.userId, "fId =", fId, "weaponId =", weaponId,
                             "fpMultiple =", fpMultiple, "fishType =", fishType, "powerList =", powerList)

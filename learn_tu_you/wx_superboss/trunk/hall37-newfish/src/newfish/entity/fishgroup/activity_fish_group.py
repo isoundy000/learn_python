@@ -48,7 +48,6 @@ class ActivityFishGroup(object):
             minTime = hippoFishConf["minTime"]
             maxTime = hippoFishConf["maxTime"]
             randomTime = random.randint(minTime, maxTime)
-            ftlog.debug("HippoFishGroup->_nextHippoGroup->", self.table.runConfig.fishPool, minTime, maxTime, randomTime)
             self._nextHippoTimer = FTLoopTimer(randomTime, 0, self._checkHippoCondition)
             self._nextHippoTimer.start()
 
