@@ -9,82 +9,124 @@ import json
 class MsgPack:
 
     def __init__(self):
-        pass
+        self._ht = {}
 
     def __str__(self):
-        pass
+        return str(self._ht)
 
     def __repr__(self):
-        pass
+        return self.__str__()
 
     def clone(self):
-        pass
+        m = MsgPack()
+        m.unpack(self.pack())
+        return m
 
     def setCmd(self, cmd):
-        pass
+        self._ht['cmd'] = cmd
 
     def setAction(self, action):
-        pass
+        self.setParam('action', action)
 
     def getAction(self):
-        pass
+        return self.getParam('action')
 
     def setCmdAction(self, cmd, action):
-        pass
+        self.setCmd(cmd)
+        self.setAction(action)
 
     def getCmd(self):
-        pass
+        if self._ht.has_key('cmd'):
+            return self._ht['cmd']
+        return None
 
     def setKey(self, key, value):
-        pass
+        self._ht[key] = value
 
     def getKey(self, key):
-        pass
+        if self._ht.has_key(key):
+            return self._ht[key]
+        return None
 
     def rmKey(self, key):
-        pass
+        if self._ht.has_key(key):
+            del self._ht[key]
 
     def pack(self):
-        pass
+        return json.dumps(self._ht, separators=(',', ':'))
 
     def unpack(self, jstr):
-        pass
+        try:
+            self._ht = json.loads(jstr)
+        except Exception, e:
+            raise Exception('unpack error ! ' + str(e) + ' jstr=' + repr(jstr))
 
     def setError(self, code, info):
-        pass
+        self._ht['error'] = {'code': code, 'info': info}
 
     def getParam(self, pkey, defValue=None):
-        pass
+        if self._ht.has_key('params'):
+            reqht = self._ht['params']
+            if reqht.has_key(pkey):
+                return reqht[pkey]
+        return defValue
 
     def setParam(self, pkey, pvalue):
-        pass
+        if not self._ht.has_key('params'):
+            self._ht['params'] = {}
+        reqht = self._ht['params']
+        reqht[pkey] = pvalue
 
     def updateParam(self, moreParam):
-        pass
+        if not self._ht.has_key('params'):
+            self._ht['params'] = {}
+        reqht = self._ht['params']
+        reqht.update(moreParam)
 
     def setResult(self, pkey, pvalue):
-        pass
+        if not self._ht.has_key('result'):
+            self._ht['result'] = {}
+        reqht = self._ht['result']
+        reqht[pkey] = pvalue
 
     def rmResult(self, key):
-        pass
+        result = self._ht.get('result')
+        if result:
+            try:
+                del result[key]
+            except:
+                pass
 
     def updateResult(self, moreResult):
-        pass
+        if not self._ht.has_key('result'):
+            self._ht['result'] = {}
+        reqht = self._ht['result']
+        reqht.update(moreResult)
 
     def getResult(self, pkey, defValue=None):
-        pass
+        if self._ht.has_key('result'):
+            reqht = self._ht['result']
+            if reqht.has_key(pkey):
+                return reqht[pkey]
+        return defValue
 
     def isError(self):
-        pass
+        return self._ht.has_key('error')
 
     def getErrorCode(self, defValue=None):
-        pass
+        err = self._ht.get('error')
+        if err:
+            return err.get('code')
+        return defValue
 
     def getErrorInfo(self, defValue=None):
-        pass
+        err = self._ht.get('error')
+        if err:
+            return err.get('info')
+        return defValue
 
     def getParams(self, *keys):
-        pass
+        return map(self._ht.get('params', {}).get, keys)
 
     def getResults(self, *keys):
-        pass
+        return map(self._ht.get('result', {}).get, keys)

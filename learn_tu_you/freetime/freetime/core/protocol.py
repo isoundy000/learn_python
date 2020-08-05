@@ -403,26 +403,64 @@ class FTHead4ServerProtocol(protocol.Protocol, FTProtocolBase, ):
         self._runTasklet(data=data)
 
 
-class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):
+class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase):
     """
     WebSocket加密的tcp协议基类
     客户端建立连接后，首先回应一个%04X的随机数作为种子
     """
-    _buffer = ''
+    _buffer = b""
     isNewVersion = True
     handshaken = False
 
     def connectionMade(self):
-        pass
+        # if self.handshaken:
+        #     return
+        ftlog.debug('websocket: connectionMade')
+        _SocketOpt.tcp(self)
+        # self.encry_seed = random.randint(100, 0xfffE)
+        # self.transport.write("%04x" % self.encry_seed)
+        self.madeHandler()
 
     def connectionLost(self, reason):
-        pass
+        ftlog.debug('websocket: connectionLost', reason)
+        self.lostHandler(reason)
+        self.handshaken = False
 
     def _encode(self, src):
-        pass
+        # zsrc = zlib.compress(src)
+        # dlen = len(zsrc)
+        # return '%04X' % dlen + ftenc.code(self.encry_seed + dlen, zsrc)
+        if not src:
+            src = '0000'
+
+        src = self.encode_message(src)
+        if self.isNewVersion:
+            back_str = []
+            back_str.append('\x81')
+            data_length = len(src)
+
+            if data_length <= 125:
+                back_str.append(chr(data_length))
+            else:
+                back_str.append(chr(126))
+                back_str.append(chr(data_length >> 8))
+                back_str.append(chr(data_length & 0xFF))
+
+            send_data = ''.join(back_str) + src
+            ftlog.debug('websocket: -------send isWebsocketNewVersion=True data:----------', send_data)
+            return send_data
+        else:
+            back_str = '\x00%s\xFF' % (src)
+            ftlog.debug('websocket: --------send isWebsocketNewVersion=False data:-----------')
+        return back_str
 
     def encode_message(self, src):
-        pass
+        if self.userId and self.userId < 10000:
+            return src
+        mask_key = os.urandom(4)
+        src = mask_key + self.mask_message(mask_key, src)
+        src = base64.b64encode(src)
+        return src
 
     def mask_message(self, mask_key, data):
         """
@@ -430,28 +468,149 @@ class FTWebSocketServerProtocol(protocol.Protocol, FTProtocolBase, ):
         mask_key: 4 byte string(byte).
         data: data to mask/unmask.
         """
-        pass
+        if data is None:
+            data = ""
+        _m = array.array("B", mask_key)
+        _d = array.array("B", data)
+        for i in range(len(_d)):
+            _d[i] ^= _m[i % 4]
+        return _d.tostring()
 
     def _decode(self, dst):
-        pass
+        # return ftenc.code(self.encry_seed + int(dst[:4], 16), dst[4:])
+        return dst
 
     def clearLineBuffer(self):
-        pass
+        b = self._buffer
+        self._buffer = ""
+        return b
 
     def dataReceived(self, data):
-        pass
+        ftlog.debug('websocket: handshaken', self.handshaken)
+        if not self.handshaken:
+            self.handshaken = True
+            if data.lower().find('upgrade: websocket') != -1:
+                ftlog.debug('websocket:: -------------start run handshake------')
+                # self.isWebsocketTcp = True
+                self.on_handshake(data)
+                return
+        self._buffer = self._buffer + data
+        dlen = len(self._buffer)
+        if dlen <= 4:
+            return
+        rawStr = ''
+        ftlog.debug('websocket:: -------------received buffer:------', self._buffer)
+        if self.isNewVersion:
+            indexN = 0
+            msgLen = len(self._buffer)
+            while indexN < msgLen:
+                rawStr = ''
+                packMsg = self._buffer[indexN:]
+                dataLen = 0
+                pastLen = 0
+                data = ''
+                codeLength = ord(packMsg[1]) & 127
+                if codeLength == 126:
+                    # ftlog.debug('websocket:: packMsg[2:4]---', packMsg[2:4])
+                    dataLen, = struct.unpack('!H', packMsg[2:4])
+                    pastLen = dataLen + 8
+                    masks = packMsg[4:8]
+                    data = packMsg[8:]
+                elif codeLength == 127:
+                    # ftlog.debug('websocket:: packMsg[2:10]---', packMsg[2:10])
+                    dataLen, = struct.unpack('!Q', packMsg[2:10])
+                    pastLen = dataLen + 14
+                    masks = packMsg[10:14]
+                    data = packMsg[14:]
+                else:
+                    dataLen = codeLength
+                    pastLen = dataLen + 6
+                    masks = packMsg[2:6]
+                    data = packMsg[6:]
+                i = 0
+                for d in data:
+                    if i >= dataLen:
+                        break
+                    rawStr += chr(ord(d) ^ ord(masks[i % 4]))
+                    i += 1
+                try:
+                    ftlog.debug('websocket:: -------------received data:------', dataLen, rawStr)
+                except:
+                    pass
+                if rawStr:
+                    self.lineReceived(rawStr)
+                indexN += pastLen
+        else:
+            rawStrArray = self._buffer.split("\xFF")
+            for tempData in rawStrArray:
+                rawStr = tempData[1:]
+                ftlog.debug('websocket old: -------------received data:------', rawStr)
+                if rawStr:
+                    self.lineReceived(rawStr)
+        self._buffer = ''
 
     def lineReceived(self, data):
-        pass
+        _countProtocolPack(2, self)
+        ftlog.debug('websocket: lineReceived', data)
+        data = self._decode(data)
+        ftlog.debug('websocket: lineReceived decode', data)
+        self._runTasklet(data=data)
 
     def on_handshake(self, msg):
-        pass
+        headers = {}
+        header, data = msg.split('\r\n\r\n', 1)
+        for line in header.split('\r\n')[1:]:
+            key, value = line.split(": ", 1)
+            headers[key] = value
+
+        headers["Location"] = "ws://%s/" % headers["Host"]
+
+        if headers.has_key('Sec-WebSocket-Key1'):
+            key1 = headers["Sec-WebSocket-Key1"]
+            key2 = headers["Sec-WebSocket-Key2"]
+            key3 = data[:8]
+
+            token = self.h5_generate_token(key1, key2, key3)
+
+            handshake = '\
+        HTTP/1.1 101 Web Socket Protocol Handshake\r\n\
+        Upgrade: WebSocket\r\n\
+        Connection: Upgrade\r\n\
+        Sec-WebSocket-Origin: %s\r\n\
+        Sec-WebSocket-Location: %s\r\n\r\n\
+        ' % (headers['Origin'], headers['Location'])
+
+            self.transport.write(handshake + token)
+
+            self.isNewVersion = False
+            ftlog.debug('websocket: -------------send hand data:------isWebsocketNewVersion:False')
+        else:
+            key = headers['Sec-WebSocket-Key']
+            token = self.h5_generate_token2(key)
+
+            handshake = '\
+        HTTP/1.1 101 Switching Protocols\r\n\
+        Upgrade: WebSocket\r\n\
+        Connection: Upgrade\r\n\
+        Sec-WebSocket-Accept: %s\r\n\r\n\
+        ' % (token)
+            self.transport.write(handshake)
+            self.isNewVersion = True
+            ftlog.debug('websocket: -------------send hand data:------isWebsocketNewVersion:True')
 
     def h5_generate_token(self, key1, key2, key3):
-        pass
+        num1 = int("".join([digit for digit in list(key1) if digit.isdigit()]))
+        spaces1 = len([char for char in list(key1) if char == " "])
+        num2 = int("".join([digit for digit in list(key2) if digit.isdigit()]))
+        spaces2 = len([char for char in list(key2) if char == " "])
+
+        combined = struct.pack(">II", num1 / spaces1, num2 / spaces2) + key3
+        return hashlib.md5(combined).digest()
 
     def h5_generate_token2(self, key):
-        pass
+        key = key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
+        serKey = hashlib.sha1(key).digest()
+        return base64.b64encode(serKey)
 
 
 class FTHttpRequest(twisted.web.http.Request, FTProtocolBase):

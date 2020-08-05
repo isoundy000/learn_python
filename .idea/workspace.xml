@@ -2,16 +2,150 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/log-server.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/INSTALL" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/README" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/db.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/json2redis.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/log_type.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/read.me" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7901.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7902.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7903.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7904.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7905.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7906.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7907.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7908.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/delete_bi_redis_list.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/kill_bi_redis.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/start_new_bi_redis.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/server.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/hotfix/gc.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/hotfix/hotfix.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/kill_bi_run_py.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/http.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/startup.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/tcp.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/read.me" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/run.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/daily.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/debug.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/mkbi.c" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/mock_data.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/read.me" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/kill_miaoyc_run_py.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/start_LI_master_36.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/start_LI_slave_35.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/start_LW_master_23.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/start_LW_slave_22.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/start_collect.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/msg.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/agentmsg.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/factory.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/protocol.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/wrapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/client.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/exceptions.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/protocol.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/subscribe.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/freetime/db.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/freetime/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/freetime/server.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/act/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/act/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/act/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/act/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/hallui/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/hallui/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/hallui/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/hallui/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/pay/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/pay/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/pay/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/game/pay/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/poker/cmd.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/poker/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/poker/machine.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/poker/room.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/dev/redis.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/json2redis.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/freetime/db.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/freetime/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/freetime/server.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/6/room/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/act/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/act/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/act/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/act/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/pay/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/pay/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/pay/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/pay/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/ui/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/ui/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/ui/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/game/9999/ui/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/poker/cmd.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/poker/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/poker/machine.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/poker/room.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/online/redis.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/freetime/db.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/freetime/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/freetime/server.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/act/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/act/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/act/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/act/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/hallui/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/hallui/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/hallui/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/hallui/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/pay/0.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/pay/1.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/pay/2.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/game/pay/3.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/poker/cmd.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/poker/global.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/poker/machine.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/poker/room.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/config/sim/redis.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/cpu/cpu.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/cpu/test.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/run.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/tclass.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/misc/testpio.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/shell/game.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/test/lockTest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/test/logTest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/test/metaclassesTest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/test/timerTest.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_hb_game/game/.idea/workspace.xml" afterPath="$PROJECT_DIR$/learn_hb_game/game/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/activity_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/activity_fish_group.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/autofill_fish_group_m.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/autofill_fish_group_m.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group_system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/multiple_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/multiple_fish_group.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/normal_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/normal_fish_group.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/box_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/box_fish_group.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/queen_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/queen_fish_group.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/superboss_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/superboss_fish_group.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/clients.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/clients.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/config.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/msg.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/msg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/factory.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/factory.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/protocol.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/protocol.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/wrapper.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/wrapper.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cache.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cache.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cron.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cron.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/defertool.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/defertool.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/encodeobj.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/encodeobj.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/encry.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/encry.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/log.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/log.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/metaclasses.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/metaclasses.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/performance.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/performance.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/pio.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/pio.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/processtool.py" afterPath="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/processtool.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -183,128 +317,102 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="queen_fish_group.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/queen_fish_group.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="163" column="37" lean-forward="true" selection-start-line="163" selection-start-column="37" selection-end-line="163" selection-end-column="37" />
-              <folding>
-                <element signature="e#87#100#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="superboss_fish_group.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/superboss_fish_group.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="836">
-              <caret line="42" column="51" lean-forward="false" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-              <folding>
-                <marker date="1596525843000" expanded="true" signature="231:2209" ph="..." />
-                <marker date="1596525843000" expanded="true" signature="859:932" ph="..." />
-                <marker date="1596525843000" expanded="true" signature="1744:2209" ph="..." />
-                <marker date="1596525843000" expanded="true" signature="1812:2031" ph="..." />
-                <marker date="1596525843000" expanded="true" signature="2239:3086" ph="..." />
-                <marker date="1596525843000" expanded="true" signature="2244:2268" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1596525843000" expanded="true" signature="2695:2832" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wx_config_load_multiple.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/newfish-client/branches/weixin_v3/res-wx/tools/config_load/wx_config_load_multiple.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="798" column="27" lean-forward="true" selection-start-line="798" selection-start-column="27" selection-end-line="798" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fish_group.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="36" column="13" lean-forward="false" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-              <folding>
-                <marker date="1596184333000" expanded="true" signature="343:375" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py">
+      <file leaf-file-name="7901.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7901.conf">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="22" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="table_conf.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_conf.py">
+      <file leaf-file-name="factory.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/factory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1716">
-              <caret line="78" column="43" lean-forward="false" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="43" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="superboss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/resource/fish_group_m/superboss">
+      <file leaf-file-name="factory.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/factory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="462">
+              <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tide_task.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py">
+      <file leaf-file-name="protocol.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/protocol.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1562">
-              <caret line="75" column="27" lean-forward="false" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
-              <folding>
-                <element signature="e#89#122#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="superbossfast" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/resource/fish_group_m/superbossfast">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="22" lean-forward="false" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="box_fish_group.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/box_fish_group.py">
+      <file leaf-file-name="msg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/msg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3916">
-              <caret line="186" column="36" lean-forward="false" selection-start-line="183" selection-start-column="8" selection-end-line="186" selection-end-column="36" />
-              <folding>
-                <element signature="e#86#99#0" expanded="true" />
-                <marker date="1596525368000" expanded="true" signature="437:13116" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="7970:12610" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="9891:11968" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="10995:11968" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="11998:12610" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="12045:12343" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="12361:12610" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="12398:12610" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="12649:13116" ph="..." />
-                <marker date="1596525368000" expanded="true" signature="12658:12691" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wrapper.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/wrapper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/client.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="403">
+              <caret line="1596" column="37" lean-forward="false" selection-start-line="1596" selection-start-column="37" selection-end-line="1596" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cache.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cache.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="25" column="44" lean-forward="false" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cpu.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/misc/cpu/cpu.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="16" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="INSTALL" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/INSTALL">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -322,9 +430,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_nextTimer</find>
-      <find>_autofillTimer</find>
-      <find>getGameInfo</find>
       <find>&gt;&gt;&gt;</find>
       <find>_addFishGroup</find>
       <find>0x1000</find>
@@ -352,6 +457,9 @@
       <find>_maxAliveTime</find>
       <find>_clearData</find>
       <find>energy_pearl</find>
+      <find>FTWebSocketServerProtocol</find>
+      <find>FTTasklet.</find>
+      <find>sendToAdapter</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -366,15 +474,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/robbery_room.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/newbie_table.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/normal_fish_group.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/protocol/router.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/table_handler.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/configure/gdata.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/protocol/runcmd.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/tables/table.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_base.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/fight_table.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/fight_room.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/rooms/room.py" />
@@ -413,10 +512,19 @@
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/network_base.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_conf.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/tide_task.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/queen_fish_group.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/clients.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/config.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/client.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/msg.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/__init__.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/http.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/factory.py" />
       </list>
     </option>
   </component>
@@ -426,9 +534,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="height" value="986" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -445,7 +554,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -463,53 +572,6 @@
               <item name="learn_python" type="462c0819:PsiDirectoryNode" />
               <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
               <item name="freetime" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="demo" type="462c0819:PsiDirectoryNode" />
-              <item name="protocol" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="freetime" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="cffi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
@@ -685,7 +747,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -698,19 +760,19 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/houguangdong/Workspace/learn_python/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/game_handler.py" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime" />
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/freetime" />
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util" />
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis" />
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime" />
+      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver" />
       <recent name="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix" />
       <recent name="$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/servers/util" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/lotterypool" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/doc" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/deps" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/freetime/demo/conf" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task" />
-      <recent name="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -873,7 +935,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="986" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -882,7 +944,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17155068" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17338218" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -915,7 +977,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37327188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17155068" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17338218" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -948,265 +1010,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/mysql.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="39" column="89" lean-forward="true" selection-start-line="39" selection-start-column="89" selection-end-line="39" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/tcp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/udp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="11" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/performance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/defertool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="29" column="4" lean-forward="false" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/aio/redis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="73" column="16" lean-forward="false" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/dragon_fish_group.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="18" column="6" lean-forward="false" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/multiple_table.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="38" column="63" lean-forward="false" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/bireport.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="48" column="4" lean-forward="false" selection-start-line="48" selection-start-column="4" selection-end-line="48" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/cffi/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="38" column="8" lean-forward="false" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi/ft.so">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi/ftcode.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi/makeso.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/cffi/pio.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/exception.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/twisted/internet/interfaces.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="1283" column="8" lean-forward="false" selection-start-line="1283" selection-start-column="8" selection-end-line="1283" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="812">
-          <caret line="37" column="23" lean-forward="false" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/timer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
-          <folding>
-            <element signature="e#88#98#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/lock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1090">
-          <caret line="87" column="20" lean-forward="true" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/reactor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="58" column="33" lean-forward="false" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-501">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group_system.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="110" column="8" lean-forward="false" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="42" column="20" lean-forward="false" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/game.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4554">
-          <caret line="223" column="19" lean-forward="false" selection-start-line="223" selection-start-column="8" selection-end-line="223" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/account.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cron.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1452">
-          <caret line="69" column="8" lean-forward="false" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/poseidon_room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7986">
-          <caret line="387" column="0" lean-forward="false" selection-start-line="387" selection-start-column="0" selection-end-line="387" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/vip_system.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/jin_zhi_change.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/network_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/roomIdDefineMap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/twisted/internet/protocol.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="784" column="6" lean-forward="false" selection-start-line="784" selection-start-column="6" selection-end-line="784" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/encry.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="402" column="35" lean-forward="false" selection-start-line="402" selection-start-column="35" selection-end-line="402" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -1235,7 +1042,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="18" column="22" lean-forward="false" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1243,7 +1049,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1251,7 +1056,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1266,9 +1070,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1562">
           <caret line="75" column="27" lean-forward="false" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
-          <folding>
-            <element signature="e#89#122#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1276,7 +1077,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1716">
           <caret line="78" column="43" lean-forward="false" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1284,19 +1084,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3916">
           <caret line="186" column="36" lean-forward="false" selection-start-line="183" selection-start-column="8" selection-end-line="186" selection-end-column="36" />
-          <folding>
-            <element signature="e#86#99#0" expanded="true" />
-            <marker date="1596525368000" expanded="true" signature="437:13116" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="7970:12610" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="9891:11968" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="10995:11968" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="11998:12610" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="12045:12343" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="12361:12610" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="12398:12610" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="12649:13116" ph="..." />
-            <marker date="1596525368000" expanded="true" signature="12658:12691" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1304,9 +1091,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="726">
           <caret line="36" column="13" lean-forward="false" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-          <folding>
-            <marker date="1596184333000" expanded="true" signature="343:375" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1314,33 +1098,309 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="836">
           <caret line="42" column="51" lean-forward="false" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-          <folding>
-            <marker date="1596525843000" expanded="true" signature="231:2209" ph="..." />
-            <marker date="1596525843000" expanded="true" signature="859:932" ph="..." />
-            <marker date="1596525843000" expanded="true" signature="1744:2209" ph="..." />
-            <marker date="1596525843000" expanded="true" signature="1812:2031" ph="..." />
-            <marker date="1596525843000" expanded="true" signature="2239:3086" ph="..." />
-            <marker date="1596525843000" expanded="true" signature="2244:2268" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1596525843000" expanded="true" signature="2695:2832" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/newfish-client/branches/weixin_v3/res-wx/tools/config_load/wx_config_load_multiple.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="798" column="27" lean-forward="true" selection-start-line="798" selection-start-column="27" selection-end-line="798" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="17402">
+          <caret line="798" column="27" lean-forward="false" selection-start-line="798" selection-start-column="27" selection-end-line="798" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/superboss/queen_fish_group.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="163" column="37" lean-forward="true" selection-start-line="163" selection-start-column="37" selection-end-line="163" selection-end-column="37" />
+        <state relative-caret-position="339">
+          <caret line="155" column="22" lean-forward="false" selection-start-line="155" selection-start-column="22" selection-end-line="155" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/protocol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="556" column="35" lean-forward="true" selection-start-line="556" selection-start-column="35" selection-end-line="556" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/reactor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="51" column="49" lean-forward="true" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/channel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/tasklet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="152" column="4" lean-forward="true" selection-start-line="152" selection-start-column="4" selection-end-line="152" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/core/timer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="137" column="19" lean-forward="true" selection-start-line="137" selection-start-column="19" selection-end-line="137" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/twisted/internet/protocol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="442" column="8" lean-forward="false" selection-start-line="442" selection-start-column="8" selection-end-line="442" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/clients.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="299" column="20" lean-forward="false" selection-start-line="299" selection-start-column="20" selection-end-line="299" selection-end-column="20" />
           <folding>
-            <element signature="e#87#100#0" expanded="true" />
+            <element signature="e#89#100#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="111" column="26" lean-forward="false" selection-start-line="111" selection-start-column="26" selection-end-line="111" selection-end-column="26" />
+          <folding>
+            <element signature="e#87#98#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/msg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3080">
+          <caret line="140" column="18" lean-forward="false" selection-start-line="140" selection-start-column="18" selection-end-line="140" selection-end-column="18" />
+          <folding>
+            <element signature="e#87#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/entity/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/db.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/global.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/json2redis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/log_type.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-455">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/read.me">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/server.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/hotfix/gc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/http.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2464">
+          <caret line="121" column="37" lean-forward="false" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/startup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/protocol/tcp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/start_LI_slave_35.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/daily.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/script/shell/kill_bi_run_py.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/cold-data-server/read.me">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/logserver/conf/redis/7901.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent2/factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/protocol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/msg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/support/tcpagent/wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/txredis/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="1596" column="37" lean-forward="false" selection-start-line="1596" selection-start-column="37" selection-end-line="1596" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/freetime/util/cache.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="25" column="44" lean-forward="false" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/misc/cpu/cpu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="16" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/freetime/INSTALL">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
