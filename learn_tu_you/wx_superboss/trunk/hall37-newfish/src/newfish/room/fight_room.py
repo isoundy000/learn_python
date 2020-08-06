@@ -74,11 +74,85 @@ class FishFightRoom(TYRoom):
                 # raise TYBizException(code, u"次数不足或道具不够!")
                 raise TYBizException(code, config.getMultiLangTextConf("ID_CREAT_FT_ITEM_NOT_ENOUGH", lang=lang))
 
-
+            self._collectFee(userId, ftId, ftConf)
+            isCollectFee = True
+            ftBindRoomId(ftId, self.roomId)
+            table = self._tableManager.borrowTable()
+            ftTable = FTTable(userId, ftId, ftConf, pktimestamp.getCurrentTimestamp(), table)
+            self._ftMap[ftId] = ftTable
+            table._ftTable = ftTable
+            # 通知桌子绑定了朋友桌
+            self._tableCtrl.bindTable(ftTable.table)
+            self.enterFT(userId, ftId)
+            ftlog.info("FTRoom.createFT Success", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=", ftConf.fee)
+            return 0
         except Exception, e:
             if isCollectFee:
                 self._returnFee(userId, ftId, ftConf)
             releaseFTId(ftId)
+            if not isinstance(e, TYBizException):
+                ftlog.error("createFT", e, userId, ftConf)
+                # raise TYBizException(7, u"创建房间失败，请稍后再试！")
+                raise TYBizException(7, config.getMultiLangTextConf("ID_CREAT_FT_FAIL_MSG", lang=lang))
+            raise e
+
+    def disbindFT(self, ftId, isReturnFee):
+        """释放自建桌子"""
+        ftlog.debug("FriendRoom disbindFT", ftId)
+        ftTable = self.findFT(ftId)
+        if not ftTable:
+            # raise TYBizException(-1,  u"没有找到该房间! ")
+            lang = util.getLanguage(ftTable.userId)
+            raise TYBizException(-1, config.getMultiLangTextConf("ID_NOT_FIND_ROOM", lang=lang))
+
+        del self._ftMap[ftId]
+        ftTable.table.clear()
+        self._tableManager.returnTable(ftTable.table)
+        releaseFTId(ftId)
+
+        ftlog.info("FTRoom.disbindFT Succ", "roomId=", self.roomId, "userId=", ftTable.userId, "ftId=", ftTable.ftId, "fee=", ftTable.ftConf.fee)
+
+    def enterFT(self, userId, ftId):
+        """进入桌子"""
+        ftlog.info("FTRoom.enterFT enterFT", "userId =", userId, "ftId =", ftId, "ftMap =", self._ftMap)
+        lang = util.getLanguage(userId)
+        try:
+            if self.runStatus != self.ROOM_STATUS_RUN:
+                # raise TYBizException(8, u"游戏维护中，请稍后再试！")
+                raise TYBizException(8, config.getMultiLangTextConf("ID_GAME_MAINTAIN_MSG", lang=lang))
+            if isinstance(ftId, int):
+                ftId = str(ftId)
+            ftTable = self.findFT(ftId)
+            if not ftTable or not ftTable.table:
+                # raise TYBizException(1, u"您输入的房间号不存在，请重新输入！")
+                raise TYBizException(1, config.getMultiLangTextConf("ID_INPUT_ROOMID_ERROR_INFO", lang=lang))
+            if ftTable.table.getUserNum() >= self.matchConf["table.seat.count"]:
+                # raise TYBizException(3, u"当前房间人数已满！")
+                raise TYBizException(3, config.getMultiLangTextConf("ID_ROOM_HAS_FULL", lang=lang))
+            if not ftTable.table.getPlayer(userId):
+                player = Player(userId)
+                ftTable.table.sitdown(player)
+                code = self._tableCtrl.tableEnter(ftTable.table, userId, player.seat.seatId)
+            else:
+                # raise TYBizException(4, u"当前房间人数已满！")
+                raise TYBizException(4, config.getMultiLangTextConf("ID_HAS_IN_ROOM", lang=lang))
+            return code
+        except Exception, e:
+            if not isinstance(e, TYBizException):
+                ftlog.error("enterFT", e, userId, ftId)
+                # raise TYBizException(7, u"加入房间失败，请稍后再试！")
+                raise TYBizException(7, config.getMultiLangTextConf("ID_ENTER_ROOM_FAIL", lang=lang))
+            raise e
+
+    def userStandUp(self, ftId, userId):
+        """用户离开桌子"""
+        ftlog.debug("room userStandUp->", userId, ftId, self._ftMap)
+        ftTable = self.findFT(ftId)
+        if ftTable and ftTable.table:
+            player = ftTable.table.getPlayer(userId)
+            if player:
+                ftTable.table.standup(player)
+            ftlog.debug("room userStandUp->", userId, ftTable.table.getUserNum())
 
     def _returnFee(self, userId, ftId, ftConf):
         """返还门票"""
@@ -91,11 +165,28 @@ class FishFightRoom(TYRoom):
         except:
             ftlog.error("FTRoom._returnFee", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=", ftConf.fee)
 
+    def _collectFee(self, userId, ftId, ftConf):
+        """收取门票"""
+        ftlog.info("FTRoom._collectFee", "roomId=", self.roomId, "userId=", userId, "fee=", ftConf.fee)
+        if ftConf.fee:
+            userAssets = hallitem.itemSystem.loadUserAssets(userId)
+            lang = util.getLanguage(userId)
+            rewards = []
+            for reward in ftConf.fee:
+                surplusCount = userAssets.balance(FISH_GAMEID, "item:" + str(reward["name"]),
+                                                  pktimestamp.getCurrentTimestamp())
+                rewards.append({"name": reward["name"], "count": -abs(reward["count"])})
+                if surplusCount < reward["count"]:
+                    code = 5
+                else:
+                    code = util.addRewards(userId, rewards, "ROOM_GAME_FEE", int(ftId))
+                if code:
+                    raise TYBizException(5, config.getMultiLangTextConf("ID_ITEM_COUNT_NOT_ENOUGH", lang=lang))
 
     def _initGR(self):
         """初始化房间的桌子变量"""
         # 获取所有的bigRoomId
-        self._ftMap = OrderedDict()
+        self._ftMap = OrderedDict()                 # 桌子Id: 桌子对象
         self._tableCtrl = TableController()
         self._tableManager = self._buildTableManager()
         ftlog.info("FTRoom._initGR Succ", "roomId=", self.roomId, "tableCount=", self._tableManager.allTableCount)
@@ -115,11 +206,15 @@ class FishFightRoom(TYRoom):
                 table = Table(FISH_GAMEID, roomId, baseId + i, seatCount)
                 tableManager.addTable(table)
 
-
-
+        ftlog.info("FTRoom._buildTableManager Succ",
+                   "roomId=", self.roomId,
+                   "shadowRoomIds=", list(shadowRoomIds),
+                   "seatCount=", seatCount,
+                   "tableCount=", tableManager.allTableCount)
+        return tableManager
 
     def _genFTId(self):
-        """"""
+        """生成一个桌子Id"""
         for _ in xrange(10):
             ftId = genFTId()
             if not self.findFT(ftId):               # 找不到重复的房间号就是新房间
@@ -128,15 +223,42 @@ class FishFightRoom(TYRoom):
 
 
 def ftExists(ftId):
-    pass
+    """是否存在此桌子"""
+    ret = False
+    try:
+        ftBind = ftFind(ftId)
+        if ftBind:
+            from newfish.servers.room.rpc import room_remote
+            ret = room_remote.ftExists(ftBind.get("roomId"), ftId)
+    except:
+        # 异常，有可能在用
+        ret = True
+        ftlog.error("ft_service.ftExists ftId=", ftId)
+
+    ftlog.debug("ft_service.ftExists ftId=", ftId,
+                "ret=", ret)
+    return ret
 
 
 def ftFind(ftId):
-    pass
+    """查找桌子"""
+    jstr = None
+    try:
+        jstr = daobase.executeMixCmd("get", "ft:%s:%s" % (FISH_GAMEID, ftId))
+        ftlog.debug("ft_service.ftFind ftId=", ftId,
+                    "jstr=", jstr)
+        if not jstr:
+            return None
+        return strutil.loads(jstr)
+    except:
+        ftlog.error("ft_service.ftFind ftId=", ftId,
+                    "jstr=", jstr)
+        return None
 
 
 def ftBindRoomId(ftId, roomId):
-    pass
+    """桌子绑定房间"""
+    daobase.executeMixCmd("set", "ft:%s:%s" % (FISH_GAMEID, ftId), strutil.dumps({"roomId": roomId}))
 
 
 def genFTId():
@@ -158,15 +280,53 @@ def releaseFTId(ftId):
 
 
 def collectCtrlRoomIds():
-    pass
+    """查询所有的控制房间"""
+    bigRoomIds = gdata.gameIdBigRoomidsMap().get(FISH_GAMEID)
+    ctrlRoomIds = []
+    for bigRoomId in bigRoomIds:
+        roomConf = gdata.getRoomConfigure(bigRoomId)
+        if roomConf.get("typeName") == config.FISH_FIGHT:
+            ctrlRoomIds.extend(gdata.bigRoomidsMap().get(bigRoomId, []))
+    ctrlRoomIds.sort()
+    return ctrlRoomIds
 
 
 def roomIdForFTId(ftId):
-    pass
+    """根据桌子Id查找房间Id"""
+    try:
+        ftBind = ftFind(ftId)
+        if ftBind:
+            return ftBind.get("roomId", 0)
+    except:
+        ftlog.warn("ft_server.roomIdForFTId", "ftId=", ftId)
+    return 0
 
 
 def createFT(userId, fee):
-    pass
+    """
+    创建自建桌
+    @param userId: 谁创建
+    @param fee: 服务费
+    """
+    ctrlRoomIds = collectCtrlRoomIds()
+    lang = util.getLanguage(userId)
+    if not ctrlRoomIds:
+        ftlog.error("ft_service.createFT userId=", userId, "fee=", fee)
+        raise TYBizException(7, config.getMultiLangTextConf("ID_CREAT_FT_FAIL_MSG", lang=lang))
+    ctrlRoomId = random.choice(ctrlRoomIds)
+    ftlog.debug("ft_service.createFT userId=", userId, "fee=", fee, "ctrlRoomId", ctrlRoomId)
+    from newfish.servers.room.rpc import room_remote
+    rewards = []
+    for reward in fee:
+        if reward and reward["count"] > 0:
+            rewards.append(reward)
+    code = room_remote.createFT(userId, ctrlRoomId, rewards)
+    if isinstance(code, dict):
+        raise TYBizException(code["errorCode"], code["message"])
+    elif isinstance(code, Exception):
+        ftlog.error("createFT", code, userId)
+        raise TYBizException(7, config.getMultiLangTextConf("ID_CREAT_FT_FAIL_MSG", lang=lang))
+    return code
 
 
 class Player(object):
@@ -297,6 +457,77 @@ class Table(object):
         """桌子Id"""
         return self._ftTable.ftId if self._ftTable else None
 
+    def getPlayer(self, userId):
+        """获取玩家"""
+        for seat in self.seats:
+            if seat.player and seat.player.userId == userId:
+                return seat.player
+        return None
+
+    def getPlayerList(self):
+        """
+        获取本桌的所有player
+        """
+        return [seat.player for seat in self.seats if seat.player]
+
+    def getUserIdList(self):
+        """
+        获取本桌所有userId
+        """
+        ret = []
+        for seat in self.seats:
+            ret.append(seat.player.userId if seat.player else 0)
+        return ret
+
+    def getUserNum(self):
+        """
+        获取本桌所有userId
+        """
+        num = 0
+        for seat in self.seats:
+            if seat.player and seat.player.userId:
+                num += 1
+        return num
+
+    def sitdown(self, player):
+        """
+        玩家坐下
+        """
+        assert (player._seat is None)
+        assert (len(self._idleSeats) > 0)
+        seat = self._idleSeats[-1]
+        del self._idleSeats[-1]
+        seat._player = player
+        player._table = self
+        player._seat = seat
+
+    def standup(self, player):
+        """
+        玩家离开桌子
+        """
+        assert (player._seat is not None and player._seat.table == self)
+        self._clearSeat(player._seat)
+
+    def clear(self):
+        """
+        清理桌子上的所有玩家
+        """
+        for seat in self._seats:
+            if seat._player:
+                self.standup(seat._player)
+
+    def _clearSeat(self, seat):
+        seat._player._seat = None
+        seat._player = None
+        self._idleSeats.append(seat)
+
+    def _makeSeats(self, count):
+        assert (count > 0)
+        seats = []
+        for i in xrange(count):
+            seats.append(Seat(self, 2 * i + 1))
+        return seats
+
 
 class TableManager(object):
 
@@ -334,7 +565,7 @@ class TableManager(object):
         return table
 
     def returnTable(self, table):
-        """添加一个桌子"""
+        """释放一个桌子"""
         assert (self._allTableMap.get(table.tableId, None) == table)
         assert (not table.getPlayerList())
         self._idleTables.append(table)

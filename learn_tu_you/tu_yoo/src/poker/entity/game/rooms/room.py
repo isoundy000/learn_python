@@ -120,7 +120,7 @@ class TYRoom(object):
 
     @property
     def matchConf(self):
-        return self.__define.configure['matchConf']
+        return self.__define.configure['matchConf']                         # 比赛的配置
 
     @property
     def hasRobot(self):

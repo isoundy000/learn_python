@@ -7,4 +7,11 @@
 
 class TimeMatch(object):
 
-    pass
+    _matchMap = {}
+
+    WINLOSE_SLEEP = 0
+
+    @classmethod
+    def getMatch(cls, roomId):
+        """获取比赛"""
+        return cls._matchMap.get(roomId, None)

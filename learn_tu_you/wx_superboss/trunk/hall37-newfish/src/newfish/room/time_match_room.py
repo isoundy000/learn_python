@@ -44,16 +44,24 @@ class FishTimeMatchRoom(TYRoom):
         self._logger.add("bigmatchId", self.bigmatchId)
         serverType = gdata.serverType()
         if serverType == gdata.SRV_TYPE_ROOM:
-            self.initMatch()                        # 此处会给self.match赋值
+            self.initMatch()                                                    # 此处会给self.match赋值
 
+    def newTable(self, tableId):
+        """
+        在GT中创建TYTable的实例
+        """
+        from newfish.table.time_match_table import FishTimeMatchTable
+        table = FishTimeMatchTable(self, tableId)
+        return table
 
+    def initializedGT(self, shadowRoomId, tableCount):
+        pass
 
 
     def initMatch(self):
         """初始化比赛"""
         assert (self.matchPlugin.getMatch(self.roomId) is None)
         self._logger.info("initMatch ...")
-        conf = MatchConfig.parse(self.gameId, self.roomId, self.bigmatchId,
-                                 self.roomConf["name"], self.matchConf)
+        conf = MatchConfig.parse(self.gameId, self.roomId, self.bigmatchId, self.roomConf["name"], self.matchConf)
 
 

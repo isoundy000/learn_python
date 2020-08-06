@@ -162,12 +162,43 @@ class StartConfig(object):
 
 
 class StageConfig(object):
-
+    """阶段配置"""
     def __init__(self):
         self.conf = None
 
         self.name = None
+        self.seatQueuing = None
+        self.riseUserCount = None
 
+        self.groupingType = None
+        self.groupingUserCount = None
+        self.groupingGroupCount = None
+        self.rankRewardsList = None
+        self.rankRewardsDesc = None
+        self.index = 0
+        self.tableTimeoutCheckInterval = 5
+
+    def checkValid(self):
+        """检查是否合法"""
+        if not isstring(self.name):
+            raise MatchConfException("Stage.name must be string")
+
+        if not SeatQueuingType.isValid(self.seatQueuing):
+            raise MatchConfException("Stage.seat.principles must in:" + str(SeatQueuingType.VALID_TYPES))
+
+        if (not isinstance(self.riseUserCount, int) or self.riseUserCount <= 0):
+            raise MatchConfException("Stage.raise.user.count must be integer >= 0")
+
+        if not GroupingType.isValid(self.groupingType):
+            raise MatchConfException("Stage.grouping.type must in:" + str(GroupingType.VALID_TYPES))
+
+        if self.groupingType == GroupingType.TYPE_GROUP_COUNT:
+            if not isinstance(self.groupingGroupCount, int) or self.groupingGroupCount <= 0:
+                raise MatchConfException("Stage.grouping.group.count must be integer > 0")
+        elif self.groupingType == GroupingType.TYPE_USER_COUNT:
+            if not isinstance(self.groupingUserCount, int) or self.groupingUserCount <= 0:
+                raise MatchConfException("Stage.grouping.user.count must be integer > 0")
+        return self
 
     @classmethod
     def parse(cls, conf):
@@ -175,7 +206,22 @@ class StageConfig(object):
         ret.conf = conf
 
         # 通用配置
-        pass
+        ret.name = conf.get("name", None)
+        ret.seatQueuing = conf.get("seat.principles", None)
+        ret.riseUserCount = conf.get("rise.user.count", None)
+        ret.groupingType = conf.get("grouping.type", GroupingType.TYPE_NO_GROUP)
+        ret.groupingUserCount = conf.get("grouping.user.count", None)
+        ret.groupingGroupCount = conf.get("grouping.group.count", None)
+
+        ret.rankRewardsList = []
+        rankRewardsList = conf.get("rank.rewards")
+        if rankRewardsList is not None:
+            if not isinstance(rankRewardsList, list):
+                raise MatchConfException("rank.rewards must be list")
+            for rankRewards in rankRewardsList:
+                ret.rankRewardsList.append(RankRewards.parse(rankRewards))
+        ret.rankRewardsDesc = RankRewards.buildRewardDescList(ret.rankRewardsList)
+        return ret.checkValid()
 
 
 class RankRewards(object):
@@ -199,13 +245,14 @@ class RankRewards(object):
 
 
 class TipsConfig(object):
-
+    """比赛场提示的配置"""
     def __init__(self):
         self.conf = None
         self.infos = None
         self.interval = None
 
     def checkValid(self):
+        """检查是否合法"""
         if not isinstance(self.infos, list):
             raise MatchConfException("tips.infos must be array")
         for info in self.infos:
@@ -218,6 +265,7 @@ class TipsConfig(object):
 
     @classmethod
     def parse(cls, conf):
+        """解析"""
         ret = cls()
         ret.conf = conf
         ret.infos = conf.get("infos", [])
@@ -299,7 +347,6 @@ class MatchConfig(object):
         """房间名 回馈赛水上乐园 """
         return cls.name
 
-
     @classmethod
     def parse(cls, gameId, roomId, matchId, name, conf):
         """
@@ -342,3 +389,4 @@ class MatchConfig(object):
             raise MatchConfException("stages must be list")
         for i, stage in enumerate(stages):
             stage = StageConfig.parse(stage)
+

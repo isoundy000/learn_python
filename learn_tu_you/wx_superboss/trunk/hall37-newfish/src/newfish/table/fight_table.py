@@ -163,6 +163,11 @@ class FishFightTable(FishTable):
                 self._expiresTimer = None
             self._expiresTimer = FTLoopTimer(self._tableExpiresTime, 0, self._tableExpires)
             self._expiresTimer.start()
+            self._doTableQuickStart(userId, seatId)             # 用户进入
+            self.sendFriendDetails(userId)                      # 发送对战详情信息
+            if userId != self.ftTable.userId:                   # 记录参与者Id
+                self.otherId = userId
+                fight_history.addOneHistory(userId, self.ftTable.userId, fight_history.HistoryType.Enter, self.ftId, self.ftTable.fee)  # 进入房间记录
         return 0
 
 
@@ -200,3 +205,13 @@ class FishFightTable(FishTable):
             msg.setResult("expirseTime", int(self._expiresTimer.getTimeOut()) if self._expiresTimer else self._tableExpiresTime)
             msg.setResult("targets", self.targets)
             GameMsg.sendMsg(msg, player.userId)
+
+
+
+
+    def _tableExpires(self):
+        """桌子过期了"""
+        if self._tableState < TableState.START:
+            self._sendExpriseHistory()
+            self._sendLeaveMsg(reason=1)
+            self._clearTable()
