@@ -57,11 +57,19 @@ class FishTimeMatchRoom(TYRoom):
     def initializedGT(self, shadowRoomId, tableCount):
         pass
 
-
     def initMatch(self):
         """初始化比赛"""
         assert (self.matchPlugin.getMatch(self.roomId) is None)
         self._logger.info("initMatch ...")
         conf = MatchConfig.parse(self.gameId, self.roomId, self.bigmatchId, self.roomConf["name"], self.matchConf)
+        conf.tableId = self.roomId * 10000                                      # 用来表示玩家在房间队列的特殊tableId
+        conf.seatId = 1
 
+        tableManager = TableManager(self, conf.tableSeatCount)
+        shadowRoomIds = self.roomDefine.shadowRoomIds
+
+        self._logger.info("initMatch", "shadowRoomIds=", list(shadowRoomIds))
+        for roomId in shadowRoomIds:
+            count = self.roomDefine.configure["gameTableCount"]
+            pass
 

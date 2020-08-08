@@ -10,10 +10,8 @@ from sre_compile import isstring
 from freetime.util.cron import FTCron
 from poker.entity.biz.exceptions import TYBizConfException
 import poker.util.timestamp as pktimestamp
-from newfish.room.timematchctrl.const import MatchType, FeeType, \
-    GroupingType, SeatQueuingType
-from newfish.room.timematchctrl.exceptions import \
-    MatchConfException
+from newfish.room.timematchctrl.const import MatchType, FeeType, GroupingType, SeatQueuingType
+from newfish.room.timematchctrl.exceptions import MatchConfException
 
 
 class StartConfig(object):
@@ -23,7 +21,7 @@ class StartConfig(object):
 
         # 通用配置
         self.type = None
-        self.feeType = None
+        self.feeType = None                 # 费用
         self.maxPlayTime = None
         self.tableTimes = None
 
@@ -114,7 +112,7 @@ class StartConfig(object):
         return self
 
     @classmethod
-    def parse(self, conf):
+    def parse(cls, conf):
         """
         解析开赛配置
         :param conf:
@@ -122,7 +120,7 @@ class StartConfig(object):
         """
         ret = StartConfig()
         ret.conf = conf
-        ret.type = conf.get("type", 1)
+        ret.type = conf.get("type", None)
         ret.feeType = conf.get("fee.type", None)
         ret.maxPlayTime = conf.get("maxplaytime", None)     # 最大能玩的时间
         ret.tableTimes = conf.get("table.times", 480)       # 桌子的时间8分钟
@@ -158,6 +156,38 @@ class StartConfig(object):
         ret.matchTimes = conf.get("list.matchtimes", [60])
         # ret.matchStartTimeStr = conf.get("times", {}).get("times_in_day", {}).get("list", [])
         ret.matchTimesBasedDays = (conf.get("matchtimesbaseddays", 0) != 0)
+        return ret.checkValid()
+
+
+class GroupingConfig(object):
+    """分组配置"""
+    def __init__(self):
+        self.conf = None
+        self.type = None
+        # 固定分组
+        self.groupCount = None
+        # 按照人数分组
+        self.userCount = None
+
+    def checkValid(self):
+        """检查是否合法"""
+        if not GroupingType.isValid(self.type):
+            raise MatchConfException("matchs.grouping.type must in:" + str(GroupingType.VALID_TYPES))
+        if GroupingType.TYPE_GROUP_COUNT:
+            if not isinstance(self.groupCount, int) or self.groupCount <= 0:
+                raise MatchConfException("matchs.grouping.group.count must in:" + str(GroupingType.VALID_TYPES))
+        else:
+            if not isinstance(self.userCount, int) or self.userCount <= 0:
+                raise MatchConfException("matchs.grouping.user.count must be int > 0")
+        return self
+    
+    @classmethod
+    def parse(cls, conf):
+        ret = GroupingConfig()
+        ret.conf = conf
+        ret.type = conf.get("type", None)
+        ret.groupCount = conf.get("group.count", None)
+        ret.userCount = conf.get("user.count", None)
         return ret.checkValid()
 
 
@@ -202,6 +232,7 @@ class StageConfig(object):
 
     @classmethod
     def parse(cls, conf):
+        """阶段解析"""
         ret = StageConfig()
         ret.conf = conf
 
@@ -225,6 +256,7 @@ class StageConfig(object):
 
 
 class RankRewards(object):
+    """排行榜奖励"""
     def __init__(self):
         self.conf = None
         self.startRank = None
@@ -235,6 +267,7 @@ class RankRewards(object):
         self.todotask = None
 
     def checkValid(self):
+        """检查是否合法"""
         if not isinstance(self.startRank, int) or self.startRank < -1:
             raise MatchConfException("rank.start must be int >= -1")
         if not isinstance(self.endRank, int) or self.endRank < -1:
@@ -242,6 +275,46 @@ class RankRewards(object):
         if self.endRank != -1 and self.endRank < self.startRank:
             raise MatchConfException("rank.end must greater than rewards.rank.start")
         return self
+
+    @classmethod
+    def parse(cls, conf):
+        """解析"""
+        ret = cls()
+        ret.conf = conf
+        ret.startRank = conf["ranking"]["start"]
+        ret.endRank = conf["ranking"]["end"]
+        
+        rewards = conf.get("rewards", [])
+        ret.rewards = []
+        for reward in rewards:
+            if not isinstance(reward, dict):
+                raise MatchConfException("reward item must dict")
+            itemId = reward.get("itemId", None)
+            if not isstring(itemId) or not itemId:
+                raise MatchConfException("reward item.name must be not empty string")
+            count = reward.get("count", None)
+            if not isinstance(count, (int, float)) or count < 0:
+                raise MatchConfException("reward item.count must be int or float >= 0")
+            if count > 0:
+                ret.rewards.append(reward)
+                
+        ret.desc = conf["desc"]
+        ret.message = conf.get("message", None)
+        ret.todotask = conf.get("todotask", None)
+        return ret.checkValid()
+    
+    @classmethod
+    def buildRewardDescList(cls, rankRewardsList):
+        """构建奖励描术列表"""
+        rewardDescList = []
+        if rankRewardsList:
+            for rankRewards in rankRewardsList:
+                if rankRewards.startRank == rankRewards.endRank:
+                    rankIndex = str(rankRewards.startRank)
+                else:
+                    rankIndex = str(rankRewards.startRank) + "-" + str(rankRewards.endRank)
+                rewardDescList.append(u"第%s名:" % (rankIndex) + rankRewards.desc)
+        return "\n".join(rewardDescList)
 
 
 class TipsConfig(object):
@@ -328,6 +401,7 @@ class MatchConfig(object):
         self.discountTime = None
 
     def checkValid(self):
+        """检查是否合法"""
         if not isinstance(self.matchId, int):
             raise MatchConfException("matchId must be int")
         if not isinstance(self.tableSeatCount, int) or self.tableSeatCount <= 0:
@@ -336,10 +410,12 @@ class MatchConfig(object):
 
     @classmethod
     def getTipsConfigClass(cls):
+        """获取提示配置奖励"""
         return TipsConfig
 
     @classmethod
     def getRankRewardsClass(cls):
+        """获取排行榜奖励类"""
         return RankRewards
 
     @classmethod
@@ -354,8 +430,8 @@ class MatchConfig(object):
         :param gameId:
         :param roomId:
         :param matchId: bigRoomId 44401
-        :param name:
-        :param conf:
+        :param name: 房间名
+        :param conf: 比赛配置
         """
         ret = MatchConfig()
         ret.conf = conf             # 比赛配置
@@ -389,4 +465,15 @@ class MatchConfig(object):
             raise MatchConfException("stages must be list")
         for i, stage in enumerate(stages):
             stage = StageConfig.parse(stage)
+            stage.index = i
+            ret.stages.append(stage)
 
+        ret.rankRewardsList = []
+        rankRewardsList = conf.get("rank.rewards")
+        if rankRewardsList is not None:
+            if not isinstance(rankRewardsList, list):
+                raise MatchConfException("rank.rewards must be list")
+            for rankRewards in rankRewardsList:
+                ret.rankRewardsList.append(cls.getRankRewardsClass().parse(rankRewards))
+        ret.rankRewardsDesc = cls.getRankRewardsClass().buildRewardDescList(ret.rankRewardsList)
+        return ret.checkValid()

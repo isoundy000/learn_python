@@ -1267,6 +1267,117 @@ def dynamic_odds_config():
     print u"end 动态概率配置 DynamicOdds"
 
 
+def gift_config(clientId=0):
+    """
+    礼包配置
+    """
+    sn = "Gift" if clientId == 0 else "Gift" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    outPath = getOutPath("gift", fn)
+    ws = getWorkBook().get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    config["gift"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            if i != startRowNum:
+                break
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config["gift"]:
+            raise KeyError("giftId %d repeat" % int(cols[0]))
+        config["gift"][str(cols[0])] = one
+        one["giftId"] = int(cols[0])
+        one["giftName"] = unicode(cols[1])
+        one["giftType"] = int(cols[2])
+        one["productId"] = cols[3]
+        one["fishPool"] = int(cols[4])
+        one["lifetime"] = int(cols[5])
+        one["minLevelLimit"] = int(cols[6])
+        one["maxLevelLimit"] = int(cols[7])
+        one["coinLimit"] = int(cols[8])
+        one["buyType"] = cols[9]
+        one["price"] = int(cols[10])
+        one["discountPrice"] = int(cols[11])
+        one["price_direct"] = int(cols[12])
+        one["price_diamond"] = int(cols[13])
+        one["otherBuyType"] = json.loads(cols[14])
+        one["vip"] = int(cols[15])
+        one["giftLimit"] = int(cols[16])
+        one["showAfterReload"] = int(cols[17])
+        one["showAfterTimes"] = int(cols[18])
+        one["roomId"] = json.loads(cols[19])
+        one["recordKey"] = str(cols[20])
+        one["loopTimes"] = int(cols[21])
+        one["appearTimes"] = json.loads(cols[22])
+        # 月卡专用
+        if one["giftType"] == 4:
+            one["monthCard"] = json.loads(cols[23])
+        one["firstBuyRewards"] = json.loads(cols[24])
+        one["getAfterBuy"] = json.loads(cols[25])
+        one["expireTime"] = int(cols[26])
+        one["popupLevel"] = int(cols[27])
+        one["items"] = []
+        for x in xrange(28, len(cols), 5):
+            if cols[x]:
+                item = {}
+                item["type"] = cols[x]
+                item["name"] = unicode(cols[x + 1]) if cols[x + 1] else ""
+                item["desc"] = unicode(cols[x + 2]) if cols[x + 2] else ""
+                item["itemId"] = cols[x + 3]
+                item["count"] = cols[x + 4]
+                one["items"].append(item)
+
+    # 每日礼包配置
+    print "daily_gift_config, start"
+    sn = "DailyGift" if clientId == 0 else "DailyGift" + "_" + str(clientId)
+    ws = getWorkBook().get_sheet_by_name(sn)
+    config["dailyGift"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config["dailyGift"][int(cols[0])] = one
+            one["giftId"] = int(cols[0])
+            one["giftName"] = unicode(cols[1])
+            one["productId"] = cols[2]
+            one["vipRange"] = json.loads(cols[3])
+            one["buyType"] = cols[4]
+            one["price"] = int(cols[5])
+            one["price_direct"] = int(cols[6])
+            one["price_diamond"] = int(cols[7])
+            one["otherBuyType"] = json.loads(cols[8])
+            one["giftInfo"] = []
+            for x in range(9, len(cols), 2):
+                if cols[x] is None:
+                    continue
+                item = collections.OrderedDict()
+                item["day_idx"] = int(cols[x])
+                item["items"] = json.loads(cols[x + 1])
+                one["giftInfo"].append(item)
+    print "daily_gift_config, end"
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def lottery_pool_config():
     pass
 
@@ -1943,12 +2054,12 @@ config_list = [
     (probability_config, None),
     (dynamic_odds_config, None),
     # (lottery_pool_config, None),
-    # # (gift_config, None),
-    # # (gift_config, 25794),
-    # # (gift_config, 25598),
-    # # (gift_config, 26120),
-    # # (gift_config, 26121),
-    # # (gift_config, 26122),
+    (gift_config, None),
+    (gift_config, 25794),
+    (gift_config, 25598),
+    (gift_config, 26120),
+    (gift_config, 26121),
+    (gift_config, 26122),
     # (item_drop_config, None),
     (vip_config, None),
     (fixed_multiple_fish, None),

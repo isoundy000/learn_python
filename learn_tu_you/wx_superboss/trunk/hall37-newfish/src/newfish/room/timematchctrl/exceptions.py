@@ -13,7 +13,7 @@ class MatchException(TYBizException):
 
 
 class MatchConfException(MatchException):
-
+    """比赛配置异常"""
     def __init__(self, message=u"系统错误"):
         super(MatchConfException, self).__init__(1, message)
 

@@ -185,6 +185,118 @@ def vip_config():
     print "vip_config, end"
 
 
+def gift_config(clientId=0):
+    """
+    礼包配置
+    """
+    sn = "Gift" if clientId == 0 else "Gift" + "_" + str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    outPath = getOutPath("gift", fn)
+    ws = getWorkBook().get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    config["gift"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            if i != startRowNum:
+                break
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config["gift"]:
+            raise KeyError("giftId %d repeat" % int(cols[0]))
+        config["gift"][str(cols[0])] = one
+        one["giftId"] = int(cols[0])                    # 礼包ID
+        one["giftName"] = unicode(cols[1])
+        one["giftType"] = int(cols[2])                  # 礼包类型
+        one["productId"] = cols[3]                      # 商品ID
+        one["fishPool"] = int(cols[4])                  # 出现渔场
+        one["lifetime"] = int(cols[5])                  # 存活时间
+        one["minLevelLimit"] = int(cols[6])             # 最小等级限制
+        one["maxLevelLimit"] = int(cols[7])
+        one["coinLimit"] = int(cols[8])                 # 金币限制
+        one["buyType"] = cols[9]                        # 购买方式
+        one["price"] = int(cols[10])                    # 原价
+        one["discountPrice"] = int(cols[11])            # 折扣价
+        one["price_direct"] = int(cols[12])             # 货币价格
+        one["price_diamond"] = int(cols[13])            # 钻石价格
+        one["otherBuyType"] = json.loads(cols[14])      # 其他购买方式
+        one["vip"] = int(cols[15])                      # vip等级
+        one["giftLimit"] = int(cols[16])                # 购买礼包限制
+        one["showAfterReload"] = int(cols[17])          # 领取后需下次登录显示
+        one["showAfterTimes"] = int(cols[18])           # 领取后多久显示(分钟)
+        one["roomId"] = json.loads(cols[19])            # 房间id
+        one["recordKey"] = str(cols[20])                # 记录累计购买次数的key
+        one["loopTimes"] = int(cols[21])                # 循环次数
+        one["appearTimes"] = json.loads(cols[22])       # 出现次数
+        # 月卡专用
+        if one["giftType"] == 4:
+            one["monthCard"] = json.loads(cols[23])     # 对应物品(月卡专用)
+        one["firstBuyRewards"] = json.loads(cols[24])   # 首次购买奖励
+        one["getAfterBuy"] = json.loads(cols[25])       # 购买立得
+        one["expireTime"] = int(cols[26])               # 有效期(分钟)
+        one["popupLevel"] = int(cols[27])               # 弹出等级
+        one["items"] = []
+        for x in xrange(28, len(cols), 5):
+            if not cols[x]:
+                continue
+            item = {}
+            item["type"] = cols[x]                      # 礼物类型
+            item["name"] = unicode(cols[x + 1]) if cols[x + 1] else ""      # 礼物名
+            item["desc"] = unicode(cols[x + 2]) if cols[x + 2] else ""      # 礼物描述
+            item["itemId"] = cols[x + 3]                # 道具Id
+            item["count"] = cols[x + 4]                 # 数量
+            one["items"].append(item)
+
+    # 每日礼包配置
+    print "daily_gift_config, start"
+    sn = "DailyGift" if clientId == 0 else "DailyGift" + "_" + str(clientId)
+    ws = getWorkBook().get_sheet_by_name(sn)
+    config["dailyGift"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config["dailyGift"][int(cols[0])] = one     # 礼包Id
+            one["giftId"] = int(cols[0])                # 礼包Id
+            one["giftName"] = unicode(cols[1])          # 礼包描述
+            one["productId"] = cols[2]                  # 商品ID
+            one["vipRange"] = json.loads(cols[3])       # vip等级限制
+            one["buyType"] = cols[4]                    # 购买方式
+            one["price"] = int(cols[5])                 # 价格
+            one["price_direct"] = int(cols[6])          # 货币价格
+            one["price_diamond"] = int(cols[7])         # 钻石价格
+            one["otherBuyType"] = json.loads(cols[8])   # 其他购买方式
+            one["giftInfo"] = []
+            for x in range(9, len(cols), 2):
+                if cols[x] is None:
+                    continue
+                item = collections.OrderedDict()
+                item["day_idx"] = int(cols[x])          # 连购天数
+                item["items"] = json.loads(cols[x + 1]) # 礼物
+                one["giftInfo"].append(item)
+    print "daily_gift_config, end"
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def getWorkBook(filename="newfish_common.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -254,8 +366,8 @@ config_list = [
     # (treasure_config, None),
     # (main_quest_config, None),
     # (daily_quest_config, None),
-    # (gift_config, None),
-    # (gift_config, 25794),
+    (gift_config, None),
+    (gift_config, 25794),
     # (gift_config, 25598),
     # (gift_config, 26120),
     # (gift_config, 26121),

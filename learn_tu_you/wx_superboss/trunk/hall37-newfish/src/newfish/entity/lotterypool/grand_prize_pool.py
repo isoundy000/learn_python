@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
-# @Time: 2020/7/17
-"""
-巨奖奖池
-"""
+# @Time: 2020/6/2
 
 import random
 import json
@@ -17,27 +14,38 @@ from freetime.core.timer import FTLoopTimer
 from poker.entity.dao import daobase, userdata
 from newfish.entity import config, util
 from newfish.entity.config import FISH_GAMEID
-from newfish.entity.redis_keys import MixData
 
 
 
 class GrandPrizePool(object):
-    pass
-
-
-    def checkSendReward(self, tableId, roomId, fId, userId, fireCost, seatId, fpMultiple):
-        """
-        检测能否发奖
-        """
+    
+    def __init__(self):
         pass
+    
+    
+def reloadConfig(event):
+    global _inited, grandPrizePoolInst
+    if not _inited or not grandPrizePoolInst:
+        return
 
+    if "game:44:grandPrize:0" not in event.keylist:
+        ftlog.info("GrandPrizePool, no need reload config!", event.keylist)
+        return
+
+    serverId = gdata.serverId()
+    if serverId == "CT9999000001":
+        if grandPrizePoolInst:
+            # grandPrizePoolInst.dumpGrandPrizePool()
+            grandPrizePoolInst.reloadConf()
+
+    ftlog.info("GrandPrizePool, reloadConfig on UT9999000001", serverId)
+    
 
 _inited = False
 grandPrizePoolInst = None
 
 
 def initialize():
-    """初始化"""
     global _inited, grandPrizePoolInst
     if not _inited:
         _inited = True
