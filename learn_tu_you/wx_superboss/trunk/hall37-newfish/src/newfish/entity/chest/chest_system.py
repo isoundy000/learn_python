@@ -117,6 +117,12 @@ def getChestRewards(userId, chestId):
     return rewards
 
 
+def deliveryChestRewards(userId, chestId, rewards, eventId=None, fromType=None, param01=0, param02=0):
+    """
+    发放宝箱物品
+    """
+    return 0
+
 
 def initialize():
     pass

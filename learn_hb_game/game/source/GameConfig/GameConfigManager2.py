@@ -63,12 +63,272 @@ class GameConfigManager:
             Log.Write(e)
             Log.Write(traceback.format_exc())
 
+        # try:
+        #     GameConfigManager.RecruitExt()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+        # try:
+        #     GameConfigManager.SkillFragmentEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.AthleticsRewardsEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        # try:
+        #     GameConfigManager.GirlRecruitEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.TreasureEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.TaskEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.SkillRobNPC()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        # try:
+        #     GameConfigManager.GossipEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.SoulHuntEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.SuitEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.EquipFragmentEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+        # try:
+        #     GameConfigManager.PengLaiMonsterEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+        # try:
+        #     GameConfigManager.GangShopEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+        # try:
+        #     #Log.Write("skillconfig",GameConfigManager.Data()["skill"])
+        #     GameConfigManager.ZhusendaiMonsterEx()
+        # except Exception,e:
+        #     Log.Write(e)
+        #     Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.AthleticsCopyEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.Begin7DayEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.LimittimeShopEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.VipEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.Penglai2MonsterEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.PetFragmentEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.ActivityTimeEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.BlackMarketEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.OnlineRewardEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.PropsEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.FavorableEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.WudaoEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.WudaoMatchEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.October1stEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.OldUserReturnEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.ReadGeneralEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.MoZhaoShopEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.EquipEvolveEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.ResourcesRecEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.MagicPosEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.WatchStarEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.StartGiftEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.KingManEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.Begin28DayEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.ContinuousRechargeEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.DragonWishingEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.GroundhogEX()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.TopOfWorldDayEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.TargetEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
+        try:
+            GameConfigManager.CampOfWarEx()
+        except Exception, e:
+            Log.Write(e)
+            Log.Write(traceback.format_exc())
+
     @staticmethod
     def setSection(section):
         """
         设置分区
         :param section: 分区号|数字
-        :return:
         """
         GameConfigManager._section = section
         if not GameConfigManager._ktv.has_key("section"):               # 初始化分区
@@ -87,7 +347,6 @@ class GameConfigManager:
     def Data():
         """
         获取分区下所有配置数据
-        :return:
         """
         # Log.Write("section", GameConfigManager._section)
         if not GameConfigManager._dict.has_key(GameConfigManager._section):
@@ -98,7 +357,6 @@ class GameConfigManager:
     def Version():
         """
         获取分区下配置的版本号{'activity': 1, 'xxx': 2}
-        :return:
         """
         if not GameConfigManager._version.has_key(GameConfigManager._section):
             return None
@@ -152,7 +410,6 @@ class GameConfigManager:
         更新分区配置
         :param section: 分区号
         :param changeFiles: 配置文件
-        :return:
         """
         Log.Write("GameConfigManager.Update")
         appConfig = ConfigManager.Singleton()
@@ -224,3 +481,9 @@ ATTR_ARRAY_Level2NoUp = ["speed", "critical", "dodge", "parry"]
 ATTR_ARRAY_2 = [
     "hp", "atk", "def", "speed", "critical", "dodge", "parry", "resilience", "hit", "arp", "criticaldmg", "adddmg", "subdmg", "ap", "ap_atk_p"
 ]
+
+BATTLE_ATTR_ARRAY_2 = [
+    "hp", "atk", "def", "speed", "critical", "dodge", "parry", "resilience", "hit", "arp", "criticaldmg", "aadddmg", "asubdmg", "radddmg", "rsubdmg"
+]
+
+ATTR_ARRAY_Level2Up_2 = ["hp", "atk", "def"]

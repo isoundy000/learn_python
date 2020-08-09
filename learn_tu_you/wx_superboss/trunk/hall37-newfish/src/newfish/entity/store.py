@@ -1328,8 +1328,6 @@ def autoConvertVoucherToDiamond(userId, needDiamondCount):
         reward = {"name": config.DIAMOND_KINDID, "count": abs(costVoucherCount * rate)}
         vip_system.addUserVipExp(FISH_GAMEID, userId, abs(costVoucherCount) * 10, "BUY_PRODUCT", config.DIAMOND_KINDID, config.DIAMOND_KINDID, rmbs=abs(costVoucherCount))
         util.addRewards(userId, [consume, reward], "ASSEMBLE_ITEM", config.DIAMOND_KINDID)
-        if ftlog.is_debug():
-            ftlog.debug("autoConvertVoucherToDiamond, userId =", userId, needDiamondCount, diamondCount, costVoucherCount, util.balanceItem(userId, config.VOUCHER_KINDID))
 
 
 def setAutoBuyAfterSDKPayData(userId, productIdA, productIdB, actionType, count):
@@ -1367,16 +1365,12 @@ def getUseRebateItemPrice(userId, itemId, fullPrice, buyType, productId, clientI
             if action["action"] != "rebate":
                 continue
             for params in action["params"]:
-                if ftlog.is_debug():
-                    ftlog.debug("getUseRebateItemPrice, userId =", userId, "fullPrice =", fullPrice, "buyType =", buyType, "params =", params)
                 if params["minPrice"] <= fullPrice and params["buyType"] == buyType:
                     _eventParam = int(productId) if str(productId).isdigit() else 0
                     userBag.removeItem(FISH_GAMEID, item, pktimestamp.getCurrentTimestamp(), "BI_NFISH_BUY_ITEM_CONSUME", _eventParam)
                     price = max(price - params["rebate"], 0)
                     ret = True
                     break
-    if ftlog.is_debug():
-        ftlog.debug("getUseRebateItemPrice, userId =", userId, "itemId =", itemId, "item =", item, "fullPrice =", fullPrice, "buyType =", buyType, "price =", price, "productId =", productId)
     return price, ret
 
 

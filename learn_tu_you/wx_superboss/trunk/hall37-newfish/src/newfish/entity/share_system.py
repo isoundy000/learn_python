@@ -67,5 +67,31 @@ class RandomChest(FishShare):
     pass
 
 
+class AlmsCoin(FishShare):
+    """
+    救济金分享
+    """
+    TYPEID = "alms_coin"
+
+    def __init__(self, userId):
+        super(AlmsCoin, self).__init__(userId)
+        self.almsRate = 0
+        # self.finishCountLimit += treasure_system.getAlmsCountAdd(self.userId)
+
+    @property
+    def extends(self):
+        """
+        领取救济金前需要等待的时间(秒)
+        """
+        waitTime = min(120, self.shareData[INDEX_FINISH_COUNT] * 30)
+        data = {
+            "waitTime": waitTime,
+        }
+        return data
+
+
+
+
+
 def initialize():
     pass
