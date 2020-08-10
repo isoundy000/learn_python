@@ -8,7 +8,8 @@ from freetime.entity.msg import MsgPack
 from poker.protocol import router
 from poker.protocol.decorator import markCmdActionHandler, markCmdActionMethod
 from hall.servers.common.base_checker import BaseMsgPackChecker
-from newfish.entity import config, gift_system, item, util, daily_gift
+from newfish.entity import config, item, util
+from newfish.entity.gift import gift_system, daily_gift
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.quest import quest_system
 from newfish.entity.quest import daily_quest, main_quest
@@ -17,7 +18,7 @@ from newfish.entity.fishactivity import fish_activity_system
 from newfish.entity.achievement import achievement_system
 from newfish.entity.skill import skill_system
 from newfish.entity import fish_notice_system
-from newfish.entity.grand_prize_pool import GrandPrizePool          # 巨奖奖池
+from newfish.entity.lotterypool.grand_prize_pool import GrandPrizePool          # 巨奖奖池
 from newfish.entity import piggy_bank
 from newfish.entity import treasure_system
 from newfish.entity import level_rewards, level_funds

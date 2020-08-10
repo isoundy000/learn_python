@@ -185,6 +185,105 @@ def vip_config():
     print "vip_config, end"
 
 
+def gift_abctest_config():
+    """
+    礼包abc测试配置
+    """
+    print "gift_abctest_config, start"
+    outPath = getOutPath("giftAbcTest")
+    ws = getWorkBook().get_sheet_by_name("Gift_abcTest")
+    config = collections.OrderedDict()
+    config["enable"] = 0                                        # 开启测试
+    config["mode"] = ""                                         # 指定模式
+    config["data"] = collections.OrderedDict()                  # 数据
+    config["gift"] = collections.OrderedDict()                  # 礼包
+    startRowNum = 4
+    i = 0
+    giftColsIdx = 11
+    eModeGiftsIdx = 65
+    eModeBestIdx = 67
+    eModeGifts = []
+    eModeBestIndex = {}
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            config["enable"] = int(cols[0])
+        if cols[1]:
+            config["mode"] = str(cols[1])
+        if cols[3]:
+            one = collections.OrderedDict()
+            config["data"][str(cols[3])] = one                  # 渔场Id
+            one["low"] = {}
+            one["low"]["price"] = int(cols[4])                  # 低档参考价格
+            one["low"]["giftList"] = json.loads(cols[5])        # 低档礼包ID
+            one["mid"] = {}
+            one["mid"]["price"] = int(cols[6])
+            one["mid"]["giftList"] = json.loads(cols[7])
+            one["high"] = {}
+            one["high"]["price"] = int(cols[8])
+            one["high"]["giftList"] = json.loads(cols[9])
+        if not cols[giftColsIdx]:
+            break
+        one = collections.OrderedDict()
+        if str(cols[giftColsIdx]) in config["gift"]:
+            raise KeyError("giftId %d repeat" % int(cols[giftColsIdx]))
+        config["gift"][str(cols[giftColsIdx])] = one            # 礼包Id
+        one["giftId"] = int(cols[giftColsIdx])                  # 礼包Id
+        one["giftName"] = unicode(cols[giftColsIdx + 1])
+        one["giftType"] = int(cols[giftColsIdx + 2])            # 礼包类型
+        one["productId"] = cols[giftColsIdx + 3]                # 商品Id
+        one["fishPool"] = int(cols[giftColsIdx + 4])            # 出现渔场
+        one["lifetime"] = int(cols[giftColsIdx + 5])            # 存活时间
+        one["minLevelLimit"] = int(cols[giftColsIdx + 6])       # 最小等级限制
+        one["maxLevelLimit"] = int(cols[giftColsIdx + 7])
+        one["coinLimit"] = int(cols[giftColsIdx + 8])           # 金币限制
+        one["buyType"] = cols[giftColsIdx + 9]                  # 购买方式
+        one["price"] = int(cols[giftColsIdx + 10])              # 原价
+        one["discountPrice"] = int(cols[giftColsIdx + 11])      # 折扣价
+        one["price_direct"] = int(cols[giftColsIdx + 12])       # 货币价格
+        one["price_diamond"] = int(cols[giftColsIdx + 13])      # 钻石价格
+        one["otherBuyType"] = json.loads(cols[giftColsIdx + 14])    # 其他购买方式
+        one["vip"] = int(cols[giftColsIdx + 15])
+        one["giftLimit"] = int(cols[giftColsIdx + 16])              # 购买礼包限制
+        one["showAfterReload"] = int(cols[giftColsIdx + 17])        # 领取后需下次登录显示
+        one["showAfterTimes"] = int(cols[giftColsIdx + 18])         # 领取后多久显示(分钟)
+        one["roomId"] = json.loads(cols[giftColsIdx + 19])          # 房间id
+        one["recordKey"] = str(cols[giftColsIdx + 20])              # 记录累计购买次数的key(0不记录)
+        one["loopTimes"] = int(cols[giftColsIdx + 21])              # 循环次数
+        one["appearTimes"] = json.loads(cols[giftColsIdx + 22])     # 出现次数
+        one["firstBuyRewards"] = json.loads(cols[giftColsIdx + 24]) # 首次购买奖励
+        one["getAfterBuy"] = json.loads(cols[giftColsIdx + 25])     # 购买立得
+        one["expireTime"] = int(cols[giftColsIdx + 26])             # 有效期(分钟)
+        one["popupLevel"] = int(cols[giftColsIdx + 27])             # 弹出等级
+        one["items"] = []
+        for x in xrange(giftColsIdx + 28, len(cols), 5):
+            if cols[x]:
+                item = {}
+                item["type"] = cols[x]                              # 礼物类型
+                item["name"] = unicode(cols[x + 1]) if cols[x + 1] else ""      # 礼物名
+                item["desc"] = unicode(cols[x + 2]) if cols[x + 2] else ""      # 礼物描述
+                item["itemId"] = cols[x + 3]                        # 道具Id
+                item["count"] = cols[x + 4]                         # 数量
+                one["items"].append(item)
+        if cols[eModeGiftsIdx]:
+            eModeGifts.append(json.loads(cols[eModeGiftsIdx]))      # e模式下的各档礼包
+        if cols[eModeBestIdx]:
+            eModeBestIndex[str(cols[eModeBestIdx])] = cols[eModeBestIdx + 1]    # 44002、0
+    config["eModeGifts"] = eModeGifts
+    config["eModeBestIndex"] = eModeBestIndex
+    print "gift_abctest_config, end"
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def gift_config(clientId=0):
     """
     礼包配置
@@ -366,6 +465,7 @@ config_list = [
     # (treasure_config, None),
     # (main_quest_config, None),
     # (daily_quest_config, None),
+    (gift_abctest_config, None),
     (gift_config, None),
     (gift_config, 25794),
     # (gift_config, 25598),
