@@ -1491,6 +1491,43 @@ def fixed_multiple_fish():
     outHandle.close()
 
 
+def achievement_config_old():
+    outPath = getOutPath("achievement")
+    ws = getWorkBook().get_sheet_by_name("AchievementTask")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]:
+            continue
+        if cols[6] not in config:
+            config[cols[6]] = []
+        one = collections.OrderedDict()
+        one["taskId"] = cols[0]
+        one["desc"] = cols[1]
+        one["target"] = json.loads(cols[2])
+        one["type"] = cols[3]
+        one["isMax"] = cols[4]
+        one["repeat"] = cols[5]
+        one["groupId"] = cols[6]
+        one["honorId"] = cols[7]
+        one["norReward"] = _getRewardInfo(cols[8])
+        one["chestReward"] = _getRewardInfo(cols[9])
+        config[cols[6]].append(one)
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+
 def weaponPowerRate_config():
     """加载武器威力加成配置"""
     outPath = getOutPath("weaponPowerRate")
@@ -1602,6 +1639,16 @@ def gunskin_config(clientId=0):
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+
+
+def _getRewardInfo(reward):
+    """获取奖励信息"""
+    reward = json.loads(reward)
+    rewardInfo = []
+    for x in xrange(0, len(reward), 2):
+        reward_ = {"name": reward[x], "count": reward[x+1]}
+        rewardInfo.append(reward_)
+    return rewardInfo
 
 
 def item_config(clientId=0):
@@ -2066,7 +2113,7 @@ config_list = [
     # (call_multiple_fish, None),
     # (fishBonus_config, None),
     # (match_multiple_fish, None),
-    # # (achievement_config, None),
+    # (achievement_config, None),
     # # (honor_config, None),
     (weaponPowerRate_config, None),     # 加载武器威力加成配置
     (gunskin_config, None),             # 皮肤炮配置

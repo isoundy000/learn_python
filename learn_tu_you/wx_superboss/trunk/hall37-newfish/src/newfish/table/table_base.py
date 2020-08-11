@@ -84,7 +84,7 @@ class FishTable(TYTable):
             "clip_clearing": self._clip_clearing,                       # 弹药结算
             "bullet_use": self._bullet_use,                             # 使用招财珠
             "refresh_user_data": self._refreshUserData,                 # 刷新用户VIP等级和金币数
-            "achievement_tasks": self._achievement_task,
+            "achievement_tasks": self._achievement_task,                # 荣耀任务
             "achievement_tasks_reward": self._achievement_reward,
             "honor_push": self._honor_push,
             "honor_replace": self._honor_replace,

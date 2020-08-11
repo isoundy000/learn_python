@@ -44,11 +44,11 @@ class GameData:
     # 用户等级
     level = "level"
     # 最近一次已拥有的皮肤炮列表（配合过期提示用）(经典和千炮模式共享)
-    ownGunSkins = "ownGunSkins"                     # [1288, 1165, 1167, 1166]
+    ownGunSkins = "ownGunSkins"
     # # 最近一次已拥有的千炮皮肤炮列表（配合过期提示用）
     # ownGunSkins_m = "ownGunSkins_m"
     # 已拥有的皮肤炮皮肤(经典和千炮模式共享)
-    ownGunSkinSkins = "ownGunSkinSkins"             # [1366]
+    ownGunSkinSkins = "ownGunSkinSkins"
     # # 已拥有的千炮皮肤炮皮肤
     # ownGunSkinSkins_m = "ownGunSkinSkins_m"
     # 已发送了过期提示弹窗的皮肤炮(经典和千炮模式共享)
@@ -60,11 +60,11 @@ class GameData:
     # # 已解锁千炮皮肤炮列表
     # unlockedGunSkins_m = "unlockedGunSkins_m"
     # 用户最大火炮等级
-    gunLevel = "gunLevel"                           # 用户最大火炮等级
+    gunLevel = "gunLevel"
     # 用户最大千炮倍率
     gunLevel_m = "gunLevel_m"
     # 用户当前皮肤炮ID
-    gunSkinId = "gunSkinId"                 # 使用的皮肤炮ID
+    gunSkinId = "gunSkinId"  # 使用的皮肤炮ID
     # 用户当前千炮皮肤炮ID
     gunSkinId_m = "gunSkinId_m"
     # 当前玩家在经典渔场中的火炮等级
@@ -251,6 +251,8 @@ class GameData:
     coinShortageCount = "coinShortageCount"
     # 身份证信息
     idCardInfo = "idCardInfo"
+    # 实名认证奖励是否领取
+    idCardRewarded = "idCardRewarded"
     # 玩家各个渔场开火消耗
     fireCost = "fireCost"
     # 玩家各个渔场开火次数
@@ -448,7 +450,7 @@ class WeakData:
     bulletProfitCoin = "bulletProfitCoin"
     # 是否存在招财模式保护限制
     isProtectionLimit = "isProtectionLimit"
-    # === 大奖赛，start
+    # === 大奖赛 ============================================，start
     # 大奖赛参赛时间戳，记录当前局是否为首次进入
     grandPrix_startTS = "grandPrix_startTS"
     # 大奖赛免费游戏次数
@@ -469,7 +471,9 @@ class WeakData:
     grandPrix_levelFpMultiple = "grandPrix_levelFpMultiple"
     # 大奖赛超越自己次数
     grandPrix_surpassCount = "grandPrix_surpassCount"
-    # === 大奖赛，end
+    # 大奖赛阶段奖励
+    grandPrix_getPointsInfo = "grandPrix_getPointsInfo"
+    # === 大奖赛 =============================================，end
     # 节日转盘抽大奖活动积分
     festivalTurntableIntegral = "festivalTurntableIntegral"
     # 超级boss兑换次数{mgType_mode:{idx: times}}
@@ -498,6 +502,8 @@ class WeakData:
     shopBuyInfo = "shop_buy_info"
     # 每日购买宝箱数量(考虑使用buyProductCount代替)
     buyDailyChestCount = "buyDailyChestCount"
+    # 每日使用免费技能的次数{skillId: count}
+    skillFreeUseCount = "skillFreeUseCount"
 
 
 class UserData:
@@ -550,16 +556,18 @@ class UserData:
     poseidonWinMost = "poseidonWinMost:%d:%d:%s"
     # 新手期间技能使用次数
     newbieUseSkillTimes = "newbieUseSkillTimes:%d:%d"
-    # 渔场红包券抽奖数据
+    # 渔场红包券抽奖数据（已废弃）
     lotteryTicketData = "lotteryTicketData:%d:h:s:%d"
     # 免费金币摇钱树数据
     luckyTreeData = "luckyTreeData:%d:s:s:%d"
     # 所有商品购买次数
     buyProductCount = "buyProductCount:%d:h:s:%d"
     # 兑换商城商品购买数据
-    buyExchangeProduct = "buyExchangeProduct:%d:%d:h:s:%d"
+    buyExchangeProduct = "buyExchangeProduct:%d:h:s:%d"
     # 等级转盘的key
     prizeWheelData_m = "prizeWheelData_m:%d:h:s:%d"
+    # 千炮场狂暴效果
+    gunEffect_m = "gunEffect_m:%d:h:s:%d"
 
 
 class MixData:

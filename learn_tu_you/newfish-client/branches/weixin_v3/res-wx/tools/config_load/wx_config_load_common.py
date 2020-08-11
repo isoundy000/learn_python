@@ -396,6 +396,130 @@ def gift_config(clientId=0):
     outHandle.close()
 
 
+
+def honor_config():
+    """称号配置"""
+    print "honor_config start"
+    outPath = getOutPath("honor")
+    ws = getWorkBook("achievement.xlsx").get_sheet_by_name("Honor")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[1])] = one
+        one["honorId"] = int(cols[1])
+        one["honorName"] = str(cols[0])
+        one["desc"] = unicode(cols[2])
+        one["honorType"] = int(cols[3])
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "honor_config end"
+
+
+def achievement_config():
+    """
+    成就|荣耀任务
+    """
+    print "achievement_config, start"
+    outPath = getOutPath("achievement")
+    ws = getWorkBook("achievement.xlsx").get_sheet_by_name("AchievementTask")
+    config = collections.OrderedDict()
+    config["tasks"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        one["Id"] = cols[0]
+        one["desc"] = cols[1]
+        one["target"] = json.loads(cols[2])
+        one["type"] = cols[3]
+        one["exp"] = cols[4]
+        key_ = str(int(cols[0]) / 100)
+        if not config["tasks"].get(key_):
+            config["tasks"][key_] = collections.OrderedDict()
+        config["tasks"][key_][cols[0]] = one
+    config["level"] = achievement_level_config()
+    config["compensate"] = achievement_compensate_config()
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "achievement_config, end"
+
+
+def achievement_level_config():
+    """荣耀等级"""
+    print "achievement_level_config start"
+    outPath = getOutPath("achievement")
+    ws = getWorkBook("achievement.xlsx").get_sheet_by_name("AchievementLevel")
+    config = collections.OrderedDict()
+    startRowNum = 2
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        one["level"] = int(cols[0])
+        one["exp"] = cols[1]
+        if cols[2]:
+            one["reward"] = {"name": int(cols[2]), "count": int(cols[3])}
+        config[int(cols[0])] = one
+    print "achievement_level_config end"
+    return config
+
+
+def achievement_compensate_config():
+    """荣耀补偿"""
+    outPath = getOutPath("achievement")
+    ws = getWorkBook("achievement.xlsx").get_sheet_by_name("AchievementCompensate")
+    config = collections.OrderedDict()
+    startRowNum = 3
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        reward = {}
+        # one["Id"] = int(cols[0])
+        for m in range(1, len(cols), 2):
+            if not cols[m]:
+                break
+            reward = {"name": int(cols[m]), "count": int(cols[m + 1])}
+        config[int(cols[0])] = reward
+    return config
+
+
 def getWorkBook(filename="newfish_common.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -474,8 +598,8 @@ config_list = [
     # (gift_config, 26122),
     # (share_config, None),
     # (user_level_config, None),
-    # (honor_config, None),
-    # (achievement_config, None),
+    (honor_config, None),
+    (achievement_config, None),
     # (lottery_pool_config, None),
     # (ring_lottery_pool_config, None)
 ]
