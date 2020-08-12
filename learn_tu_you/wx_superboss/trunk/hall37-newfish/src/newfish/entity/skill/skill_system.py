@@ -275,6 +275,51 @@ def checkSkillStatus(userId, skillId):
     return 0, skill
 
 
+def isSkillMax(userId, skillId):
+    """
+    技能等级是否满级
+    """
+    code, skill = checkSkillStatus(userId, skillId)
+    if code != 0:
+        return code, False
+    if skill[INDEX_CURRENT_LEVEL] >= MAX_ORIGINAL_LEVEL:
+        return 0, True
+    else:
+        return 4, False
+
+
+def getHigherSkillLevelInfo(userId):
+    """
+    获得xx级以上技能的数量
+    """
+    allSkills = _getAllSkills(userId)
+    levelMap = {}
+    starMap = {}
+    for _, info in allSkills.iteritems():
+        skillLevel = info[INDEX_ORIGINAL_LEVEL]
+        starLevel = info[INDEX_STAR_LEVEL]
+        levelMap[skillLevel] = levelMap.setdefault(skillLevel, 0) + 1
+        starMap[starLevel] = starMap.setdefault(starLevel, 0) + 1
+    ftlog.debug("getHigherSkillLevelInfo->start->", levelMap, starMap)
+
+    # 把高等级技能数量算入低等级以上数量中
+    levelNum = 0
+    realLevelMap = {}
+    for skillLevel in range(MAX_ORIGINAL_LEVEL + 1)[::-1]:
+        if skillLevel in levelMap:
+            levelNum += levelMap[skillLevel]
+        realLevelMap[skillLevel] = levelNum
+
+    starNum = 0
+    realStarMap = {}
+    for starLevel in range(MAX_STAR_LEVEL + 1)[::-1]:
+        if starLevel in starMap:
+            starNum += starMap[starLevel]
+        realStarMap[starLevel] = starNum
+    ftlog.debug("getHigherSkillLevelInfo->end->", realLevelMap, realStarMap)
+    return realLevelMap, realStarMap
+
+
 def checkSkillUpgrade(event):
     """
     检查技能能否升级升星

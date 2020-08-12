@@ -22,18 +22,92 @@ class AchievementTableSystem(object):
 
     # 初始化用户成就任务
     def _initPlayerAchieveTasks(self, userId):
-        pass
+        taskObjects = []
+        if self.player.level < config.getCommonValueByKey("achievementOpenLevel"):
+            return taskObjects
+        # 渔场内支持的任务类型，数据会及时刷新。
+        tableTypes = [AchieveType.CatchFishNum, AchieveType.CatchBetFishNum, AchieveType.CatchBossNum]
+        achConfigs = config.getAchievementConf().get("tasks")
+        for honorId, tasksConf in achConfigs.iteritems():
+            for _, conf in tasksConf.iteritems():
+                if conf["type"] in tableTypes:
+                    taskClass = FishAchievementTask(userId, conf)
+                    taskObjects.append(taskClass)
+        return taskObjects
 
+    # 捕获鱼
+    def triggerCatchFishEvent(self, event):
+        if self.table.typeName not in config.NORMAL_ROOM_TYPE:
+            return
+        if not self.player or self.player.userId <= 0:
+            return
+        if self.player.level < config.getCommonValueByKey("achievementOpenLevel"):
+            return
+        if not self.achieveTasks:
+            self.achieveTasks = self._initPlayerAchieveTasks(self.player.userId)
+        if hasattr(event, "fpMultiple"):
+            fpMultiple = event.fpMultiple
+        else:
+            ftlog.info("achievement_table_system, not set fpMultiple! userId", event.userId)
+            fpMultiple = self.table.runConfig.multiple
+        fishIds = event.fishTypes  # 鱼种类
+        fTypes = []
+        # 计算倍率鱼 个数
+        betFishMap = {}
+        bossNum = 0  # boss个数
+        for fishType in fishIds:
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.player.fpMultiple)
+            if fishConf["type"] in config.BOSS_FISH_TYPE:
+                bossNum += 1
+            fTypes.append(fishConf["type"])
 
+        for gainMap in event.gain:
+            fishConf = config.getFishConf(gainMap["fishType"], self.table.typeName, self.player.fpMultiple)
+            itemId = gainMap["itemId"]
+            itemCount = gainMap["count"]
+            if fishConf["type"] in config.MULTIPLE_FISH_TYPE:
+                if itemId == config.CHIP_KINDID:  # 金币
+                    bet = itemCount / fishConf["score"] / fpMultiple
+                    if str(bet) not in betFishMap:
+                        betFishMap[str(bet)] = 1
+                    else:
+                        betFishMap[str(bet)] += 1
 
+        tipHonorIds = []
+        for taskClass in self.achieveTasks:
+            hasComplete = False
+            taskConf = taskClass.getTaskConf()
+            if taskConf["type"] == AchieveType.CatchFishNum:  # 捕获鱼多少条
+                count = len(fishIds)
+                fishTypes = taskConf["target"].get("fishType")
+                if fishTypes:
+                    count = sum([fTypes.count(type_) for type_ in fishTypes])
+                hasComplete = taskClass.addProgress(count, inTable=True)
+            elif taskConf["type"] == AchieveType.CatchBetFishNum:  # 捕获倍率鱼总数
+                betNum = 0
+                targetBet = taskConf["target"]["condition"]
+                for bet in betFishMap:
+                    if int(bet) >= targetBet:
+                        betNum += betFishMap[bet]
+                hasComplete = taskClass.addProgress(betNum, inTable=True)
+            elif taskConf["type"] == AchieveType.CatchBossNum and (taskConf["target"].get("condition", self.table.runConfig.multiple) == self.table.runConfig.multiple):  # 捕获boss个数
+                hasComplete = taskClass.addProgress(bossNum, inTable=True)
+            # 添加小红点
+            if hasComplete and taskClass.getHonorId() not in tipHonorIds:
+                tipHonorIds.append(taskClass.getHonorId())
+        if tipHonorIds:
+            module_tip.addModuleTipEvent(self.player.userId, "achievement", tipHonorIds)
 
     def updateStateAndSave(self):
-        if ftlog.is_debug():
-            ftlog.debug("updateStateAndSave", self.achieveTasks)
-        pass
+        """更新任务状态并且保存到数据库"""
+        if self.table.typeName in config.NORMAL_ROOM_TYPE and self.player and self.player.userId:
+            if self.achieveTasks:
+                for taskClass in self.achieveTasks:
+                    taskClass.updateStateAndSave()
 
     def refreshAchievementTask(self):
-        pass
+        """刷新成就任务"""
+        self.achieveTasks = self._initPlayerAchieveTasks(self.player.userId)
 
     def dealLeaveTable(self):
         """

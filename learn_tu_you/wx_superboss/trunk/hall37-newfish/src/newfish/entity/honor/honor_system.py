@@ -2,7 +2,30 @@
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
 # @Time: 2020/6/6
+# 新版称号系统
 
+import json
+import time
+
+import freetime.util.log as ftlog
+from freetime.entity.msg import MsgPack
+from poker.protocol import router
+from poker.util import strutil
+from poker.entity.dao import daobase, gamedata
+from hall.entity import hallitem
+from newfish.entity import config, module_tip, util, mail_system
+from newfish.entity.redis_keys import GameData, UserData
+from newfish.entity.config import FISH_GAMEID
+from newfish.entity.event import GetAchievementTaskRewardEvent, GetHonorEvent, \
+    NewbieTaskCompleteEvent, MainQuestSectionFinishEvent
+
+
+
+def _buildUserHonorKey(userId):
+    """
+    称号数据存取key
+    """
+    return UserData.honor % (FISH_GAMEID, userId)
 
 
 def getWeaponPowerAddition(honors, wpId):
@@ -29,6 +52,15 @@ def getHonorList(userId, hasDesc=False, honorTypeList=None):
     return []
 
 
+def getHonor(userId, honorId):
+    """获得单个称号数据"""
+    assert (str(honorId) in config.getHonorConf().keys())
+    value = daobase.executeUserCmd(userId, "HGET", _buildUserHonorKey(userId), str(honorId))
+    if value:
+        return strutil.loads(value, False, True)
+    return [0, 0, 0]
+
+
 def _getAllHonors(userId):
     """
     获得所有称号数据
@@ -53,6 +85,18 @@ def getOwnedHonors(userId, allHonors=None):
 
 
 
+_inited = False
+
 
 def initialize():
-    pass
+    global _inited
+    if not _inited:
+        _inited = True
+        ftlog.debug("newfish honor_system initialize begin")
+        from poker.entity.events.tyevent import EventUserLogin
+        from newfish.game import TGFish
+        TGFish.getEventBus().subscribe(GetAchievementTaskRewardEvent, _triggerAchievementTaskRewardEvent)
+        TGFish.getEventBus().subscribe(NewbieTaskCompleteEvent, _triggerNewbieTaskCompleteEvent)
+        TGFish.getEventBus().subscribe(EventUserLogin, _triggerUserLoginEvent)
+        TGFish.getEventBus().subscribe(MainQuestSectionFinishEvent, _triggerMainQuestSectionFinishEvent)
+        ftlog.debug("newfish honor_system initialize end")

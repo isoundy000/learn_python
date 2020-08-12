@@ -75,3 +75,23 @@ room = gdata.rooms()[444111001]
 # [4410410010001, 4410410010002, 4410410010003, 4410410010004, 4410410010005, 4410410010006, 4410410010007, 4410410010008, 4410410010009, 4410410010010]
 table = room.maptable[4410110010001]
 ftlog.info('111111111111', table.runConfig.allSuperBossGroupIds)
+
+
+
+
+import freetime.util.log as ftlog
+from freetime.core.timer import FTLoopTimer
+from newfish.entity import config, util
+from poker.entity.dao import userdata, gamedata
+from newfish.entity.redis_keys import GameData, WeakData, UserData, ABTestData
+def _main1():
+    userId = 10002
+    a = not util.isVersionLimit(userId)
+    b = not util.isPurchaseLimit(userId)
+    c = util.isFinishAllRedTask(userId)
+    clientVersion = gamedata.getGameAttr(userId, config.FISH_GAMEID, GameData.clientVersion)
+    if clientVersion in util.getReviewVersionList(userId):  # config.getPublic("reviewClientVersion", []):
+        ftlog.debug('6666666666666', clientVersion, util.getReviewVersionList(userId))
+    state = not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllRedTask(userId)
+    ftlog.debug(state, a, b, c, "777777777777777")
+FTLoopTimer(5, 0, _main1).start()
