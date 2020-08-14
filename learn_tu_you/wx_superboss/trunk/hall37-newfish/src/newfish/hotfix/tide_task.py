@@ -94,4 +94,12 @@ def _main1():
         ftlog.debug('6666666666666', clientVersion, util.getReviewVersionList(userId))
     state = not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllRedTask(userId)
     ftlog.debug(state, a, b, c, "777777777777777")
+
+
+import freetime.util.log as ftlog
+from freetime.core.timer import FTLoopTimer
+from newfish.entity import config, util
+def _main1():
+    userId = 10013
+    ftlog.debug(util.balanceItem(userId, 14177), '11111111111111111')
 FTLoopTimer(5, 0, _main1).start()

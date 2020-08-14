@@ -128,7 +128,6 @@ def is_number(s):
 def match_fish_config():
     '''
     比赛鱼的配置
-    :return:
     '''
     outPath = getOutPath("matchFish")
     ws = getWorkBook().get_sheet_by_name("MatchFish")
@@ -1703,8 +1702,89 @@ def item_config(clientId=0):
     print "item_config, end"
 
 
+def _getSheetName(confName, clientId=0):
+    return confName if clientId == 0 else confName + "_" + str(clientId)
+
+
+def _getFileName(clientId=0):
+    return "0.json" if clientId == 0 else str(clientId) + ".json"
+
+
+def newbie7DaysGift_config(clientId=0):
+    """
+    新手7日礼包配置
+    """
+    sn = _getSheetName("Newbie7DaysGift", clientId)
+    fn = _getFileName(clientId)
+    print "newbie7DaysGift_config, start, ", sn, fn
+    outPath = getOutPath("newbie7DaysGift", fn)
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name(sn)
+    config = []
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[1]:
+            one = collections.OrderedDict()
+            config.append(one)
+            one["idx"] = int(cols[0])
+            one["rewards"] = json.loads(cols[1])
+            one["cond"] = json.loads(cols[2])
+            one["des"] = str(cols[3])
+            one["rechargeBonus"] = int(cols[4])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "newbie7DaysGift_config, end"
+
+
 def store_config():
     pass
+
+
+def multi_lang_text():
+    """
+    多语言文本配置
+    """
+    print "multi_lang_text, start"
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    ws = getWorkBook("multiLangText.xlsx").get_sheet_by_name('multiLangText')
+    config = collections.OrderedDict()
+    outPath = getOutPath("multiLangText")
+    i = 0
+    startRowNum = 4
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if str(cols[0]) in config:
+            raise KeyError("key %s repeat" % str(cols[0]))
+        if cols[0] is not None:
+            one = collections.OrderedDict()
+            config[str(cols[0])] = one
+            one["zh"] = str(cols[1])
+            if cols[2]:
+                one["en"] = str(cols[2])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "multi_lang_text, end"
 
 
 def prizewheel_config():
@@ -2049,7 +2129,7 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
 
 # 配置列表
 config_list = [
-    # # (activity_config, None),
+    # (activity_config, None),
     (item_config, None),
     (item_config, 26312),
     (item_config, 26760),
@@ -2064,8 +2144,8 @@ config_list = [
     (store_config, 26312),
     (store_config, 26760),
     (store_config, 26882),
-    # # (multi_lang_text, None),
-    # (newbie7DaysGift_config, None),
+    (multi_lang_text, None),
+    (newbie7DaysGift_config, None),
     # (lottery_ticket_config, None),
     # (pass_card_config, None),
     # (skill_compen_config, None),
@@ -2087,11 +2167,11 @@ config_list = [
     (fish_config, None),
     (match_fish_config, None),
     (weapon_config, None),
-    # (ulevel_config, None),
+    (ulevel_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
-    # # (main_quest_config, None),
-    # # (daily_quest_config, None),
+    (main_quest_config, None),
+    # (daily_quest_config, None),
     (chest_config, None),               # 宝箱配置
     (chest_drop_config, None),          # 宝箱掉落配置
     # (cmptt_task_config, None),

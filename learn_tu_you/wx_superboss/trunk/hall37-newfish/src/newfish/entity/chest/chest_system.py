@@ -109,6 +109,23 @@ def getChestIdleOrder(userId):
     return -1
 
 
+
+def getChestInfo(chestId):
+    """
+    获取宝箱物品详情
+    """
+    chestConf = config.getChestConf(chestId)
+    chestInfo = {}
+
+
+
+
+
+
+
+    return chestInfo
+
+
 def getChestRewards(userId, chestId):
     """
     获取宝箱物品
