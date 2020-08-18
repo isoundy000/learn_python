@@ -2,9 +2,114 @@
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
 # @Time: 2020/6/30
+# 原则上每个商品购买对应一个BuyAction，每个BuyAction对应一个BaseProduct，
+# 但是HotStoreBuyAction中的商品购买根据pt类型对应不用的BaseProduct!
+
+import time
+import json
+from operator import itemgetter
+from distutils.version import StrictVersion
+
+import freetime.util.log as ftlog
+from freetime.entity.msg import MsgPack
+import poker.util.timestamp as pktimestamp
+from poker.protocol import router
+from poker.entity.dao import userchip, gamedata, daobase
+from poker.entity.configure import pokerconf
+from hall.entity import hallitem, hallvip, hallexchange, datachangenotify
+from hall.entity.hallconf import HALL_GAMEID
+from hall.servers.util.item_handler import ItemHelper
+from newfish.entity import config, weakdata, util, module_tip, vip_system, \
+    drop_system, store, mail_system
+from newfish.entity.config import FISH_GAMEID, REDPACKET_KINDID, WX_APPID, \
+    PEARL_KINDID, VOUCHER_KINDID, RUBY_KINDID, OCEANSTAR_KINDID
+from newfish.entity.redis_keys import GameData, MixData, WeakData, UserData
+from newfish.entity.chest import chest_system
+from newfish.servers.util.rpc import user_rpc
+from newfish.entity.event import StoreBuyEvent
+from newfish.entity.msg import GameMsg
+from newfish.entity.fishactivity.fish_activity_system import VIP_ITEMS
+from newfish.entity.skill import skill_system
+from newfish.entity.fishactivity import super_egg_activity, competition_activity, pass_card_activity
+from newfish.entity.level_funds import doBuyLevelFunds
+from newfish.entity.gun import gun_system
 
 
 
+class BuyResultState:
+    """
+    购买结果状态
+    """
+    BRS_SUCC = 0                            # 成功购买
+    BRS_COIN_NOTENOUGH = 1                  # 金币不足
+    BRS_PEARL_NOTENOUGH = 2                 # 珍珠不足
+    BRS_DIAMOND_NOTENOUGH = 3               # 钻石不足
+    BRS_COUPON_NOTENOUGH = 4                # 奖券不足
+    BRS_NEWBIE_LIMIT = 5                    # 新手任务限制
+    BRS_VIP_LIMIT = 6                       # vip等级限制
+    BRS_DAILY_USER_BUY_COUNT_LIMIT = 7      # 每日玩家购买次数限制
+    BRS_FAILED = 8                          # 购买失败
+    BRS_VOUCHER_NOTENOUGH = 9               # 代购券不足
+    BRS_RUBY_NOTENOUGH = 10                 # 红宝石不足
+    BRS_TOTAL_BUY_COUNT_LIMIT = 11          # 总购买次数限制
+    BRS_DAILY_SERVER_BUY_COUNT_LIMIT = 12   # 每日全服购买次数限制
+    BRS_USER_BUY_COUNT_LIMIT = 13           # 购买次数限制
+    BRS_UNLOCK = 14                         # 需要解锁
+    BRS_OCEANSTAR_NOTENOUGH = 15            # 海洋之星不足
+    BRS_VIP_DAILY_USER_BUY_COUNT_LIMIT = 16  # vip每日玩家购买次数限制
+
+
+class BuyAction(object):
+    """
+    购买动作基类
+    """
+    def __init__(self, userId, clientId, actionType, productId, count, buyType=None, rebateItemId=0):
+        self.userId = userId
+        self.clientId = clientId
+        self.productId = productId
+        self.buyCount = count
+        self.actionType = actionType
+        self.code = BuyResultState.BRS_SUCC
+        self.ret = {}
+        self.info = u""
+        self.storeConf = None
+        self.product = None
+        self.name = None
+        self.itemId = None
+        self.itemType = None
+        self.itemCount = None
+        self.buyType = buyType
+        self.buyTypeStr = None
+        self.price = 0
+        self.vipLimit = 0
+        self.guideLimit = 0
+        self.rebateItemId = rebateItemId
+        self.userVip = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+        self.lang = util.getLanguage(userId, clientId)
+        self.tabName = store.storeTabConfName.get(self.actionType)
+        self._setConf()
+        # 每日数据刷新时间点.
+        self.dayRefreshTime = "00:00"
+        self.curTime = int(time.time())
+        self.allInfo = {}
+        self.vipDailyCountLimit = []
+        self._initData()
+    
+    def _setConf(self):
+        """
+        设置商品配置
+        """
+        if self.actionType in [store.StoreTabType.STT_HOT, store.StoreTabType.STT_COIN, store.StoreTabType.STT_DIAMOND,
+                               store.StoreTabType.STT_ITEM, store.StoreTabType.STT_CHEST, store.StoreTabType.STT_COUPON]:
+            self.storeConf = config.getStoreConf(self.clientId).get(self.tabName).get("items")
+        else:
+            self.storeConf = config.getStoreConf(self.clientId).get(self.tabName)
+
+    def _initData(self):
+        """
+        初始化商品信息数据
+        """
+        pass
 
 
 

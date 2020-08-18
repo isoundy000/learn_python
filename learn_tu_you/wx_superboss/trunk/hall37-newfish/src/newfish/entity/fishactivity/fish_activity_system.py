@@ -7,6 +7,9 @@ from newfish.entity import config
 
 
 
+VIP_ITEMS = ()
+
+
 def countTableData(userId, betFishNum, bossFishNum, gainCoin, roomId, catchFishes):
     pass
 

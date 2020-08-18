@@ -16,6 +16,307 @@ ServerPath = ""
 ClientIdMap = None
 
 
+def multi_lang_text():
+    """
+    多语言文本配置
+    """
+    print "multi_lang_text, start"
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    ws = getWorkBook("multiLangText.xlsx").get_sheet_by_name('multiLangText')
+    config = collections.OrderedDict()
+    outPath = getOutPath("multiLangText")
+    i = 0
+    startRowNum = 4
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if str(cols[0]) in config:
+            raise KeyError("key %s repeat" % str(cols[0]))
+        if cols[0] is not None:
+            one = collections.OrderedDict()
+            config[str(cols[0])] = one
+            one["zh"] = str(cols[1])
+            if cols[2]:
+                one["en"] = str(cols[2])
+    ws = getWorkBook("multiLangText_multiple.xlsx").get_sheet_by_name('multiLangText')
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+            # if str(cols[0]) in config:
+            # raise KeyError("key %s repeat" % str(cols[0]))
+        if cols[0] is not None:
+            one = collections.OrderedDict()
+            config[str(cols[0])] = one
+            one["zh"] = str(cols[1])
+            if cols[2]:
+                one["en"] = str(cols[2])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "multi_lang_text, end"
+
+
+def activity_config():
+    """活动配置"""
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    outPath = getOutPath("activity")
+    ws = getWorkBook().get_sheet_by_name("Activity")
+    taskConfig = activity_task()
+    config = collections.OrderedDict()
+    config["activityInfo"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("activityId %d repeat" % int(cols[0]))
+        one["Id"] = cols[0]
+        one["tip"] = cols[1]
+        one["name"] = cols[2]
+        if cols[3]:
+            one["rule"] = json.loads(cols[3])
+        else:
+            one["rule"] = {}
+        one["type"] = int(cols[4])
+        one["tabType"] = int(cols[5])
+        one["tabName"] = str(cols[6])
+        one["clientModel"] = int(cols[7])
+        one["modelUIType"] = int(cols[8])
+        one["isDailyReset"] = int(cols[9])
+        one["limitVip"] = int(cols[10])
+        one["limitLevel"] = int(cols[11])
+        one["limitGuide"] = int(cols[12])
+        one["limitGameTime"] = int(cols[13])
+        one["registerTime"] = int(cols[14])
+        one["reward"] = cols[15]
+        one["order"] = int(cols[16])
+        one["lowClientVersion"] = (cols[17])
+        one["reviewVerLimit"] = int(cols[18])
+        if cols[19] and str(cols[20]) != "0":
+            one["sysLimit"] = json.loads(cols[19])
+        if str(cols[20]) == "0":
+            continue
+        try:
+            one["activityEnable"] = json.loads(cols[20])
+        except ValueError:
+            raise KeyError("activity_config %s" % cols[0])
+        one["effectiveTime"] = 0
+        if cols[21] and cols[21] != "0":
+            one["effectiveTime"] = {}
+            one["effectiveTime"]["start"] = cols[21]
+            one["effectiveTime"]["end"] = cols[22]
+        if cols[23] and cols[23] != "0":
+            timeArr = str(cols[23]).split("|")
+            one["realAcTime"] = {}
+            one["realAcTime"]["start"] = timeArr[0]
+            one["realAcTime"]["end"] = timeArr[1]
+        one["overDay"] = int(cols[24])
+        one["receivedVisible"] = int(cols[25])
+        if cols[26] and cols[26] != "0":
+            one["dayTimeLimit"] = int(cols[26])
+        if cols[27] and cols[27] != "0":
+            one["notInTable"] = int(cols[27])
+        if cols[28] and cols[28] != "0":
+            one["sort"] = int(cols[28])
+        one["colors"] = cols[29]
+        one["activityTag"] = int(cols[30])
+        one["isShowModuleTip"] = int(cols[31])
+        if cols[32]:
+            try:
+                one["extends"] = json.loads(cols[32])
+            except:
+                one["extends"] = str(cols[32])
+        one["acImg"] = cols[33]
+        if cols[34]:
+            one["acImgApp"] = cols[34] or ""
+        if cols[35]:
+            one["acImgQQ"] = cols[35] or ""
+        if cols[36]:
+            one["acImgEN"] = cols[36] or ""
+        one["buttonParams"] = []
+        for x in xrange(37, len(cols), 5):
+            if cols[x]:
+                item = {}
+                item["action"] = cols[x]
+                item["btnStr"] = cols[x + 1]
+                if cols[x + 2]:
+                    item["btnStrEN"] = cols[x + 2]
+                item["param"] = cols[x + 3]
+                item["btnPos"] = cols[x + 4]
+                one["buttonParams"].append(item)
+            else:
+                break
+        taskKey = one["Id"][0:-9]
+        if taskConfig.has_key(taskKey):
+            one["task"] = taskConfig[taskKey]
+        config["activityInfo"][str(cols[0])] = one
+    # config["notice"] = notice_config()
+    config["activityClient"] = activity_Client()
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def getClientIdMap():
+    """获取客户端的映射map"""
+    import urllib2
+    import urllib
+    import json
+    from hashlib import md5
+    def dohttpquery(posturl, datadict):
+        Headers = {"Content-type": "application/x-www-form-urlencoded"}
+        postData = urllib.urlencode(datadict)
+        request = urllib2.Request(url=posturl, data=postData, headers=Headers)
+        response = urllib2.urlopen(request)
+        if response != None :
+            retstr = response.read()
+            return retstr
+        return "{}"
+    ct = int(time.time())
+    sign = "gdss.touch4.me-api-" + str(ct) + "-gdss.touch4.me-api"
+    m = md5()
+    m.update(sign)
+    md5code = m.hexdigest()
+    sign = md5code.lower()
+    posturl = "%s/?act=api.%s&time=%d&sign=%s" % ("http://gdss.touch4.me", "getClientIdDict", ct, sign)
+    retstr = dohttpquery(posturl, {})
+    return json.loads(retstr).get("retmsg", {})
+
+
+def activity_task():
+    """活动的任务"""
+    ws = getWorkBook().get_sheet_by_name("ActivityTask")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = collections.OrderedDict()
+        if config.has_key(str(cols[1])) and str(cols[0]) in config[str(cols[1])]:
+            raise KeyError("activityId %d repeat" % int(cols[0]))
+        one["id"] = cols[0]
+        one["frontTasks"] = cols[2]
+        one["showForever"] = cols[3]
+        one["repeat"] = cols[4]
+        one["type"] = cols[5]
+        if cols[6]:
+            one["isInside"] = cols[6]
+        one["value"] = cols[7]
+        one["reward"] = cols[8]
+        if cols[9]:
+            one["spareReward"] = cols[9]
+        one["taskDesc"] = cols[10]
+        one["taskImg"] = cols[12]
+        one["taskDisableImg"] = cols[13]
+        one["totalCount"] = cols[14]
+        one["takeTimesPerDay"] = cols[15]
+
+        if str(cols[1]) not in config:
+            config[str(cols[1])] = collections.OrderedDict()
+        config[str(cols[1])][str(cols[0])] = one
+    return config
+    # result = json.dumps(config, indent=4, ensure_ascii=False)
+    # return result
+
+
+def getClientIdNum(clientId):
+    """获取客户端的数字标识"""
+    global ClientIdMap
+    ClientIdMap = ClientIdMap or getClientIdMap()
+    result = ClientIdMap.get(clientId)
+    print clientId, result
+    assert result
+    return result
+
+
+def activity_Client():
+    """活动客户端使用的活动模板"""
+    ws = getWorkBook().get_sheet_by_name("ClientId")
+    config = collections.OrderedDict()
+    zhTempDict = collections.OrderedDict()
+    enTempDict = collections.OrderedDict()
+    config2 = []
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        clientId = str(cols[0])
+        clientIdNum = getClientIdNum(clientId)
+        if cols[1]:
+            zhTempDict[clientIdNum] = cols[1]
+        if cols[2]:
+            enTempDict[clientIdNum] = cols[2]
+        if int(cols[3]) == 1:
+            config2.append(clientIdNum)
+    config["zh"] = zhTempDict
+    config["en"] = enTempDict
+    outPath = getOutPath("common")
+    outHandle = open(outPath, "r")
+    conf = json.load(outHandle)
+    outHandle.close()
+    conf["reviewLimitClientIds"] = config2
+    def sortDict(_conf):
+        if isinstance(_conf, dict):
+            conf_sorted = sorted(_conf.iteritems())
+            _conf = collections.OrderedDict()
+            for k, v in conf_sorted:
+                if isinstance(v, dict):
+                    v = sortDict(v)
+                elif isinstance(v, list):
+                    __v = [sortDict(_v) for _v in v]
+                    v = __v
+                _conf[k] = v
+        return _conf
+    conf = sortDict(conf)
+    # conf_sorted = sorted(conf.items(), key=lambda k: k[0])
+    # conf = collections.OrderedDict()
+    # for k, v in conf_sorted:
+    #     conf[k] = v
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    return config
+
+
 def skill_config():
     """
     解析技能表
@@ -60,6 +361,50 @@ def skill_config():
     outHandle.close()
     print "skill_config, end"
 
+
+def lucky_tree_conf():
+    """
+    免费金币摇钱树配置
+    """
+    print "lucky_tree_conf, start, "
+    outPath = getOutPath("luckyTree")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("LuckyTree")
+    config = collections.OrderedDict()
+    config["rewardList"] = []
+    config["accelerateTime"] = 0
+    config["interval"] = 0
+    config["rewardCount"] = 0
+    config["rule"] = ""
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0]:
+            one = collections.OrderedDict()
+            config["rewardList"].append(one)
+            one["id"] = int(cols[0])
+            one["reward"] = json.loads(cols[1])
+            one["targetVal"] = int(cols[2])
+
+        if cols[4]:
+            config["accelerateTime"] = int(cols[4])
+            config["interval"] = int(cols[5])
+            config["rewardCount"] = int(cols[6])
+            config["rule"] = str(cols[7])
+            config["vipLimit"] = int(cols[8])
+            config["maxSkiptimes"] = int(cols[9])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "lucky_tree_conf, end"
 
 
 def item_config(clientId=0):
@@ -115,6 +460,292 @@ def item_config(clientId=0):
     outHandle.write(result)
     outHandle.close()
     print "item_config, end"
+
+
+def store_config(clientId=0):
+    """商店配置"""
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+
+    sn = "WeiXin" if clientId == 0 else str(clientId)
+    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
+    outPath = getOutPath("store", fn)
+    ws = getWorkBook("store.xlsx").get_sheet_by_name(sn)
+    config = collections.OrderedDict()
+    config["coinStore"] = collections.OrderedDict()
+    config["coinStore"]["items"] = collections.OrderedDict()
+    config["diamondStore"] = collections.OrderedDict()
+    config["diamondStore"]["items"] = collections.OrderedDict()
+    config["pearlStore"] = collections.OrderedDict()
+    config["chestStore"] = collections.OrderedDict()
+    config["chestStore"]["items"] = collections.OrderedDict()
+    config["chestStore"]["shop"] = collections.OrderedDict()
+    config["itemStore"] = collections.OrderedDict()
+    config["itemStore"]["items"] = collections.OrderedDict()
+    config["couponStore"] = collections.OrderedDict()
+    config["couponStore"]["items"] = collections.OrderedDict()
+    config["gunSkinStore"] = collections.OrderedDict()
+    config["bulletStore"] = collections.OrderedDict()
+    config["bulletStore"]["hall37"] = collections.OrderedDict()
+    config["hotStore"] = collections.OrderedDict()
+    config["hotStore"]["items"] = collections.OrderedDict()
+
+    i = 0
+    startRowNum = 4
+    hot_store_num = 0
+    coin_store_num = 7
+    diamond_store_num = 31
+    chest_store_num = 55
+    item_store_num = 79
+    coupon_store_num = 103
+    pearl_store_num = 127
+    gun_skin_num = 142
+    robbery_store_num = 156
+    storeTabDict = {"coinStore": coin_store_num, "diamondStore": diamond_store_num,
+                    "chestStore": chest_store_num, "itemStore": item_store_num, "couponStore": coupon_store_num}
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[hot_store_num]:
+            one = collections.OrderedDict()
+            config["hotStore"]["items"][str(cols[hot_store_num])] = one
+            one["order"] = int(cols[hot_store_num + 1])
+            one["pt"] = str(cols[hot_store_num + 2]) if cols[hot_store_num + 2] else ""
+            one["extendData"] = json.loads(cols[hot_store_num + 3])
+            one["limitCond"] = json.loads(cols[hot_store_num + 4])
+            if cols[hot_store_num + 5]:
+                config["hotStore"]["shop"] = json.loads(cols[hot_store_num + 5])
+
+        for tab, _idx in storeTabDict.iteritems():
+            if cols[_idx] is not None:
+                one = collections.OrderedDict()
+                config[tab]["items"][str(cols[_idx])] = one
+                one["name"] = json.loads(cols[_idx + 1])
+                one["order"] = int(cols[_idx + 2])
+                one["pt"] = str(cols[_idx + 3]) if cols[_idx + 3] else ""
+                one["itemId"] = int(cols[_idx + 4])
+                one["count"] = json.loads(cols[_idx + 5])
+                one["price"] = int(cols[_idx + 6]) if cols[_idx + 6] else 0
+                one["cur_price"] = json.loads(cols[_idx + 7])
+                one["price_direct"] = int(cols[_idx + 8]) if cols[_idx + 8] else 0
+                one["price_diamond"] = int(cols[_idx + 9]) if cols[_idx + 9] else 0
+                one["pic"] = str(cols[_idx + 10]) if cols[_idx + 10] != "\"\"" else ""
+                one["buyType"] = str(cols[_idx + 11])
+                one["otherBuyType"] = json.loads(cols[_idx + 12])
+                one["label1"] = json.loads(cols[_idx + 13])
+                if cols[_idx + 14]:
+                    one["label1BgType"] = json.loads(cols[_idx + 14])
+                one["label2"] = json.loads(cols[_idx + 15])
+                if cols[_idx + 16]:
+                    one["label2BgType"] = json.loads(cols[_idx + 16])
+                one["label3"] = json.loads(cols[_idx + 17])
+                if cols[_idx + 18]:
+                    one["label3BgType"] = json.loads(cols[_idx + 18])
+                one["additionVip"] = int(cols[_idx + 19])
+                one["extendData"] = json.loads(cols[_idx + 20])
+                one["limitCond"] = json.loads(cols[_idx + 21])
+                if cols[_idx + 22] and cols[_idx + 22] != "\"\"":
+                    config[tab]["shop"] = str(cols[_idx + 22])
+
+        if cols[pearl_store_num]:
+            one = collections.OrderedDict()
+            config["pearlStore"][str(cols[pearl_store_num])] = one
+            one["name"] = json.loads(cols[pearl_store_num + 1])
+            one["itemId"] = int(cols[pearl_store_num + 2])
+            one["count"] = json.loads(cols[pearl_store_num + 3])
+            one["order"] = int(cols[pearl_store_num + 4])
+            one["price"] = int(cols[pearl_store_num + 5])
+            one["price_direct"] = int(cols[pearl_store_num + 6])
+            one["price_diamond"] = int(cols[pearl_store_num + 7])
+            one["additionVip"] = int(cols[pearl_store_num + 8])
+            one["tag"] = int(cols[pearl_store_num + 9])
+            one["addition"] = json.loads(cols[pearl_store_num + 10])
+            if cols[pearl_store_num + 11] == "\"\"":
+                one["pic"] = ""
+            else:
+                one["pic"] = str(cols[pearl_store_num + 11])
+            one["buyType"] = str(cols[pearl_store_num + 12])
+            one["otherBuyType"] = json.loads(cols[pearl_store_num + 13])
+
+        if cols[gun_skin_num]:
+            one = collections.OrderedDict()
+            config["gunSkinStore"][str(cols[gun_skin_num])] = one
+            one["name"] = str(cols[gun_skin_num + 1])
+            one["itemId"] = int(cols[gun_skin_num + 2])
+            one["count"] = int(cols[gun_skin_num + 3])
+            one["order"] = int(cols[gun_skin_num + 4])
+            if cols[gun_skin_num + 5] is not None:
+                one["vip"] = int(cols[gun_skin_num + 5])
+            if cols[gun_skin_num + 6] != "\"\"":
+                one["desc"] = str(cols[gun_skin_num + 6])
+            else:
+                one["desc"] = ""
+            one["price"] = int(cols[gun_skin_num + 7])
+            one["discountPrice"] = json.loads(cols[gun_skin_num + 8])
+            one["tag"] = int(cols[gun_skin_num + 9])
+            one["addition"] = json.loads(cols[gun_skin_num + 10])
+            if cols[gun_skin_num + 11] != "\"\"":
+                one["pic"] = str(cols[gun_skin_num + 11])
+            else:
+                one["pic"] = ""
+            one["buyType"] = str(cols[gun_skin_num + 12])
+
+        if cols[robbery_store_num]:
+            one = collections.OrderedDict()
+            config["bulletStore"]["hall37"][str(cols[robbery_store_num])] = one
+            one["name"] = str(cols[robbery_store_num + 1])
+            one["itemId"] = int(cols[robbery_store_num + 2])
+            one["count"] = int(cols[robbery_store_num + 3])
+            one["order"] = int(cols[robbery_store_num + 4])
+            one["price"] = int(cols[robbery_store_num + 5])
+            one["price_direct"] = int(cols[robbery_store_num + 6])
+            one["price_diamond"] = int(cols[robbery_store_num + 7])
+            one["tag"] = int(cols[robbery_store_num + 8])
+            one["addition"] = json.loads(cols[robbery_store_num + 9])
+            if cols[robbery_store_num + 10] != "\"\"":
+                one["pic"] = str(cols[robbery_store_num + 10])
+            else:
+                one["pic"] = ""
+            one["buyType"] = str(cols[robbery_store_num + 11])
+            one["robberyBonus"] = int(cols[robbery_store_num + 12])
+            one["vipAddition"] = json.loads(cols[robbery_store_num + 13])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "store_config, end"
+
+
+def time_limited_store_config():
+    """
+    限时商城配置
+    """
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    print "time_limited_store_config, start"
+    outPath = getOutPath("timeLimitedStore")
+    wb = getWorkBook()
+    ws = getWorkBook("store.xlsx").get_sheet_by_name("TimeLimitedStore")
+    config = collections.OrderedDict()
+    config["stores"] = collections.OrderedDict()
+    config["slot"] = []
+    config["types"] = {}
+    startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        one = collections.OrderedDict()
+        if cols[0]:
+            config["stores"][str(cols[0])] = one
+            one["id"] = str(cols[0])
+            one["name"] = str(cols[1])
+            one["itemId"] = int(cols[2])
+            one["count"] = int(cols[3])
+            one["buyType"] = unicode(cols[4] or "")
+            one["price"] = int(cols[5])
+            one["levelRange"] = json.loads(cols[6])
+            one["rate"] = int(cols[7])
+            one["types"] = json.loads(cols[8])
+            one["maxBuyCount"] = int(cols[9])
+            one["label1"] = unicode(cols[10] or "")
+            one["labelBgType"] = unicode(cols[11] or "")
+            one["label2"] = unicode(cols[12] or "")
+            one["label2BgType"] = unicode(cols[13] or "")
+            one["label3"] = unicode(cols[14] or "")
+            one["label3BgType"] = unicode(cols[15] or "")
+
+            for t in json.loads(cols[8]):
+                config["types"].setdefault(str(t), [])
+                config["types"][str(t)].append(one)
+
+        if cols[17]:
+            config["slot"].append({"idx": int(cols[17]), "unlockLevel": int(cols[18]), "typeList": json.loads(cols[19])})
+
+        if cols[21]:
+            config["vipLimit"] = int(cols[21])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    result = re.sub(r"\\\\n", r"\\n", result)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "time_limited_store_config, end"
+
+
+def exchange_store_config():
+    """
+    兑换商城
+    """
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    print "exchange_store_config, start"
+    outPath = getOutPath("exchangeStore")
+    ws = getWorkBook("store.xlsx").get_sheet_by_name("ExchangeStore")
+    config = collections.OrderedDict()
+    config["items"] = collections.OrderedDict()
+    i = 0
+    startRowNum = 4
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        _idx = 0
+        if cols[_idx] is not None:
+            one = collections.OrderedDict()
+            config["items"][str(cols[_idx])] = one
+            one["name"] = json.loads(cols[_idx + 1])
+            one["order"] = int(cols[_idx + 2])
+            one["pt"] = str(cols[_idx + 3]) if cols[_idx + 3] else ""
+            one["itemId"] = int(cols[_idx + 4])
+            one["count"] = json.loads(cols[_idx + 5])
+            one["price"] = int(cols[_idx + 6]) if cols[_idx + 6] else 0
+            one["cur_price"] = json.loads(cols[_idx + 7])
+            one["price_direct"] = int(cols[_idx + 8]) if cols[_idx + 8] else 0
+            one["price_diamond"] = int(cols[_idx + 9]) if cols[_idx + 9] else 0
+            one["pic"] = str(cols[_idx + 10]) if cols[_idx + 10] != "\"\"" else ""
+            one["buyType"] = str(cols[_idx + 11])
+            one["otherBuyType"] = json.loads(cols[_idx + 12])
+            one["label1"] = json.loads(cols[_idx + 13])
+            if cols[_idx + 14]:
+                one["label1BgType"] = json.loads(cols[_idx + 14])
+            one["label2"] = json.loads(cols[_idx + 15])
+            if cols[_idx + 16]:
+                one["label2BgType"] = json.loads(cols[_idx + 16])
+            one["label3"] = json.loads(cols[_idx + 17])
+            if cols[_idx + 18]:
+                one["label3BgType"] = json.loads(cols[_idx + 18])
+            one["additionVip"] = int(cols[_idx + 19])
+            one["extendData"] = json.loads(cols[_idx + 20])
+            one["limitCond"] = json.loads(cols[_idx + 21])
+            one["categoryId"] = int(cols[_idx + 22])
+            if cols[_idx + 23] and cols[_idx + 23] != "\"\"":
+                config["shop"] = str(cols[_idx + 23])
+
+        if cols[_idx + 25]:
+            config["startTS"] = str(cols[_idx + 25])
+        if cols[_idx + 26]:
+            config["loopDays"] = int(cols[_idx + 26])
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "exchange_store_config, end"
 
 
 def vip_config():
@@ -563,26 +1194,26 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
 
 # 配置列表
 config_list = [
-    # (multi_lang_text, None),
-    # (activity_config, None),
+    (multi_lang_text, None),
+    (activity_config, None),
     (skill_config, None),
-    # (lucky_tree_conf, None),
+    (lucky_tree_conf, None),
     (item_config, None),
     (item_config, 26312),
     (item_config, 26760),
     (item_config, 26882),
-    # (store_config, None),
-    # (store_config, 25598),
-    # (store_config, 25794),
-    # (store_config, 25840),
-    # (store_config, 26120),
-    # (store_config, 26121),
-    # (store_config, 26122),
-    # (store_config, 26312),
-    # (store_config, 26760),
-    # (store_config, 26882),
-    # (time_limited_store_config, None),
-    # (exchange_store_config, None),
+    (store_config, None),
+    (store_config, 25598),
+    (store_config, 25794),
+    (store_config, 25840),
+    (store_config, 26120),
+    (store_config, 26121),
+    (store_config, 26122),
+    (store_config, 26312),
+    (store_config, 26760),
+    (store_config, 26882),
+    (time_limited_store_config, None),
+    (exchange_store_config, None),
     # (piggy_bank_config, None),
     # (checkin_config, None),
     (vip_config, None),
@@ -592,10 +1223,10 @@ config_list = [
     (gift_abctest_config, None),
     (gift_config, None),
     (gift_config, 25794),
-    # (gift_config, 25598),
-    # (gift_config, 26120),
-    # (gift_config, 26121),
-    # (gift_config, 26122),
+    (gift_config, 25598),
+    (gift_config, 26120),
+    (gift_config, 26121),
+    (gift_config, 26122),
     # (share_config, None),
     # (user_level_config, None),
     (honor_config, None),

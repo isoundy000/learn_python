@@ -23,7 +23,7 @@ def superboss_exchange_config():
     超级boss兑换配置
     """
     print "superboss_exchange_config, start"
-    outPath = getOutPath("superbossExchange")
+    outPath = getOutPath("superBossExchange")
     wb = getWorkBook()
     ws = wb.get_sheet_by_name("SuperBossExchange")
     config = collections.OrderedDict()
@@ -79,7 +79,7 @@ def superboss_minigame_config():
     超级boss宝箱配置
     """
     print "superboss_minigame_config, start"
-    outPath = getOutPath("superbossMinigame")
+    outPath = getOutPath("superBossMinigame")
     wb = getWorkBook()
     ws = wb.get_sheet_by_name("SuperBossMinigame")
     config = collections.OrderedDict()
@@ -100,16 +100,17 @@ def superboss_minigame_config():
             key = "%s_%d" % (str(cols[0]), int(cols[1]))
             config["info"][key] = one
             one["mode"] = int(cols[1])
-            one["maxTimes"] = int(cols[2])
+            one["maxTimes"] = json.loads(cols[2])
             one["currencyList"] = json.loads(cols[3])
         if cols[5]:
             key = "%s_%d" % (str(cols[5]), int(cols[6]))
             config["game"].setdefault(key, [])
             config["game"][key].append({
-                "costs": json.loads(cols[8]),
-                "rewards": json.loads(cols[9]),
-                "des": str(cols[7]) if cols[7] else "",
-                "mode": int(cols[6])
+                "costs": json.loads(cols[9]),
+                "rewards": json.loads(cols[10]),
+                "des": str(cols[8]) if cols[8] else "",
+                "mode": int(cols[6]),
+                "level": int(cols[7])
             })
 
     result = json.dumps(config, indent=4, ensure_ascii=False)
@@ -124,7 +125,7 @@ def superboss_common_config():
     超级boss通用配置
     """
     print "superboss_common_config, start"
-    outPath = getOutPath("superbossCommon")
+    outPath = getOutPath("superBossCommon")
     wb = getWorkBook()
     ws = wb.get_sheet_by_name("SuperBossCommon")
     config = collections.OrderedDict()
@@ -173,10 +174,11 @@ def is_number(s):
 
 
 def fish_config():
-    '''
+    """
     千炮玩法渔场的鱼
     :return:
-    '''
+    """
+    print "fish_config, start"
     outPath = getOutPath("fish_m")
     ws = getWorkBook().get_sheet_by_name("Fish")
     config = collections.OrderedDict()
@@ -197,6 +199,7 @@ def fish_config():
         if str(cols[0]) in config:
             raise KeyError("fishId %d repeat" % int(cols[0]))
         config[str(cols[3])] = one
+        one["fishType"] = int(cols[3])
         one["name"] = unicode(cols[1])
         one["type"] = int(cols[4])
         if is_number(cols[5]):
@@ -204,21 +207,20 @@ def fish_config():
         else:
             one["itemId"] = json.loads(cols[5])
         one["score"] = int(cols[6])
-        one["minCount"] = int(cols[7])
-        one["maxCount"] = int(cols[8])
-        one["probb1"] = float("%.1f" % cols[9])
-        one["probb2"] = float("%.1f" % cols[10])
-        one["HP"] = int(cols[11])
-        one["value"] = int(cols[12])
-        if cols[14]:
-            one["weaponId"] = int(cols[14])
-        one["prizeWheelValue"] = float(cols[15])
-        one["triggerRate"] = int(cols[16])
-        one["catchValue"] = float(cols[17])
+        one["probb1"] = float("%.1f" % cols[7])
+        one["probb2"] = float("%.1f" % cols[8])
+        one["HP"] = int(cols[9])
+        one["value"] = int(cols[10])
+        if cols[12]:
+            one["weaponId"] = int(cols[12])
+        one["prizeWheelValue"] = float(cols[13])
+        one["triggerRate"] = int(cols[14])
+        one["catchValue"] = float(cols[15])
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+    print "fish_config, end"
 
 
 def skill_grade_config():
@@ -290,7 +292,7 @@ def skill_star_config():
         one["abilities"] = abilities
         for x in xrange(3, len(cols), 3):
             if not cols[x]:
-                continue
+                break
             ability = collections.OrderedDict()
             ability["ability"] = int(cols[x])           # 提升能力类型
             ability["valueType"] = int(cols[x + 1])     # 数值类型
@@ -303,7 +305,7 @@ def skill_star_config():
 
 
 def gunLevel():
-    """千炮升级"""
+    """火炮等级配置"""
     outPath = getOutPath("gunLevel_m")
     ws = getWorkBook().get_sheet_by_name("GunLevel")
     config = collections.OrderedDict()
@@ -323,7 +325,7 @@ def gunLevel():
         one["gunLevel"] = int(cols[0])
         upgradeItems = collections.OrderedDict()
         if int(cols[1]):
-            upgradeItems[cols[1]] = cols[2]
+            upgradeItems[cols[1]] = int(cols[2])
         for x in range(3, 6, 2):
             if int(cols[x]):
                 upgradeItems[cols[x]] = cols[x + 1]
@@ -349,11 +351,9 @@ def gunLevel():
             one["returnItems"] = returnItems
         if cols[_tmpIdx + 12]:
             one["interval"] = float(cols[_tmpIdx + 12])
-        if cols[_tmpIdx + 13]:
-            one["unlockMultiple"] = int(cols[_tmpIdx + 13])
-        if cols[_tmpIdx + 14] is not None:
-            one["levelAddition"] = float(cols[_tmpIdx + 14])
-        one["levelValue"] = int(cols[_tmpIdx + 15])
+        if cols[_tmpIdx + 13] is not None:
+            one["levelAddition"] = float(cols[_tmpIdx + 13])
+        one["levelValue"] = int(cols[_tmpIdx + 14])
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
@@ -448,43 +448,6 @@ def gunskin_config(clientId=0):
     print "gunskin_config, end"
 
 
-def superboss_power_config():
-    print "superboss_power_config, start"
-    outPath = getOutPath("superbossPower")
-    ws = getWorkBook().get_sheet_by_name("SuperBossPower")
-    config = collections.OrderedDict()
-    config["power"] = collections.OrderedDict()
-    config["powerRange"] = []
-    startRowNum = 4
-    h = 0
-    for row in ws.rows:
-        h = h + 1
-        if h < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-
-        if cols[0]:
-            one = collections.OrderedDict()
-            config["power"][int(cols[0])] = one     # 鱼ID
-            one["countPct"] = json.loads(cols[1])   # 狂暴次数百分比
-            one["basePower"] = int(cols[2])         # 基础威力
-
-        if cols[4]:
-            one = collections.OrderedDict()
-            config["powerRange"].append(one)        # 威力范围
-            one["min"] = float(cols[5])             # 最小倍率
-            one["max"] = float(cols[6])             # 最大
-            one["probb"] = int(cols[7])             # 概率
-
-    print "superboss_power_config, end"
-    result = json.dumps(config, indent=4)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
-    outHandle.close()
-
-
 def weapon_config():
     print "weapon_config_m"
     outPath = getOutPath("weapon_m")
@@ -510,13 +473,47 @@ def weapon_config():
         oneWeapon["power"] = cols[4]
         oneWeapon["matchAddition"] = cols[5]
         oneWeapon["wpRatio"] = cols[12]
-        oneWeapon["singlePower"] = cols[13]
 
     print "weapon_config, end"
     result = json.dumps(weaponConfig, indent=4)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+
+
+def weaponPowerRate_config():
+    print "weaponPowerRate_config, start"
+    outPath = getOutPath("weaponPowerRate_m")
+    ws = getWorkBook().get_sheet_by_name("WeaponPowerRate")
+    powerRateConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        oneRate =  []
+        if str(cols[0]) in powerRateConfig:
+            raise KeyError("weaponId %d repeat" % int(cols[0]))
+        powerRateConfig[str(cols[0])] = oneRate
+        probb = 0
+        for m in range(2, len(cols), 2):
+            if not cols[m]:
+                break              
+            item = {}
+            item["value"] = json.loads(cols[m])
+            itemProbb = cols[m + 1]
+            item["probb"] = [probb + 1, probb + itemProbb]   
+            oneRate.append(item)
+            probb += itemProbb
+    result = json.dumps(powerRateConfig, indent=4)
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "weaponPowerRate_config, end"
 
 
 def level_funds_config(clientId=0):
@@ -725,16 +722,17 @@ def autofill_fish_m():
     def parse(saveDict, cols):
         if cols[0] and cols[0] not in saveDict:
             saveDict[cols[0]] = collections.OrderedDict()       # 渔场ID
-        if cols[2] and cols[2] not in saveDict[cols[0]]:
+        if cols[3] and cols[3] not in saveDict[cols[0]]:
             fishCategory = collections.OrderedDict()
-            saveDict[cols[0]][cols[2]] = fishCategory           # 渔场ID: {鱼种类别: {}}
-            fishCategory["categoryId"] = str(cols[2])           # 鱼种类别
-            fishCategory["supplyInterval"] = int(cols[1])       # 填充时间间隔
+            saveDict[cols[0]][cols[3]] = fishCategory           # 渔场ID: {鱼种类别: {}}
+            fishCategory["categoryId"] = str(cols[3])           # 鱼种类别
+            fishCategory["cSupplyInterval"] = int(cols[1])      # 鱼类填充时间间隔
+            fishCategory["sSupplyInterval"] = int(cols[2])      # 鱼群填充时间间隔
             fishCategory["groups"] = []                         # 鱼群
         group = collections.OrderedDict()
-        group["groupType"] = int(cols[3])                       # 分组类型
+        group["groupType"] = int(cols[4])                       # 分组类型
         group["fishes"] = []                                    # 鱼
-        for x in xrange(4, len(cols), 6):
+        for x in xrange(5, len(cols), 6):
             if not cols[x] or not cols[x + 1]:
                 continue
             fish = collections.OrderedDict()
@@ -744,7 +742,7 @@ def autofill_fish_m():
             fish["minCount"] = int(cols[x + 4])
             fish["maxCount"] = int(cols[x + 5])
             group["fishes"].append(fish)
-        saveDict[cols[0]][cols[2]]["groups"].append(group)
+        saveDict[cols[0]][cols[3]]["groups"].append(group)
         return saveDict
 
     outPath = getOutPath("autofillFish_m")
@@ -779,18 +777,14 @@ def autofill_fish_m():
     outHandle.close()
 
 
-def special_fish_effect_count():
+def weapon_stage_count_config():
     """
-    特殊鱼的效果次数
+    武器的爆炸次数
     """
-    print "special_fish_effect_count, start"
-    outPath = getOutPath("specialFishEffectCount")
-    ws = getWorkBook().get_sheet_by_name("SpecialFishEffectCount")
+    print "weapon_stage_count_config, start"
+    outPath = getOutPath("weaponStageCount_m")
+    ws = getWorkBook().get_sheet_by_name("WeaponStageCount")
     config = collections.OrderedDict()
-    config["times"] = []
-    config["energy_pearl"] = []
-    config["trident"] = []
-    config["money_box"] = []
     startRowNum = 4
     i = 0
     for row in ws.rows:
@@ -805,11 +799,105 @@ def special_fish_effect_count():
         if not cols[0]:
             continue
 
-        config["times"].append(int(cols[0]))
+        if int(cols[0]) not in config:
+            config[int(cols[0])] = []
+        for x in xrange(2, len(cols)):
+            if cols[x] is None:
+                continue
+            config[int(cols[0])].append(int(cols[x]))
+        if sum(config[int(cols[0])]) != 10000:
+            raise KeyError("weapon_stage_count_config probb error")
+
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "weapon_stage_count_config, end"
+
+
+def tide_task_config():
+    """鱼潮任务"""
+    print "tide_task_config, start"
+    outPath = getOutPath("tideTask")
+    ws = getWorkBook().get_sheet_by_name("TideTask")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("taskId %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one                                  # 任务Id
+        one["taskId"] = cols[0]
+        one["fishPool"] = cols[1]
+        assert int(cols[2]) in [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        one["group"] = cols[2]                                      # 鱼群
+        one["tipSeconds"] = cols[3]
+        one["readySeconds"] = cols[4]                               # 准备时间
+        one["timeLong"] = cols[5]
+        one["taskType"] = cols[6]
+        one["desc"] = unicode(cols[7] or "")
+        targets = collections.OrderedDict()
+        one["targets"] = targets
+        if cols[8]:
+            targets["target"] = cols[8]
+        if cols[9]:
+            targets["number"] = cols[9]
+        one["rewards"] = {}
+        if cols[10]:
+            one["rewards"]["name"] = cols[10]
+        if cols[11]:
+            one["rewards"]["count"] = cols[11]
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "tide_task_config, end"
+
         config["energy_pearl"].append(int(cols[1]))
         config["trident"].append(int(cols[2]))
         config["money_box"].append(int(cols[3]))
 
+
+def platter_fish():
+    """大盘鱼出现的概率和间隔"""
+    outPath = getOutPath("platterFish")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("PlatterFish")
+    config = collections.OrderedDict()
+    platterFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        platterFish[str(cols[0])] = one
+        interval = int(cols[1])
+        probb = 0
+        for x in xrange(2, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])
+            fish["interval"] = interval
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one.append(fish)
+    config["platterFish"] = platterFish
     result = json.dumps(config, indent=4)
     outHandle = open(outPath, "w")
     outHandle.write(result)
@@ -874,15 +962,24 @@ config_list = [
     (skill_star_config, None),
     (gunLevel, None),                       # 火炮倍率
     (gunskin_config, None),                 # 火炮和皮肤
-    (superboss_power_config, None),
     (weapon_config, None),                  # 武器配置
+    (weaponPowerRate_config, None),
+    (weapon_stage_count_config, None),
     (level_funds_config, None),
     (level_funds_config, 25794),
     (prizewheel_m_config, None),
     (time_point_match_skill, None),
+    (probability_config_m, None),
     (terror_fish_m, None),
-    # (autofill_fish_m, None),
-    (special_fish_effect_count, None)
+    (autofill_fish_m, None),
+    (tide_task_config, None),
+    (fixed_multiple_fish, None),
+    (match_multiple_fish, None),
+    (randomMultipleFish_config, None),
+    (plyerBuffer_config, None),
+    (platter_fish, None),                   # 大盘鱼
+    (super_boss_drop_config, None),
+    (catch_drop_config, None)
 ]
 
 
@@ -923,14 +1020,6 @@ if __name__ == "__main__":
     else:
         process_single_config(0, conf_queue, cost_queue, err_queue, ServerPath)
 
-    t2 = int(time.time())
-    print "----- load config successfully"
-    print "----- out full path: %s" % os.path.abspath(os.path.split(os.path.realpath(__file__))[0] + ServerPath)
-    if isUseMultiProcess:
-        print "----- %d cpu, process %d files, export json cost %d s" % (cpu_count(), len(config_list), t2 - t1)
-    else:
-        print "----- process %d files, export json cost %d s" % (len(config_list), t2 - t1)
-
     # s1 = set()
     # while not cost_queue.empty():
     #     fn, costTime = cost_queue.get()
@@ -941,10 +1030,19 @@ if __name__ == "__main__":
         print err_queue.get()
     # windows需要转换json的换行符.
     if _system == "Windows":
-        print "json format: windows->unix, start"
+        # print "json format: windows->unix, start"
         import os
         if TestConfPath:
             os.system(r".\jsonDos2Unix.bat %s" % TestConfPath)
         if RealeaseConfPath:
             os.system(r".\jsonDos2Unix.bat %s" % RealeaseConfPath)
-        print "json format: windows->unix, end"
+        # print "json format: windows->unix, end"
+
+    t2 = int(time.time())
+    print "----- load config successfully"
+    print "----- out full path: %s" % os.path.abspath(os.path.split(os.path.realpath(__file__))[0] + ServerPath)
+    if isUseMultiProcess:
+        print "----- %d cpu, process %d files, export json cost %d s" % (cpu_count(), len(config_list), t2 - t1)
+    else:
+        print "----- process %d files, export json cost %d s" % (len(config_list), t2 - t1)
+
