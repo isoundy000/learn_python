@@ -361,7 +361,7 @@ def getWeaponType(wpId):
             return config.NUMB_WEAPON_TYPE
         elif wpId // 100 == 28:     # 钻头鱼死亡
             return config.DRILL_WEAPON_TYPE
-        elif wpId // 100 == 29:     # 超级boss:宝箱怪,龙女王,大冰龙
+        elif wpId // 100 == [29, 30, 31]:     # 超级boss:宝箱怪,龙女王,大冰龙
             return config.SUPER_BOSS_WEAPON_TYPE
         elif wpId // 100 == 32:     # 能量宝珠
             return config.ENERGY_ORB

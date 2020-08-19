@@ -206,7 +206,7 @@ class DynamicOdds(object):
         :param superBullet: 是否超级子弹
         :param aloofFish: 是否高冷鱼
         :param gunConf: 当前装备火炮配置
-        :return: 返回概率系数
+        :return: 返回概率系数 1、1.3、1.25
         """
         # 2倍场使用低概率.
         # if self.table.bigRoomId == 44401:
@@ -217,6 +217,44 @@ class DynamicOdds(object):
                 aloofFish = True
             else:
                 return 1
+        if not self.player or not self.player.userId:
+            return 1
+        if self.isProtectMode():
+            return self.protectOdds[self.player.level - 1]
+        if self.table.typeName == config.FISH_NEWBIE and self.chip <= 50:
+            return 10000
+
+        if skill:
+            if self.player.userId in self.banOddsList:      # 黑名单概率
+                odds = self.skillBanOdds                    # 0.5
+            else:
+                if superBullet:                             # 超级子弹
+                    odds = 1
+                else:
+                    if aloofFish:
+                        odds = self.getNorSkillNonCurveOdds()
+                    else:
+                        odds = self.getNorSkillCurveOdds()
+        else:
+            if self.player.userId in self.banOddsList:
+                odds = self.fireBanOdds
+            else:
+                if superBullet:
+                    odds = 1
+                else:
+                    if aloofFish:
+                        odds = self.getGunNonCurveOdds(gunConf)
+                    else:
+                        odds = self.getGunCurveOdds()
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->getOdds->",
+                        "userId =", self.player.userId,
+                        "odds =", odds,
+                        "skill =", skill,
+                        "superBullet =", superBullet,
+                        "aloofFish =", aloofFish,
+                        "gunConf =", gunConf)
+        return odds
 
     def changeOdds(self):
         """

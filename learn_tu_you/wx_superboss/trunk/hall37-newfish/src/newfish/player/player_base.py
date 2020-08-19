@@ -859,8 +859,8 @@ class FishPlayer(TYPlayer):
         """重置活动消耗的子弹数"""
         self.activityConsumeClip = 0
 
-    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None,
-                clientFire=True, targetPos=None, fishType=None, costChip=0):
+    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, gunMultiple=None,
+                clientFire=True, targetPos=None, fishType=None, costChip=0, gunX=None):
         """
         添加开火信息
         :param bulletId: 子弹Id
@@ -869,7 +869,7 @@ class FishPlayer(TYPlayer):
         :param fpMultiple: 渔场倍率
         :param skill: 技能对象
         :param power: 威力
-        :param multiple: 单倍|双倍炮
+        :param gunMultiple: 单倍|双倍炮
         :param clientFire: 客户端开火
         :param targetPos: 目标位置
         :param fishType: 鱼的Id
@@ -891,10 +891,11 @@ class FishPlayer(TYPlayer):
             "receiveTimestamp": nowTimestamp,      # 接收时间
             "power": power,                        # 威力
             "initPower": power,                    # 初始威力
-            "multiple": multiple,                  # 单倍|双倍炮
             "targetPos": targetPos,                # 目标位置
             "fishType": fishType,                  # 鱼的Id
             "fpMultiple": fpMultiple,              # 渔场倍率
+            "gunMultiple": gunMultiple,            # 单倍|双倍炮
+            "gunX": gunX,                          # 炮倍数
             "maxStage": len(power) - 1 if isinstance(power, list) and len(power) > 0 else 0    # 最大阶段
         }
         self._fires[bulletId].update({"superBullet": self.isSuperBullet(bulletId)})     # 超级子弹 获取炮的配置
@@ -908,9 +909,6 @@ class FishPlayer(TYPlayer):
             if wpType == config.GUN_WEAPON_TYPE:
                 self.fireCount.setdefault(str(self.table.runConfig.fishPool), 0)        # 开火次数
                 self.fireCount[str(self.table.runConfig.fishPool)] += 1
-                if self.table.typeName in config.QUICK_START_ROOM_TYPE:
-                    self.lotteryFireCostChip.setdefault(str(self.table.runConfig.fishPool), 0)
-                    self.lotteryFireCostChip[str(self.table.runConfig.fishPool)] += costChip    # 开火消耗金币奖池
                 self.gunEffectState(3, costChip)                              # 只有千炮渔场才有此对象
 
     def delFire(self, bulletId=0, extendId=0, wpId=0):
@@ -930,8 +928,10 @@ class FishPlayer(TYPlayer):
                 if bulletId in self._fires:
                     del self._fires[bulletId]
 
-    def getFire(self, bulletId):
+    def getFire(self, bulletId, extendId=None):
         """获取一颗子弹的信息"""
+        if extendId:
+            return self._fires.get(extendId, {})
         return self._fires.get(bulletId, {})
 
     def getFireWpId(self, bulletId):
@@ -969,16 +969,6 @@ class FishPlayer(TYPlayer):
         power = power[stageId] if stageId < len(power) else power[0]
         return power
 
-    def getFireMultiple(self, bulletId, extendId):
-        """
-        获取开火时的倍率
-        """
-        if extendId:
-            _fire = self._fires.get(extendId, {})
-        else:
-            _fire = self._fires.get(bulletId, {})
-        return _fire.get("multiple")
-
     def getFireFpMultiple(self, bulletId, extendId):
         """
         获取开火时的渔场倍率
@@ -988,6 +978,26 @@ class FishPlayer(TYPlayer):
         else:
             _fire = self._fires.get(bulletId, {})
         return _fire.get("fpMultiple", self.table.runConfig.multiple)
+
+    def getFireGunMultiple(self, bulletId, extendId):
+        """
+        获取开火时的倍率
+        """
+        if extendId:
+            _fire = self._fires.get(extendId, {})
+        else:
+            _fire = self._fires.get(bulletId, {})
+        return _fire.get("gunMultiple")
+
+    def getFireGunX(self, bulletId, extendId):
+        """
+        获取开火时的武器倍数
+        """
+        if extendId:
+            _fire = self._fires.get(extendId, {})
+        else:
+            _fire = self._fires.get(bulletId, {})
+        return _fire.get("gunX")
 
     def decreaseFirePower(self, bulletId, val, stageId=0):
         """
