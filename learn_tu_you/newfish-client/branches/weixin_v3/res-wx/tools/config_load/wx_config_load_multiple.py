@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 '''
 千炮玩法的配置
+执行该脚本，将会生成newfish_multiple.xlsm对应的json配置文件
 '''
 __author__ = 'ghou'
 
@@ -215,12 +216,62 @@ def fish_config():
             one["weaponId"] = int(cols[12])
         one["prizeWheelValue"] = float(cols[13])
         one["triggerRate"] = int(cols[14])
-        one["catchValue"] = float(cols[15])
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
     print "fish_config, end"
+
+
+def match_fish_config():
+    """
+    比赛鱼的配置
+    :return:
+    """
+    print "match_fish_config, start"
+    outPath = getOutPath("matchFish")
+    ws = getWorkBook().get_sheet_by_name("MatchFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    reload(sys)
+    sys.setdefaultencoding("utf8")
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        one = collections.OrderedDict()
+        if str(cols[0]) in config:
+            raise KeyError("fishId %d repeat" % int(cols[0]))
+        config[str(cols[2])] = one
+        one["name"] = unicode(cols[1])
+        one["type"] = int(cols[3])
+        if is_number(cols[4]):
+            one["itemId"] = int(cols[4])
+        else:
+            one["itemId"] = json.loads(cols[4])
+        one["score"] = int(cols[5])
+        one["probb1"] = float("%.1f" % cols[6])
+        one["probb2"] = float("%.1f" % cols[7])
+        one["HP"] = int(cols[8])
+        one["multiple"] = int(cols[9])
+        fishPool = cols[10]                     # 加倍鱼出现渔场
+        if isinstance(fishPool, unicode):
+            fishPool = fishPool.split("|")
+            fishPool = [int(x) for x in fishPool]
+        else:
+            fishPool = []
+        one["fishPool"] = fishPool
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "match_fish_config, end"
 
 
 def skill_grade_config():
@@ -532,7 +583,7 @@ def level_funds_config(clientId=0):
     config["rewards"] = collections.OrderedDict()
     startRowNum = 4
     fundIdx = 2
-    rewardsIdx = 12
+    rewardsIdx = 13
     h = 0
     for row in ws.rows:
         h = h + 1
@@ -557,6 +608,7 @@ def level_funds_config(clientId=0):
             one["price_diamond"] = cols[fundIdx + 6]                # 钻石价格
             one["otherBuyType"] = json.loads(cols[fundIdx + 7])     # 其他购买方式
             one["title"] = cols[fundIdx + 8]        # 标题宣传语
+            one["showLevel"] = cols[fundIdx + 9]    # 展示等级
 
         if cols[rewardsIdx]:
             config["rewards"].setdefault(str(cols[rewardsIdx + 1]), [])     # 奖励
@@ -674,6 +726,151 @@ def time_point_match_skill():
     outHandle.write(result)
     outHandle.close()
     print "time_point_match_skill, end"
+
+
+def getMultipleFish(ws):
+    multipleFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols:
+            continue
+        if not cols[0]: 
+            continue
+        one = []
+        multipleFish[str(cols[0])] = one
+        probb = 0
+        highProbb = 0
+        rechargeProbb = 0
+        for x in xrange(1, len(cols), 4):
+            multiple = collections.OrderedDict()
+            itemProbb = int(cols[x + 1] or 0)
+            itemHighProbb = int(cols[x + 2] or 0)
+            itemRechargeProbb = int(cols[x + 3] or 0)
+            if itemProbb <= 0 and itemHighProbb <= 0 and itemRechargeProbb <= 0:
+                continue
+            multiple["multiple"] = int(cols[x])
+            if itemProbb:
+                multiple["probb"] = [probb + 1, probb + itemProbb]
+            if itemHighProbb:
+                multiple["highProbb"] = [highProbb + 1, highProbb + itemHighProbb]
+            if itemRechargeProbb:
+                multiple["rechargeProbb"] = [rechargeProbb + 1, rechargeProbb + itemRechargeProbb]
+            probb += itemProbb
+            highProbb += itemHighProbb
+            rechargeProbb += itemRechargeProbb
+            one.append(multiple)
+    return multipleFish
+
+
+def getMatchBufferFish(ws):
+    bufferFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        one = []
+        bufferFish[str(cols[0])] = one
+        probb = 0
+        for x in xrange(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb] 
+            probb += itemProbb
+            one.append(fish)
+    return bufferFish
+
+
+def getBossFish(ws):
+    bossFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        one = []
+        bossFish[str(cols[0])] = one
+        probb = 0
+        for x in xrange(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb] 
+            probb += itemProbb
+            one.append(fish)
+    return bossFish
+
+
+def getBossMultiple(ws):
+    bossMultiple = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        one = []
+        bossMultiple[str(cols[0])] = one
+        probb = 0
+        for x in xrange(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["multiple"] = float(cols[x])
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb] 
+            probb += itemProbb
+            one.append(fish)
+    return bossMultiple
+
+
+def probability_config_m():
+    print "probability_config_m, start"
+    outPath = getOutPath("probability_m")
+    wb = getWorkBook()
+    config = collections.OrderedDict()
+    multipleFish = getMultipleFish(wb.get_sheet_by_name("MultipleFish"))
+    bossFish = getBossFish(wb.get_sheet_by_name("BossFish"))
+    bossMultiple = getBossMultiple(wb.get_sheet_by_name("BossMultiple"))
+    bufferFish = getMatchBufferFish(wb.get_sheet_by_name("MatchBufferFish"))
+
+    config["multipleFish"] = multipleFish
+    config["bossFish"] = bossFish
+    config["bossMultiple"] = bossMultiple
+    config["bufferFish"] = bufferFish
+    result = json.dumps(config, indent=4)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)
+    print "probability_config_m, end"
 
 
 def terror_fish_m():
@@ -832,37 +1029,179 @@ def tide_task_config():
             cols.append(cell.value)
         one = collections.OrderedDict()
         if str(cols[0]) in config:
-            raise KeyError("taskId %d repeat" % int(cols[0]))
-        config[str(cols[0])] = one                                  # 任务Id
-        one["taskId"] = cols[0]
-        one["fishPool"] = cols[1]
-        assert int(cols[2]) in [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        one["group"] = cols[2]                                      # 鱼群
-        one["tipSeconds"] = cols[3]
-        one["readySeconds"] = cols[4]                               # 准备时间
-        one["timeLong"] = cols[5]
-        one["taskType"] = cols[6]
-        one["desc"] = unicode(cols[7] or "")
+            raise KeyError("group_name %d repeat" % int(cols[0]))
+        config[str(cols[0])] = one                                  # 鱼潮鱼阵Id
+        one["group"] = cols[0]                                      # 鱼群
+        one["taskId"] = cols[1]
+        one["tipSeconds"] = cols[2]
+        one["readySeconds"] = cols[3]                               # 准备时间
+        one["timeLong"] = cols[4]
+        one["taskType"] = cols[5]
+        one["desc"] = unicode(cols[6] or "")
         targets = collections.OrderedDict()
         one["targets"] = targets
+        if cols[7]:
+            targets["target"] = cols[7]
         if cols[8]:
-            targets["target"] = cols[8]
-        if cols[9]:
-            targets["number"] = cols[9]
+            targets["number"] = cols[8]
         one["rewards"] = {}
+        if cols[9]:
+            one["rewards"]["name"] = cols[9]
         if cols[10]:
-            one["rewards"]["name"] = cols[10]
-        if cols[11]:
-            one["rewards"]["count"] = cols[11]
+            one["rewards"]["count"] = cols[10]
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
     print "tide_task_config, end"
 
-        config["energy_pearl"].append(int(cols[1]))
-        config["trident"].append(int(cols[2]))
-        config["money_box"].append(int(cols[3]))
+
+def fixed_multiple_fish():
+    """倍率鱼"""
+    print "fixed_multiple_fish, start"
+    outPath = getOutPath("fixedMultipleFish")
+    ws = getWorkBook().get_sheet_by_name("FixedMultipleFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        probbConf = {}
+        one = []
+        config[str(cols[0])] = probbConf
+        probbConf["range"] = json.loads(str(cols[1]))
+        probbConf["probb"] = cols[2]
+        probbConf["multiples"] = one
+        probb = 0
+        for x in xrange(3, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            multiple = collections.OrderedDict()
+            itemProbb = int(cols[x + 1])
+            multiple["multiple"] = int(cols[x])
+            multiple["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one.append(multiple)
+    result = json.dumps(config, indent=4)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "fixed_multiple_fish, end"
+
+
+def match_multiple_fish():
+    print "match_multiple_fish, start"
+    outPath = getOutPath("matchMultipleFish")
+    ws = getWorkBook().get_sheet_by_name("MatchMultipleFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        probbConf = []
+        config[str(cols[0])] = probbConf
+        for x in xrange(4):
+            multiples = []
+            luckyValueConf = collections.OrderedDict()
+            luckyValueConf["luckyValue"] = int(cols[9 * x + 1])
+            luckyValueConf["multiples"] = multiples
+            probb = 0
+            for y in xrange(9 * x + 2, 9 * (x + 1), 2):
+                if not cols[y] or not cols[y + 1]:
+                    continue
+                multiple = collections.OrderedDict()
+                multiples.append(multiple)
+                multiple["multiple"] = int(cols[y])
+                itemProbb = int(cols[y + 1])
+                multiple["probb"] = [probb + 1, probb + itemProbb]
+                probb += itemProbb
+            probbConf.append(luckyValueConf)
+    result = json.dumps(config, indent=4)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "match_multiple_fish, end"
+
+
+def randomMultipleFish_config():
+    print "randomMultipleFish_config, start"
+    outPath = getOutPath("randomMultipleFish")
+    ws = getWorkBook().get_sheet_by_name("RandomMultipleFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        multiples = []
+        config[str(cols[0])] = multiples
+        totalProbb = 0
+        for x in range(1, len(cols), 2):
+            if not cols[x + 1]:
+                continue
+            one = collections.OrderedDict()
+            one["fishType"] = int(cols[x])
+            one["probb"] = [totalProbb + 1, totalProbb + cols[x + 1]]
+            totalProbb += cols[x + 1]
+            multiples.append(one)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "randomMultipleFish_config, end"
+
+
+def plyerBuffer_config():
+    print "plyerBuffer_config, start"
+    outPath = getOutPath("playerBuffer")
+    ws = getWorkBook().get_sheet_by_name("PlayerBuffer")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] ==0 or not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["bufferId"] = int(cols[0])
+        one["weaponIds"] = json.loads(cols[1])
+        one["weaponType"] = json.loads(cols[2])
+        one["cdReduce"] = float(cols[3])
+        one["coinAdd"] = float(cols[4])
+        one["powerAdd"] = float(cols[5])
+        one["duration"] = int(cols[6])
+        one["delayTime"] = float(cols[7])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "plyerBuffer_config, end"
 
 
 def platter_fish():
@@ -902,7 +1241,136 @@ def platter_fish():
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
-    print "special_fish_effect_count, end"
+
+
+def super_boss_drop_config():
+    """超级Boss掉落"""
+    print "super_boss_drop_config, start"
+    outPath = getOutPath("superBossDrop")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("SuperBossDrop")
+    config = collections.OrderedDict()
+    config["goldCoin"] = collections.OrderedDict()
+    config["goldRing"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0]:
+            x = 0
+            one = collections.OrderedDict()
+            config["goldCoin"][str(cols[x + 1])] = one
+            one["kindId"] = int((cols[x + 2]))
+            one["score"] = int((cols[x + 3]))
+            one["value"] = int((cols[x + 4]))
+        if cols[6]:
+            x = 6
+            one = collections.OrderedDict()
+            config["goldRing"][str(cols[x + 1])] = one
+            one["kindId"] = int((cols[x + 2]))
+            one["score"] = int((cols[x + 3]))
+            one["value"] = int((cols[x + 4]))
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "super_boss_drop_config, end"
+
+
+def catch_drop_config():
+    print "catch_drop_config, start"
+    outPath = getOutPath("catchDrop_m")
+    ws = getWorkBook().get_sheet_by_name("CatchDrop")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    config["dropGunX"] = collections.OrderedDict()
+    config["dropGroup"] = collections.OrderedDict()
+
+    dropDataStartIdx = 0
+    dropGroupStartIdx = 18
+
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[dropDataStartIdx] is not None:
+            gunDropList = []
+            config["dropGunX"][cols[dropDataStartIdx]] = gunDropList
+            for x in xrange(dropDataStartIdx + 1, dropGroupStartIdx - 1, 4):
+                if cols[x] is not None:
+                    itemDict = collections.OrderedDict()
+                    itemDict["dropGroupId"] = int(cols[x])
+                    itemDict["min"] = int(cols[x + 1])
+                    itemDict["max"] = int(cols[x + 2])
+                    itemDict["probability"] = int(cols[x + 3])
+                    gunDropList.append(itemDict)
+
+        if cols[dropGroupStartIdx] is not None:
+            dropGroupDict = collections.OrderedDict()
+            config["dropGroup"].setdefault(int(cols[dropGroupStartIdx]), dropGroupDict)
+            dropGroupDict["fishTypeList"] = json.loads(cols[dropGroupStartIdx + 1])
+            dropGroupDict["dropItemList"] = [json.loads(cols[dropGroupStartIdx + 2]), json.loads(cols[dropGroupStartIdx + 3])]
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+    print "catch_drop_config, end"
+
+
+def level_gift_config():
+    print "level_gift_config, start"
+    outPath = getOutPath("levelGift_m")
+    ws = getWorkBook().get_sheet_by_name("LevelGift")
+    config = collections.OrderedDict()
+    # config["LevelGift"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[int(cols[0])] = one
+            one["giftId"] = int(cols[0])
+            one["giftName"] = unicode(cols[1])
+            one["productId"] = cols[2]
+            one["minLevel"] = cols[3]
+            one["maxLevel"] = cols[4]
+            one["levelUp"] = int(cols[5])
+            one["showTime"] = cols[6]
+            one["buyType"] = cols[7]
+            one["priceDiamond"] = int(cols[8])
+            one["discountPrice"] = int(cols[9])
+            one["rewards"] = []
+            for x in range(10, len(cols), 2):
+                if cols[x] is None or int(cols[x]) == 0:
+                    continue
+                item = collections.OrderedDict()
+                item["name"] = int(cols[x])
+                item["count"] = int(cols[x + 1])
+                one["rewards"].append(item)
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "level_gift_config, end"
 
 
 def getWorkBook(filename="newfish_multiple.xlsm"):
@@ -958,6 +1426,7 @@ config_list = [
     (superboss_minigame_config, None),
     (superboss_common_config, None),
     (fish_config, None),
+    (match_fish_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
     (gunLevel, None),                       # 火炮倍率
@@ -979,7 +1448,8 @@ config_list = [
     (plyerBuffer_config, None),
     (platter_fish, None),                   # 大盘鱼
     (super_boss_drop_config, None),
-    (catch_drop_config, None)
+    (catch_drop_config, None),
+    (level_gift_config, None),              # 等级礼包
 ]
 
 
@@ -995,7 +1465,6 @@ if __name__ == "__main__":
     #     ServerPath = "/../../../../../../../gameServer/hall37/newfish-py/wx_superboss/xxfish_dev/config37/game/44"
 
     import platform
-
     _system = platform.system()
     if _system == "Darwin" and len(sys.argv) > 1 and sys.argv[1] == "-k":
         upConfig = "svn up .%s" % ServerPath

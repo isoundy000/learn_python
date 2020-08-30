@@ -1201,282 +1201,60 @@ class FishTable(TYTable):
         :param player: 捕鱼者
         :param fpMultiple: 渔场倍率
         :param gunMultiple: 炮的倍率
-        :param bufferCoinAdd: buffer加成金币系数
+        :param bufferCoinAdd: buffer加成金币系数（暂时无用）
         :param wpType: 武器类型
-        :param extends: 扩展
+        :param extends: 扩展数据
         :param gunX: 炮的倍数
         """
-        gainChip = 0
-        exp = 0
-        gain = []
-        gainMap = {}
-        fishType = self.fishMap[fId]["conf"]["fishType"]
-        fishConf = config.getFishConf(fishType, self.typeName, fpMultiple)
-        if fishConf["score"] > 0:                                       # 捕获后掉落固定数值的资产（金币、奖券、道具）
-            gainMap["type"] = fishConf["type"]
-            gainMap["fId"] = fId
-            gainMap["itemId"] = int(fishConf["itemId"])                 # 掉落的东西
-            gainMap["count"] = int(fishConf["score"])                   # 掉落的数量
-            if int(fishConf["itemId"]) == CHIP_KINDID:                  # 被捕获后掉落金币
-                if fishConf["type"] in config.MULTIPLE_FISH_TYPE:
-                    multiple = self.getMultipleFishMultiple(player, fishConf, fpMultiple, gunMultiple, gunX)
-                    gainMap["count"] = int(fishConf["score"] * multiple)
-                    gainMap["fishMultiple"] = multiple
-                elif fishConf["type"] in config.CHIP_CHEST_FISH_TYPE:   # 金币宝箱
-                    gainMap["count"] = int(self.fishMap[fId]["score"])
-                _count = gainMap["count"]
-                gainMap["count"] = _count * fpMultiple                  # 获取数量 * 渔场倍率
-                exp = int(fishConf["score"])                            # 升级玩家等级的经验
-                gainChip = int(gainMap["count"] * gunMultiple * gunX * bufferCoinAdd)
-                # boss单独检测幸运降临
-                if fishConf["type"] in config.BOSS_FISH_TYPE:
-                    self.checkBigPrize(player, gainChip / (gunMultiple * gunX * fpMultiple), gainChip, fpMultiple, True)
-                # 检测非特殊鱼捕获时的幸运降临
-                elif wpType not in config.SPECIAL_WEAPON_TYPE_SET:
-                    self.checkBigPrize(player, gainChip / (gunMultiple * gunX * fpMultiple), gainChip, fpMultiple)
-            elif int(fishConf["itemId"]) in BULLET_KINDIDS:             # 被捕获后掉落招财珠
-                # 10倍场未完成持有10万金币主线任务，将掉落的珠子转成等值金币.
-                needExchangeToChip = False
-                if self.runConfig.fishPool == 44002 and player.mainQuestSystem and player.mainQuestSystem.currTask:
-                    _taskId = player.mainQuestSystem.currTask.get("taskId", 0)
-                    if ftlog.is_debug():
-                        ftlog.debug("dealKillFishGain, userId =", player.userId, "taskId =", _taskId, "type =", type(_taskId))
-                    if player.mainQuestSystem.currTask.get("taskId", 0) <= 642003:
-                        needExchangeToChip = True
+        raise NotImplementedError
 
-                _count = int(fishConf["score"])
-                gainMap["count"] = _count
-                exp = int(fishConf["score"]) * BULLET_KINDIDS[int(fishConf["itemId"])] / fpMultiple
-                if needExchangeToChip:
-                    gainMap["itemId"] = CHIP_KINDID
-                    gainMap["count"] = int(gainMap["count"] * BULLET_KINDIDS[int(fishConf["itemId"])])
-                    gainChip = gainMap["count"]
-                    if ftlog.is_debug():
-                        ftlog.debug("bulletExchangedToChip", "fishPool =", self.runConfig.fishPool, "userId =", player.userId,
-                                "preItem =", fishConf["itemId"], "preCount =", fishConf["score"], "gain =", gainMap)
-                chipValue = int(_count * BULLET_KINDIDS[int(fishConf["itemId"])])
-                # boss单独处理幸运降临
-                if fishConf["type"] in config.BOSS_FISH_TYPE:
-                    self.checkBigPrize(player,  chipValue / fpMultiple, chipValue, fpMultiple, True)
-            if fishConf["type"] in config.SUPERBOSS_FISH_TYPE:
-                gainMap["count"] = random.randint(fishConf["minCount"], fishConf["maxCount"]) * gunMultiple * gunX
-            if fishConf["type"] == 13:  # 捕获随机奖券鱼
-                _, items = drop_system.getDropItem(fishConf["itemId"])
-                gainMap["itemId"] = items["name"]
-                gainMap["count"] = items["count"]
-            gainMap["count"] *= gunMultiple * gunX * bufferCoinAdd
-            gain.append(gainMap)
-            if fishConf["type"] in config.CHIP_CHEST_FISH_TYPE and gunMultiple * gunX > 1:      # 金币宝箱
-                self.room.lotteryPool.deductionChestPoolCoin(gainChip / (gunMultiple * gunX) / bufferCoinAdd)
-            if fishConf["type"] in config.STAR_FISH_TYPE:           # 被捕获后概率掉落海星
-                if fishConf["type"] in config.BOSS_FISH_TYPE:       # Boss必定掉落海星
-                    dropConf = config.getCatchDropConf(fpMultiple, "BOSS_FISH_TYPE", player.userId)
-                else:
-                    dropConf = config.getCatchDropConf(fpMultiple, "STAR_FISH_TYPE", player.userId)
-                if dropConf and dropConf["probability"] > 0:
-                    if fishConf["type"] in config.BOSS_FISH_TYPE:  # Boss必定掉落海星
-                        probability = int(dropConf["probability"])
-                    else:
-                        probability = int(fishConf["score"] / float(dropConf["probability"]) * 10000)
-                        if player.gunId == 1290 and player.starfish >= 10000:  # 装备暮刃且今日海星数超过1w，概率减半
-                            probability /= 2
-                    if random.randint(1, 10000) <= probability:
-                        itemGainMap = {}
-                        itemGainMap["fId"] = fId
-                        itemGainMap["itemId"] = dropConf["kindId"]  # STARFISH_KINDID
-                        _count = random.randint(dropConf["min"], dropConf["max"])
-                        _count *= gunMultiple * gunX * bufferCoinAdd
-                        itemGainMap["count"] = _count
-                        gain.append(itemGainMap)
-            if fishConf["type"] in config.PEARL_FISH_TYPE:                      # 被捕获后概率掉落珍珠
-                dropConf = config.getCatchDropConf(fpMultiple, "PEARL_FISH_TYPE", player.userId)
-                if dropConf and dropConf["probability"] > 0:
-                    probability = int(fishConf["score"] / float(dropConf["probability"]) * 10000)
-                    if player.level < 16:   # 当用户留有珍珠数量大于后2级升级所需之和，则不掉落珍珠
-                        upgradeItemsConf1 = gun_system.getUpgradeItemsConf(player.userId, player.gunLevel + 1)
-                        upgradeItemsConf2 = gun_system.getUpgradeItemsConf(player.userId, player.gunLevel + 2)
-                        totalCount = upgradeItemsConf1.get(str(PEARL_KINDID), 0)
-                        totalCount += upgradeItemsConf2.get(str(PEARL_KINDID), 0)
-                        if player.pearlCount >= totalCount:
-                            probability = 0
-                    if 3 <= player.level <= 5:
-                        probability *= 5
-                    elif player.level < 10:
-                        probability *= 2
-                    # 在完成新手教学4和5时,若未掉落珍珠,则每累计捕获15条鱼必掉1个珍珠.
-                    dropCount = random.randint(dropConf["min"], dropConf["max"])
-                    if not player.isFinishRedTask and probability > 0 and player.taskSystemUser and player.taskSystemUser.getCurMainTaskId() in [10004, 10005]:
-                        player.killPearlFishCount += 1
-                        if player.killPearlFishCount >= 15:
-                            player.killPearlFishCount = 0
-                            probability = 10000
-                            dropCount = 1
-                    ratio = player.getPearlDropRatio(str(fpMultiple))
-                    # ratio = config.getUlevel(player.level).get(str(self.runConfig.fishPool)）
-                    if random.randint(1, 10000) <= min(10000, probability * ratio):
-                        player.killPearlFishCount = 0
-                        itemGainMap = {}
-                        itemGainMap["fId"] = fId
-                        itemGainMap["itemId"] = dropConf["kindId"]
-                        itemGainMap["count"] = dropCount
-                        itemGainMap["count"] *= gunMultiple * gunX * bufferCoinAdd
-                        gain.append(itemGainMap)
-            if fishConf["type"] in config.CRYSTAL_FISH_TYPE:  # 被捕获后概率掉落水晶
-                dropConf = config.getCatchDropConf(fpMultiple, "CRYSTAL_FISH_TYPE", player.userId)
-                if dropConf and dropConf["probability"] > 0:
-                    probability = int(fishConf["score"] / float(dropConf["probability"]) * 10000)
-                    ratio = player.incrCrystalDropRatio + config.getUlevel(player.level).get(str(fpMultiple), 0)
-                    if ftlog.is_debug():
-                        ftlog.debug("dropCrystal, userId =", player.userId, ratio, player.incrCrystalDropRatio)
-                    if random.randint(1, 10000) <= probability * ratio:
-                        itemGainMap = {}
-                        itemGainMap["fId"] = fId
-                        itemGainMap["itemId"] = dropConf["kindId"]
-                        itemGainMap["count"] = random.randint(dropConf["min"], dropConf["max"])
-                        itemGainMap["count"] *= gunMultiple * gunX * bufferCoinAdd
-                        gain.append(itemGainMap)
-            if fishConf["type"] in config.BOSS_FISH_TYPE:       # Boss鱼掉落宝箱
-                deductionCoin = fishConf["value"] * gunMultiple * gunX * fpMultiple
-                if player.dynamicOdds.currRechargeBonus >= deductionCoin:
-                    player.dynamicOdds.deductionRechargeBonus(deductionCoin)
-                dropChestList = config.getPublic("bossDropChestConf", {}).get(str(fpMultiple))
-                if dropChestList:
-                    chestGainMap = {}
-                    chestGainMap["fId"] = fId
-                    chestGainMap["itemId"] = dropChestList[0]
-                    chestGainMap["count"] = 1
-                    gain.append(chestGainMap)
+    def getKillFishExp(self, player, fishConf, fpMultiple):
+        """
+        获得捕获鱼所得经验值
+        """
+        raise NotImplementedError
 
-            # 记录捕鱼收益数据.
-            fish_type = fishType
-            if extends and len(extends) > 1 and wpType in (
-                    config.BOMB_WEAPON_TYPE, config.NUMB_WEAPON_TYPE, config.DRILL_WEAPON_TYPE,
-                    config.SUPER_BOSS_WEAPON_TYPE
-                ):
-                fish_type = player.getFire(extends[0]).get("fishType")
-                if fish_type is None:
-                    fish_type = extends[1]
-            if fishConf["type"] in config.MULTIPLE_FISH_TYPE:
-                benefit = gainChip
-            else:
-                benefit = fishConf["value"] * fpMultiple * gunMultiple * gunX
-            if ftlog.is_debug():
-                ftlog.debug("report, fish benefit", fish_type, benefit, fishConf["type"], gainChip)
-        else:
-            if fishConf["type"] in config.BUFFER_FISH_TYPE:         # 捕获buffer鱼
-                gainMap["fId"] = fId
-                bufferId = player.getCatchBufferId(fishConf["itemId"])
-                if bufferId > 0:
-                    gainMap["itemId"] = bufferId
-                    gainMap["count"] = 1
-                gain.append(gainMap)
-            elif fishConf["type"] in config.HIPPO_FISH_TYPE:        # 捕获后掉口红的鱼
-                gainMap["fId"] = fId
-                _, items = drop_system.getDropItem(fishConf["itemId"])
-                gainMap["itemId"] = items["name"]
-                gainMap["count"] = int(items["count"] * gunMultiple * gunX * bufferCoinAdd)     # * 1. * fpMultiple / player.getMatchingFpMultiple(fpMultiple))
-                gain.append(gainMap)
-        return gainChip, gain, exp
+    def dealKillFishFixedDropGain(self, player, fId, fishConf, fpMultiple, gunMultiple, gunX, wpType):
+        """
+        处理捕获鱼所获得的固定掉落奖励
+        """
+        raise NotImplementedError
+
+    def dealKillFishExtraDropGain(self, player, fId, fishConf, fpMultiple, gunMultiple, gunX):
+        """
+        处理捕获鱼所获得的额外掉落奖励
+        """
+        raise NotImplementedError
+
+    def getKillFishCoinGain(self, player, fId, fishConf, fpMultiple, gunMultiple, gunX, gainMap):
+        """
+        获得捕获鱼的基础金币奖励
+        """
+        raise NotImplementedError
+
+    def getKillFishBulletGain(self, player, fId, fishConf, fpMultiple, gunMultiple, gunX, gainMap):
+        """
+        获得捕获鱼的基础招财珠奖励
+        """
+        raise NotImplementedError
 
     def getMultipleFishMultiple(self, player, fishConf, fpMultiple, gunMultiple, gunX):
         """
         获得倍率鱼的倍率
         """
-        # 是否存在幸运倍率池加成
-        isLuckyAddition = False
-        # 是否存在充值奖池加成
-        isRechargeAddition = False
-        # 是否为倍率池幸运时间和幸运数字
-        isLucky, luckyCount = self.room.lotteryPool.isMultiplePoolLucky()
-        # 满足充值奖池加成所需金币
-        conditionCoin = fishConf["value"] * fpMultiple * gunMultiple * gunX
-        if isLucky and luckyCount != player.luckyCount:
-            # 在幸运时间内，且幸运数字与上次不同才会触发，触发概率随火炮等级升高而降低
-            player.luckyCount = luckyCount
-            if random.randint(player.gunLevel % 100 * 20, 10100) < 5000:
-                isLuckyAddition = True
-        elif player.dynamicOdds.currRechargeBonus >= conditionCoin:
-            isRechargeAddition = True
-        if ftlog.is_debug():
-            ftlog.debug(
-                "getFishMultiple->",
-                "userId =", player.userId,
-                "fishConf =", fishConf,
-                "isLuckyAddition =", isLuckyAddition,
-                "isRechargeAddition =", isRechargeAddition,
-                "gunMultiple =", gunMultiple,
-                "gunX =", gunX
-            )
-        randInt = random.randint(1, 10000)
-        for multipleMap in config.getMultipleFishConf(self.runConfig.fishPool, self.runConfig.gameMode):
-            if isLuckyAddition:
-                if multipleMap.get("highProbb"):
-                    probb = multipleMap["highProbb"]
-                else:
-                    continue
-                if probb[0] <= randInt <= probb[-1]:
-                    deductionCoin = fishConf["score"] * fpMultiple * gunMultiple * gunX * multipleMap["multiple"]
-                    self.room.lotteryPool.deductionMultiplePoolCoin(deductionCoin)
-                    if ftlog.is_debug():
-                        ftlog.debug("getFishMultiple->isLuckyAddition", multipleMap["multiple"], deductionCoin)
-                    return multipleMap["multiple"]
-            elif isRechargeAddition:
-                if multipleMap.get("rechargeProbb"):
-                    probb = multipleMap["rechargeProbb"]
-                else:
-                    continue
-                if probb[0] <= randInt <= probb[-1]:
-                    deductionCoin = fishConf["score"] * fpMultiple * gunMultiple * gunX * multipleMap["multiple"]
-                    player.dynamicOdds.deductionRechargeBonus(deductionCoin)
-                    if ftlog.is_debug():
-                        ftlog.debug("getFishMultiple->isRechargeAddition", multipleMap["multiple"], deductionCoin)
-                    return multipleMap["multiple"]
-            else:
-                probb = multipleMap["probb"]
-                if probb[0] <= randInt <= probb[-1]:
-                    if ftlog.is_debug():
-                        ftlog.debug("getFishMultiple->normal", multipleMap["multiple"], probb, randInt)
-                    return multipleMap["multiple"]
-        return 1
+        raise NotImplementedError
 
-    # 处理打中boss掉落金币
+    def getBossFishMultiple(self, player, fishConf, fpMultiple, gunMultiple, gunX):
+        """
+        获得Boss的倍率
+        """
+        raise NotImplementedError
+
     def dealHitBossGain(self, power, fId, player, originHP=0, totalProbb=1):
-        gainChip = 0
-        gain = []
-        if player:
-            player.addAttackBossNum(self.fishMap[fId])
-        # gainMap = {}
-        # fishType = self.fishMap[fId]["conf"]["fishType"]
-        # fishConf = config.getFishConf(fishType)
-        # totalProbb = totalProbb if totalProbb > 0 else fishConf["score"]
-        # if fishConf["type"] == 2:
-        #     if originHP <= 0:
-        #         probb = fishConf["probb1"] if fishConf["probb1"] > 0 else fishConf["score"]
-        #     else:
-        #         probb = fishConf["probb2"] if fishConf["probb2"] > 0 else fishConf["score"]
-        #     ftlog.debug("dealHitBossGain->power =", power, "probb =", probb, "totalProbb", totalProbb,
-        #                 "fishPower =", self.fishMap[fId].get("power", 0))
-        #     power = power * probb / totalProbb + self.fishMap[fId].get("power", 0)
-        #     bearPower = power // 10 * 10
-        #     randInt = random.randint(1, 10000)
-        #     for multipleMap in config.getHitBossConf():
-        #         probb = multipleMap["probb"]
-        #         if randInt >= probb[0] and randInt <= probb[-1]:
-        #             multiple = multipleMap["multiple"]
-        #             gainChip = int(multiple * bearPower * self.runConfig.multiple)
-        #             if gainChip > 0:
-        #                 ftlog.debug("dealHitBossGain->multiple =", multiple, "bearPower =", bearPower,
-        #                             "power =", power)
-        #                 if self.room.lotteryPool.getBossPoolCoin() > 0:
-        #                     gainChip *= 2
-        #                     self.room.lotteryPool.deductionBossPoolCoin(int(gainChip // 2))
-        #                 gainMap["fId"] = fId
-        #                 gainMap["itemId"] = CHIP_KINDID
-        #                 gainMap["count"] = gainChip
-        #                 break
-        #     power -= bearPower
-        #     self.fishMap[fId]["power"] = power
-        return gainChip, gain
+        """
+        处理打中boss掉落金币
+        """
+        raise NotImplementedError
 
     def _retVerifyCatch(self, player, bulletId, catch, gain, extends, skillId, stageId, fpMultiple, isFraud=False, skillType=0):
         """
@@ -1627,11 +1405,10 @@ class FishTable(TYTable):
             elif gainMap and gainMap["itemId"] == COUPON_KINDID:
                 gainCoupon += int(gainMap["count"])
             else:
-                if _fType in config.BUFFER_FISH_TYPE:
-                    player.addOneBufferId(gainMap["itemId"])
-                else:
-                    items.append(gainMap)
-            if _fType in config.RED_FISH_TYPE:
+                items.append(gainMap)
+            if gainMap.get("fishMultiple"):
+                catchFishMultiple[gainMap["fId"]] = gainMap.get("fishMultiple")
+            if fishConf["type"] in config.RED_FISH_TYPE:
                 # 计算累计获得金额及个人奖券鱼捕获次数
                 totalEntityAmount = gamedata.getGameAttr(player.userId, FISH_GAMEID, GameData.totalEntityAmount)
                 totalEntityAmount = float(totalEntityAmount) if totalEntityAmount else 0
@@ -1643,32 +1420,29 @@ class FishTable(TYTable):
                     catchCountDict = gamedata.getGameAttrJson(player.userId, FISH_GAMEID, GameData.catchUserCouponFishCount, {})        # 通过捕鱼累计获得奖券和实物卡金额
                     catchCountDict[str(self.runConfig.fishPool)] = catchCountDict.setdefault(str(self.runConfig.fishPool), 0) + 1
                     gamedata.setGameAttr(player.userId, FISH_GAMEID, GameData.catchUserCouponFishCount, json.dumps(catchCountDict))
-            if _fType in config.LOG_OUTPUT_FISH_TYPE:
-                ftlog.info("dealCatch->fishType", "userId =", player.userId, "fishType =", fishConf["type"],
-                           "wpId =", wpId, "gainMap =", gainMap, "gainChip =", gainChip)
+            if fishConf["type"] in config.LOG_OUTPUT_FISH_TYPE:
+                ftlog.info("dealCatch->fishType",
+                           "userId =", player.userId,
+                           "fishType =", fishConf["type"],
+                           "wpId =", wpId,
+                           "gainMap =", gainMap,
+                           "gainChip =", gainChip)
             # 捕获了超级boss添加积分到排行榜.
-            if _fType in config.SUPERBOSS_FISH_TYPE:
-                from newfish.game import TGFish
-                from newfish.entity.event import SuperbossPointChangeEvent
-                event = SuperbossPointChangeEvent(player.userId, FISH_GAMEID, self.bigRoomId, fishConf["score"])
-                TGFish.getEventBus().publishEvent(event)
+            # if fishConf["type"] in config.SUPER_BOSS_FISH_TYPE:
+            #     from newfish.game import TGFish
+            #     from newfish.entity.event import SuperbossPointChangeEvent
+            #     event = SuperbossPointChangeEvent(player.userId, FISH_GAMEID, self.bigRoomId, fishConf["score"])
+            #     TGFish.getEventBus().publishEvent(event)
 
-        # 处理玩家等级升级.
-        nowExp = player.incrExp(exp)
-        player.incExpLevel(nowExp)
-
+        # 处理玩家等级升级
+        player.incrExp(exp)
         wpType = util.getWeaponType(wpId)
         if wpType == config.GUN_WEAPON_TYPE:
             gunExp = player.incrGunExp(exp)
             player.incrGunLevel(gunExp)
-        if wpType in [
-            config.SKILL_WEAPON_TYPE, config.RB_FIRE_WEAPON_TYPE, config.RB_BOMB_WEAPON_TYPE,
-            config.BOMB_WEAPON_TYPE, config.NUMB_WEAPON_TYPE, config.DRILL_WEAPON_TYPE, config.SUPER_BOSS_WEAPON_TYPE
-            ]:
-            ftlog.info("dealCatch->wpType", "userId =", player.userId, "wpId =", wpId, "wpType =", wpType, "gainChip =", gainChip)
-        player.catchBudget(gainChip, gainCoupon, items, wpId=wpId)              # 捕获添加奖励
+        # 捕获奖励结算
+        player.catchBudget(gainChip, gainCoupon, items, wpId=wpId)
         self._afterCatch(bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends, skillId, isFraud=isFraud, skillType=skillType)
-        # self._enterNextRoom(oldLevel, player)
         self._retVerifyCatch(player, bulletId, catch, gain, extends, skillId, stageId, fpMultiple, isFraud=isFraud, skillType=skillType)
 
     # # 是否可以进入解锁的房间
@@ -1703,7 +1477,7 @@ class FishTable(TYTable):
 
     def _afterCatch(self, bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends=None, skillId=0, isFraud=False, skillType=0):
         """
-        捕获之后
+        捕获结算之后
         :param bulletId: 子弹ID
         :param wpId: 武器ID
         :param player: 玩家
@@ -1711,30 +1485,21 @@ class FishTable(TYTable):
         :param gain: 获得奖励
         :param gainChip: 获取金币
         :param fpMultiple: 渔场倍率
-        :param extends: 扩展
+        :param extends: 扩展数据
         :param skillId: 技能ID
-        :param isFraud:
+        :param isFraud: 是否存在欺诈水晶效果
         :param skillType: 技能类型
-        :return:
         """
-        fIds = []
         fishTypes = []
         extendId = extends[0] if extends else 0
         gunConf = player.getGunConf(bulletId, extendId)
-        skill = player.getFireSkill(bulletId) or player.getSkill(skillId, skillType)
-        player.addProfitCoin(gainChip)
+        gunX = player.getFireGunX(bulletId, extendId)
         if isFraud:
-            multiple = 1
+            gunMultiple = 1
         else:
-            if skillId:
-                if skill:
-                    multiple = skill.gunSkinMultiple
-                else:
-                    multiple = gunConf.get("multiple", 1)
-            else:
-                multiple = player.getFireMultiple(bulletId, extendId)
-                if multiple is None:
-                    multiple = gunConf.get("multiple", 1)
+            gunMultiple = player.getFireGunMultiple(bulletId, extendId)  # 获取开火时的武器倍率
+            # gunMultiple = gunMultiple or gunConf.get("multiple", 1)
+        player.addProfitCoin(gainChip)
         catchFishPoints = []
         for catchMap in catch:
             if catchMap["reason"] == 0:
@@ -1746,11 +1511,10 @@ class FishTable(TYTable):
                 if self.fishMap[fId]["alive"]:                      # 鱼活着
                     self.refreshFishTypeCount(self.fishMap[fId])    # 扣除鱼类型的条数
                 self.fishMap[fId]["alive"] = False                  # 鱼死
-                fIds.append(fId)
                 fishTypes.append(fishType)
                 if fishConf["itemId"] != config.CHIP_KINDID:
                     # 非金币类鱼，使用其金币价值
-                    player.addProfitCoin(fishConf.get("value", 0) * multiple * fpMultiple)
+                    player.addProfitCoin(fishConf.get("value", 0) * gunMultiple * fpMultiple)
                 if fishConf["type"] in config.NORMAL_FISH_TYPE:     # 处理普通鱼捕获（判断金币宝箱鱼是否出现）
                     self.chestFishGroup and self.chestFishGroup.checkCondition(player, fishConf)
                 elif fishConf["type"] in config.BOSS_FISH_TYPE:     # 处理boss捕获（全民打boss活动）
@@ -1809,7 +1573,7 @@ class FishTable(TYTable):
                     self.checkGrandPrize(fishConf.get("score", 0), player, fId, fpMultiple)
                 # 捕鱼轮盘充能
                 if self.typeName in config.NORMAL_ROOM_TYPE:
-                    self.addPrizeWheelEnergy(player, fId, fishConf, fpMultiple, multiple)
+                    self.addPrizeWheelEnergy(player, fId, fishConf, fpMultiple, gunMultiple)
                 # 大奖赛计算捕鱼积分
                 if self.typeName in [config.FISH_GRAND_PRIX] and fishConf.get("probb2", 0) > 0 \
                         and fishConf["type"] not in config.TERROR_FISH_TYPE:
@@ -1826,7 +1590,7 @@ class FishTable(TYTable):
         # 特殊鱼捕获时的幸运降临 炸弹鱼
         if util.getWeaponType(wpId) in [config.NUMB_WEAPON_TYPE, config.BOMB_WEAPON_TYPE]:
             totalCoin = sum([_val.get("count", 0) for _val in gain if _val.get("itemId") == CHIP_KINDID and _val.get("type") not in config.BOSS_FISH_TYPE])
-            self.checkBigPrize(player, totalCoin / (multiple * fpMultiple), totalCoin, fpMultiple)
+            self.checkBigPrize(player, totalCoin / (gunMultiple * fpMultiple), totalCoin, fpMultiple)
 
         # 大奖赛主动推送捕鱼积分信息
         if self.typeName in [config.FISH_GRAND_PRIX] and catchFishPoints:
@@ -1860,10 +1624,9 @@ class FishTable(TYTable):
 
     def _sendLed(self, player, gain, fIds, fpMultiple):
         """
-        发送通讯
+        发送全服通知
         :param player: 玩家
         :param gain: 获取奖励
-        :param fIds: 鱼ID
         :param fpMultiple: 渔场倍率
         :return:
         """
@@ -2659,56 +2422,31 @@ class FishTable(TYTable):
         """
         处理火炮皮肤特性
         """
-        if player.gunId == 1165:  # 霜冻特性，有几率冰冻鱼
-            addTimeGroup = []
+        if player.gunId == 1165:        # 霜冻特性，有几率冰冻鱼
+            addTimeGroups = []
             frozenFishes = []
-            duration = 3    # 冰冻时间
+            duration = 3                # 冰冻时间
             if player.skinId == 1472:   # 雪人皮肤特性，冰冻时间加1s
                 duration += 1
             endTime = time.time() + duration
             buffer = [5104, endTime, player.userId, 1, 1, duration, 0]
             for fId in fIds:
-                count = 0
-                buffers = self.fishMap[fId]["buffer"]
-                isCoverFrozen = True
-                frozenTime = duration
-                lastFrozenTime = 0
-                for lastBuffer in buffers:
-                    if lastBuffer[0] == 5104:
-                        count = lastBuffer[6]
-                        lastFrozenTime = lastBuffer[5]
-                        if endTime > lastBuffer[1]:  # 新冰冻到期时间大于旧冰冻到期时间，覆盖时间
-                            # 如果上一个冰冻状态未到期且小于新冰冻到期时间，则鱼在冰冻状态下再次冰冻，实际冰冻时间为间隔时间
-                            if time.time() < lastBuffer[1] < endTime:
-                                frozenTime = round(endTime - lastBuffer[1], 3)
-                        else:
-                            isCoverFrozen = False
+                isCoverFrozen, lastFrozenTime, frozenTime, frozenCount = self.checkCoverFrozen(fId, duration, endTime)
                 if isCoverFrozen:
-                    if count == 0:  # 第一次冰冻5%概率
+                    if frozenCount == 0: # 第一次冰冻5%概率
                         isCoverFrozen = True if random.randint(1, 10000) <= 500 else False
-                    elif count == 1:
+                    elif frozenCount == 1:
                         isCoverFrozen = True if random.randint(1, 10000) <= 300 else False
-                    elif count == 2:
+                    elif frozenCount == 2:
                         isCoverFrozen = True if random.randint(1, 10000) <= 100 else False
                     else:
                         isCoverFrozen = False
 
                 if isCoverFrozen:
-                    if ftlog.is_debug():
-                        ftlog.debug("dealGunEffect->frozenTime =", fId, frozenTime)
-                    buffer[5] = round(lastFrozenTime + frozenTime, 3)
-                    self.setFishBuffer(fId, buffer)
+                    self.frozenFish(fId, buffer, lastFrozenTime, frozenTime, addTimeGroups)
                     frozenFishes.append(fId)
-                    buffers = self.fishMap[fId]["buffer"]
-                    if ftlog.is_debug():
-                        ftlog.debug("dealGunEffect->isCoverFrozen->buffer =", fId, buffers)
-                    group = self.fishMap[fId]["group"]
-                    if group.startFishId not in addTimeGroup:
-                        addTimeGroup.append(group.startFishId)
-                        group.adjust(frozenTime)
-                        self.superBossFishGroup and self.superBossFishGroup.frozen(fId, self.fishMap[fId]["conf"]["fishType"], frozenTime)
 
-            if frozenFishes:  # 广播新处于冰冻状态的鱼
+            if frozenFishes:            # 广播新处于冰冻状态的鱼
                 self.broadcastSkillEffect(player, endTime, frozenFishes, 5104)
 
     def _achievement_task(self, msg, userId, seatId):
@@ -3107,3 +2845,47 @@ class FishTable(TYTable):
             msg.setResult("code", code)
             msg.setResult("rewards", rewards)
             router.sendToUser(msg, userId)
+
+    def checkCoverFrozen(self, fId, duration, endTime):
+        """
+        检查能否覆盖鱼的冰冻数据
+        @param fId:鱼Id
+        @param duration:冰冻持续时间
+        @param endTime:冰冻结束时间
+        @return:是否覆盖, 被冰冻次数, 上次冰冻时长, 本次冰冻时长
+        """
+        buffers = self.fishMap[fId]["buffer"]
+        isCoverFrozen = True
+        frozenTime = duration
+        lastFrozenTime = 0
+        frozenCount = 0
+        for lastBuffer in buffers:
+            if lastBuffer[0] != 5104:
+                continue
+            lastFrozenTime = lastBuffer[5]
+            frozenCount = lastBuffer[6]
+            if endTime > lastBuffer[1]:  # 新冰冻到期时间大于旧冰冻到期时间，覆盖时间
+                # 如果上一个冰冻状态未到期且小于新冰冻到期时间，则鱼在冰冻状态下再次冰冻，实际冰冻时间为间隔时间
+                if time.time() < lastBuffer[1] < endTime:
+                    frozenTime = round(endTime - lastBuffer[1], 3)
+            else:
+                isCoverFrozen = False
+        return isCoverFrozen, lastFrozenTime, frozenTime, frozenCount
+
+    def frozenFish(self, fId, buffer, lastFrozenTime, frozenTime, addTimeGroups):
+        """
+        把鱼冰冻住
+        @param fId: 鱼Id
+        @param buffer: 冰冻buffer数据
+        @param lastFrozenTime: 上次冰冻时长
+        @param frozenTime: 本次冰冻时长
+        @param addTimeGroups: 已修改了冻结时长的鱼群
+        """
+        buffer[5] = round(lastFrozenTime + frozenTime, 3)
+        self.setFishBuffer(fId, buffer)
+        group = self.fishMap[fId]["group"]
+        if group.startFishId not in addTimeGroups:
+            addTimeGroups.append(group.startFishId)
+            group.adjust(frozenTime)
+            if self.superBossFishGroup:
+                self.superBossFishGroup.frozen(fId, self.fishMap[fId]["conf"]["fishType"], frozenTime)

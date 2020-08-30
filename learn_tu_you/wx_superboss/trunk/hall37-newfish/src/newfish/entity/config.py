@@ -1165,6 +1165,11 @@ def getUserLevelConf():
     return userLevelConf
 
 
+def getMaxUserLevel():
+    global userLevelConf
+    return len(userLevelConf)
+
+
 def loadMainQuestConf(intClientId=0):
     """
     加载主线任务配置

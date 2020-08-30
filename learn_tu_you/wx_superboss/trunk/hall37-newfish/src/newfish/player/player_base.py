@@ -726,14 +726,15 @@ class FishPlayer(TYPlayer):
         """
         增加玩家等级经验值
         """
-        if gainExp > 0:
+        if gainExp > 0 and self.level < config.getMaxUserLevel():
             self.exp += gainExp
+            self.incExpLevel()
         if ftlog.is_debug():
             ftlog.debug("incrExp, userId =", self.userId, "level =", self.level, "gainExp =", gainExp, "exp =",
                         self.exp)
         return self.exp
 
-    def incExpLevel(self, nowExp):
+    def incExpLevel(self):
         """
         玩家等级升级
         """
