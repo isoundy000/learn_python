@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-
-__author__ = 'ghou'
+"""
+Created by lichen on 17/2/8.
+执行该脚本，将会生成newfish.xlsm对应的json配置文件
+"""
 
 import time
 from openpyxl import load_workbook
@@ -14,53 +16,6 @@ from multiprocessing import Queue, Process, cpu_count, freeze_support
 
 ServerPath = ""
 ClientIdMap = None
-
-
-def drop_config():
-    """
-    掉落的配置
-    :return:
-    """
-    print "drop_config, start"
-    outPath = getOutPath("drop")                    # 输出的文件名字
-    ws = getWorkBook().get_sheet_by_name("Drop")    # 获取的Drop
-    dropConfig = collections.OrderedDict()
-    startRowNum = 4
-    i = 0
-    for row in ws.rows:
-        i = i + 1
-        cols = []
-        if i < startRowNum:
-            continue
-        for cell in row:
-            cols.append(cell.value)
-        if len(cols) < 5:
-            continue
-        oneDrop = {}
-        if str(cols[0]) in dropConfig:
-            raise KeyError("dropId %d repeat" % int(cols[0]))
-        dropConfig[str(cols[0])] = oneDrop
-        oneDrop["type"] = int(cols[2])
-        oneDrop["randomCount"] = int(cols[3])
-        oneDrop["items"] = []
-        probb = 0
-        for m in range(4, len(cols), 3):
-            if len(cols) - m < 3:
-                break
-            if not cols[m]:
-                break
-            item = {}
-            item["itemId"] = cols[m]
-            item["number"] = cols[m + 1]
-            itemProbb = cols[m + 2]
-            item["probb"] = [probb + 1, probb + itemProbb]
-            oneDrop["items"].append(item)
-            probb += itemProbb
-    result = json.dumps(dropConfig, indent=4)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
-    outHandle.close()
-    print "drop_config, end"
 
 
 def fish_config():
@@ -105,7 +60,6 @@ def fish_config():
             one["weaponId"] = int(cols[12])         # 武器Id
         one["prizeWheelValue"] = float(cols[13])    # 积攒价值
         one["triggerRate"] = int(cols[14])          # 触发几率(10000)
-        one["catchValue"] = float(cols[15])         # 价值
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
@@ -128,57 +82,6 @@ def is_number(s):
         pass
 
     return False
-
-
-def match_fish_config():
-    """
-    比赛鱼的配置
-    :return:
-    """
-    print "match_fish_config, start"
-    outPath = getOutPath("matchFish")
-    ws = getWorkBook().get_sheet_by_name("MatchFish")
-    config = collections.OrderedDict()
-    startRowNum = 4
-    i = 0
-    reload(sys)
-    sys.setdefaultencoding("utf8")
-    for row in ws.rows:
-        i = i + 1
-        if i < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-        if not cols[2]:
-            continue
-        one = collections.OrderedDict()
-        if str(cols[0]) in config:
-            raise KeyError("fishId %d repeat" % int(cols[0]))
-        config[str(cols[2])] = one
-        one["name"] = unicode(cols[1])
-        one["type"] = int(cols[3])
-        if is_number(cols[4]):
-            one["itemId"] = int(cols[4])
-        else:
-            one["itemId"] = json.loads(cols[4])
-        one["score"] = int(cols[5])
-        one["probb1"] = float("%.1f" % cols[6])
-        one["probb2"] = float("%.1f" % cols[7])
-        one["HP"] = int(cols[8])
-        one["multiple"] = int(cols[9])
-        fishPool = cols[10]                     # 加倍鱼出现渔场
-        if isinstance(fishPool, unicode):
-            fishPool = fishPool.split("|")
-            fishPool = [int(x) for x in fishPool]
-        else:
-            fishPool = []
-        one["fishPool"] = fishPool
-    result = json.dumps(config, indent=4, ensure_ascii=False)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
-    outHandle.close()
-    print "match_fish_config, end"
 
 
 def weapon_config():
@@ -631,149 +534,6 @@ def daily_quest_reward_config():
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
-
-
-def chest_config():
-    print u"start 宝箱配置Chest"
-    outPath = getOutPath("chest")
-    ws = getWorkBook().get_sheet_by_name("Chest")
-    config = collections.OrderedDict()
-    startRowNum = 4
-    i = 0 
-    for row in ws.rows:
-        i = i+1
-        if i < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-        if not cols[0]:
-            continue
-        one = collections.OrderedDict()
-        if str(cols[0]) in config:
-            raise KeyError("chestId %d repeat" % int(cols[0]))
-        config[str(cols[0])] = one
-        one["chestId"] = int(cols[0])
-        one["name"] = unicode(cols[1])
-        one["star"] = int(cols[3])
-        one["type"] = int(cols[4])
-        one["show"] = int(cols[5])                          # 是否显示星级
-        one["kindId"] = int(cols[6])                        # 兑换券道具ID
-        one["unlockTime"] = int(cols[7])                    # 解锁时间
-        one["levelRange"] = json.loads(cols[8])             # 宝箱级别范围
-        one["openCoin"] = int(cols[9])                      # 开启消耗金币/分钟
-        startNum = 9
-        assert int(cols[startNum + 1]) <= int(cols[startNum + 2])
-        one["coinRange"] = [int(cols[startNum + 1]), int(cols[startNum + 2])]
-        assert int(cols[startNum + 3]) <= int(cols[startNum + 4])
-        one["pearlRange"] = [int(cols[startNum + 3]), int(cols[startNum + 4])]
-        # 技能卡
-        one["nCardRate"] = int(cols[startNum + 5])
-        one["nCardRandom"] = int(cols[startNum + 6])
-        assert int(cols[startNum + 7]) <= int(cols[startNum + 8])
-        one["nCardRange"] = [int(cols[startNum + 7]), int(cols[startNum + 8])]
-        one["rCardRate"] = int(cols[startNum + 9])
-        one["rCardRandom"] = int(cols[startNum + 10])
-        assert int(cols[startNum + 11]) <= int(cols[startNum + 12])
-        one["rCardRange"] = [int(cols[startNum + 11]), int(cols[startNum + 12])]
-        one["srCardRate"] = int(cols[startNum + 13])
-        one["srCardRandom"] = int(cols[startNum + 14])
-        assert int(cols[startNum + 15]) <= int(cols[startNum + 16])
-        one["srCardRange"] = [int(cols[startNum + 15]), int(cols[startNum + 16])]
-        one["cardCertain"] = int(cols[startNum + 17])
-        one["cardCertainRateRange"] = map(int, str(cols[startNum + 18]).split(",")) if cols[startNum + 18] else []
-        one["cardCertainNum"] = int(cols[startNum + 19])
-        # 升星卡
-        one["nStarCardRate"] = int(cols[startNum + 20])
-        one["nStarCardRandom"] = int(cols[startNum + 21])
-        assert int(cols[startNum + 22]) <= int(cols[startNum + 23])
-        one["nStarCardRange"] = [int(cols[startNum + 22]), int(cols[startNum + 23])]
-        one["rStarCardRate"] = int(cols[startNum + 24])
-        one["rStarCardRandom"] = int(cols[startNum + 25])
-        assert int(cols[startNum + 26]) <= int(cols[startNum + 27])
-        one["rStarCardRange"] = [int(cols[startNum + 26]), int(cols[startNum + 27])]
-        one["srStarCardRate"] = int(cols[startNum + 28])
-        one["srStarCardRandom"] = int(cols[startNum + 29])
-        assert int(cols[startNum + 30]) <= int(cols[startNum + 31])
-        one["srStarCardRange"] = [int(cols[startNum + 30]), int(cols[startNum + 31])]
-        one["starCardCertain"] = int(cols[startNum + 32])
-        one["starCardCertainRateRange"] = map(int, str(cols[startNum + 33]).split(",")) if cols[startNum + 33] else []
-        one["starCardCertainNum"] = int(cols[startNum + 34])
-        # 火炮、水晶、奖券、海星、冷却
-        one["gunSkinRate"] = int(cols[startNum + 35])
-        one["gunSkinRandom"] = int(cols[startNum + 36])
-        assert int(cols[startNum + 37]) <= int(cols[startNum + 38])
-        one["gunSkinRange"] = [int(cols[startNum + 37]), int(cols[startNum + 38])]
-        one["crystalRate"] = int(cols[startNum + 39])
-        one["crystalRandom"] = int(cols[startNum + 40])
-        assert int(cols[startNum + 41]) <= int(cols[startNum + 42])
-        one["crystalRange"] = [int(cols[startNum + 41]), int(cols[startNum + 42])]
-        one["couponRate"] = int(cols[startNum + 43])
-        assert int(cols[startNum + 44]) <= int(cols[startNum + 45])
-        one["couponRange"] = [int(cols[startNum + 44]), int(cols[startNum + 45])]
-        one["starfishRate"] = int(cols[startNum + 46])
-        assert int(cols[startNum + 47]) <= int(cols[startNum + 48])
-        one["starfishRange"] = [int(cols[startNum + 47]), int(cols[startNum + 48])]
-        one["coolDownRate"] = int(cols[startNum + 49])
-        assert int(cols[startNum + 50]) <= int(cols[startNum + 51])
-        one["coolDownRange"] = [int(cols[startNum + 50]), int(cols[startNum + 51])]
-        # 青铜、白银、黄金招财珠数
-        one["bronzeBulletRate"] = int(cols[startNum + 52])
-        assert int(cols[startNum + 53]) <= int(cols[startNum + 54])
-        one["bronzeBulletRange"] = [int(cols[startNum + 53]), int(cols[startNum + 54])]
-        one["silverBulletRate"] = int(cols[startNum + 55])
-        assert int(cols[startNum + 56]) <= int(cols[startNum + 57])
-        one["silverBulletRange"] = [int(cols[startNum + 56]), int(cols[startNum + 57])]
-        one["goldBulletRate"] = int(cols[startNum + 58])
-        assert int(cols[startNum + 59]) <= int(cols[startNum + 60])
-        one["goldBulletRange"] = [int(cols[startNum + 59]), int(cols[startNum + 60])]
-        # 红宝石
-        one["rubyRate"] = int(cols[startNum + 61])
-        assert int(cols[startNum + 62]) <= int(cols[startNum + 63])
-        one["rubyRange"] = [int(cols[startNum + 62]), int(cols[startNum + 63])]
-        # 出现其他物品id，概率，最小数量，最大数量
-        one["itemsData"] = json.loads(cols[startNum + 64])
-        
-    result = json.dumps(config, indent=4, ensure_ascii=False)        
-    outHandle = open(outPath, "w")   
-    outHandle.write(result)  
-    outHandle.close()
-    print u"end 宝箱配置Chest"
-
-
-def chest_drop_config():
-    print u"start 宝箱掉落配置ChestDrop"
-    outPath = getOutPath("chestDrop")
-    ws = getWorkBook().get_sheet_by_name("ChestDrop")
-    config = collections.OrderedDict()
-    startRowNum = 4
-    i = 0 
-    for row in ws.rows:
-        i = i+1
-        if i < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-        if not cols[0]:
-            continue
-        one = collections.OrderedDict()
-        if str(cols[0]) in config:
-            raise KeyError("kindId %d repeat" % int(cols[0]))
-        config[str(cols[0])] = one
-        one["kindId"] = int(cols[0])    # 物品ID
-        one["type"] = int(cols[3])
-        one["rare"] = int(cols[4])      # 稀有度
-        one["level"] = int(cols[5])
-        one["unlock"] = int(cols[6])    # 解锁等级
-        one["weight"] = int(cols[7])
-        one["convertCoin"] = int(cols[8])   # 溢出后转换金币数
-
-    result = json.dumps(config, indent=4)        
-    outHandle = open(outPath, "w")   
-    outHandle.write(result)  
-    outHandle.close()
-    print u"end 宝箱掉落配置ChestDrop"
    
 
 def getCouponFish(ws):
@@ -1499,10 +1259,46 @@ def achievement_config_old():
 
 
 def weaponPowerRate_config():
-    """加载武器威力加成配置"""
     outPath = getOutPath("weaponPowerRate")
     ws = getWorkBook().get_sheet_by_name("WeaponPowerRate")
     powerRateConfig = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        oneRate =  []
+        if str(cols[0]) in powerRateConfig:
+            raise KeyError("weaponId %d repeat" % int(cols[0]))
+        powerRateConfig[str(cols[0])] = oneRate
+        probb = 0
+        for m in range(2, len(cols), 2):
+            if not cols[m]:
+                break              
+            item = {}
+            item["value"] = json.loads(cols[m])
+            itemProbb = cols[m + 1]
+            item["probb"] = [probb + 1, probb + itemProbb]   
+            oneRate.append(item)
+            probb += itemProbb
+    result = json.dumps(powerRateConfig, indent=4)
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def weapon_stage_count_config():
+    """
+    武器的爆炸次数
+    """
+    print "weapon_stage_count_config, start"
+    outPath = getOutPath("weaponStageCount")
+    ws = getWorkBook().get_sheet_by_name("WeaponStageCount")
+    config = collections.OrderedDict()
     startRowNum = 4
     i = 0
     for row in ws.rows:
@@ -1510,26 +1306,27 @@ def weaponPowerRate_config():
         cols = []
         if i < startRowNum:
             continue
+
         for cell in row:
             cols.append(cell.value)
-        oneRate = []
-        if str(cols[0]) in powerRateConfig:
-            raise KeyError("weaponId %d repeat" % int(cols[0]))
-        powerRateConfig[str(cols[0])] = oneRate
-        probb = 0
-        for m in range(1, len(cols), 2):
-            if not cols[m]:
-                break
-            item = {}
-            item["value"] = json.loads(cols[m])
-            itemProbb = cols[m + 1]
-            item["probb"] = [probb + 1, probb + itemProbb]
-            oneRate.append(item)
-            probb += itemProbb
-    result = json.dumps(powerRateConfig, indent=4)
+
+        if not cols[0]:
+            continue
+
+        if int(cols[0]) not in config:
+            config[int(cols[0])] = []
+        for x in xrange(2, len(cols)):
+            if cols[x] is None:
+                continue
+            config[int(cols[0])].append(int(cols[x]))
+        if sum(config[int(cols[0])]) != 10000:
+            raise KeyError("weapon_stage_count_config probb error")
+
+    result = json.dumps(config, indent=4)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
+    print "weapon_stage_count_config, end"
 
 
 def gunskin_config(clientId=0):
@@ -1593,7 +1390,7 @@ def gunskin_config(clientId=0):
 
     i = 0
     for row in wsSkin.rows:
-        i = i + 1
+        i = i+1
         cols = []
         if i < startRowNum:
             continue
@@ -1605,10 +1402,138 @@ def gunskin_config(clientId=0):
         one["gunId"] = cols[1]
         one["kindId"] = cols[2]
         one["consumeCount"] = cols[3]
-    result = json.dumps(config, indent=4, ensure_ascii=False)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
     outHandle.close()
+
+
+def achievement_config_old():
+    outPath = getOutPath("achievement")
+    ws = getWorkBook().get_sheet_by_name("AchievementTask")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]: 
+            continue
+        if cols[6] not in config:
+            config[cols[6]] = []
+        one = collections.OrderedDict()
+        one["taskId"] = cols[0]
+        one["desc"] = cols[1]
+        one["target"] = json.loads(cols[2])
+        one["type"] = cols[3]
+        one["isMax"] = cols[4]
+        one["repeat"] = cols[5]
+        one["groupId"] = cols[6]
+        one["honorId"] = cols[7]
+        one["norReward"] = _getRewardInfo(cols[8])
+        one["chestReward"] = _getRewardInfo(cols[9])
+        config[cols[6]].append(one)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def plyerBuffer_config():
+    outPath = getOutPath("playerBuffer")
+    ws = getWorkBook().get_sheet_by_name("PlayerBuffer")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] ==0 or not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["bufferId"] = int(cols[0])
+        one["weaponIds"] = json.loads(cols[1])
+        one["weaponType"] = json.loads(cols[2])
+        one["cdReduce"] = float(cols[3])
+        one["coinAdd"] = float(cols[4])
+        one["powerAdd"] = float(cols[5])
+        one["duration"] = int(cols[6])
+        one["delayTime"] = float(cols[7])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def randomMultipleFish_config():
+    outPath = getOutPath("randomMultipleFish")
+    ws = getWorkBook().get_sheet_by_name("RandomMultipleFish")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        multiples = []
+        config[str(cols[0])] = multiples
+        totalProbb = 0
+        for x in range(1, len(cols), 2):
+            if not cols[x + 1]:
+                continue
+            one = collections.OrderedDict()
+            one["fishType"] = int(cols[x])
+            one["probb"] = [totalProbb + 1, totalProbb + cols[x + 1]]
+            totalProbb += cols[x + 1]
+            multiples.append(one)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def guideFollowedTask_config():
+    outPath = getOutPath("GuideFollowedTask")
+    ws = getWorkBook().get_sheet_by_name("GuideFollowedTask")
+    config = []
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] !=0 and not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        one["taskId"] = int(cols[0])
+        one["desc"] = cols[1]
+        one["type"] = int(cols[2])
+        one["repeat"] = int(cols[3])
+        one["target"] = json.loads(cols[4])
+        one["reward"] = _getRewardInfo(cols[5])
+        config.append(one)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()  
 
 
 def _getRewardInfo(reward):
@@ -1621,22 +1546,309 @@ def _getRewardInfo(reward):
     return rewardInfo
 
 
-def item_config(clientId=0):
-    """
-    道具配置
-    """
-    sn = "Item" if clientId == 0 else "Item" + "_" + str(clientId)
-    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
-    print "item_config, start, ", sn, fn
-    outPath = getOutPath("item", fn)
-    wb = getWorkBook()
-    ws = wb.get_sheet_by_name(sn)
+def gunLevel():
+    """火炮等级配置"""
+    outPath = getOutPath("gunLevel")
+    ws = getWorkBook().get_sheet_by_name("GunLevel")
     config = collections.OrderedDict()
     startRowNum = 4
-    h = 0
+    i = 0 
     for row in ws.rows:
-        h = h + 1
-        if h < startRowNum:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] != 0 and not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["gunLevel"] = int(cols[0])
+        upgradeItems = collections.OrderedDict()
+        if int(cols[1]):
+            upgradeItems[cols[1]] = cols[2]
+        for x in range(3, 6, 2):
+            if int(cols[x]):
+                upgradeItems[cols[x]] = cols[x + 1]
+        if upgradeItems:
+            one["upgradeItems"] = upgradeItems
+        _tmpIdx = 7
+        one["successRate"] = int(cols[_tmpIdx])
+        if int(cols[_tmpIdx]) < 10000:
+            protectItems = collections.OrderedDict()
+            one["protectItems"] = protectItems
+            protectItems[cols[_tmpIdx + 1]] = int(cols[_tmpIdx + 2])
+        returnItems = []
+        probb = 0
+        for x in range(_tmpIdx + 3, _tmpIdx + 12, 3):
+            if int(cols[x]):
+                item = collections.OrderedDict()
+                item["kindId"] = cols[x]
+                item["count"] = cols[x + 1]
+                item["probb"] = [probb + 1, probb + cols[x + 2]]
+                returnItems.append(item)
+                probb += cols[x + 2]
+        if returnItems:
+            one["returnItems"] = returnItems
+        if cols[_tmpIdx + 12]:
+            one["interval"] = float(cols[_tmpIdx + 12])
+        if cols[_tmpIdx + 13] is not None:
+            one["levelAddition"] = float(cols[_tmpIdx + 13])
+        one["levelValue"] = int(cols[_tmpIdx + 14])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def tableTask():
+    outPath = getOutPath("tableTask")
+    ws = getWorkBook().get_sheet_by_name("TableTask")
+    wsRoomTask = getWorkBook().get_sheet_by_name("RoomTask")
+    config = collections.OrderedDict()
+    config["tasks"] = collections.OrderedDict()
+    config["roomTask"] = collections.OrderedDict()
+    startRowNum = 2
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] !=0 and not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config["tasks"][str(cols[0])] = one
+        one["taskId"] = int(cols[0])
+        one["type"] = int(cols[1])
+        one["desc"] = cols[2]
+        one["target"] = int(cols[3])
+        one["targetNum"] = int(cols[4])
+        one["timeLong"] = int(cols[5])
+        one["failTime"] = int(cols[6])
+        one["rewards"] = []
+        for m in range(7, 9, 3):
+            if not cols[m]:
+                break
+            reward = {"name": int(cols[m]), "count": int(cols[m+1])}
+            one["rewards"].append(reward)
+        one["suggestTarget"] = int(cols[10])
+        one["waitTime"] = int(cols[11])
+    i = 0
+    for row in wsRoomTask.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] !=0 and not cols[0]: 
+            continue
+        if not cols[1] or cols[1] == "":
+            continue
+        one = collections.OrderedDict()
+        config["roomTask"][str(cols[0])] = one
+        one["mainTask"] = json.loads(cols[1])
+        one["branchTask"] = json.loads(cols[2])
+        one["randomTask"] = json.loads(cols[3])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()  
+
+
+def inviteTask_config():
+    outPath = getOutPath("inviteTask")
+    ws = getWorkBook().get_sheet_by_name("InviteTask")
+    config = collections.OrderedDict()
+    config["inviteTask"] = collections.OrderedDict()
+    config["recallTask"] = collections.OrderedDict()
+    startRowNum = 3
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] !=0 and not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        if int(cols[1]) == 1:
+            config["inviteTask"][str(cols[0])] = one
+        else:
+            config["recallTask"][str(cols[0])] = one
+         
+        one["Id"] = int(cols[0])
+        one["type"] = int(cols[1])
+        one["target"] = int(cols[2])
+        one["rewards"] = []
+        for m in range(3, len(cols), 2):
+            if not cols[m]:
+                break
+            reward = {"name": int(cols[m]), "count": int(cols[m+1])}
+            one["rewards"].append(reward)
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def rechargePool_config():
+    outPath = getOutPath("rechargePool")
+    ws = getWorkBook().get_sheet_by_name("RechargePool")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["productId"] = str(cols[0])
+        bonuses = []
+        probb = 0
+        for x in range(1, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                break
+            bonus = collections.OrderedDict()
+            bonus["bonus"] = int(cols[x])
+            bonus["probb"] = [probb + 1, probb + int(cols[x + 1])]
+            probb += int(cols[x + 1])
+            bonuses.append(bonus)
+        one["bonuses"] = bonuses
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def share_config():
+    outPath = getOutPath("share")
+    ws = getWorkBook().get_sheet_by_name("Share")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if cols[0] !=0 and not cols[0]: 
+            continue
+        one = collections.OrderedDict()
+        config[str(cols[0])] = one
+        one["shareId"] = int(cols[0])
+        one["typeId"] = str(cols[1])
+        one["title"] = unicode(cols[2] or "")
+        one["desc1"] = unicode(cols[3] or "")
+        one["desc2"] = unicode(cols[4] or "")
+        one["vipLimit"] = int(cols[6])
+        one["levelLimit"] = int(cols[7])
+        one["versionLimit"] = json.loads(cols[8])
+        one["timeLimit"] = json.loads(cols[9])
+        one["locationLimit"] = [unicode(x) for x in cols[10].split(",")] if cols[10] else []
+        one["popCountLimit"] = int(cols[11])
+        one["finishCountLimit"] = int(cols[12])
+        one["expiresType"] = int(cols[13])
+        one["finishType"] = int(cols[14])
+        one["groupType"] = int(cols[15])
+        one["modes"] = json.loads(cols[16])
+        one["rewards1"] = json.loads(cols[17])
+        one["rewards2"] = json.loads(cols[18])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def fly_pig_config():
+    outPath = getOutPath("flyPigReward")
+    ws = getWorkBook().get_sheet_by_name("FlyPigReward")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0 
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            break
+        probb = 0
+        items = []
+        config[str(cols[0])] = items
+        for x in range(1, len(cols), 6):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            itemDict = collections.OrderedDict()
+            itemDict["probb"] = [probb + 1, probb + int(cols[x])]
+            itemDict["kindId"] = int(cols[x + 1])
+            itemDict["displayCount"] = int(cols[x + 2])
+            itemDict["shareMultiple"] = int(cols[x + 3])
+            itemDict["advertMultiple"] = int(cols[x + 4])
+            itemDict["saleCoin"] = int(cols[x + 5])
+            items.append(itemDict)
+            probb += int(cols[x])
+    result = json.dumps(config, indent=4, ensure_ascii=False)        
+    outHandle = open(outPath, "w")   
+    outHandle.write(result)  
+    outHandle.close()
+
+
+def starfish_roulette_config():
+    """
+    海星轮盘配置
+    """
+    print "starfish_roulette_config, start"
+    outPath = getOutPath("starfishRoulette")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("StarfishTurntable")
+    config = collections.OrderedDict()
+
+    config["starfishRoulette"] = []
+    config["priceInfo"] = {}
+    config["rouletteLevel"] = []
+    config["unlockLevel"] = 0
+    config["rule"] = ""
+
+    # 轮盘配置数据范围
+    # rouletteStartColIdx = 1
+    rouletteEndColIdx = 7
+
+    # 价格配置数据范围
+    priceStartColIdx = 8
+    priceEndColIdx = 13
+
+    # 轮盘等级配置数据范围
+    levelStartColIdx = 15
+    levelEndColIdx = 17
+
+    # 轮盘解锁等级
+    unlockLevelColIdx = 19
+
+    ruleIdx = 21
+
+    startRowNum = 4
+    i = 0
+    lastLevelInfo = {"level": 0, "exp": 0, "count": 0}
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
             continue
         cols = []
         for cell in row:
@@ -1644,317 +1856,214 @@ def item_config(clientId=0):
 
         if cols[0]:
             one = collections.OrderedDict()
-            config[str(cols[0])] = one
-            one["kindId"] = int(cols[0])
-            one["order"] = int(cols[1])
-            if not cols[2]:
-                one["visibleInBag"] = 0
-                continue
-            if cols[3]:
-                one["up_skill"] = 1
-            one["actions"] = []
-            one["name"] = str(cols[4])
-            one["desc"] = str(cols[5])
-            if cols[6]:
-                one["minimumVersion"] = str(cols[6])
-            one["reviewVerLimit"] = int(cols[7]) if cols[7] else 0
-            actCnt = int(cols[8])
-            for i in range(9, 9 + 2 * actCnt, 2):
-                tmp = collections.OrderedDict()
-                tmp["action"] = str(cols[i])
-                if cols[i + 1]:
-                    tmp["params"] = json.loads(cols[i + 1])
-                one["actions"].append(tmp)
+            config["starfishRoulette"].append(one)
+            one["Id"] = int(cols[0])
+            one["starweight"] = int(cols[1])
+            one["ticketweight"] = int(cols[2])
+            one["rewards"] = []
+            for x in xrange(3, rouletteEndColIdx, 4):
+                item = {}
+                item["name"] = int(cols[x + 0])
+                item["count"] = int(cols[x + 1])
+                item["rare"] = int(cols[x + 2])
+                item["des"] = str(cols[x + 3])
+                one["rewards"].append(item)
+
+        if cols[priceStartColIdx]:
+            priceCount = int(cols[priceStartColIdx])
+            itemId = int(cols[priceStartColIdx + 1])
+            if itemId:
+                priceIdx = 0
+                itemDict = {}
+                for idx in xrange(priceStartColIdx + 2, priceEndColIdx, 2):
+                    if priceIdx >= priceCount:
+                        break
+                    priceIdx = priceIdx + 1
+                    item = {}
+                    playTimes = int(cols[idx + 0])
+                    item["name"] = int(itemId)
+                    item["count"] = int(cols[idx + 1])
+                    itemDict[playTimes] = item
+                config["priceInfo"][itemId] = itemDict
+
+        if cols[levelStartColIdx]:
+            level = int(cols[levelStartColIdx])
+            exp = int(cols[levelStartColIdx + 1])
+            count = int(cols[levelStartColIdx + 2])
+            if len(config["rouletteLevel"]) == 0:
+                config["rouletteLevel"].append({"level": 0, "exp": 0, "count": 0})
+
+            lastLevel = lastLevelInfo["level"]
+            if level - lastLevel > 1:
+                for idx in range(level - lastLevel - 1):
+                    item = copy.deepcopy(lastLevelInfo)
+                    item["level"] = lastLevel + idx + 1
+                    config["rouletteLevel"].append(item)
+
+            lastLevelInfo["level"] = level
+            lastLevelInfo["exp"] = exp
+            lastLevelInfo["count"] = count
+            levelItem = copy.deepcopy(lastLevelInfo)
+            config["rouletteLevel"].append(levelItem)
+
+        if cols[unlockLevelColIdx]:
+            config["unlockLevel"] = int(cols[unlockLevelColIdx])
+
+        if cols[ruleIdx]:
+            config["rule"] = str(cols[ruleIdx])
 
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
-    print "item_config, end"
+    print "starfish_roulette_config, end"
 
 
-def _getSheetName(confName, clientId=0):
-    return confName if clientId == 0 else confName + "_" + str(clientId)
-
-
-def _getFileName(clientId=0):
-    return "0.json" if clientId == 0 else str(clientId) + ".json"
-
-
-def newbie7DaysGift_config(clientId=0):
+def surpass_target_config():
     """
-    新手7日礼包配置
+    比赛超越目标配置
     """
-    sn = _getSheetName("Newbie7DaysGift", clientId)
-    fn = _getFileName(clientId)
-    print "newbie7DaysGift_config, start, ", sn, fn
-    outPath = getOutPath("newbie7DaysGift", fn)
+    print "surpass_target_config, start"
+    outPath = getOutPath("surpassTarget")
     wb = getWorkBook()
-    ws = wb.get_sheet_by_name(sn)
+    ws = wb.get_sheet_by_name("SurpassTarget")
     config = []
+
     startRowNum = 4
-    h = 0
-    for row in ws.rows:
-        h = h + 1
-        if h < startRowNum:
-            continue
-        cols = []
-        for cell in row:
-            cols.append(cell.value)
-
-        if cols[1]:
-            one = collections.OrderedDict()
-            config.append(one)
-            one["idx"] = int(cols[0])
-            one["rewards"] = json.loads(cols[1])
-            one["cond"] = json.loads(cols[2])
-            one["des"] = str(cols[3])
-            one["rechargeBonus"] = int(cols[4])
-
-    result = json.dumps(config, indent=4, ensure_ascii=False)
-    outHandle = open(outPath, "w")
-    outHandle.write(result)
-    outHandle.close()
-    print "newbie7DaysGift_config, end"
-
-
-def store_config(clientId=0):
-    """商店配置"""
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
-    sn = "weixin" if clientId == 0 else str(clientId)
-    fn = "0.json" if clientId == 0 else str(clientId) + ".json"
-    outPath = getOutPath("gift", fn)
-    outPath = getOutPath("store", fn)
-    ws = getWorkBook("store.xlsx").get_sheet_by_name(sn)
-    config = collections.OrderedDict()
-    config["coinStore"] = collections.OrderedDict()
-    config["diamondStore"] = collections.OrderedDict()
-    config["pearlStore"] = collections.OrderedDict()
-    config["chestStore"] = collections.OrderedDict()
-    config["chestStore"]["items"] = collections.OrderedDict()
-    config["chestStore"]["ads"] = collections.OrderedDict()
-    config["couponStore"] = collections.OrderedDict()
-    config["gunSkinStore"] = collections.OrderedDict()
-    config["bulletStore"] = collections.OrderedDict()
-    config["bulletStore"]["hall37"] = collections.OrderedDict()
-
     i = 0
-    results = []
-    startRowNum = 4
-    diamond_store_num = 15
-    pearl_store_num = 35
-    chest_store_num = 50
-    ads_num = 71
-    coupon_store_num = 73
-    gun_skin_num = 96
-    robbery_store_num = 110
-
     for row in ws.rows:
-        i = i+1
+        i = i + 1
         if i < startRowNum:
             continue
         cols = []
         for cell in row:
             cols.append(cell.value)
 
-        if cols[0] is not None:
-            one = collections.OrderedDict()
-            config["coinStore"][str(cols[0])] = one
-            one["name"] = json.loads(cols[1])
-            one["itemId"] = int(cols[2])
-            one["count"] = json.loads(cols[3])
-            one["label"] = json.loads(cols[4])
-            one["order"] = int(cols[5])
-            one["price"] = int(cols[6])
-            one["price_direct"] = int(cols[7])
-            one["price_diamond"] = int(cols[8])
-            one["additionVip"] = int(cols[9])
-            one["tag"] = int(cols[10])
-            one["addition"] = json.loads(cols[11])
-            if cols[12] == "\"\"":
-                one["pic"] = ""
-            else:
-                one["pic"] = str(cols[12])
-            one["buyType"] = str(cols[13])
-
-        if cols[diamond_store_num]:
-            one = collections.OrderedDict()
-            config["diamondStore"][str(cols[diamond_store_num])] = one
-            one["type"] = str(cols[diamond_store_num+1])
-            one["name"] = json.loads(cols[diamond_store_num+2])
-            one["itemId"] = int(cols[diamond_store_num+3])
-            one["count"] = json.loads(cols[diamond_store_num+4])
-            one["label"] = json.loads(cols[diamond_store_num+5])
-            one["order"] = int(cols[diamond_store_num+6])
-            one["price"] = int(cols[diamond_store_num+7])
-            one["price_direct"] = int(cols[diamond_store_num+8])
-            one["price_diamond"] = int(cols[diamond_store_num+9])
-            one["additionVip"] = int(cols[diamond_store_num+10])
-            one["tag"] = int(cols[diamond_store_num+11])
-            one["addition"] = json.loads(cols[diamond_store_num+12])
-            if cols[diamond_store_num+13] == "\"\"":
-                one["pic"] = ""
-            else:
-                one["pic"] = str(cols[diamond_store_num+13])
-            one["buyType"] = str(cols[diamond_store_num+14])
-            if cols[diamond_store_num+15]:
-                one["otherBuyType"] = json.loads(cols[diamond_store_num+15])
-            if cols[diamond_store_num+16] is not None:
-                one["visible"] = int(cols[diamond_store_num+16])
-            if cols[diamond_store_num+17] is not None:
-                one["appVisible"] = int(cols[diamond_store_num+17])
-            #one["extend"] = json.loads(cols[30])
-
-        if cols[pearl_store_num]:
-            one = collections.OrderedDict()
-            config["pearlStore"][str(cols[pearl_store_num])] = one
-            one["name"] = json.loads(cols[pearl_store_num+1])
-            one["itemId"] = int(cols[pearl_store_num+2])
-            one["count"] = json.loads(cols[pearl_store_num+3])
-            one["order"] = int(cols[pearl_store_num+4])
-            one["price"] = int(cols[pearl_store_num+5])
-            one["price_direct"] = int(cols[pearl_store_num+6])
-            one["price_diamond"] = int(cols[pearl_store_num+7])
-            one["additionVip"] = int(cols[pearl_store_num+8])
-            one["tag"] = int(cols[pearl_store_num+9])
-            one["addition"] = json.loads(cols[pearl_store_num+10])
-            if cols[pearl_store_num+11] == "\"\"":
-                one["pic"] = ""
-            else:
-                one["pic"] = str(cols[pearl_store_num+11])
-            one["buyType"] = str(cols[pearl_store_num+12])
-            one["otherBuyType"] = json.loads(cols[pearl_store_num+13])
-
-        if cols[chest_store_num]:
-            one = collections.OrderedDict()
-            config["chestStore"]["items"][str(cols[chest_store_num])] = one
-            one["name"] = str(cols[chest_store_num+1])
-            one["itemId"] = int(cols[chest_store_num+2])
-            if cols[chest_store_num+3]:
-                one["type"] = int(cols[chest_store_num+3])
-            if str(cols[chest_store_num+4]).find(",") < 0:
-                one["count"] = int(cols[chest_store_num+4])
-            else:
-                one["count"] = json.loads(cols[chest_store_num+4])
-            one["order"] = int(cols[chest_store_num+5])
-            one["price"] = int(cols[chest_store_num+6])
-            one["discountPrice"] = json.loads(cols[chest_store_num+7])
-            if cols[chest_store_num+8]:
-                one["price_direct"] = int(cols[chest_store_num+8])
-            if cols[chest_store_num+9]:
-                one["price_diamond"] = int(cols[chest_store_num+9])
-            one["tag"] = json.loads(cols[chest_store_num+10])
-            if cols[chest_store_num+11] == "\"\"":
-                one["desc"] = ""
-            else:
-                one["desc"] = str(cols[chest_store_num+11])
-            one["addition"] = json.loads(cols[chest_store_num+12])
-            one["buyType"] = str(cols[chest_store_num+13])
-            if cols[chest_store_num+14]:
-                one["otherBuyType"] = json.loads(cols[chest_store_num+14])
-            if cols[chest_store_num+15]:
-                one["minLevel"] = int(cols[chest_store_num+15])
-            if cols[chest_store_num+16]:
-                one["lowVersion"] = str(cols[chest_store_num+16])
-            if cols[chest_store_num+17]:
-                one["convenientBuy"] = int(cols[chest_store_num+17])
-            if cols[chest_store_num+18]:
-                one["additionVip"] = int(cols[chest_store_num+18])
-            if cols[chest_store_num+19]:
-                one["extend"] = json.loads(cols[chest_store_num+19])
-            if cols[chest_store_num+20]:
-                one["activityPrice"] = json.loads(cols[chest_store_num+20])
-            if cols[ads_num]:
-                config["chestStore"]["ads"] = json.loads(cols[ads_num])
-                #one["chestStore"]["ads"] = json.loads(cols[ads_num])
-
-        if cols[coupon_store_num]:
-            one = collections.OrderedDict()
-            config["couponStore"][str(cols[coupon_store_num])] = one
-            one["name"] = str(cols[coupon_store_num + 1])
-            one["itemId"] = int(cols[coupon_store_num + 2])
-            one["count"] = int(cols[coupon_store_num + 3])
-            one["order"] = int(cols[coupon_store_num + 4])
-            if cols[coupon_store_num + 5] != "\"\"":
-                one["desc"] = str(cols[coupon_store_num + 5])
-            else:
-                one["desc"] = ""
-            one["price"] = int(cols[coupon_store_num + 6])
-            one["price_coupon"] = int(cols[coupon_store_num + 7])
-            if cols[coupon_store_num+8]:
-                one["activityPrice"] = json.loads(cols[coupon_store_num+8])
-            one["tag"] = int(cols[coupon_store_num + 9])
-            one["addition"] = json.loads(cols[coupon_store_num + 10])
-            if cols[coupon_store_num + 11] != "\"\"":
-                one["pic"] = str(cols[coupon_store_num + 11])
-            else:
-                one["pic"] = ""
-            one["guideLimit"] = int(cols[coupon_store_num + 12])
-            if cols[coupon_store_num+13]:
-                one["dayBuyNum"] = int(cols[coupon_store_num+13])
-            one["serverBuyNum"] = int(cols[coupon_store_num + 14]) if cols[coupon_store_num + 14] else 0
-            one["vip"] = int(cols[coupon_store_num + 15]) if cols[coupon_store_num + 15] else 0
-            if cols[coupon_store_num+16] is not None:
-               one["visible"] = cols[coupon_store_num+16]
-            one["buyType"] = str(cols[coupon_store_num + 17])
-            if cols[coupon_store_num+18] is not None:
-                one["reviewVerLimit"] = int(cols[coupon_store_num+18])
-            if cols[coupon_store_num+19] is not None:
-                one["entityItem"] = int(cols[coupon_store_num+19])
-            if cols[coupon_store_num+20]:
-                one["displayLimitNum"] = int(cols[coupon_store_num+20])
-            if cols[coupon_store_num + 21]:
-                one["extend"] = json.loads(cols[coupon_store_num + 21])
-
-        if cols[gun_skin_num]:
-            one = collections.OrderedDict()
-            config["gunSkinStore"][str(cols[gun_skin_num])] = one
-            one["name"] = str(cols[gun_skin_num+1])
-            one["itemId"] = int(cols[gun_skin_num+2])
-            one["count"] = int(cols[gun_skin_num+3])
-            one["order"] = int(cols[gun_skin_num+4])
-            if cols[gun_skin_num+5] is not None:
-                one["vip"] = int(cols[gun_skin_num+5])
-            if cols[gun_skin_num+6] != "\"\"":
-                one["desc"] = str(cols[gun_skin_num+6])
-            else:
-                one["desc"] = ""
-            one["price"] = int(cols[gun_skin_num+7])
-            one["discountPrice"] = json.loads(cols[gun_skin_num+8])
-            one["tag"] = int(cols[gun_skin_num+9])
-            one["addition"] = json.loads(cols[gun_skin_num+10])
-            if cols[gun_skin_num+11] != "\"\"":
-                one["pic"] = str(cols[gun_skin_num+11])
-            else:
-                one["pic"] = ""
-            one["buyType"] = str(cols[gun_skin_num+12])
-
-        if cols[robbery_store_num]:
-            one = collections.OrderedDict()
-            config["bulletStore"]["hall37"][str(cols[robbery_store_num])] = one
-            one["name"] = str(cols[robbery_store_num+1])
-            one["itemId"] = int(cols[robbery_store_num+2])
-            one["count"] = int(cols[robbery_store_num+3])
-            one["order"] = int(cols[robbery_store_num+4])
-            one["price"] = int(cols[robbery_store_num+5])
-            one["price_direct"] = int(cols[robbery_store_num+6])
-            one["price_diamond"] = int(cols[robbery_store_num+7])
-            one["tag"] = int(cols[robbery_store_num+8])
-            one["addition"] = json.loads(cols[robbery_store_num+9])
-            if cols[robbery_store_num+10] != "\"\"":
-                one["pic"] = str(cols[robbery_store_num+10])
-            else:
-                one["pic"] = ""
-            one["buyType"] = str(cols[robbery_store_num+11])
-            one["robberyBonus"] = int(cols[robbery_store_num+12])
-            one["vipAddition"] = json.loads(cols[robbery_store_num+13])
+        if cols[0]:
+            rank = int(cols[0])
+            config.append(rank)
 
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
-    print "store_config, end"
+    print "surpass_target_config, end"
+
+
+def special_item_config():
+    """
+    特殊物品配置
+    """
+    print "special_item_config, start"
+    outPath = getOutPath("specialItem")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("SpecialItem")
+    config = collections.OrderedDict()
+
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[int(cols[0])] = one
+            one["itemId"] = int(cols[0])
+            one["incrPearlDropRate"] = cols[1]
+            one["incrCrystalDropRate"] = cols[2]
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "special_item_config, end"
+
+
+def report_fish_cb_config():
+    """
+    上报捕鱼成本收益配置
+    """
+    print "report_fish_cb_config, start"
+    outPath = getOutPath("reportFishCB")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("ReportFishCB")
+    config = collections.OrderedDict()
+    
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[int(cols[0])] = one
+            one["enable"] = int(cols[1])
+            one["interval"] = cols[2]
+            one["count"] = cols[3]
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "report_fish_cb_config, end"
+
+
+def robot_config():
+    """
+    机器人配置
+    """
+    print "robot_config, start"
+    outPath = getOutPath("robot")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("Robot")
+    config = collections.OrderedDict()
+    outHandle = open(outPath, "r")
+    ret = outHandle.read()
+    outHandle.close()
+    conf = json.loads(ret)
+    conf["robotScript"] = config
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+
+        if cols[0]:
+            one = collections.OrderedDict()
+            config[int(cols[0])] = one
+            one["enable"] = int(cols[1])
+            one["scripts"] = []
+            for x in range(2, len(cols), 6):
+                if cols[x] is None:
+                    continue
+                item = collections.OrderedDict()
+                item["level"] = int(cols[x])
+                item["fireRange"] = json.loads(cols[x + 1])
+                item["idleRange"] = json.loads(cols[x + 2])
+                item["leaveRange"] = json.loads(cols[x + 3])
+                item["chatExp"] = json.loads(cols[x + 4])
+                item["probb"] = int(cols[x + 5])
+                one["scripts"].append(item)
+
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "robot_config, end"
 
 
 def multi_lang_text():
@@ -1967,10 +2076,10 @@ def multi_lang_text():
     ws = getWorkBook("multiLangText.xlsx").get_sheet_by_name('multiLangText')
     config = collections.OrderedDict()
     outPath = getOutPath("multiLangText")
-    i = 0
+    i = 0 
     startRowNum = 4
     for row in ws.rows:
-        i = i + 1
+        i = i+1
         if i < startRowNum:
             continue
         cols = []
@@ -2315,102 +2424,78 @@ def process_single_config(idx, task_queue, cost_queue, err_queue, sp):
             print "=========== export ", confFunc.__name__, " failed ! ", traceback.format_exc()
             err_queue.put((confFunc.__name__ + "_" + str(arg), e))
 
+
 # 配置列表
 config_list = [
     # (activity_config, None),
-    (item_config, None),
-    (item_config, 26312),
-    (item_config, 26760),
-    (item_config, 26882),
-    (store_config, None),
-    (store_config, 25598),
-    (store_config, 25794),
-    (store_config, 25840),
-    (store_config, 26120),
-    (store_config, 26121),
-    (store_config, 26122),
-    (store_config, 26312),
-    (store_config, 26760),
-    (store_config, 26882),
-    (multi_lang_text, None),
+    # (multi_lang_text, None),
     (newbie7DaysGift_config, None),
-    # (lottery_ticket_config, None),
-    # (pass_card_config, None),
-    # (skill_compen_config, None),
-    # (grand_prize_pool_config, None),
-    # # (piggy_bank_config, None),
+    (lottery_ticket_config, None),
+    (pass_card_config, None),
+    (skill_compen_config, None),
+    (grand_prize_pool_config, None),
+    # (piggy_bank_config, None),
     (prizewheel_config, None),
     (grandPrixPrizewheel_config, None),
-    # # (time_limited_store_config, None),
-    # (levelRewards_config, None),
+    # (time_limited_store_config, None),
+    (levelRewards_config, None),
     (level_funds_config, None),
-    (level_funds_config, 25794),        # 基金
-    # (super_egg_config, None),
-    # (updateVerRewards_config, None),
-    (grandPrix_config, None),
-    # (bigPrize_config, None),
-    # (compAct_config, None),
-    # # (checkin_config, None),
-    (drop_config, None),
+    (level_funds_config, 25794),
+    (super_egg_config, None),
+    (updateVerRewards_config, None),
+    (bigPrize_config, None),
+    (compAct_config, None),
+    # (checkin_config, None),
     (fish_config, None),
-    (match_fish_config, None),
     (weapon_config, None),
     (ulevel_config, None),
     (skill_grade_config, None),
     (skill_star_config, None),
-    (main_quest_config, None),
+    # (main_quest_config, None),
     # (daily_quest_config, None),
-    (chest_config, None),               # 宝箱配置
-    (chest_drop_config, None),          # 宝箱掉落配置
-    # (cmptt_task_config, None),
-    # (ncmptt_task_config, None),
-    # (bonus_task_config, None),
-    # (guide_task_config, None),
+    (cmptt_task_config, None),
+    (ncmptt_task_config, None),
+    (bonus_task_config, None),
+    (guide_task_config, None),
     (probability_config, None),
     (dynamic_odds_config, None),
     # (lottery_pool_config, None),
-    (gift_config, None),
-    (gift_config, 25794),
-    (gift_config, 25598),
-    (gift_config, 26120),
-    (gift_config, 26121),
-    (gift_config, 26122),
-    # (item_drop_config, None),
-    (vip_config, None),
-    (fixed_multiple_fish, None),
-    # (call_multiple_fish, None),
-    # (fishBonus_config, None),
+    (catch_drop_config, None),
+    # (vip_config, None),
+    # (fixed_multiple_fish, None),
+    (call_multiple_fish, None),
+    (fishBonus_config, None),
     # (match_multiple_fish, None),
     # (achievement_config, None),
-    # # (honor_config, None),
-    (weaponPowerRate_config, None),     # 加载武器威力加成配置
-    (gunskin_config, None),             # 皮肤炮配置
-    (gunskin_config, 26312),
-    (gunskin_config, 26760),
+    # (honor_config, None),
+    (weaponPowerRate_config, None),
+    (weapon_stage_count_config, None),
+    (gunskin_config, None),
     # (plyerBuffer_config, None),
     # (randomMultipleFish_config, None),
-    # (gunLevel, None),
-    # (tableTask, None),
-    # (inviteTask_config, None),
-    # (rechargePool_config, None),
-    # # (share_config, None),
-    # (fly_pig_config, None),
-    # (starfish_roulette_config, None),
-    # (surpass_target_config, None),
-    # (special_item_config, None),
-    # (robot_config, None),
-    # (report_fish_cb_config, None),
-    # # (treasure_config, None),
-    # (statistic_prop_config, None),
-    # (slot_machine_config, None),
-    # (money_tree_config, None),
-    # (canned_fish_config, None),
-    # (credit_store_config, None),
-    # (supply_box_config, None),
-    # (festival_turntable_config, None),
-    # (collect_item_config, None),
-    # (abtest_config, None)
-    # # (world_boss_config, None),
+    (gunLevel, None),
+    (tableTask, None),
+    (inviteTask_config, None),
+    (rechargePool_config, None),
+    # (share_config, None),
+    (fly_pig_config, None),
+    (starfish_roulette_config, None),
+    (surpass_target_config, None),
+    (special_item_config, None),
+    (robot_config, None),
+    (report_fish_cb_config, None),
+    # (treasure_config, None),
+    (statistic_prop_config, None),
+    (slot_machine_config, None),
+    (money_tree_config, None),
+    (canned_fish_config, None),
+    (credit_store_config, None),
+    (supply_box_config, None),
+    (festival_turntable_config, None),
+    (collect_item_config, None),
+    (abtest_config, None),
+    # (world_boss_config, None),
+    (terror_fish, None),
 ]
 
 if __name__ == "__main__":

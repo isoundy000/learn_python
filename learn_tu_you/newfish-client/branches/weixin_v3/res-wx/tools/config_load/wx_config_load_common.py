@@ -1005,67 +1005,217 @@ def piggy_bank_config():
     outHandle.write(result)
     outHandle.close()
     print "piggy_bank_config, end"
-    ws = getWorkBook().get_sheet_by_name("Vip")
+
+
+def checkin_config():
+    """
+    更服奖励配置
+    """
+    print "checkin_config, start"
+    outPath = getOutPath("checkin")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("Checkin")
     config = collections.OrderedDict()
     startRowNum = 4
+    h = 0
+    for row in ws.rows:
+        h = h + 1
+        if h < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
 
-    expStartIdx = 11
+        if cols[0] is not None:
+            config.setdefault("oldcheckinData", collections.OrderedDict())
+            config["oldcheckinData"][str(cols[0])] = {"normalReward": json.loads(cols[1]), "shareReward": json.loads(cols[2])}
+
+        if cols[4] is not None:
+            config.setdefault("resetInfo", collections.OrderedDict())
+            config["resetInfo"]["vip"] = int(cols[4])
+            config["resetInfo"]["resetWeekDay"] = int(cols[5])
+
+        if cols[8] is not None:
+            config.setdefault("checkinData", collections.OrderedDict())
+            one = collections.OrderedDict()
+            config["checkinData"][str(cols[8])] = one
+            one["type"] = str(cols[8])
+            one["unlockdays"] = int(cols[9])
+            one["datas"] = []
+            for x in range(10, len(cols), 2):
+                if cols[x]:
+                    if cols[8] != "multiple":
+                        one["datas"].append({"rewards": json.loads(cols[x]), "rate": int(cols[x + 1])})
+                    else:
+                        one["datas"].append({"rewards": int(cols[x]), "rate": int(cols[x + 1])})
+
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+    print "checkin_config, end"
+
+
+def treasure_config():
+    """
+    宝藏配置
+    """
+    outPath = getOutPath("treasure")
+    ws = getWorkBook().get_sheet_by_name("Treasure")
+    config = collections.OrderedDict()
+    startRowNum = 4
     i = 0
+    one = collections.OrderedDict()
+    levels = None
+    for row in ws.rows:
+        i = i+1
+        cols = []
+        if i < startRowNum:
+            continue
+        if row[1].value not in config.keys():
+            one = collections.OrderedDict()
+            config[row[1].value] = one
+            levels = collections.OrderedDict()
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[2]:
+            continue
+        one["kindId"] = int(cols[1])
+        one["name"] = str(cols[2])
+        one["desc"] = str(cols[3])
+        one["sortId"] = int(cols[4])
+        one["effectType"] = int(cols[5])
+        one["limitCount"] = int(cols[6])
+        one["convert"] = json.loads(cols[7])
+        levelMap = collections.OrderedDict()
+        levelMap["cost"] = int(cols[9])
+        levelMap["params"] = json.loads(cols[10])
+        levels[int(cols[8])] = (levelMap)
+        one["levels"] = levels
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def main_quest_config():
+    outPath = getOutPath("mainQuest")
+    ws = getWorkBook().get_sheet_by_name("MainQuest")
+    config = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    tasks = collections.OrderedDict()
+    sections = collections.OrderedDict()
     for row in ws.rows:
         i = i + 1
+        cols = []
+        if i < startRowNum:
+            continue
+        for cell in row:
+            cols.append(cell.value)
+        task = collections.OrderedDict()
+        tasks[int(cols[0])] = task
+        task["taskId"] = int(cols[0])
+        task["title"] = str(cols[1])
+        task["desc"] = unicode(cols[2])
+        task["num"] = int(cols[3])
+        task["normalRewards"] = json.loads(cols[4])
+        task["chestRewards"] = json.loads(cols[5])
+        task["type"] = int(cols[6])
+        task["star"] = int(cols[7])
+
+        if cols[9]:
+            section = collections.OrderedDict()
+            sections[int(cols[9])] = section
+            section["sectionId"] = int(cols[9])
+            section["sortId"] = int(cols[10])
+            section["taskIds"] = json.loads(cols[11])
+            section["starRewards"] = json.loads(cols[12] or "{}")
+            section["display"] = int(cols[13])
+    config["tasks"] = tasks
+    config["sections"] = sections
+    result = json.dumps(config, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
+def daily_quest_config():
+    outPath = getOutPath("dailyQuest")
+    ws = getWorkBook().get_sheet_by_name("DailyQuest")
+    conf = collections.OrderedDict()
+    conf["questData"] = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
         if i < startRowNum:
             continue
         cols = []
         for cell in row:
             cols.append(cell.value)
         if not cols[0]:
-            if i != startRowNum:
-                break
+            continue
         one = collections.OrderedDict()
-        config[str(cols[0])] = one
-        one["vipLv"] = int(cols[0])
-        one["vipPresentCount:1137"] = int(cols[1])
-        one["vipPresentCount:1193"] = int(cols[2])
-        one["vipPresentCount:1194"] = int(cols[3])
-        one["vipPresentCount:1426"] = int(cols[4])
-        one["vipPresentCount:1408"] = int(cols[5])
-        one["vipPresentCount:1429"] = int(cols[6])
-        one["vipPresentCount:1430"] = int(cols[7])
-        one["vipPresentCount:1431"] = int(cols[8])
-        one["vipReceiveCount:1194"] = int(cols[9])
-        one["vipReceiveCount:1193"] = int(cols[10])
-        one["vipExp"] = int(cols[expStartIdx])
-        one["freeRouletteTimes"] = int(cols[expStartIdx + 1])
-        one["dropPearlTotalCount"] = int(cols[expStartIdx + 2])
-        one["dropPearlRatioLimit"] = cols[expStartIdx + 3]
-        one["vipDesc"] = unicode(cols[expStartIdx + 4]) or ""
-        one["vipGift"] = json.loads(cols[expStartIdx + 5])
-        one["originalPrice"] = int(cols[expStartIdx + 6])
-        one["price"] = int(cols[expStartIdx + 7])
-        one["pearlMultiple"] = float(cols[expStartIdx + 8])
-        one["matchAddition"] = float(cols[expStartIdx + 9])
-        one["setVipShow"] = int(cols[expStartIdx + 10])
-        one["almsRate"] = float(cols[expStartIdx + 11])
-        one["autoSupply:101"] = int(cols[expStartIdx + 12])
-        one["initLuckyValue:44102"] = int(cols[expStartIdx + 13])
-        one["inviterReward"] = json.loads(cols[expStartIdx + 14])
-        one["contFire"] = int(cols[expStartIdx + 15])
-        one["enableChat"] = int(cols[expStartIdx + 16])
-        one["limitChatTip"] = unicode(cols[expStartIdx + 17] or "")
-        one["convert1137ToDRate"] = json.loads(cols[expStartIdx + 18])
-        one["convert1429ToDRate"] = json.loads(cols[expStartIdx + 19])
-        one["convert1430ToDRate"] = json.loads(cols[expStartIdx + 20])
-        one["convert1431ToDRate"] = json.loads(cols[expStartIdx + 21])
-        one["grandPrixFreeTimes"] = int(cols[expStartIdx + 22])
-        one["grandPrixAddition"] = float(cols[expStartIdx + 23])
-        one["checkinRechargeBonus"] = int(cols[expStartIdx + 24])
+        conf["questData"][cols[0]] = one
+        one["taskId"] = cols[0]
+        one["taskType"] = cols[1]
+        one["des"] = unicode(cols[2] or "")
+        one["lv"] = cols[3]
+        one["activeLv"] = cols[4]
+        one["unlockUserLv"] = cols[5]
+        one["taskLevel"] = cols[6]
+        one["groupId"] = cols[7]
+        one["targetsNum"] = cols[8]
+        one["fishPool"] = json.loads(cols[9])
+        one["gunX"] = int(cols[10])
+        one["fpMultiple"] = int(cols[11])
+        showDay = cols[12]
+        if isinstance(showDay, unicode):
+            showDay = showDay.split("|")
+            showDay = [int(x) for x in showDay]
+        else:
+            showDay = [showDay]
+        one["showDay"] = showDay
+        if cols[13]:
+            one["rewards"] = json.loads(cols[13])
+        if cols[15]:
+            conf["questOrder"] = json.loads(cols[15])
 
-    result = json.dumps(config, indent=4, ensure_ascii=False)
-    result = re.sub(r"\\\\n", r"\\n", result)
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")
     outHandle.write(result)
     outHandle.close()
-    print "vip_config, end"
+    daily_quest_reward_config()
+
+
+def daily_quest_reward_config():
+    outPath = getOutPath("dailyQuestReward")
+    ws = getWorkBook().get_sheet_by_name("DailyQuestReward")
+    conf = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i+1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        conf[cols[0]] = collections.OrderedDict()
+        for k in range(1, len(cols), 5):
+            one = collections.OrderedDict()
+            conf[cols[0]][cols[k]] = one
+            one["finishedStar"] = cols[k]
+            one["type"] = str(cols[k + 1])
+            one["rewards"] = [{"itemId": cols[k + 3], "count": 1, "name": cols[k + 2], "reward": json.loads(cols[k + 4])}]
+
+    result = json.dumps(conf, indent=4, ensure_ascii=False)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
 
 
 def gift_abctest_config():
