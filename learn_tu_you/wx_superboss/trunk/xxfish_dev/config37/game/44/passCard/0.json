@@ -1,0 +1,48 @@
+{
+    "productInfo": {
+        "activity_pass_card_20200814": {
+            "productId": "TY0044H00120001", 
+            "productName": "ID_ACT_GOLD_REWARD_1", 
+            "buyType": "diamond", 
+            "price_direct": 12, 
+            "price_diamond": 120, 
+            "productDesc": "ID_ACT_GOLD_REWARD_4"
+        }, 
+        "activity_pass_card_1_20200814": {
+            "productId": "TY0044H01200001", 
+            "productName": "ID_ACT_GOLD_REWARD_2", 
+            "buyType": "diamond", 
+            "price_direct": 120, 
+            "price_diamond": 1200, 
+            "productDesc": "ID_ACT_GOLD_REWARD_5"
+        }, 
+        "activity_pass_card_2_20200814": {
+            "productId": "TY0044H06000001", 
+            "productName": "ID_ACT_GOLD_REWARD_3", 
+            "buyType": "diamond", 
+            "price_direct": 600, 
+            "price_diamond": 6000, 
+            "productDesc": "ID_ACT_GOLD_REWARD_6"
+        }
+    }, 
+    "productInfoAcId": {
+        "TY0044H00120001": {
+            "acId": "activity_pass_card_20200814", 
+            "buyType": "diamond", 
+            "price_direct": 12, 
+            "price_diamond": 120
+        }, 
+        "TY0044H01200001": {
+            "acId": "activity_pass_card_1_20200814", 
+            "buyType": "diamond", 
+            "price_direct": 120, 
+            "price_diamond": 1200
+        }, 
+        "TY0044H06000001": {
+            "acId": "activity_pass_card_2_20200814", 
+            "buyType": "diamond", 
+            "price_direct": 600, 
+            "price_diamond": 6000
+        }
+    }
+}

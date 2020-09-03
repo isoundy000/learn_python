@@ -1,0 +1,50 @@
+{
+    "rewardList": [
+        {
+            "id": 1, 
+            "reward": {
+                "count": 20000, 
+                "name": 101
+            }, 
+            "targetVal": 5
+        }, 
+        {
+            "id": 2, 
+            "reward": {
+                "count": 200000, 
+                "name": 101
+            }, 
+            "targetVal": 40
+        }, 
+        {
+            "id": 3, 
+            "reward": {
+                "count": 3, 
+                "name": 14175
+            }, 
+            "targetVal": 10
+        }, 
+        {
+            "id": 4, 
+            "reward": {
+                "count": 2, 
+                "name": 14176
+            }, 
+            "targetVal": 10
+        }, 
+        {
+            "id": 5, 
+            "reward": {
+                "count": 5, 
+                "name": 14124
+            }, 
+            "targetVal": 20
+        }
+    ], 
+    "accelerateTime": 1, 
+    "interval": 1, 
+    "rewardCount": 5, 
+    "rule": "ID_LUCKY_TREE_RULE", 
+    "vipLimit": 2, 
+    "maxSkiptimes": 8
+}

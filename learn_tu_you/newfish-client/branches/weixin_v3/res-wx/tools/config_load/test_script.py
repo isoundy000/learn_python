@@ -164,10 +164,79 @@ FTLoopTimer(0.1, 0, _main).start()
 # 回馈赛添加机器人
 
 
+# 机器人参加比赛(测试服含机器人总人数不能超过70), SERVERIDS填写:UT9999000001
+import json, random
+from freetime.entity.msg import MsgPack
+from poker.protocol import router
+from poker.entity.dao import userdata, gamedata, onlinedata
+
+roomId = 441041000
+count = 70
+
+for x in xrange(count):
+    userId = 1 + x
+    onlinedata.cleanOnlineLoc(userId)
+    userdata.setSessionData(userId, {"ci": "robot_3.7_-hall6-robot"})
+    luckyValue = random.randint(1, 10000)
+    rankArr = []
+    for _ in xrange(5):
+        rankArr.append(random.randint(0,50))
+    gamedata.setGameAttrs(userId, 44, ["level", "gunSkinId", "userGuideStep","m.44101"], [1, 0, json.dumps([1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2200, 2300]),
+        json.dumps({"bestRank": 1, "bestRankDate": 1523956838, "isGroup": 0, "crownCount": 4, "playCount": 4, "luckyValue": luckyValue, "recentRank": rankArr})])
+    mo = MsgPack()
+    mo.setCmd("room")
+    mo.setParam("action", "signin")
+    mo.setParam("userId", userId)
+    mo.setParam("gameId", 44)
+    mo.setParam("roomId", roomId)
+    mo.setParam("clientId", "robot_3.7_-hall6-robot")
+    router.sendRoomServer(mo, roomId)
+    mo.setParam("action", "enter")
+    router.sendRoomServer(mo, roomId)
+# 机器人参加比赛
+
+
+# 50%概率捕获，SERVERIDS填写:GT0044001_999
+from newfish.table.table_base import FishTable
+from newfish.table.multiple_table import FishMultipleTable
+
+def getCatchProbb(self, player, wpConf, fId, fIdsCount=1, superBullet=None, extendId=0, aloofOdds=0, nonAloofOdds=0, stageId=0, datas=None):
+    # 以下注释打开即为正常概率
+    # return self._getCatchProbb(player, wpConf, fId, fIdsCount, superBullet, extendId, aloofOdds, nonAloofOdds, stageId, datas)
+    return 5000
+
+FishTable.getCatchProbb = getCatchProbb
+FishMultipleTable.getCatchProbb = getCatchProbb
+# 50%概率捕获
+
+
+# 技能50%捕获，SERVERIDS填写:GT0044001_999
+import time
+import random
+import math
+
+import freetime.util.log as ftlog
+from poker.entity.biz import bireport
+from poker.entity.dao import gamedata
+from newfish.entity import config
+from newfish.entity.config import FISH_GAMEID
+from newfish.entity.redis_keys import GameData
+from newfish.entity.skill.skill_release import SkillBase
+
+def getSkillCatchProbb(self, fId, fIdsCount, realPower, probbRadix, aloofOdds, nonAloofOdds):
+    probb = 5000
+    ftlog.debug("getSkillCatchProbb->50%","userId =", self.player.userId,"probb =", probb)
+    return probb, realPower
+
+SkillBase.getSkillCatchProbb = getSkillCatchProbb
+# 技能50%捕获
 
 
 
 
+
+
+# 测试数据库key
 def _main():
     userId = 116009
     import time
@@ -176,11 +245,9 @@ def _main():
     from newfish.entity.redis_keys import GameData, WeakData
     import freetime.util.log as ftlog
     data = weakdata.getDayFishData(userId, 'ceshishuju', [])
-    ftlog.debug('vvvvvvvvvvvdddddddd', data)
     if not data:
         weakdata.setDayFishData(userId, 'ceshishuju', json.dumps(["7909", time.time()]))
         weakdata.setDayFishData(userId, 'ceshishuju', json.dumps(["7903", time.time()]))
-    ftlog.debug(weakdata.getDayFishData(userId, 'ceshishuju'), 'vvvvvvvvvvvvv')
 
 
 from freetime.core.timer import FTLoopTimer

@@ -1,0 +1,525 @@
+{
+    "supplyBox": [
+        {
+            "boxId": 1, 
+            "boxName": "青铜宝箱", 
+            "star": 3, 
+            "taskIds": [
+                390001, 
+                390002, 
+                390003, 
+                390004, 
+                390005, 
+                390006
+            ]
+        }, 
+        {
+            "boxId": 2, 
+            "boxName": "白银宝箱", 
+            "star": 3, 
+            "taskIds": [
+                390007, 
+                390008, 
+                390009, 
+                390010, 
+                390011, 
+                390012
+            ]
+        }, 
+        {
+            "boxId": 3, 
+            "boxName": "黄金宝箱", 
+            "star": 3, 
+            "taskIds": [
+                390013, 
+                390014, 
+                390015, 
+                390016
+            ]
+        }, 
+        {
+            "boxId": 4, 
+            "boxName": "白金宝箱", 
+            "star": 3, 
+            "taskIds": [
+                390017, 
+                390018, 
+                390019, 
+                390020
+            ]
+        }, 
+        {
+            "boxId": 5, 
+            "boxName": "钻石宝箱", 
+            "star": 3, 
+            "taskIds": [
+                390021
+            ]
+        }
+    ], 
+    "boxes": {
+        "1": [
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 200000, 
+                    "rare": 1, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 200, 
+                "reward": {
+                    "name": 1285, 
+                    "count": 1, 
+                    "rare": 0, 
+                    "desc": "刺豚黄金扭蛋"
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 1137, 
+                    "count": 100, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 100000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 1408, 
+                    "count": 20, 
+                    "rare": 0, 
+                    "desc": "冷却"
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 80000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 40000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 20000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 10000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }
+        ], 
+        "2": [
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 13548, 
+                    "count": 1, 
+                    "rare": 1, 
+                    "desc": "神秘金币"
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 300, 
+                "reward": {
+                    "name": 101, 
+                    "count": 300000, 
+                    "rare": 1, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 13543, 
+                    "count": 500, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 300, 
+                "reward": {
+                    "name": 1137, 
+                    "count": 500, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 200000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 150000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 2000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 100000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 80000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 50000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }
+        ], 
+        "3": [
+            {
+                "weight": 50, 
+                "reward": {
+                    "name": 101, 
+                    "count": 3000000, 
+                    "rare": 1, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 50, 
+                "reward": {
+                    "name": 13543, 
+                    "count": 1000, 
+                    "rare": 1, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 1289, 
+                    "count": 720, 
+                    "rare": 0, 
+                    "desc": "光辉"
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 2000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 1000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 3000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 800000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 2000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 600000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 400000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 200000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }
+        ], 
+        "4": [
+            {
+                "weight": 10, 
+                "reward": {
+                    "name": 13549, 
+                    "count": 1, 
+                    "rare": 1, 
+                    "desc": "点金手"
+                }, 
+                "vipLevel": 10
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 10000000, 
+                    "rare": 1, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 13543, 
+                    "count": 2000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 300, 
+                "reward": {
+                    "name": 1286, 
+                    "count": 20, 
+                    "rare": 0, 
+                    "desc": "章鱼王黄金扭蛋"
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 8000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 6000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 2000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 4000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 2000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 1000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }
+        ], 
+        "5": [
+            {
+                "weight": 0, 
+                "reward": {
+                    "name": 13551, 
+                    "count": 1, 
+                    "rare": 1, 
+                    "desc": "摇钱树"
+                }, 
+                "vipLevel": 12
+            }, 
+            {
+                "weight": 10, 
+                "reward": {
+                    "name": 13550, 
+                    "count": 1, 
+                    "rare": 1, 
+                    "desc": "聚宝盆"
+                }, 
+                "vipLevel": 12
+            }, 
+            {
+                "weight": 30, 
+                "reward": {
+                    "name": 13555, 
+                    "count": 1, 
+                    "rare": 1, 
+                    "desc": "人鱼之戒"
+                }, 
+                "vipLevel": 12
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 20000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 10000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 100, 
+                "reward": {
+                    "name": 101, 
+                    "count": 8000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 3500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 6000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 2500, 
+                "reward": {
+                    "name": 101, 
+                    "count": 4000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }, 
+            {
+                "weight": 1000, 
+                "reward": {
+                    "name": 101, 
+                    "count": 2000000, 
+                    "rare": 0, 
+                    "desc": ""
+                }, 
+                "vipLevel": 0
+            }
+        ]
+    }, 
+    "timeDesc": "ID_CONFIG_ACT_SUPPLY_BOX_TIMEDESC", 
+    "rule": "ID_CONFIG_ACT_SUPPLY_BOX_RULE", 
+    "actType": 2
+}

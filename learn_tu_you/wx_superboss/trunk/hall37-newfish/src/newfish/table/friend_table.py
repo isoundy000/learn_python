@@ -51,17 +51,17 @@ class FishFriendTable(FishNormalTable):
         if self.runConfig.allBossGroupIds:
             self.bossFishGroup = BossFishGroup(self)
         # 奖券鱼初始化
-        if self.runConfig.allCouponGroupIds:
-            self.couponFishGroup = CouponFishGroup(self)
+        # if self.runConfig.allCouponGroupIds:
+        #     self.couponFishGroup = CouponFishGroup(self)
         # 金币宝箱鱼初始化
         if self.runConfig.allChestGroupIds:
             self.chestFishGroup = ChestFishGroup(self)
         # 活动鱼初始化
-        if self.runConfig.allActivityGroupIds:
-            self.activityFishGroup = ActivityFishGroup(self)
+        # if self.runConfig.allActivityGroupIds:
+        #     self.activityFishGroup = ActivityFishGroup(self)
         # 分享宝箱鱼初始化
-        if self.runConfig.allShareGroupIds:
-            self.shareFishGroup = ShareFishGroup(self)
+        # if self.runConfig.allShareGroupIds:
+        #     self.shareFishGroup = ShareFishGroup(self)
         # 彩虹鱼初始化
         if self.runConfig.allRainbowGroupIds:
             self.rainbowFishGroup = RainbowFishGroup(self)
@@ -77,6 +77,6 @@ class FishFriendTable(FishNormalTable):
 
     def createPlayer(self, table, seatIndex, clientId):
         """
-        新创建好友Player对象
+        新创建Player对象
         """
         return FishFriendPlayer(table, seatIndex, clientId)

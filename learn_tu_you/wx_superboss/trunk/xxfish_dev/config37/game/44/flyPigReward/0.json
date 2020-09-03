@@ -1,0 +1,261 @@
+{
+    "44001": [
+        {
+            "probb": [
+                1, 
+                1000
+            ], 
+            "kindId": 31402, 
+            "displayCount": 1, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                1001, 
+                2000
+            ], 
+            "kindId": 1137, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                2001, 
+                3000
+            ], 
+            "kindId": 1145, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                3001, 
+                4000
+            ], 
+            "kindId": 1149, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                4001, 
+                7000
+            ], 
+            "kindId": 1408, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                7001, 
+                9000
+            ], 
+            "kindId": 1288, 
+            "displayCount": 10, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                9001, 
+                10000
+            ], 
+            "kindId": 31402, 
+            "displayCount": 1, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }
+    ], 
+    "44002": [
+        {
+            "probb": [
+                1, 
+                1000
+            ], 
+            "kindId": 32402, 
+            "displayCount": 1, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                1001, 
+                2500
+            ], 
+            "kindId": 1137, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                2501, 
+                3500
+            ], 
+            "kindId": 1145, 
+            "displayCount": 20, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                3501, 
+                4500
+            ], 
+            "kindId": 1149, 
+            "displayCount": 20, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                4501, 
+                5500
+            ], 
+            "kindId": 1147, 
+            "displayCount": 20, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                5501, 
+                8000
+            ], 
+            "kindId": 1408, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                8001, 
+                9000
+            ], 
+            "kindId": 1165, 
+            "displayCount": 10, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                9001, 
+                10000
+            ], 
+            "kindId": 32402, 
+            "displayCount": 1, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }
+    ], 
+    "44003": [
+        {
+            "probb": [
+                1, 
+                1000
+            ], 
+            "kindId": 1137, 
+            "displayCount": 10, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                1001, 
+                2000
+            ], 
+            "kindId": 1145, 
+            "displayCount": 50, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                2001, 
+                3000
+            ], 
+            "kindId": 1149, 
+            "displayCount": 50, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                3001, 
+                4000
+            ], 
+            "kindId": 1147, 
+            "displayCount": 50, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                4001, 
+                7000
+            ], 
+            "kindId": 1408, 
+            "displayCount": 5, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                7001, 
+                9000
+            ], 
+            "kindId": 1165, 
+            "displayCount": 10, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                9001, 
+                9500
+            ], 
+            "kindId": 1166, 
+            "displayCount": 10, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }, 
+        {
+            "probb": [
+                9501, 
+                10000
+            ], 
+            "kindId": 33402, 
+            "displayCount": 1, 
+            "shareMultiple": 1, 
+            "advertMultiple": 1, 
+            "saleCoin": 0
+        }
+    ]
+}

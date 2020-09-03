@@ -1,0 +1,306 @@
+{
+    "slotmachine": [
+        {
+            "weight": 5000, 
+            "rewards": [
+                {
+                    "count": 50000, 
+                    "rewardIdx": 1, 
+                    "rare": 0, 
+                    "name": 101, 
+                    "des": "ID_BUYTYPE_COIN", 
+                    "integral": 2
+                }
+            ]
+        }, 
+        {
+            "weight": 1000, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 2, 
+                    "rare": 0, 
+                    "name": 1194, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1194", 
+                    "integral": 1
+                }
+            ]
+        }, 
+        {
+            "weight": 5000, 
+            "rewards": [
+                {
+                    "count": 2, 
+                    "rewardIdx": 3, 
+                    "rare": 0, 
+                    "name": 1430, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1430", 
+                    "integral": 3
+                }
+            ]
+        }, 
+        {
+            "weight": 2500, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 4, 
+                    "rare": 0, 
+                    "name": 1193, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1193", 
+                    "integral": 2
+                }
+            ]
+        }, 
+        {
+            "weight": 15000, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 5, 
+                    "rare": 0, 
+                    "name": 1287, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1287", 
+                    "integral": 5
+                }
+            ]
+        }, 
+        {
+            "weight": 10000, 
+            "rewards": [
+                {
+                    "count": 30, 
+                    "rewardIdx": 6, 
+                    "rare": 0, 
+                    "name": 1137, 
+                    "des": "ID_BUYTYPE_PEARL", 
+                    "integral": 4
+                }
+            ]
+        }, 
+        {
+            "weight": 400, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 7, 
+                    "rare": 1, 
+                    "name": 1472, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1472", 
+                    "integral": 0
+                }
+            ]
+        }, 
+        {
+            "weight": 15000, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 8, 
+                    "rare": 0, 
+                    "name": 1301, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1301", 
+                    "integral": 3
+                }
+            ]
+        }, 
+        {
+            "weight": 1000, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 9, 
+                    "rare": 0, 
+                    "name": 1431, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1431", 
+                    "integral": 1
+                }
+            ]
+        }, 
+        {
+            "weight": 25000, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "rewardIdx": 10, 
+                    "rare": 0, 
+                    "name": 101, 
+                    "des": "ID_BUYTYPE_COIN", 
+                    "integral": 5
+                }
+            ]
+        }, 
+        {
+            "weight": 15000, 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "rewardIdx": 11, 
+                    "rare": 0, 
+                    "name": 1408, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1408", 
+                    "integral": 4
+                }
+            ]
+        }, 
+        {
+            "weight": 90, 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "rewardIdx": 12, 
+                    "rare": 0, 
+                    "name": 103, 
+                    "des": "ID_BUYTYPE_COUPON", 
+                    "integral": 1
+                }
+            ]
+        }, 
+        {
+            "weight": 5000, 
+            "rewards": [
+                {
+                    "count": 2, 
+                    "rewardIdx": 13, 
+                    "rare": 0, 
+                    "name": 1429, 
+                    "des": "ID_CONFIG_KINDID_ITEM:1429", 
+                    "integral": 3
+                }
+            ]
+        }, 
+        {
+            "weight": 10, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "rewardIdx": 14, 
+                    "rare": 1, 
+                    "name": 13549, 
+                    "des": "ID_CONFIG_TREASURE_NAME_5", 
+                    "integral": 0
+                }
+            ]
+        }
+    ], 
+    "integralrewards": [
+        {
+            "rank": 1, 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 2, 
+            "rewards": [
+                {
+                    "count": 8, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 3, 
+            "rewards": [
+                {
+                    "count": 6, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 4, 
+            "rewards": [
+                {
+                    "count": 4, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 5, 
+            "rewards": [
+                {
+                    "count": 3, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 6, 
+            "rewards": [
+                {
+                    "count": 2, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 7, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 8, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 9, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }, 
+        {
+            "rank": 10, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "des": "黄金招财珠", 
+                    "name": 1194
+                }
+            ]
+        }
+    ], 
+    "freetime": [
+        0, 
+        12, 
+        18, 
+        21
+    ], 
+    "maxPlayTimes": 33, 
+    "outProductId": [
+        "TY0044S00010001", 
+        "TY0044S00060001", 
+        "TY0044S00120001", 
+        "TY0044S00300001", 
+        "TY0044S00680001", 
+        "TY0044S01280001", 
+        "TY0044S01980001", 
+        "TY0044S03280001", 
+        "TY0044S06480001"
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "44001": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }, 
+    "44002": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }, 
+    "44003": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }, 
+    "44004": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }, 
+    "44005": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }, 
+    "44501": {
+        "enable": 1, 
+        "interval": 10, 
+        "count": 30
+    }
+}

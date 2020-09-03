@@ -10,7 +10,6 @@ from random import choice, randint
 from collections import OrderedDict
 
 import freetime.util.log as ftlog
-from freetime.util.cron import FTCron
 from freetime.entity.msg import MsgPack
 from freetime.core.timer import FTLoopTimer
 from freetime.util.log import getMethodName
@@ -22,6 +21,7 @@ from poker.entity.configure import gdata
 from poker.entity.game.rooms.normal_room import TYNormalRoom
 from hall.entity import hallvip
 from newfish.entity import config, util
+from newfish.entity.cron import FTCron
 from newfish.entity.lotterypool import poseidon_lottery_pool
 from newfish.entity.redis_keys import MixData
 from newfish.entity.config import FISH_GAMEID, ELEC_TOWERID, TOWERIDS
@@ -34,7 +34,6 @@ class FishPoseidonRoom(TYNormalRoom):
     """
     捕鱼海皇来袭房间
     """
-
     def __init__(self, roomDefine):
         super(FishPoseidonRoom, self).__init__(roomDefine)
         self.poseidon = None
@@ -331,7 +330,6 @@ class HeartbeatAble(object):
 
 
 class Table(object):
-
     def __init__(self, gameId, roomId, tableId):
         self._gameId = gameId
         self._roomId = roomId
@@ -365,7 +363,6 @@ class Poseidon(HeartbeatAble):
         self.room = room
         self._state = None
         self.tower = None
-        # FTLoopTimer(10, -1, self.syncPoseidonState).start()
 
     @property
     def state(self):
@@ -397,7 +394,7 @@ class Poseidon(HeartbeatAble):
         """
         self.poseidonConf = self.room.roomConf["poseidonConf"]
         self._state = Poseidon.ST_IDLE
-        self._cron = FTCron(self.poseidonConf["times"])
+        self._cron = FTCron(self.poseidonConf["cronTime"])
         self.appearTimeStrList = [time_.strftime("%R") for time_ in self._cron.getTimeList()]
         # 海皇空闲状态开始时间戳
         self.idleTime = self.calcIdleTime()
@@ -519,6 +516,7 @@ class Poseidon(HeartbeatAble):
         向渔场同步海皇状态
         """
         for _, tableDict in self.room.allTableDict.iteritems():
+            # 异步处理防止阻塞
             FTLoopTimer(0, 0, self._syncPoseidonState, tableDict).start()
             if ftlog.is_debug():
                 ftlog.debug("syncPoseidonState->", tableDict)

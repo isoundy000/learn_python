@@ -175,8 +175,7 @@ class FishNewbieRoom(TYNormalRoom):
                                             extParams, mainTaskId, self.tableTaskIdDict.get(mainTaskId),
                                             "useableTable =",
                                             dict([(taskId, [table.tableId for table in tables]) for taskId, tables in self._usableTableDict.iteritems()]),
-                                            "tableScore =",
-                                            {k: v.getTableScore() for k, v in self._allTableDict.iteritems()})
+                                            "tableScore =", {k: v.getTableScore() for k, v in self._allTableDict.iteritems()})
                         else:
                             assert isinstance(shadowRoomId, int) and gdata.roomIdDefineMap()[shadowRoomId].bigRoomId == self.bigRoomId
                             table = self._allTableDict[tableId]
@@ -189,8 +188,7 @@ class FishNewbieRoom(TYNormalRoom):
                         continue
                     return isOK
                 except Exception, e:
-                    ftlog.error("_trySitDown error", userId, shadowRoomId, tableId, clientId, extParams,
-                                traceback.format_exc())
+                    ftlog.error("_trySitDown error", userId, shadowRoomId, tableId, clientId, extParams, traceback.format_exc())
                 finally:
                     if table:
                         table.processing = False

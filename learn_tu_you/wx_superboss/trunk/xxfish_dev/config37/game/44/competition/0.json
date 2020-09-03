@@ -1,0 +1,162 @@
+{
+    "items": [
+        {
+            "productId": "TY0044A00300001", 
+            "name": "2分钟鼓舞礼包", 
+            "buyType": "diamond", 
+            "price_direct": 30, 
+            "price_diamond": 300, 
+            "itemId": 101, 
+            "count": 400000, 
+            "extraCount": 0, 
+            "inspireTime": 2, 
+            "extraGainTime": 0
+        }, 
+        {
+            "productId": "TY0044A00600001", 
+            "name": "4分钟鼓舞礼包", 
+            "buyType": "diamond", 
+            "price_direct": 60, 
+            "price_diamond": 600, 
+            "itemId": 101, 
+            "count": 800000, 
+            "extraCount": 400000, 
+            "inspireTime": 4, 
+            "extraGainTime": 3
+        }, 
+        {
+            "productId": "TY0044A01200001", 
+            "name": "10分钟鼓舞礼包", 
+            "buyType": "diamond", 
+            "price_direct": 120, 
+            "price_diamond": 1200, 
+            "itemId": 101, 
+            "count": 1600000, 
+            "extraCount": 800000, 
+            "inspireTime": 10, 
+            "extraGainTime": 3
+        }
+    ], 
+    "points": {
+        "10": 10, 
+        "50": 20, 
+        "100": 20, 
+        "200": 40, 
+        "500": 100
+    }, 
+    "timeRange": [
+        "20:00", 
+        "21:00"
+    ], 
+    "bonus": {
+        "minBonus": 10000000, 
+        "maxBonus": 999999999, 
+        "minCount": 10000
+    }, 
+    "winnerRankRewards": [
+        {
+            "count": 10000000, 
+            "name": 101
+        }, 
+        {
+            "count": 5000000, 
+            "name": 101
+        }, 
+        {
+            "count": 2000000, 
+            "name": 101
+        }, 
+        {
+            "count": 1000000, 
+            "name": 101
+        }, 
+        {
+            "count": 500000, 
+            "name": 101
+        }, 
+        {
+            "count": 500000, 
+            "name": 101
+        }, 
+        {
+            "count": 200000, 
+            "name": 101
+        }, 
+        {
+            "count": 200000, 
+            "name": 101
+        }, 
+        {
+            "count": 200000, 
+            "name": 101
+        }, 
+        {
+            "count": 100000, 
+            "name": 101
+        }
+    ], 
+    "rankRewards": [
+        {
+            "count": 10000000, 
+            "name": 101
+        }, 
+        {
+            "count": 5000000, 
+            "name": 101
+        }, 
+        {
+            "count": 3000000, 
+            "name": 101
+        }, 
+        {
+            "count": 2000000, 
+            "name": 101
+        }, 
+        {
+            "count": 1500000, 
+            "name": 101
+        }, 
+        {
+            "count": 1000000, 
+            "name": 101
+        }, 
+        {
+            "count": 800000, 
+            "name": 101
+        }, 
+        {
+            "count": 600000, 
+            "name": 101
+        }, 
+        {
+            "count": 300000, 
+            "name": 101
+        }, 
+        {
+            "count": 200000, 
+            "name": 101
+        }
+    ], 
+    "ratio": [
+        50, 
+        10, 
+        10, 
+        10, 
+        10, 
+        10
+    ], 
+    "balance": {
+        "enable": 1, 
+        "time": [
+            600, 
+            1500
+        ], 
+        "point": [
+            500, 
+            1000
+        ], 
+        "diff": 2000, 
+        "interval": 10
+    }, 
+    "rankRewardsTeamCnt": 3
+}

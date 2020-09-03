@@ -1,0 +1,344 @@
+{
+    "platterFish": {
+        "44411": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2500
+                ], 
+                "fishType": 76217
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2501, 
+                    4500
+                ], 
+                "fishType": 76218
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4501, 
+                    6300
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6301, 
+                    7800
+                ], 
+                "fishType": 76219
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7801, 
+                    9000
+                ], 
+                "fishType": 76221
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9001, 
+                    10000
+                ], 
+                "fishType": 76224
+            }
+        ], 
+        "44412": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2500
+                ], 
+                "fishType": 76217
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2501, 
+                    4500
+                ], 
+                "fishType": 76218
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4501, 
+                    6300
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6301, 
+                    7800
+                ], 
+                "fishType": 76219
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7801, 
+                    9000
+                ], 
+                "fishType": 76221
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9001, 
+                    10000
+                ], 
+                "fishType": 76224
+            }
+        ], 
+        "44413": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2500
+                ], 
+                "fishType": 76217
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2501, 
+                    4500
+                ], 
+                "fishType": 76218
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4501, 
+                    6300
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6301, 
+                    7500
+                ], 
+                "fishType": 76219
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7501, 
+                    8700
+                ], 
+                "fishType": 76224
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    8701, 
+                    9500
+                ], 
+                "fishType": 76225
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9501, 
+                    10000
+                ], 
+                "fishType": 76226
+            }
+        ], 
+        "44414": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2500
+                ], 
+                "fishType": 76220
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2501, 
+                    4500
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4501, 
+                    6100
+                ], 
+                "fishType": 76222
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6101, 
+                    7400
+                ], 
+                "fishType": 76224
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7401, 
+                    8400
+                ], 
+                "fishType": 76225
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    8401, 
+                    9200
+                ], 
+                "fishType": 76226
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9201, 
+                    10000
+                ], 
+                "fishType": 76227
+            }
+        ], 
+        "44415": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2500
+                ], 
+                "fishType": 76220
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2501, 
+                    4500
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4501, 
+                    6100
+                ], 
+                "fishType": 76222
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6101, 
+                    7400
+                ], 
+                "fishType": 76224
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7401, 
+                    8400
+                ], 
+                "fishType": 76225
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    8401, 
+                    9200
+                ], 
+                "fishType": 76226
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9201, 
+                    10000
+                ], 
+                "fishType": 76227
+            }
+        ], 
+        "44501": [
+            {
+                "interval": 60, 
+                "probb": [
+                    1, 
+                    2200
+                ], 
+                "fishType": 76217
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    2201, 
+                    4200
+                ], 
+                "fishType": 76218
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    4201, 
+                    5700
+                ], 
+                "fishType": 76223
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    5701, 
+                    6900
+                ], 
+                "fishType": 76219
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    6901, 
+                    7800
+                ], 
+                "fishType": 76221
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    7801, 
+                    8600
+                ], 
+                "fishType": 76224
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    8601, 
+                    9400
+                ], 
+                "fishType": 76225
+            }, 
+            {
+                "interval": 60, 
+                "probb": [
+                    9401, 
+                    10000
+                ], 
+                "fishType": 76226
+            }
+        ]
+    }
+}

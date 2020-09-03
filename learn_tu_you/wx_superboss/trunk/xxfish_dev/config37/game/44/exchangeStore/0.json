@@ -1,0 +1,661 @@
+{
+    "items": {
+        "101_500000_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_COIN_500000"
+            ], 
+            "order": 0, 
+            "pt": "exchange", 
+            "itemId": 101, 
+            "count": [
+                500000
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "1137_20_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1137_20"
+            ], 
+            "order": 1, 
+            "pt": "exchange", 
+            "itemId": 1137, 
+            "count": [
+                20
+            ], 
+            "price": 10, 
+            "cur_price": [
+                10
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "14120_10_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14120_10"
+            ], 
+            "order": 2, 
+            "pt": "exchange", 
+            "itemId": 14120, 
+            "count": [
+                10
+            ], 
+            "price": 10, 
+            "cur_price": [
+                10
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "14119_10_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14119_10"
+            ], 
+            "order": 3, 
+            "pt": "exchange", 
+            "itemId": 14119, 
+            "count": [
+                10
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "14124_20_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14124_10"
+            ], 
+            "order": 4, 
+            "pt": "exchange", 
+            "itemId": 14124, 
+            "count": [
+                20
+            ], 
+            "price": 20, 
+            "cur_price": [
+                20
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "13543_50_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_13543_50"
+            ], 
+            "order": 5, 
+            "pt": "exchange", 
+            "itemId": 13543, 
+            "count": [
+                50
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "14125_1_1": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14125_1"
+            ], 
+            "order": 6, 
+            "pt": "exchange", 
+            "itemId": 14125, 
+            "count": [
+                1
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 0
+        }, 
+        "13543_50_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_13543_50"
+            ], 
+            "order": 0, 
+            "pt": "exchange", 
+            "itemId": 13543, 
+            "count": [
+                50
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 1
+        }, 
+        "14124_50_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14124_50"
+            ], 
+            "order": 1, 
+            "pt": "exchange", 
+            "itemId": 14124, 
+            "count": [
+                50
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 1
+        }, 
+        "14125_2_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14125_2"
+            ], 
+            "order": 2, 
+            "pt": "exchange", 
+            "itemId": 14125, 
+            "count": [
+                2
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 8
+            }, 
+            "categoryId": 1
+        }, 
+        "14126_2_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14126_2"
+            ], 
+            "order": 3, 
+            "pt": "exchange", 
+            "itemId": 14126, 
+            "count": [
+                2
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "label3BgType": [
+                "window_shop_tag_1.png"
+            ], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 8
+            }, 
+            "categoryId": 1
+        }, 
+        "14127_2_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14127_2"
+            ], 
+            "order": 4, 
+            "pt": "exchange", 
+            "itemId": 14127, 
+            "count": [
+                2
+            ], 
+            "price": 100, 
+            "cur_price": [
+                100
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "label3BgType": [
+                "window_shop_tag_3.png"
+            ], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 8
+            }, 
+            "categoryId": 1
+        }, 
+        "1429_10_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1429_10"
+            ], 
+            "order": 5, 
+            "pt": "exchange", 
+            "itemId": 1429, 
+            "count": [
+                10
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 4
+            }, 
+            "categoryId": 1
+        }, 
+        "1430_10_2": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1430_10"
+            ], 
+            "order": 6, 
+            "pt": "exchange", 
+            "itemId": 1430, 
+            "count": [
+                10
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 4
+            }, 
+            "categoryId": 1
+        }, 
+        "1429_10_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1429_10"
+            ], 
+            "order": 0, 
+            "pt": "exchange", 
+            "itemId": 1429, 
+            "count": [
+                10
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 2
+        }, 
+        "1430_10_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1430_10"
+            ], 
+            "order": 1, 
+            "pt": "exchange", 
+            "itemId": 1430, 
+            "count": [
+                10
+            ], 
+            "price": 50, 
+            "cur_price": [
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": 5
+            }, 
+            "categoryId": 2
+        }, 
+        "14146_10_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_14146_10"
+            ], 
+            "order": 2, 
+            "pt": "exchange", 
+            "itemId": 14146, 
+            "count": [
+                10
+            ], 
+            "price": 500, 
+            "cur_price": [
+                100, 
+                200, 
+                300, 
+                400, 
+                500
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "label3BgType": [
+                "window_shop_tag_3.png"
+            ], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }, 
+        "13543_50_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_13543_50"
+            ], 
+            "order": 3, 
+            "pt": "exchange", 
+            "itemId": 13543, 
+            "count": [
+                50
+            ], 
+            "price": 25, 
+            "cur_price": [
+                25, 
+                25, 
+                25, 
+                25, 
+                50
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }, 
+        "1288_72_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1288_72"
+            ], 
+            "order": 4, 
+            "pt": "exchange", 
+            "itemId": 1288, 
+            "count": [
+                72
+            ], 
+            "price": 22, 
+            "cur_price": [
+                22
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }, 
+        "1165_72_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1165_72"
+            ], 
+            "order": 5, 
+            "pt": "exchange", 
+            "itemId": 1165, 
+            "count": [
+                72
+            ], 
+            "price": 22, 
+            "cur_price": [
+                22
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }, 
+        "1166_72_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1166_72"
+            ], 
+            "order": 6, 
+            "pt": "exchange", 
+            "itemId": 1166, 
+            "count": [
+                72
+            ], 
+            "price": 45, 
+            "cur_price": [
+                45
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }, 
+        "1167_72_3": {
+            "name": [
+                "ID_CONFIG_ExchangeStore_1167_72"
+            ], 
+            "order": 7, 
+            "pt": "exchange", 
+            "itemId": 1167, 
+            "count": [
+                72
+            ], 
+            "price": 68, 
+            "cur_price": [
+                68
+            ], 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "pic": "", 
+            "buyType": "oceanStar", 
+            "otherBuyType": {}, 
+            "label1": [], 
+            "label2": [], 
+            "label3": [], 
+            "additionVip": 0, 
+            "extendData": {}, 
+            "limitCond": {
+                "userCountLimit": -1
+            }, 
+            "categoryId": 2
+        }
+    }, 
+    "startTS": "2020-07-08 00:00:00", 
+    "loopDays": 15
+}

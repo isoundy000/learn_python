@@ -1,0 +1,869 @@
+{
+    "44000001": {
+        "shareId": 44000001, 
+        "typeId": "limit_task_finish_1", 
+        "title": "首次完成限时任务(已废弃)", 
+        "desc1": "恭喜首次完成限时任务，分享立得：", 
+        "desc2": "恭喜首次完成限时任务，看视频立得：", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000002": {
+        "shareId": 44000002, 
+        "typeId": "gun_obtain", 
+        "title": "分享获得皮肤炮：霜冻(已废弃)", 
+        "desc1": "点击分享，立得稀有炮台", 
+        "desc2": "看视频立得稀有炮台", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 1, 
+                "name": 1165
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 1, 
+                "name": 1165
+            }
+        ]
+    }, 
+    "44000003": {
+        "shareId": 44000003, 
+        "typeId": "gun_present", 
+        "title": "赠送皮肤炮：霜冻(已废弃)", 
+        "desc1": "他人点击分享，自己立得霜冻x1天", 
+        "desc2": "", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 3, 
+        "expiresType": 1, 
+        "finishType": 1, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            [
+                {
+                    "count": 24, 
+                    "name": 1165
+                }
+            ], 
+            [
+                {
+                    "count": 1, 
+                    "name": 1165
+                }
+            ]
+        ], 
+        "rewards2": [
+            [
+                {
+                    "count": 24, 
+                    "name": 1165
+                }
+            ], 
+            [
+                {
+                    "count": 1, 
+                    "name": 1165
+                }
+            ]
+        ]
+    }, 
+    "44000004": {
+        "shareId": 44000004, 
+        "typeId": "limit_task_fail", 
+        "title": "任务失败分享加速(已废弃)", 
+        "desc1": "分享即可获得200%任务加速", 
+        "desc2": "看视频即可获得200%任务加速", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000005": {
+        "shareId": 44000005, 
+        "typeId": "multiple_fish_catch_1", 
+        "title": "首次捕获倍率鱼(已废弃)", 
+        "desc1": "恭喜您首次捕获倍率鱼，分享立得：", 
+        "desc2": "恭喜您首次捕获倍率鱼，看视频立得：", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 1000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 1000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000006": {
+        "shareId": 44000006, 
+        "typeId": "checkin", 
+        "title": "每日签到分享", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 1, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000007": {
+        "shareId": 44000007, 
+        "typeId": "skill_obtain_grenade", 
+        "title": "分享提升技能(已废弃)", 
+        "desc1": "分享即可提升技能等级！", 
+        "desc2": "看视频即可提升技能等级！", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000008": {
+        "shareId": 44000008, 
+        "typeId": "coin_store", 
+        "title": "分享获得金币", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 2, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 3000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 3000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000009": {
+        "shareId": 44000009, 
+        "typeId": "match_end", 
+        "title": "比赛分享(已废弃)", 
+        "desc1": "分享即可获得1000金币", 
+        "desc2": "", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 1000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 1000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000010": {
+        "shareId": 44000010, 
+        "typeId": "boss_fish_catch", 
+        "title": "捕获BOSS分享", 
+        "desc1": "分享立得：", 
+        "desc2": "看视频立得：", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 3, 
+        "finishCountLimit": 3, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            2
+        ], 
+        "rewards1": [
+            {
+                "count": 3000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 3000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000011": {
+        "shareId": 44000011, 
+        "typeId": "multiple_fish_catch", 
+        "title": "捕获倍率鱼分享(已废弃)", 
+        "desc1": "分享立得：", 
+        "desc2": "看视频立得：", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 3, 
+        "finishCountLimit": 3, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000012": {
+        "shareId": 44000012, 
+        "typeId": "skill_cooldown", 
+        "title": "技能刷新CD分享", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 5, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 1, 
+                "name": 1408
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 1, 
+                "name": 1408
+            }
+        ]
+    }, 
+    "44000013": {
+        "shareId": 44000013, 
+        "typeId": "first_bucket_gold", 
+        "title": "第一桶金(已废弃)", 
+        "desc1": "第一桶金", 
+        "desc2": "第一桶金", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000014": {
+        "shareId": 44000014, 
+        "typeId": "alms_coin", 
+        "title": "救济金分享", 
+        "desc1": "救济金分享", 
+        "desc2": "救济金分享", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 2, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ]
+    }, 
+    "44000015": {
+        "shareId": 44000015, 
+        "typeId": "starfish_catch", 
+        "title": "捕获海星分享(未开发)", 
+        "desc1": "恭喜您获得海星，分享立得：", 
+        "desc2": "恭喜您获得海星，看视频立得：", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 3, 
+        "finishCountLimit": 3, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000016": {
+        "shareId": 44000016, 
+        "typeId": "skill_obtain_missile", 
+        "title": "分享提升技能(已废弃)", 
+        "desc1": "分享即可提升技能等级！", 
+        "desc2": "看视频即可提升技能等级！", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000017": {
+        "shareId": 44000017, 
+        "typeId": "skill_obtain_cannon", 
+        "title": "分享提升技能(已废弃)", 
+        "desc1": "分享即可提升技能等级！", 
+        "desc2": "看视频即可提升技能等级！", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000018": {
+        "shareId": 44000018, 
+        "typeId": "skill_obtain_energy", 
+        "title": "分享提升技能(已废弃)", 
+        "desc1": "分享即可提升技能等级！", 
+        "desc2": "看视频即可提升技能等级！", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000019": {
+        "shareId": 44000019, 
+        "typeId": "skill_obtain_laser", 
+        "title": "分享提升技能(已废弃)", 
+        "desc1": "分享即可提升技能等级！", 
+        "desc2": "看视频即可提升技能等级！", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 1, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000020": {
+        "shareId": 44000020, 
+        "typeId": "limit_task_success", 
+        "title": "任务完成分享双倍(已废弃)", 
+        "desc1": "任务完成分享双倍", 
+        "desc2": "任务完成分享双倍", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000021": {
+        "shareId": 44000021, 
+        "typeId": "random_chest", 
+        "title": "随机分享宝箱", 
+        "desc1": "随机分享宝箱", 
+        "desc2": "随机分享宝箱", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": {
+            "58109": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 31101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58112": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 34101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58110": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 32101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58111": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 33101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58113": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 35101
+                    }
+                ], 
+                "sale": []
+            }
+        }, 
+        "rewards2": {
+            "58109": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 31101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58112": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 34101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58110": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 32101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58111": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 33101
+                    }
+                ], 
+                "sale": []
+            }, 
+            "58113": {
+                "rewards": [
+                    {
+                        "count": 1, 
+                        "name": 35101
+                    }
+                ], 
+                "sale": []
+            }
+        }
+    }, 
+    "44000022": {
+        "shareId": 44000022, 
+        "typeId": "honor_obtain", 
+        "title": "获得称号(未开发)", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 999, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 3, 
+        "finishCountLimit": 1, 
+        "expiresType": 1, 
+        "finishType": 0, 
+        "groupType": 0, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000023": {
+        "shareId": 44000023, 
+        "typeId": "chest_accelerate", 
+        "title": "宝箱加速分享(已废弃)", 
+        "desc1": "每当一名玩家点击分享，即可减少30分钟冷却时间", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 1, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }, 
+    "44000024": {
+        "shareId": 44000024, 
+        "typeId": "flying_pig", 
+        "title": "分享领豪礼！", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            2, 
+            1
+        ], 
+        "rewards1": [
+            {
+                "count": 20, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 103
+            }, 
+            {
+                "count": 10, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1149
+            }, 
+            {
+                "count": 10, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1137
+            }, 
+            {
+                "count": 5, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1408
+            }, 
+            {
+                "count": 10, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1137
+            }
+        ], 
+        "rewards2": [
+            {
+                "count": 20, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 103
+            }, 
+            {
+                "count": 10, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1149
+            }, 
+            {
+                "count": 5, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1137
+            }, 
+            {
+                "count": 5, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1408
+            }, 
+            {
+                "count": 5, 
+                "saleCoin": 0, 
+                "multiple": 1, 
+                "name": 1137
+            }
+        ]
+    }, 
+    "44000025": {
+        "shareId": 44000025, 
+        "typeId": "red_fish_catch", 
+        "title": "捕获红包鱼分享", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": {
+            "share": {
+                "name": 103, 
+                "randomArray": [
+                    10
+                ]
+            }
+        }, 
+        "rewards2": {
+            "share": {
+                "name": 103, 
+                "randomArray": [
+                    10
+                ]
+            }
+        }
+    }, 
+    "44000026": {
+        "shareId": 44000026, 
+        "typeId": "free_coin_lucky_tree", 
+        "title": "免费金币摇钱树", 
+        "desc1": "", 
+        "desc2": "", 
+        "vipLimit": 0, 
+        "levelLimit": 0, 
+        "versionLimit": [], 
+        "timeLimit": [], 
+        "locationLimit": [], 
+        "popCountLimit": 99999, 
+        "finishCountLimit": 99999, 
+        "expiresType": 0, 
+        "finishType": 0, 
+        "groupType": 1, 
+        "modes": [
+            1
+        ], 
+        "rewards1": [], 
+        "rewards2": []
+    }
+}

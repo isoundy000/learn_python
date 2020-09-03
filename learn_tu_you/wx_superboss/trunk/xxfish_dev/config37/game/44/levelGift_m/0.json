@@ -1,0 +1,248 @@
+{
+    "70501": {
+        "giftId": 70501, 
+        "giftName": "ID_GIFT_NAME_1", 
+        "productId": "LevelGift_1", 
+        "minLevel": 10, 
+        "maxLevel": 9000, 
+        "levelUp": 0, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 1520, 
+        "discountPrice": 980, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 4800000
+            }, 
+            {
+                "name": 1137, 
+                "count": 1000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70502": {
+        "giftId": 70502, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_2", 
+        "minLevel": 10000, 
+        "maxLevel": 10000, 
+        "levelUp": 30000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 7000, 
+        "discountPrice": 3280, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 32800000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70503": {
+        "giftId": 70503, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_3", 
+        "minLevel": 15000, 
+        "maxLevel": 15000, 
+        "levelUp": 30000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 6500, 
+        "discountPrice": 3000, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 30000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70504": {
+        "giftId": 70504, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_4", 
+        "minLevel": 20000, 
+        "maxLevel": 20000, 
+        "levelUp": 30000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 5500, 
+        "discountPrice": 2600, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 26000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70505": {
+        "giftId": 70505, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_5", 
+        "minLevel": 25000, 
+        "maxLevel": 25000, 
+        "levelUp": 30000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 3200, 
+        "discountPrice": 1500, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 15000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70506": {
+        "giftId": 70506, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_6", 
+        "minLevel": 30000, 
+        "maxLevel": 30000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 38880, 
+        "discountPrice": 6480, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 64800000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70507": {
+        "giftId": 70507, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_7", 
+        "minLevel": 35000, 
+        "maxLevel": 35000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 36000, 
+        "discountPrice": 6000, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 60000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70508": {
+        "giftId": 70508, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_8", 
+        "minLevel": 40000, 
+        "maxLevel": 40000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 32000, 
+        "discountPrice": 5000, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 50000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70509": {
+        "giftId": 70509, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_9", 
+        "minLevel": 45000, 
+        "maxLevel": 45000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 25000, 
+        "discountPrice": 3500, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 35000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70510": {
+        "giftId": 70510, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_10", 
+        "minLevel": 50000, 
+        "maxLevel": 50000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 18000, 
+        "discountPrice": 1600, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 16000000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }, 
+    "70511": {
+        "giftId": 70511, 
+        "giftName": "ID_GIFT_NAME_2", 
+        "productId": "LevelGift_11", 
+        "minLevel": 60000, 
+        "maxLevel": 60000, 
+        "levelUp": 70000, 
+        "showTime": 60, 
+        "buyType": "diamond", 
+        "priceDiamond": 10000, 
+        "discountPrice": 980, 
+        "rewards": [
+            {
+                "name": 101, 
+                "count": 9800000
+            }, 
+            {
+                "name": 14120, 
+                "count": 20
+            }
+        ]
+    }
+}

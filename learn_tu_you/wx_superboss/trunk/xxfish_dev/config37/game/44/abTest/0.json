@@ -1,0 +1,66 @@
+{
+    "abcTest": {
+        "mode": "c", 
+        "registerRechargeBonus": {
+            "a": 200000, 
+            "c": 200000, 
+            "b": 0
+        }, 
+        "firstCurve": {
+            "44002": {
+                "a": 6, 
+                "c": 6, 
+                "b": 2
+            }
+        }, 
+        "enterLimit": {
+            "44005": {
+                "b": {
+                    "minCoin": 500000, 
+                    "minLevel": 30
+                }
+            }, 
+            "44004": {
+                "b": {
+                    "minCoin": 300000, 
+                    "minLevel": 25
+                }
+            }, 
+            "44003": {
+                "b": {
+                    "minCoin": 150000, 
+                    "minLevel": 12
+                }
+            }
+        }, 
+        "waveChange": {
+            "44002": {
+                "b": {
+                    "changeTimes": 1, 
+                    "profitCoin": 200000
+                }
+            }
+        }, 
+        "enableNewbie8DaysGift": {}, 
+        "enableNewbieLottery": {}, 
+        "enableUserCoupon": {}, 
+        "extraRechargeBonus": {
+            "c": {
+                "TY0044G06480004": 600000, 
+                "TY0044G00080001": 80000, 
+                "TY0044G00080006": 80000, 
+                "TY0044G00680005": 600000, 
+                "TY0044G01280004": 600000, 
+                "TY0044G00300004": 300000
+            }, 
+            "b": {
+                "TY0044G06480004": 600000, 
+                "TY0044G00080001": 80000, 
+                "TY0044G00080006": 80000, 
+                "TY0044G00680005": 600000, 
+                "TY0044G01280004": 600000, 
+                "TY0044G00300004": 300000
+            }
+        }
+    }
+}

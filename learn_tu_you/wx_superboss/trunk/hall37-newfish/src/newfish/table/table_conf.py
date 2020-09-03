@@ -7,9 +7,9 @@ from newfish.entity import config
 
 
 class FishTableConf(object):
-    '''
-    捕鱼桌子内的配置
-    '''
+    """
+    渔场桌子内的配置
+    """
     def __init__(self, datas):
         self.datas = datas
         # 初始化鱼群  string_44002 = [tide_44002_1、tide_44002_2、group_44002_13、group_44002_14、superboss_71202_10、superboss_71202_11]
@@ -22,24 +22,28 @@ class FishTableConf(object):
         self.allGroupIds = self.fishGroups.keys()           # 该场次可使用的所有鱼阵 [tide_44002_1: {id: xx, fishes: {'xxx': xx}, total_time: xxx}、call_11002_lv3]
         self.allNormalGroupIds = []                         # 普通鱼
         self.allBossGroupIds = {}                           # boss鱼阵
-        self.allCallGroupIds = []
+        self.allCallGroupIds = []                           # 召唤鱼阵
         self.allTideGroupIds = []                           # 普通鱼潮
         self.allActTideGroupIds = []                        # 活动鱼潮1
         self.allActTide2GroupIds = []                       # 活动鱼潮2
-        self.allChestGroupIds = []
-        self.allCouponGroupIds = {}
-        self.allActivityGroupIds = {}
-        self.allRobberyBossGroupIds = []
-        self.allBufferGroupIds = []
-        self.allMultipleGroupIds = {}
+        self.allChestGroupIds = []                          # 金币宝箱
+        self.allCouponGroupIds = {}                         # 奖券鱼
+        self.allActivityGroupIds = {}                       # 活动鱼（海螺）
+        self.allRobberyBossGroupIds = []                    # 招财模式Boss
+        self.allBufferGroupIds = []                         # 回馈赛Buffer
+        self.allMultipleGroupIds = {}                       # 回馈赛随机倍率鱼
         self.allShareGroupIds = {}                          # 所有分享宝箱鱼
         self.allRainbowGroupIds = []                        # 所有的彩虹鱼鱼群
         self.allTerrorGroupIds = {}                         # terror鱼初始化
-        self.allAutofillGroupIds = {}                       # 所有自动填充鱼
+        self.allAutofillGroupIds = {}                       # 自动填充鱼
+        self.allAutofillShoalGroupIds = {}                  # 自动填充鱼群
         self.allGrandPrixGroupIds = {}                      # 大奖所有鱼群
-        self.allSuperBossGroupIds = {}                      # 超级boss鱼群
-        self.allSuperBossBornGroupIds = {}                  # 出生boss鱼群
-        self.allSuperBossFastMoveGroupIds = {}              # 没有保护罩的超级boss
+        self.allSuperBossGroupIds = {}                      # 超级Boss正常鱼群
+        self.allSuperBossBornGroupIds = {}                  # 超级Boss出生鱼群
+        self.allSuperBossFastMoveGroupIds = {}              # 没有保护罩的超级Boss
+        self.allPlatterGroupIds = {}                        # 大盘鱼初始化
+        self.allMiniGameGroupIds = {}                       # 小游戏Boss（美人鱼）
+
         for key in self.allGroupIds:
             fishType = key.split("_")[1]
             if key.startswith("group_"):                    # 普通鱼
@@ -74,6 +78,8 @@ class FishTableConf(object):
                 self.allTerrorGroupIds.setdefault(int(fishType), []).append(key)
             elif key.startswith("autofill_"):
                 self.allAutofillGroupIds.setdefault(int(fishType), []).append(key)
+            elif key.startswith("shoal_"):
+                self.allAutofillShoalGroupIds.setdefault(int(fishType), []).append(key)
             elif key.startswith("grandprix_"):
                 self.allGrandPrixGroupIds.setdefault(int(fishType), []).append(key)
             elif key.startswith("superboss_"):
@@ -82,6 +88,10 @@ class FishTableConf(object):
                 self.allSuperBossBornGroupIds.setdefault(int(fishType), []).append(key)
             elif key.startswith("superbossfast_"):
                 self.allSuperBossFastMoveGroupIds.setdefault(int(fishType), []).append(key)
+            elif key.startswith("platter_"):
+                self.allPlatterGroupIds.setdefault(int(fishType), []).append(key)
+            elif key.startswith("minigame_"):
+                self.allMiniGameGroupIds.setdefault(int(fishType), []).append(key)
 
     def getAllDatas(self):
         return self.datas
@@ -295,20 +305,6 @@ class FishTableConf(object):
         最大波动基数
         """
         return self.datas.get("maxWaveRadix", -1)
-
-    @property
-    def minWaveRadix_b(self):
-        """
-        最小波动基数(渔场倍率b模式)
-        """
-        return self.datas.get("minWaveRadix_b") or self.minWaveRadix
-
-    @property
-    def maxWaveRadix_b(self):
-        """
-        最大波动基数(渔场倍率b模式)
-        """
-        return self.datas.get("maxWaveRadix_b") or self.maxWaveRadix
 
     @property
     def waveRadixRate(self):

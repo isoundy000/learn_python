@@ -1,0 +1,1389 @@
+{
+    "gift": {
+        "7001": {
+            "giftId": 7001, 
+            "giftName": "启航礼包", 
+            "giftType": 0, 
+            "productId": 0, 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 1, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 0, 
+            "discountPrice": 0, 
+            "price_direct": 0, 
+            "price_diamond": 0, 
+            "otherBuyType": {}, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 103, 
+                    "count": 50, 
+                    "type": 3, 
+                    "name": "红包券", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 101, 
+                    "count": 500, 
+                    "type": 3, 
+                    "name": "金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1408, 
+                    "count": 3, 
+                    "type": 3, 
+                    "name": "冷却", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70201": {
+            "giftId": 70201, 
+            "giftName": "首充礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G00080001", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 100, 
+            "discountPrice": 8, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 200000, 
+                    "type": 3, 
+                    "name": "20万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1137, 
+                    "count": 50, 
+                    "type": 3, 
+                    "name": "珍珠x50", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1366, 
+                    "count": 1, 
+                    "type": 5, 
+                    "name": "舞龙烟花", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "702008": {
+            "giftId": 702008, 
+            "giftName": "升级礼包", 
+            "giftType": 5, 
+            "productId": "TY0044G00080006", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 12, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 100, 
+            "discountPrice": 8, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44401, 
+                44402, 
+                44403, 
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": 720, 
+            "popupLevel": 12, 
+            "items": [
+                {
+                    "itemId": 1137, 
+                    "count": 160, 
+                    "type": 3, 
+                    "name": "珍珠x160", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1352, 
+                    "count": 1, 
+                    "type": 5, 
+                    "name": "飓风", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70202": {
+            "giftId": 70202, 
+            "giftName": "超值礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G00300004", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 120, 
+            "discountPrice": 30, 
+            "price_direct": 30, 
+            "price_diamond": 300, 
+            "otherBuyType": {
+                "voucher": 30
+            }, 
+            "vip": 0, 
+            "giftLimit": 70201, 
+            "showAfterReload": 1, 
+            "showAfterTimes": 30, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 600000, 
+                    "type": 3, 
+                    "name": "60万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1395, 
+                    "count": 1, 
+                    "type": 5, 
+                    "name": "自由之翼", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37502, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "璀璨大银箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "702128": {
+            "giftId": 702128, 
+            "giftName": "豪华礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G01280004", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 288, 
+            "discountPrice": 128, 
+            "price_direct": 128, 
+            "price_diamond": 1280, 
+            "otherBuyType": {
+                "voucher": 128
+            }, 
+            "vip": 0, 
+            "giftLimit": 70202, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1880000, 
+                    "type": 3, 
+                    "name": "188万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1137, 
+                    "count": 999, 
+                    "type": 3, 
+                    "name": "珍珠x999", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70212801": {
+            "giftId": 70212801, 
+            "giftName": "豪华礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G01280014", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 300, 
+            "discountPrice": 128, 
+            "price_direct": 128, 
+            "price_diamond": 1280, 
+            "otherBuyType": {
+                "voucher": 128
+            }, 
+            "vip": 0, 
+            "giftLimit": 70202, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1880000, 
+                    "type": 3, 
+                    "name": "188万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37602, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "璀璨贵族箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70212802": {
+            "giftId": 70212802, 
+            "giftName": "升级礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G01280024", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 300, 
+            "discountPrice": 128, 
+            "price_direct": 128, 
+            "price_diamond": 1280, 
+            "otherBuyType": {
+                "voucher": 128
+            }, 
+            "vip": 0, 
+            "giftLimit": 70202, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 1137, 
+                    "count": 2200, 
+                    "type": 3, 
+                    "name": "珍珠x2200", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1408, 
+                    "count": 40, 
+                    "type": 3, 
+                    "name": "冷却x40", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37502, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "璀璨大银箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70203": {
+            "giftId": 70203, 
+            "giftName": "终极礼包", 
+            "giftType": 2, 
+            "productId": "TY0044G06480004", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 2000, 
+            "discountPrice": 648, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "vip": 4, 
+            "giftLimit": 702128, 
+            "showAfterReload": 1, 
+            "showAfterTimes": 30, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 10000000, 
+                    "type": 3, 
+                    "name": "1000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1137, 
+                    "count": 6666, 
+                    "type": 3, 
+                    "name": " 珍珠x6666", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1429, 
+                    "count": 66, 
+                    "type": 3, 
+                    "name": "紫水晶", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1430, 
+                    "count": 66, 
+                    "type": 3, 
+                    "name": "黄水晶", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1431, 
+                    "count": 6, 
+                    "type": 3, 
+                    "name": "五彩水晶", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "703001": {
+            "giftId": 703001, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00010005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 5, 
+            "discountPrice": 1, 
+            "price_direct": 1, 
+            "price_diamond": 10, 
+            "otherBuyType": {
+                "voucher": 1
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 28888, 
+                    "type": 3, 
+                    "name": "28888金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 36201, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "财富宝箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "703006": {
+            "giftId": 703006, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00080005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 20, 
+            "discountPrice": 8, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44403, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 160000, 
+                    "type": 3, 
+                    "name": "16万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 1137, 
+                    "count": 40, 
+                    "type": 3, 
+                    "name": " 珍珠x40", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70301": {
+            "giftId": 70301, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00680005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 150, 
+            "discountPrice": 68, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "otherBuyType": {
+                "voucher": 68
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44403, 
+                44404, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1000000, 
+                    "type": 3, 
+                    "name": "100万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37502, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "璀璨大银箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "703198": {
+            "giftId": 703198, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G01980005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 500, 
+            "discountPrice": 198, 
+            "price_direct": 198, 
+            "price_diamond": 1980, 
+            "otherBuyType": {
+                "voucher": 198
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 3000000, 
+                    "type": 3, 
+                    "name": "300万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37602, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "璀璨贵族箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70302": {
+            "giftId": 70302, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G03280005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 900, 
+            "discountPrice": 328, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                1, 
+                2
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 5000000, 
+                    "type": 3, 
+                    "name": "500万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37702, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "梦幻宝藏箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70303": {
+            "giftId": 70303, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G06480005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "direct", 
+            "price": 1600, 
+            "discountPrice": 648, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                0
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 12000000, 
+                    "type": 3, 
+                    "name": "1200万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 37702, 
+                    "count": 1, 
+                    "type": 1, 
+                    "name": "梦幻宝藏箱", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70401": {
+            "giftId": 70401, 
+            "giftName": "畅玩月卡", 
+            "giftType": 4, 
+            "productId": "TY0044M00180001", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 360, 
+            "discountPrice": 180, 
+            "price_direct": 18, 
+            "price_diamond": 180, 
+            "otherBuyType": {
+                "voucher": 18
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "monthCard": {
+                "count": 30, 
+                "name": 1452
+            }, 
+            "firstBuyRewards": [
+                {
+                    "itemId": 1301, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "青铜招财珠x10", 
+                    "desc": ""
+                }
+            ], 
+            "getAfterBuy": [
+                {
+                    "itemId": 101, 
+                    "count": 1800000, 
+                    "type": 3, 
+                    "name": "180万金币", 
+                    "desc": ""
+                }
+            ], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 300000, 
+                    "type": 3, 
+                    "name": "30万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "锁定x10", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14119, 
+                    "count": 5, 
+                    "type": 3, 
+                    "name": "冰冻x5", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 3106, 
+                    "count": 40, 
+                    "type": 3, 
+                    "name": "海星x40", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14164, 
+                    "count": 1, 
+                    "type": 3, 
+                    "name": "大奖赛门票", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70402": {
+            "giftId": 70402, 
+            "giftName": "永久月卡", 
+            "giftType": 4, 
+            "productId": "TY0044M00680001", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 2000, 
+            "discountPrice": 680, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "otherBuyType": {
+                "voucher": 68
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "monthCard": {
+                "count": 1, 
+                "name": 14009
+            }, 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [
+                {
+                    "itemId": 101, 
+                    "count": 6800000, 
+                    "type": 3, 
+                    "name": "680万金币", 
+                    "desc": ""
+                }
+            ], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 300000, 
+                    "type": 3, 
+                    "name": "30万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "锁定x10", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14119, 
+                    "count": 5, 
+                    "type": 3, 
+                    "name": "冰冻x5", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 3106, 
+                    "count": 40, 
+                    "type": 3, 
+                    "name": "海星x40", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14164, 
+                    "count": 1, 
+                    "type": 3, 
+                    "name": "大奖赛门票", 
+                    "desc": ""
+                }
+            ]
+        }
+    }, 
+    "dailyGift": {
+        "707008": {
+            "giftId": 707008, 
+            "giftName": "ID_CONFIG_DAILY_GIFT_NAME_1", 
+            "productId": "TY0044D00080001", 
+            "vipRange": [
+                0, 
+                12
+            ], 
+            "buyType": "diamond", 
+            "price": 80, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "giftInfo": [
+                {
+                    "day_idx": 0, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 1600000, 
+                            "name": "金币160万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 20, 
+                            "des": "珍珠x20"
+                        }, 
+                        {
+                            "itemId": 1284, 
+                            "count": 1, 
+                            "name": "白银扭蛋x1"
+                        }, 
+                        {
+                            "itemId": 14124, 
+                            "count": 25, 
+                            "name": "齿轮x25"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 1, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 2000000, 
+                            "name": "金币200万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 25, 
+                            "des": "珍珠x25"
+                        }, 
+                        {
+                            "itemId": 1284, 
+                            "count": 2, 
+                            "name": "白银扭蛋x2"
+                        }, 
+                        {
+                            "itemId": 14124, 
+                            "count": 25, 
+                            "name": "齿轮x25"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 2, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 2400000, 
+                            "name": "金币240万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 30, 
+                            "des": "珍珠x30"
+                        }, 
+                        {
+                            "itemId": 1284, 
+                            "count": 3, 
+                            "name": "白银扭蛋x3"
+                        }, 
+                        {
+                            "itemId": 14124, 
+                            "count": 25, 
+                            "name": "齿轮x25"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "707030": {
+            "giftId": 707030, 
+            "giftName": "ID_CONFIG_DAILY_GIFT_NAME_2", 
+            "productId": "TY0044D00300001", 
+            "vipRange": [
+                0, 
+                12
+            ], 
+            "buyType": "diamond", 
+            "price": 300, 
+            "price_direct": 30, 
+            "price_diamond": 300, 
+            "otherBuyType": {
+                "voucher": 30
+            }, 
+            "giftInfo": [
+                {
+                    "day_idx": 0, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 6000000, 
+                            "name": "金币600万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 40, 
+                            "des": "珍珠x40"
+                        }, 
+                        {
+                            "itemId": 1285, 
+                            "count": 2, 
+                            "name": "刺豚黄金扭蛋x2"
+                        }, 
+                        {
+                            "itemId": 36501, 
+                            "count": 1, 
+                            "name": "神秘大银箱x1"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 1, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 7500000, 
+                            "name": "金币750万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 50, 
+                            "des": "珍珠x50"
+                        }, 
+                        {
+                            "itemId": 1285, 
+                            "count": 4, 
+                            "name": "刺豚黄金扭蛋x4"
+                        }, 
+                        {
+                            "itemId": 36501, 
+                            "count": 1, 
+                            "name": "神秘大银箱x1"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 2, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 9000000, 
+                            "name": "金币900万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 60, 
+                            "des": "珍珠x60"
+                        }, 
+                        {
+                            "itemId": 1285, 
+                            "count": 6, 
+                            "name": "刺豚黄金扭蛋x6"
+                        }, 
+                        {
+                            "itemId": 36501, 
+                            "count": 1, 
+                            "name": "神秘大银箱x1"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "707098": {
+            "giftId": 707098, 
+            "giftName": "ID_CONFIG_DAILY_GIFT_NAME_3", 
+            "productId": "TY0044D00980001", 
+            "vipRange": [
+                2, 
+                12
+            ], 
+            "buyType": "diamond", 
+            "price": 980, 
+            "price_direct": 98, 
+            "price_diamond": 980, 
+            "otherBuyType": {
+                "voucher": 98
+            }, 
+            "giftInfo": [
+                {
+                    "day_idx": 0, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 18000000, 
+                            "name": "金币1800万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 120, 
+                            "des": "珍珠x120"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 1, 
+                            "name": "章鱼王黄金扭蛋x1"
+                        }, 
+                        {
+                            "itemId": 37501, 
+                            "count": 1, 
+                            "name": "璀璨大银箱x1"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 1, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 24000000, 
+                            "name": "金币2400万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 150, 
+                            "des": "珍珠x150"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 2, 
+                            "name": "章鱼王黄金扭蛋x2"
+                        }, 
+                        {
+                            "itemId": 37501, 
+                            "count": 1, 
+                            "name": "璀璨大银箱x1"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 2, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 30000000, 
+                            "name": "金币3000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 180, 
+                            "des": "珍珠x180"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 3, 
+                            "name": "章鱼王黄金扭蛋x3"
+                        }, 
+                        {
+                            "itemId": 37501, 
+                            "count": 1, 
+                            "name": "璀璨大银箱x1"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "707328": {
+            "giftId": 707328, 
+            "giftName": "ID_CONFIG_DAILY_GIFT_NAME_4", 
+            "productId": "TY0044D03280001", 
+            "vipRange": [
+                4, 
+                12
+            ], 
+            "buyType": "diamond", 
+            "price": 3280, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "giftInfo": [
+                {
+                    "day_idx": 0, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 60000000, 
+                            "name": "金币6000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 100, 
+                            "des": "珍珠x100"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 1, 
+                            "name": "章鱼王黄金扭蛋x1"
+                        }, 
+                        {
+                            "itemId": 13543, 
+                            "count": 400, 
+                            "name": "红宝石x400"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 1, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 80000000, 
+                            "name": "金币8000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 150, 
+                            "des": "珍珠x150"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 2, 
+                            "name": "章鱼王黄金扭蛋x2"
+                        }, 
+                        {
+                            "itemId": 13543, 
+                            "count": 500, 
+                            "name": "红宝石x500"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 2, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 100000000, 
+                            "name": "金币10000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 200, 
+                            "des": "珍珠x200"
+                        }, 
+                        {
+                            "itemId": 1286, 
+                            "count": 3, 
+                            "name": "章鱼王黄金扭蛋x3"
+                        }, 
+                        {
+                            "itemId": 13543, 
+                            "count": 600, 
+                            "name": "红宝石x600"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "707648": {
+            "giftId": 707648, 
+            "giftName": "ID_CONFIG_DAILY_GIFT_NAME_5", 
+            "productId": "TY0044D06480001", 
+            "vipRange": [
+                8, 
+                12
+            ], 
+            "buyType": "diamond", 
+            "price": 6480, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "giftInfo": [
+                {
+                    "day_idx": 0, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 120000000, 
+                            "name": "金币12000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 200, 
+                            "des": "珍珠x200"
+                        }, 
+                        {
+                            "itemId": 1429, 
+                            "count": 80, 
+                            "name": "紫水晶x80"
+                        }, 
+                        {
+                            "itemId": 1430, 
+                            "count": 80, 
+                            "name": "黄水晶x80"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 1, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 160000000, 
+                            "name": "金币16000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 300, 
+                            "des": "珍珠x300"
+                        }, 
+                        {
+                            "itemId": 1429, 
+                            "count": 100, 
+                            "name": "紫水晶x100"
+                        }, 
+                        {
+                            "itemId": 1430, 
+                            "count": 100, 
+                            "name": "黄水晶x100"
+                        }
+                    ]
+                }, 
+                {
+                    "day_idx": 2, 
+                    "items": [
+                        {
+                            "itemId": 101, 
+                            "count": 200000000, 
+                            "name": "金币20000万"
+                        }, 
+                        {
+                            "itemId": 1137, 
+                            "count": 400, 
+                            "des": "珍珠x400"
+                        }, 
+                        {
+                            "itemId": 1429, 
+                            "count": 120, 
+                            "name": "紫水晶x120"
+                        }, 
+                        {
+                            "itemId": 1430, 
+                            "count": 120, 
+                            "name": "黄水晶x120"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

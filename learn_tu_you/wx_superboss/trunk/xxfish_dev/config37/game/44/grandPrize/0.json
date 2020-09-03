@@ -1,0 +1,31 @@
+{
+    "roomIds": [
+        44404, 
+        44405
+    ], 
+    "enable": 1, 
+    "recordCount": 30, 
+    "interval": [
+        180, 
+        1020
+    ], 
+    "winningBaseCoin": 30000000000, 
+    "minPool": 30000000, 
+    "fishScore": 100, 
+    "rewardsPct": [
+        [
+            7800, 
+            5
+        ], 
+        [
+            1850, 
+            25
+        ], 
+        [
+            350, 
+            100
+        ]
+    ], 
+    "minWinningRate": 10, 
+    "poolPct": 0.3
+}

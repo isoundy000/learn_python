@@ -1,0 +1,2315 @@
+{
+    "dropGunX": {
+        "10": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 50
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "15": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 50
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "20": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 60
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "25": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 60
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "30": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 70
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "40": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 70
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "50": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 80
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "60": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 80
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "70": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 90
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "80": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 90
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }
+        ], 
+        "90": [
+            {
+                "dropGroupId": 1, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 100
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 800
+            }
+        ], 
+        "100": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5280
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 100
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 800
+            }
+        ], 
+        "150": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5280
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 110
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 800
+            }
+        ], 
+        "200": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 4800
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 110
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 800
+            }
+        ], 
+        "250": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 2400
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 120
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 4, 
+                "probability": 800
+            }
+        ], 
+        "300": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 2160
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 120
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 4, 
+                "probability": 800
+            }
+        ], 
+        "350": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1920
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 130
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 2, 
+                "max": 5, 
+                "probability": 800
+            }
+        ], 
+        "400": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1680
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 130
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 2, 
+                "max": 5, 
+                "probability": 800
+            }
+        ], 
+        "450": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1440
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 140
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 800
+            }
+        ], 
+        "500": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 140
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 800
+            }
+        ], 
+        "600": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 150
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 3, 
+                "max": 6, 
+                "probability": 800
+            }
+        ], 
+        "700": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 150
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 3, 
+                "max": 6, 
+                "probability": 800
+            }
+        ], 
+        "800": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 3, 
+                "max": 7, 
+                "probability": 800
+            }
+        ], 
+        "900": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 3, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 4, 
+                "max": 8, 
+                "probability": 800
+            }
+        ], 
+        "1000": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 3, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 5, 
+                "max": 10, 
+                "probability": 800
+            }
+        ], 
+        "1500": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 4, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 5, 
+                "max": 15, 
+                "probability": 800
+            }
+        ], 
+        "2000": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 4, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 6, 
+                "max": 18, 
+                "probability": 800
+            }
+        ], 
+        "2500": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 6, 
+                "max": 18, 
+                "probability": 800
+            }
+        ], 
+        "3000": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 8, 
+                "max": 20, 
+                "probability": 800
+            }
+        ], 
+        "3500": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 6, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 8, 
+                "max": 20, 
+                "probability": 800
+            }
+        ], 
+        "4000": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 6, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 10, 
+                "max": 25, 
+                "probability": 800
+            }
+        ], 
+        "4500": [
+            {
+                "dropGroupId": 1, 
+                "min": 4, 
+                "max": 7, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 10, 
+                "max": 25, 
+                "probability": 800
+            }
+        ], 
+        "5000": [
+            {
+                "dropGroupId": 1, 
+                "min": 4, 
+                "max": 7, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 10, 
+                "max": 30, 
+                "probability": 800
+            }
+        ], 
+        "6000": [
+            {
+                "dropGroupId": 1, 
+                "min": 4, 
+                "max": 7, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 10, 
+                "max": 30, 
+                "probability": 800
+            }
+        ], 
+        "7000": [
+            {
+                "dropGroupId": 1, 
+                "min": 4, 
+                "max": 8, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 15, 
+                "max": 30, 
+                "probability": 800
+            }
+        ], 
+        "8000": [
+            {
+                "dropGroupId": 1, 
+                "min": 4, 
+                "max": 8, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 15, 
+                "max": 35, 
+                "probability": 800
+            }
+        ], 
+        "9000": [
+            {
+                "dropGroupId": 1, 
+                "min": 5, 
+                "max": 9, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 0, 
+                "max": 0, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 15, 
+                "max": 38, 
+                "probability": 800
+            }
+        ], 
+        "10000": [
+            {
+                "dropGroupId": 1, 
+                "min": 6, 
+                "max": 11, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 16, 
+                "max": 40, 
+                "probability": 800
+            }
+        ], 
+        "15000": [
+            {
+                "dropGroupId": 1, 
+                "min": 9, 
+                "max": 17, 
+                "probability": 960
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 18, 
+                "max": 41, 
+                "probability": 800
+            }
+        ], 
+        "20000": [
+            {
+                "dropGroupId": 1, 
+                "min": 11, 
+                "max": 20, 
+                "probability": 720
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 20, 
+                "max": 42, 
+                "probability": 800
+            }
+        ], 
+        "25000": [
+            {
+                "dropGroupId": 1, 
+                "min": 14, 
+                "max": 26, 
+                "probability": 720
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 20, 
+                "max": 45, 
+                "probability": 800
+            }
+        ], 
+        "30000": [
+            {
+                "dropGroupId": 1, 
+                "min": 18, 
+                "max": 33, 
+                "probability": 720
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 20, 
+                "max": 48, 
+                "probability": 800
+            }
+        ], 
+        "35000": [
+            {
+                "dropGroupId": 1, 
+                "min": 18, 
+                "max": 33, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 22, 
+                "max": 50, 
+                "probability": 800
+            }
+        ], 
+        "40000": [
+            {
+                "dropGroupId": 1, 
+                "min": 23, 
+                "max": 43, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 26, 
+                "max": 52, 
+                "probability": 800
+            }
+        ], 
+        "45000": [
+            {
+                "dropGroupId": 1, 
+                "min": 29, 
+                "max": 54, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 27, 
+                "max": 53, 
+                "probability": 800
+            }
+        ], 
+        "50000": [
+            {
+                "dropGroupId": 1, 
+                "min": 35, 
+                "max": 65, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 30, 
+                "max": 54, 
+                "probability": 800
+            }
+        ], 
+        "60000": [
+            {
+                "dropGroupId": 1, 
+                "min": 41, 
+                "max": 76, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 30, 
+                "max": 58, 
+                "probability": 800
+            }
+        ], 
+        "70000": [
+            {
+                "dropGroupId": 1, 
+                "min": 47, 
+                "max": 87, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 32, 
+                "max": 60, 
+                "probability": 800
+            }
+        ], 
+        "80000": [
+            {
+                "dropGroupId": 1, 
+                "min": 53, 
+                "max": 98, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 36, 
+                "max": 60, 
+                "probability": 800
+            }
+        ], 
+        "90000": [
+            {
+                "dropGroupId": 1, 
+                "min": 58, 
+                "max": 108, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "100000": [
+            {
+                "dropGroupId": 1, 
+                "min": 70, 
+                "max": 130, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "120": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5280
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 100
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 800
+            }
+        ], 
+        "140": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5280
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 105
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 800
+            }
+        ], 
+        "160": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5040
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 110
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 800
+            }
+        ], 
+        "180": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 5040
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 110
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 800
+            }
+        ], 
+        "240": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 3600
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 115
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 3, 
+                "probability": 800
+            }
+        ], 
+        "280": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 2280
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 120
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 4, 
+                "probability": 800
+            }
+        ], 
+        "320": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 2040
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 125
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 1, 
+                "max": 4, 
+                "probability": 800
+            }
+        ], 
+        "360": [
+            {
+                "dropGroupId": 1, 
+                "min": 1, 
+                "max": 2, 
+                "probability": 1800
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 130
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 2, 
+                "max": 5, 
+                "probability": 800
+            }
+        ], 
+        "1200": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 3, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 4, 
+                "max": 9, 
+                "probability": 800
+            }
+        ], 
+        "1400": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 3, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 5, 
+                "max": 12, 
+                "probability": 800
+            }
+        ], 
+        "1600": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 4, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 5, 
+                "max": 16, 
+                "probability": 800
+            }
+        ], 
+        "1800": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 4, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 5, 
+                "max": 16, 
+                "probability": 800
+            }
+        ], 
+        "2400": [
+            {
+                "dropGroupId": 1, 
+                "min": 2, 
+                "max": 4, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 6, 
+                "max": 18, 
+                "probability": 800
+            }
+        ], 
+        "2800": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 7, 
+                "max": 19, 
+                "probability": 800
+            }
+        ], 
+        "3200": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 5, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 8, 
+                "max": 20, 
+                "probability": 800
+            }
+        ], 
+        "3600": [
+            {
+                "dropGroupId": 1, 
+                "min": 3, 
+                "max": 6, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 0
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 9, 
+                "max": 22, 
+                "probability": 800
+            }
+        ], 
+        "12000": [
+            {
+                "dropGroupId": 1, 
+                "min": 5, 
+                "max": 10, 
+                "probability": 1200
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 800
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 15, 
+                "max": 39, 
+                "probability": 800
+            }
+        ], 
+        "14000": [
+            {
+                "dropGroupId": 1, 
+                "min": 7, 
+                "max": 14, 
+                "probability": 1080
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 17, 
+                "max": 40, 
+                "probability": 800
+            }
+        ], 
+        "16000": [
+            {
+                "dropGroupId": 1, 
+                "min": 10, 
+                "max": 18, 
+                "probability": 840
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 19, 
+                "max": 41, 
+                "probability": 800
+            }
+        ], 
+        "18000": [
+            {
+                "dropGroupId": 1, 
+                "min": 10, 
+                "max": 18, 
+                "probability": 840
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 19, 
+                "max": 41, 
+                "probability": 800
+            }
+        ], 
+        "24000": [
+            {
+                "dropGroupId": 1, 
+                "min": 12, 
+                "max": 23, 
+                "probability": 720
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 20, 
+                "max": 43, 
+                "probability": 800
+            }
+        ], 
+        "28000": [
+            {
+                "dropGroupId": 1, 
+                "min": 16, 
+                "max": 29, 
+                "probability": 720
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 20, 
+                "max": 46, 
+                "probability": 800
+            }
+        ], 
+        "32000": [
+            {
+                "dropGroupId": 1, 
+                "min": 18, 
+                "max": 33, 
+                "probability": 600
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 21, 
+                "max": 49, 
+                "probability": 800
+            }
+        ], 
+        "36000": [
+            {
+                "dropGroupId": 1, 
+                "min": 20, 
+                "max": 38, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 24, 
+                "max": 51, 
+                "probability": 800
+            }
+        ], 
+        "120000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "140000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "160000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "180000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "200000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "240000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "280000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "320000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "360000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ], 
+        "400000": [
+            {
+                "dropGroupId": 1, 
+                "min": 64, 
+                "max": 119, 
+                "probability": 480
+            }, 
+            {
+                "dropGroupId": 2, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 160
+            }, 
+            {
+                "dropGroupId": 3, 
+                "min": 1, 
+                "max": 1, 
+                "probability": 1600
+            }, 
+            {
+                "dropGroupId": 4, 
+                "min": 38, 
+                "max": 62, 
+                "probability": 800
+            }
+        ]
+    }, 
+    "dropGroup": {
+        "1": {
+            "fishTypeList": [
+                1, 
+                2, 
+                3, 
+                31, 
+                32, 
+                36, 
+                38
+            ], 
+            "dropItemList": [
+                [
+                    {
+                        "kindId": 3106, 
+                        "poss": 100
+                    }
+                ], 
+                [
+                    {
+                        "kindId": 3106, 
+                        "poss": 100
+                    }
+                ]
+            ]
+        }, 
+        "2": {
+            "fishTypeList": [
+                1, 
+                3, 
+                32, 
+                36, 
+                38
+            ], 
+            "dropItemList": [
+                [
+                    {
+                        "kindId": 1137, 
+                        "poss": 100
+                    }
+                ], 
+                [
+                    {
+                        "kindId": 1137, 
+                        "poss": 100
+                    }
+                ]
+            ]
+        }, 
+        "3": {
+            "fishTypeList": [
+                1, 
+                3, 
+                32, 
+                36, 
+                38
+            ], 
+            "dropItemList": [
+                [
+                    {
+                        "kindId": 1429, 
+                        "poss": 60
+                    }, 
+                    {
+                        "kindId": 1430, 
+                        "poss": 40
+                    }
+                ], 
+                [
+                    {
+                        "kindId": 1429, 
+                        "poss": 40
+                    }, 
+                    {
+                        "kindId": 1430, 
+                        "poss": 60
+                    }
+                ]
+            ]
+        }, 
+        "4": {
+            "fishTypeList": [
+                2, 
+                31
+            ], 
+            "dropItemList": [
+                [
+                    {
+                        "kindId": 3157, 
+                        "poss": 100
+                    }
+                ], 
+                [
+                    {
+                        "kindId": 3157, 
+                        "poss": 100
+                    }
+                ]
+            ]
+        }
+    }
+}

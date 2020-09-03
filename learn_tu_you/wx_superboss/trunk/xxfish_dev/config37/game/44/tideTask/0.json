@@ -1,0 +1,694 @@
+{
+    "tide_44411_1": {
+        "group": "tide_44411_1", 
+        "taskId": 64301, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11021, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_2": {
+        "group": "tide_44411_2", 
+        "taskId": 64302, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11024, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_3": {
+        "group": "tide_44411_3", 
+        "taskId": 64303, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_4": {
+        "group": "tide_44411_4", 
+        "taskId": 64304, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 180
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_5": {
+        "group": "tide_44411_5", 
+        "taskId": 64305, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_6": {
+        "group": "tide_44411_6", 
+        "taskId": 64306, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11021, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_7": {
+        "group": "tide_44411_7", 
+        "taskId": 64307, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44411_8": {
+        "group": "tide_44411_8", 
+        "taskId": 64308, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 60118, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_1": {
+        "group": "tide_44412_1", 
+        "taskId": 64401, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11021, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_2": {
+        "group": "tide_44412_2", 
+        "taskId": 64402, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11024, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_3": {
+        "group": "tide_44412_3", 
+        "taskId": 64403, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_4": {
+        "group": "tide_44412_4", 
+        "taskId": 64404, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 200
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_5": {
+        "group": "tide_44412_5", 
+        "taskId": 64405, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 32
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_6": {
+        "group": "tide_44412_6", 
+        "taskId": 64406, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11021, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_7": {
+        "group": "tide_44412_7", 
+        "taskId": 64407, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 32
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44412_8": {
+        "group": "tide_44412_8", 
+        "taskId": 64408, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 60118, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_1": {
+        "group": "tide_44413_1", 
+        "taskId": 64501, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11026, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_2": {
+        "group": "tide_44413_2", 
+        "taskId": 64502, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11021, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_3": {
+        "group": "tide_44413_3", 
+        "taskId": 64503, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_4": {
+        "group": "tide_44413_4", 
+        "taskId": 64504, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 300
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_5": {
+        "group": "tide_44413_5", 
+        "taskId": 64505, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 36
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_6": {
+        "group": "tide_44413_6", 
+        "taskId": 64506, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11026, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_7": {
+        "group": "tide_44413_7", 
+        "taskId": 64507, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 36
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44413_8": {
+        "group": "tide_44413_8", 
+        "taskId": 64508, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 60118, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_1": {
+        "group": "tide_44414_1", 
+        "taskId": 64601, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 14024, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_2": {
+        "group": "tide_44414_2", 
+        "taskId": 64602, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11027, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_3": {
+        "group": "tide_44414_3", 
+        "taskId": 64603, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_4": {
+        "group": "tide_44414_4", 
+        "taskId": 64604, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 400
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_5": {
+        "group": "tide_44414_5", 
+        "taskId": 64605, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 40
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_6": {
+        "group": "tide_44414_6", 
+        "taskId": 64606, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11027, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_7": {
+        "group": "tide_44414_7", 
+        "taskId": 64607, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 40
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_8": {
+        "group": "tide_44414_8", 
+        "taskId": 64608, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 79230, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44414_9": {
+        "group": "tide_44414_9", 
+        "taskId": 64609, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 500
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_1": {
+        "group": "tide_44415_1", 
+        "taskId": 64701, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11027, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_2": {
+        "group": "tide_44415_2", 
+        "taskId": 64702, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 14025, 
+            "number": 2
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_3": {
+        "group": "tide_44415_3", 
+        "taskId": 64703, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 30
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_4": {
+        "group": "tide_44415_4", 
+        "taskId": 64704, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 420
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_5": {
+        "group": "tide_44415_5", 
+        "taskId": 64705, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 40
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_6": {
+        "group": "tide_44415_6", 
+        "taskId": 64706, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 11027, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_7": {
+        "group": "tide_44415_7", 
+        "taskId": 64707, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 2, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_2", 
+        "targets": {
+            "number": 40
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_8": {
+        "group": "tide_44415_8", 
+        "taskId": 64708, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 1, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_1", 
+        "targets": {
+            "target": 79230, 
+            "number": 1
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }, 
+    "tide_44415_9": {
+        "group": "tide_44415_9", 
+        "taskId": 64709, 
+        "tipSeconds": 2, 
+        "readySeconds": 4, 
+        "timeLong": 60, 
+        "taskType": 3, 
+        "desc": "ID_CONFIG_TIDE_TASK_DESC_3", 
+        "targets": {
+            "number": 600
+        }, 
+        "rewards": {
+            "count": 100, 
+            "name": 101
+        }
+    }
+}

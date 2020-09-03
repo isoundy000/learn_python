@@ -1,0 +1,286 @@
+{
+    "consumeCount": {
+        "0": {
+            "vipLevel": 0, 
+            "count": 1
+        }, 
+        "1": {
+            "vipLevel": 1, 
+            "count": 2
+        }, 
+        "2": {
+            "vipLevel": 2, 
+            "count": 3
+        }, 
+        "3": {
+            "vipLevel": 3, 
+            "count": 3
+        }, 
+        "4": {
+            "vipLevel": 4, 
+            "count": 3
+        }, 
+        "5": {
+            "vipLevel": 5, 
+            "count": 4
+        }, 
+        "6": {
+            "vipLevel": 6, 
+            "count": 4
+        }, 
+        "7": {
+            "vipLevel": 7, 
+            "count": 4
+        }, 
+        "8": {
+            "vipLevel": 8, 
+            "count": 5
+        }, 
+        "9": {
+            "vipLevel": 9, 
+            "count": 5
+        }, 
+        "10": {
+            "vipLevel": 10, 
+            "count": 5
+        }, 
+        "11": {
+            "vipLevel": 11, 
+            "count": 7
+        }, 
+        "12": {
+            "vipLevel": 12, 
+            "count": 10
+        }
+    }, 
+    "consumeItem": [
+        {
+            "count": 20000, 
+            "name": 101
+        }
+    ], 
+    "moneyTree": [
+        {
+            "weight": 100, 
+            "reward": {
+                "rewardIdx": 1, 
+                "name": 13550, 
+                "count": 1, 
+                "rare": 1, 
+                "display": 1, 
+                "desc": "聚宝盆"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 1000, 
+            "vipLevel": 12, 
+            "level": 30, 
+            "obtainCount": 1, 
+            "serverCount": 2
+        }, 
+        {
+            "weight": 200, 
+            "reward": {
+                "rewardIdx": 2, 
+                "name": 13549, 
+                "count": 1, 
+                "rare": 1, 
+                "display": 1, 
+                "desc": "点金手"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 200, 
+            "vipLevel": 8, 
+            "level": 25, 
+            "obtainCount": 1, 
+            "serverCount": 5
+        }, 
+        {
+            "weight": 500, 
+            "reward": {
+                "rewardIdx": 3, 
+                "name": 13548, 
+                "count": 1, 
+                "rare": 1, 
+                "display": 1, 
+                "desc": "神秘金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 20, 
+            "vipLevel": 4, 
+            "level": 15, 
+            "obtainCount": 2, 
+            "serverCount": 100
+        }, 
+        {
+            "weight": 5, 
+            "reward": {
+                "rewardIdx": 4, 
+                "name": 101, 
+                "count": 5000000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 50, 
+            "vipLevel": 4, 
+            "level": 20, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 30, 
+            "reward": {
+                "rewardIdx": 5, 
+                "name": 101, 
+                "count": 1000000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 100, 
+            "reward": {
+                "rewardIdx": 6, 
+                "name": 101, 
+                "count": 500000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 500, 
+            "reward": {
+                "rewardIdx": 7, 
+                "name": 101, 
+                "count": 100000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 1000, 
+            "reward": {
+                "rewardIdx": 8, 
+                "name": 101, 
+                "count": 66666, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 3000, 
+            "reward": {
+                "rewardIdx": 9, 
+                "name": 101, 
+                "count": 30000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": 1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 8565, 
+            "reward": {
+                "rewardIdx": 10, 
+                "name": 101, 
+                "count": 10000, 
+                "rare": 0, 
+                "display": 0, 
+                "desc": "金币"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 0, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 5000, 
+            "reward": {
+                "rewardIdx": 11, 
+                "name": 1137, 
+                "count": 10, 
+                "rare": 0, 
+                "display": 1, 
+                "desc": "珍珠"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 18, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }, 
+        {
+            "weight": 1000, 
+            "reward": {
+                "rewardIdx": 12, 
+                "name": 1472, 
+                "count": 1, 
+                "rare": 0, 
+                "display": 1, 
+                "desc": "雪人皮肤碎片"
+            }, 
+            "certainCount": -1, 
+            "drawCount": 0, 
+            "vipLevel": 0, 
+            "level": 25, 
+            "obtainCount": -1, 
+            "serverCount": -1
+        }
+    ], 
+    "freeTime": [
+        5, 
+        11, 
+        17, 
+        23
+    ], 
+    "outProductId": [
+        "TY0044S00010001", 
+        "TY0044S00060001", 
+        "TY0044S00120001", 
+        "TY0044S00300001", 
+        "TY0044S00680001", 
+        "TY0044S01280001", 
+        "TY0044S01980001", 
+        "TY0044S03280001", 
+        "TY0044S06480001"
+    ], 
+    "rule": "ID_CONFIG_MONEY_TREE_RULE"
+}

@@ -35,8 +35,8 @@ class AchievementTableSystem(object):
                     taskObjects.append(taskClass)
         return taskObjects
 
-    # 捕获鱼
     def triggerCatchFishEvent(self, event):
+        """捕获鱼"""
         if self.table.typeName not in config.NORMAL_ROOM_TYPE:
             return
         if not self.player or self.player.userId <= 0:
@@ -48,13 +48,11 @@ class AchievementTableSystem(object):
         if hasattr(event, "fpMultiple"):
             fpMultiple = event.fpMultiple
         else:
-            ftlog.info("achievement_table_system, not set fpMultiple! userId", event.userId)
             fpMultiple = self.table.runConfig.multiple
-        fishIds = event.fishTypes  # 鱼种类
+        fishIds = event.fishTypes               # 鱼种类
         fTypes = []
-        # 计算倍率鱼 个数
-        betFishMap = {}
-        bossNum = 0  # boss个数
+        betFishMap = {}                         # 计算倍率鱼 个数
+        bossNum = 0                             # boss个数
         for fishType in fishIds:
             fishConf = config.getFishConf(fishType, self.table.typeName, self.player.fpMultiple)
             if fishConf["type"] in config.BOSS_FISH_TYPE:
@@ -65,25 +63,26 @@ class AchievementTableSystem(object):
             fishConf = config.getFishConf(gainMap["fishType"], self.table.typeName, self.player.fpMultiple)
             itemId = gainMap["itemId"]
             itemCount = gainMap["count"]
-            if fishConf["type"] in config.MULTIPLE_FISH_TYPE:
-                if itemId == config.CHIP_KINDID:  # 金币
-                    bet = itemCount / fishConf["score"] / fpMultiple
-                    if str(bet) not in betFishMap:
-                        betFishMap[str(bet)] = 1
-                    else:
-                        betFishMap[str(bet)] += 1
+            if fishConf["type"] not in config.MULTIPLE_FISH_TYPE:
+                continue
+            if itemId == config.CHIP_KINDID:    # 金币
+                bet = itemCount / fishConf["score"] / fpMultiple
+                if str(bet) not in betFishMap:
+                    betFishMap[str(bet)] = 1
+                else:
+                    betFishMap[str(bet)] += 1
 
         tipHonorIds = []
         for taskClass in self.achieveTasks:
             hasComplete = False
             taskConf = taskClass.getTaskConf()
-            if taskConf["type"] == AchieveType.CatchFishNum:  # 捕获鱼多少条
+            if taskConf["type"] == AchieveType.CatchFishNum:                        # 捕获鱼多少条
                 count = len(fishIds)
                 fishTypes = taskConf["target"].get("fishType")
                 if fishTypes:
                     count = sum([fTypes.count(type_) for type_ in fishTypes])
                 hasComplete = taskClass.addProgress(count, inTable=True)
-            elif taskConf["type"] == AchieveType.CatchBetFishNum:  # 捕获倍率鱼总数
+            elif taskConf["type"] == AchieveType.CatchBetFishNum:                   # 捕获倍率鱼总数
                 betNum = 0
                 targetBet = taskConf["target"]["condition"]
                 for bet in betFishMap:

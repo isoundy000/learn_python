@@ -18,9 +18,10 @@ from newfish.entity.redis_keys import GameData
 from newfish.entity.achievement import fish_achievement_task
 from newfish.entity.achievement.fish_achievement_task import FishAchievementTask, AchieveType
 from newfish.entity.achievement.achievement_level import AchievementLevel
-from newfish.entity.event import WinCmpttTaskEvent, \
-    WinBonusTaskEvent, MatchOverEvent, SkillLevelUpEvent, \
-    StarfishChangeEvent, MatchGiveUpEvent, RankOverEvent, GainChestEvent, LevelUpEvent, EnterTableEvent
+from newfish.entity.event import WinCmpttTaskEvent, WinBonusTaskEvent, MatchOverEvent, SkillLevelUpEvent, \
+    StarfishChangeEvent, MatchGiveUpEvent, RankOverEvent, GainChestEvent, LevelUpEvent, EnterTableEvent, PrizeWheelSpinEvent, \
+    MainQuestSectionFinishEvent
+from newfish.entity.achievement.achievement_level import TaskState
 from newfish.entity.honor import honor_system
 
 
@@ -49,7 +50,7 @@ def receiveTaskReward(userId, taskId):
     # 分组信息
     if isLimitLevel(userId):
         return 7, None, None, None
-    if not util.isFinishAllRedTask(userId):
+    if not util.isFinishAllNewbieTask(userId):
         return 6, None, None, None
     honorId = int(taskId) / 100
     tasksConf = config.getAchievementTaskInfo(str(honorId))
@@ -110,8 +111,8 @@ def doGetAllAchievementInfo(userId):
     message.setResult("achExp", achLevelClass.getAchieveExp())
     message.setResult("achTotalExp", achLevelClass.getAchieveTotalExp())
     message.setResult("achLevelRewardInfo", achLevelClass.getCurAchievementLevelReward())
-    honorList = honor_system.getHonorList(userId, True, [1, 2])
-    honorIds = module_tip.getTipValue(userId, module_tip.findModuleTip("achievement"))
+    honorList = honor_system.getHonorList(userId, True, [1, 2])                                 # 获取所有的勋章
+    honorIds = module_tip.getTipValue(userId, module_tip.findModuleTip("achievement"))          # 荣耀任务是否闪烁
     for honorInfo in honorList:
         tasks = config.getAchievementTaskInfo(str(honorInfo["honorId"]))
         honorInfo["totalLevel"] = len(tasks.keys()) if tasks else 0
@@ -138,7 +139,7 @@ def doGetAchievelLevelInfos(userId):
 
 def doGetAllAchievementTasks(userId, honorId):
     """
-    获取所有成就任务
+    获取荣誉任务中一个称号的信息
     """
     message = MsgPack()
     message.setCmd("achievement_tasks")
@@ -149,8 +150,8 @@ def doGetAllAchievementTasks(userId, honorId):
         router.sendToUser(message, userId)
         return
     message.setResult("code", 0)
-    tasks = getAllTaskInfo(userId, honorId)
-    message.setResult("achievementTasks", tasks)
+    tasks = getAllTaskInfo(userId, honorId)                                 # 勋章Id
+    message.setResult("achievementTasks", tasks)                            # 里面的成就任务
     message.setResult("honorId", honorId)
     router.sendToUser(message, userId)
 
@@ -276,19 +277,33 @@ def _triggerStateChange(event):
     updateAchievementModuleTips(event.userId)
 
 
-# 宝藏争夺赛
-def _triggerWinCmpttTaskEvent(event):
-    _winCmpttTaskEvent(event)
+# # 宝藏争夺赛
+# def _triggerWinCmpttTaskEvent(event):
+#     _winCmpttTaskEvent(event)
+#
+#
+# def _winCmpttTaskEvent(event):
+#     userId = event.userId
+#     achConfigs = getAchievementAllTask(userId)
+#     if not achConfigs:
+#         return
+#     for honorId, tasksConf in achConfigs.iteritems():
+#         for _, conf in tasksConf.iteritems():
+#             if conf["type"] == AchieveType.CmpttWinNum:  # 比赛获得胜利
+#                 taskClass = FishAchievementTask(userId, conf)
+#                 if taskClass.addProgress(1):
+#                     module_tip.addModuleTipEvent(userId, "achievement", int(honorId))
 
 
-def _winCmpttTaskEvent(event):
+# 进行多少次转盘转动
+def _triggerPrizeWheelSpinEvent(event):
     userId = event.userId
     achConfigs = getAchievementAllTask(userId)
     if not achConfigs:
         return
     for honorId, tasksConf in achConfigs.iteritems():
         for _, conf in tasksConf.iteritems():
-            if conf["type"] == AchieveType.CmpttWinNum:  # 比赛获得胜利
+            if conf["type"] == AchieveType.LevelPrizeWheelNum:                          # 轮盘次数
                 taskClass = FishAchievementTask(userId, conf)
                 if taskClass.addProgress(1):
                     module_tip.addModuleTipEvent(userId, "achievement", int(honorId))
@@ -480,6 +495,35 @@ def _triggerUserLoginEvent(event):
 #             module_tip.addModuleTipEvent(userId, "achievementNew", taskConf.get("taskId"))
 
 
+def _triggerMainQuestSectionFinishEvent(event):
+    """
+    主线任务章节完成事件
+    """
+    userId = event.userId
+    currSectionId = event.sectionId
+
+    achConfigs = getAchievementAllTask(userId)
+    if not achConfigs:
+        return
+    for honorId, tasksConf in achConfigs.iteritems():
+        for _, conf in tasksConf.iteritems():
+            if conf["type"] == AchieveType.CompleteMainQuestSection:  # 完成主线任务
+                taskClass = FishAchievementTask(userId, conf)
+                finishAllMainQuest = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.finishAllMainQuest)
+                curSectionIdx = gamedata.getGameAttr(userId, FISH_GAMEID, currSectionId) / 1000 % 640
+                # 所有章节都已完成
+                if finishAllMainQuest:
+                    taskClass.taskData["progress"] = conf["target"]["num"]
+                else:
+                    taskClass.taskData["progress"] = min(curSectionIdx - 1, conf["target"]["num"])
+                if taskClass.taskData["state"] < TaskState.Received:
+                    if taskClass.taskData["progress"] >= conf["target"]["num"]:
+                        taskClass.taskData["state"] = TaskState.Complete
+                        module_tip.addModuleTipEvent(userId, "achievement", int(honorId))
+                    else:
+                        taskClass.taskData["state"] = TaskState.Normal
+
+
 _inited = False
 
 
@@ -490,8 +534,8 @@ def initialize():
         ftlog.debug("newfish achievement_system_new initialize begin")
         from poker.entity.events.tyevent import EventUserLogin
         from newfish.game import TGFish
-        TGFish.getEventBus().subscribe(WinCmpttTaskEvent, _triggerWinCmpttTaskEvent)        # 夺宝赛获奖事件
-        TGFish.getEventBus().subscribe(WinBonusTaskEvent, _triggerWinCmpttTaskEvent)        # 奖金赛获奖事件
+        # TGFish.getEventBus().subscribe(WinCmpttTaskEvent, _triggerWinCmpttTaskEvent)        # 夺宝赛获奖事件
+        # TGFish.getEventBus().subscribe(WinBonusTaskEvent, _triggerWinCmpttTaskEvent)        # 奖金赛获奖事件
         TGFish.getEventBus().subscribe(MatchOverEvent, _triggerMatchOverEvent)              # 回馈赛结束事件
         TGFish.getEventBus().subscribe(EnterTableEvent, _triggerEnterTableEvent)            # 进入牌桌事件
         TGFish.getEventBus().subscribe(SkillLevelUpEvent, _triggerSkillLevelUpEvent)        # 技能升级事件
@@ -501,5 +545,7 @@ def initialize():
         TGFish.getEventBus().subscribe(RankOverEvent, _triggerRankOverEvent)                # 排行榜结算时间
         TGFish.getEventBus().subscribe(GainChestEvent, _triggerGainChestEvent)              # 获取宝箱事件
         TGFish.getEventBus().subscribe(LevelUpEvent, _triggerLevelUpEvent)                  # 等级升级
+        TGFish.getEventBus().subscribe(PrizeWheelSpinEvent, _triggerPrizeWheelSpinEvent)    # 进行多少转盘
+        TGFish.getEventBus().subscribe(MainQuestSectionFinishEvent, _triggerMainQuestSectionFinishEvent)
 
     ftlog.debug("newfish achievement_system_new initialize end")

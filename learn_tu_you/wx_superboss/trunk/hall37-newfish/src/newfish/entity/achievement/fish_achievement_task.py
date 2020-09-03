@@ -31,9 +31,10 @@ class AchieveType:
     CatchBetFishNum = 3     # 捕获多少只倍率鱼--
     ReceiveWeekChest = 4    # 领取周宝箱--
     SkillUp = 5             # 技能升级类--
-    CmpttWinNum = 6         # 渔场比赛获胜多少次--
+    # CmpttWinNum = 6       # 渔场比赛获胜多少次--
+    LevelPrizeWheelNum = 6  # 进行多少次转盘抽奖
     EnterRobbery = 7        # 参加招财模式多少次--
-    JoinMatch = 8           # 参加比赛多少场--
+    JoinMatch = 8           # 回馈赛 参加比赛多少场--
     TotalRankMatch = 9      # 回馈赛榜--
     CollectStar = 10        # 渔场收集海星--
     TotalRankRobbery = 11   # 登上今日赢家榜n次--
@@ -62,16 +63,16 @@ class FishAchievementTask(object):
         #     self.taskData["progress"] = max(0, self.taskData["progress"])
         #     self._setAchievementTaskData()
         # 为了兼容老玩家数据.
-        if self.taskConfig["type"] == AchieveType.CompleteMainQuestSection:
-            finishAllMainQuest = gamedata.getGameAttr(self.userId, FISH_GAMEID, GameData.finishAllMainQuest)
-            curSectionIdx = gamedata.getGameAttr(self.userId, FISH_GAMEID, GameData.currSectionId) / 1000 % 640
-            # 所有章节都已完成
-            if finishAllMainQuest:
-                self.taskData["progress"] = self.taskConfig["target"]["num"]
-            else:
-                self.taskData["progress"] = min(curSectionIdx - 1, self.taskConfig["target"]["num"])
-            if self.taskData["state"] < TaskState.Received:
-                self.taskData["state"] = TaskState.Complete if self.taskData["progress"] >= self.taskConfig["target"]["num"] else TaskState.Normal
+        # if self.taskConfig["type"] == AchieveType.CompleteMainQuestSection:
+        #     finishAllMainQuest = gamedata.getGameAttr(self.userId, FISH_GAMEID, GameData.finishAllMainQuest)
+        #     curSectionIdx = gamedata.getGameAttr(self.userId, FISH_GAMEID, GameData.currSectionId) / 1000 % 640
+        #     # 所有章节都已完成
+        #     if finishAllMainQuest:
+        #         self.taskData["progress"] = self.taskConfig["target"]["num"]
+        #     else:
+        #         self.taskData["progress"] = min(curSectionIdx - 1, self.taskConfig["target"]["num"])
+        #     if self.taskData["state"] < TaskState.Received:
+        #         self.taskData["state"] = TaskState.Complete if self.taskData["progress"] >= self.taskConfig["target"]["num"] else TaskState.Normal
 
     def getTaskInfo(self):
         """
@@ -84,9 +85,7 @@ class FishAchievementTask(object):
         taskInfo["state"] = self.taskData["state"]
         taskInfo["type"] = self.taskConfig["type"]
         taskInfo["target"] = self.taskConfig["target"]["num"]
-        # taskInfo["desc"] = self.taskConfig["desc"]
-        descId = self.taskConfig["desc"]
-        desc = config.getMultiLangTextConf(str(descId), lang=self.lang)
+        desc = config.getMultiLangTextConf(str(self.taskConfig["desc"]), lang=self.lang)
         if taskInfo["type"] == AchieveType.SkillUp:
             if desc.find("%d") >= 0:
                 taskInfo["desc"] = desc % self.taskConfig["target"].get("condition", 0)
@@ -169,7 +168,6 @@ class FishAchievementTask(object):
         self._setAchievementTaskData()
         return Task_Error_Code.SUCCESS, self.taskConfig["exp"]
 
-
     def sendPushCompleteInfo(self):
         """
         发送任务完成消息
@@ -242,11 +240,6 @@ class FishAchievementTask(object):
     #     for chestInfo in self.taskConfig["chestReward"]:
     #         chestId = chestInfo["name"]
     #         chestRewards = chest_system.getChestRewards(self.userId, chestId)
-    #     if self.taskId == 1003:
-    #         newbieMode = gamedata.getGameAttr(self.userId, FISH_GAMEID, ABTestData.newbieMode)
-    #         if newbieMode in ["b", "c"]:
-    #             reward = {"name": 1137, "count": 80}
-    #             chestRewards.append(reward)
     #     return chestId, chestRewards
 
     def _setAchievementTaskData(self):

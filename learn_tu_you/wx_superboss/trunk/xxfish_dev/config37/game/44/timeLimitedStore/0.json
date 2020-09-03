@@ -1,0 +1,806 @@
+{
+    "stores": {
+        "101_500000": {
+            "id": "101_500000", 
+            "name": "ID_CONFIG_ExchangeStore_COIN_500000", 
+            "itemId": 101, 
+            "count": 500000, 
+            "buyType": "ruby", 
+            "price": 50, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                1
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "101_5000000": {
+            "id": "101_5000000", 
+            "name": "ID_CONFIG_COIN_5000000", 
+            "itemId": 101, 
+            "count": 5000000, 
+            "buyType": "ruby", 
+            "price": 500, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                1
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1137_50": {
+            "id": "1137_50", 
+            "name": "ID_CONFIG_1137_50", 
+            "itemId": 1137, 
+            "count": 50, 
+            "buyType": "ruby", 
+            "price": 50, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                2
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14124_50": {
+            "id": "14124_50", 
+            "name": "ID_CONFIG_14124_50", 
+            "itemId": 14124, 
+            "count": 50, 
+            "buyType": "ruby", 
+            "price": 100, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                2
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14120_20": {
+            "id": "14120_20", 
+            "name": "ID_CONFIG_14120_20", 
+            "itemId": 14120, 
+            "count": 20, 
+            "buyType": "ruby", 
+            "price": 40, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                2
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14119_20": {
+            "id": "14119_20", 
+            "name": "ID_CONFIG_14119_20", 
+            "itemId": 14119, 
+            "count": 20, 
+            "buyType": "ruby", 
+            "price": 100, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                2
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14125_1": {
+            "id": "14125_1", 
+            "name": "ID_CONFIG_14125_1", 
+            "itemId": 14125, 
+            "count": 1, 
+            "buyType": "ruby", 
+            "price": 25, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                3
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14126_1": {
+            "id": "14126_1", 
+            "name": "ID_CONFIG_14126_1", 
+            "itemId": 14126, 
+            "count": 1, 
+            "buyType": "ruby", 
+            "price": 50, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                3
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14127_1": {
+            "id": "14127_1", 
+            "name": "ID_CONFIG_14127_1", 
+            "itemId": 14127, 
+            "count": 1, 
+            "buyType": "ruby", 
+            "price": 100, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                3
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "14146_1": {
+            "id": "14146_1", 
+            "name": "ID_CONFIG_14146_1", 
+            "itemId": 14146, 
+            "count": 1, 
+            "buyType": "ruby", 
+            "price": 20, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 50, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1288_72": {
+            "id": "1288_72", 
+            "name": "ID_CONFIG_ExchangeStore_1288_72", 
+            "itemId": 1288, 
+            "count": 72, 
+            "buyType": "ruby", 
+            "price": 45, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1165_72": {
+            "id": "1165_72", 
+            "name": "ID_CONFIG_ExchangeStore_1165_72", 
+            "itemId": 1165, 
+            "count": 72, 
+            "buyType": "ruby", 
+            "price": 45, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1166_72": {
+            "id": "1166_72", 
+            "name": "ID_CONFIG_ExchangeStore_1166_72", 
+            "itemId": 1166, 
+            "count": 72, 
+            "buyType": "ruby", 
+            "price": 90, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1167_72": {
+            "id": "1167_72", 
+            "name": "ID_CONFIG_ExchangeStore_1167_72", 
+            "itemId": 1167, 
+            "count": 72, 
+            "buyType": "ruby", 
+            "price": 135, 
+            "levelRange": [
+                1, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1430_10": {
+            "id": "1430_10", 
+            "name": "ID_CONFIG_1430_10", 
+            "itemId": 1430, 
+            "count": 10, 
+            "buyType": "ruby", 
+            "price": 100, 
+            "levelRange": [
+                10000, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }, 
+        "1429_10": {
+            "id": "1429_10", 
+            "name": "ID_CONFIG_1429_10", 
+            "itemId": 1429, 
+            "count": 10, 
+            "buyType": "ruby", 
+            "price": 100, 
+            "levelRange": [
+                10000, 
+                100000
+            ], 
+            "rate": 100, 
+            "types": [
+                4
+            ], 
+            "maxBuyCount": -1, 
+            "label1": "", 
+            "labelBgType": "", 
+            "label2": "", 
+            "label2BgType": "", 
+            "label3": "", 
+            "label3BgType": ""
+        }
+    }, 
+    "slot": [
+        {
+            "typeList": [
+                1
+            ], 
+            "unlockLevel": 1, 
+            "idx": 1
+        }, 
+        {
+            "typeList": [
+                2
+            ], 
+            "unlockLevel": 1000, 
+            "idx": 2
+        }, 
+        {
+            "typeList": [
+                1, 
+                2, 
+                3
+            ], 
+            "unlockLevel": 3000, 
+            "idx": 3
+        }, 
+        {
+            "typeList": [
+                1, 
+                2, 
+                3, 
+                4
+            ], 
+            "unlockLevel": 10000, 
+            "idx": 4
+        }, 
+        {
+            "typeList": [
+                1, 
+                2, 
+                3, 
+                4
+            ], 
+            "unlockLevel": 30000, 
+            "idx": 5
+        }, 
+        {
+            "typeList": [
+                1, 
+                2, 
+                3, 
+                4
+            ], 
+            "unlockLevel": 70000, 
+            "idx": 6
+        }
+    ], 
+    "types": {
+        "1": [
+            {
+                "id": "101_500000", 
+                "name": "ID_CONFIG_ExchangeStore_COIN_500000", 
+                "itemId": 101, 
+                "count": 500000, 
+                "buyType": "ruby", 
+                "price": 50, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    1
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "101_5000000", 
+                "name": "ID_CONFIG_COIN_5000000", 
+                "itemId": 101, 
+                "count": 5000000, 
+                "buyType": "ruby", 
+                "price": 500, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    1
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }
+        ], 
+        "3": [
+            {
+                "id": "14125_1", 
+                "name": "ID_CONFIG_14125_1", 
+                "itemId": 14125, 
+                "count": 1, 
+                "buyType": "ruby", 
+                "price": 25, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    3
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "14126_1", 
+                "name": "ID_CONFIG_14126_1", 
+                "itemId": 14126, 
+                "count": 1, 
+                "buyType": "ruby", 
+                "price": 50, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    3
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "14127_1", 
+                "name": "ID_CONFIG_14127_1", 
+                "itemId": 14127, 
+                "count": 1, 
+                "buyType": "ruby", 
+                "price": 100, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    3
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }
+        ], 
+        "2": [
+            {
+                "id": "1137_50", 
+                "name": "ID_CONFIG_1137_50", 
+                "itemId": 1137, 
+                "count": 50, 
+                "buyType": "ruby", 
+                "price": 50, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    2
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "14124_50", 
+                "name": "ID_CONFIG_14124_50", 
+                "itemId": 14124, 
+                "count": 50, 
+                "buyType": "ruby", 
+                "price": 100, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    2
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "14120_20", 
+                "name": "ID_CONFIG_14120_20", 
+                "itemId": 14120, 
+                "count": 20, 
+                "buyType": "ruby", 
+                "price": 40, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    2
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "14119_20", 
+                "name": "ID_CONFIG_14119_20", 
+                "itemId": 14119, 
+                "count": 20, 
+                "buyType": "ruby", 
+                "price": 100, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    2
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }
+        ], 
+        "4": [
+            {
+                "id": "14146_1", 
+                "name": "ID_CONFIG_14146_1", 
+                "itemId": 14146, 
+                "count": 1, 
+                "buyType": "ruby", 
+                "price": 20, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 50, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1288_72", 
+                "name": "ID_CONFIG_ExchangeStore_1288_72", 
+                "itemId": 1288, 
+                "count": 72, 
+                "buyType": "ruby", 
+                "price": 45, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1165_72", 
+                "name": "ID_CONFIG_ExchangeStore_1165_72", 
+                "itemId": 1165, 
+                "count": 72, 
+                "buyType": "ruby", 
+                "price": 45, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1166_72", 
+                "name": "ID_CONFIG_ExchangeStore_1166_72", 
+                "itemId": 1166, 
+                "count": 72, 
+                "buyType": "ruby", 
+                "price": 90, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1167_72", 
+                "name": "ID_CONFIG_ExchangeStore_1167_72", 
+                "itemId": 1167, 
+                "count": 72, 
+                "buyType": "ruby", 
+                "price": 135, 
+                "levelRange": [
+                    1, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1430_10", 
+                "name": "ID_CONFIG_1430_10", 
+                "itemId": 1430, 
+                "count": 10, 
+                "buyType": "ruby", 
+                "price": 100, 
+                "levelRange": [
+                    10000, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }, 
+            {
+                "id": "1429_10", 
+                "name": "ID_CONFIG_1429_10", 
+                "itemId": 1429, 
+                "count": 10, 
+                "buyType": "ruby", 
+                "price": 100, 
+                "levelRange": [
+                    10000, 
+                    100000
+                ], 
+                "rate": 100, 
+                "types": [
+                    4
+                ], 
+                "maxBuyCount": -1, 
+                "label1": "", 
+                "labelBgType": "", 
+                "label2": "", 
+                "label2BgType": "", 
+                "label3": "", 
+                "label3BgType": ""
+            }
+        ]
+    }, 
+    "vipLimit": 2
+}

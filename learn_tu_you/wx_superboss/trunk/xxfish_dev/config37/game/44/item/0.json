@@ -1,15 +1,15 @@
 {
-    "1137": {
-        "kindId": 1137, 
-        "order": 4, 
+    "14166": {
+        "kindId": 14166, 
+        "order": 1, 
         "actions": [], 
-        "name": "ID_CONFIG_KINDID_ITEM:1137", 
-        "desc": "ID_CONFIG_BAG_LIST_DESC_1137", 
+        "name": "ID_CONFIG_KINDID_ITEM:14166", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14166", 
         "reviewVerLimit": 0
     }, 
     "1194": {
         "kindId": 1194, 
-        "order": 1, 
+        "order": 2, 
         "actions": [
             {
                 "action": "sale", 
@@ -43,7 +43,7 @@
     }, 
     "1193": {
         "kindId": 1193, 
-        "order": 2, 
+        "order": 3, 
         "actions": [
             {
                 "action": "sale", 
@@ -77,7 +77,7 @@
     }, 
     "1301": {
         "kindId": 1301, 
-        "order": 3, 
+        "order": 4, 
         "actions": [
             {
                 "action": "sale", 
@@ -109,9 +109,17 @@
         "desc": "ID_CONFIG_BAG_LIST_DESC_1301", 
         "reviewVerLimit": 0
     }, 
+    "1137": {
+        "kindId": 1137, 
+        "order": 5, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:1137", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_1137", 
+        "reviewVerLimit": 0
+    }, 
     "3106": {
         "kindId": 3106, 
-        "order": 5, 
+        "order": 6, 
         "actions": [
             {
                 "action": "sale", 
@@ -129,7 +137,7 @@
     }, 
     "1283": {
         "kindId": 1283, 
-        "order": 6, 
+        "order": 7, 
         "actions": [
             {
                 "action": "open"
@@ -141,7 +149,7 @@
     }, 
     "1284": {
         "kindId": 1284, 
-        "order": 7, 
+        "order": 8, 
         "actions": [
             {
                 "action": "open"
@@ -153,7 +161,7 @@
     }, 
     "1285": {
         "kindId": 1285, 
-        "order": 8, 
+        "order": 9, 
         "actions": [
             {
                 "action": "open"
@@ -165,7 +173,7 @@
     }, 
     "1286": {
         "kindId": 1286, 
-        "order": 9, 
+        "order": 10, 
         "actions": [
             {
                 "action": "open"
@@ -177,7 +185,7 @@
     }, 
     "1287": {
         "kindId": 1287, 
-        "order": 10, 
+        "order": 11, 
         "actions": [
             {
                 "action": "open"
@@ -189,7 +197,7 @@
     }, 
     "1228": {
         "kindId": 1228, 
-        "order": 11, 
+        "order": 12, 
         "actions": [
             {
                 "action": "sale", 
@@ -207,7 +215,7 @@
     }, 
     "1306": {
         "kindId": 1306, 
-        "order": 12, 
+        "order": 13, 
         "actions": [], 
         "name": "ID_CONFIG_KINDID_ITEM:1306", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_1306", 
@@ -215,7 +223,7 @@
     }, 
     "1380": {
         "kindId": 1380, 
-        "order": 13, 
+        "order": 14, 
         "actions": [], 
         "name": "ID_CONFIG_KINDID_ITEM:1380", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_1380", 
@@ -223,7 +231,7 @@
     }, 
     "1408": {
         "kindId": 1408, 
-        "order": 14, 
+        "order": 15, 
         "actions": [
             {
                 "action": "sale", 
@@ -241,7 +249,7 @@
     }, 
     "1426": {
         "kindId": 1426, 
-        "order": 15, 
+        "order": 16, 
         "actions": [
             {
                 "action": "present", 
@@ -256,7 +264,7 @@
     }, 
     "1429": {
         "kindId": 1429, 
-        "order": 16, 
+        "order": 17, 
         "actions": [
             {
                 "action": "sale", 
@@ -282,7 +290,7 @@
     }, 
     "1430": {
         "kindId": 1430, 
-        "order": 17, 
+        "order": 18, 
         "actions": [
             {
                 "action": "sale", 
@@ -308,7 +316,7 @@
     }, 
     "1431": {
         "kindId": 1431, 
-        "order": 18, 
+        "order": 19, 
         "actions": [
             {
                 "action": "sale", 
@@ -326,7 +334,7 @@
     }, 
     "1381": {
         "kindId": 1381, 
-        "order": 19, 
+        "order": 20, 
         "up_skill": 1, 
         "actions": [
             {
@@ -353,7 +361,7 @@
     }, 
     "1229": {
         "kindId": 1229, 
-        "order": 12, 
+        "order": 21, 
         "actions": [
             {
                 "action": "sale", 
@@ -371,7 +379,7 @@
     }, 
     "1230": {
         "kindId": 1230, 
-        "order": 13, 
+        "order": 22, 
         "actions": [
             {
                 "action": "sale", 
@@ -389,7 +397,7 @@
     }, 
     "1498": {
         "kindId": 1498, 
-        "order": 20, 
+        "order": 23, 
         "actions": [
             {
                 "action": "use", 
@@ -404,7 +412,7 @@
     }, 
     "13543": {
         "kindId": 13543, 
-        "order": 21, 
+        "order": 24, 
         "actions": [
             {
                 "action": "use"
@@ -416,7 +424,7 @@
     }, 
     "13559": {
         "kindId": 13559, 
-        "order": 22, 
+        "order": 25, 
         "actions": [
             {
                 "action": "use"
@@ -438,7 +446,7 @@
     }, 
     "13560": {
         "kindId": 13560, 
-        "order": 23, 
+        "order": 26, 
         "actions": [
             {
                 "action": "use"
@@ -460,7 +468,7 @@
     }, 
     "13561": {
         "kindId": 13561, 
-        "order": 24, 
+        "order": 27, 
         "actions": [
             {
                 "action": "use"
@@ -482,7 +490,7 @@
     }, 
     "13562": {
         "kindId": 13562, 
-        "order": 25, 
+        "order": 28, 
         "actions": [
             {
                 "action": "use"
@@ -504,7 +512,7 @@
     }, 
     "13563": {
         "kindId": 13563, 
-        "order": 26, 
+        "order": 29, 
         "actions": [
             {
                 "action": "use"
@@ -526,7 +534,7 @@
     }, 
     "13564": {
         "kindId": 13564, 
-        "order": 27, 
+        "order": 30, 
         "actions": [
             {
                 "action": "use"
@@ -548,7 +556,7 @@
     }, 
     "13565": {
         "kindId": 13565, 
-        "order": 28, 
+        "order": 31, 
         "actions": [
             {
                 "action": "use"
@@ -570,7 +578,7 @@
     }, 
     "13566": {
         "kindId": 13566, 
-        "order": 29, 
+        "order": 32, 
         "actions": [
             {
                 "action": "use"
@@ -592,7 +600,7 @@
     }, 
     "13573": {
         "kindId": 13573, 
-        "order": 30, 
+        "order": 33, 
         "actions": [
             {
                 "action": "use"
@@ -614,7 +622,7 @@
     }, 
     "13574": {
         "kindId": 13574, 
-        "order": 31, 
+        "order": 34, 
         "actions": [
             {
                 "action": "use"
@@ -636,7 +644,7 @@
     }, 
     "13575": {
         "kindId": 13575, 
-        "order": 32, 
+        "order": 35, 
         "actions": [
             {
                 "action": "use"
@@ -658,7 +666,7 @@
     }, 
     "13576": {
         "kindId": 13576, 
-        "order": 33, 
+        "order": 36, 
         "actions": [
             {
                 "action": "use"
@@ -680,7 +688,7 @@
     }, 
     "13577": {
         "kindId": 13577, 
-        "order": 34, 
+        "order": 37, 
         "actions": [
             {
                 "action": "use"
@@ -702,7 +710,7 @@
     }, 
     "13653": {
         "kindId": 13653, 
-        "order": 35, 
+        "order": 38, 
         "actions": [], 
         "name": "ID_CONFIG_KINDID_ITEM:13653", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_13653", 
@@ -710,7 +718,7 @@
     }, 
     "13654": {
         "kindId": 13654, 
-        "order": 36, 
+        "order": 39, 
         "actions": [
             {
                 "action": "sale", 
@@ -728,7 +736,7 @@
     }, 
     "13697": {
         "kindId": 13697, 
-        "order": 37, 
+        "order": 40, 
         "actions": [], 
         "name": "ID_CONFIG_KINDID_ITEM:13697", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_13697", 
@@ -736,7 +744,7 @@
     }, 
     "13696": {
         "kindId": 13696, 
-        "order": 38, 
+        "order": 41, 
         "actions": [
             {
                 "action": "sale", 
@@ -754,7 +762,7 @@
     }, 
     "13994": {
         "kindId": 13994, 
-        "order": 39, 
+        "order": 42, 
         "actions": [
             {
                 "action": "select", 
@@ -784,7 +792,7 @@
     }, 
     "13995": {
         "kindId": 13995, 
-        "order": 40, 
+        "order": 43, 
         "actions": [
             {
                 "action": "select", 
@@ -814,7 +822,7 @@
     }, 
     "13996": {
         "kindId": 13996, 
-        "order": 41, 
+        "order": 44, 
         "actions": [
             {
                 "action": "select", 
@@ -844,7 +852,7 @@
     }, 
     "13997": {
         "kindId": 13997, 
-        "order": 42, 
+        "order": 45, 
         "actions": [
             {
                 "action": "select", 
@@ -874,7 +882,7 @@
     }, 
     "14070": {
         "kindId": 14070, 
-        "order": 43, 
+        "order": 46, 
         "actions": [
             {
                 "action": "use"
@@ -887,7 +895,7 @@
     }, 
     "14091": {
         "kindId": 14091, 
-        "order": 44, 
+        "order": 47, 
         "actions": [
             {
                 "action": "use", 
@@ -904,7 +912,7 @@
     }, 
     "14105": {
         "kindId": 14105, 
-        "order": 35, 
+        "order": 48, 
         "actions": [], 
         "name": "ID_CONFIG_KINDID_ITEM:14105", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_14105", 
@@ -912,7 +920,7 @@
     }, 
     "14106": {
         "kindId": 14106, 
-        "order": 36, 
+        "order": 49, 
         "actions": [
             {
                 "action": "sale", 
@@ -926,6 +934,237 @@
         ], 
         "name": "ID_CONFIG_KINDID_ITEM:14106", 
         "desc": "ID_CONFIG_BAG_LIST_DESC_14106", 
+        "reviewVerLimit": 0
+    }, 
+    "14144": {
+        "kindId": 14144, 
+        "order": 50, 
+        "actions": [
+            {
+                "action": "sale", 
+                "params": [
+                    {
+                        "count": 2000, 
+                        "name": 101
+                    }
+                ]
+            }
+        ], 
+        "name": "ID_CONFIG_KINDID_ITEM:14144", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14144", 
+        "minimumVersion": "2.0.65", 
+        "reviewVerLimit": 0
+    }, 
+    "13757": {
+        "kindId": 13757, 
+        "order": 51, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13757", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13757", 
+        "reviewVerLimit": 0
+    }, 
+    "13758": {
+        "kindId": 13758, 
+        "order": 52, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13758", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13758", 
+        "reviewVerLimit": 0
+    }, 
+    "13759": {
+        "kindId": 13759, 
+        "order": 53, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13759", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13759", 
+        "reviewVerLimit": 0
+    }, 
+    "13760": {
+        "kindId": 13760, 
+        "order": 54, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13760", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13760", 
+        "reviewVerLimit": 0
+    }, 
+    "13761": {
+        "kindId": 13761, 
+        "order": 55, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13761", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13761", 
+        "reviewVerLimit": 0
+    }, 
+    "13762": {
+        "kindId": 13762, 
+        "order": 56, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13762", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13762", 
+        "reviewVerLimit": 0
+    }, 
+    "13763": {
+        "kindId": 13763, 
+        "order": 57, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13763", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13763", 
+        "reviewVerLimit": 0
+    }, 
+    "13764": {
+        "kindId": 13764, 
+        "order": 58, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13764", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13764", 
+        "reviewVerLimit": 0
+    }, 
+    "13765": {
+        "kindId": 13765, 
+        "order": 59, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:13765", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_13765", 
+        "reviewVerLimit": 0
+    }, 
+    "14114": {
+        "kindId": 14114, 
+        "order": 60, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14114", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14114", 
+        "reviewVerLimit": 0
+    }, 
+    "14115": {
+        "kindId": 14115, 
+        "order": 61, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14115", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14115", 
+        "reviewVerLimit": 0
+    }, 
+    "14116": {
+        "kindId": 14116, 
+        "order": 62, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14116", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14116", 
+        "reviewVerLimit": 0
+    }, 
+    "14119": {
+        "kindId": 14119, 
+        "order": 63, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14119", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14119", 
+        "reviewVerLimit": 0
+    }, 
+    "14120": {
+        "kindId": 14120, 
+        "order": 64, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14120", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14120", 
+        "reviewVerLimit": 0
+    }, 
+    "14175": {
+        "kindId": 14175, 
+        "order": 65, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14175", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14175", 
+        "reviewVerLimit": 0
+    }, 
+    "14176": {
+        "kindId": 14176, 
+        "order": 66, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14176", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14176", 
+        "reviewVerLimit": 0
+    }, 
+    "14177": {
+        "kindId": 14177, 
+        "order": 67, 
+        "actions": [
+            {
+                "action": "sale", 
+                "params": [
+                    {
+                        "count": 100, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "action": "convert", 
+                "params": {
+                    "rate": 0.1, 
+                    "convertKindId": 1431, 
+                    "unit": 10
+                }
+            }
+        ], 
+        "name": "ID_CONFIG_KINDID_ITEM:14177", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14177", 
+        "reviewVerLimit": 0
+    }, 
+    "14178": {
+        "kindId": 14178, 
+        "order": 68, 
+        "actions": [
+            {
+                "action": "sale", 
+                "params": [
+                    {
+                        "count": 100, 
+                        "name": 101
+                    }
+                ]
+            }, 
+            {
+                "action": "convert", 
+                "params": {
+                    "rate": 0.1, 
+                    "convertKindId": 1431, 
+                    "unit": 10
+                }
+            }
+        ], 
+        "name": "ID_CONFIG_KINDID_ITEM:14178", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14178", 
+        "reviewVerLimit": 0
+    }, 
+    "14124": {
+        "kindId": 14124, 
+        "order": 69, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14124", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14124", 
+        "reviewVerLimit": 0
+    }, 
+    "14125": {
+        "kindId": 14125, 
+        "order": 70, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14125", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14125", 
+        "reviewVerLimit": 0
+    }, 
+    "14126": {
+        "kindId": 14126, 
+        "order": 71, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14126", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14126", 
+        "reviewVerLimit": 0
+    }, 
+    "14127": {
+        "kindId": 14127, 
+        "order": 72, 
+        "actions": [], 
+        "name": "ID_CONFIG_KINDID_ITEM:14127", 
+        "desc": "ID_CONFIG_BAG_LIST_DESC_14127", 
         "reviewVerLimit": 0
     }
 }

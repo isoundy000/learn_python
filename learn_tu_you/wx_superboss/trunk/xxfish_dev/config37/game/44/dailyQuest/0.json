@@ -1,0 +1,1746 @@
+{
+    "questData": {
+        "6000101": {
+            "taskId": 6000101, 
+            "taskType": 10012, 
+            "des": "ID_DAILYQUEST_DES_1", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 10, 
+            "groupId": 1, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6000102": {
+            "taskId": 6000102, 
+            "taskType": 10012, 
+            "des": "ID_DAILYQUEST_DES_1", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 10, 
+            "groupId": 1, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 6, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6000103": {
+            "taskId": 6000103, 
+            "taskType": 10012, 
+            "des": "ID_DAILYQUEST_DES_1", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 10, 
+            "groupId": 1, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 7, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6000104": {
+            "taskId": 6000104, 
+            "taskType": 10012, 
+            "des": "ID_DAILYQUEST_DES_1", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 10, 
+            "groupId": 1, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 7, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6000105": {
+            "taskId": 6000105, 
+            "taskType": 10012, 
+            "des": "ID_DAILYQUEST_DES_1", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 10, 
+            "groupId": 1, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 8, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6000201": {
+            "taskId": 6000201, 
+            "taskType": 10033, 
+            "des": "ID_DAILYQUEST_DES_3", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 10, 
+            "groupId": 2, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 25000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000202": {
+            "taskId": 6000202, 
+            "taskType": 10033, 
+            "des": "ID_DAILYQUEST_DES_3", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 10, 
+            "groupId": 2, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 75000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000203": {
+            "taskId": 6000203, 
+            "taskType": 10033, 
+            "des": "ID_DAILYQUEST_DES_3", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 10, 
+            "groupId": 2, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 250000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000204": {
+            "taskId": 6000204, 
+            "taskType": 10033, 
+            "des": "ID_DAILYQUEST_DES_3", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 10, 
+            "groupId": 2, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 500000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000205": {
+            "taskId": 6000205, 
+            "taskType": 10033, 
+            "des": "ID_DAILYQUEST_DES_3", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 10, 
+            "groupId": 2, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 750000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000301": {
+            "taskId": 6000301, 
+            "taskType": 10034, 
+            "des": "ID_DAILYQUEST_DES_4", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 3, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 14119
+                }
+            ]
+        }, 
+        "6000302": {
+            "taskId": 6000302, 
+            "taskType": 10034, 
+            "des": "ID_DAILYQUEST_DES_4", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 3, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 6, 
+                    "name": 14119
+                }
+            ]
+        }, 
+        "6000303": {
+            "taskId": 6000303, 
+            "taskType": 10034, 
+            "des": "ID_DAILYQUEST_DES_4", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 3, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 8, 
+                    "name": 14119
+                }
+            ]
+        }, 
+        "6000304": {
+            "taskId": 6000304, 
+            "taskType": 10034, 
+            "des": "ID_DAILYQUEST_DES_4", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 3, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 9, 
+                    "name": 14119
+                }
+            ]
+        }, 
+        "6000305": {
+            "taskId": 6000305, 
+            "taskType": 10034, 
+            "des": "ID_DAILYQUEST_DES_4", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 3, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14119
+                }
+            ]
+        }, 
+        "6000401": {
+            "taskId": 6000401, 
+            "taskType": 10035, 
+            "des": "ID_DAILYQUEST_DES_5", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 4, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 4, 
+                    "name": 1137
+                }
+            ]
+        }, 
+        "6000402": {
+            "taskId": 6000402, 
+            "taskType": 10035, 
+            "des": "ID_DAILYQUEST_DES_5", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 4, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 6, 
+                    "name": 1137
+                }
+            ]
+        }, 
+        "6000403": {
+            "taskId": 6000403, 
+            "taskType": 10035, 
+            "des": "ID_DAILYQUEST_DES_5", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 4, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 1137
+                }
+            ]
+        }, 
+        "6000404": {
+            "taskId": 6000404, 
+            "taskType": 10035, 
+            "des": "ID_DAILYQUEST_DES_5", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 4, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 12, 
+                    "name": 1137
+                }
+            ]
+        }, 
+        "6000405": {
+            "taskId": 6000405, 
+            "taskType": 10035, 
+            "des": "ID_DAILYQUEST_DES_5", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 4, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 14, 
+                    "name": 1137
+                }
+            ]
+        }, 
+        "6000501": {
+            "taskId": 6000501, 
+            "taskType": 10036, 
+            "des": "ID_DAILYQUEST_DES_6", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 5, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 25000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000502": {
+            "taskId": 6000502, 
+            "taskType": 10036, 
+            "des": "ID_DAILYQUEST_DES_6", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 5, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 75000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000503": {
+            "taskId": 6000503, 
+            "taskType": 10036, 
+            "des": "ID_DAILYQUEST_DES_6", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 5, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 250000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000504": {
+            "taskId": 6000504, 
+            "taskType": 10036, 
+            "des": "ID_DAILYQUEST_DES_6", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 5, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 500000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000505": {
+            "taskId": 6000505, 
+            "taskType": 10036, 
+            "des": "ID_DAILYQUEST_DES_6", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 5, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 750000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000601": {
+            "taskId": 6000601, 
+            "taskType": 10002, 
+            "des": "ID_DAILYQUEST_DES_7", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 6, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 100, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 25000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000602": {
+            "taskId": 6000602, 
+            "taskType": 10002, 
+            "des": "ID_DAILYQUEST_DES_7", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 6, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 1500, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 75000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000603": {
+            "taskId": 6000603, 
+            "taskType": 10002, 
+            "des": "ID_DAILYQUEST_DES_7", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 6, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 7000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 250000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000604": {
+            "taskId": 6000604, 
+            "taskType": 10002, 
+            "des": "ID_DAILYQUEST_DES_7", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 6, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 15000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 500000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000605": {
+            "taskId": 6000605, 
+            "taskType": 10002, 
+            "des": "ID_DAILYQUEST_DES_7", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 6, 
+            "targetsNum": 15, 
+            "fishPool": [], 
+            "gunX": 35000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 750000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6000701": {
+            "taskId": 6000701, 
+            "taskType": 10038, 
+            "des": "ID_DAILYQUEST_DES_8", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 7, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 100, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000702": {
+            "taskId": 6000702, 
+            "taskType": 10038, 
+            "des": "ID_DAILYQUEST_DES_8", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 7, 
+            "targetsNum": 3, 
+            "fishPool": [], 
+            "gunX": 1500, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000703": {
+            "taskId": 6000703, 
+            "taskType": 10038, 
+            "des": "ID_DAILYQUEST_DES_8", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 7, 
+            "targetsNum": 3, 
+            "fishPool": [], 
+            "gunX": 7000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000704": {
+            "taskId": 6000704, 
+            "taskType": 10038, 
+            "des": "ID_DAILYQUEST_DES_8", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 7, 
+            "targetsNum": 3, 
+            "fishPool": [], 
+            "gunX": 15000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000705": {
+            "taskId": 6000705, 
+            "taskType": 10038, 
+            "des": "ID_DAILYQUEST_DES_8", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 7, 
+            "targetsNum": 3, 
+            "fishPool": [], 
+            "gunX": 35000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000801": {
+            "taskId": 6000801, 
+            "taskType": 10004, 
+            "des": "ID_DAILYQUEST_DES_9", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 8, 
+            "targetsNum": 20, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000802": {
+            "taskId": 6000802, 
+            "taskType": 10004, 
+            "des": "ID_DAILYQUEST_DES_9", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 8, 
+            "targetsNum": 20, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000803": {
+            "taskId": 6000803, 
+            "taskType": 10004, 
+            "des": "ID_DAILYQUEST_DES_9", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 8, 
+            "targetsNum": 20, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000804": {
+            "taskId": 6000804, 
+            "taskType": 10004, 
+            "des": "ID_DAILYQUEST_DES_9", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 8, 
+            "targetsNum": 20, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000805": {
+            "taskId": 6000805, 
+            "taskType": 10004, 
+            "des": "ID_DAILYQUEST_DES_9", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 8, 
+            "targetsNum": 20, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000901": {
+            "taskId": 6000901, 
+            "taskType": 10005, 
+            "des": "ID_DAILYQUEST_DES_10", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 9, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 100, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000902": {
+            "taskId": 6000902, 
+            "taskType": 10005, 
+            "des": "ID_DAILYQUEST_DES_10", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 9, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 1500, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000903": {
+            "taskId": 6000903, 
+            "taskType": 10005, 
+            "des": "ID_DAILYQUEST_DES_10", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 9, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 7000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000904": {
+            "taskId": 6000904, 
+            "taskType": 10005, 
+            "des": "ID_DAILYQUEST_DES_10", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 9, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 15000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6000905": {
+            "taskId": 6000905, 
+            "taskType": 10005, 
+            "des": "ID_DAILYQUEST_DES_10", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 9, 
+            "targetsNum": 2, 
+            "fishPool": [], 
+            "gunX": 35000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001001": {
+            "taskId": 6001001, 
+            "taskType": 10001, 
+            "des": "ID_DAILYQUEST_DES_11", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 10, 
+            "targetsNum": 100, 
+            "fishPool": [], 
+            "gunX": 100, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001002": {
+            "taskId": 6001002, 
+            "taskType": 10001, 
+            "des": "ID_DAILYQUEST_DES_11", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 10, 
+            "targetsNum": 100, 
+            "fishPool": [], 
+            "gunX": 1500, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001003": {
+            "taskId": 6001003, 
+            "taskType": 10001, 
+            "des": "ID_DAILYQUEST_DES_11", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 10, 
+            "targetsNum": 100, 
+            "fishPool": [], 
+            "gunX": 7000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001004": {
+            "taskId": 6001004, 
+            "taskType": 10001, 
+            "des": "ID_DAILYQUEST_DES_11", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 10, 
+            "targetsNum": 100, 
+            "fishPool": [], 
+            "gunX": 15000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001005": {
+            "taskId": 6001005, 
+            "taskType": 10001, 
+            "des": "ID_DAILYQUEST_DES_11", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 10, 
+            "targetsNum": 100, 
+            "fishPool": [], 
+            "gunX": 35000, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001101": {
+            "taskId": 6001101, 
+            "taskType": 10003, 
+            "des": "ID_DAILYQUEST_DES_12", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 11, 
+            "targetsNum": 300000, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 25000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6001102": {
+            "taskId": 6001102, 
+            "taskType": 10003, 
+            "des": "ID_DAILYQUEST_DES_12", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 11, 
+            "targetsNum": 9000000, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 75000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6001103": {
+            "taskId": 6001103, 
+            "taskType": 10003, 
+            "des": "ID_DAILYQUEST_DES_12", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 11, 
+            "targetsNum": 42000000, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 250000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6001104": {
+            "taskId": 6001104, 
+            "taskType": 10003, 
+            "des": "ID_DAILYQUEST_DES_12", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 11, 
+            "targetsNum": 90000000, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 500000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6001105": {
+            "taskId": 6001105, 
+            "taskType": 10003, 
+            "des": "ID_DAILYQUEST_DES_12", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 11, 
+            "targetsNum": 210000000, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 750000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "6001201": {
+            "taskId": 6001201, 
+            "taskType": 10006, 
+            "des": "ID_DAILYQUEST_DES_13", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 12, 
+            "targetsNum": 60, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001202": {
+            "taskId": 6001202, 
+            "taskType": 10006, 
+            "des": "ID_DAILYQUEST_DES_13", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 12, 
+            "targetsNum": 60, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001203": {
+            "taskId": 6001203, 
+            "taskType": 10006, 
+            "des": "ID_DAILYQUEST_DES_13", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 12, 
+            "targetsNum": 60, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001204": {
+            "taskId": 6001204, 
+            "taskType": 10006, 
+            "des": "ID_DAILYQUEST_DES_13", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 12, 
+            "targetsNum": 60, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001205": {
+            "taskId": 6001205, 
+            "taskType": 10006, 
+            "des": "ID_DAILYQUEST_DES_13", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 12, 
+            "targetsNum": 60, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 10, 
+                    "name": 14124
+                }
+            ]
+        }, 
+        "6001301": {
+            "taskId": 6001301, 
+            "taskType": 10040, 
+            "des": "ID_DAILYQUEST_DES_14", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 13, 
+            "targetsNum": 4, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001302": {
+            "taskId": 6001302, 
+            "taskType": 10037, 
+            "des": "ID_DAILYQUEST_DES_15", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 13, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001303": {
+            "taskId": 6001303, 
+            "taskType": 10037, 
+            "des": "ID_DAILYQUEST_DES_15", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 13, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001304": {
+            "taskId": 6001304, 
+            "taskType": 10037, 
+            "des": "ID_DAILYQUEST_DES_15", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 13, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001305": {
+            "taskId": 6001305, 
+            "taskType": 10037, 
+            "des": "ID_DAILYQUEST_DES_15", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 13, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001401": {
+            "taskId": 6001401, 
+            "taskType": 10039, 
+            "des": "ID_DAILYQUEST_DES_16", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 14, 
+            "targetsNum": 200, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6001402": {
+            "taskId": 6001402, 
+            "taskType": 10016, 
+            "des": "ID_DAILYQUEST_DES_17", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 14, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 6, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6001403": {
+            "taskId": 6001403, 
+            "taskType": 10016, 
+            "des": "ID_DAILYQUEST_DES_17", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 14, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 7, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6001404": {
+            "taskId": 6001404, 
+            "taskType": 10016, 
+            "des": "ID_DAILYQUEST_DES_17", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 14, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 7, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6001405": {
+            "taskId": 6001405, 
+            "taskType": 10016, 
+            "des": "ID_DAILYQUEST_DES_17", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 14, 
+            "targetsNum": 1, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 8, 
+                    "name": 14120
+                }
+            ]
+        }, 
+        "6001501": {
+            "taskId": 6001501, 
+            "taskType": 10031, 
+            "des": "ID_DAILYQUEST_DES_18", 
+            "lv": 1, 
+            "activeLv": 10, 
+            "unlockUserLv": 10, 
+            "taskLevel": 15, 
+            "groupId": 15, 
+            "targetsNum": 6, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001502": {
+            "taskId": 6001502, 
+            "taskType": 10031, 
+            "des": "ID_DAILYQUEST_DES_18", 
+            "lv": 2, 
+            "activeLv": 15, 
+            "unlockUserLv": 3000, 
+            "taskLevel": 15, 
+            "groupId": 15, 
+            "targetsNum": 6, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001503": {
+            "taskId": 6001503, 
+            "taskType": 10031, 
+            "des": "ID_DAILYQUEST_DES_18", 
+            "lv": 3, 
+            "activeLv": 20, 
+            "unlockUserLv": 10000, 
+            "taskLevel": 15, 
+            "groupId": 15, 
+            "targetsNum": 6, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001504": {
+            "taskId": 6001504, 
+            "taskType": 10031, 
+            "des": "ID_DAILYQUEST_DES_18", 
+            "lv": 4, 
+            "activeLv": 25, 
+            "unlockUserLv": 30000, 
+            "taskLevel": 15, 
+            "groupId": 15, 
+            "targetsNum": 6, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }, 
+        "6001505": {
+            "taskId": 6001505, 
+            "taskType": 10031, 
+            "des": "ID_DAILYQUEST_DES_18", 
+            "lv": 5, 
+            "activeLv": 40, 
+            "unlockUserLv": 50000, 
+            "taskLevel": 15, 
+            "groupId": 15, 
+            "targetsNum": 6, 
+            "fishPool": [], 
+            "gunX": 1, 
+            "fpMultiple": 1, 
+            "showDay": [
+                0
+            ], 
+            "rewards": [
+                {
+                    "count": 5, 
+                    "name": 13543
+                }
+            ]
+        }
+    }, 
+    "questOrder": [
+        15, 
+        2, 
+        3, 
+        4, 
+        6, 
+        8, 
+        1, 
+        5, 
+        9, 
+        7, 
+        10, 
+        11, 
+        12, 
+        13, 
+        14
+    ]
+}

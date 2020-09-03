@@ -1,0 +1,185 @@
+{
+    "maxBuyCount": 5, 
+    "eggs": [
+        {
+            "productId": "TY0044A00250001", 
+            "name": "ID_CONFIG_SUPER_EGG_NAME_MILLION", 
+            "des": "ID_CONFIG_SUPER_EGG_DES_MILLION", 
+            "buyType": "diamond", 
+            "price_direct": 25, 
+            "price_diamond": 250, 
+            "dropConf": [
+                {
+                    "color": "255,133,24,51,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 1000000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "238,121,255,51,15,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 600000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "0,222,255,15,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 400000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "255,230,0,172,28,22", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 200000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "255,133,24,51,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 100000, 
+                            "name": 101
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "productId": "TY0044A02000001", 
+            "name": "ID_CONFIG_SUPER_EGG_NAME_TEN_MILLIONS", 
+            "des": "ID_CONFIG_SUPER_EGG_DES_TEN_MILLIONS", 
+            "buyType": "diamond", 
+            "price_direct": 200, 
+            "price_diamond": 2000, 
+            "dropConf": [
+                {
+                    "color": "255,230,0,172,28,22", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 10000000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "255,133,24,51,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 6000000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "0,222,255,15,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 4000000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "238,121,255,51,15,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 2000000, 
+                            "name": 101
+                        }
+                    ]
+                }, 
+                {
+                    "color": "0,222,255,15,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 1000000, 
+                            "name": 101
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "productId": "TY0044A01000001", 
+            "name": "ID_CONFIG_SUPER_EGG_NAME_PEARL", 
+            "des": "ID_CONFIG_SUPER_EGG_DES_PEARL", 
+            "buyType": "diamond", 
+            "price_direct": 100, 
+            "price_diamond": 1000, 
+            "dropConf": [
+                {
+                    "color": "255,230,0,172,28,22", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 5000, 
+                            "name": 1137
+                        }
+                    ]
+                }, 
+                {
+                    "color": "255,133,24,51,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 3000, 
+                            "name": 1137
+                        }
+                    ]
+                }, 
+                {
+                    "color": "0,222,255,15,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 2500, 
+                            "name": 1137
+                        }
+                    ]
+                }, 
+                {
+                    "color": "238,121,255,51,15,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 1000, 
+                            "name": 1137
+                        }
+                    ]
+                }, 
+                {
+                    "color": "0,222,255,15,42,85", 
+                    "rate": 10000, 
+                    "rewards": [
+                        {
+                            "count": 500, 
+                            "name": 1137
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

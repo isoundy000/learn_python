@@ -1,0 +1,1060 @@
+{
+    "enable": 1, 
+    "mode": "d", 
+    "data": {
+        "44411": {
+            "low": {
+                "price": 1, 
+                "giftList": {
+                    "d": [
+                        703001, 
+                        703001, 
+                        703001
+                    ]
+                }
+            }, 
+            "mid": {
+                "price": 8, 
+                "giftList": {
+                    "d": [
+                        703006, 
+                        70300602, 
+                        70300603
+                    ]
+                }
+            }, 
+            "high": {
+                "price": 8, 
+                "giftList": {
+                    "d": [
+                        703006, 
+                        70300602, 
+                        70300603
+                    ]
+                }
+            }
+        }, 
+        "44412": {
+            "low": {
+                "price": 8, 
+                "giftList": {
+                    "d": [
+                        703006, 
+                        70300602, 
+                        70300603
+                    ]
+                }
+            }, 
+            "mid": {
+                "price": 68, 
+                "giftList": {
+                    "d": [
+                        70301, 
+                        7030102, 
+                        7030103
+                    ]
+                }
+            }, 
+            "high": {
+                "price": 68, 
+                "giftList": {
+                    "d": [
+                        70301, 
+                        7030102, 
+                        7030103
+                    ]
+                }
+            }
+        }, 
+        "44413": {
+            "low": {
+                "price": 68, 
+                "giftList": {
+                    "d": [
+                        70301, 
+                        7030102, 
+                        7030103
+                    ]
+                }
+            }, 
+            "mid": {
+                "price": 198, 
+                "giftList": {
+                    "d": [
+                        703198, 
+                        70319802, 
+                        70319803
+                    ]
+                }
+            }, 
+            "high": {
+                "price": 328, 
+                "giftList": {
+                    "d": [
+                        70302, 
+                        7030202, 
+                        7030203
+                    ]
+                }
+            }
+        }, 
+        "44414": {
+            "low": {
+                "price": 198, 
+                "giftList": {
+                    "d": [
+                        703198, 
+                        70319802, 
+                        70319803
+                    ]
+                }
+            }, 
+            "mid": {
+                "price": 328, 
+                "giftList": {
+                    "d": [
+                        70302, 
+                        7030202, 
+                        7030203
+                    ]
+                }
+            }, 
+            "high": {
+                "price": 648, 
+                "giftList": {
+                    "d": [
+                        70303, 
+                        7030302, 
+                        7030303
+                    ]
+                }
+            }
+        }, 
+        "44415": {
+            "low": {
+                "price": 198, 
+                "giftList": {
+                    "c": [
+                        703198, 
+                        70319802, 
+                        70319803
+                    ], 
+                    "d": [
+                        703198, 
+                        703198, 
+                        703198
+                    ]
+                }
+            }, 
+            "mid": {
+                "price": 328, 
+                "giftList": {
+                    "c": [
+                        70302, 
+                        7030202, 
+                        7030203
+                    ], 
+                    "d": [
+                        70302, 
+                        70302, 
+                        70302
+                    ]
+                }
+            }, 
+            "high": {
+                "price": 648, 
+                "giftList": {
+                    "c": [
+                        70303, 
+                        7030302, 
+                        7030303
+                    ], 
+                    "d": [
+                        70303, 
+                        70303, 
+                        70303
+                    ]
+                }
+            }
+        }
+    }, 
+    "gift": {
+        "703001": {
+            "giftId": 703001, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00010005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 50, 
+            "discountPrice": 10, 
+            "price_direct": 1, 
+            "price_diamond": 10, 
+            "otherBuyType": {
+                "voucher": 1
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 150000, 
+                    "type": 3, 
+                    "name": "15万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 5, 
+                    "type": 1, 
+                    "name": "锁定x5", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "703006": {
+            "giftId": 703006, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00080005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 200, 
+            "discountPrice": 80, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44403, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1200000, 
+                    "type": 3, 
+                    "name": "120万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "锁定x10", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70301": {
+            "giftId": 70301, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00680005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 1500, 
+            "discountPrice": 680, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "otherBuyType": {
+                "voucher": 68
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44403, 
+                44404, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 10000000, 
+                    "type": 3, 
+                    "name": "1000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 8, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x8", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "703198": {
+            "giftId": 703198, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G01980005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 5000, 
+            "discountPrice": 1980, 
+            "price_direct": 198, 
+            "price_diamond": 1980, 
+            "otherBuyType": {
+                "voucher": 198
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 35000000, 
+                    "type": 3, 
+                    "name": "3500万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 12, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x12", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70302": {
+            "giftId": 70302, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G03280005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 9000, 
+            "discountPrice": 3280, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                1, 
+                2
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 60000000, 
+                    "type": 3, 
+                    "name": "6000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 40, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x40", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70303": {
+            "giftId": 70303, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G06480005", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 16000, 
+            "discountPrice": 6480, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                0
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 130000000, 
+                    "type": 3, 
+                    "name": "13000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 80, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x80", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70300602": {
+            "giftId": 70300602, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00080007", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 280, 
+            "discountPrice": 80, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44403, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1450000, 
+                    "type": 3, 
+                    "name": "145万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "锁定x10", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70300603": {
+            "giftId": 70300603, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00080008", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 400, 
+            "discountPrice": 80, 
+            "price_direct": 8, 
+            "price_diamond": 80, 
+            "otherBuyType": {
+                "voucher": 8
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44499, 
+                44401, 
+                44402, 
+                44403, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 1800000, 
+                    "type": 3, 
+                    "name": "180万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14120, 
+                    "count": 10, 
+                    "type": 3, 
+                    "name": "锁定x10", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030102": {
+            "giftId": 7030102, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00680006", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 2000, 
+            "discountPrice": 680, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "otherBuyType": {
+                "voucher": 68
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44403, 
+                44404, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 12000000, 
+                    "type": 3, 
+                    "name": "1200万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 8, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x8", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030103": {
+            "giftId": 7030103, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G00680007", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 2900, 
+            "discountPrice": 680, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "otherBuyType": {
+                "voucher": 68
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44403, 
+                44404, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 15000000, 
+                    "type": 3, 
+                    "name": "1500万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 8, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x8", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70319802": {
+            "giftId": 70319802, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G01980006", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 7000, 
+            "discountPrice": 1980, 
+            "price_direct": 198, 
+            "price_diamond": 1980, 
+            "otherBuyType": {
+                "voucher": 198
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 42000000, 
+                    "type": 3, 
+                    "name": "4200万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 12, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x12", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "70319803": {
+            "giftId": 70319803, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G01980007", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 9400, 
+            "discountPrice": 1980, 
+            "price_direct": 198, 
+            "price_diamond": 1980, 
+            "otherBuyType": {
+                "voucher": 198
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "0", 
+            "loopTimes": 0, 
+            "appearTimes": [], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 53000000, 
+                    "type": 3, 
+                    "name": "5300万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 12, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x12", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030202": {
+            "giftId": 7030202, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G03280006", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 12000, 
+            "discountPrice": 3280, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                1, 
+                2
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 72000000, 
+                    "type": 3, 
+                    "name": "7200万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 40, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x40", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030203": {
+            "giftId": 7030203, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G03280007", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 17000, 
+            "discountPrice": 3280, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "otherBuyType": {
+                "voucher": 328
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44404, 
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                1, 
+                2
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 90000000, 
+                    "type": 3, 
+                    "name": "9000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 40, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x40", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030302": {
+            "giftId": 7030302, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G06480006", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 22000, 
+            "discountPrice": 6480, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                0
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 160000000, 
+                    "type": 3, 
+                    "name": "16000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 80, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x80", 
+                    "desc": ""
+                }
+            ]
+        }, 
+        "7030303": {
+            "giftId": 7030303, 
+            "giftName": "转运礼包", 
+            "giftType": 3, 
+            "productId": "TY0044G06480007", 
+            "fishPool": 0, 
+            "lifetime": 0, 
+            "minLevelLimit": 1, 
+            "maxLevelLimit": 999, 
+            "coinLimit": 0, 
+            "buyType": "diamond", 
+            "price": 34000, 
+            "discountPrice": 6480, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "otherBuyType": {
+                "voucher": 648
+            }, 
+            "vip": 0, 
+            "giftLimit": 0, 
+            "showAfterReload": 0, 
+            "showAfterTimes": -1, 
+            "roomId": [
+                44405, 
+                44501, 
+                44601
+            ], 
+            "recordKey": "70302-70303", 
+            "loopTimes": 3, 
+            "appearTimes": [
+                0
+            ], 
+            "firstBuyRewards": [], 
+            "getAfterBuy": [], 
+            "expireTime": -1, 
+            "popupLevel": 0, 
+            "items": [
+                {
+                    "itemId": 101, 
+                    "count": 200000000, 
+                    "type": 3, 
+                    "name": "20000万金币", 
+                    "desc": ""
+                }, 
+                {
+                    "itemId": 14146, 
+                    "count": 80, 
+                    "type": 1, 
+                    "name": "宝藏通用升级卡x80", 
+                    "desc": ""
+                }
+            ]
+        }
+    }, 
+    "eModeGifts": [
+        [
+            703006, 
+            70301, 
+            703198, 
+            70302
+        ], 
+        [
+            70300602, 
+            7030102, 
+            70319802, 
+            7030202
+        ], 
+        [
+            70300603, 
+            7030103, 
+            70319803, 
+            7030203
+        ]
+    ], 
+    "eModeBestIndex": {
+        "44412": 0, 
+        "44413": 1, 
+        "44414": 2, 
+        "44415": 3
+    }
+}

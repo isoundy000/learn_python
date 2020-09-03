@@ -30,13 +30,24 @@
                 "skins": [
                     0, 
                     1366, 
+                    14182, 
+                    14183, 
+                    14184, 
                     -1
                 ], 
-                "fire_count": 1, 
+                "fire_count": 0, 
                 "power_rate": 0, 
-                "duration": 2, 
+                "duration": 0, 
                 "percent": 0, 
                 "aloofOdds": [
+                    {
+                        "odds": 1, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.4, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -69,9 +80,17 @@
                 ], 
                 "fire_count": 0, 
                 "power_rate": 0, 
-                "duration": 2, 
+                "duration": 0, 
                 "percent": 0, 
                 "aloofOdds": [
+                    {
+                        "odds": 0.95, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.8, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -104,9 +123,17 @@
                 ], 
                 "fire_count": 0, 
                 "power_rate": 0, 
-                "duration": 2, 
+                "duration": 0, 
                 "percent": 0, 
                 "aloofOdds": [
+                    {
+                        "odds": 0.95, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.8, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0, 
                         "probb": 0.2
@@ -137,11 +164,19 @@
                     1473, 
                     -1
                 ], 
-                "fire_count": 1, 
-                "power_rate": 0, 
-                "duration": 2, 
-                "percent": 0, 
+                "fire_count": 1200, 
+                "power_rate": 200, 
+                "duration": 6, 
+                "percent": 2, 
                 "aloofOdds": [
+                    {
+                        "odds": 1, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0.2, 
                         "probb": 0.2
@@ -172,11 +207,19 @@
                     1476, 
                     -1
                 ], 
-                "fire_count": 0, 
-                "power_rate": 0, 
-                "duration": 2, 
-                "percent": 0, 
+                "fire_count": 1200, 
+                "power_rate": 180, 
+                "duration": 6, 
+                "percent": 2, 
                 "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2.2, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0.2, 
                         "probb": 0.2
@@ -207,11 +250,19 @@
                     1478, 
                     -1
                 ], 
-                "fire_count": 0, 
-                "power_rate": 0, 
-                "duration": 2, 
-                "percent": 0, 
+                "fire_count": 1200, 
+                "power_rate": 200, 
+                "duration": 6, 
+                "percent": 2, 
                 "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.7
+                    }, 
+                    {
+                        "odds": 2, 
+                        "probb": 0.1
+                    }, 
                     {
                         "odds": 0.25, 
                         "probb": 0.2
@@ -242,11 +293,19 @@
                     -1, 
                     -1
                 ], 
-                "fire_count": 0, 
-                "power_rate": 0, 
-                "duration": 2, 
-                "percent": 0, 
+                "fire_count": 1200, 
+                "power_rate": 180, 
+                "duration": 6, 
+                "percent": 2, 
                 "aloofOdds": [
+                    {
+                        "odds": 0.96, 
+                        "probb": 0.72
+                    }, 
+                    {
+                        "odds": 2.4, 
+                        "probb": 0.08
+                    }, 
                     {
                         "odds": 0.25, 
                         "probb": 0.2
@@ -350,6 +409,24 @@
             "skinId": 1479, 
             "gunId": 1290, 
             "kindId": 1479, 
+            "consumeCount": 20
+        }, 
+        "14182": {
+            "skinId": 14182, 
+            "gunId": 0, 
+            "kindId": 1366, 
+            "consumeCount": 20
+        }, 
+        "14183": {
+            "skinId": 14183, 
+            "gunId": 0, 
+            "kindId": 1366, 
+            "consumeCount": 20
+        }, 
+        "14184": {
+            "skinId": 14184, 
+            "gunId": 0, 
+            "kindId": 1366, 
             "consumeCount": 20
         }
     }

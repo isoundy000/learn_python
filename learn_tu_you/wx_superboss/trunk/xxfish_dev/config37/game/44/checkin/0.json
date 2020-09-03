@@ -1,0 +1,264 @@
+{
+    "oldcheckinData": {
+        "1": {
+            "normalReward": {
+                "count": 2000, 
+                "name": 101
+            }, 
+            "shareReward": {
+                "count": 4000, 
+                "name": 101
+            }
+        }, 
+        "2": {
+            "normalReward": {
+                "count": 5000, 
+                "name": 101
+            }, 
+            "shareReward": {
+                "count": 10000, 
+                "name": 101
+            }
+        }, 
+        "3": {
+            "normalReward": {
+                "count": 3000, 
+                "name": 101
+            }, 
+            "shareReward": {
+                "count": 1, 
+                "name": 33401, 
+                "receiveCoin": 3000
+            }
+        }, 
+        "4": {
+            "normalReward": {
+                "count": 25, 
+                "name": 1137
+            }, 
+            "shareReward": {
+                "count": 50, 
+                "name": 1137
+            }
+        }, 
+        "5": {
+            "normalReward": {
+                "count": 5000, 
+                "name": 101
+            }, 
+            "shareReward": {
+                "count": 10000, 
+                "name": 101
+            }
+        }, 
+        "6": {
+            "normalReward": {
+                "count": 5, 
+                "name": 1408
+            }, 
+            "shareReward": {
+                "count": 10, 
+                "name": 1408
+            }
+        }, 
+        "7": {
+            "normalReward": {
+                "count": 5000, 
+                "name": 101
+            }, 
+            "shareReward": {
+                "count": 1, 
+                "name": 36601, 
+                "receiveCoin": 5000
+            }
+        }
+    }, 
+    "resetInfo": {
+        "vip": 1, 
+        "resetWeekDay": 0
+    }, 
+    "checkinData": {
+        "rewards": {
+            "type": "rewards", 
+            "unlockdays": 1, 
+            "datas": [
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 30000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 5, 
+                        "name": 1137
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 50000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 10, 
+                        "name": 14120
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 80000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 5, 
+                        "name": 14119
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 100000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 10, 
+                        "name": 1137
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 150000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 15, 
+                        "name": 14120
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 10, 
+                        "name": 14119
+                    }
+                }, 
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 20, 
+                        "name": 13543
+                    }
+                }
+            ]
+        }, 
+        "rewards2": {
+            "type": "rewards2", 
+            "unlockdays": 2, 
+            "datas": [
+                {
+                    "rate": 1000, 
+                    "rewards": {
+                        "count": 1, 
+                        "name": 14146
+                    }
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": {
+                        "count": 200000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 1500, 
+                    "rewards": {
+                        "count": 1, 
+                        "name": 14125
+                    }
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": {
+                        "count": 300000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 1, 
+                        "name": 14126
+                    }
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": {
+                        "count": 400000, 
+                        "name": 101
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 20, 
+                        "name": 13543
+                    }
+                }, 
+                {
+                    "rate": 500, 
+                    "rewards": {
+                        "count": 20, 
+                        "name": 14124
+                    }
+                }
+            ]
+        }, 
+        "multiple": {
+            "type": "multiple", 
+            "unlockdays": 7, 
+            "datas": [
+                {
+                    "rate": 1000, 
+                    "rewards": 5
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": 2
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": 2
+                }, 
+                {
+                    "rate": 1500, 
+                    "rewards": 4
+                }, 
+                {
+                    "rate": 2000, 
+                    "rewards": 2
+                }, 
+                {
+                    "rate": 1500, 
+                    "rewards": 3
+                }
+            ]
+        }
+    }
+}

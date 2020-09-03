@@ -19,7 +19,8 @@
             "otherBuyType": {
                 "voucher": 30
             }, 
-            "title": "30,100万"
+            "title": "30,100万", 
+            "showLevel": 0
         }, 
         {
             "productId": "TY0044F01980001", 
@@ -33,7 +34,8 @@
             "otherBuyType": {
                 "voucher": 198
             }, 
-            "title": "198,600万"
+            "title": "198,600万", 
+            "showLevel": 0
         }, 
         {
             "productId": "TY0044F03280001", 
@@ -47,7 +49,8 @@
             "otherBuyType": {
                 "voucher": 328
             }, 
-            "title": "328,1000万"
+            "title": "328,1000万", 
+            "showLevel": 10000
         }, 
         {
             "productId": "TY0044F06480001", 
@@ -61,7 +64,8 @@
             "otherBuyType": {
                 "voucher": 648
             }, 
-            "title": "648,2000万"
+            "title": "648,2000万", 
+            "showLevel": 10000
         }, 
         {
             "productId": "TY0044F03280002", 
@@ -75,7 +79,8 @@
             "otherBuyType": {
                 "voucher": 328
             }, 
-            "title": "328,1100万"
+            "title": "328,1100万", 
+            "showLevel": 10000
         }, 
         {
             "productId": "TY0044F06480002", 
@@ -89,7 +94,8 @@
             "otherBuyType": {
                 "voucher": 648
             }, 
-            "title": "648,2500万"
+            "title": "648,2500万", 
+            "showLevel": 10000
         }, 
         {
             "productId": "TY0044F03280003", 
@@ -103,7 +109,8 @@
             "otherBuyType": {
                 "voucher": 328
             }, 
-            "title": "328,1300万"
+            "title": "328,1300万", 
+            "showLevel": 10000
         }
     ], 
     "rewards": {

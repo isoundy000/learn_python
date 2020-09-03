@@ -285,7 +285,7 @@
     "prize": {
         "44002": {
             "nextRoomId": 444031000, 
-            "nextRoomMultiple": 50, 
+            "nextRoomMultiple": 500, 
             "betList": [
                 2
             ], 
@@ -374,7 +374,7 @@
         }, 
         "44003": {
             "nextRoomId": 444041000, 
-            "nextRoomMultiple": 200, 
+            "nextRoomMultiple": 2000, 
             "betList": [
                 2, 
                 3
@@ -464,7 +464,7 @@
         }, 
         "44004": {
             "nextRoomId": 444051000, 
-            "nextRoomMultiple": 500, 
+            "nextRoomMultiple": 5000, 
             "betList": [
                 2, 
                 3, 

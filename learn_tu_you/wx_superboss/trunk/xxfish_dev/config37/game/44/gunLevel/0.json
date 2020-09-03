@@ -1,0 +1,864 @@
+{
+    "2101": {
+        "gunLevel": 2101, 
+        "successRate": 10000, 
+        "interval": 0.22, 
+        "levelAddition": 0.0, 
+        "levelValue": 1
+    }, 
+    "2102": {
+        "gunLevel": 2102, 
+        "upgradeItems": {
+            "1137": 2
+        }, 
+        "successRate": 10000, 
+        "interval": 0.25, 
+        "levelAddition": 0.0, 
+        "levelValue": 2
+    }, 
+    "2103": {
+        "gunLevel": 2103, 
+        "upgradeItems": {
+            "1137": 3
+        }, 
+        "successRate": 10000, 
+        "interval": 0.28, 
+        "levelAddition": 0.0, 
+        "levelValue": 3
+    }, 
+    "2104": {
+        "gunLevel": 2104, 
+        "upgradeItems": {
+            "1137": 4
+        }, 
+        "successRate": 10000, 
+        "interval": 0.31, 
+        "levelAddition": 0.0, 
+        "levelValue": 4
+    }, 
+    "2105": {
+        "gunLevel": 2105, 
+        "upgradeItems": {
+            "1137": 4
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 5
+    }, 
+    "2106": {
+        "gunLevel": 2106, 
+        "upgradeItems": {
+            "1137": 4
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 6
+    }, 
+    "2107": {
+        "gunLevel": 2107, 
+        "upgradeItems": {
+            "1137": 5
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 7
+    }, 
+    "2108": {
+        "gunLevel": 2108, 
+        "upgradeItems": {
+            "1137": 6
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 8
+    }, 
+    "2109": {
+        "gunLevel": 2109, 
+        "upgradeItems": {
+            "1137": 8
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 9
+    }, 
+    "2110": {
+        "gunLevel": 2110, 
+        "upgradeItems": {
+            "1137": 10
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 10
+    }, 
+    "2111": {
+        "gunLevel": 2111, 
+        "upgradeItems": {
+            "1137": 10
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 11
+    }, 
+    "2112": {
+        "gunLevel": 2112, 
+        "upgradeItems": {
+            "1137": 14
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 12
+    }, 
+    "2113": {
+        "gunLevel": 2113, 
+        "upgradeItems": {
+            "1137": 16
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 13
+    }, 
+    "2114": {
+        "gunLevel": 2114, 
+        "upgradeItems": {
+            "1137": 20
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 14
+    }, 
+    "2115": {
+        "gunLevel": 2115, 
+        "upgradeItems": {
+            "1137": 24
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 15
+    }, 
+    "2116": {
+        "gunLevel": 2116, 
+        "upgradeItems": {
+            "1137": 30
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 16
+    }, 
+    "2117": {
+        "gunLevel": 2117, 
+        "upgradeItems": {
+            "1137": 40
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 17
+    }, 
+    "2118": {
+        "gunLevel": 2118, 
+        "upgradeItems": {
+            "1137": 50
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 18
+    }, 
+    "2119": {
+        "gunLevel": 2119, 
+        "upgradeItems": {
+            "1137": 60
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.0, 
+        "levelValue": 19
+    }, 
+    "2120": {
+        "gunLevel": 2120, 
+        "upgradeItems": {
+            "1137": 80
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.01, 
+        "levelValue": 20
+    }, 
+    "2121": {
+        "gunLevel": 2121, 
+        "upgradeItems": {
+            "1137": 100
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.01, 
+        "levelValue": 21
+    }, 
+    "2122": {
+        "gunLevel": 2122, 
+        "upgradeItems": {
+            "1137": 120
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.01, 
+        "levelValue": 22
+    }, 
+    "2123": {
+        "gunLevel": 2123, 
+        "upgradeItems": {
+            "1137": 140
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.01, 
+        "levelValue": 23
+    }, 
+    "2124": {
+        "gunLevel": 2124, 
+        "upgradeItems": {
+            "1137": 160
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.01, 
+        "levelValue": 24
+    }, 
+    "2125": {
+        "gunLevel": 2125, 
+        "upgradeItems": {
+            "1137": 180
+        }, 
+        "successRate": 10000, 
+        "interval": 0.333334, 
+        "levelAddition": 0.02, 
+        "levelValue": 25
+    }, 
+    "2126": {
+        "gunLevel": 2126, 
+        "upgradeItems": {
+            "1137": 10, 
+            "1429": 0, 
+            "1430": 10
+        }, 
+        "successRate": 9000, 
+        "protectItems": {
+            "1431": 2
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 1, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.02, 
+        "levelValue": 26
+    }, 
+    "2127": {
+        "gunLevel": 2127, 
+        "upgradeItems": {
+            "1137": 20, 
+            "1429": 10, 
+            "1430": 10
+        }, 
+        "successRate": 8000, 
+        "protectItems": {
+            "1431": 3
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 1, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.02, 
+        "levelValue": 27
+    }, 
+    "2128": {
+        "gunLevel": 2128, 
+        "upgradeItems": {
+            "1137": 30, 
+            "1429": 10, 
+            "1430": 10
+        }, 
+        "successRate": 6000, 
+        "protectItems": {
+            "1431": 4
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 1, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.02, 
+        "levelValue": 28
+    }, 
+    "2129": {
+        "gunLevel": 2129, 
+        "upgradeItems": {
+            "1137": 100, 
+            "1429": 10, 
+            "1430": 10
+        }, 
+        "successRate": 4000, 
+        "protectItems": {
+            "1431": 5
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 1, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.02, 
+        "levelValue": 29
+    }, 
+    "2130": {
+        "gunLevel": 2130, 
+        "upgradeItems": {
+            "1137": 200, 
+            "1429": 15, 
+            "1430": 15
+        }, 
+        "successRate": 2500, 
+        "protectItems": {
+            "1431": 10
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 30
+    }, 
+    "2131": {
+        "gunLevel": 2131, 
+        "upgradeItems": {
+            "1137": 300, 
+            "1429": 15, 
+            "1430": 15
+        }, 
+        "successRate": 2000, 
+        "protectItems": {
+            "1431": 15
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 31
+    }, 
+    "2132": {
+        "gunLevel": 2132, 
+        "upgradeItems": {
+            "1137": 300, 
+            "1429": 15, 
+            "1430": 15
+        }, 
+        "successRate": 1500, 
+        "protectItems": {
+            "1431": 20
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 32
+    }, 
+    "2133": {
+        "gunLevel": 2133, 
+        "upgradeItems": {
+            "1137": 350, 
+            "1429": 15, 
+            "1430": 15
+        }, 
+        "successRate": 1000, 
+        "protectItems": {
+            "1431": 30
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 33
+    }, 
+    "2134": {
+        "gunLevel": 2134, 
+        "upgradeItems": {
+            "1137": 350, 
+            "1429": 15, 
+            "1430": 15
+        }, 
+        "successRate": 800, 
+        "protectItems": {
+            "1431": 40
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 2, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 34
+    }, 
+    "2135": {
+        "gunLevel": 2135, 
+        "upgradeItems": {
+            "1137": 400, 
+            "1429": 20, 
+            "1430": 20
+        }, 
+        "successRate": 600, 
+        "protectItems": {
+            "1431": 60
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 35
+    }, 
+    "2136": {
+        "gunLevel": 2136, 
+        "upgradeItems": {
+            "1137": 450, 
+            "1429": 20, 
+            "1430": 20
+        }, 
+        "successRate": 500, 
+        "protectItems": {
+            "1431": 80
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 36
+    }, 
+    "2137": {
+        "gunLevel": 2137, 
+        "upgradeItems": {
+            "1137": 450, 
+            "1429": 20, 
+            "1430": 20
+        }, 
+        "successRate": 400, 
+        "protectItems": {
+            "1431": 100
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 37
+    }, 
+    "2138": {
+        "gunLevel": 2138, 
+        "upgradeItems": {
+            "1137": 450, 
+            "1429": 20, 
+            "1430": 20
+        }, 
+        "successRate": 300, 
+        "protectItems": {
+            "1431": 150
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 38
+    }, 
+    "2139": {
+        "gunLevel": 2139, 
+        "upgradeItems": {
+            "1137": 450, 
+            "1429": 20, 
+            "1430": 20
+        }, 
+        "successRate": 200, 
+        "protectItems": {
+            "1431": 200
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 3, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 39
+    }, 
+    "2140": {
+        "gunLevel": 2140, 
+        "upgradeItems": {
+            "1137": 500, 
+            "1429": 25, 
+            "1430": 25
+        }, 
+        "successRate": 100, 
+        "protectItems": {
+            "1431": 500
+        }, 
+        "returnItems": [
+            {
+                "kindId": 1431, 
+                "count": 4, 
+                "probb": [
+                    1, 
+                    3000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 5, 
+                "probb": [
+                    3001, 
+                    7000
+                ]
+            }, 
+            {
+                "kindId": 1431, 
+                "count": 6, 
+                "probb": [
+                    7001, 
+                    10000
+                ]
+            }
+        ], 
+        "interval": 0.333334, 
+        "levelAddition": 0.05, 
+        "levelValue": 40
+    }
+}

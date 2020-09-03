@@ -1,0 +1,162 @@
+[
+    {
+        "idx": 0, 
+        "rewards": [
+            {
+                "count": 3000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "None", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 1, 
+        "rewards": [
+            {
+                "count": 50000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "None", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 2, 
+        "rewards": [
+            {
+                "count": 100000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "ID_NEWBIE_7_DAYS_GIFT_COND_2", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 3, 
+        "rewards": [
+            {
+                "count": 150000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "None", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 4, 
+        "rewards": [
+            {
+                "count": 200000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "ID_NEWBIE_7_DAYS_GIFT_COND_4", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 5, 
+        "rewards": [
+            {
+                "count": 500000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "None", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 6, 
+        "rewards": [
+            {
+                "count": 800000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "ID_NEWBIE_7_DAYS_GIFT_COND_6", 
+        "rechargeBonus": 0
+    }, 
+    {
+        "idx": 7, 
+        "rewards": [
+            {
+                "count": 1200000, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "name": 14175
+            }, 
+            {
+                "count": 3, 
+                "name": 14176
+            }
+        ], 
+        "cond": {}, 
+        "des": "None", 
+        "rechargeBonus": 0
+    }
+]

@@ -1,0 +1,346 @@
+{
+    "300": {
+        "[30,30]": {
+            "finishedStar": "[30,30]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 32101, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "2星木宝箱"
+                }
+            ]
+        }, 
+        "[60,60]": {
+            "finishedStar": "[60,60]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 32201, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "2星铜宝箱"
+                }
+            ]
+        }, 
+        "[120,120]": {
+            "finishedStar": "[120,120]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37302, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "2星银宝箱"
+                }
+            ]
+        }, 
+        "[180,180]": {
+            "finishedStar": "[180,180]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37402, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "2星金宝箱"
+                }
+            ]
+        }, 
+        "[500,500]": {
+            "finishedStar": "[500,500]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 32301, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "2星周宝箱1"
+                }
+            ]
+        }, 
+        "[900,900]": {
+            "finishedStar": "[900,900]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 32401, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "2星周宝箱2"
+                }
+            ]
+        }
+    }, 
+    "600": {
+        "[30,30]": {
+            "finishedStar": "[30,30]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 33101, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "3星木宝箱"
+                }
+            ]
+        }, 
+        "[60,60]": {
+            "finishedStar": "[60,60]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 33201, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "3星铜宝箱"
+                }
+            ]
+        }, 
+        "[120,120]": {
+            "finishedStar": "[120,120]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37303, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "3星银宝箱"
+                }
+            ]
+        }, 
+        "[180,180]": {
+            "finishedStar": "[180,180]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37403, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "3星金宝箱"
+                }
+            ]
+        }, 
+        "[500,500]": {
+            "finishedStar": "[500,500]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 33301, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1193, 
+                        "tip": "最大奖", 
+                        "name": "白银招财珠"
+                    }, 
+                    "name": "3星周宝箱1"
+                }
+            ]
+        }, 
+        "[900,900]": {
+            "finishedStar": "[900,900]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 33401, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1193, 
+                        "tip": "最大奖", 
+                        "name": "白银招财珠"
+                    }, 
+                    "name": "3星周宝箱2"
+                }
+            ]
+        }
+    }, 
+    "900": {
+        "[30,30]": {
+            "finishedStar": "[30,30]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 34101, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "4星木宝箱"
+                }
+            ]
+        }, 
+        "[60,60]": {
+            "finishedStar": "[60,60]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 34201, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "4星铜宝箱"
+                }
+            ]
+        }, 
+        "[120,120]": {
+            "finishedStar": "[120,120]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37304, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "4星银宝箱"
+                }
+            ]
+        }, 
+        "[180,180]": {
+            "finishedStar": "[180,180]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37404, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "4星金宝箱"
+                }
+            ]
+        }, 
+        "[500,500]": {
+            "finishedStar": "[500,500]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 34301, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1194, 
+                        "tip": "最大奖", 
+                        "name": "黄金招财珠"
+                    }, 
+                    "name": "4星周宝箱1"
+                }
+            ]
+        }, 
+        "[900,900]": {
+            "finishedStar": "[900,900]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 34401, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1194, 
+                        "tip": "最大奖", 
+                        "name": "黄金招财珠"
+                    }, 
+                    "name": "4星周宝箱2"
+                }
+            ]
+        }
+    }, 
+    "1200": {
+        "[30,30]": {
+            "finishedStar": "[30,30]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 35101, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "5星木宝箱"
+                }
+            ]
+        }, 
+        "[60,60]": {
+            "finishedStar": "[60,60]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 35201, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "5星铜宝箱"
+                }
+            ]
+        }, 
+        "[120,120]": {
+            "finishedStar": "[120,120]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37305, 
+                    "count": 1, 
+                    "reward": {}, 
+                    "name": "5星银宝箱"
+                }
+            ]
+        }, 
+        "[180,180]": {
+            "finishedStar": "[180,180]", 
+            "type": "day", 
+            "rewards": [
+                {
+                    "itemId": 37405, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1301, 
+                        "tip": "最大奖", 
+                        "name": "青铜招财珠"
+                    }, 
+                    "name": "5星金宝箱"
+                }
+            ]
+        }, 
+        "[500,500]": {
+            "finishedStar": "[500,500]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 35301, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1194, 
+                        "tip": "最大奖", 
+                        "name": "黄金招财珠"
+                    }, 
+                    "name": "5星周宝箱1"
+                }
+            ]
+        }, 
+        "[900,900]": {
+            "finishedStar": "[900,900]", 
+            "type": "week", 
+            "rewards": [
+                {
+                    "itemId": 35401, 
+                    "count": 1, 
+                    "reward": {
+                        "itemId": 1194, 
+                        "tip": "最大奖", 
+                        "name": "黄金招财珠"
+                    }, 
+                    "name": "5星周宝箱2"
+                }
+            ]
+        }
+    }
+}

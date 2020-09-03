@@ -1,0 +1,86 @@
+{
+    "8001": {
+        "honorId": 8001, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8001", 
+        "desc": "ID_CONFIG_HONOR_DESC_8001", 
+        "honorType": 1
+    }, 
+    "8002": {
+        "honorId": 8002, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8002", 
+        "desc": "ID_CONFIG_HONOR_DESC_8002", 
+        "honorType": 1
+    }, 
+    "8003": {
+        "honorId": 8003, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8003", 
+        "desc": "ID_CONFIG_HONOR_DESC_8003", 
+        "honorType": 1
+    }, 
+    "8004": {
+        "honorId": 8004, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8004", 
+        "desc": "ID_CONFIG_HONOR_DESC_8004", 
+        "honorType": 1
+    }, 
+    "8005": {
+        "honorId": 8005, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8005", 
+        "desc": "ID_CONFIG_HONOR_DESC_8005", 
+        "honorType": 1
+    }, 
+    "8006": {
+        "honorId": 8006, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8006", 
+        "desc": "ID_CONFIG_HONOR_DESC_8006", 
+        "honorType": 1
+    }, 
+    "8007": {
+        "honorId": 8007, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8007", 
+        "desc": "ID_CONFIG_HONOR_DESC_8007", 
+        "honorType": 1
+    }, 
+    "8008": {
+        "honorId": 8008, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8008", 
+        "desc": "ID_CONFIG_HONOR_DESC_8008", 
+        "honorType": 1
+    }, 
+    "8009": {
+        "honorId": 8009, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8009", 
+        "desc": "ID_CONFIG_HONOR_DESC_8009", 
+        "honorType": 1
+    }, 
+    "8010": {
+        "honorId": 8010, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8010", 
+        "desc": "ID_CONFIG_HONOR_DESC_8010", 
+        "honorType": 1
+    }, 
+    "8011": {
+        "honorId": 8011, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8011", 
+        "desc": "ID_CONFIG_HONOR_DESC_8011", 
+        "honorType": 1
+    }, 
+    "8012": {
+        "honorId": 8012, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8012", 
+        "desc": "ID_CONFIG_HONOR_DESC_8012", 
+        "honorType": 1
+    }, 
+    "8013": {
+        "honorId": 8013, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8013", 
+        "desc": "ID_CONFIG_HONOR_DESC_8013", 
+        "honorType": 2
+    }, 
+    "8014": {
+        "honorId": 8014, 
+        "honorName": "ID_CONFIG_HONOR_NAME_8014", 
+        "desc": "ID_CONFIG_HONOR_DESC_8014", 
+        "honorType": 3
+    }
+}

@@ -1,0 +1,344 @@
+{
+    "showPrize": {
+        "44001": {
+            "prize": [
+                {
+                    "count": 10, 
+                    "name": 103
+                }, 
+                {
+                    "count": 20, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }
+            ], 
+            "roomMultiple": 1, 
+            "maxPrize": 2, 
+            "nextRoomId": 444021000
+        }, 
+        "44002": {
+            "prize": [
+                {
+                    "count": 20, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 150, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }
+            ], 
+            "roomMultiple": 10, 
+            "maxPrize": 3, 
+            "nextRoomId": 444031000
+        }, 
+        "44003": {
+            "prize": [
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 150, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 400, 
+                    "name": 103
+                }
+            ], 
+            "roomMultiple": 50, 
+            "maxPrize": 4, 
+            "nextRoomId": 444041000
+        }, 
+        "44004": {
+            "prize": [
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 500, 
+                    "name": 103
+                }
+            ], 
+            "roomMultiple": 200, 
+            "maxPrize": 5, 
+            "nextRoomId": 444051000
+        }, 
+        "44005": {
+            "prize": [
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 250, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 500, 
+                    "name": 103
+                }, 
+                {
+                    "count": 1000, 
+                    "name": 103
+                }
+            ], 
+            "roomMultiple": 500, 
+            "maxPrize": 10, 
+            "nextRoomId": 0
+        }
+    }, 
+    "rewards": {
+        "44001": {
+            "roomId": 444011000, 
+            "costChipList": [
+                600
+            ], 
+            "rewardList": [
+                {
+                    "count": 50, 
+                    "name": 103
+                }
+            ], 
+            "totalDrawCount": 1, 
+            "orderIdx": 1
+        }, 
+        "44002": {
+            "roomId": 444021000, 
+            "costChipList": [
+                70000, 
+                80000, 
+                90000, 
+                90000, 
+                80000
+            ], 
+            "rewardList": [
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 150, 
+                    "name": 103
+                }, 
+                {
+                    "count": 20, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }
+            ], 
+            "totalDrawCount": 5, 
+            "orderIdx": 5
+        }, 
+        "44003": {
+            "roomId": 444031000, 
+            "costChipList": [
+                750000, 
+                450000, 
+                375000, 
+                300000, 
+                225000
+            ], 
+            "rewardList": [
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }
+            ], 
+            "totalDrawCount": 5, 
+            "orderIdx": 0
+        }, 
+        "44004": {
+            "roomId": 444041000, 
+            "costChipList": [
+                6000000, 
+                4500000, 
+                3000000, 
+                2000000, 
+                1500000, 
+                1000000, 
+                1000000, 
+                1000000
+            ], 
+            "rewardList": [
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 100, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }, 
+                {
+                    "count": 50, 
+                    "name": 103
+                }
+            ], 
+            "totalDrawCount": 8, 
+            "orderIdx": 3
+        }, 
+        "44005": {
+            "roomId": 444051000, 
+            "costChipList": [
+                18000000, 
+                13500000, 
+                9000000, 
+                7500000, 
+                7500000, 
+                6000000, 
+                6000000, 
+                4500000, 
+                3000000, 
+                3000000
+            ], 
+            "rewardList": [
+                {
+                    "count": 250, 
+                    "name": 103
+                }, 
+                {
+                    "count": 500, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 300, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 250, 
+                    "name": 103
+                }, 
+                {
+                    "count": 200, 
+                    "name": 103
+                }, 
+                {
+                    "count": 500, 
+                    "name": 103
+                }
+            ], 
+            "totalDrawCount": 10, 
+            "orderIdx": 3
+        }
+    }, 
+    "startTime": "2020-02-22 00:00:00", 
+    "expire": 7, 
+    "exchangeReward": {
+        "name": "ID_LOTTERY_TICKET_REWARD_NAME_1", 
+        "id": 4143
+    }, 
+    "exchangeRewardIgnore": {
+        "name": "ID_LOTTERY_TICKET_REWARD_NAME_2", 
+        "id": 1193
+    }, 
+    "rule": "ID_LOTTERY_TICKET_RULE_1", 
+    "ruleIgnore": "ID_LOTTERY_TICKET_RULE_2", 
+    "lowClientVersion": "2.0.30"
+}

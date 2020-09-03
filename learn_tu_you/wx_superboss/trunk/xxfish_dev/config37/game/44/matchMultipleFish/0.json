@@ -1,0 +1,454 @@
+{
+    "44101": [
+        {
+            "luckyValue": 2500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        5000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        5001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 5000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        4000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        4001, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 7500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        7200
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        7201, 
+                        9700
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9701, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 10000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        6500
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        6501, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }
+    ], 
+    "44102": [
+        {
+            "luckyValue": 2500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        5000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        5001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 5000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        4000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        4001, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 7500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        7200
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        7201, 
+                        9700
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9701, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 10000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        6500
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        6501, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }
+    ], 
+    "44103": [
+        {
+            "luckyValue": 2500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        5000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        5001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 5000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        4000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        4001, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 7500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        7200
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        7201, 
+                        9700
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9701, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 10000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        6500
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        6501, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }
+    ], 
+    "44104": [
+        {
+            "luckyValue": 2500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        5000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        5001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 5000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        4000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        4001, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 7500, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        7200
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        7201, 
+                        9700
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9701, 
+                        10000
+                    ]
+                }
+            ]
+        }, 
+        {
+            "luckyValue": 10000, 
+            "multiples": [
+                {
+                    "multiple": 1, 
+                    "probb": [
+                        1, 
+                        3000
+                    ]
+                }, 
+                {
+                    "multiple": 2, 
+                    "probb": [
+                        3001, 
+                        6500
+                    ]
+                }, 
+                {
+                    "multiple": 3, 
+                    "probb": [
+                        6501, 
+                        9000
+                    ]
+                }, 
+                {
+                    "multiple": 5, 
+                    "probb": [
+                        9001, 
+                        10000
+                    ]
+                }
+            ]
+        }
+    ]
+}

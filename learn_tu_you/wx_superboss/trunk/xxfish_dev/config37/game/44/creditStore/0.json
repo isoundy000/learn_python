@@ -1,0 +1,121 @@
+{
+    "creditStore": [
+        {
+            "productId": "credit_1", 
+            "name": "5000万金币", 
+            "kindId": 101, 
+            "count": 50000000, 
+            "credit": 30000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/50w.png"
+        }, 
+        {
+            "productId": "credit_2", 
+            "name": "紫水晶x10", 
+            "kindId": 1429, 
+            "count": 10, 
+            "credit": 4000, 
+            "limitType": 0, 
+            "limitCount": -1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/zishuijing.png"
+        }, 
+        {
+            "productId": "credit_3", 
+            "name": "黄水晶x10", 
+            "kindId": 1430, 
+            "count": 10, 
+            "credit": 4000, 
+            "limitType": 0, 
+            "limitCount": -1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/huangshuijing.png"
+        }, 
+        {
+            "productId": "credit_4", 
+            "name": "200万金币", 
+            "kindId": 101, 
+            "count": 2000000, 
+            "credit": 10000, 
+            "limitType": 0, 
+            "limitCount": -1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/20w.png"
+        }, 
+        {
+            "productId": "credit_5", 
+            "name": "珍珠x2000", 
+            "kindId": 1137, 
+            "count": 2000, 
+            "credit": 20000, 
+            "limitType": 2, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/zhenzhu2000.png"
+        }, 
+        {
+            "productId": "credit_6", 
+            "name": "满1280减400钻石券", 
+            "kindId": 13573, 
+            "count": 1, 
+            "credit": 4000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/400manjian.png"
+        }, 
+        {
+            "productId": "credit_7", 
+            "name": "满1980减600钻石券", 
+            "kindId": 13574, 
+            "count": 1, 
+            "credit": 6000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/600manjian.png"
+        }, 
+        {
+            "productId": "credit_8", 
+            "name": "满3280减1000钻石券", 
+            "kindId": 13575, 
+            "count": 1, 
+            "credit": 10000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/1000manjian.png"
+        }, 
+        {
+            "productId": "credit_9", 
+            "name": "满6480减2000钻石券", 
+            "kindId": 13576, 
+            "count": 1, 
+            "credit": 20000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/2000manjian.png"
+        }, 
+        {
+            "productId": "credit_10", 
+            "name": "满6480减3240钻石券", 
+            "kindId": 13577, 
+            "count": 1, 
+            "credit": 32000, 
+            "limitType": 3, 
+            "limitCount": 1, 
+            "limitVipLevel": 8, 
+            "pic": "${http_download}/newfish/jifenshangcheng/3240manjian.png"
+        }
+    ], 
+    "creditTask": [
+        {
+            "name": "游戏充值", 
+            "desc": "每累计充值1元 +10积分", 
+            "pic": "${http_download}/newfish/jifenshangcheng/chongzhi.png"
+        }
+    ]
+}

@@ -66,7 +66,7 @@ class TGFish(TYGame):
         from newfish.entity.gun import gun_system
         from newfish.entity.fishactivity import (fish_activity_system, competition_activity,
                                                  canned_fish_factory)
-        from newfish.entity import invite_system, fish_notice_system
+        from newfish.entity import invite_system, fish_notice_system, souvenir_coin
         from newfish.entity.lotterypool import robbery_lottery_pool
         from newfish.entity.lotterypool import poseidon_lottery_pool
         serverType = gdata.serverType()
@@ -156,6 +156,8 @@ class TGFish(TYGame):
         returner_mission.initialize()
         # 邮件初始化
         mail_system.initialize()
+        # 纪念币初始化
+        souvenir_coin.initialize()
 
     def initGameAfter(self):
         """
@@ -189,23 +191,15 @@ class TGFish(TYGame):
         room 桌子所属的房间的TYRoom实例
         tableId 新桌子实例的ID
         """
+        serverType = gdata.serverType()
         typeName = room.roomConf.get("typeName")
-        if typeName in (config.FISH_NORMAL,
-                        config.FISH_FRIEND,
-                        config.FISH_TIME_MATCH,
-                        config.FISH_FIGHT,
-                        config.FISH_ROBBERY,
-                        config.FISH_NEWBIE,
-                        config.FISH_TIME_POINT_MATCH,
-                        config.FISH_GRAND_PRIX,
-                        config.FISH_POSEIDON,
-                        config.FISH_MULTIPLE):
+        if serverType == gdata.SRV_TYPE_TABLE and typeName in tyRoomConst.ROOM_CLASS_DICT:
             lotteryPool = hasattr(room, "lotteryPool")
-            ringLotteryPool = hasattr(room, "lotteryPool")
             if not lotteryPool:
                 room.lotteryPool = NormalLotteryPool(room)
-            if not ringLotteryPool:
-                room.ringLotteryPool = RingLotteryPool(room)
+            # ringLotteryPool = hasattr(room, "lotteryPool")
+            # if not ringLotteryPool:
+            #     room.ringLotteryPool = RingLotteryPool(room)
             table = room.newTable(tableId)
             return table
 

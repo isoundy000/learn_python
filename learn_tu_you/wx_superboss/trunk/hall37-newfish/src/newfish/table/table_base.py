@@ -212,6 +212,14 @@ class FishTable(TYTable):
         初始化鱼阵数据
         """
         self.fishGroupSystem = FishGroupSystem(self)
+        self.superBossFishGroup = None          # 超级Boss
+        self.tideFishGroup = None               # 鱼潮
+        self.resetFishGroupData()
+
+    def resetFishGroupData(self):
+        """
+        重置鱼阵数据
+        """
         self.activityFishGroup = None           # 活动的鱼阵
         self.autofillFishGroup = None           # 自动填充的鱼阵
         self.bossFishGroup = None               # boss鱼阵
@@ -223,7 +231,6 @@ class FishTable(TYTable):
         self.normalFishGroup = None             # 普通鱼阵
         self.rainbowFishGroup = None            # 彩虹鱼鱼群
         self.shareFishGroup = None              # 分享宝箱鱼群
-        self.superBossFishGroup = None          # 超级boss鱼阵
         self.terrorFishGroup = None             # 获取恐怖鱼鱼阵
         self.platterFishGroup = None            # 获取大盘鱼鱼群
         self.miniGameFishGroup = None           # 小游戏鱼阵
@@ -255,13 +262,12 @@ class FishTable(TYTable):
         self.normalFishGroup and self.normalFishGroup.clearTimer()
         self.rainbowFishGroup and self.rainbowFishGroup.clearTimer()
         self.shareFishGroup and self.shareFishGroup.clearTimer()
-        self.superBossFishGroup and self.superBossFishGroup.clearTimer()
         self.terrorFishGroup and self.terrorFishGroup.clearTimer()
         self.platterFishGroup and self.platterFishGroup.clearTimer()
         self.miniGameFishGroup and self.miniGameFishGroup.clearTimer()
         self.ttAutofillFishGroup and self.ttAutofillFishGroup.clearTimer()
-        self.fishGroupSystem.clear()                                        # 渔场鱼群管理系统  删除全部鱼群
-        self.initFishGroupData()                                            # 初始化鱼群
+        self.fishGroupSystem.clear()
+        self.resetFishGroupData()
 
     def _checkReloadRunConfig(self):
         """
@@ -463,8 +469,6 @@ class FishTable(TYTable):
     def clip_add(self, userId, seatId, bullet=0, auto=0):
         """弹药添加"""
         player = self.players[seatId - 1]
-        # if (bullet not in self.runConfig.bullets and not auto) or not player:
-        #     return False
         reason, info = player.addClip(bullet, auto)
         message = MsgPack()
         message.setCmd("clip_add")
@@ -556,6 +560,7 @@ class FishTable(TYTable):
         if player:
             player.refreshVipLevel()                # 刷新vip等级
             player.refreshHoldCoin()                # 刷新金币数
+            player.refreshGunLevel()                # 刷新炮等级
             message = MsgPack()
             message.setCmd("refresh_user_data")
             message.setResult("gameId", FISH_GAMEID)
@@ -619,10 +624,10 @@ class FishTable(TYTable):
             fpMultiple = player.fpMultiple
             if wpType == config.GUN_WEAPON_TYPE:
                 costChip = costBullet * fpMultiple      # 消耗的子弹 * 渔场倍率
-                wpPower = wpConf["power"]
+                # 增加狂暴弹期间子弹威力
+                wpPower = player.gunEffectState(6, player.gunId, wpConf["power"], gunX * gunMultiple) if self.gameMode == 1 else wpConf["power"]
                 clip = player.costClip(costBullet, "BI_NFISH_GUN_FIRE")
-            player.addFire(bulletId, wpId, timestamp, fpMultiple, skill=skill, power=wpPower, gunMultiple=gunMultiple,
-                           costChip=costChip, gunX=gunX)
+            player.addFire(bulletId, wpId, timestamp, fpMultiple, skill=skill, power=wpPower, gunMultiple=gunMultiple, costChip=costChip, gunX=gunX)
 
         if player:
             params = {"fPos": fPos, "wpId": wpId, "bulletId": bulletId, "skillId": skillId,
@@ -779,23 +784,28 @@ class FishTable(TYTable):
                 fishConf = config.getFishConf(fishType, self.typeName, self.runConfig.multiple)
                 if fishConf["type"] in config.ICE_FISH_TYPE:    # 冰锥
                     if time.time() >= skillEndTime:
-                        if self.fishMap[fId]["alive"]:
-                            self.refreshFishTypeCount(self.fishMap[fId])
-                        self.fishMap[fId]["alive"] = False
+                        self.setFishDied(fId)
                         isOK = False
                     if userId == releaseUserId:
                         isOK = False
             elif skillId == 5109:                               # 猎鱼机甲（倒计时后消失）
                 if time.time() >= skillEndTime:
-                    if self.fishMap[fId]["alive"]:
-                        self.refreshFishTypeCount(self.fishMap[fId])
-                    self.fishMap[fId]["alive"] = False
+                    self.setFishDied(fId)
                     isOK = False
                 if wpId != 2302 and userId == releaseUserId:    # 猎鱼机甲不会被自己捕获
                     isOK = False
             if not isOK:
                 break
         return isOK, catchUserId, _buffer
+
+    def setFishDied(self, fId):
+        """
+        标记鱼为死亡状态
+        """
+        if fId in self.fishMap:
+            if self.fishMap[fId]["alive"]:
+                self.refreshFishTypeCount(self.fishMap[fId])
+            self.fishMap[fId]["alive"] = False
 
     def _catchFish(self, player, bulletId, wpId, fIds, extends, stageId):
         """
@@ -1350,9 +1360,9 @@ class FishTable(TYTable):
         buffers.append(newBuffer)
         self.fishMap[fId]["buffer"] = buffers
 
-    # 奖励给其他人(鱼处于欺诈水晶状态下)
     def extendOtherCatchGain(self, fId, catchUserId, otherCatch, gainChip, gain, catchMap=None, exp=0):
         """
+        奖励给其他人(鱼处于欺诈水晶状态下)
         :param fId: 鱼ID
         :param catchUserId: 捕鱼者
         :param otherCatch: 其他捕获
@@ -1442,40 +1452,10 @@ class FishTable(TYTable):
             player.incrGunLevel(gunExp)
         # 捕获奖励结算
         player.catchBudget(gainChip, gainCoupon, items, wpId=wpId)
-        self._afterCatch(bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends, skillId, isFraud=isFraud, skillType=skillType)
-        self._retVerifyCatch(player, bulletId, catch, gain, extends, skillId, stageId, fpMultiple, isFraud=isFraud, skillType=skillType)
+        self._afterCatch(bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends, skillId, catchFishMultiple=catchFishMultiple)
+        self._retVerifyCatch(player, bulletId, catch, gain, extends, skillId, stageId, fpMultiple)
 
-    # # 是否可以进入解锁的房间
-    # def _enterNextRoom(self, oldLevel, player):
-    #     if oldLevel == player.level or util.isFinishAllRedTask(player.userId):
-    #         return
-    #     allRoomIds = gdata.gameIdBigRoomidsMap()[FISH_GAMEID]
-    #     allRoomConf = []
-    #     for bigRid in allRoomIds:
-    #         conf = gdata.getRoomConfigure(bigRid)
-    #         if conf.get("typeName") != config.FISH_FRIEND:
-    #             continue
-    #         conf["roomId"] = bigRid
-    #         allRoomConf.append(conf)
-    #     allRoomConf.sort(key=lambda x: x["minLevel"], reverse=True)
-    #     for roomConfig in allRoomConf:
-    #         if roomConfig["minLevel"] <= oldLevel or roomConfig["minLevel"] > player.level:
-    #             continue
-    #         # 当超过下个房间准入的3倍时，提示是否进入下个房间
-    #         if player.allChip >= roomConfig["minCoin"] * 3:
-    #             self._sendEnterNextRoomMsg(roomConfig["roomId"], player)
-    #             break
-
-    def _sendEnterNextRoomMsg(self, roomId, player):
-        """进入下一个房间"""
-        msg = MsgPack()
-        msg.setCmd("enter_next_room")
-        msg.setResult("gameId", FISH_GAMEID)
-        msg.setResult("userId", player.userId)
-        msg.setResult("roomId", roomId)
-        GameMsg.sendMsg(msg, player.userId)
-
-    def _afterCatch(self, bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends=None, skillId=0, isFraud=False, skillType=0):
+    def _afterCatch(self, bulletId, wpId, player, catch, gain, gainChip, fpMultiple, extends=None, skillId=0, isFraud=False, skillType=0, catchFishMultiple=None):
         """
         捕获结算之后
         :param bulletId: 子弹ID
@@ -1491,14 +1471,12 @@ class FishTable(TYTable):
         :param skillType: 技能类型
         """
         fishTypes = []
-        extendId = extends[0] if extends else 0
-        gunConf = player.getGunConf(bulletId, extendId)
+        extendId = extends[0] if extends and not skillId else None  # 激光炮extends有特殊含义，代表判定次数
         gunX = player.getFireGunX(bulletId, extendId)
         if isFraud:
             gunMultiple = 1
         else:
             gunMultiple = player.getFireGunMultiple(bulletId, extendId)  # 获取开火时的武器倍率
-            # gunMultiple = gunMultiple or gunConf.get("multiple", 1)
         player.addProfitCoin(gainChip)
         catchFishPoints = []
         for catchMap in catch:
@@ -1508,10 +1486,9 @@ class FishTable(TYTable):
                 fishConf = config.getFishConf(fishType, self.typeName, fpMultiple)
                 if ftlog.is_debug():
                     ftlog.debug("_afterCatch", player.userId, fId, fishType)
-                if self.fishMap[fId]["alive"]:                      # 鱼活着
-                    self.refreshFishTypeCount(self.fishMap[fId])    # 扣除鱼类型的条数
-                self.fishMap[fId]["alive"] = False                  # 鱼死
+                self.setFishDied(fId)
                 fishTypes.append(fishType)
+                # 处理活动等数据
                 if fishConf["itemId"] != config.CHIP_KINDID:
                     # 非金币类鱼，使用其金币价值
                     player.addProfitCoin(fishConf.get("value", 0) * gunMultiple * fpMultiple)
@@ -1521,49 +1498,31 @@ class FishTable(TYTable):
                     for player_ in self.players:
                         if player_ and self.fishMap.get(fId):
                             player_.dealCatchBoss(self.fishMap[fId], player.userId)
-                elif fishConf["type"] in config.TERROR_FISH_TYPE and "weaponId" in fishConf:  # 特殊鱼增加子弹数据
-                    if self.isNeedAdjustFishProbbRadix(fishConf, player):
-                        # 10倍场主线任务处于1-2期间，炸弹鱼威力倍率固定为1
-                        wpConf = config.getWeaponConf(fishConf["weaponId"], False, mode=self.gameMode)
-                    else:
-                        wpConf = config.getWeaponConf(fishConf["weaponId"], mode=self.gameMode)
-                    power = wpConf["power"]
-                    # 钻头鱼
-                    if fishConf["type"] in config.DRILL_FISH_TYPE:
-                        catchMap["power"] = int(power * 0.4)
-                        powerList = [catchMap["power"], power - catchMap["power"]]
-                    else:
-                        catchMap["power"] = power
-                        powerList = [power]
-                    # 添加特殊鱼这颗子弹
-                    player.addFire(fId, fishConf["weaponId"], int(time.time()), fpMultiple, power=powerList, multiple=multiple,
-                                   clientFire=False, fishType=fishType)
-                    ftlog.info("addFire, userId =", player.userId, "fId =", fId, "power =", powerList,
-                               "multiple =", multiple, "isFraud =", isFraud, "skill =", skill, "gunConf =", gunConf,
-                               "extends =", extends, "bulletId =", bulletId, "wpId =", wpId)
-                # 超级boss添加子弹数据.
-                elif fishConf["type"] in config.SUPERBOSS_FISH_TYPE and self.superBossFishGroup and "weaponId" in fishConf:
-                    self.superBossFishGroup.addFire(player, fId, fishConf["weaponId"], fpMultiple, multiple=multiple, fishType=fishType)
-                if fishConf["type"] in config.RAINBOW_BONUS_FISH_TYPE:  # 彩虹鱼扣减奖池
+                # 捕获倍率
+                if catchFishMultiple and catchFishMultiple.get(fId):
+                    catchMap["fishMultiple"] = catchFishMultiple.get(fId)
+                # 特殊鱼死亡后爆炸
+                if fishConf["type"] in config.SPECIAL_WEAPON_FISH_TYPE:
+                    catchMap = self.dealSpecialFishFire(player, fishConf, fpMultiple, gunMultiple, gunX, catchMap)
+                # 彩虹鱼扣减奖池
+                if fishConf["type"] in config.RAINBOW_BONUS_FISH_TYPE:
                     value = fishConf["score"]
-                    gunMultiple = config.getGunConf(player.gunId, player.clientId, player.gunLv, self.gameMode).get("multiple", 1)
-                    gunX = util.getGunX(wpId, self.gameMode)
                     if fishConf["type"] in config.TERROR_FISH_TYPE:
                         value = config.getWeaponConf(fishConf["weaponId"], False, self.gameMode)["power"]
                     # 鱼分值/武器能量对应奖池
-                    bonus = value * gunMultiple * gunX * fpMultiple
+                    bonus = value * gunMultiple * fpMultiple
                     # 需扣减奖池
-                    deductionBonus = (value - fishConf["probb1"]) * gunMultiple * gunX * fpMultiple
+                    deductionBonus = (value - fishConf["probb1"]) * gunMultiple * fpMultiple
                     if ftlog.is_debug():
                         ftlog.debug(
                             "dealCatch->userId =", player.userId, "currRechargeBonus =", player.dynamicOdds.currRechargeBonus >= bonus,
                             "getRainbowPoolCoin =", self.room.lotteryPool.getRainbowPoolCoin() >= bonus, "bonus =", bonus,
-                            "deductionBonus =", deductionBonus, "gunMultiple =", gunMultiple, "gunX =", gunX
+                            "deductionBonus =", deductionBonus, "gunMultiple =", gunMultiple
                         )
                     if player.dynamicOdds.currRechargeBonus >= bonus:
                         # 存在充值奖池
                         player.dynamicOdds.deductionRechargeBonus(deductionBonus)
-                    elif self.room.lotteryPool.getRainbowPoolCoin() >= bonus:
+                    elif self.room.lotteryPool and self.room.lotteryPool.getRainbowPoolCoin() >= bonus:
                         # 存在彩虹鱼奖池
                         self.room.lotteryPool.deductionRainbowPoolCoin(deductionBonus)
                 # 检测是否可以获得巨奖
@@ -1582,8 +1541,6 @@ class FishTable(TYTable):
                         point *= catchMap["fishMultiple"]
                         if ftlog.is_debug():
                             ftlog.debug("addGrandPrixFishPoint 2, userId =", player.userId, catchMap["fishMultiple"])
-                    gunMultiple = config.getGunConf(player.gunId, player.clientId, player.gunLv, self.gameMode).get("multiple", 1)
-                    gunX = util.getGunX(wpId, self.gameMode)
                     point = player.addGrandPrixFishPoint(point, str(fishType), gunMultiple * gunX)
                     if point:
                         catchFishPoints.append({"fId": fId, "point": point})
@@ -1596,14 +1553,12 @@ class FishTable(TYTable):
         if self.typeName in [config.FISH_GRAND_PRIX] and catchFishPoints:
             player.sendGrandPrixCatch(catchFishPoints)
 
-        gunId = gunConf.get("gunId", 0)
-        gunLevel = gunConf.get("gunLevel", 1)
-        wpConf = config.getWeaponConf(wpId, mode=self.gameMode)
-        self._sendLed(player, gain, fIds, fpMultiple)               # 发送奖励掉落
+        self._sendLed(player, gain, fpMultiple, gunMultiple, gunX)  # 发送奖励掉落
         player.addCatchFishes(fishTypes)                            # 捕获鱼的条数
 
         from newfish.game import TGFish
-        event = CatchEvent(player.userId, FISH_GAMEID, self.roomId, self.tableId, fishTypes, wpId, gainChip, fpMultiple, catch, gain, player.resetTime, gunConf.get("multiple", 1))
+        event = CatchEvent(player.userId, FISH_GAMEID, self.roomId, self.tableId, fishTypes, wpId, gainChip, fpMultiple,
+                           catch, gain, player.resetTime, gunMultiple, gunX=gunX)
         TGFish.getEventBus().publishEvent(event)
         player.triggerCatchFishEvent(event)                         # 处理捕鱼事件
         if self.superBossFishGroup:                                 # 超级boss鱼群
@@ -1622,7 +1577,44 @@ class FishTable(TYTable):
         # 触发美人鱼的馈赠小游戏
         self._miniMermaidStart(player.seatId, fishTypes)            # 开始小游戏美人鱼的馈赠, 8101是美人鱼小游戏id
 
-    def _sendLed(self, player, gain, fIds, fpMultiple):
+    def dealSpecialFishFire(self, player, fishConf, fpMultiple, gunMultiple, gunX, catchMap):
+        """
+        处理特殊鱼死亡后变为武器新增的子弹数据
+        """
+        fId = catchMap["fId"]
+        fishType = fishConf["fishType"]
+        weaponId = fishConf.get("weaponId", 0)
+        # 计算爆炸阶段次数
+        stageCount = util.selectIdxByWeight(config.getWeaponStageCountConf(weaponId, self.gameMode)) + 1
+        if stageCount > 0:
+            powerList = []
+            for _ in xrange(stageCount):
+                wpConf = config.getWeaponConf(weaponId, mode=self.gameMode)
+                powerList.append(wpConf["power"])
+            # 通过catchMap["power"]告知客户端爆炸威力。客户端穿透鱼时需要递减威力（钻头鱼、电鳗采用该算法）
+            if fishConf["type"] in config.DRILL_FISH_TYPE:  # 钻头鱼
+                power = powerList[0]
+                catchMap["power"] = int(power * 0.4)
+                powerList = [catchMap["power"], power - catchMap["power"]]
+            else:
+                catchMap["power"] = powerList[0]
+            catchMap["fishType"] = fishType
+            catchMap["stageCount"] = stageCount
+            # 增加子弹数据
+            player.addFire(catchMap["fId"], weaponId, int(time.time()), fpMultiple,
+                           power=powerList, gunMultiple=gunMultiple,
+                           clientFire=False, fishType=fishType, gunX=gunX)
+            ftlog.info("dealSpecialFishFire, userId =", player.userId,
+                       "fId =", fId,
+                       "fishType =", fishType,
+                       "gunMultiple =", gunMultiple,
+                       "gunX =", gunX,
+                       "weaponId =", weaponId,
+                       "stageCount =", stageCount,
+                       "powerList =", powerList)
+        return catchMap
+
+    def _sendLed(self, player, gain, fpMultiple, gunMultiple, gunX):
         """
         发送全服通知
         :param player: 玩家
@@ -1632,6 +1624,7 @@ class FishTable(TYTable):
         """
         if self.runConfig.fishPool == 44001:
             return
+        gunM = gunMultiple * gunX
         title = config.getMultiLangTextConf(self.runConfig.title, lang=player.lang)
         for gainMap in gain:
             if not self.fishMap.get(gainMap["fId"]):
@@ -1641,104 +1634,94 @@ class FishTable(TYTable):
             fishName = config.getMultiLangTextConf(fishConf["name"], lang=player.lang)
             if ftlog.is_debug():
                 ftlog.debug("fishName--->", fishName, fishConf)
-            if fishConf["type"] in [2, 19] and gainMap and gainMap["itemId"] == CHIP_KINDID and gainMap["count"] >= 1500:
+            if fishConf["type"] in [2, 19, 8, 9] and gainMap and gainMap["itemId"] == CHIP_KINDID and self.runConfig.fishPool == (44004 or 44405):
                 # msg = u"恭喜玩家%s在%s成功捕获%s，获得%s金币" % \
-                mid = "ID_LED_CATCH_BOSS_DROP_CHIP"
-               # msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-               #         player.name, self.runConfig.title, fishConf["name"],
-               #         util.formatScore(gainMap["count"], lang=player.lang))
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName,
-                        util.formatScore(gainMap["count"], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
-            elif fishConf["type"] == 19:
-                # msg = u"恭喜玩家%s在%s成功捕获%s，获得青铜招财珠x%d（价值%s金币）" % \
-                mid = "ID_LED_CATCH_FISH_DROP_BRONZE_BULLET"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName, gainMap["count"],
-                        util.formatScore(gainMap["count"] * BULLET_KINDIDS[BRONZE_BULLET_KINDID], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
-            elif fishConf["type"] == 8:
-                # msg = u"恭喜玩家%s在%s成功捕获%s，获得白银招财珠x%d（价值%s金币）" % \
-                mid = "ID_LED_CATCH_FISH_DROP_SILVER_BULLET"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName, gainMap["count"],
-                        util.formatScore(gainMap["count"] * BULLET_KINDIDS[SILVER_BULLET_KINDID], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
-            elif fishConf["type"] == 9:
-                # msg = u"恭喜玩家%s在%s成功捕获%s，获得黄金招财珠x%d（价值%s金币）" % \
-                mid = "ID_LED_CATCH_FISH_DROP_GOLD_BULLET"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName, gainMap["count"],
-                        util.formatScore(gainMap["count"] * BULLET_KINDIDS[GOLD_BULLET_KINDID], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
-            elif fishConf["type"] in config.CHIP_CHEST_FISH_TYPE:
-                # msg = u"恭喜玩家%s在%s捕获%s，开出%s金币" % \
-                mid = "ID_LED_CATCH_FISH_DROP_ITEM"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName,
-                        util.formatScore(gainMap["count"], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_BOSS_DROP_CHIP", player.name, title, fishName,
+                                    util.formatScore(gainMap["count"], lang=player.lang))
+            # elif fishConf["type"] == 19:
+            #     # msg = u"恭喜玩家%s在%s成功捕获%s，获得青铜招财珠x%d（价值%s金币）" % \
+            #     mid = "ID_LED_CATCH_FISH_DROP_BRONZE_BULLET"
+            #     msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
+            #             player.name, title, fishName, gainMap["count"],
+            #             util.formatScore(gainMap["count"] * BULLET_KINDIDS[BRONZE_BULLET_KINDID], lang=player.lang))
+            #     user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+            # elif fishConf["type"] == 8:
+            #     # msg = u"恭喜玩家%s在%s成功捕获%s，获得白银招财珠x%d（价值%s金币）" % \
+            #     mid = "ID_LED_CATCH_FISH_DROP_SILVER_BULLET"
+            #     msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
+            #             player.name, title, fishName, gainMap["count"],
+            #             util.formatScore(gainMap["count"] * BULLET_KINDIDS[SILVER_BULLET_KINDID], lang=player.lang))
+            #     user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+            # elif fishConf["type"] == 9:
+            #     # msg = u"恭喜玩家%s在%s成功捕获%s，获得黄金招财珠x%d（价值%s金币）" % \
+            #     mid = "ID_LED_CATCH_FISH_DROP_GOLD_BULLET"
+            #     msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
+            #             player.name, title, fishName, gainMap["count"],
+            #             util.formatScore(gainMap["count"] * BULLET_KINDIDS[GOLD_BULLET_KINDID], lang=player.lang))
+            #     user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+            # elif fishConf["type"] in config.CHIP_CHEST_FISH_TYPE:
+            #     # msg = u"恭喜玩家%s在%s捕获%s，开出%s金币" % \
+            #     mid = "ID_LED_CATCH_FISH_DROP_ITEM"
+            #     msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
+            #             player.name, title, fishName,
+            #             util.formatScore(gainMap["count"], lang=player.lang))
+            #     user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
             # elif fishConf["type"] in config.MULTIPLE_FISH_TYPE and gainMap["count"] / self.runConfig.multiple >= 2000:
-            elif fishConf["type"] in config.MULTIPLE_FISH_TYPE and fishConf["score"] >= 200:
+            elif fishConf["type"] in config.MULTIPLE_FISH_TYPE and fishConf["score"] >= 200 and self.runConfig.fishPool == (44004 or 44405):
                 multiple = gainMap["count"] / fishConf["score"] / fpMultiple
-                # msg = u"恭喜玩家%s在%s成功捕获%d倍%s，一口气赢得%s金币" % \
+                # msg = u"恭喜%s击杀%s获得X%d倍，总计%d倍，共%s金币！", " % \
+                totalMultiple = 2000 * multiple if self.runConfig.fishPool == 44004 else 5000 * multiple
                 if multiple >= 20:
-                    mid = "ID_LED_CATCH_MULTIPLE_FISH"
-                    msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                            player.name, title, multiple, fishName,
-                            util.formatScore(gainMap["count"], lang=player.lang))
-                    user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
-            elif gainMap["itemId"] == COUPON_KINDID and gainMap["count"] >= 500:    # 100:
+                    self._sendFormatLed(player, "ID_LED_CATCH_MULTIPLE_FISH", player.name, fishName, multiple, totalMultiple,
+                                        util.formatScore(gainMap["count"], lang=player.lang))
+            elif gainMap["itemId"] == COUPON_KINDID and gainMap["count"] >= 1000:    # 500:
                 # msg = u"恭喜玩家%s在%s凭借超凡的智慧和华丽的操作瞬间拿下%.2f红包券" % \
-                mid = "ID_LED_CATCH_COUPON_FISH"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"] * config.COUPON_DISPLAY_RATE,
-                        gainMap["count"] * config.COUPON_DISPLAY_RATE)
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
-            elif fishConf["type"] in config.TERROR_FISH_TYPE and gainMap["count"] / fpMultiple >= 1500:
+                self._sendFormatLed(player, "ID_LED_CATCH_COUPON_FISH", player.name, title, gainMap["count"] * config.COUPON_DISPLAY_RATE)
+            elif fishConf["type"] in config.TERROR_FISH_TYPE and gainMap["count"] / fpMultiple >= 1500 and self.runConfig.fishPool == (44004 or 44405):
                 # msg = u"恭喜%s在%s成功捕获%s，获得%s金币" % \
-                mid = "ID_LED_CATCH_TERROR_FISH"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, fishName,
-                        util.formatScore(gainMap["count"], lang=player.lang))
-                user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH", player.name, title, fishName,
+                                    util.formatScore(gainMap["count"], lang=player.lang))
             elif gainMap["itemId"] == 4141:
                 # msg = u"恭喜玩家%s在%s获得10元话费卡x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_4141"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_4141", player.name, title, gainMap["count"])
             elif gainMap["itemId"] == 4142:
                 # msg = u"恭喜玩家%s在%s获得30元话费卡x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_4142"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_4142", player.name, title, gainMap["count"])
             elif gainMap["itemId"] == 4144:
                 # msg = u"恭喜玩家%s在%s凭借超凡的智慧和华丽的操作瞬间拿下100元话费卡x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_4144"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_4144", player.name, title, gainMap["count"])
             elif gainMap["itemId"] == 4233:
                 # msg = u"恭喜玩家%s在%s凭借超凡的智慧和华丽的操作瞬间拿下100元京东卡x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_4233"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_4233", player.name, title, gainMap["count"])
             elif gainMap["itemId"] == 2061:
                 # msg = u"恭喜玩家%s在%s获得5元红包x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_2061"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_2061", player.name, title, gainMap["count"])
             elif gainMap["itemId"] == 2050:
                 # msg = u"恭喜玩家%s在%s凭借超凡的智慧和华丽的操作瞬间拿下100元红包x%d" % \
-                mid = "ID_LED_CATCH_FISH_DROP_2050"
-                msg = config.getMultiLangTextConf(mid, lang=player.lang).format(
-                        player.name, title, gainMap["count"])
-                user_rpc.sendLed(FISH_GAMEID, msg, type="new", id=mid, lang=player.lang)
+                self._sendFormatLed(player, "ID_LED_CATCH_FISH_DROP_2050", player.name, title, gainMap["count"])
+            elif fishConf["type"] == 2 and gunM >= 10000:
+                # msg = u"好运爆表！恭喜%s用%s倍炮击杀%s获得%s金币" % \
+                self._sendFormatLed(player, "ID_LED_CATCH_BOSS_MULTIPL", player.name, gunM, fishName,
+                                    util.formatScore(gainMap["count"], lang=player.lang))
+            elif fishConf["type"] in config.MULTIPLE_FISH_TYPE and gainMap["count"] >= 4000000 and gunM >= 10000:
+                multiple = gainMap["count"] / fishConf["score"] / gunM
+                totalMultiple = gainMap["count"] / gunM
+                # msg = u"恭喜%s用%s倍炮击杀%s获得X%d倍，总计%d倍，共%s金币！" % \
+                if multiple >= 4 and totalMultiple >= 200:
+                    self._sendFormatLed(player, "ID_LED_CATCH_MULTIPLE_FISH_MULTIPL", player.name, gunM, fishName, multiple, totalMultiple,
+                                        util.formatScore(gainMap["count"], lang=player.lang))
+            elif fishConf["type"] in config.TERROR_FISH_TYPE and gainMap["count"] >= 5000000 and gunM >= 10000:
+                # msg = u"恭喜%s用%s倍炮击杀%s获得%s分，共%s金币" % \
+                totalValue = gainMap["count"] / gunM
+                self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH_MULTIPL", player.name, gunM,
+                                    fishName, totalValue, util.formatScore(gainMap["count"], lang=player.lang))
+
+    def _sendFormatLed(self, player, mid, *args):
+        """
+        格式化Led消息并发送
+        """
+        msg = config.getMultiLangTextConf(mid, lang=player.lang).format(*args)
+        user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
 
     def _doSit(self, msg, userId, seatId, clientId):
         """
@@ -2020,7 +2003,8 @@ class FishTable(TYTable):
         info["enT"] = round(group.enterTime, 2)
         info["fishesStartId"] = group.startFishId
         info["position"] = group.position               # 鱼群出现的位置
-        info["gameResolution"] = group.gameResolution
+        if group.gameResolution:
+            info["gameResolution"] = group.gameResolution
         diedFish = []
         HPFish = {}
         bufferFish = {}
@@ -2030,9 +2014,7 @@ class FishTable(TYTable):
             #     if ftlog.is_debug():
             #         ftlog.debug("_getGroupInfo", group.id, group.startFishId, group.fishCount, fId, self.fishMap.keys())
             #     continue
-            if not self.fishMap[fId]["alive"]:
-                diedFish.append(fId)
-            else:
+            if self.fishMap[fId]["alive"]:
                 fishType = self.fishMap[fId]["conf"]["fishType"]
                 fishConf = config.getFishConf(fishType, self.typeName, self.runConfig.multiple)
                 if fishConf["HP"] > 0:
@@ -2041,6 +2023,8 @@ class FishTable(TYTable):
                     bufferFish[fId] = self.fishMap[fId]["buffer"]       # 鱼身上的buffer 冰冻|无敌
                 if self.fishMap[fId]["multiple"] > 1:
                     multipleFish[fId] = self.fishMap[fId]["multiple"]
+            else:
+                diedFish.append(fId)
         if diedFish:
             info["died"] = diedFish
         if HPFish:
@@ -2668,15 +2652,6 @@ class FishTable(TYTable):
         if player and hasattr(player, "prizeWheel") and player.prizeWheel:
             player.prizeWheel.catchFish(fId, fishConf, fpMultiple, gunMultiple)
 
-    # def _chgMultiple(self, msg, userId, seatId):
-    #     """
-    #     修改玩家渔场倍率
-    #     """
-    #     fpMultiple = msg.getParam("fpMultiple")
-    #     player = self.getPlayer(userId)
-    #     if player:
-    #         player.changeFpMultiple(fpMultiple)
-
     def _inspireNotify(self, msg, userId, seatId):
         """
         请求鼓舞礼包数据
@@ -2690,6 +2665,12 @@ class FishTable(TYTable):
         是否存在超级boss
         """
         return self.superBossFishGroup and self.superBossFishGroup.isAppear()
+
+    def hasTideFishGroup(self):
+        """
+        是否存在鱼潮
+        """
+        return self.tideFishGroup and self.tideFishGroup.isAppear()
 
     def checkBigPrize(self, player, score, chip, fpMultiple, isBoss=False, isGrandPriz=False):
         """
@@ -2710,9 +2691,6 @@ class FishTable(TYTable):
         if isTriggerBigPrize:
             if player.compAct:
                 point = config.getCompActConf().get("points", {}).get(str(player.fpMultiple), 0)
-                # if point == 0:
-                #     ftlog.error("addPoint, userId =", player.userId, player.fpMultiple, config.getCompActConf().get("points"))
-                # else:
                 if point:
                     player.compAct.addPoint(point)
             player.activitySystem and player.activitySystem.addBigPrizeTimes(chip)
@@ -2731,7 +2709,6 @@ class FishTable(TYTable):
                 ftlog.info("refreshFishTypeCount, count error ! group =", group.desc(), "tableId =", self.tableId, "ft =", ft)
         else:
             ftlog.info("refreshFishTypeCount, type error ! group =", group.desc(), "tableId =", self.tableId, "ft =", ft)
-        # ftlog.debug("refreshFishTypeCount", self.tableId, ft, self.fishCountMap.get(ft, 0))
 
     def _takeNewbie7DaysGift(self, msg, userId, seatId):
         """

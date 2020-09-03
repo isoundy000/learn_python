@@ -1,0 +1,149 @@
+{
+    "welfareCan": {
+        "1": {
+            "name": 14120, 
+            "count": 10, 
+            "des": "锁定"
+        }, 
+        "2": {
+            "name": 14120, 
+            "count": 10, 
+            "des": "锁定"
+        }, 
+        "3": {
+            "name": 14120, 
+            "count": 10, 
+            "des": "锁定"
+        }, 
+        "4": {
+            "name": 14120, 
+            "count": 15, 
+            "des": "锁定"
+        }, 
+        "5": {
+            "name": 14120, 
+            "count": 15, 
+            "des": "锁定"
+        }, 
+        "6": {
+            "name": 14119, 
+            "count": 10, 
+            "des": "冰冻"
+        }, 
+        "7": {
+            "name": 14119, 
+            "count": 10, 
+            "des": "冰冻"
+        }, 
+        "8": {
+            "name": 14119, 
+            "count": 10, 
+            "des": "冰冻"
+        }, 
+        "9": {
+            "name": 14119, 
+            "count": 15, 
+            "des": "冰冻"
+        }, 
+        "10": {
+            "name": 14119, 
+            "count": 15, 
+            "des": "冰冻"
+        }, 
+        "11": {
+            "name": 1429, 
+            "count": 2, 
+            "des": "紫水晶"
+        }, 
+        "12": {
+            "name": 1429, 
+            "count": 2, 
+            "des": "紫水晶"
+        }, 
+        "13": {
+            "name": 1429, 
+            "count": 3, 
+            "des": "紫水晶"
+        }, 
+        "14": {
+            "name": 1429, 
+            "count": 4, 
+            "des": "紫水晶"
+        }, 
+        "15": {
+            "name": 1430, 
+            "count": 2, 
+            "des": "黄水晶"
+        }, 
+        "16": {
+            "name": 1430, 
+            "count": 2, 
+            "des": "黄水晶"
+        }, 
+        "17": {
+            "name": 1430, 
+            "count": 3, 
+            "des": "黄水晶"
+        }, 
+        "18": {
+            "name": 1430, 
+            "count": 4, 
+            "des": "黄水晶"
+        }, 
+        "19": {
+            "name": 1193, 
+            "count": 1, 
+            "des": "白银招财珠"
+        }, 
+        "20": {
+            "name": 1193, 
+            "count": 1, 
+            "des": "白银招财珠"
+        }
+    }, 
+    "rule": "ID_CONFIG_FISHCAN_FACTOORY_RULE", 
+    "makeMail": "ID_CONFIG_FISHCAN_FACTORY_MAKE_MAIL", 
+    "receiveMail": "ID_CONFIG_FISHCAN_FACTORY_RECEIVE_MAIL", 
+    "bagMail": "ID_CONFIG_FISHCAN_FACTORY_OUTDATE_MAIL", 
+    "canProp": [
+        14120, 
+        14119, 
+        1429, 
+        1430, 
+        1193, 
+        1194
+    ], 
+    "wordFactoryChip": 100, 
+    "userChip": 100, 
+    "expireTime": 24.0, 
+    "userMakeCan": {
+        "14120": {
+            "name": 14120, 
+            "des": "锁定"
+        }, 
+        "14119": {
+            "name": 14119, 
+            "des": "冰冻"
+        }, 
+        "1429": {
+            "name": 1429, 
+            "des": "紫水晶"
+        }, 
+        "1430": {
+            "name": 1430, 
+            "des": "黄水晶"
+        }, 
+        "1193": {
+            "name": 1193, 
+            "des": "白银招财珠"
+        }, 
+        "1194": {
+            "name": 1194, 
+            "des": "黄金招财珠"
+        }
+    }, 
+    "welfareCanGenerateTs": 7, 
+    "welfareCanExpireTs": 23, 
+    "maxCount": 100, 
+    "vipLimit": 4
+}

@@ -279,146 +279,6 @@
         "power": 40, 
         "wpRatio": 1
     }, 
-    "2141": {
-        "costBullet": 41, 
-        "matchAddition": 0, 
-        "weaponId": 2141, 
-        "power": 41, 
-        "wpRatio": 1
-    }, 
-    "2142": {
-        "costBullet": 42, 
-        "matchAddition": 0, 
-        "weaponId": 2142, 
-        "power": 42, 
-        "wpRatio": 1
-    }, 
-    "2143": {
-        "costBullet": 43, 
-        "matchAddition": 0, 
-        "weaponId": 2143, 
-        "power": 43, 
-        "wpRatio": 1
-    }, 
-    "2144": {
-        "costBullet": 44, 
-        "matchAddition": 0, 
-        "weaponId": 2144, 
-        "power": 44, 
-        "wpRatio": 1
-    }, 
-    "2145": {
-        "costBullet": 45, 
-        "matchAddition": 0, 
-        "weaponId": 2145, 
-        "power": 45, 
-        "wpRatio": 1
-    }, 
-    "2146": {
-        "costBullet": 46, 
-        "matchAddition": 0, 
-        "weaponId": 2146, 
-        "power": 46, 
-        "wpRatio": 1
-    }, 
-    "2147": {
-        "costBullet": 47, 
-        "matchAddition": 0, 
-        "weaponId": 2147, 
-        "power": 47, 
-        "wpRatio": 1
-    }, 
-    "2148": {
-        "costBullet": 48, 
-        "matchAddition": 0, 
-        "weaponId": 2148, 
-        "power": 48, 
-        "wpRatio": 1
-    }, 
-    "2149": {
-        "costBullet": 49, 
-        "matchAddition": 0, 
-        "weaponId": 2149, 
-        "power": 49, 
-        "wpRatio": 1
-    }, 
-    "2150": {
-        "costBullet": 50, 
-        "matchAddition": 0, 
-        "weaponId": 2150, 
-        "power": 50, 
-        "wpRatio": 1
-    }, 
-    "2151": {
-        "costBullet": 51, 
-        "matchAddition": 0, 
-        "weaponId": 2151, 
-        "power": 51, 
-        "wpRatio": 1
-    }, 
-    "2152": {
-        "costBullet": 52, 
-        "matchAddition": 0, 
-        "weaponId": 2152, 
-        "power": 52, 
-        "wpRatio": 1
-    }, 
-    "2153": {
-        "costBullet": 53, 
-        "matchAddition": 0, 
-        "weaponId": 2153, 
-        "power": 53, 
-        "wpRatio": 1
-    }, 
-    "2154": {
-        "costBullet": 54, 
-        "matchAddition": 0, 
-        "weaponId": 2154, 
-        "power": 54, 
-        "wpRatio": 1
-    }, 
-    "2155": {
-        "costBullet": 55, 
-        "matchAddition": 0, 
-        "weaponId": 2155, 
-        "power": 55, 
-        "wpRatio": 1
-    }, 
-    "2156": {
-        "costBullet": 56, 
-        "matchAddition": 0, 
-        "weaponId": 2156, 
-        "power": 56, 
-        "wpRatio": 1
-    }, 
-    "2157": {
-        "costBullet": 57, 
-        "matchAddition": 0, 
-        "weaponId": 2157, 
-        "power": 57, 
-        "wpRatio": 1
-    }, 
-    "2158": {
-        "costBullet": 58, 
-        "matchAddition": 0, 
-        "weaponId": 2158, 
-        "power": 58, 
-        "wpRatio": 1
-    }, 
-    "2159": {
-        "costBullet": 59, 
-        "matchAddition": 0, 
-        "weaponId": 2159, 
-        "power": 59, 
-        "wpRatio": 1
-    }, 
-    "2160": {
-        "costBullet": 60, 
-        "matchAddition": 0, 
-        "weaponId": 2160, 
-        "power": 60, 
-        "wpRatio": 1
-    }, 
     "2201": {
         "costBullet": 0, 
         "matchAddition": 0, 
@@ -684,5 +544,26 @@
         "weaponId": 2805, 
         "power": 4200, 
         "wpRatio": 0.2
+    }, 
+    "2901": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 2901, 
+        "power": 90, 
+        "wpRatio": 1
+    }, 
+    "2902": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 2902, 
+        "power": 120, 
+        "wpRatio": 1
+    }, 
+    "2903": {
+        "costBullet": 0, 
+        "matchAddition": 0, 
+        "weaponId": 2903, 
+        "power": 200, 
+        "wpRatio": 1
     }
 }

@@ -1,0 +1,655 @@
+{
+    "inviteTask": {
+        "1000": {
+            "Id": 1000, 
+            "type": 1, 
+            "target": 1, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1001": {
+            "Id": 1001, 
+            "type": 1, 
+            "target": 2, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1002": {
+            "Id": 1002, 
+            "type": 1, 
+            "target": 3, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1003": {
+            "Id": 1003, 
+            "type": 1, 
+            "target": 4, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1004": {
+            "Id": 1004, 
+            "type": 1, 
+            "target": 4, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 100, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1005": {
+            "Id": 1005, 
+            "type": 1, 
+            "target": 5, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1006": {
+            "Id": 1006, 
+            "type": 1, 
+            "target": 6, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1007": {
+            "Id": 1007, 
+            "type": 1, 
+            "target": 7, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1008": {
+            "Id": 1008, 
+            "type": 1, 
+            "target": 8, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1009": {
+            "Id": 1009, 
+            "type": 1, 
+            "target": 8, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1010": {
+            "Id": 1010, 
+            "type": 1, 
+            "target": 9, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1011": {
+            "Id": 1011, 
+            "type": 1, 
+            "target": 10, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1012": {
+            "Id": 1012, 
+            "type": 1, 
+            "target": 11, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1013": {
+            "Id": 1013, 
+            "type": 1, 
+            "target": 12, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1014": {
+            "Id": 1014, 
+            "type": 1, 
+            "target": 12, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1015": {
+            "Id": 1015, 
+            "type": 1, 
+            "target": 13, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1016": {
+            "Id": 1016, 
+            "type": 1, 
+            "target": 14, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1017": {
+            "Id": 1017, 
+            "type": 1, 
+            "target": 15, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1018": {
+            "Id": 1018, 
+            "type": 1, 
+            "target": 16, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1019": {
+            "Id": 1019, 
+            "type": 1, 
+            "target": 16, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1020": {
+            "Id": 1020, 
+            "type": 1, 
+            "target": 17, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1021": {
+            "Id": 1021, 
+            "type": 1, 
+            "target": 18, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1022": {
+            "Id": 1022, 
+            "type": 1, 
+            "target": 19, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1023": {
+            "Id": 1023, 
+            "type": 1, 
+            "target": 20, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1024": {
+            "Id": 1024, 
+            "type": 1, 
+            "target": 20, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1025": {
+            "Id": 1025, 
+            "type": 1, 
+            "target": 21, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1026": {
+            "Id": 1026, 
+            "type": 1, 
+            "target": 22, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1027": {
+            "Id": 1027, 
+            "type": 1, 
+            "target": 23, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1028": {
+            "Id": 1028, 
+            "type": 1, 
+            "target": 24, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1029": {
+            "Id": 1029, 
+            "type": 1, 
+            "target": 24, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1030": {
+            "Id": 1030, 
+            "type": 1, 
+            "target": 25, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1031": {
+            "Id": 1031, 
+            "type": 1, 
+            "target": 26, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1032": {
+            "Id": 1032, 
+            "type": 1, 
+            "target": 27, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1033": {
+            "Id": 1033, 
+            "type": 1, 
+            "target": 28, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1034": {
+            "Id": 1034, 
+            "type": 1, 
+            "target": 28, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1035": {
+            "Id": 1035, 
+            "type": 1, 
+            "target": 29, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1036": {
+            "Id": 1036, 
+            "type": 1, 
+            "target": 30, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1037": {
+            "Id": 1037, 
+            "type": 1, 
+            "target": 31, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1038": {
+            "Id": 1038, 
+            "type": 1, 
+            "target": 32, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1039": {
+            "Id": 1039, 
+            "type": 1, 
+            "target": 32, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1040": {
+            "Id": 1040, 
+            "type": 1, 
+            "target": 33, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1041": {
+            "Id": 1041, 
+            "type": 1, 
+            "target": 34, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1042": {
+            "Id": 1042, 
+            "type": 1, 
+            "target": 35, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1043": {
+            "Id": 1043, 
+            "type": 1, 
+            "target": 36, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1044": {
+            "Id": 1044, 
+            "type": 1, 
+            "target": 36, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }, 
+        "1045": {
+            "Id": 1045, 
+            "type": 1, 
+            "target": 37, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1046": {
+            "Id": 1046, 
+            "type": 1, 
+            "target": 38, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "1047": {
+            "Id": 1047, 
+            "type": 1, 
+            "target": 39, 
+            "rewards": [
+                {
+                    "count": 10000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "1048": {
+            "Id": 1048, 
+            "type": 1, 
+            "target": 40, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 33402
+                }
+            ]
+        }, 
+        "1049": {
+            "Id": 1049, 
+            "type": 1, 
+            "target": 40, 
+            "rewards": [
+                {
+                    "count": 20000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 120, 
+                    "name": 3106
+                }
+            ]
+        }
+    }, 
+    "recallTask": {
+        "2000": {
+            "Id": 2000, 
+            "type": 2, 
+            "target": 1, 
+            "rewards": [
+                {
+                    "count": 2000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "2001": {
+            "Id": 2001, 
+            "type": 2, 
+            "target": 2, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "2002": {
+            "Id": 2002, 
+            "type": 2, 
+            "target": 3, 
+            "rewards": [
+                {
+                    "count": 2000, 
+                    "name": 101
+                }
+            ]
+        }, 
+        "2003": {
+            "Id": 2003, 
+            "type": 2, 
+            "target": 4, 
+            "rewards": [
+                {
+                    "count": 1, 
+                    "name": 32402
+                }
+            ]
+        }, 
+        "2004": {
+            "Id": 2004, 
+            "type": 2, 
+            "target": 4, 
+            "rewards": [
+                {
+                    "count": 5000, 
+                    "name": 101
+                }, 
+                {
+                    "count": 50, 
+                    "name": 3106
+                }
+            ]
+        }
+    }
+}

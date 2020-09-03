@@ -1,0 +1,3077 @@
+{
+    "coinStore": {
+        "items": {
+            "TY0044C00120001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_240W_COIN", 
+                    "ID_CONFIG_COIN_STORE_120W_COIN"
+                ], 
+                "order": 0, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    2400000, 
+                    1200000
+                ], 
+                "price": 120, 
+                "cur_price": [
+                    120
+                ], 
+                "price_direct": 12, 
+                "price_diamond": 120, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C00300001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_600W_COIN", 
+                    "ID_CONFIG_COIN_STORE_300W_COIN"
+                ], 
+                "order": 1, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    6000000, 
+                    3000000
+                ], 
+                "price": 300, 
+                "cur_price": [
+                    300
+                ], 
+                "price_direct": 30, 
+                "price_diamond": 300, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C00680001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_1360W_COIN", 
+                    "ID_CONFIG_COIN_STORE_680W_COIN"
+                ], 
+                "order": 2, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    13600000, 
+                    6800000
+                ], 
+                "price": 680, 
+                "cur_price": [
+                    680
+                ], 
+                "price_direct": 68, 
+                "price_diamond": 680, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C01280001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_2560W_COIN", 
+                    "ID_CONFIG_COIN_STORE_1280W_COIN"
+                ], 
+                "order": 3, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    25600000, 
+                    12800000
+                ], 
+                "price": 1280, 
+                "cur_price": [
+                    1280
+                ], 
+                "price_direct": 128, 
+                "price_diamond": 1280, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C01980001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_4200W_COIN", 
+                    "ID_CONFIG_COIN_STORE_2100W_COIN"
+                ], 
+                "order": 4, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    42000000, 
+                    21000000
+                ], 
+                "price": 1980, 
+                "cur_price": [
+                    1980
+                ], 
+                "price_direct": 198, 
+                "price_diamond": 1980, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    "ID_CONFIG_COIN_STORE_ADDITION_3"
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    "window_shop_tag_bg_1.png"
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C03280001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_6560W_COIN", 
+                    "ID_CONFIG_COIN_STORE_3680W_COIN"
+                ], 
+                "order": 5, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    65600000, 
+                    36800000
+                ], 
+                "price": 3280, 
+                "cur_price": [
+                    3280
+                ], 
+                "price_direct": 328, 
+                "price_diamond": 3280, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    "ID_CONFIG_COIN_STORE_ADDITION_4"
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    "window_shop_tag_bg_1.png"
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C06480001": {
+                "name": [
+                    "ID_CONFIG_COIN_STORE_15600W_COIN", 
+                    "ID_CONFIG_COIN_STORE_7800W_COIN"
+                ], 
+                "order": 6, 
+                "pt": "coin", 
+                "itemId": 101, 
+                "count": [
+                    156000000, 
+                    78000000
+                ], 
+                "price": 6480, 
+                "cur_price": [
+                    6480
+                ], 
+                "price_direct": 648, 
+                "price_diamond": 6480, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COIN_STORE_DOUBLE", 
+                    "ID_CONFIG_COIN_STORE_ADDITION_5"
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    "window_shop_tag_bg_1.png"
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }
+        }
+    }, 
+    "diamondStore": {
+        "items": {
+            "TY0044R00080001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_80_DIAMOND"
+                ], 
+                "order": 0, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    80
+                ], 
+                "price": 8, 
+                "cur_price": [
+                    8
+                ], 
+                "price_direct": 8, 
+                "price_diamond": 80, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 8
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R00120001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_120_DIAMOND"
+                ], 
+                "order": 1, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    120
+                ], 
+                "price": 12, 
+                "cur_price": [
+                    12
+                ], 
+                "price_direct": 12, 
+                "price_diamond": 120, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 12
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R00180001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_180_DIAMOND"
+                ], 
+                "order": 2, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    180
+                ], 
+                "price": 18, 
+                "cur_price": [
+                    8
+                ], 
+                "price_direct": 18, 
+                "price_diamond": 180, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 18
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R00300001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_300_DIAMOND"
+                ], 
+                "order": 3, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    300
+                ], 
+                "price": 30, 
+                "cur_price": [
+                    30
+                ], 
+                "price_direct": 30, 
+                "price_diamond": 300, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 30
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R00680001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_680_DIAMOND"
+                ], 
+                "order": 4, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    680
+                ], 
+                "price": 68, 
+                "cur_price": [
+                    68
+                ], 
+                "price_direct": 68, 
+                "price_diamond": 680, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 68
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R00980001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_980_DIAMOND"
+                ], 
+                "order": 5, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    980
+                ], 
+                "price": 98, 
+                "cur_price": [
+                    98
+                ], 
+                "price_direct": 98, 
+                "price_diamond": 980, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 98
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R01280001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_1280_DIAMOND"
+                ], 
+                "order": 6, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    1280
+                ], 
+                "price": 128, 
+                "cur_price": [
+                    128
+                ], 
+                "price_direct": 128, 
+                "price_diamond": 1280, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 128
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R01980001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_1980_DIAMOND"
+                ], 
+                "order": 7, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    1980
+                ], 
+                "price": 198, 
+                "cur_price": [
+                    198
+                ], 
+                "price_direct": 198, 
+                "price_diamond": 1980, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 198
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R03280001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_3280_DIAMOND"
+                ], 
+                "order": 8, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    3280
+                ], 
+                "price": 328, 
+                "cur_price": [
+                    328
+                ], 
+                "price_direct": 328, 
+                "price_diamond": 3280, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 328
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044R06480001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_6480_DIAMOND"
+                ], 
+                "order": 9, 
+                "pt": "diamond", 
+                "itemId": 102, 
+                "count": [
+                    6480
+                ], 
+                "price": 648, 
+                "cur_price": [
+                    648
+                ], 
+                "price_direct": 648, 
+                "price_diamond": 6480, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {
+                    "voucher": 648
+                }, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "label3BgType": [
+                    "window_shop_tag_2.png"
+                ], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044V00010001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_1_VOUCHER"
+                ], 
+                "order": 10, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    1
+                ], 
+                "price": 1, 
+                "cur_price": [
+                    1
+                ], 
+                "price_direct": 1, 
+                "price_diamond": 10, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "visible": 0, 
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00060001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_6_VOUCHER"
+                ], 
+                "order": 11, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    6
+                ], 
+                "price": 6, 
+                "cur_price": [
+                    6
+                ], 
+                "price_direct": 6, 
+                "price_diamond": 60, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "visible": 0, 
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00080001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_8_VOUCHER"
+                ], 
+                "order": 12, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    8
+                ], 
+                "price": 8, 
+                "cur_price": [
+                    8
+                ], 
+                "price_direct": 8, 
+                "price_diamond": 80, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "visible": 0, 
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00120001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_12_VOUCHER"
+                ], 
+                "order": 13, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    12
+                ], 
+                "price": 12, 
+                "cur_price": [
+                    12
+                ], 
+                "price_direct": 12, 
+                "price_diamond": 120, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00180001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_18_VOUCHER"
+                ], 
+                "order": 14, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    18
+                ], 
+                "price": 18, 
+                "cur_price": [
+                    18
+                ], 
+                "price_direct": 18, 
+                "price_diamond": 180, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00300001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_30_VOUCHER"
+                ], 
+                "order": 15, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    30
+                ], 
+                "price": 30, 
+                "cur_price": [
+                    30
+                ], 
+                "price_direct": 30, 
+                "price_diamond": 300, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00680001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_68_VOUCHER"
+                ], 
+                "order": 16, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    68
+                ], 
+                "price": 68, 
+                "cur_price": [
+                    68
+                ], 
+                "price_direct": 68, 
+                "price_diamond": 680, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V00980001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_98_VOUCHER"
+                ], 
+                "order": 17, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    98
+                ], 
+                "price": 98, 
+                "cur_price": [
+                    98
+                ], 
+                "price_direct": 98, 
+                "price_diamond": 980, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V01280001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_128_VOUCHER"
+                ], 
+                "order": 18, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    128
+                ], 
+                "price": 128, 
+                "cur_price": [
+                    128
+                ], 
+                "price_direct": 128, 
+                "price_diamond": 1280, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V01980001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_198_VOUCHER"
+                ], 
+                "order": 19, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    198
+                ], 
+                "price": 198, 
+                "cur_price": [
+                    198
+                ], 
+                "price_direct": 198, 
+                "price_diamond": 1980, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V03280001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_328_VOUCHER"
+                ], 
+                "order": 20, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    328
+                ], 
+                "price": 328, 
+                "cur_price": [
+                    328
+                ], 
+                "price_direct": 328, 
+                "price_diamond": 3280, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }, 
+            "TY0044V06480001": {
+                "name": [
+                    "ID_CONFIG_DIAMOND_STORE_648_VOUCHER"
+                ], 
+                "order": 21, 
+                "pt": "diamond", 
+                "itemId": 1426, 
+                "count": [
+                    648
+                ], 
+                "price": 648, 
+                "cur_price": [
+                    648
+                ], 
+                "price_direct": 648, 
+                "price_diamond": 6480, 
+                "pic": "", 
+                "buyType": "direct", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "type": "voucher"
+                }, 
+                "limitCond": {
+                    "appVisible": 0
+                }
+            }
+        }
+    }, 
+    "pearlStore": {
+        "TY0044P00120001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_120_PEARL", 
+                "ID_CONFIG_PEARL_STORE_120_PEARL", 
+                "ID_CONFIG_PEARL_STORE_120_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                180, 
+                120, 
+                132
+            ], 
+            "order": 1, 
+            "price": 12, 
+            "price_direct": 12, 
+            "price_diamond": 120, 
+            "additionVip": 3, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_2", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_2"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 12
+            }
+        }, 
+        "TY0044P00300001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_300_PEARL", 
+                "ID_CONFIG_PEARL_STORE_300_PEARL", 
+                "ID_CONFIG_PEARL_STORE_300_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                450, 
+                300, 
+                336
+            ], 
+            "order": 2, 
+            "price": 30, 
+            "price_direct": 30, 
+            "price_diamond": 300, 
+            "additionVip": 4, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP4_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP4_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 30
+            }
+        }, 
+        "TY0044P00680001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_680_PEARL", 
+                "ID_CONFIG_PEARL_STORE_680_PEARL", 
+                "ID_CONFIG_PEARL_STORE_680_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                1020, 
+                680, 
+                780
+            ], 
+            "order": 3, 
+            "price": 68, 
+            "price_direct": 68, 
+            "price_diamond": 680, 
+            "additionVip": 5, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP5_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP5_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 68
+            }
+        }, 
+        "TY0044P01280001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_1280_PEARL", 
+                "ID_CONFIG_PEARL_STORE_1280_PEARL", 
+                "ID_CONFIG_PEARL_STORE_1280_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                1920, 
+                1280, 
+                1480
+            ], 
+            "order": 4, 
+            "price": 128, 
+            "price_direct": 128, 
+            "price_diamond": 1280, 
+            "additionVip": 6, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP6_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP6_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 128
+            }
+        }, 
+        "TY0044P01980001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_1980_PEARL", 
+                "ID_CONFIG_PEARL_STORE_1980_PEARL", 
+                "ID_CONFIG_PEARL_STORE_1980_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                2970, 
+                1980, 
+                2380
+            ], 
+            "order": 5, 
+            "price": 198, 
+            "price_direct": 198, 
+            "price_diamond": 1980, 
+            "additionVip": 7, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP7_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP7_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 198
+            }
+        }, 
+        "TY0044P03280001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_3280_PREAL", 
+                "ID_CONFIG_PEARL_STORE_3280_PREAL", 
+                "ID_CONFIG_PEARL_STORE_3280_PREAL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                4920, 
+                3280, 
+                4030
+            ], 
+            "order": 6, 
+            "price": 328, 
+            "price_direct": 328, 
+            "price_diamond": 3280, 
+            "additionVip": 8, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDIIOTN_VIP8_1", 
+                "ID_CONFIG_PEARL_STORE_ADDIIOTN_VIP8_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 328
+            }
+        }, 
+        "TY0044P06480001": {
+            "name": [
+                "ID_CONFIG_PEARL_STORE_6480_PEARL", 
+                "ID_CONFIG_PEARL_STORE_6480_PEARL", 
+                "ID_CONFIG_PEARL_STORE_6480_PEARL"
+            ], 
+            "itemId": 1137, 
+            "count": [
+                9720, 
+                6480, 
+                8080
+            ], 
+            "order": 7, 
+            "price": 648, 
+            "price_direct": 648, 
+            "price_diamond": 6480, 
+            "additionVip": 9, 
+            "tag": 0, 
+            "addition": [
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP3_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP9_1", 
+                "ID_CONFIG_PEARL_STORE_ADDITION_VIP9_1"
+            ], 
+            "pic": "", 
+            "buyType": "direct", 
+            "otherBuyType": {
+                "voucher": 648
+            }
+        }
+    }, 
+    "chestStore": {
+        "items": {
+            "36201": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_1"
+                ], 
+                "order": 0, 
+                "pt": "chest", 
+                "itemId": 36201, 
+                "count": [
+                    1
+                ], 
+                "price": 0, 
+                "cur_price": [
+                    0, 
+                    -1
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_14", 
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_15", 
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_13"
+                ], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "free": {
+                        "type": "day", 
+                        "time": [
+                            0, 
+                            0.25, 
+                            0.5
+                        ]
+                    }
+                }, 
+                "limitCond": {}
+            }, 
+            "36501": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_7"
+                ], 
+                "order": 1, 
+                "pt": "chest", 
+                "itemId": 36501, 
+                "count": [
+                    1
+                ], 
+                "price": 160, 
+                "cur_price": [
+                    160
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_14", 
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_15"
+                ], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "free": {
+                        "type": "interval", 
+                        "time": [
+                            48
+                        ]
+                    }
+                }, 
+                "limitCond": {}
+            }, 
+            "37501": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_2"
+                ], 
+                "order": 2, 
+                "pt": "chest", 
+                "itemId": 37501, 
+                "count": [
+                    1
+                ], 
+                "price": 650, 
+                "cur_price": [
+                    650
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "37601": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_3"
+                ], 
+                "order": 3, 
+                "pt": "chest", 
+                "itemId": 37601, 
+                "count": [
+                    1
+                ], 
+                "price": 1600, 
+                "cur_price": [
+                    1120, 
+                    1120, 
+                    1000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_10", 
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_11", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "37701": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_4"
+                ], 
+                "order": 4, 
+                "pt": "chest", 
+                "itemId": 37701, 
+                "count": [
+                    1
+                ], 
+                "price": 2800, 
+                "cur_price": [
+                    2240, 
+                    2000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_12", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "38501": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_5"
+                ], 
+                "order": 5, 
+                "pt": "item", 
+                "itemId": 38501, 
+                "count": [
+                    1
+                ], 
+                "price": 680, 
+                "cur_price": [
+                    680
+                ], 
+                "price_direct": 68, 
+                "price_diamond": 680, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "levelLimit": 10000
+                }
+            }, 
+            "38701": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_6"
+                ], 
+                "order": 6, 
+                "pt": "item", 
+                "itemId": 38701, 
+                "count": [
+                    1
+                ], 
+                "price": 8100, 
+                "cur_price": [
+                    6480
+                ], 
+                "price_direct": 648, 
+                "price_diamond": 6480, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_CHEST_STORE_DESC_7"
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png"
+                ], 
+                "label2": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_DESC_6"
+                ], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "levelLimit": 10000
+                }
+            }
+        }, 
+        "shop": {
+            "ads": [
+                "${http_download}/newfish/newfish_hall_images/ads/ads_newfish_chest_shop.png"
+            ]
+        }
+    }, 
+    "itemStore": {
+        "items": {
+            "1137": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:1137"
+                ], 
+                "order": 0, 
+                "pt": "item", 
+                "itemId": 1137, 
+                "count": [
+                    1
+                ], 
+                "price": 1, 
+                "cur_price": [
+                    1
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "convenientBuy": 1
+                }, 
+                "limitCond": {}
+            }, 
+            "13543_1": {
+                "name": [
+                    "ID_BUYTYPE_RUBY"
+                ], 
+                "order": 1, 
+                "pt": "item", 
+                "itemId": 13543, 
+                "count": [
+                    1
+                ], 
+                "price": 1, 
+                "cur_price": [
+                    1
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "convenientBuy": 1
+                }, 
+                "limitCond": {}
+            }, 
+            "14120_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:14120"
+                ], 
+                "order": 2, 
+                "pt": "item", 
+                "itemId": 14120, 
+                "count": [
+                    1
+                ], 
+                "price": 2, 
+                "cur_price": [
+                    2
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "pearl", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "convenientBuy": 1
+                }, 
+                "limitCond": {}
+            }, 
+            "14119_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:14119"
+                ], 
+                "order": 3, 
+                "pt": "item", 
+                "itemId": 14119, 
+                "count": [
+                    1
+                ], 
+                "price": 5, 
+                "cur_price": [
+                    5
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "pearl", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "convenientBuy": 1
+                }, 
+                "limitCond": {}
+            }, 
+            "14164": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:14164"
+                ], 
+                "order": 4, 
+                "pt": "item", 
+                "itemId": 14164, 
+                "count": [
+                    1
+                ], 
+                "price": 100, 
+                "cur_price": [
+                    10, 
+                    30, 
+                    50, 
+                    100, 
+                    100
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "ruby", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_1", 
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_2", 
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_3", 
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_4", 
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_5", 
+                    "ID_CONFIG_CHEST_STORE_ITEM_DESC_6"
+                ], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "userDailyCountLimit": 5
+                }
+            }, 
+            "13757": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:13757"
+                ], 
+                "order": 5, 
+                "pt": "item", 
+                "itemId": 13757, 
+                "count": [
+                    1
+                ], 
+                "price": 10000, 
+                "cur_price": [
+                    10000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coin", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [
+                    "ID_BUY_ERR_INFO_17"
+                ], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "convenientBuy": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 2, 
+                    "vipDailyCountLimit": [
+                        0, 
+                        0, 
+                        300, 
+                        600, 
+                        1000, 
+                        2000, 
+                        3000, 
+                        5000, 
+                        10000, 
+                        16000, 
+                        30000, 
+                        60000, 
+                        100000
+                    ]
+                }
+            }, 
+            "14070": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:14070"
+                ], 
+                "order": 7, 
+                "pt": "item", 
+                "itemId": 14070, 
+                "count": [
+                    1
+                ], 
+                "price": 300, 
+                "cur_price": [
+                    300
+                ], 
+                "price_direct": 30, 
+                "price_diamond": 300, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "1478": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_NAME_11"
+                ], 
+                "order": 8, 
+                "pt": "item", 
+                "itemId": 1478, 
+                "count": [
+                    1
+                ], 
+                "price": 2980, 
+                "cur_price": [
+                    2980
+                ], 
+                "price_direct": 298, 
+                "price_diamond": 2980, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "effectiveTime": {
+                            "start": "2020-02-14 00:00:00", 
+                            "end": "2020-02-20 23:59:59"
+                        }
+                    }, 
+                    "itemType": 5
+                }, 
+                "limitCond": {}
+            }, 
+            "13996": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_NAME_12"
+                ], 
+                "order": 9, 
+                "pt": "item", 
+                "itemId": 13996, 
+                "count": [
+                    1
+                ], 
+                "price": 2980, 
+                "cur_price": [
+                    2980
+                ], 
+                "price_direct": 298, 
+                "price_diamond": 2980, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "effectiveTime": {
+                            "start": "2020-03-06 00:00:00", 
+                            "end": "2020-03-12 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {}
+            }, 
+            "1288_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:1288"
+                ], 
+                "order": 10, 
+                "pt": "item", 
+                "itemId": 1288, 
+                "count": [
+                    1
+                ], 
+                "price": 880, 
+                "cur_price": [
+                    880
+                ], 
+                "price_direct": 88, 
+                "price_diamond": 880, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "itemType": 5
+                }, 
+                "limitCond": {}
+            }, 
+            "1165_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:1165"
+                ], 
+                "order": 11, 
+                "pt": "item", 
+                "itemId": 1165, 
+                "count": [
+                    1
+                ], 
+                "price": 1880, 
+                "cur_price": [
+                    1880
+                ], 
+                "price_direct": 188, 
+                "price_diamond": 1880, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "itemType": 5
+                }, 
+                "limitCond": {}
+            }, 
+            "1166_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:1166"
+                ], 
+                "order": 12, 
+                "pt": "item", 
+                "itemId": 1166, 
+                "count": [
+                    1
+                ], 
+                "price": 1880, 
+                "cur_price": [
+                    1880
+                ], 
+                "price_direct": 188, 
+                "price_diamond": 1880, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "itemType": 5
+                }, 
+                "limitCond": {}
+            }, 
+            "1395_1": {
+                "name": [
+                    "ID_CONFIG_KINDID_ITEM:1395"
+                ], 
+                "order": 12, 
+                "pt": "item", 
+                "itemId": 1395, 
+                "count": [
+                    1
+                ], 
+                "price": 880, 
+                "cur_price": [
+                    880
+                ], 
+                "price_direct": 88, 
+                "price_diamond": 880, 
+                "pic": "", 
+                "buyType": "diamond", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "itemType": 5
+                }, 
+                "limitCond": {}
+            }
+        }
+    }, 
+    "couponStore": {
+        "items": {
+            "2336_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_15"
+                ], 
+                "order": 0, 
+                "pt": "coupon", 
+                "itemId": 2336, 
+                "count": [
+                    1
+                ], 
+                "price": 3000, 
+                "cur_price": [
+                    3000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 20
+                }
+            }, 
+            "4143_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_16"
+                ], 
+                "order": 1, 
+                "pt": "coupon", 
+                "itemId": 4143, 
+                "count": [
+                    1
+                ], 
+                "price": 5000, 
+                "cur_price": [
+                    5000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 2, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 40
+                }
+            }, 
+            "4232_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_26"
+                ], 
+                "order": 2, 
+                "pt": "coupon", 
+                "itemId": 4232, 
+                "count": [
+                    1
+                ], 
+                "price": 5000, 
+                "cur_price": [
+                    5000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 2, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 40
+                }
+            }, 
+            "4144_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_17"
+                ], 
+                "order": 3, 
+                "pt": "coupon", 
+                "itemId": 4144, 
+                "count": [
+                    1
+                ], 
+                "price": 10000, 
+                "cur_price": [
+                    10000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 4, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 5, 
+                    "serverDailyCountLimit": 40
+                }
+            }, 
+            "4233_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_3"
+                ], 
+                "order": 4, 
+                "pt": "coupon", 
+                "itemId": 4233, 
+                "count": [
+                    1
+                ], 
+                "price": 10000, 
+                "cur_price": [
+                    10000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 4, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 5, 
+                    "serverDailyCountLimit": 40
+                }
+            }, 
+            "4369_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_27"
+                ], 
+                "order": 5, 
+                "pt": "coupon", 
+                "itemId": 4369, 
+                "count": [
+                    1
+                ], 
+                "price": 50000, 
+                "cur_price": [
+                    50000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "displayNumLimit": 50000, 
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 99
+                }
+            }, 
+            "101_10000": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_5"
+                ], 
+                "order": 6, 
+                "pt": "coupon", 
+                "itemId": 101, 
+                "count": [
+                    10000
+                ], 
+                "price": 50, 
+                "cur_price": [
+                    50
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }, 
+            "101_120000": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_6"
+                ], 
+                "order": 7, 
+                "pt": "coupon", 
+                "itemId": 101, 
+                "count": [
+                    120000
+                ], 
+                "price": 600, 
+                "cur_price": [
+                    600
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }, 
+            "1137_200": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_7"
+                ], 
+                "order": 8, 
+                "pt": "coupon", 
+                "itemId": 1137, 
+                "count": [
+                    200
+                ], 
+                "price": 1000, 
+                "cur_price": [
+                    1000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COUPON_STORE_ADDITION_1", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "cur_price": 1600, 
+                        "price": 2000, 
+                        "effectiveTime": {
+                            "start": "2019-11-11 00:00:00", 
+                            "end": "2019-11-17 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 999
+                }
+            }, 
+            "1301_20": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_12"
+                ], 
+                "order": 9, 
+                "pt": "coupon", 
+                "itemId": 1301, 
+                "count": [
+                    20
+                ], 
+                "price": 1000, 
+                "cur_price": [
+                    1000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 999
+                }
+            }, 
+            "1193_10": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_13"
+                ], 
+                "order": 10, 
+                "pt": "coupon", 
+                "itemId": 1193, 
+                "count": [
+                    10
+                ], 
+                "price": 5000, 
+                "cur_price": [
+                    5000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 999
+                }
+            }, 
+            "1194_4": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_13_1"
+                ], 
+                "order": 11, 
+                "pt": "coupon", 
+                "itemId": 1194, 
+                "count": [
+                    4
+                ], 
+                "price": 9100, 
+                "cur_price": [
+                    9100
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {}, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 999
+                }
+            }, 
+            "2338_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_18"
+                ], 
+                "order": 12, 
+                "pt": "coupon", 
+                "itemId": 2338, 
+                "count": [
+                    1
+                ], 
+                "price": 6000, 
+                "cur_price": [
+                    6000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 3, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 10
+                }
+            }, 
+            "2339_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_19"
+                ], 
+                "order": 13, 
+                "pt": "coupon", 
+                "itemId": 2339, 
+                "count": [
+                    1
+                ], 
+                "price": 20000, 
+                "cur_price": [
+                    20000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 4, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 20
+                }
+            }, 
+            "2344_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_20"
+                ], 
+                "order": 14, 
+                "pt": "coupon", 
+                "itemId": 2344, 
+                "count": [
+                    1
+                ], 
+                "price": 3000, 
+                "cur_price": [
+                    3000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 5
+                }
+            }, 
+            "2345_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_21"
+                ], 
+                "order": 15, 
+                "pt": "coupon", 
+                "itemId": 2345, 
+                "count": [
+                    1
+                ], 
+                "price": 6000, 
+                "cur_price": [
+                    6000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 3, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 10
+                }
+            }, 
+            "2347_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_22"
+                ], 
+                "order": 16, 
+                "pt": "coupon", 
+                "itemId": 2347, 
+                "count": [
+                    1
+                ], 
+                "price": 20000, 
+                "cur_price": [
+                    20000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 4, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 20
+                }
+            }, 
+            "2340_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_23"
+                ], 
+                "order": 17, 
+                "pt": "coupon", 
+                "itemId": 2340, 
+                "count": [
+                    1
+                ], 
+                "price": 3000, 
+                "cur_price": [
+                    3000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 5
+                }
+            }, 
+            "2341_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_24"
+                ], 
+                "order": 18, 
+                "pt": "coupon", 
+                "itemId": 2341, 
+                "count": [
+                    1
+                ], 
+                "price": 6000, 
+                "cur_price": [
+                    6000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 3, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 10
+                }
+            }, 
+            "2342_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_25"
+                ], 
+                "order": 19, 
+                "pt": "coupon", 
+                "itemId": 2342, 
+                "count": [
+                    1
+                ], 
+                "price": 20000, 
+                "cur_price": [
+                    20000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 4, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": 20
+                }
+            }, 
+            "36201_1": {
+                "name": [
+                    "ID_CONFIG_CHEST_STORE_CHEST_NAME_1"
+                ], 
+                "order": 20, 
+                "pt": "coupon", 
+                "itemId": 36201, 
+                "count": [
+                    1
+                ], 
+                "price": 500, 
+                "cur_price": [
+                    500
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COUPON_STORE_ADDITION_1", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "cur_price": 64, 
+                        "price": 80, 
+                        "effectiveTime": {
+                            "start": "2019-11-11 00:00:00", 
+                            "end": "2019-11-17 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }, 
+            "37501_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_9"
+                ], 
+                "order": 21, 
+                "pt": "coupon", 
+                "itemId": 37501, 
+                "count": [
+                    1
+                ], 
+                "price": 6500, 
+                "cur_price": [
+                    6500
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COUPON_STORE_ADDITION_1", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "cur_price": 1600, 
+                        "price": 2000, 
+                        "effectiveTime": {
+                            "start": "2019-11-11 00:00:00", 
+                            "end": "2019-11-17 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }, 
+            "37601_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_10"
+                ], 
+                "order": 22, 
+                "pt": "coupon", 
+                "itemId": 37601, 
+                "count": [
+                    1
+                ], 
+                "price": 16000, 
+                "cur_price": [
+                    16000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COUPON_STORE_ADDITION_1", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "cur_price": 5600, 
+                        "price": 7000, 
+                        "effectiveTime": {
+                            "start": "2019-11-11 00:00:00", 
+                            "end": "2019-11-17 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }, 
+            "37701_1": {
+                "name": [
+                    "ID_CONFIG_COUPON_STORE_NAME_11"
+                ], 
+                "order": 23, 
+                "pt": "coupon", 
+                "itemId": 37701, 
+                "count": [
+                    1
+                ], 
+                "price": 28000, 
+                "cur_price": [
+                    28000
+                ], 
+                "price_direct": 0, 
+                "price_diamond": 0, 
+                "pic": "", 
+                "buyType": "coupon", 
+                "otherBuyType": {}, 
+                "label1": [
+                    "ID_CONFIG_COUPON_STORE_ADDITION_1", 
+                    ""
+                ], 
+                "label1BgType": [
+                    "window_shop_tag_bg_1.png", 
+                    ""
+                ], 
+                "label2": [], 
+                "label3": [], 
+                "additionVip": 0, 
+                "extendData": {
+                    "activityPrice": {
+                        "cur_price": 11200, 
+                        "price": 14000, 
+                        "effectiveTime": {
+                            "start": "2019-11-11 00:00:00", 
+                            "end": "2019-11-17 23:59:59"
+                        }
+                    }
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": -1, 
+                    "serverDailyCountLimit": -1
+                }
+            }
+        }
+    }, 
+    "gunSkinStore": {
+        "1288_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_0", 
+            "itemId": 1288, 
+            "count": 72, 
+            "order": 0, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 30, 
+            "discountPrice": [
+                30
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1288_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_1", 
+            "itemId": 1288, 
+            "count": 720, 
+            "order": 1, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 300, 
+            "discountPrice": [
+                240
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1165_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_2", 
+            "itemId": 1165, 
+            "count": 72, 
+            "order": 2, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 60, 
+            "discountPrice": [
+                60
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1165_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_3", 
+            "itemId": 1165, 
+            "count": 720, 
+            "order": 3, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 600, 
+            "discountPrice": [
+                480
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1166_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_4", 
+            "itemId": 1166, 
+            "count": 72, 
+            "order": 4, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 375, 
+            "discountPrice": [
+                375
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "${http_download}/hall/item/imgs/fish_item_1166.png", 
+            "buyType": "pearl"
+        }, 
+        "1166_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_5", 
+            "itemId": 1166, 
+            "count": 720, 
+            "order": 5, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 3750, 
+            "discountPrice": [
+                3000
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1167_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_6", 
+            "itemId": 1167, 
+            "count": 72, 
+            "order": 6, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 750, 
+            "discountPrice": [
+                750
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1167_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_7", 
+            "itemId": 1167, 
+            "count": 720, 
+            "order": 7, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 7500, 
+            "discountPrice": [
+                6000
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1289_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_8", 
+            "itemId": 1289, 
+            "count": 72, 
+            "order": 8, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 1000, 
+            "discountPrice": [
+                1000
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1289_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_9", 
+            "itemId": 1289, 
+            "count": 720, 
+            "order": 9, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 10000, 
+            "discountPrice": [
+                8000
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1290_3": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_10", 
+            "itemId": 1290, 
+            "count": 72, 
+            "order": 10, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 1000, 
+            "discountPrice": [
+                1000
+            ], 
+            "tag": 0, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }, 
+        "1290_30": {
+            "name": "ID_CONFIG_GUNSKIN_STORE_NAME_11", 
+            "itemId": 1290, 
+            "count": 720, 
+            "order": 11, 
+            "vip": 0, 
+            "desc": "", 
+            "price": 10000, 
+            "discountPrice": [
+                8000
+            ], 
+            "tag": 1, 
+            "addition": [
+                ""
+            ], 
+            "pic": "", 
+            "buyType": "pearl"
+        }
+    }, 
+    "bulletStore": {
+        "hall37": {
+            "1301_30": {
+                "name": "ID_CONFIG_BULLET_STORE_NAME_1", 
+                "itemId": 1301, 
+                "count": 30, 
+                "order": 1, 
+                "price": 300, 
+                "price_direct": 30, 
+                "price_diamond": 300, 
+                "tag": 0, 
+                "addition": [
+                    ""
+                ], 
+                "pic": "", 
+                "buyType": "diamond", 
+                "robberyBonus": 300000, 
+                "vipAddition": {}
+            }, 
+            "1193_20": {
+                "name": "ID_CONFIG_BULLET_STORE_NAME_2", 
+                "itemId": 1193, 
+                "count": 20, 
+                "order": 1, 
+                "price": 1980, 
+                "price_direct": 198, 
+                "price_diamond": 1980, 
+                "tag": 0, 
+                "addition": [
+                    "ID_CONFIG_BULLET_STORE_ADDITION_VIP5_1"
+                ], 
+                "pic": "", 
+                "buyType": "diamond", 
+                "robberyBonus": 2000000, 
+                "vipAddition": {
+                    "vipLevel": 5, 
+                    "rewards": [
+                        {
+                            "count": 77, 
+                            "name": 1301
+                        }
+                    ], 
+                    "desc": "ID_CONFIG_BULLET_STORE_DESC_VIP5_1"
+                }
+            }, 
+            "1193_65": {
+                "name": "ID_CONFIG_BULLET_STORE_NAME_3", 
+                "itemId": 1193, 
+                "count": 65, 
+                "order": 1, 
+                "price": 6480, 
+                "price_direct": 648, 
+                "price_diamond": 6480, 
+                "tag": 0, 
+                "addition": [
+                    "ID_CONFIG_BULLET_STORE_ADDITION_VIP8_1"
+                ], 
+                "pic": "", 
+                "buyType": "diamond", 
+                "robberyBonus": 6500000, 
+                "vipAddition": {
+                    "vipLevel": 8, 
+                    "rewards": [
+                        {
+                            "count": 322, 
+                            "name": 1301
+                        }
+                    ], 
+                    "desc": "ID_CONFIG_BULLET_STORE_DESC_VIP8_1"
+                }
+            }
+        }
+    }, 
+    "hotStore": {
+        "items": {
+            "TY0044C00120001": {
+                "order": 0, 
+                "pt": "coin", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visible": 1, 
+                    "serverDailyCountLimit": 30
+                }
+            }, 
+            "TY0044C00300001": {
+                "order": 1, 
+                "pt": "coin", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visible": 1, 
+                    "userDailyCountLimit": 3
+                }
+            }, 
+            "TY0044C00680001": {
+                "order": 2, 
+                "pt": "coin", 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "TY0044C01280001": {
+                "order": 3, 
+                "pt": "coin", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visibleTime": {
+                        "start": "2020-05-05 00:00:00", 
+                        "end": "2020-05-06 23:59:59"
+                    }, 
+                    "serverDailyCountLimit": 10
+                }
+            }, 
+            "TY0044C01980001": {
+                "order": 4, 
+                "pt": "coin", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visibleTime": {
+                        "start": "2020-05-05 00:00:00", 
+                        "end": "2020-05-06 23:59:59"
+                    }, 
+                    "userDailyCountLimit": 3
+                }
+            }, 
+            "TY0044R00980001": {
+                "order": 5, 
+                "pt": "diamond", 
+                "extendData": {
+                    "type": "diamond"
+                }, 
+                "limitCond": {
+                    "visible": 1, 
+                    "userDailyCountLimit": 3
+                }
+            }, 
+            "14070": {
+                "order": 6, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visible": 1, 
+                    "userDailyCountLimit": 3
+                }
+            }, 
+            "36201": {
+                "order": 7, 
+                "pt": "chest", 
+                "extendData": {
+                    "free": {
+                        "type": "day", 
+                        "time": [
+                            0, 
+                            1, 
+                            2
+                        ]
+                    }
+                }, 
+                "limitCond": {}
+            }, 
+            "TY0044P00120001": {
+                "order": 8, 
+                "pt": "pearl", 
+                "extendData": {}, 
+                "limitCond": {
+                    "visible": 1, 
+                    "userDailyCountLimit": 3
+                }
+            }, 
+            "2336_1": {
+                "order": 9, 
+                "pt": "coupon", 
+                "extendData": {
+                    "entityItem": 1
+                }, 
+                "limitCond": {
+                    "vipLimit": 0, 
+                    "guideLimit": 1, 
+                    "userDailyCountLimit": 1, 
+                    "serverDailyCountLimit": 20
+                }
+            }, 
+            "38501": {
+                "order": 10, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {
+                    "levelLimit": 15
+                }
+            }, 
+            "1288_1": {
+                "order": 11, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "1165_1": {
+                "order": 12, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "1166_1": {
+                "order": 13, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {}
+            }, 
+            "1395_1": {
+                "order": 14, 
+                "pt": "item", 
+                "extendData": {}, 
+                "limitCond": {}
+            }
+        }, 
+        "shop": {
+            "tip": [
+                {
+                    "effectiveTime": {
+                        "start": "2020-05-05 00:00:00", 
+                        "end": "2020-08-15 23:59:59"
+                    }, 
+                    "txt": "ID_CONFIG_HOT_STORE"
+                }
+            ]
+        }
+    }
+}

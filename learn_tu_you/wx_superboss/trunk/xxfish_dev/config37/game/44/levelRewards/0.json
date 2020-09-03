@@ -1,0 +1,249 @@
+{
+    "10": {
+        "rewards": [
+            {
+                "count": 5, 
+                "name": 1147
+            }, 
+            {
+                "count": 2000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 0
+    }, 
+    "12": {
+        "rewards": [
+            {
+                "count": 1, 
+                "name": 31401
+            }, 
+            {
+                "count": 3000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 0
+    }, 
+    "14": {
+        "rewards": [
+            {
+                "count": 200, 
+                "name": 1155
+            }, 
+            {
+                "count": 4000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 0
+    }, 
+    "16": {
+        "rewards": [
+            {
+                "count": 100, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_TICKET", 
+                "name": 3106
+            }, 
+            {
+                "count": 5000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 10000
+    }, 
+    "18": {
+        "rewards": [
+            {
+                "count": 1, 
+                "name": 13560
+            }, 
+            {
+                "count": 72, 
+                "name": 1166
+            }, 
+            {
+                "count": 1, 
+                "name": 1498
+            }, 
+            {
+                "count": 6000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 10000
+    }, 
+    "20": {
+        "rewards": [
+            {
+                "count": 15, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_RARE_SKILL", 
+                "name": 1150
+            }, 
+            {
+                "count": 72, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_POWERFUL_GUN", 
+                "name": 1166
+            }, 
+            {
+                "count": 8000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 15000
+    }, 
+    "22": {
+        "rewards": [
+            {
+                "count": 200, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_SKILL_STAR_UP", 
+                "name": 1160
+            }, 
+            {
+                "count": 1, 
+                "name": 13561
+            }, 
+            {
+                "count": 10000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 15000
+    }, 
+    "24": {
+        "rewards": [
+            {
+                "count": 500, 
+                "name": 3106
+            }, 
+            {
+                "count": 15000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 15000
+    }, 
+    "26": {
+        "rewards": [
+            {
+                "count": 1, 
+                "name": 37602
+            }, 
+            {
+                "count": 20000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 15000
+    }, 
+    "28": {
+        "rewards": [
+            {
+                "count": 25, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_RARE_SKILL", 
+                "name": 1152
+            }, 
+            {
+                "count": 30000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 15000
+    }, 
+    "30": {
+        "rewards": [
+            {
+                "count": 1, 
+                "name": 13562
+            }, 
+            {
+                "count": 20, 
+                "name": 1408
+            }, 
+            {
+                "count": 40000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 30000
+    }, 
+    "32": {
+        "rewards": [
+            {
+                "count": 72, 
+                "name": 1167
+            }, 
+            {
+                "count": 200, 
+                "name": 1162
+            }, 
+            {
+                "count": 50000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 30000
+    }, 
+    "34": {
+        "rewards": [
+            {
+                "count": 1, 
+                "name": 37702
+            }, 
+            {
+                "count": 100000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 30000
+    }, 
+    "36": {
+        "rewards": [
+            {
+                "count": 72, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_DOUBLE_GAIN", 
+                "name": 1289
+            }, 
+            {
+                "count": 200000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 30000
+    }, 
+    "38": {
+        "rewards": [
+            {
+                "count": 200, 
+                "name": 13543
+            }, 
+            {
+                "count": 30, 
+                "name": 1408
+            }, 
+            {
+                "count": 300000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 30000
+    }, 
+    "40": {
+        "rewards": [
+            {
+                "count": 72, 
+                "des": "ID_CONFIG_LEVEL_REWARDS_DOUBLE_SKILL", 
+                "name": 1290
+            }, 
+            {
+                "count": 500, 
+                "name": 13543
+            }, 
+            {
+                "count": 500000, 
+                "name": 101
+            }
+        ], 
+        "rechargeBonus": 50000
+    }
+}

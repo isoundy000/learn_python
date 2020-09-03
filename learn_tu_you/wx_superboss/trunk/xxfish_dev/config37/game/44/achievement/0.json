@@ -1,0 +1,931 @@
+{
+    "tasks": {
+        "8001": {
+            "800101": {
+                "Id": 800101, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8001", 
+                "target": {
+                    "num": 1000
+                }, 
+                "type": 1, 
+                "exp": 10
+            }, 
+            "800102": {
+                "Id": 800102, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8001", 
+                "target": {
+                    "num": 10000
+                }, 
+                "type": 1, 
+                "exp": 20
+            }, 
+            "800103": {
+                "Id": 800103, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8001", 
+                "target": {
+                    "num": 50000
+                }, 
+                "type": 1, 
+                "exp": 50
+            }, 
+            "800104": {
+                "Id": 800104, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8001", 
+                "target": {
+                    "num": 100000
+                }, 
+                "type": 1, 
+                "exp": 100
+            }, 
+            "800105": {
+                "Id": 800105, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8001", 
+                "target": {
+                    "num": 1000000
+                }, 
+                "type": 1, 
+                "exp": 500
+            }
+        }, 
+        "8002": {
+            "800201": {
+                "Id": 800201, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8002", 
+                "target": {
+                    "num": 5, 
+                    "fishType": [
+                        5, 
+                        28, 
+                        29, 
+                        33, 
+                        34, 
+                        35
+                    ]
+                }, 
+                "type": 1, 
+                "exp": 10
+            }, 
+            "800202": {
+                "Id": 800202, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8002", 
+                "target": {
+                    "num": 50, 
+                    "fishType": [
+                        5, 
+                        28, 
+                        29, 
+                        33, 
+                        34, 
+                        35
+                    ]
+                }, 
+                "type": 1, 
+                "exp": 20
+            }, 
+            "800203": {
+                "Id": 800203, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8002", 
+                "target": {
+                    "num": 200, 
+                    "fishType": [
+                        5, 
+                        28, 
+                        29, 
+                        33, 
+                        34, 
+                        35
+                    ]
+                }, 
+                "type": 1, 
+                "exp": 50
+            }, 
+            "800204": {
+                "Id": 800204, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8002", 
+                "target": {
+                    "num": 400, 
+                    "fishType": [
+                        5, 
+                        28, 
+                        29, 
+                        33, 
+                        34, 
+                        35
+                    ]
+                }, 
+                "type": 1, 
+                "exp": 100
+            }, 
+            "800205": {
+                "Id": 800205, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8002", 
+                "target": {
+                    "num": 4000, 
+                    "fishType": [
+                        5, 
+                        28, 
+                        29, 
+                        33, 
+                        34, 
+                        35
+                    ]
+                }, 
+                "type": 1, 
+                "exp": 500
+            }
+        }, 
+        "8003": {
+            "800301": {
+                "Id": 800301, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8003", 
+                "target": {
+                    "num": 3, 
+                    "condition": 20
+                }, 
+                "type": 3, 
+                "exp": 10
+            }, 
+            "800302": {
+                "Id": 800302, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8003", 
+                "target": {
+                    "num": 30, 
+                    "condition": 20
+                }, 
+                "type": 3, 
+                "exp": 20
+            }, 
+            "800303": {
+                "Id": 800303, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8003", 
+                "target": {
+                    "num": 120, 
+                    "condition": 20
+                }, 
+                "type": 3, 
+                "exp": 50
+            }, 
+            "800304": {
+                "Id": 800304, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8003", 
+                "target": {
+                    "num": 240, 
+                    "condition": 20
+                }, 
+                "type": 3, 
+                "exp": 100
+            }, 
+            "800305": {
+                "Id": 800305, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8003", 
+                "target": {
+                    "num": 2400, 
+                    "condition": 20
+                }, 
+                "type": 3, 
+                "exp": 500
+            }
+        }, 
+        "8004": {
+            "800401": {
+                "Id": 800401, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8004", 
+                "target": {
+                    "num": 1
+                }, 
+                "type": 4, 
+                "exp": 20
+            }, 
+            "800402": {
+                "Id": 800402, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8004", 
+                "target": {
+                    "num": 2
+                }, 
+                "type": 4, 
+                "exp": 40
+            }, 
+            "800403": {
+                "Id": 800403, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8004", 
+                "target": {
+                    "num": 3
+                }, 
+                "type": 4, 
+                "exp": 100
+            }, 
+            "800404": {
+                "Id": 800404, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8004", 
+                "target": {
+                    "num": 5
+                }, 
+                "type": 4, 
+                "exp": 200
+            }, 
+            "800405": {
+                "Id": 800405, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8004", 
+                "target": {
+                    "num": 10
+                }, 
+                "type": 4, 
+                "exp": 1000
+            }
+        }, 
+        "8005": {
+            "800501": {
+                "Id": 800501, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8005", 
+                "target": {
+                    "num": 3, 
+                    "condition": 5
+                }, 
+                "type": 5, 
+                "exp": 10
+            }, 
+            "800502": {
+                "Id": 800502, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8005", 
+                "target": {
+                    "num": 3, 
+                    "condition": 10
+                }, 
+                "type": 5, 
+                "exp": 20
+            }, 
+            "800503": {
+                "Id": 800503, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8005", 
+                "target": {
+                    "num": 3, 
+                    "condition": 15
+                }, 
+                "type": 5, 
+                "exp": 50
+            }, 
+            "800504": {
+                "Id": 800504, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8005", 
+                "target": {
+                    "num": 3, 
+                    "condition": 20
+                }, 
+                "type": 5, 
+                "exp": 100
+            }, 
+            "800505": {
+                "Id": 800505, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8005", 
+                "target": {
+                    "num": 3, 
+                    "condition": 25
+                }, 
+                "type": 5, 
+                "exp": 500
+            }
+        }, 
+        "8006": {
+            "800601": {
+                "Id": 800601, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8006", 
+                "target": {
+                    "num": 2
+                }, 
+                "type": 2, 
+                "exp": 10
+            }, 
+            "800602": {
+                "Id": 800602, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8006", 
+                "target": {
+                    "num": 20
+                }, 
+                "type": 2, 
+                "exp": 20
+            }, 
+            "800603": {
+                "Id": 800603, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8006", 
+                "target": {
+                    "num": 100
+                }, 
+                "type": 2, 
+                "exp": 50
+            }, 
+            "800604": {
+                "Id": 800604, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8006", 
+                "target": {
+                    "num": 200
+                }, 
+                "type": 2, 
+                "exp": 100
+            }, 
+            "800605": {
+                "Id": 800605, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8006", 
+                "target": {
+                    "num": 2000
+                }, 
+                "type": 2, 
+                "exp": 500
+            }
+        }, 
+        "8007": {
+            "800701": {
+                "Id": 800701, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8007", 
+                "target": {
+                    "num": 2
+                }, 
+                "type": 6, 
+                "exp": 20
+            }, 
+            "800702": {
+                "Id": 800702, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8007", 
+                "target": {
+                    "num": 20
+                }, 
+                "type": 6, 
+                "exp": 40
+            }, 
+            "800703": {
+                "Id": 800703, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8007", 
+                "target": {
+                    "num": 100
+                }, 
+                "type": 6, 
+                "exp": 100
+            }, 
+            "800704": {
+                "Id": 800704, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8007", 
+                "target": {
+                    "num": 200
+                }, 
+                "type": 6, 
+                "exp": 200
+            }, 
+            "800705": {
+                "Id": 800705, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8007", 
+                "target": {
+                    "num": 2000
+                }, 
+                "type": 6, 
+                "exp": 1000
+            }
+        }, 
+        "8008": {
+            "800801": {
+                "Id": 800801, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8008", 
+                "target": {
+                    "num": 5
+                }, 
+                "type": 7, 
+                "exp": 20
+            }, 
+            "800802": {
+                "Id": 800802, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8008", 
+                "target": {
+                    "num": 50
+                }, 
+                "type": 7, 
+                "exp": 40
+            }, 
+            "800803": {
+                "Id": 800803, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8008", 
+                "target": {
+                    "num": 200
+                }, 
+                "type": 7, 
+                "exp": 100
+            }, 
+            "800804": {
+                "Id": 800804, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8008", 
+                "target": {
+                    "num": 400
+                }, 
+                "type": 7, 
+                "exp": 200
+            }, 
+            "800805": {
+                "Id": 800805, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8008", 
+                "target": {
+                    "num": 4000
+                }, 
+                "type": 7, 
+                "exp": 1000
+            }
+        }, 
+        "8009": {
+            "800901": {
+                "Id": 800901, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8009", 
+                "target": {
+                    "num": 5
+                }, 
+                "type": 8, 
+                "exp": 20
+            }, 
+            "800902": {
+                "Id": 800902, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8009", 
+                "target": {
+                    "num": 50
+                }, 
+                "type": 8, 
+                "exp": 40
+            }, 
+            "800903": {
+                "Id": 800903, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8009", 
+                "target": {
+                    "num": 200
+                }, 
+                "type": 8, 
+                "exp": 100
+            }, 
+            "800904": {
+                "Id": 800904, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8009", 
+                "target": {
+                    "num": 400
+                }, 
+                "type": 8, 
+                "exp": 200
+            }, 
+            "800905": {
+                "Id": 800905, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8009", 
+                "target": {
+                    "num": 4000
+                }, 
+                "type": 8, 
+                "exp": 1000
+            }
+        }, 
+        "8010": {
+            "801001": {
+                "Id": 801001, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8010", 
+                "target": {
+                    "top": 3, 
+                    "num": 1
+                }, 
+                "type": 9, 
+                "exp": 20
+            }, 
+            "801002": {
+                "Id": 801002, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8010", 
+                "target": {
+                    "top": 3, 
+                    "num": 10
+                }, 
+                "type": 9, 
+                "exp": 40
+            }, 
+            "801003": {
+                "Id": 801003, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8010", 
+                "target": {
+                    "top": 3, 
+                    "num": 30
+                }, 
+                "type": 9, 
+                "exp": 100
+            }, 
+            "801004": {
+                "Id": 801004, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8010", 
+                "target": {
+                    "top": 3, 
+                    "num": 50
+                }, 
+                "type": 9, 
+                "exp": 200
+            }, 
+            "801005": {
+                "Id": 801005, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8010", 
+                "target": {
+                    "top": 3, 
+                    "num": 100
+                }, 
+                "type": 9, 
+                "exp": 1000
+            }
+        }, 
+        "8011": {
+            "801101": {
+                "Id": 801101, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8011", 
+                "target": {
+                    "num": 100
+                }, 
+                "type": 10, 
+                "exp": 10
+            }, 
+            "801102": {
+                "Id": 801102, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8011", 
+                "target": {
+                    "num": 1000
+                }, 
+                "type": 10, 
+                "exp": 20
+            }, 
+            "801103": {
+                "Id": 801103, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8011", 
+                "target": {
+                    "num": 10000
+                }, 
+                "type": 10, 
+                "exp": 50
+            }, 
+            "801104": {
+                "Id": 801104, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8011", 
+                "target": {
+                    "num": 100000
+                }, 
+                "type": 10, 
+                "exp": 100
+            }, 
+            "801105": {
+                "Id": 801105, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8011", 
+                "target": {
+                    "num": 1000000
+                }, 
+                "type": 10, 
+                "exp": 500
+            }
+        }, 
+        "8012": {
+            "801201": {
+                "Id": 801201, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8012", 
+                "target": {
+                    "num": 1, 
+                    "rankId": 110044006
+                }, 
+                "type": 11, 
+                "exp": 40
+            }, 
+            "801202": {
+                "Id": 801202, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8012", 
+                "target": {
+                    "num": 3, 
+                    "rankId": 110044006
+                }, 
+                "type": 11, 
+                "exp": 80
+            }, 
+            "801203": {
+                "Id": 801203, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8012", 
+                "target": {
+                    "num": 10, 
+                    "rankId": 110044006
+                }, 
+                "type": 11, 
+                "exp": 200
+            }, 
+            "801204": {
+                "Id": 801204, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8012", 
+                "target": {
+                    "num": 50, 
+                    "rankId": 110044006
+                }, 
+                "type": 11, 
+                "exp": 400
+            }, 
+            "801205": {
+                "Id": 801205, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8012", 
+                "target": {
+                    "num": 100, 
+                    "rankId": 110044006
+                }, 
+                "type": 11, 
+                "exp": 2000
+            }
+        }, 
+        "8013": {
+            "801301": {
+                "Id": 801301, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8013", 
+                "target": {
+                    "num": 1
+                }, 
+                "type": 12, 
+                "exp": 10
+            }, 
+            "801302": {
+                "Id": 801302, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8013", 
+                "target": {
+                    "num": 2
+                }, 
+                "type": 12, 
+                "exp": 20
+            }, 
+            "801303": {
+                "Id": 801303, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8013", 
+                "target": {
+                    "num": 3
+                }, 
+                "type": 12, 
+                "exp": 50
+            }, 
+            "801304": {
+                "Id": 801304, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8013", 
+                "target": {
+                    "num": 4
+                }, 
+                "type": 12, 
+                "exp": 100
+            }, 
+            "801305": {
+                "Id": 801305, 
+                "desc": "ID_CONFIG_ACHIEVEMENT_TASK_DESC_8013", 
+                "target": {
+                    "num": 5
+                }, 
+                "type": 12, 
+                "exp": 500
+            }
+        }
+    }, 
+    "level": {
+        "1": {
+            "level": 1, 
+            "exp": 50
+        }, 
+        "2": {
+            "level": 2, 
+            "exp": 100, 
+            "reward": {
+                "count": 50, 
+                "name": 13543
+            }
+        }, 
+        "3": {
+            "level": 3, 
+            "exp": 200, 
+            "reward": {
+                "count": 100, 
+                "name": 13543
+            }
+        }, 
+        "4": {
+            "level": 4, 
+            "exp": 300, 
+            "reward": {
+                "count": 200, 
+                "name": 13543
+            }
+        }, 
+        "5": {
+            "level": 5, 
+            "exp": 400, 
+            "reward": {
+                "count": 300, 
+                "name": 13543
+            }
+        }, 
+        "6": {
+            "level": 6, 
+            "exp": 600, 
+            "reward": {
+                "count": 400, 
+                "name": 13543
+            }
+        }, 
+        "7": {
+            "level": 7, 
+            "exp": 800, 
+            "reward": {
+                "count": 600, 
+                "name": 13543
+            }
+        }, 
+        "8": {
+            "level": 8, 
+            "exp": 1000, 
+            "reward": {
+                "count": 800, 
+                "name": 13543
+            }
+        }, 
+        "9": {
+            "level": 9, 
+            "exp": 1200, 
+            "reward": {
+                "count": 1000, 
+                "name": 13543
+            }
+        }, 
+        "10": {
+            "level": 10, 
+            "exp": 1500, 
+            "reward": {
+                "count": 1200, 
+                "name": 13543
+            }
+        }, 
+        "11": {
+            "level": 11, 
+            "exp": 2000, 
+            "reward": {
+                "count": 1500, 
+                "name": 13543
+            }
+        }, 
+        "12": {
+            "level": 12, 
+            "exp": 2500, 
+            "reward": {
+                "count": 2000, 
+                "name": 13543
+            }
+        }, 
+        "13": {
+            "level": 13, 
+            "exp": 3000, 
+            "reward": {
+                "count": 3000, 
+                "name": 13543
+            }
+        }, 
+        "14": {
+            "level": 14, 
+            "exp": 4000, 
+            "reward": {
+                "count": 5000, 
+                "name": 13543
+            }
+        }, 
+        "15": {
+            "level": 15, 
+            "exp": 6000, 
+            "reward": {
+                "count": 10000, 
+                "name": 13543
+            }
+        }, 
+        "16": {
+            "level": 16, 
+            "exp": 8000, 
+            "reward": {
+                "count": 20000, 
+                "name": 13543
+            }
+        }, 
+        "17": {
+            "level": 17, 
+            "exp": 10000, 
+            "reward": {
+                "count": 30000, 
+                "name": 13543
+            }
+        }, 
+        "18": {
+            "level": 18, 
+            "exp": 13000, 
+            "reward": {
+                "count": 40000, 
+                "name": 13543
+            }
+        }, 
+        "19": {
+            "level": 19, 
+            "exp": -1, 
+            "reward": {
+                "count": 50000, 
+                "name": 13543
+            }
+        }
+    }, 
+    "compensate": {
+        "8001": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8002": {
+            "count": 20, 
+            "name": 13543
+        }, 
+        "8003": {
+            "count": 30, 
+            "name": 13543
+        }, 
+        "8004": {
+            "count": 50, 
+            "name": 13543
+        }, 
+        "8005": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8006": {
+            "count": 20, 
+            "name": 13543
+        }, 
+        "8007": {
+            "count": 30, 
+            "name": 13543
+        }, 
+        "8008": {
+            "count": 50, 
+            "name": 13543
+        }, 
+        "8009": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8010": {
+            "count": 20, 
+            "name": 13543
+        }, 
+        "8011": {
+            "count": 30, 
+            "name": 13543
+        }, 
+        "8012": {
+            "count": 50, 
+            "name": 13543
+        }, 
+        "8013": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8014": {
+            "count": 20, 
+            "name": 13543
+        }, 
+        "8015": {
+            "count": 30, 
+            "name": 13543
+        }, 
+        "8016": {
+            "count": 50, 
+            "name": 13543
+        }, 
+        "8017": {
+            "count": 200, 
+            "name": 13543
+        }, 
+        "8018": {
+            "count": 200, 
+            "name": 13543
+        }, 
+        "8019": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8020": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8021": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8022": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8023": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8024": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8025": {
+            "count": 10, 
+            "name": 13543
+        }, 
+        "8026": {
+            "count": 10, 
+            "name": 13543
+        }
+    }
+}

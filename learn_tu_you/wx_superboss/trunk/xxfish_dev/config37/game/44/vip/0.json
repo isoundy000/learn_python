@@ -17,6 +17,8 @@
         "dropPearlRatioLimit": 0.01, 
         "vipDesc": "None", 
         "vipGift": [], 
+        "productId": "None", 
+        "giftName": "None", 
         "originalPrice": 0, 
         "price": 0, 
         "pearlMultiple": 1.0, 
@@ -47,7 +49,8 @@
         ], 
         "grandPrixFreeTimes": 1, 
         "grandPrixAddition": 0.0, 
-        "checkinRechargeBonus": 50000
+        "checkinRechargeBonus": 50000, 
+        "timeLimitedStoreRefreshTimes": 0
     }, 
     "1": {
         "vipLv": 1, 
@@ -65,19 +68,32 @@
         "freeRouletteTimes": 0, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_1_DES", 
+        "vipDesc": "ID_VIP_1_DES_new", 
         "vipGift": [
             {
-                "count": 12, 
-                "name": 1152
+                "count": 1200000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 5, 
+                "type": 3, 
+                "name": 14148
+            }, 
+            {
+                "count": 20, 
+                "type": 3, 
+                "name": 1137
             }
         ], 
-        "originalPrice": 120000, 
-        "price": 20000, 
+        "productId": "vip_gift_1", 
+        "giftName": "ID_VIP_GIFT_NAME_1", 
+        "originalPrice": 180, 
+        "price": 60, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.005, 
+        "matchAddition": 0.01, 
         "setVipShow": 0, 
-        "almsRate": 1.5, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 6000, 
         "inviterReward": [
@@ -106,8 +122,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.0, 
-        "checkinRechargeBonus": 100000
+        "grandPrixAddition": 0.01, 
+        "checkinRechargeBonus": 100000, 
+        "timeLimitedStoreRefreshTimes": 0
     }, 
     "2": {
         "vipLv": 2, 
@@ -125,19 +142,32 @@
         "freeRouletteTimes": 0, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_2_DES", 
+        "vipDesc": "ID_VIP_2_DES_new", 
         "vipGift": [
             {
-                "count": 40, 
-                "name": 1152
+                "count": 2400000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 5, 
+                "type": 3, 
+                "name": 14151
+            }, 
+            {
+                "count": 30, 
+                "type": 3, 
+                "name": 14120
             }
         ], 
-        "originalPrice": 400000, 
-        "price": 80000, 
+        "productId": "vip_gift_2", 
+        "giftName": "ID_VIP_GIFT_NAME_2", 
+        "originalPrice": 280, 
+        "price": 120, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.005, 
+        "matchAddition": 0.015, 
         "setVipShow": 0, 
-        "almsRate": 2.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 7000, 
         "inviterReward": [
@@ -166,8 +196,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.0, 
-        "checkinRechargeBonus": 100000
+        "grandPrixAddition": 0.015, 
+        "checkinRechargeBonus": 100000, 
+        "timeLimitedStoreRefreshTimes": 0
     }, 
     "3": {
         "vipLv": 3, 
@@ -185,19 +216,32 @@
         "freeRouletteTimes": 0, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_3_DES", 
+        "vipDesc": "ID_VIP_3_DES_new", 
         "vipGift": [
             {
-                "count": 60, 
-                "name": 1152
+                "count": 3600000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 1, 
+                "type": 5, 
+                "name": 14182
+            }, 
+            {
+                "count": 50, 
+                "type": 3, 
+                "name": 1137
             }
         ], 
-        "originalPrice": 600000, 
-        "price": 150000, 
+        "productId": "vip_gift_3", 
+        "giftName": "ID_VIP_GIFT_NAME_3", 
+        "originalPrice": 560, 
+        "price": 180, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.01, 
+        "matchAddition": 0.02, 
         "setVipShow": 0, 
-        "almsRate": 2.5, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 8000, 
         "inviterReward": [
@@ -226,8 +270,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.0, 
-        "checkinRechargeBonus": 100000
+        "grandPrixAddition": 0.02, 
+        "checkinRechargeBonus": 100000, 
+        "timeLimitedStoreRefreshTimes": 1
     }, 
     "4": {
         "vipLv": 4, 
@@ -245,19 +290,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_4_DES", 
+        "vipDesc": "ID_VIP_4_DES_new", 
         "vipGift": [
             {
-                "count": 90, 
-                "name": 1152
+                "count": 6000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "type": 3, 
+                "name": 14151
+            }, 
+            {
+                "count": 200, 
+                "type": 3, 
+                "name": 14124
             }
         ], 
-        "originalPrice": 900000, 
-        "price": 250000, 
+        "productId": "vip_gift_4", 
+        "giftName": "ID_VIP_GIFT_NAME_4", 
+        "originalPrice": 1000, 
+        "price": 300, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.01, 
+        "matchAddition": 0.025, 
         "setVipShow": 0, 
-        "almsRate": 3.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 9000, 
         "inviterReward": [
@@ -286,8 +344,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.0, 
-        "checkinRechargeBonus": 150000
+        "grandPrixAddition": 0.025, 
+        "checkinRechargeBonus": 150000, 
+        "timeLimitedStoreRefreshTimes": 1
     }, 
     "5": {
         "vipLv": 5, 
@@ -305,19 +364,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_5_DES", 
+        "vipDesc": "ID_VIP_5_DES_new", 
         "vipGift": [
             {
-                "count": 168, 
-                "name": 1166
+                "count": 6000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 10, 
+                "type": 3, 
+                "name": 14148
+            }, 
+            {
+                "count": 40, 
+                "type": 3, 
+                "name": 14125
             }
         ], 
-        "originalPrice": 1750000, 
-        "price": 500000, 
+        "productId": "vip_gift_5", 
+        "giftName": "ID_VIP_GIFT_NAME_5", 
+        "originalPrice": 1680, 
+        "price": 300, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.02, 
+        "matchAddition": 0.03, 
         "setVipShow": 0, 
-        "almsRate": 3.5, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -346,8 +418,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.01, 
-        "checkinRechargeBonus": 150000
+        "grandPrixAddition": 0.03, 
+        "checkinRechargeBonus": 150000, 
+        "timeLimitedStoreRefreshTimes": 1
     }, 
     "6": {
         "vipLv": 6, 
@@ -365,19 +438,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_6_DES", 
+        "vipDesc": "ID_VIP_6_DES_new", 
         "vipGift": [
             {
-                "count": 50, 
-                "name": 1153
+                "count": 14000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 1, 
+                "type": 5, 
+                "name": 14183
+            }, 
+            {
+                "count": 800, 
+                "type": 3, 
+                "name": 14124
             }
         ], 
-        "originalPrice": 2500000, 
-        "price": 750000, 
+        "productId": "vip_gift_6", 
+        "giftName": "ID_VIP_GIFT_NAME_6", 
+        "originalPrice": 3000, 
+        "price": 680, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.02, 
+        "matchAddition": 0.035, 
         "setVipShow": 1, 
-        "almsRate": 4.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -390,7 +476,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -406,8 +492,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.02, 
-        "checkinRechargeBonus": 150000
+        "grandPrixAddition": 0.035, 
+        "checkinRechargeBonus": 150000, 
+        "timeLimitedStoreRefreshTimes": 1
     }, 
     "7": {
         "vipLv": 7, 
@@ -425,19 +512,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_7_DES", 
+        "vipDesc": "ID_VIP_7_DES_new", 
         "vipGift": [
             {
-                "count": 60, 
-                "name": 1153
+                "count": 40000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 50, 
+                "type": 3, 
+                "name": 14148
+            }, 
+            {
+                "count": 200, 
+                "type": 3, 
+                "name": 14120
             }
         ], 
-        "originalPrice": 3000000, 
-        "price": 1000000, 
+        "productId": "vip_gift_7", 
+        "giftName": "ID_VIP_GIFT_NAME_7", 
+        "originalPrice": 5000, 
+        "price": 1980, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.025, 
+        "matchAddition": 0.04, 
         "setVipShow": 1, 
-        "almsRate": 4.5, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -450,7 +550,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -466,8 +566,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.03, 
-        "checkinRechargeBonus": 200000
+        "grandPrixAddition": 0.04, 
+        "checkinRechargeBonus": 200000, 
+        "timeLimitedStoreRefreshTimes": 2
     }, 
     "8": {
         "vipLv": 8, 
@@ -485,19 +586,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_8_DES", 
+        "vipDesc": "ID_VIP_8_DES_new", 
         "vipGift": [
             {
-                "count": 120, 
-                "name": 1153
+                "count": 40000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 50, 
+                "type": 3, 
+                "name": 1430
+            }, 
+            {
+                "count": 50, 
+                "type": 3, 
+                "name": 1429
             }
         ], 
-        "originalPrice": 6000000, 
-        "price": 2000000, 
+        "productId": "vip_gift_8", 
+        "giftName": "ID_VIP_GIFT_NAME_8", 
+        "originalPrice": 5000, 
+        "price": 1980, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.025, 
+        "matchAddition": 0.045, 
         "setVipShow": 1, 
-        "almsRate": 5.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -510,7 +624,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -526,8 +640,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.04, 
-        "checkinRechargeBonus": 200000
+        "grandPrixAddition": 0.045, 
+        "checkinRechargeBonus": 200000, 
+        "timeLimitedStoreRefreshTimes": 2
     }, 
     "9": {
         "vipLv": 9, 
@@ -545,19 +660,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_9_DES", 
+        "vipDesc": "ID_VIP_9_DES_new", 
         "vipGift": [
             {
-                "count": 160, 
-                "name": 1153
+                "count": 66000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
+                "count": 80, 
+                "type": 3, 
+                "name": 1430
+            }, 
+            {
+                "count": 80, 
+                "type": 3, 
+                "name": 1429
             }
         ], 
-        "originalPrice": 8000000, 
-        "price": 3000000, 
+        "productId": "vip_gift_9", 
+        "giftName": "ID_VIP_GIFT_NAME_9", 
+        "originalPrice": 8200, 
+        "price": 3280, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.03, 
+        "matchAddition": 0.05, 
         "setVipShow": 1, 
-        "almsRate": 5.5, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -570,7 +698,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -587,7 +715,8 @@
         ], 
         "grandPrixFreeTimes": 1, 
         "grandPrixAddition": 0.05, 
-        "checkinRechargeBonus": 200000
+        "checkinRechargeBonus": 200000, 
+        "timeLimitedStoreRefreshTimes": 2
     }, 
     "10": {
         "vipLv": 10, 
@@ -605,23 +734,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_10_DES", 
+        "vipDesc": "ID_VIP_10_DES_new", 
         "vipGift": [
             {
-                "count": 180, 
-                "name": 1153
+                "count": 130000000, 
+                "type": 3, 
+                "name": 101
             }, 
             {
-                "count": 200, 
-                "name": 1163
+                "count": 120, 
+                "type": 3, 
+                "name": 1430
+            }, 
+            {
+                "count": 120, 
+                "type": 3, 
+                "name": 1429
             }
         ], 
-        "originalPrice": 15000000, 
-        "price": 6000000, 
+        "productId": "vip_gift_10", 
+        "giftName": "ID_VIP_GIFT_NAME_10", 
+        "originalPrice": 15400, 
+        "price": 6480, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.03, 
+        "matchAddition": 0.055, 
         "setVipShow": 1, 
-        "almsRate": 10.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -634,7 +772,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -650,8 +788,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.06, 
-        "checkinRechargeBonus": 300000
+        "grandPrixAddition": 0.055, 
+        "checkinRechargeBonus": 300000, 
+        "timeLimitedStoreRefreshTimes": 2
     }, 
     "11": {
         "vipLv": 11, 
@@ -669,23 +808,32 @@
         "freeRouletteTimes": 1, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_11_DES", 
+        "vipDesc": "ID_VIP_11_DES_new", 
         "vipGift": [
             {
-                "count": 300, 
-                "name": 1429
+                "count": 130000000, 
+                "type": 3, 
+                "name": 101
             }, 
             {
-                "count": 300, 
+                "count": 120, 
+                "type": 3, 
                 "name": 1430
+            }, 
+            {
+                "count": 120, 
+                "type": 3, 
+                "name": 1429
             }
         ], 
-        "originalPrice": 24000000, 
-        "price": 12000000, 
+        "productId": "vip_gift_11", 
+        "giftName": "ID_VIP_GIFT_NAME_11", 
+        "originalPrice": 15400, 
+        "price": 6480, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.04, 
+        "matchAddition": 0.06, 
         "setVipShow": 1, 
-        "almsRate": 15.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -698,7 +846,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -714,8 +862,9 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.08, 
-        "checkinRechargeBonus": 400000
+        "grandPrixAddition": 0.06, 
+        "checkinRechargeBonus": 400000, 
+        "timeLimitedStoreRefreshTimes": 2
     }, 
     "12": {
         "vipLv": 12, 
@@ -733,19 +882,32 @@
         "freeRouletteTimes": 2, 
         "dropPearlTotalCount": -1, 
         "dropPearlRatioLimit": 0.01, 
-        "vipDesc": "ID_VIP_12_DES", 
+        "vipDesc": "ID_VIP_12_DES_new", 
         "vipGift": [
             {
+                "count": 130000000, 
+                "type": 3, 
+                "name": 101
+            }, 
+            {
                 "count": 1, 
-                "name": 1381
+                "type": 5, 
+                "name": 14184
+            }, 
+            {
+                "count": 40, 
+                "type": 3, 
+                "name": 14127
             }
         ], 
-        "originalPrice": 100000000, 
-        "price": 30000000, 
+        "productId": "vip_gift_12", 
+        "giftName": "ID_VIP_GIFT_NAME_12", 
+        "originalPrice": 30000, 
+        "price": 6480, 
         "pearlMultiple": 1.0, 
-        "matchAddition": 0.05, 
+        "matchAddition": 0.065, 
         "setVipShow": 1, 
-        "almsRate": 50.0, 
+        "almsRate": 1.0, 
         "autoSupply:101": 0, 
         "initLuckyValue:44102": 10000, 
         "inviterReward": [
@@ -758,7 +920,7 @@
         "enableChat": 1, 
         "limitChatTip": "", 
         "convert1137ToDRate": [
-            2, 
+            1, 
             1
         ], 
         "convert1429ToDRate": [
@@ -774,7 +936,8 @@
             200
         ], 
         "grandPrixFreeTimes": 1, 
-        "grandPrixAddition": 0.1, 
-        "checkinRechargeBonus": 500000
+        "grandPrixAddition": 0.065, 
+        "checkinRechargeBonus": 500000, 
+        "timeLimitedStoreRefreshTimes": 2
     }
 }

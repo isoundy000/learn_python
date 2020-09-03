@@ -1,0 +1,38 @@
+{
+    "10000": {
+        "bufferId": 10000, 
+        "weaponIds": [], 
+        "weaponType": [
+            2
+        ], 
+        "cdReduce": 1.0, 
+        "coinAdd": 0.0, 
+        "powerAdd": 0.0, 
+        "duration": 0, 
+        "delayTime": 1.3
+    }, 
+    "10001": {
+        "bufferId": 10001, 
+        "weaponIds": [], 
+        "weaponType": [], 
+        "cdReduce": 0.0, 
+        "coinAdd": 1.0, 
+        "powerAdd": 0.0, 
+        "duration": 20, 
+        "delayTime": 1.3
+    }, 
+    "10002": {
+        "bufferId": 10002, 
+        "weaponIds": [], 
+        "weaponType": [
+            1, 
+            2, 
+            3
+        ], 
+        "cdReduce": 0.0, 
+        "coinAdd": 0.0, 
+        "powerAdd": 1.0, 
+        "duration": 15, 
+        "delayTime": 1.3
+    }
+}

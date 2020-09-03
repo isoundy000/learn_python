@@ -1,0 +1,314 @@
+{
+    "info": {
+        "enable": 1, 
+        "startDay": "2019-11-08 00:00:01", 
+        "msg": "ID_CONFIG_GRAND_PRIX_CONGRATULATION_MSG", 
+        "des": "ID_CONFIG_GRAND_PRIX_DES", 
+        "endDes": "ID_CONFIG_GRABNND_PRIX_ENDDES", 
+        "robot": [
+            1, 
+            30, 
+            [
+                2, 
+                2
+            ]
+        ], 
+        "level": 20
+    }, 
+    "playAddition": [
+        {
+            "playTimes": 1, 
+            "addition": 0.0
+        }, 
+        {
+            "playTimes": 2, 
+            "addition": 0.0
+        }, 
+        {
+            "playTimes": 3, 
+            "addition": 0.0
+        }, 
+        {
+            "playTimes": 4, 
+            "addition": 0.0
+        }, 
+        {
+            "playTimes": 5, 
+            "addition": 0.0
+        }
+    ], 
+    "openTimeRange": [
+        "00:00", 
+        "23:00"
+    ], 
+    "fireCount": [
+        500, 
+        3
+    ], 
+    "fee": [
+        {
+            "count": 1, 
+            "name": 14164
+        }
+    ], 
+    "pointRewards": [
+        {
+            "rewards": [
+                {
+                    "count": 0, 
+                    "name": 101
+                }
+            ], 
+            "point": 50000
+        }
+    ], 
+    "group": {
+        "1": [
+            11004, 
+            11010
+        ], 
+        "3": [
+            11021, 
+            11090
+        ], 
+        "2": [
+            11018, 
+            11020
+        ]
+    }, 
+    "target": {
+        "11021": {
+            "count": 2, 
+            "point": 5000
+        }, 
+        "11090": {
+            "count": 2, 
+            "point": 5000
+        }, 
+        "11020": {
+            "count": 3, 
+            "point": 3000
+        }, 
+        "11004": {
+            "count": 8, 
+            "point": 2000
+        }, 
+        "11010": {
+            "count": 8, 
+            "point": 2000
+        }, 
+        "11018": {
+            "count": 2, 
+            "point": 3000
+        }
+    }, 
+    "robotData": [
+        {
+            "count": 1, 
+            "points": [
+                58001, 
+                60000
+            ]
+        }, 
+        {
+            "count": 1, 
+            "points": [
+                56001, 
+                58000
+            ]
+        }, 
+        {
+            "count": 1, 
+            "points": [
+                54001, 
+                56000
+            ]
+        }, 
+        {
+            "count": 2, 
+            "points": [
+                52001, 
+                54000
+            ]
+        }, 
+        {
+            "count": 5, 
+            "points": [
+                50001, 
+                52000
+            ]
+        }, 
+        {
+            "count": 10, 
+            "points": [
+                48001, 
+                50000
+            ]
+        }, 
+        {
+            "count": 10, 
+            "points": [
+                46001, 
+                48000
+            ]
+        }, 
+        {
+            "count": 20, 
+            "points": [
+                40001, 
+                46000
+            ]
+        }, 
+        {
+            "count": 50, 
+            "points": [
+                40000, 
+                42000
+            ]
+        }
+    ], 
+    "surpassTarget": [
+        100, 
+        80, 
+        50, 
+        30, 
+        20, 
+        10, 
+        5, 
+        3, 
+        2, 
+        1
+    ], 
+    "gunMultiAddition": [
+        {
+            "rangeList": [
+                10, 
+                4500
+            ], 
+            "addition": 0.0
+        }, 
+        {
+            "rangeList": [
+                5000, 
+                9000
+            ], 
+            "addition": 0.3
+        }, 
+        {
+            "rangeList": [
+                10000, 
+                25000
+            ], 
+            "addition": 0.6
+        }, 
+        {
+            "rangeList": [
+                30000, 
+                50000
+            ], 
+            "addition": 1.0
+        }, 
+        {
+            "rangeList": [
+                55000, 
+                75000
+            ], 
+            "addition": 1.5
+        }, 
+        {
+            "rangeList": [
+                80000, 
+                90000
+            ], 
+            "addition": 2.0
+        }, 
+        {
+            "rangeList": [
+                100000, 
+                100000
+            ], 
+            "addition": 2.5
+        }, 
+        {
+            "rangeList": [
+                200000, 
+                400000
+            ], 
+            "addition": 2.5
+        }
+    ], 
+    "stageInfo": [
+        {
+            "rewards": [
+                {
+                    "count": 300000, 
+                    "name": 101
+                }
+            ], 
+            "point": 50000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 300000, 
+                    "name": 101
+                }
+            ], 
+            "point": 100000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 500000, 
+                    "name": 101
+                }
+            ], 
+            "point": 150000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 1000000, 
+                    "name": 101
+                }
+            ], 
+            "point": 180000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 1500000, 
+                    "name": 101
+                }
+            ], 
+            "point": 220000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 2000000, 
+                    "name": 101
+                }
+            ], 
+            "point": 260000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 3000000, 
+                    "name": 101
+                }
+            ], 
+            "point": 300000
+        }, 
+        {
+            "rewards": [
+                {
+                    "count": 3000000, 
+                    "name": 101
+                }
+            ], 
+            "point": 350000
+        }
+    ]
+}

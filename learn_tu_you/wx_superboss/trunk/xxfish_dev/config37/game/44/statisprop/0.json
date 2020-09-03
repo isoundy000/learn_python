@@ -1,0 +1,51 @@
+{
+    "statisprop": [
+        {
+            "propid": 1301, 
+            "propname": "青铜招财珠"
+        }, 
+        {
+            "propid": 1193, 
+            "propname": "白银招财珠"
+        }, 
+        {
+            "propid": 1194, 
+            "propname": "黄金招财珠"
+        }, 
+        {
+            "propid": 1137, 
+            "propname": "珍珠"
+        }, 
+        {
+            "propid": 1429, 
+            "propname": "紫水晶"
+        }, 
+        {
+            "propid": 1430, 
+            "propname": "黄水晶"
+        }, 
+        {
+            "propid": 1431, 
+            "propname": "五彩水晶"
+        }, 
+        {
+            "propid": 103, 
+            "propname": "奖券"
+        }, 
+        {
+            "propid": 13543, 
+            "propname": "红宝石"
+        }
+    ], 
+    "statisPropId": [
+        1301, 
+        1193, 
+        1194, 
+        1137, 
+        1429, 
+        1430, 
+        1431, 
+        103, 
+        13543
+    ]
+}
