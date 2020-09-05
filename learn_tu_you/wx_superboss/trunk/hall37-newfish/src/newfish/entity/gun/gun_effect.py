@@ -115,7 +115,7 @@ class GunEffect(object):
         if gunId in self.gunEffectData:
             self._setData(gunId)
 
-    def addGunEffectPower(self, gunId, power):
+    def addGunEffectPower(self, gunId, power, gunX):
         """
         使用狂暴弹增加威力 需要完善TODO
         """
@@ -124,18 +124,16 @@ class GunEffect(object):
         else:
             data = self.gunEffectData[gunId]
         if not data:
-            return
+            return power
         conf = config.getGunConf(gunId, self.clientId, 1, self.mode)
-        dan_shuang_bei = 1
-        paoX = 2                        # 炮的倍率
-        if data[0] > dan_shuang_bei * power * paoX * conf['power_rate'] / 100:
-            val = dan_shuang_bei * power * paoX * (conf['power_rate'] / 100 - 1)
+        if data[0] > int(power * gunX * conf["power_rate"] / 100.0):
+            val = int(power * gunX * (conf["power_rate"] / 100.0 - 1))
             self.updateFireOrEnergy(self, gunId, 0, val, add=False)                     # 消耗能量
-            new_power = dan_shuang_bei * power * paoX * conf['power_rate'] / 100        # 最大威力
+            newPower = int(power * gunX * conf["power_rate"] / 100.0)                   # 最大威力
         else:
             self.updateFireOrEnergy(self, gunId, 0, absValue=1)
-            new_power = (data[0] / (dan_shuang_bei * power * paoX * conf['power_rate'] / 100)) + 1
-        return new_power
+            newPower = int(power * (float(data[0]) / (power * gunX * conf["power_rate"] / 100.0) + 1))
+        return newPower
 
     def addGunEffectFire(self, gunId, count):
         """

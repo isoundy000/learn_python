@@ -1373,6 +1373,45 @@ def level_gift_config():
     print "level_gift_config, end"
 
 
+def mini_game_fish():
+    """美人鱼出现的概率和间隔"""
+    outPath = getOutPath("miniGameFish")
+    wb = getWorkBook()
+    ws = wb.get_sheet_by_name("MiniGameFish")
+    config = collections.OrderedDict()
+    miniGameFish = collections.OrderedDict()
+    startRowNum = 4
+    i = 0
+    for row in ws.rows:
+        i = i + 1
+        if i < startRowNum:
+            continue
+        cols = []
+        for cell in row:
+            cols.append(cell.value)
+        if not cols[0]:
+            continue
+        one = []
+        miniGameFish[str(cols[0])] = one
+        interval = int(cols[1])
+        probb = 0
+        for x in xrange(2, len(cols), 2):
+            if not cols[x] or not cols[x + 1]:
+                continue
+            fish = {}
+            fish["fishType"] = int(cols[x])
+            fish["interval"] = interval
+            itemProbb = int(cols[x + 1])
+            fish["probb"] = [probb + 1, probb + itemProbb]
+            probb += itemProbb
+            one.append(fish)
+    config["miniGameFish"] = miniGameFish
+    result = json.dumps(config, indent=4)
+    outHandle = open(outPath, "w")
+    outHandle.write(result)
+    outHandle.close()
+
+
 def getWorkBook(filename="newfish_multiple.xlsm"):
     configFile = os.path.split(os.path.realpath(__file__))[0] + "/%s" % filename
     return load_workbook(filename=configFile, read_only=True, data_only=True)
@@ -1450,6 +1489,7 @@ config_list = [
     (super_boss_drop_config, None),
     (catch_drop_config, None),
     (level_gift_config, None),              # 等级礼包
+    (mini_game_fish, None),
 ]
 
 

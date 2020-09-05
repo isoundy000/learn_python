@@ -18,6 +18,13 @@ class FishMultiplePlayer(FishNormalPlayer):
         super(FishMultiplePlayer, self).__init__(table, seatIndex, clientId)
         self.gunEffect = GunEffect(table, self, self.table.gameMode)        # 皮肤炮的使用效果
 
+    def _loadSkillData(self, skillId, skillType=0):
+        """
+        读取单个技能数据
+        """
+        if skillId in self.skillSlots:
+            self.skillSlots[skillId][2] = None
+
     def gunEffectState(self, _type=-1, *args):
         """
         玩家皮肤炮狂暴的状态
@@ -46,3 +53,7 @@ class FishMultiplePlayer(FishNormalPlayer):
         elif _type == 5:
             self.gunEffect.sendProgress(gunId)                                  # 狂暴炮的能量和子弹 断线
             self.gunEffect.sendUseEffectState(gunId)                            # 狂暴炮的炮台信息
+        elif _type == 6:
+            return self.gunEffect.addGunEffectPower(args[0], args[1], args[2])  # 增加子弹威力
+
+    def getOce

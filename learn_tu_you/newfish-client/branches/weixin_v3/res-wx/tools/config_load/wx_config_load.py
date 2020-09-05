@@ -4556,7 +4556,7 @@ config_list = [
     (supply_box_config, None),
     (festival_turntable_config, None),
     (collect_item_config, None),
-    (abtest_config, None),
+    # (abtest_config, None),
     # (world_boss_config, None),
     (terror_fish, None),
 ]

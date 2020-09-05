@@ -1304,12 +1304,6 @@ def gift_abctest_config():
                 item["itemId"] = cols[x + 3]                        # 道具Id
                 item["count"] = cols[x + 4]                         # 数量
                 one["items"].append(item)
-        if cols[eModeGiftsIdx]:
-            eModeGifts.append(json.loads(cols[eModeGiftsIdx]))      # e模式下的各档礼包
-        if cols[eModeBestIdx]:
-            eModeBestIndex[str(cols[eModeBestIdx])] = cols[eModeBestIdx + 1]    # 44002、0
-    config["eModeGifts"] = eModeGifts
-    config["eModeBestIndex"] = eModeBestIndex
     print "gift_abctest_config, end"
     result = json.dumps(config, indent=4, ensure_ascii=False)
     outHandle = open(outPath, "w")

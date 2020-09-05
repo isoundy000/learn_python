@@ -40,3 +40,35 @@ class FishNewbieTable(FishNormalTable):
             ftlog.error("_doTableCall error clear table", userId, msg, traceback.format_exc())
             self._clearTable()
 
+    def startFishGroup(self):
+        """
+        启动鱼阵
+        """
+        NewbieFishGroup(self)
+
+    def createPlayer(self, table, seatIndex, clientId):
+        """
+        新创建Player对象
+        """
+        return FishNewbiePlayer(table, seatIndex, clientId)
+
+    def getMultipleFishMultiple(self, player, fishConf, fpMultiple, gunMultiple, gunX):
+        """
+        获得倍率鱼的倍率
+        """
+        betDict = config.getCommonValueByKey("newbieBetFish")
+        curTaskId = player.taskSystemUser.curTask.getTaskId()
+        pass
+
+
+
+    def _task_expedite(self, msg, userId, seatId):
+        """任务加速"""
+        taskExpedite = msg.getParam("taskExpedite")
+        player = self.getPlayer(userId)
+        if player and player.taskSystemUser:
+            player.taskSystemUser.taskExpedite = taskExpedite
+
+
+
+
