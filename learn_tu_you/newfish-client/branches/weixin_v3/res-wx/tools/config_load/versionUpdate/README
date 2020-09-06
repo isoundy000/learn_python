@@ -1,0 +1,8 @@
+html_to_image.py使用说明
+
+脚本运行所需环境(电脑需有以下软件)：
+	python或pypy（3.0以下版本）
+	wkhtmltoimage（下载地址：https://wkhtmltopdf.org/downloads.html）
+
+执行以下命令生成图片：
+	python html_to_image.py

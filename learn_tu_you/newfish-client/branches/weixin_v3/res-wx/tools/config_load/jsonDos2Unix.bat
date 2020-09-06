@@ -1,0 +1,1 @@
+for /R %1 %%G in (*.json) do dos2unix-7.4.0-win64\bin\dos2unix %%G
