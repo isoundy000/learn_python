@@ -38,7 +38,7 @@ class StartConfig(object):
         self.prepareTimes = None
         self.signinTimesStr = None
         self.times = None
-        self._cron = None
+        self._cron = None                   # 是否是定时
 
         # 开赛速度
         self.startMatchSpeed = None
@@ -64,6 +64,102 @@ class StartConfig(object):
     def isTimePointType(self):
         """定时积分赛"""
         return self.type == MatchType.TIME_POINT
+
+    def calcNextStartTime(self, timestamp=None):
+        """计算下次开赛事件"""
+        timestamp = timestamp or pktimestamp.getCurrentTimestamp()
+        ntime = datetime.fromtimestamp(int(timestamp))
+        nexttime = None
+        if self._cron:
+            nexttime = self._cron.getNextTime(ntime)
+        if nexttime is not None:
+            return int(time.mktime(nexttime.timetuple()))
+        return None
+
+    def getTodayNextLater(self):
+        """获取今天下一个比赛时间点"""
+        if self._cron:
+            return self._cron.getTodayNextLater()
+        return -1
+
+    def calcSigninTime(self, startTime):
+        """计算报名时间"""
+        assert (self.isTimingType() or self.isTimePointType())
+        if self.signinTimes:
+            return startTime - self.signinTimes
+        return None
+
+    def calcPrepareTime(self, startTime):
+        """计算准备时间"""
+        assert (self.isTimingType() or self.isTimePointType())
+        if self.prepareTimes:
+            return startTime - self.prepareTimes
+        return startTime - 5
+
+    def calcCloseTime(self, startTime):
+        """计算结束时间"""
+        assert (self.isTimingType() or self.isTimePointType())
+        endTime = self.calcEndTime(startTime)
+        if endTime and self.closeTime:
+            return endTime - self.closeTime
+        return None
+
+    def calcRewardTime(self, startTime):
+        """计算发奖时间"""
+        assert (self.isTimingType() or self.isTimePointType())
+        endTime = self.calcEndTime(startTime)
+        if endTime and self.rewardTimes:
+            return endTime - self.rewardTimes
+        return None
+
+    def calcEndTime(self, startTime):
+        """计算结束时间"""
+        assert (self.isTimingType() or self.isTimePointType())
+        if startTime is None:
+            return None
+        if self.matchTimes:
+            if self.matchTimesBasedDays is False:
+                strfTime = time.strftime("%R", time.localtime(startTime))
+                if strfTime in self.matchStartTimeStr:
+                    idx = self.matchStartTimeStr.index(strfTime)
+                    if 0 <= idx < len(self.matchTimes):
+                        return startTime + self.matchTimes[idx] * 60
+                    return startTime + self.matchTimes[-1] * 60
+            else:
+                strfTime = time.strftime("%Y%m%d", time.localtime(startTime))
+                if strfTime in self.matchStartTimeDayStr:
+                    idx = self.matchStartTimeDayStr.index(strfTime)
+                    # import freetime.util.log as ftlog
+                    # ftlog.debug("--calcEndTime", strfTime, self.matchStartTimeDayStr, idx, len(self.matchTimes),
+                    #             idx % len(self.matchTimes))
+                    idx = idx % len(self.matchTimes)
+                    if 0 <= idx < len(self.matchTimes):
+                        return startTime + self.matchTimes[idx] * 60
+                    return startTime + self.matchTimes[-1] * 60
+        elif self.times.get("times_in_day") and self.times["times_in_day"].get("interval"):
+            return startTime + self.times["times_in_day"]["interval"] * 60
+        return None
+
+    def buildSigninTimeStr(self):
+        """创建报名时间字符串"""
+        if not (self.isTimingType() or self.isTimePointType()):
+            return u""
+        if self.signinTimesStr:
+            return self.signinTimesStr
+        ts = int(self.signinTimes)
+        thours = int(ts / 3600)
+        ts = ts - thours * 3600
+        tminutes = int(ts / 60)
+        ts = ts - tminutes * 60
+        tseconds = int(ts % 60)
+        tstr = u""
+        if thours > 0:
+            tstr = tstr + unicode(thours) + u"小时"
+        if tminutes > 0:
+            tstr = tstr + unicode(tminutes) + u"分钟"
+        if tseconds > 0:
+            tstr = tstr + unicode(tseconds) + u"秒"
+        return "请在比赛开始前%s，报名参加此比赛" % (tstr)
 
     def checkValid(self):
         if not MatchType.isValid(self.type):
@@ -151,8 +247,7 @@ class StartConfig(object):
         ret.closeTime = conf.get("close.times", None)       # 360s
         ret.rewardTimes = conf.get("reward.times", None)    # 180s
         ret.maxGameTimes = conf.get("maxGameTimes", -1)     # 最大完的次数
-        # 当比赛的持续时间
-        import json
+        # 当前比赛的持续时间(m)
         ret.matchTimes = conf.get("list.matchtimes", [60])
         # ret.matchStartTimeStr = conf.get("times", {}).get("times_in_day", {}).get("list", [])
         ret.matchTimesBasedDays = (conf.get("matchtimesbaseddays", 0) != 0)

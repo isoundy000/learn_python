@@ -71,5 +71,47 @@ class FishTimeMatchRoom(TYRoom):
         self._logger.info("initMatch", "shadowRoomIds=", list(shadowRoomIds))
         for roomId in shadowRoomIds:
             count = self.roomDefine.configure["gameTableCount"]
-            pass
+            baseid = roomId * 10000
+            self._logger.info("initMatch addTables", "shadowRoomId=", roomId, "tableCount=", count, "baseid=", baseid)
+            tableManager.addTables(roomId, baseid, count)
+
+        random.shuffle(tableManager._idleTables)
+        match, master = self.matchPlugin.buildMatch(conf, self)
+        match.tableManager = tableManager
+
+        if gdata.mode() == gdata.RUN_MODE_ONLINE:
+            playerCapacity = tableManager.allTableCount * tableManager.tableSeatCount               # 玩家容量
+            if playerCapacity <= conf.start.userMaxCountPerMatch:
+                self._logger.error("initMatch", "allTableCount=", tableManager.allTableCount,
+                                   "tableSeatCount=", tableManager.tableSeatCount,
+                                   "playerCapacity=", playerCapacity,
+                                   "userMaxCount=", conf.start.userMaxCount,
+                                   "confUserMaxCountPerMatch=", conf.start.userMaxCountPerMatch,
+                                   "err=", "NotEnoughTable")
+            # assert (playerCapacity > conf.start.userMaxCountPerMatch)
+        self.match = match
+        self.matchMaster = master
+        self.matchPlugin.setMatch(self.roomId, match)
+        if master:
+            master.startHeart()
+
+    def doEnter(self, userId):
+        if self._logger.isDebug():
+            self._logger.debug("doEnter", "userId=", userId)
+        mo = MsgPack()
+        mo.setCmd("m_enter")
+        mo.setResult("gameId", self.gameId)
+        mo.setResult("roomId", self.roomId)
+        mo.setResult("userId", userId)
+        try:
+            onlineLocList = onlinedata.getOnlineLocList(userId)
+            self._logger.debug("doEnter", "userId=", userId, "onlinedata=", onlineLocList)
+            if onlineLocList:
+                raise BadStateException()
+            self.match.enter(userId)
+            mo.setResult("enter", 1)
+            mo.setResult("targets", self.match.curInst.targets if self.match.curInst else {})
+            router.sendToUser(mo, userId)
+        except MatchException, e:
+            self.matchPlugin.handleMatchException(self, e, userId, mo)
 
