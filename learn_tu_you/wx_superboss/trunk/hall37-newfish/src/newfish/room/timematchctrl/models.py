@@ -266,8 +266,7 @@ class Table(object):
         """
         玩家离开桌子
         """
-        assert (player._seat is not None
-                and player._seat.table == self)
+        assert(player._seat is not None and player._seat.table == self)
         self._clearSeat(player._seat)
 
     def clear(self):

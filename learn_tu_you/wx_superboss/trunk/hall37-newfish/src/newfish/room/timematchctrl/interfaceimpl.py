@@ -75,35 +75,48 @@ class SigninRecordDaoRedis(SigninRecordDao):
             while (i + 1 < len(datas)):
                 try:
                     userId = int(datas[i])
-                    record = self.decodeRecord(userId, datas[i + 1])
+                    record = self.decodeRecord(userId, datas[i+1])
                     ret.append(record)
                 except:
-                    self._logger.error("SigninRecordDaoRedis.loadAll", "matchId=", matchId, "instId=", instId,
+                    self._logger.error("SigninRecordDaoRedis.loadAll",
+                                       "matchId=", matchId,
+                                       "instId=", instId,
                                        "ctrlRoomId=", ctrlRoomId,
-                                       "Bad SigninRecord data: [%s, %s]" % (datas[i], datas[i + 1]))
+                                       "Bad SigninRecord data: [%s, %s]" % (datas[i], datas[i+1]))
                 i += 2
         return ret
-
+    
     def add(self, matchId, ctrlRoomId, instId, record):
         key = self.buildKey(matchId, ctrlRoomId, instId)
         if self._logger.isDebug():
-            self._logger.debug("SigninRecordDaoRedis.add", "matchId=", matchId, "ctrlRoomId=", ctrlRoomId,
-                               "instId=", instId, "key=", key, "record=", self.encodeRecord(record), "userId=",
-                               record.userId)
+            self._logger.debug("SigninRecordDaoRedis.add",
+                               "matchId=", matchId,
+                               "ctrlRoomId=", ctrlRoomId,
+                               "instId=", instId,
+                               "key=", key,
+                               "record=", self.encodeRecord(record),
+                               "userId=", record.userId)
         return daobase.executeMixCmd("hsetnx", key, record.userId, self.encodeRecord(record)) == 1
-
+    
     def remove(self, matchId, ctrlRoomId, instId, userId):
         key = self.buildKey(matchId, ctrlRoomId, instId)
         if self._logger.isDebug():
-            self._logger.debug("SigninRecordDaoRedis.remove", "matchId=", matchId, "ctrlRoomId=", ctrlRoomId,
-                               "instId=", instId, "userId=", userId, "key=", key)
+            self._logger.debug("SigninRecordDaoRedis.remove",
+                               "matchId=", matchId,
+                               "ctrlRoomId=", ctrlRoomId,
+                               "instId=", instId,
+                               "userId=", userId,
+                               "key=", key)
         daobase.executeMixCmd("hdel", key, userId)
-
+    
     def removeAll(self, matchId, ctrlRoomId, instId):
         key = self.buildKey(matchId, ctrlRoomId, instId)
         if self._logger.isDebug():
-            self._logger.debug("SigninRecordDaoRedis.removeAll", "matchId=", matchId, "ctrlRoomId=", ctrlRoomId,
-                               "instId=", instId, "key=", key)
+            self._logger.debug("SigninRecordDaoRedis.removeAll",
+                               "matchId=", matchId,
+                               "ctrlRoomId=", ctrlRoomId,
+                               "instId=", instId,
+                               "key=", key)
         daobase.executeMixCmd("del", key)
 
 
@@ -136,13 +149,20 @@ class MatchStatusDaoRedis(MatchStatusDao):
             jstr = strutil.dumps(d)
             daobase.executeMixCmd("hset", key, status.matchId, jstr)
         except:
-            self._logger.error("MatchStatusDaoRedis.save", "matchId=", status.matchId, "instId=", status.instId,
-                               "startTime=", status.startTime, "skills=", status.skills)
+            self._logger.error("MatchStatusDaoRedis.save",
+                               "matchId=", status.matchId,
+                               "instId=", status.instId,
+                               "startTime=", status.startTime,
+                               "skills=", status.skills)
 
     def getNextMatchingSequence(self, matchId):
-        """获取下一场比赛的唯一值"""
+        """
+        下场比赛的轮次ID
+        """
         key = "matchingId:%s" % (self._room.gameId)
-        self._logger.hinfo("MatchStatusDaoRedis.getNextMatchingSequence", "matchId=", matchId, "key=", key)
+        self._logger.hinfo("MatchStatusDaoRedis.getNextMatchingSequence",
+                           "matchId=", matchId,
+                           "key=", key)
         return daobase.executeMixCmd("hincrby", key, matchId, 1)
 
 
@@ -249,10 +269,16 @@ class SigninFeeTime(SigninFee):
             return
 
         contentItemList = [{"itemId": fee.assetKindId, "count": fee.count}]
-        assetKindId, count = user_remote.consumeAssets(self._room.gameId, userId, contentItemList, "MATCH_SIGNIN_FEE", self._room.roomId)
+        assetKindId, count = user_remote.consumeAssets(self._room.gameId, userId, contentItemList,
+                                                       "MATCH_SIGNIN_FEE", self._room.roomId)
 
-        self._logger.info("SigninFeeTime.collectFee matchId=", matchId, "roomId=", roomId, "instId=", instId, "userId=", userId,
-            "fee=", fee.toDict(), "assetKindId=", assetKindId, "count=", count)
+        self._logger.info("SigninFeeTime.collectFee matchId=", matchId,
+                          "roomId=", roomId,
+                          "instId=", instId,
+                          "userId=", userId,
+                          "fee=", fee.toDict(),
+                          "assetKindId=", assetKindId,
+                          "count=", count)
         if assetKindId:
             raise SigninFeeNotEnoughException(fee)
         return fee
@@ -266,8 +292,11 @@ class SigninFeeTime(SigninFee):
                 return
             contentItemList = [{"itemId": fee.assetKindId, "count": fee.count}]
             user_remote.addAssets(self._room.gameId, userId, contentItemList, "MATCH_RETURN_FEE", self._room.roomId)
-            self._logger.info("SigninFeeTime.returnFee matchId=", matchId, "roomId=", roomId, "instId=", instId,
-                "userId=", userId, "fee=", fee.toDict())
+            self._logger.info("SigninFeeTime.returnFee matchId=", matchId,
+                              "roomId=", roomId,
+                              "instId=", instId,
+                              "userId=", userId,
+                              "fee=", fee.toDict())
         except:
             self._logger.error()
 
@@ -399,12 +428,18 @@ class TableControllerTime(TableController):
         让桌子开始
         """
         try:
-            self._logger.info("startTable", "groupId=", table.group.groupId, "tableId=", table.tableId, "userIds=", table.getUserIdList())
+            self._logger.info("startTable",
+                              "groupId=", table.group.groupId,
+                              "tableId=", table.tableId,
+                              "userIds=", table.getUserIdList())
             # 发送tableStart
             message = self.buildTableStartMessage(table)
             router.sendTableServer(message, table.roomId)
         except:
-            self._logger.error("startTable", "groupId=", table.group.groupId, "tableId=", table.tableId, "userIds=", table.getUserIdList())
+            self._logger.error("startTable",
+                               "groupId=", table.group.groupId,
+                               "tableId=", table.tableId,
+                               "userIds=", table.getUserIdList())
 
     def update(self, table):
         """
@@ -415,12 +450,19 @@ class TableControllerTime(TableController):
             return
 
         try:
-            self._logger.info("update", "groupId=", table.group.groupId, "tableId=", table.tableId, "userIds=", table.getUserIdList())
+            self._logger.info("update",
+                              "groupId=", table.group.groupId,
+                              "tableId=", table.tableId,
+                              "userIds=", table.getUserIdList())
             # 发送tableStart
             message = self.buildUpdateMessage(table)
             router.sendTableServer(message, table.roomId)
         except:
-            self._logger.error("update", "groupId=", table.group.groupId, "tableId=", table.tableId, "userIds=", table.getUserIdList())
+            self._logger.error("update",
+                               "groupId=", table.group.groupId,
+                               "tableId=", table.tableId,
+                               "userIds=", table.getUserIdList())
+
 
     def clearTable(self, table):
         """
@@ -431,7 +473,10 @@ class TableControllerTime(TableController):
             tableClearMessage = self.buildTableClearMessage(table)
             router.sendTableServer(tableClearMessage, table.roomId)
         except:
-            self._logger.error("clearTable", "groupId=", table.group.groupId, "tableId=", table.tableId, "userIds=", table.getUserIdList())
+            self._logger.error("clearTable",
+                               "groupId=", table.group.groupId,
+                               "tableId=", table.tableId,
+                               "userIds=", table.getUserIdList())
 
     def userGiveup(self, table, seat):
         """
@@ -449,8 +494,11 @@ class TableControllerTime(TableController):
             msg.setParam("seatId", seat.seatId)
             router.sendTableServer(msg, table.roomId)
         except:
-            self._logger.error("userGiveup", "groupId=", table.group.groupId, "tableId=", table.tableId,
-                               "userId=", seat.player.userId if seat.player else 0, "userIds=", table.getUserIdList())
+            self._logger.error("userGiveup",
+                               "groupId=", table.group.groupId,
+                               "tableId=", table.tableId,
+                               "userId=", seat.player.userId if seat.player else 0,
+                               "userIds=", table.getUserIdList())
 
 
 class TableControllerTimePoint(TableControllerTime):
@@ -1381,7 +1429,7 @@ class TimeStage(MatchStage):
         if rankRewardsList:
             for rankRewards in rankRewardsList:
                 if ((rankRewards.startRank == -1 or player.rank >= rankRewards.startRank)
-                    and (rankRewards.endRank == -1 or player.rank <= rankRewards.endRank)):
+                   and (rankRewards.endRank == -1 or player.rank <= rankRewards.endRank)):
                     return rankRewards
         return None
 
@@ -1410,9 +1458,9 @@ class TimeStage(MatchStage):
                                "groupState=", self.group.state,
                                "userIds=", [p.userId for p in self._rankList],
                                "_allTableRankRatioList=", self._allTableRankRatioList)
-            # byeCount = len(waitPlayers) % self.matchConf.tableSeatCount
-            # for i in xrange(byeCount):
-            #     self._waitPlayerList[-1 - i].waitReason = WaitReason.BYE
+        # byeCount = len(waitPlayers) % self.matchConf.tableSeatCount
+        # for i in xrange(byeCount):
+        #     self._waitPlayerList[-1 - i].waitReason = WaitReason.BYE
 
     def _initPlayerDatas(self):
         for i, player in enumerate(self._rankList):
@@ -1743,8 +1791,7 @@ class TimeStage(MatchStage):
         weaponPrecent = config.getWeaponConf(weapLevel).get("matchAddition", 0)
         weapAddition = int(weaponPrecent * player.score)
         player.matchAdditions = [player.score, vipPrecent, weaponPrecent]
-        ftlog.debug("matchOver_addition==", player.matchAdditions, gunLevel, self.area.room.roomConf.get("maxGunLevel"),
-                    weapLevel)
+        ftlog.debug("matchOver_addition==", player.matchAdditions, gunLevel, self.area.room.roomConf.get("maxGunLevel"), weapLevel)
         player.score = player.score + vipAddition + weapAddition
 
 
@@ -1997,4 +2044,3 @@ class TimePointMatchFactory(MatchFactory):
         player.playCount = signer.playCount
         player.averageRank = signer.averageRank
         return player
-
