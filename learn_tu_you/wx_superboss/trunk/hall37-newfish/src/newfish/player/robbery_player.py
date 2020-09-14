@@ -161,6 +161,15 @@ class FishRobberyPlayer(FishPlayer):
         if self.bullets[kindId] == 0:
             kindId = self.table.runConfig.usableBullets[0]
 
+        if self.trialMode:                                              # 试玩模式
+            self.gunsLevel = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.robberyTrialGunLevel, {})
+        else:
+            self.gunsLevel = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.robberyGunLevel, {})
+        self.setSkillId(kindId)
+
+        self.refreshVipLevel()
+        self.refreshHonor()
+        self.activitySystem = ActivityTableSystem(self.table, self)     # 活动系统
 
     def _loadRobberyData(self):
         """
@@ -182,19 +191,106 @@ class FishRobberyPlayer(FishPlayer):
             return
         self.rank, _ = ranking_system.getUserRankAndRewards(ranking_system.RankType.TodayWinner, self.userId)
 
+    def getBulletNum(self, kindId):
+        """
+        获取子弹数量
+        """
+        userAssets = hallitem.itemSystem.loadUserAssets(self.userId)
+        surplusCount = userAssets.balance(FISH_GAMEID, "item:" + str(kindId), pktimestamp.getCurrentTimestamp())
+        return surplusCount
 
+    def setSkillId(self, skillId):
+        """
+        设置默认子弹，获取火炮等级
+        """
+        self.skillId = skillId
+        nowGunLevel = self.gunsLevel.setdefault(str(self.skillId), self.table.runConfig.minGunLevel)
+        maxGunLevel = self.table.runConfig.maxGunLevelLimit.get(str(skillId), self.table.runConfig.maxGunLevel)
+        self.nowGunLevel = min(nowGunLevel, maxGunLevel)
 
+    def setNowGunLevel(self, gunLevel):
+        """设置炮的等级"""
+        self.gunsLevel[str(self.skillId)] = gunLevel
+        self.nowGunLevel = gunLevel
+        maxGunLevel = self.table.runConfig.maxGunLevelLimit.get(str(self.skillId), self.table.runConfig.maxGunLevel)
+        self.nowGunLevel = min(self.nowGunLevel, maxGunLevel)
+        self.nowGunLevel = max(self.nowGunLevel, self.table.runConfig.minGunLevel)
 
+    def refreshVipLevel(self):
+        """刷新vip等级"""
+        vipInfo = hallvip.userVipSystem.getVipInfo(self.userId)
+        self.vipLevel = vipInfo.get("level", 0)
 
+    def refreshHonor(self):
+        """刷新勋章"""
+        self.ownedHonors = honor_system.getOwnedHonors(self.userId)
+        honorId, _ = honor_system.getInstalledHonor(self.userId, self.ownedHonors)
+        self.honorId = honorId if honorId >= 0 else 0
 
+    def incrExp(self, gainExp):
+        return self.exp
 
+    def catchBudgetRobbery(self, wpId, kindId, gainBullet, reason):
+        """
+        捕获结算
+        """
+        if reason == 0:
+            costBullet = self.table.getCostBulletRobbery(wpId)
+            count = gainBullet - costBullet
+            if count > 0:
+                eventId = "BI_NFISH_CATCH_GAIN"
+            else:
+                eventId = "BI_NFISH_GUN_FIRE"
+            util.addItems(self.userId,
+                          [{"name": kindId, "count": count}],
+                          eventId,
+                          wpId,
+                          roomId=self.table.roomId,
+                          tableId=self.table.tableId,
+                          clientId=self.clientId,
+                          param01=self.level)
+            self.countRobberyProfit(kindId, count, costBullet)
+        mo = ItemHelper.makeItemListResponseByGame(FISH_GAMEID, self.userId)
+        GameMsg.sendMsg(mo, self.userId)
 
+    def countRobberyProfit(self, kindId, count, costBullet):
+        """
+        计算个人盈亏数据
+        """
+        if self.trialMode:
+            index = robbery_lottery_pool.TM_KINDIDS.index(kindId)
+        else:
+            index = robbery_lottery_pool.KINDIDS.index(kindId)
+        self.bulletProfit[index] += count
+        self.bulletWin += max(0, count)
+        if self.trialMode:
+            return
+        from newfish.game import TGFish
+        event = RobberyBulletChangeEvent(self.userId, FISH_GAMEID, kindId, count, costBullet)
+        TGFish.getEventBus().publishEvent(event)
 
-
-
-
-
-
+    def reportTableData(self):
+        """上报桌子数据"""
+        from newfish.game import TGFish
+        event = BulletChangeEvent(self.userId, FISH_GAMEID)
+        TGFish.getEventBus().publishEvent(event)
+        totalFishCount = 0
+        for fishType, count in self._catchFishes.iteritems():
+            bireport.reportGameEvent("BI_NFISH_GE_CATCH", self.userId, FISH_GAMEID, self.table.roomId,
+                                     self.table.tableId, int(fishType), count, 0, 0, [], self.clientId)
+            totalFishCount += count
+        if totalFishCount > 0:
+            fish_activity_system.countRobberyTableData(self.userId, totalFishCount, self.table.bigRoomId)
+        self._catchFishes = {}
+        self.gameTime = 0
+        fish_activity_system.countRobberyData(self.userId, self.table.bigRoomId, self.bulletWin, self.bulletProfit)
+        if self.trialMode:
+            return
+        bulletProfitCoin = robbery_lottery_pool.getBulletCoin(self.bulletProfit)
+        self.positiveBulletProfit = map(lambda num: max(0, num), self.bulletProfit)
+        if bulletProfitCoin > self.bulletWinMostCoin:
+            robbery_lottery_pool.updateDayWinMostRank(self.userId, self.positiveBulletProfit)
+            robbery_lottery_pool.updateWeekWinMostRank(self.userId, self.positiveBulletProfit)
 
     def beginTrialMode(self):
         """
@@ -207,6 +303,14 @@ class FishRobberyPlayer(FishPlayer):
             elif _count < count:
                 util.addItems(self.userId, [{"name": kindId, "count": count - _count}], "ITEM_USE", changeNotify=True)
 
+    def endTrialMode(self):
+        """
+        清理试玩数据
+        """
+        for kindId, count in self.table.bulletInitCount.iteritems():
+            _count = util.balanceItem(self.userId, kindId)
+            if _count > 0:
+                util.consumeItems(self.userId, [{"name": kindId, "count": _count}], "ITEM_USE")
 
     def refreshGunSkin(self):
         pass
