@@ -15,8 +15,8 @@ from newfish.table.multiple_table import FishMultipleTable
 from newfish.entity.fishgroup.terror_fish_group import TerrorFishGroup
 from newfish.entity.fishgroup.autofill_fish_group_m import AutofillFishGroup
 from newfish.entity.fishgroup.platter_fish_group import PlatterFishGroup
-from newfish.entity.fishgroup.minigame_fish_group import MiniGameFishGroup
 from newfish.player.grand_prix_player import FishGrandPrixPlayer
+from newfish.entity.fishgroup.grandprix_fish_group import GrandPrixFishGroup
 
 
 class FishGrandPrixTable(FishMultipleTable):
@@ -34,6 +34,9 @@ class FishGrandPrixTable(FishMultipleTable):
         # 大盘鱼初始化
         if self.runConfig.allPlatterGroupIds and not self.platterFishGroup:
             self.platterFishGroup = PlatterFishGroup(self)
+        # grandprix鱼初始化
+        if self.runConfig.allGrandPrixGroupIds and not self.grandPrixFishGroup:
+            self.grandPrixFishGroup = GrandPrixFishGroup(self)
 
     def createPlayer(self, table, seatIndex, clientId):
         """
@@ -86,7 +89,7 @@ class FishGrandPrixTable(FishMultipleTable):
                     player.grandPrixUseSkillTimes[idx]["count"] = min(player.grandPrixUseSkillTimes[idx]["count"], config.getGrandPrixConf("fireCount")[1])
                     player.grandPrixUseSkillTimes[idx]["count"] = max(player.grandPrixUseSkillTimes[idx]["count"], 0)
                     break
-            useSkillTimes = [val.get("count", 0) for val in player.grandPrixUseSkillTimes]
+            useSkillTimes = {val.get("skillId"): val.get("count", 0) for val in player.grandPrixUseSkillTimes}
         return useSkillTimes
 
     def _skill_install(self, msg, userId, seatId):

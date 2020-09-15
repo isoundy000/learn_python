@@ -12,7 +12,7 @@ from freetime.entity.msg import MsgPack
 from poker.entity.biz import bireport
 from poker.entity.dao import daobase, gamedata
 from poker.protocol import router
-from newfish.entity.config import FISH_GAMEID, STARFISH_KINDID, PEARL_KINDID
+from newfish.entity.config import FISH_GAMEID
 from newfish.entity import util, config, weakdata, module_tip, drop_system
 from newfish.entity.chest import chest_system
 from newfish.entity.redis_keys import GameData, WeakData, UserData
@@ -25,23 +25,15 @@ class QuestTaskState:
 
 
 class TaskType():
-    FishNum = 10001                 # 累计捕获鱼数
-    MultipleFishNum = 10002         # 累计捕获倍率鱼数
-    CoinNum = 10003                 # 累计捕鱼获得金币数
-    SkillUseNum = 10004             # 累计技能使用数
-    BossFishNum = 10005             # 累计捕获Boss鱼数
-    PlayTime = 10006                # 累计游戏时长
+
     TableTaskNum = 10007            # 累计完成渔场任务数
     TableTimeTaskNum = 10008        # 累计完成渔场限时任务数
     StoreBuyNum = 10009             # 在商店购买任意物品数
     ShareFinishNum = 10010          # 分享完成次数
     GetFreeCoinNum = 10011          # 在金币商城领取免费金币次数
-
-    CheckIn = 10012                 # 每日签到
     EelFishNum = 10013              # 捕获电鳗数量
     BombFishNum = 10014             # 捕获炸弹鱼数量
     DrillFishNum = 10015            # 捕获钻头鱼数量
-    EnterMatchTimes = 10016         # 参加比赛次数
     StarfishNum = 10017             # 捕鱼获得海星数
     UseCoolDownNum = 10018          # 使用冷却次数
     FireNum = 10019                 # 累计开火次数
@@ -56,8 +48,28 @@ class TaskType():
     LanternFishNum = 10028          # 捕获灯笼鱼次数
     DoradoFishNum = 10029           # 捕获剑鱼次数
     WinTask = 10030                 # 渔场比赛冠军(夺宝赛，奖金赛)
-    TodayRechargeCount = 10031      # 当日充值数量
     EnterFishPool = 10032           # 进入渔场的次数
+
+    # 复用
+    GunYFishNum = 10001             # 使用n倍炮以上捕获鱼数
+    GunYMultipleFishNum = 10002     # 使用n倍炮以上捕获倍率鱼数
+    CoinNum = 10003                 # 累计捕鱼获得金币数
+    SkillUseNum = 10004             # 累计技能使用数
+    GunYBossFishNum = 10005         # 使用n倍炮以上捕获Boss鱼数
+    PlayTime = 10006                # 累计游戏时长
+    CheckIn = 10012                 # 每日签到
+    EnterMatchTimes = 10016         # 参加比赛次数    回馈赛次数
+    TodayRechargeCount = 10031      # 当日充值数量
+    # 新加
+    FreeChest = 10033               # 在商城中领取{}次免费宝箱
+    UseSkillLockItem = 10034        # 使用多少次锁定
+    UseSkillFreezeItem = 10035      # 使用多沙次冰冻
+    LevelPrizeWheel = 10036         # 转盘的转动
+    JoinGrandPrix = 10037           # 参加大奖赛次数
+    # 捕获鱼的任务
+    GunYTerrorFishNum = 10038       # 使用n倍炮以上捕获特殊鱼
+    FishNum = 10039                 # 捕获n条鱼
+    TerrorFishNum = 10040           # 捕获n条特殊鱼
 
 
 def refreshDailyQuestData(userId):

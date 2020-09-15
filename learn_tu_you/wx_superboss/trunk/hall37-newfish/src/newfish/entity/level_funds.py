@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
+# -*- coding=utf-8 -*-
 """
 成长基金
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/9/17
 
 import json
 
@@ -12,12 +11,13 @@ import freetime.util.log as ftlog
 from freetime.entity.msg import MsgPack
 from poker.protocol import router
 from poker.entity.configure import pokerconf
-from poker.entity.dao import daobase, gamedata
+from poker.entity.dao import daobase, gamedata, userchip
 from newfish.entity import config, util, vip_system, module_tip
-from newfish.entity.config import FISH_GAMEID, BT_DIRECT, BT_VOUCHER, VOUCHER_KINDID, CLASSIC_MODE
+from newfish.entity.config import FISH_GAMEID, BT_DIRECT, BT_VOUCHER, VOUCHER_KINDID, CLASSIC_MODE, BT_DIAMOND
 from newfish.entity.redis_keys import GameData, UserData
 from newfish.entity.msg import GameMsg
 from newfish.entity.chest import chest_system
+from newfish.entity import store
 
 
 def _getRdKey(userId, mode):
@@ -32,16 +32,16 @@ def _getRdKey(userId, mode):
 
 def _getRewardsState(userId, mode):
     """
-    获取玩家已领取奖励数据 {"10": [2, 2], "11": [2, 2], "12": [2, 2]}
+    获取玩家已领取奖励数据
     """
-    lf_rewards = daobase.executeUserCmd(userId, "HGET", _getRdKey(userId, mode), GameData.lf_rewards) or "{}"   # {等级:[免费,付费]}
+    lf_rewards = daobase.executeUserCmd(userId, "HGET", _getRdKey(userId, mode), GameData.lf_rewards) or "{}"
     lf_rewards = json.loads(lf_rewards)
     return lf_rewards
 
 
 def _getBoughtFunds(userId, mode):
     """
-    获取玩家已购买基金索引数据 [1, 2, 3, 4, 6]
+    获取玩家已购买基金索引数据
     """
     lf_funds = daobase.executeUserCmd(userId, "HGET", _getRdKey(userId, mode), GameData.lf_funds) or "[]"
     lf_funds = json.loads(lf_funds)
@@ -52,6 +52,7 @@ def _getFundsList(userId, clientId, mode):
     """
     获取玩家可以使用的成长基金索引列表
     """
+    userLv = util.getGunLevelVal(userId, mode)
     fundsConf = config.getLevelFundsConf(clientId, mode)
     canBuyIdxs = fundsConf.get("canBuyIdx")
     funds = fundsConf.get("funds")
@@ -59,11 +60,11 @@ def _getFundsList(userId, clientId, mode):
     userIdxs = {}
     for idx in lf_funds + canBuyIdxs:
         if len(funds) >= idx > 0:
+            if mode == 1 and userLv < funds[idx - 1].get("showLevel", 0):
+                continue
             _type = funds[idx - 1].get("type")
             if str(_type) not in userIdxs:
                 userIdxs[str(_type)] = idx
-    if ftlog.is_debug():
-        ftlog.debug("level_funds, userId =", userId, "clientId =", clientId, "mode =", mode, "canBuyIdxs =", canBuyIdxs, "userIdxs =", userIdxs, "lf_funds =", lf_funds)
     return sorted(userIdxs.values())
 
 
@@ -105,20 +106,62 @@ def getLevelFundsData(userId, clientId, mode):
     获取成长基金数据
     """
     module_tip.resetModuleTipEvent(userId, "levelfunds")
-    userLv = util.getGunLevelVal(userId, mode)
     message = MsgPack()
     message.setCmd("levelFundsData")
     message.setResult("gameId", config.FISH_GAMEID)
     message.setResult("userId", userId)
+    if mode == -1:
+        show = []
+        for m in [config.CLASSIC_MODE, config.MULTIPLE_MODE]:
+            isAllTaken = isShow(userId, clientId, m)[-1]
+            if isAllTaken:
+                show.append(1)
+            else:
+                show.append(0)
+        message.setResult("show", show)
+        message.setResult("mode", mode)
+        router.sendToUser(message, userId)
+        return
+    userLv, funds, userIdxs, lf_funds, lf_rewards, isAllTaken = isShow(userId, clientId, mode)
     message.setResult("level", userLv)
     fundsList = []
-    lang = util.getLanguage(userId)
+    addTipPIds = []
+    isIn, roomId, _, _ = util.isInFishTable(userId)
+    if isIn and not isAllTaken and util.isFinishAllNewbieTask(userId):
+        for idx in userIdxs:
+            productConf = funds[idx - 1]
+            _funds = {}
+            productId = productConf.get("productId")
+            _funds["Id"] = productId
+            _funds["state"] = 1 if idx in lf_funds else 0
+            _funds["title"] = productConf.get("title")
+            _funds["name"] = config.getMultiLangTextConf(productConf.get("name"), lang=util.getLanguage(userId))
+            _funds["price_direct"] = productConf.get("price_direct")
+            _funds["price_diamond"] = productConf.get("price_diamond")
+            _funds["buyType"] = productConf.get("buyType")
+            _funds["otherBuyType"] = productConf.get("otherBuyType")
+            from newfish.entity import store
+            _funds["otherProductInfo"] = store.getOtherBuyProduct(productConf.get("otherBuyType"), productConf.get("buyType"))
+            hasTip, _funds["rewardsState"] = _getLevelFundsRewardState(userId, clientId, idx, mode, lf_rewards, lf_funds)
+            if hasTip:
+                addTipPIds.append(productId)
+            fundsList.append(_funds)
+    message.setResult("fundsList", fundsList)
+    message.setResult("mode", mode)
+    router.sendToUser(message, userId)
+    if addTipPIds:
+        module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
+
+
+def isShow(userId, clientId, mode):
+    """是否展示"""
+    userLv = util.getGunLevelVal(userId, mode)
     fundsConf = config.getLevelFundsConf(clientId, mode)
     funds = fundsConf.get("funds", [])
-    userIdxs = _getFundsList(userId, clientId, mode)            # 获取所有可买的基金
-    lf_rewards = _getRewardsState(userId, mode)
+    userIdxs = _getFundsList(userId, clientId, mode)
     lf_funds = _getBoughtFunds(userId, mode)
-
+    lf_rewards = _getRewardsState(userId, mode)
+    isAllTaken = False
     if set(userIdxs) == set(lf_funds):
         isAllTaken = True
         rewardsConf = fundsConf.get("rewards")
@@ -132,36 +175,7 @@ def getLevelFundsData(userId, clientId, mode):
                 if userLv < lv or sum(lf_rewards.get(str(lv), [0, 0])) != 4:
                     isAllTaken = False
                     break
-    else:
-        isAllTaken = False
-    addTipPIds = []
-    isIn, roomId, _, _ = util.isInFishTable(userId)
-    canShow = not isIn
-    if canShow and not isAllTaken and util.isFinishAllRedTask(userId):
-        for idx in userIdxs:
-            productConf = funds[idx - 1]
-            _funds = {}
-            fundsList.append(_funds)
-            productId = productConf.get("productId")
-            _funds["Id"] = productId
-            _funds["state"] = 1 if idx in lf_funds else 0
-            _funds["title"] = productConf.get("title")
-            _funds["name"] = config.getMultiLangTextConf(productConf.get("name"), lang=lang)
-            _funds["price_direct"] = productConf.get("price_direct")
-            _funds["price_diamond"] = productConf.get("price_diamond")
-            _funds["buyType"] = productConf.get("buyType")
-            _funds["otherBuyType"] = productConf.get("otherBuyType")
-            from newfish.entity import store
-            _funds["otherProductInfo"] = store.getOtherBuyProduct(productConf.get("otherBuyType"), productConf.get("buyType"))
-            hasTip, _funds["rewardsState"] = _getLevelFundsRewardState(userId, clientId, idx, mode, lf_rewards, lf_funds)
-            if hasTip:
-                addTipPIds.append(productId)
-    message.setResult("fundsList", fundsList)
-    router.sendToUser(message, userId)
-    if addTipPIds:
-        module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
-    if ftlog.is_debug():
-        ftlog.debug("level_funds, userId =", userId, "mode =", mode, "message =", message)
+    return userLv, funds, userIdxs, lf_funds, lf_rewards, isAllTaken
 
 
 def getLevelFundsRewards(userId, clientId, productId, level=0, rewardType=0):
@@ -187,42 +201,44 @@ def getLevelFundsRewards(userId, clientId, productId, level=0, rewardType=0):
     funds = fundsConf.get("funds")
     rewardsConf = fundsConf.get("rewards")
     rewardsTypeStr = ["free_rewards", "funds_rewards"]
-    if rewardType in [0, 1]:                                        # 0:免费,1:基金
+    if rewardType in [0, 1]:
         for val in funds:
-            if val.get("productId") == productId:
-                rewardsData = rewardsConf.get(str(val["idx"]))
-                isChanged = False
-                for lvData in rewardsData:
-                    lv = lvData["level"]
-                    if (isQuickGet and lv <= userLv) or (not isQuickGet and lv == level):
-                        lf_rewards.setdefault(str(lv), [0, 0])
-                        # 一键领取时需要检测两种奖励是否可以领取。
-                        typeList = [rewardType]
-                        if isQuickGet:
-                            typeList = [0, 1]
-                        for _type in typeList:
-                            if lf_rewards[str(lv)][_type] == 0 and (_type == 0 or val["idx"] in lf_funds):
-                                isChanged = True
-                                lf_rewards[str(lv)][_type] = 2
-                                for _reward in lvData[rewardsTypeStr[_type]]:
-                                    itemId = _reward["name"]
-                                    if util.isChestRewardId(itemId):
-                                        chestRewards = {}
-                                        chestRewards["chestId"] = itemId
-                                        chestRewards["rewards"] = chest_system.getChestRewards(userId, itemId)
-                                        chest_system.deliveryChestRewards(userId, itemId, chestRewards["rewards"], "BI_NFISH_GET_LEVEL_FUNDS", param01=lv, param02=_type)
-                                        rewards.append(chestRewards)
-                                    else:
-                                        rewards.append([_reward])
-                                        util.addRewards(userId, [_reward], "BI_NFISH_GET_LEVEL_FUNDS", param01=lv, param02=_type)
-                                if _type == 0 and lvData.get("rechargeBonus", 0) > 0:
-                                    util.incrUserRechargeBonus(userId, lvData["rechargeBonus"])
-                if isChanged:
-                    daobase.executeUserCmd(userId, "HSET", _getRdKey(userId, mode), GameData.lf_rewards, json.dumps(lf_rewards))
-                hasTip, rewardsState = _getLevelFundsRewardState(userId, clientId, val["idx"], mode, lf_funds=lf_funds, lf_rewards=lf_rewards)
-                if not hasTip:
-                    module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
-                break
+            if val.get("productId") != productId:
+                continue
+            rewardsData = rewardsConf.get(str(val["idx"]))
+            isChanged = False
+            for lvData in rewardsData:
+                lv = lvData["level"]
+                if (isQuickGet and lv <= userLv) or (not isQuickGet and lv == level):
+                    lf_rewards.setdefault(str(lv), [0, 0])
+                    # 一键领取时需要检测两种奖励是否可以领取。
+                    typeList = [rewardType]
+                    if isQuickGet:
+                        typeList = [0, 1]
+                    for _type in typeList:
+                        if lf_rewards[str(lv)][_type] == 0 and (_type == 0 or val["idx"] in lf_funds):
+                            isChanged = True
+                            lf_rewards[str(lv)][_type] = 2
+                            for _reward in lvData[rewardsTypeStr[_type]]:
+                                itemId = _reward["name"]
+                                if util.isChestRewardId(itemId):
+                                    chestRewards = {}
+                                    chestRewards["chestId"] = itemId
+                                    chestRewards["rewards"] = chest_system.getChestRewards(userId, itemId)
+                                    chest_system.deliveryChestRewards(userId, itemId, chestRewards["rewards"],
+                                                                      "BI_NFISH_GET_LEVEL_FUNDS", param01=lv, param02=_type)
+                                    rewards.append(chestRewards)
+                                else:
+                                    rewards.append([_reward])
+                                    util.addRewards(userId, [_reward], "BI_NFISH_GET_LEVEL_FUNDS", param01=lv, param02=_type)
+                            if _type == 0 and lvData.get("rechargeBonus", 0) > 0:
+                                util.incrUserRechargeBonus(userId, lvData["rechargeBonus"])
+            if isChanged:
+                daobase.executeUserCmd(userId, "HSET", _getRdKey(userId, mode), GameData.lf_rewards, json.dumps(lf_rewards))
+            hasTip, rewardsState = _getLevelFundsRewardState(userId, clientId, val["idx"], mode, lf_funds=lf_funds, lf_rewards=lf_rewards)
+            if not hasTip:
+                module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
+            break
         else:
             code = 1
     else:
@@ -237,11 +253,9 @@ def getLevelFundsRewards(userId, clientId, productId, level=0, rewardType=0):
     message.setResult("rewardType", rewardType)
     message.setResult("rewardsState", rewardsState)
     router.sendToUser(message, userId)
-    if ftlog.is_debug():
-        ftlog.debug("level_funds, userId =", userId, "mode =", mode, "message =", message)
 
 
-def doBuyLevelFunds(userId, clientId, buyType, productId):
+def doBuyLevelFunds(userId, clientId, buyType, productId, rebateItemId=0):
     """
     购买成长基金
     """
@@ -264,7 +278,6 @@ def doBuyLevelFunds(userId, clientId, buyType, productId):
     if not productConf:
         sendBuyLevelFundsRet(userId, clientId, productId, 0, 5, mode)
         return
-
     buyType = buyType or productConf.get("buyType")
     lf_funds = daobase.executeUserCmd(userId, "HGET", _getRdKey(userId, mode), GameData.lf_funds) or "[]"
     lf_funds = json.loads(lf_funds)
@@ -294,8 +307,22 @@ def doBuyLevelFunds(userId, clientId, buyType, productId):
                     code = 0
             else:
                 code = 3
+        # 使用钻石购买
+        elif buyType == config.BT_DIAMOND:                                              # 钻石购买
+            price = productConf["price_diamond"]
+            price, isSucc = store.getUseRebateItemPrice(userId, rebateItemId, price, buyType, productId, clientId)
+            # 不能出现使用满减券后不需要花钱的情况！！！
+            if price > 0 and isSucc:
+                store.autoConvertVoucherToDiamond(userId, price)                        # 钻石足够优先使用钻石、在使用代购券
+                consumeCount, final = userchip.incrDiamond(userId, FISH_GAMEID, -abs(price), 0, "BI_NFISH_BUY_LEVEL_FUNDS_CONSUME", int(config.DIAMOND_KINDID), clientId, param01=productId)
+                if abs(consumeCount) != price:
+                    code = 4
+                else:
+                    code = 0
+            else:
+                code = 5
         else:
-            code = 4
+            code = 6
     if code == 0:
         util.addProductBuyEvent(userId, productId, clientId)
         lf_funds.append(productConf.get("idx"))
@@ -323,27 +350,6 @@ def sendBuyLevelFundsRet(userId, clientId, productId, idx, code, mode):
             module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
     message.setResult("rewardsState", rewardsState)
     router.sendToUser(message, userId)
-    if ftlog.is_debug():
-        ftlog.debug("level_funds, userId =", userId, "mode =", mode, "message =", message)
-
-
-def _triggerChargeNotifyEvent(event):
-    """
-    直充购买商品成功事件
-    """
-    ftlog.info(
-        "level_funds._triggerChargeNotifyEvent->", "userId =", event.userId, "gameId =", event.gameId,
-        "rmbs =", event.rmbs, "productId =", event.productId, "clientId =", event.clientId
-    )
-    userId = event.userId
-    productId = event.productId
-    fundsConf = config.getLevelFundsConf(event.clientId, config.CLASSIC_MODE)
-    fundsConf2 = config.getLevelFundsConf(event.clientId, config.MULTIPLE_MODE)
-    funds = fundsConf.get("funds") + fundsConf2.get("funds")
-    for val in funds:
-        if val.get("productId") == productId:
-            doBuyLevelFunds(userId, event.clientId, None, productId)
-            break
 
 
 def _triggerLevelUpEvent(event):
@@ -353,7 +359,6 @@ def _triggerLevelUpEvent(event):
     userId = event.userId
     clientId = util.getClientId(userId)
     mode = event.gameMode
-
     fundsConf = config.getLevelFundsConf(clientId, mode)
     funds = fundsConf.get("funds", [])
     userIdxs = _getFundsList(userId, clientId, mode)
@@ -367,8 +372,6 @@ def _triggerLevelUpEvent(event):
             addTipPIds.append(productId)
     if addTipPIds:
         module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
-    if ftlog.is_debug():
-        ftlog.debug("level_funds, userId =", userId, "mode =", mode)
 
 
 _inited = False
@@ -379,11 +382,7 @@ def initialize():
     global _inited
     if not _inited:
         _inited = True
-        from poker.entity.events.tyevent import ChargeNotifyEvent
-        from hall.game import TGHall
         from newfish.game import TGFish
-        from newfish.entity.event import NFChargeNotifyEvent, LevelUpEvent
-        TGHall.getEventBus().subscribe(ChargeNotifyEvent, _triggerChargeNotifyEvent)
-        TGFish.getEventBus().subscribe(NFChargeNotifyEvent, _triggerChargeNotifyEvent)
-        TGFish.getEventBus().subscribe(LevelUpEvent, _triggerLevelUpEvent)
+        from newfish.entity.event import GunLevelUpEvent
+        TGFish.getEventBus().subscribe(GunLevelUpEvent, _triggerLevelUpEvent)
     ftlog.debug("newfish level_funds initialize end")

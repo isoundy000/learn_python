@@ -12,14 +12,10 @@ class FishTableConf(object):
     """
     def __init__(self, datas):
         self.datas = datas
-        # 初始化鱼群  string_44002 = [tide_44002_1、tide_44002_2、group_44002_13、group_44002_14、superboss_71202_10、superboss_71202_11]
         fishGroupsName = self.datas.get("fishGroupsName")
         if fishGroupsName:
-            # string_44002 += (common = [boss_12027_1、call_11002_lv3、coupon_15033_32、
-            # red_27079_7、random_29054_15、activity_44001_4、multiple_14020_14、share_58110_9、
-            # terror_68119_3、autofill_11002_1_4、platter_76224_1、terror_77228_2])
-            self.datas["fishGroups"] = config.getFishGroups(fishGroupsName, self.datas.get("gameMode", 0))     # scene下面 gameMode 0经典 1千炮
-        self.allGroupIds = self.fishGroups.keys()           # 该场次可使用的所有鱼阵 [tide_44002_1: {id: xx, fishes: {'xxx': xx}, total_time: xxx}、call_11002_lv3]
+            self.datas["fishGroups"] = config.getFishGroups(fishGroupsName, self.datas.get("gameMode", 0))
+        self.allGroupIds = self.fishGroups.keys()           # 该场次可使用的所有鱼阵
         self.allNormalGroupIds = []                         # 普通鱼
         self.allBossGroupIds = {}                           # boss鱼阵
         self.allCallGroupIds = []                           # 召唤鱼阵
@@ -46,7 +42,7 @@ class FishTableConf(object):
 
         for key in self.allGroupIds:
             fishType = key.split("_")[1]
-            if key.startswith("group_"):                    # 普通鱼
+            if key.startswith("group_"):
                 self.allNormalGroupIds.append(key)
             elif key.startswith("boss_"):
                 self.allBossGroupIds.setdefault(int(fishType), []).append(key)

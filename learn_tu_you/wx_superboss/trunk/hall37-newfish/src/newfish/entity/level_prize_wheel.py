@@ -130,8 +130,6 @@ class LevelPrizeWheel(PrizeWheel):
             pct = int(100 * pwData[PWValueSlot.ENERGY] * 1. / total)
             pct = max(0, min(pct, 100))
         except:
-            ftlog.error("lpw_get_energy_pct, userId =", self.userId, "level =", level, "fpMultiple =",
-                        fpMultiple, "total =", total, "pwData =", pwData)
             pct = 0
         return pct
 
@@ -157,9 +155,6 @@ class LevelPrizeWheel(PrizeWheel):
         mo.setResult("curRemainTimes", pwData[PWValueSlot.SPINTIMES])
         mo.setResult("is_can", 0 if self.pwConf['condition'] > gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber) else 1)
         GameMsg.sendMsg(mo, self.userId)
-        if ftlog.is_debug():
-            ftlog.debug("lpw_send_energy_process, userId =", self.userId, "level =", level,
-                        "fpMultiple =", fpMultiple, "mo =", mo)
 
     def getPrizeConf(self, level, fpMultiple):
         """
@@ -244,9 +239,6 @@ class LevelPrizeWheel(PrizeWheel):
         if next_level <= int(max(self.pwConf['energy'])):
             mo.setResult("nextProgressPct", self._getEnergyPct(str(next_level), fpMultiple))  # 当前转盘的能量/目标轮盘的能量
         GameMsg.sendMsg(mo, self.userId)
-        if ftlog.is_debug():
-            ftlog.debug("lpw_get_info, userId =", self.userId, "level =", level,
-                        "fpMultiple =", fpMultiple, "msg =", mo)
 
     def spin(self, weightList, level):
         """
@@ -333,10 +325,12 @@ class LevelPrizeWheel(PrizeWheel):
                                 code = 0
                                 self._resetPrizeWheelState(level, fpMultiple)
                             else:
-                                code = util.addRewards(self.userId, rewards, "BI_NFISH_LEVEL_PRIZE_WHEEL_REWARDS", int(level), self.roomId, fpMultiple)
                                 if rewards and rewards[0].get("count", 0) > 0:  # 抽奖成功，获得奖励
+                                    code = util.addRewards(self.userId, rewards, "BI_NFISH_LEVEL_PRIZE_WHEEL_REWARDS",
+                                                           int(level), self.roomId, fpMultiple)
                                     self._resetPrizeWheelState(level, fpMultiple)
                                 else:                                           # 抽奖失败，谢谢参与
+                                    code = 0
                                     pwData[PWValueSlot.STATE] = PWState.FAIL_SPIN
                                     pwData[PWValueSlot.BET] = bet
                                     self._setData(level, fpMultiple)
@@ -359,13 +353,13 @@ class LevelPrizeWheel(PrizeWheel):
         lv = self.getEnergyIdx()[0]                               # 重新计算当前转盘的段位
         self.sendEnergyProgress(lv, fpMultiple, self.roomId, 0)
 
-    def catchFish(self, fId, fishConf, fpMultiple, gunMultiple):
+    def catchFish(self, fId, fishConf, fpMultiple, gunX):
         """
         判断是否给轮盘充能
         :param fId: 鱼的id
         :param fishConf: 鱼的配置
         :param fpMultiple: 1、2、3、4、5
-        :param gunMultiple: 炮 1: 单倍炮 2: 双倍炮
+        :param gunX: 炮倍
         """
         level = min(self.pwConf['energy'].keys())
         max_level = max(self.pwConf['energy'].keys())
@@ -386,9 +380,9 @@ class LevelPrizeWheel(PrizeWheel):
             return
         # rate = fishConf.get("triggerRate", 0)
         # rand = random.randint(1, 10000)
-        val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunMultiple
+        val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunX
         if ftlog.is_debug():
-            ftlog.debug("lpw_catch_fish, userId =", self.userId, "level =", level, "val =", val, fpMultiple, gunMultiple)
+            ftlog.debug("lpw_catch_fish, userId =", self.userId, "level =", level, "val =", val, fpMultiple, gunX)
         if val and self._addEnergy(level, fpMultiple, val):
             number = gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber)
             number += 1

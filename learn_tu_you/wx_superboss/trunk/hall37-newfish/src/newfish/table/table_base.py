@@ -251,8 +251,8 @@ class FishTable(TYTable):
         """
         清除鱼阵
         """
-        self.activityFishGroup and self.activityFishGroup.clearTimer()      # 活动的鱼阵
-        self.autofillFishGroup and self.autofillFishGroup.clearTimer()      # 自动填充的鱼阵
+        self.activityFishGroup and self.activityFishGroup.clearTimer()
+        self.autofillFishGroup and self.autofillFishGroup.clearTimer()
         self.bossFishGroup and self.bossFishGroup.clearTimer()
         self.bufferFishGroup and self.bufferFishGroup.clearTimer()
         self.chestFishGroup and self.chestFishGroup.clearTimer()

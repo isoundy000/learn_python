@@ -31,7 +31,8 @@ from newfish.entity.config import FISH_GAMEID, \
     GOLD_BULLET_KINDID, BRONZE_BULLET_KINDID, DIAMOND_KINDID
 from newfish.entity.event import BulletChangeEvent,\
     StarfishChangeEvent, AddGunSkinEvent, NewSkillEvent, ItemMonitorEvent, \
-    ItemChangeEvent, SkillItemCountChangeEvent, GunItemCountChangeEvent
+    ItemChangeEvent, SkillItemCountChangeEvent, GunItemCountChangeEvent, TreasureItemCountChangeEvent, \
+    ConsumeVoucherEvent
 from newfish.entity import module_tip
 from newfish.servers.util.rpc import user_rpc
 
@@ -265,16 +266,13 @@ def timestampToStr(timestamp, formatTime="%Y-%m-%d %H:%M:%S"):
     return time.strftime(formatTime, time.localtime(timestamp))
 
 
-def getDayStartTimestamp(timestamp):
+def getDayStartTimestamp(timestamp=None):
     """
     获取0点时间戳
     """
+    if timestamp is None:
+        timestamp = time.time()
     ts = int(timestamp - time.timezone) / 86400 * 86400 + time.timezone
-    # dayStr = time.strftime("%Y-%m-%d", time.localtime(timestamp))
-    # t = time.strptime(dayStr, "%Y-%m-%d")
-    # t1 = int(time.mktime(t))
-    # if t1 != ts:
-    #     ftlog.debug("getDayStartTimestamp", timestamp, t1, ts)
     return ts
 
 
@@ -361,7 +359,7 @@ def getWeaponType(wpId):
             return config.NUMB_WEAPON_TYPE
         elif wpId // 100 == 28:     # 钻头鱼死亡
             return config.DRILL_WEAPON_TYPE
-        elif wpId // 100 == [29, 30, 31]:     # 超级boss:宝箱怪,龙女王,大冰龙
+        elif wpId // 100 in [29, 30, 31]:   # 超级Boss（宝箱怪、龙女王、大冰龙）
             return config.SUPER_BOSS_WEAPON_TYPE
         elif wpId // 100 == 32:     # 能量宝珠
             return config.ENERGY_ORB
@@ -369,7 +367,6 @@ def getWeaponType(wpId):
             return config.TRIDENT
         elif wpId // 100 == 34:     # 金钱箱
             return config.MONEY_BOX
-
     return 0
 
 
@@ -403,39 +400,54 @@ def consumeItems(userId, items, eventId, intEventParam=0, param01=0, param02=0):
     """
     assert isinstance(items, list)
     ret = []
-    userAssets = hallitem.itemSystem.loadUserAssets(userId)
-    for item in items:
-        kindId = item["name"]
-        count = item["count"]
-        assetKind, consumeCount, final = userAssets.consumeAsset(FISH_GAMEID, "item:" + str(kindId), count,
-                                                                 pktimestamp.getCurrentTimestamp(), str(eventId),
-                                                                 intEventParam, param01=param01, param02=param02)
-        if consumeCount == item["count"]:
-            ret.append((assetKind, consumeCount, final))
+    try:
+        userAssets = hallitem.itemSystem.loadUserAssets(userId)
+        for item in items:
+            kindId = item["name"]
+            count = item["count"]
+            _, consumeCount, final = userAssets.consumeAsset(FISH_GAMEID, "item:" + str(kindId), count,
+                                                             pktimestamp.getCurrentTimestamp(), str(eventId),
+                                                             intEventParam, param01=param01, param02=param02)
+            if consumeCount == item["count"]:
+                ret.append((kindId, consumeCount, final))
 
-    isUpSkillItem = False
-    isUpGunItem = False
-    changedItems = []
-    from newfish.game import TGFish
-    for assetKind, consumeCount, final in ret:
-        changedItems.append({"name": assetKind.kindId, "count": final, "delta": -abs(consumeCount)})
-        if assetKind.kindId in config.upgradeSkillKindIds:
-            isUpSkillItem = True
-        if assetKind.kindId in config.upgradeGunKindIds:
-            isUpGunItem = True
+        isUpSkillItem = False
+        isUpGunItem = False
+        isUpTreasure = False
+        voucherCount = 0
+        changedItems = []
+        from newfish.game import TGFish
+        for kindId, consumeCount, final in ret:
+            changedItems.append({"name": kindId, "count": final, "delta": -abs(consumeCount)})
+            if kindId in config.upgradeSkillKindIds:
+                isUpSkillItem = True
+            if kindId in config.upgradeGunKindIds:
+                isUpGunItem = True
+            if kindId in config.upgradeTreasureKindIds:
+                isUpTreasure = True
+            if kindId == config.VOUCHER_KINDID:
+                voucherCount += consumeCount
 
-    if isUpSkillItem:   # 存在技能升级所需物品
-        event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
-        TGFish.getEventBus().publishEvent(event)
-    if isUpGunItem:     # 存在普通炮升级所需物品
-        event = GunItemCountChangeEvent(userId, FISH_GAMEID)
-        TGFish.getEventBus().publishEvent(event)
-    if changedItems:
-        changed = {"items": changedItems}
-        event = ItemMonitorEvent(userId, FISH_GAMEID, changed, eventId)
-        TGFish.getEventBus().publishEvent(event)
-    if ret:
-        datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
+        if isUpSkillItem:   # 存在技能升级所需物品
+            event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        if isUpGunItem:     # 存在普通炮升级所需物品
+            event = GunItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        if isUpTreasure:    # 存在宝藏升级所需物品
+            event = TreasureItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        if voucherCount > 0:
+            event = ConsumeVoucherEvent(userId, FISH_GAMEID, voucherCount)
+            TGFish.getEventBus().publishEvent(event)
+        if changedItems:
+            changed = {"items": changedItems}
+            event = ItemMonitorEvent(userId, FISH_GAMEID, changed, eventId)
+            TGFish.getEventBus().publishEvent(event)
+        if ret:
+            datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
+    except Exception as e:
+        ftlog.error("consumeItems error", userId, items, eventId, intEventParam, param01, param02, e)
     return ret
 
 
@@ -461,77 +473,79 @@ def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, client
     items = []
     # 竞赛积分，只用于处理addRewards逻辑以免返回错误占位使用!
     compPoints = []
-    if not clientId:
-        clientId = getClientId(userId)
-    for item in gain:
-        count = item["count"]
-        assetKindId = item["name"]
-        if assetKindId == "tableChip" or assetKindId == "bulletChip" or assetKindId == CHIP_KINDID:
-            if type == 0:
-                # 对用户的金币进行INCR操作
-                delta, finalChip = userchip.incrChip(userId, FISH_GAMEID, count, 0,
-                                                     eventId, intEventParam, clientId, roomId=roomId,
-                                                     tableId=tableId, param01=param01, param02=param02)
-                ud.append({"name": "chip", "count": finalChip, "delta": delta})
+    try:
+        if not clientId:
+            clientId = getClientId(userId)
+        for item in gain:
+            count = item["count"]
+            assetKindId = item["name"]
+            if assetKindId == "tableChip" or assetKindId == "bulletChip" or assetKindId == CHIP_KINDID:
+                if type == 0:
+                    # 对用户的金币进行INCR操作
+                    delta, finalChip = userchip.incrChip(userId, FISH_GAMEID, count, 0,
+                                                         eventId, intEventParam, clientId, roomId=roomId,
+                                                         tableId=tableId, param01=param01, param02=param02)
+                    ud.append({"name": "chip", "count": finalChip, "delta": delta})
+                else:
+                    # 用户的tablechip进行INCR操作
+                    delta, finalChip = userchip.incrTableChip(userId, FISH_GAMEID, count, 1,
+                                                              eventId, intEventParam, clientId, tableId,
+                                                              roomId=roomId, param01=param01, param02=param02)
+                    ud.append({"name": "tableChip", "count": finalChip, "delta": delta})
+                if delta != count:
+                    ud = []
+                    if type != 0:
+                        ftlog.error("addItemsErrorLog add user chip error,", userId, eventId, count, delta)
+            elif assetKindId == COUPON_KINDID:          # 增加奖券
+                delta, finalCoupon = userchip.incrCoupon(userId, FISH_GAMEID, count, 0,
+                                                         eventId, intEventParam, clientId, roomId=roomId,
+                                                         tableId=tableId, param01=param01, param02=param02)
+                if delta == count:
+                    ud.append({"name": "coupon", "count": finalCoupon, "delta": delta})
+                else:
+                    ftlog.error("addItemsErrorLog add user coupon error,", userId, eventId, count, delta)
+            elif assetKindId == DIAMOND_KINDID:         # 增加钻石
+                delta, finalDiamond = userchip.incrDiamond(userId, FISH_GAMEID, count, 0,
+                                                         eventId, intEventParam, clientId, roomId=roomId,
+                                                         tableId=tableId, param01=param01, param02=param02)
+                if delta == count:
+                    ud.append({"name": "diamond", "count": finalDiamond, "delta": delta})
+                else:
+                    ftlog.error("addItemsErrorLog add user diamond error,", userId, eventId, count, delta)
+            # 竞赛活动积分道具
+            elif assetKindId in config.COMP_ACT_POINT_KINDID_LIST:  # 竞赛活动积分
+                from newfish.entity.fishactivity import competition_activity
+                teamId = competition_activity._getCompTeamId(userId)
+                if teamId >= 0 and count > 0:
+                    compPoints.append(count)
+                    competition_activity._addCompTeamPoint(userId, teamId, count)
+                else:
+                    ftlog.error("addItemsErrorLog add user comp act point error,", userId, eventId, count, teamId)
             else:
-                # 用户的tablechip进行INCR操作
-                delta, finalChip = userchip.incrTableChip(userId, FISH_GAMEID, count, 1,
-                                                          eventId, intEventParam, clientId, tableId,
-                                                          roomId=roomId, param01=param01, param02=param02)
-                ud.append({"name": "tableChip", "count": finalChip, "delta": delta})
-            if delta != count:
-                ud = []
-                if type != 0:
-                    ftlog.error("addItemsErrorLog add user chip error,", userId, eventId, count, delta)
-        elif assetKindId == COUPON_KINDID:          # 增加奖券
-            delta, finalCoupon = userchip.incrCoupon(userId, FISH_GAMEID, count, 0,
-                                                     eventId, intEventParam, clientId, roomId=roomId,
-                                                     tableId=tableId, param01=param01, param02=param02)
-            if delta == count:
-                ud.append({"name": "coupon", "count": finalCoupon, "delta": delta})
-            else:
-                ftlog.error("addItemsErrorLog add user coupon error,", userId, eventId, count, delta)
-        elif assetKindId == DIAMOND_KINDID:         # 增加钻石
-            delta, finalDiamond = userchip.incrDiamond(userId, FISH_GAMEID, count, 0,
-                                                     eventId, intEventParam, clientId, roomId=roomId,
-                                                     tableId=tableId, param01=param01, param02=param02)
-            if delta == count:
-                ud.append({"name": "diamond", "count": finalDiamond, "delta": delta})
-            else:
-                ftlog.error("addItemsErrorLog add user diamond error,", userId, eventId, count, delta)
-        # 竞赛活动积分道具
-        elif assetKindId in config.COMP_ACT_POINT_KINDID_LIST:  # 竞赛活动积分
-            from newfish.entity.fishactivity import competition_activity
-            teamId = competition_activity._getCompTeamId(userId)
-            if teamId >= 0 and count > 0:
-                compPoints.append(count)
-                competition_activity._addCompTeamPoint(userId, teamId, count)
-            else:
-                ftlog.error("addItemsErrorLog add user comp act point error,", userId, eventId, count, teamId)
-        else:
-            from hall.entity import hallitem
-            userAssets = hallitem.itemSystem.loadUserAssets(userId)
-            timestamp = pktimestamp.getCurrentTimestamp()
-            if ":" not in str(assetKindId):
-                assetKindId = "item:" + str(assetKindId)
-            if count == 0:
-                continue
-            if count > 0:
-                assetTuple = userAssets.addAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
-                                                 eventId, intEventParam, roomId=roomId, tableId=tableId,
-                                                 param01=param01, param02=param02)
-            else:
-                assetTuple = userAssets.consumeAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
+                from hall.entity import hallitem
+                userAssets = hallitem.itemSystem.loadUserAssets(userId)
+                timestamp = pktimestamp.getCurrentTimestamp()
+                if ":" not in str(assetKindId):
+                    assetKindId = "item:" + str(assetKindId)
+                if count == 0:
+                    continue
+                if count > 0:
+                    assetTuple = userAssets.addAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
                                                      eventId, intEventParam, roomId=roomId, tableId=tableId,
                                                      param01=param01, param02=param02)
+                else:
+                    assetTuple = userAssets.consumeAsset(FISH_GAMEID, assetKindId, abs(count), timestamp,
+                                                         eventId, intEventParam, roomId=roomId, tableId=tableId,
+                                                         param01=param01, param02=param02)
 
-            assetKindId = int(assetKindId.split(":")[1])
-            delta = assetTuple[1]
-            if delta == abs(count):
-                items.append({"name": assetKindId, "count": assetTuple[2], "delta": count})
-            else:
-                ftlog.error("addItemsErrorLog add user item error,", assetKindId, userId, count, delta)
-
+                assetKindId = int(assetKindId.split(":")[1])
+                delta = assetTuple[1]
+                if delta == abs(count):
+                    items.append({"name": assetKindId, "count": assetTuple[2], "delta": count})
+                else:
+                    ftlog.error("addItemsErrorLog add user item error,", assetKindId, userId, count, delta)
+    except Exception as e:
+        ftlog.error("addItems error", userId, gain, eventId, intEventParam, e)
     changed = {}
     from newfish.game import TGFish
     if ud:
@@ -542,16 +556,22 @@ def addItems(userId, gain, eventId, intEventParam=0, roomId=0, tableId=0, client
         changed["items"] = items
         isUpSkillItem = False
         isUpGunItem = False
+        isUpTreasure = False
         for item in items:
             if item["name"] in config.upgradeSkillKindIds:
                 isUpSkillItem = True
             if item["name"] in config.upgradeGunKindIds:
                 isUpGunItem = True
+            if item["name"] in config.upgradeTreasureKindIds:
+                isUpTreasure = True
         if isUpSkillItem:   # 存在技能升级所需物品
             event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
             TGFish.getEventBus().publishEvent(event)
         if isUpGunItem:     # 存在普通炮升级所需物品
             event = GunItemCountChangeEvent(userId, FISH_GAMEID)
+            TGFish.getEventBus().publishEvent(event)
+        if isUpTreasure:    # 存在宝藏升级所需物品
+            event = TreasureItemCountChangeEvent(userId, FISH_GAMEID)
             TGFish.getEventBus().publishEvent(event)
         # 道具监控
         event = ItemMonitorEvent(userId, FISH_GAMEID, changed, eventId)
@@ -582,16 +602,15 @@ def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, 
         return 5
     for item in rewards:
         kindId = dict(item)["name"]
-        if kindId in config.skillCardKindIdMap:                                 # 技能提示和事件
-            skillId = config.skillCardKindIdMap[kindId]
-            skill = skill_system.getSkill(userId, skillId)
-            if skill[skill_system.INDEX_ORIGINAL_LEVEL] == 0:
+        # if kindId in config.skillCardKindIdMap:                                 # 技能提示和事件
+        #     skillId = config.skillCardKindIdMap[kindId]
+        #     skill = skill_system.getSkill(userId, skillId)
+        #     if skill[skill_system.INDEX_ORIGINAL_LEVEL] == 0:
                 # skill_system.setSkill(userId, skillId, [1, 1, 1, 0])
-                module_tip.addModuleTipEvent(userId, "newskill", skillId)
-                from newfish.game import TGFish
-                event = NewSkillEvent(userId, FISH_GAMEID, skillId, eventId)
-                TGFish.getEventBus().publishEvent(event)
-        elif kindId in config.getAllGunIds(clientId, config.CLASSIC_MODE):      # 经典火炮的提示和事件
+                # from newfish.game import TGFish
+                # event = NewSkillEvent(userId, FISH_GAMEID, skillId, eventId)
+                # TGFish.getEventBus().publishEvent(event)
+        if kindId in config.getAllGunIds(clientId, config.CLASSIC_MODE):      # 经典火炮的提示和事件
             from newfish.game import TGFish
             from newfish.entity.gun import gun_system
             event = AddGunSkinEvent(userId, FISH_GAMEID, kindId, int(item["count"]), intEventParam, config.CLASSIC_MODE)
@@ -620,6 +639,10 @@ def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, 
         elif config.getTreasureConf(kindId):                                                # 获取宝藏配置
             from newfish.entity import treasure_system
             treasure_system.refreshTreasureState(userId, kindId)
+        elif kindId == config.SOUVENIR_KIND_ID and item["count"] < 0:
+            from newfish.game import TGFish
+            event = ConsumeVoucherEvent(userId, FISH_GAMEID, abs(item["count"]))
+            TGFish.getEventBus().publishEvent(event)
     datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["chip", "item"])
     return 0
 
@@ -857,18 +880,18 @@ def addGuideStep(userId, step, clientId):
     """
     userGuideStep = getAllUserGuideStep(userId)
     clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
-    if step not in userGuideStep and step in config.getPublic("allGuideIds", []):   # config.ALL_GUIDE_IDS:
+    if step not in userGuideStep and step in config.getPublic("allGuideIds", []):
         userGuideStep.append(step)
         gamedata.setGameAttr(userId, FISH_GAMEID, GameData.userGuideStep, json.dumps(userGuideStep))
         bireport.reportGameEvent("BI_NFISH_GE_GUIDE_STEP", userId, FISH_GAMEID, 0,
                                  0, int(step), 0, 0, 0, [], clientId)
         # 完成新手任务即可
-        isGuideOver = isFinishAllRedTask(userId)                        # isFinishAllGuide(userId, userGuideStep)
+        isGuideOver = isFinishAllNewbieTask(userId)
         from newfish.entity.event import GuideChangeEvent
         from newfish.game import TGFish
         event = GuideChangeEvent(userId, FISH_GAMEID, isGuideOver)
         TGFish.getEventBus().publishEvent(event)
-    elif clientVersion in getReviewVersionList(userId):                 # config.getPublic("reviewClientVersion"):
+    elif clientVersion in getReviewVersionList(userId):
         userGuideStep.append(step)
     return userGuideStep
 
@@ -880,7 +903,7 @@ def isFinishAllGuide(userId, userGuideStep=None):
     userGuideStep = userGuideStep or getAllUserGuideStep(userId)
     totalGuide = config.getPublic("allGuideIds", [])                    # config.ALL_GUIDE_IDS
     leftStep = list(set(totalGuide) - set(userGuideStep))
-    return len(leftStep) <= 0 and isFinishAllRedTask(userId)
+    return len(leftStep) <= 0 and isFinishAllNewbieTask(userId)
 
 
 def getAllUserGuideStep(userId):
@@ -891,7 +914,7 @@ def getAllUserGuideStep(userId):
     return userGuideStep
 
 
-def isFinishAllRedTask(userId):
+def isFinishAllNewbieTask(userId):
     """
     判断是否完成所有新手任务
     """
@@ -901,7 +924,7 @@ def isFinishAllRedTask(userId):
     return True
 
 
-def isRedRoom(typeName):
+def isNewbieRoom(typeName):
     """
     是否为新手场
     """
@@ -940,7 +963,7 @@ def isVersionLimit(userId, clientVersion=None):
     if isInWhiteList(userId):
         return False
     clientVersion = clientVersion or gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
-    if clientVersion in getReviewVersionList(userId):   # config.getPublic("reviewClientVersion", []):
+    if clientVersion in getReviewVersionList(userId):
         return True
     return False
 
@@ -971,12 +994,12 @@ def isPurchaseLimit(userId):
     """
     if isInWhiteList(userId):
         return False
-    from poker.util.constants import CLIENT_SYS_IOS
-    platformOS = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.platformOS)
-    if platformOS == CLIENT_SYS_IOS.lower():
-        level = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
-        if level < 12:
-            return True
+    # from poker.util.constants import CLIENT_SYS_IOS
+    # platformOS = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.platformOS)
+    # if platformOS == CLIENT_SYS_IOS.lower():
+    #     level = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
+    #     if level < 12:
+    #         return True
     return False
 
 
@@ -1398,26 +1421,19 @@ def isNumber(str):
     return False
 
 
-def getItemPresentTestMode(userId):
-    """
-    获取物品赠送测试模式
-    """
-    itemPresentTestMode = config.getPublic("itemPresentTestMode")
-    return itemPresentTestMode or gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.itemPresentTestMode)
-
-
 def selectIdxByWeight(weightList):
     """
     根据权重选择索引位置
     """
     try:
         totalWeight = sum(weightList)
-        weight = random.randint(1, totalWeight)
-        for i, w in enumerate(weightList):
-            if weight > w:
-                weight -= w
-            else:
-                return i
+        if totalWeight > 0:
+            weight = random.randint(1, totalWeight)
+            for i, w in enumerate(weightList):
+                if weight > w:
+                    weight -= w
+                else:
+                    return i
         return -1
     except:
         ftlog.error("selectIdxByWeight, weightList =", weightList)
@@ -1469,12 +1485,12 @@ def chatReport(*argList):
     from freetime5._tyserver._entity import ftglobal
     global _CHATLOGER
     if _CHATLOGER is None:
-        logFileFullpath = gdata.globalConfig()['log_path']
-        logFileFullpath = logFileFullpath + '/chat.log'
+        logFileFullpath = gdata.globalConfig()["log_path"]
+        logFileFullpath = logFileFullpath + "/chat.log"
         _CHATLOGER = ftlog.openNormalLogfile(logFileFullpath)
     logData = [ftglobal.cloudId, bireport._generateRecordId()]
     logData.extend(list(argList))
-    msg = '\t'.join(map(bireport._getFBRecordField, logData))
+    msg = "\t".join(map(bireport._getFBRecordField, logData))
     _CHATLOGER.info(msg)
 
 
@@ -1517,13 +1533,8 @@ def increaseExtraRechargeBonus(userId, bonus):
     """
     给玩家添加额外充值奖池
     """
-    # 新手abc测试a模式不增加额外奖池.
-    testMode = getNewbieABCTestMode(userId)
-    if testMode == "a":
-        return
     extraRechargePool = config.getPublic("extraRechargePool", 0)
     lastCount = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.extraRechargePool)
-    curCount = lastCount
     if lastCount < extraRechargePool and bonus > 0:
         curCount = gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.extraRechargePool, min(bonus, extraRechargePool - lastCount))
         incrUserRechargeBonus(userId, curCount - lastCount)
@@ -1545,51 +1556,42 @@ def getNewbieABCTestMode(userId):
     testMode = gamedata.getGameAttr(userId, FISH_GAMEID, ABTestData.newbiewABCTestMode)
     if testMode is None:
         return testMode
-    # 苹果版本使用a模式.
-    if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
-        return "a"
     testMode = config.getABTestConf("abcTest").get("mode") or testMode
     return testMode
 
 
 def getGiftAbcTestMode(userId):
     """
-    获取玩家礼包abc测试模式
+    获取玩家礼包cde测试模式
     """
-    # 苹果版本使用a模式.
-    if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
-        return "a"
-    giftAbcTestConf = config.getGiftAbcTestConf(getClientId(userId))
-    if giftAbcTestConf.get("mode"):
-        return giftAbcTestConf.get("mode")
-    mode = ["a", "b", "c"]
-    idx = int(userId) % len(mode) if giftAbcTestConf.get("enable") else 0
-    return mode[idx]
+    # if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
+    #     return "c"
+    # giftAbcTestConf = config.getGiftAbcTestConf(getClientId(userId))
+    # if giftAbcTestConf.get("mode"):
+    #     return giftAbcTestConf.get("mode")
+    # mode = ["c", "d", "e"]
+    # idx = int(userId) % len(mode) if giftAbcTestConf.get("enable") else 0
+    # return mode[idx]
+    return "d"
 
 
-def getRoomMinLevel(roomId, abcTestMode):
+def getRoomMinLevel(roomId):
     """
     获取房间最小等级
     """
-    bigRoomId, _ = getBigRoomId(roomId)
-    fishPool = getFishPoolByBigRoomId(bigRoomId)
-    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
-    if abcTestConf and abcTestConf.get("minLevel"):
-        return abcTestConf["minLevel"]
-    roomConf = gdata.roomIdDefineMap()[roomId].configure
-    return roomConf.get("minLevel", 0)
+    roomConf = {}
+    if gdata.roomIdDefineMap().get(roomId):
+        roomConf = gdata.roomIdDefineMap()[roomId].configure
+    return roomConf.get("minLevel", 1)
 
 
-def getRoomMinCoin(roomId, abcTestMode):
+def getRoomMinCoin(roomId):
     """
     获取房间最小金币
     """
-    bigRoomId, _ = getBigRoomId(roomId)
-    fishPool = getFishPoolByBigRoomId(bigRoomId)
-    abcTestConf = config.getABTestConf("abcTest").get("enterLimit", {}).get(str(fishPool), {}).get(abcTestMode)
-    if abcTestConf and abcTestConf.get("minCoin"):
-        return abcTestConf["minCoin"]
-    roomConf = gdata.roomIdDefineMap()[roomId].configure
+    roomConf = {}
+    if gdata.roomIdDefineMap().get(roomId):
+        roomConf = gdata.roomIdDefineMap()[roomId].configure
     return roomConf.get("minCoin", 0)
 
 
@@ -1650,6 +1652,25 @@ def verifyPhoneNumber(phoneNumber):
     return False
 
 
+def getRoomGameMode(roomId):
+    """
+    获取roomId所属的游戏玩法
+    """
+    if gdata.roomIdDefineMap().get(roomId):
+        roomConf = gdata.roomIdDefineMap()[roomId].configure
+        typeName = roomConf.get("typeName")
+        if typeName in config.CLASSIC_MODE_ROOM_TYPE:
+            return config.CLASSIC_MODE
+    return config.MULTIPLE_MODE
+
+
+def isOldPlayerV2(userId):
+    """
+    是否为2.0版本老用户
+    """
+    return gamedata.getGameAttr(userId, FISH_GAMEID, GameData.isOldPlayerV2)
+
+
 def getGunX(wpId, mode):
     """
     获取炮台的倍数(经典模式为1:千炮为炮台倍数)
@@ -1663,8 +1684,7 @@ def getGunLevel(userId, mode):
     获取火炮等级索引(21xx)
     """
     gunLevelKey = GameData.gunLevel if mode == config.CLASSIC_MODE else GameData.gunLevel_m
-    gunLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, gunLevelKey)
-    return gunLevel
+    return gamedata.getGameAttrInt(userId, FISH_GAMEID, gunLevelKey)
 
 
 # TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
@@ -1686,41 +1706,17 @@ def getStoreCheckLevel(userId):
     return level
 
 
-# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
-def getLevelByGunLevel(userId):
+def getUserLevel(userId):
     """
-    获取火炮等级对应的等级
+    获取玩家等级
     """
-    # 需要注意游戏中已有的升级相关的等级含义.
-    uLevel = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.level)
-    return uLevel
-
-
-# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
-def getDailyQuestCheckLevel(userId):
-    """
-    获取每日任务需要检测的等级
-    """
-    # 需要注意游戏中已有的升级相关的等级含义.
-    userLv = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
-    return userLv
+    return gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
 
 
 # TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
 def getActivityCheckLevel(userId):
     """
     获取活动需要检测的等级
-    """
-    # 需要注意游戏中已有的升级相关的等级含义.
-    # 应使用千炮等级
-    userLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
-    return userLevel
-
-
-# TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
-def getUnlockCheckLevel(userId):
-    """
-    获取解锁模块需要检测的等级
     """
     # 需要注意游戏中已有的升级相关的等级含义.
     # 应使用千炮等级

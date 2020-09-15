@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 from poker.entity.dao import gamedata, daobase
 from poker.entity.biz.message import message
@@ -32,7 +32,7 @@ class GameMsg(object):
 
         rediskey = message.REDIS_KEY.format(message.MESSAGE_TYPE_PRIVATE, message.HALL_GAMEID, toUid)
         msglist = message._msg_load_and_expire(toUid, rediskey)
-        if len(msglist) >= 100:  # 超100条删除
+        if len(msglist) >= 100:                                     # 超100条删除
             lastmsgval = None
             for msgval in msglist:
                 if lastmsgval:
