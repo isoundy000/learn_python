@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/8/11
-# 荣耀任务等级.(荣耀等级)
-
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 19/05/30.
+荣耀任务等级.(荣耀等级)
+"""
 import json
 import freetime.util.log as ftlog
 from poker.entity.dao import gamedata, daobase

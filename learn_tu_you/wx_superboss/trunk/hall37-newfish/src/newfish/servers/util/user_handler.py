@@ -861,11 +861,13 @@ class UserTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="user", action="fishStarGameInfo", clientIdVer=0, scope="game", lockParamName="userId")
     def getStarfishBonusInfo(self, gameId, userId):
+        """海星抽奖信息获取"""
         ftlog.debug("getStarfishBonusInfo", gameId, userId)
         starfish_bonus.doGetBonusInfo(userId)
 
     @markCmdActionMethod(cmd="user", action="fishStarGameResult", clientIdVer=0, scope="game", lockParamName="userId")
     def getStarfishBonusResult(self, userId, gameId, clientId, count):
+        """海星抽奖抽取结果获取"""
         ftlog.debug("getStarfishBonusResult", gameId, clientId, userId)
         starfish_bonus.doGetBonusResult(userId, count)
 

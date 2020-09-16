@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 17/10/10.
+"""
 
 import freetime.util.log as ftlog
 from newfish.entity import config,  module_tip

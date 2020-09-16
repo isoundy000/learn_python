@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/8/11
-# 荣耀任务.
-
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 17/11/30.
+荣耀任务.
+"""
 
 import json
 import time

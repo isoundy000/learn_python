@@ -8,11 +8,10 @@ import json
 
 from freetime.util import log as ftlog
 from poker.entity.dao import gamedata
-from poker.entity.biz import bireport
 from newfish.entity import config, util, weakdata
 from newfish.entity.catchfish.dynamic_odds import DynamicOdds
 from newfish.entity.config import FISH_GAMEID
-from newfish.entity.redis_keys import GameData, ABTestData, WeakData
+from newfish.entity.redis_keys import GameData
 
 
 class DynamicOdds_m(DynamicOdds):
@@ -20,7 +19,7 @@ class DynamicOdds_m(DynamicOdds):
     动态概率控制
     """
     def __init__(self, table, player):
-        super(DynamicOdds, self).__init__(table, player)
+        super(DynamicOdds_m, self).__init__(table, player)
         self.table = table
         self.player = player
         self.initConstData()
@@ -37,9 +36,6 @@ class DynamicOdds_m(DynamicOdds):
             return bonus
         if not self.player or not self.player.userId:
             return bonus
-        # 新手期间使用奖池.
-        # if self.isProtectMode():
-        #     return bonus
         return self._currRechargeBonus
 
     def initConstData(self):
@@ -92,10 +88,6 @@ class DynamicOdds_m(DynamicOdds):
         """
         if not self.player or not self.player.userId:
             return 1
-        # if self.isProtectMode():
-        #     return self.protectOdds[self.player.level - 1]
-        # if self.table.typeName == config.FISH_NEWBIE and self.chip <= 50:
-        #     return 10000
 
         if skill:
             if self.player.userId in self.banOddsList:
