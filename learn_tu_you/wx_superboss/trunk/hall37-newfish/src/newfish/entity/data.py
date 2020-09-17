@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/11
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import time
 
@@ -32,7 +32,6 @@ class FishData():
 
     @classmethod
     def getGameDataKeys(cls):
-        """获取用户初始化的key"""
         keys = []
         for item in cls.config:
             keys.append(item[0])
@@ -40,8 +39,8 @@ class FishData():
 
     @classmethod
     def getGameDataValues(cls):
-        """获取玩家初始化的值"""
         values = []
         for item in cls.config:
             values.append(item[1])
         return values
+

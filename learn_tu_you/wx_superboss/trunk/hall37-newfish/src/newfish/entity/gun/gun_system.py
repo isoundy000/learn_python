@@ -16,7 +16,7 @@ import random
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
-from poker.entity.dao import daobase, gamedata, userchip
+from poker.entity.dao import daobase, gamedata
 from poker.protocol import router
 from poker.util import strutil
 from poker.entity.biz import bireport
@@ -24,7 +24,6 @@ from hall.entity import hallvip, hallitem
 from newfish.entity import config, util, module_tip
 from newfish.entity.config import FISH_GAMEID, CLASSIC_MODE, MULTIPLE_MODE
 from newfish.entity.redis_keys import GameData, UserData
-from newfish.entity import store
 
 INDEX_LEVEL = 0         # 第0位:皮肤炮熟练等级
 INDEX_EXP = 1           # 第1位:皮肤炮经验值
@@ -79,11 +78,9 @@ def setGunData(userId, gunId, gunInfo, mode):
     clientId = util.getClientId(userId)
     assert int(gunId) in config.getAllGunIds(clientId, mode)
     assert isinstance(gunInfo, list) and len(gunInfo) == 3
-    # assert gunInfo[INDEX_SKINID] in config.getGunConf(gunId, clientId).get("skins")
     skins = config.getGunConf(gunId, clientId, mode=mode).get("skins")
     if gunInfo[INDEX_SKINID] not in skins:
-        ftlog.error("setGunData, not find skin, userId =", userId, "gunId =", gunId, "gunInfo =", gunInfo,
-                    "skins =", skins, "mode =", mode, "clientId =", clientId)
+        ftlog.error("setGunData, not find skin, userId =", userId, "gunId =", gunId, "gunInfo =", gunInfo, "skins =", skins, "mode =", mode, "clientId =", clientId)
         gunInfo[INDEX_SKINID] = skins[0]
     daobase.executeUserCmd(userId, "HSET", _buildUserGunKey(userId, mode), str(gunId), json.dumps(gunInfo))
 
@@ -140,7 +137,7 @@ def getGunIds(userId, mode):
     clientId = util.getClientId(userId)
     gunIds = [0]
     userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
-    ownGunSkinSkinsKey = GameData.ownGunSkinSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkinSkins_m
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
     ownGunSkinSkins = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinSkinsKey, [])
     for kindId in config.getAllGunIds(clientId, mode):
         item = userBag.getItemByKindId(kindId)
@@ -169,11 +166,11 @@ def sendExpiredGunMsg(userId, mode):
     """
     返回火炮皮肤过期提示
     """
-    ownGunSkinsKey = GameData.ownGunSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkins_m    # 最近一次已拥有的皮肤炮列表
+    ownGunSkinsKey = GameData.ownGunSkins               # 最近一次已拥有的皮肤炮列表
     gunSkinIdKey = GameData.gunSkinId if mode == CLASSIC_MODE else GameData.gunSkinId_m             # 用户当前皮肤炮ID
-    promptedGunSkinsKey = GameData.promptedGunSkins  # if mode == CLASSIC_MODE else GameData.promptedGunSkins_m     # 已发送了过期提示弹窗的皮肤炮
+    promptedGunSkinsKey = GameData.promptedGunSkins     # 已发送了过期提示弹窗的皮肤炮
     ownGuns = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinsKey, [])
-    currentGunIds = getGunIds(userId, mode)[1:]     # 玩家当前拥有的火炮ID
+    currentGunIds = getGunIds(userId, mode)[1:]         # 玩家当前拥有的火炮ID
     clientId = util.getClientId(userId)
     allGunIds = config.getAllGunIds(clientId, mode)
     for idx in range(len(ownGuns) - 1, -1, -1):
@@ -214,7 +211,7 @@ def sendGunListMsg(userId, mode):
     userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
     allGuns = getAllGuns(userId, mode)                                  # 获得所有皮肤炮数据
     lang = util.getLanguage(userId)
-    ownGunSkinSkinsKey = GameData.ownGunSkinSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkinSkins_m
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
     ownGunSkinSkins = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinSkinsKey, [])     # 已拥有的皮肤炮皮肤
     for gunId in config.getAllGunIds(clientId, mode):
         if gunId not in allGuns:
@@ -225,7 +222,6 @@ def sendGunListMsg(userId, mode):
         skinId = allGuns[gunId][INDEX_SKINID]
         gunConf = config.getGunConf(gunId, clientId, gunLv, mode)
         gun["gunId"] = gunId
-        # gun["name"] = gunConf["name"]
         gun["name"] = config.getMultiLangTextConf(gunConf["name"], lang=lang)
         gun["unlockDesc"] = gunConf["unlockDesc"]                       # 解锁描述
         if gunConf["unlockDesc"]:
@@ -290,7 +286,6 @@ def sendGunInfoMsg(userId, mode):
     gunLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, gunLevelKey)
     nextGunLevel = config.getNextGunLevel(gunLevel, mode)
     if nextGunLevel == -1:
-        ftlog.error("gunLevel error! userId =", userId, "gunLevel =", gunLevel, "mode =", mode)
         return
     nextGunLevelConf = config.getGunLevelConf(nextGunLevel, mode)
     mo = MsgPack()
@@ -299,13 +294,20 @@ def sendGunInfoMsg(userId, mode):
     mo.setResult("userId", userId)
     mo.setResult("gunLevel", gunLevel)                              # 当前火炮等级
     mo.setResult("nextGunLevel", nextGunLevelConf["gunLevel"])      # 下一个等级
+    if "levelRewards" in nextGunLevelConf and nextGunLevelConf["levelRewards"] > 0:
+        mo.setResult("levelUpRewards", nextGunLevelConf["levelRewards"])      # 金币数量
     mo.setResult("successRate", nextGunLevelConf["successRate"])
     mo.setResult("gameMode", mode)
     upgradeItemsConf = getUpgradeItemsConf(userId, nextGunLevel, mode=mode)
     if upgradeItemsConf:
         upgradeItems = {}
         for kindId, count in upgradeItemsConf.iteritems():
-            upgradeItems[kindId] = [util.balanceItem(userId, kindId), count]
+            if int(kindId) == config.PURPLE_CRYSTAL_KINDID:
+                upgradeItems[kindId] = [util.balanceItem(userId, kindId) + util.balanceItem(userId, config.BIND_PURPLE_CRYSTAL_KINDID),  count]
+            elif int(kindId) == config.YELLOW_CRYSTAL_KINDID:
+                upgradeItems[kindId] = [util.balanceItem(userId, kindId) + util.balanceItem(userId, config.BIND_YELLOW_CRYSTAL_KINDID), count]
+            else:
+                upgradeItems[kindId] = [util.balanceItem(userId, kindId), count]
         mo.setResult("upgradeItems", upgradeItems)
     if nextGunLevelConf.get("protectItems"):
         protectItems = {}
@@ -315,21 +317,37 @@ def sendGunInfoMsg(userId, mode):
     router.sendToUser(mo, userId)
 
 
-def upgradeGun(userId, protect, mode):
+def isEnough(userId, items):
+    """
+    道具数量是否满足升级所需数量
+    """
+    for kindId, count in items.iteritems():
+        if (int(kindId) == config.PURPLE_CRYSTAL_KINDID and
+                bindOrNotBindItem(userId, config.BIND_PURPLE_CRYSTAL_KINDID, config.PURPLE_CRYSTAL_KINDID, count)):
+            continue
+        elif (int(kindId) == config.YELLOW_CRYSTAL_KINDID and
+                bindOrNotBindItem(userId, config.BIND_YELLOW_CRYSTAL_KINDID, config.YELLOW_CRYSTAL_KINDID, count)):
+            continue
+        if util.balanceItem(userId, kindId) < count:
+            return False
+    return True
+
+
+def upgradeGun(userId, protect, mode, byGift=False, upToLevel=0):
     """
     升级普通炮
     """
-    def isEnough(items):
-        for kindId, count in items.iteritems():
-            if util.balanceItem(userId, kindId) < count:
-                return False
-        return True
-
     def consume(items, level):
+        """消耗升级所需道具"""
         _consumeList = []
         for kindId, count in items.iteritems():
-            _consume = {"name": int(kindId), "count": count}
-            _consumeList.append(_consume)
+            if int(kindId) == config.PURPLE_CRYSTAL_KINDID:
+                _consumeList.extend(consumeBindOrNotBindItem(userId, config.BIND_PURPLE_CRYSTAL_KINDID, config.PURPLE_CRYSTAL_KINDID, count))
+            elif int(kindId) == config.YELLOW_CRYSTAL_KINDID:
+                _consumeList.extend(consumeBindOrNotBindItem(userId, config.BIND_YELLOW_CRYSTAL_KINDID, config.YELLOW_CRYSTAL_KINDID, count))
+            else:
+                _consume = {"name": int(kindId), "count": count}
+                _consumeList.append(_consume)
         util.consumeItems(userId, _consumeList, "ITEM_USE", level)
 
     gunLevelKey = GameData.gunLevel if mode == CLASSIC_MODE else GameData.gunLevel_m
@@ -343,44 +361,53 @@ def upgradeGun(userId, protect, mode):
     nextGunLevelConf = config.getGunLevelConf(nextGunLevel, mode)
     upgradeItemsConf = getUpgradeItemsConf(userId, nextGunLevel, mode=mode)
     returnRewards = None
-    if isEnough(upgradeItemsConf):                      # 判断升级所需物品是否足够
-        if nextGunLevelConf["successRate"] >= 10000:    # 是否100%成功
-            consume(upgradeItemsConf, level)            # 消耗升级所需物品
-            code = 0                                    # 升级成功
-        else:
-            if protect:                                 # 是否使用五彩水晶
-                if isEnough(nextGunLevelConf["protectItems"]):          # 判断五彩水晶是否足够
-                    consume(upgradeItemsConf, level)                    # 消耗升级所需物品
-                    consume(nextGunLevelConf["protectItems"], level)    # 消耗五彩水晶
-                    code = 0
-                else:
-                    code = 99                                           # 五彩水晶物品不足
+    levelUpRewards = None
+    if not byGift:
+        if isEnough(userId, upgradeItemsConf):                              # 判断升级所需物品是否足够
+            if nextGunLevelConf["successRate"] >= 10000:                    # 是否100%成功
+                consume(upgradeItemsConf, level)                            # 消耗升级所需物品
+                code = 0                                                    # 升级成功
             else:
-                consume(upgradeItemsConf, level)                        # 消耗升级所需物品
-                randInt = random.randint(1, 10000)
-                if randInt <= nextGunLevelConf["successRate"]:
-                    code = 0
+                if protect:                                                 # 是否使用五彩水晶
+                    if isEnough(userId, nextGunLevelConf["protectItems"]):  # 判断五彩水晶是否足够
+                        consume(upgradeItemsConf, level)                    # 消耗升级所需物品
+                        consume(nextGunLevelConf["protectItems"], level)    # 消耗五彩水晶
+                        code = 0
+                    else:
+                        code = 99                                           # 五彩水晶物品不足
                 else:
+                    consume(upgradeItemsConf, level)                        # 消耗升级所需物品
                     randInt = random.randint(1, 10000)
-                    for item in nextGunLevelConf["returnItems"]:
-                        if item["probb"][0] <= randInt <= item["probb"][1]:
-                            returnRewards = [{"name": item["kindId"], "count": item["count"]}]
-                            break
-                    code = 1                                            # 升级失败，返还道具
+                    if randInt <= nextGunLevelConf["successRate"]:
+                        code = 0
+                    else:
+                        randInt = random.randint(1, 10000)
+                        for item in nextGunLevelConf["returnItems"]:
+                            if item["probb"][0] <= randInt <= item["probb"][1]:
+                                returnRewards = [{"name": item["kindId"], "count": item["count"]}]
+                                break
+                        code = 1                                            # 升级失败，返还道具
+        else:
+            code = 99    # 升级所需物品不足
     else:
-        code = 99    # 升级所需物品不足
+        if upToLevel > gunLevel:
+            code = 0
+        else:
+            code = 1
     if code == 0:
         # level += 1
         # gunLevel += 1
         # gamedata.setGameAttrs(userId, FISH_GAMEID, [GameData.level, GameData.gunLevel], [level, gunLevel])
         # gunLevel += 1
-        gunLevel = nextGunLevel
+        if "levelRewards" in nextGunLevelConf and nextGunLevelConf["levelRewards"] > 0:
+            levelUpRewards = [{"name": config.CHIP_KINDID, "count": nextGunLevelConf["levelRewards"]}]
+        gunLevel = nextGunLevel if not byGift else upToLevel
         gamedata.setGameAttr(userId, FISH_GAMEID, gunLevelKey, gunLevel)
         from newfish.game import TGFish
-        from newfish.entity.event import LevelUpEvent
-        event = LevelUpEvent(userId, FISH_GAMEID, level, gunLevel, mode)
+        from newfish.entity.event import GunLevelUpEvent
+        event = GunLevelUpEvent(userId, FISH_GAMEID, level, gunLevel, mode)
         TGFish.getEventBus().publishEvent(event)
-        bireport.reportGameEvent("BI_NFISH_GE_LEVEL_UP", userId, FISH_GAMEID, 0, 0, int(level), mode, 0, 0, [], util.getClientId(userId))
+        bireport.reportGameEvent("BI_NFISH_GE_LEVEL_UP", userId, FISH_GAMEID, 0, 0, int(level), mode, 0, 0, [byGift, upToLevel, gunLevel], util.getClientId(userId))
 
     mo = MsgPack()
     mo.setCmd("gun_up")                                     # 升级普通炮
@@ -393,12 +420,15 @@ def upgradeGun(userId, protect, mode):
     if returnRewards:
         util.addRewards(userId, returnRewards, "ASSEMBLE_ITEM", level)
         mo.setResult("returnRewards", returnRewards)
+    if levelUpRewards:
+        util.addRewards(userId, levelUpRewards, "ASSEMBLE_ITEM", level)
+        mo.setResult("levelUpRewards", levelUpRewards)
     router.sendToUser(mo, userId)
     sendGunInfoMsg(userId, mode)                            # 发送普通炮信息
     # 检查是否需要有需要弹出的升级礼包.
     # TODO.需要检测游戏模式为经典还是千炮.
     if mode == CLASSIC_MODE:
-        from newfish.entity import gift_system
+        from newfish.entity.gift import gift_system
         clientId = util.getClientId(userId)
         levelUpGift = gift_system.LevelUpGift(userId, clientId).getGiftInfo()
         if isinstance(levelUpGift, list) and len(levelUpGift) > 0:
@@ -411,7 +441,6 @@ def upgradeGun(userId, protect, mode):
                     gamedata.setGameAttr(userId, FISH_GAMEID, GameData.popupGift, json.dumps(popupGiftInfo))
                     gift_system.doRefreshFishGift(userId)
     return code == 0
-
 
 
 def changeGun(userId, gunId, mode):
@@ -452,7 +481,6 @@ def changeGun(userId, gunId, mode):
         router.sendToUser(mo, userId)
 
 
-
 def changeGunSkin(userId, gunId, skinId, mode):
     """
     切换火炮皮肤
@@ -467,7 +495,7 @@ def changeGunSkin(userId, gunId, skinId, mode):
     mo.setResult("gameMode", mode)
     clientId = util.getClientId(userId)
     skins = config.getGunConf(gunId, clientId, mode=mode).get("skins")
-    ownGunSkinSkinsKey = GameData.ownGunSkinSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkinSkins_m
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
     ownGunSkinSkins = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinSkinsKey, [])
     if skinId not in ownGunSkinSkins and skinId != skins[0]:
         mo.setResult("code", 1)  # 未获得
@@ -507,7 +535,7 @@ def composeGunSkin(userId, gunId, skinId, mode):
         router.sendToUser(mo, userId)
         return False
     surplusCount = util.balanceItem(userId, skinConf["kindId"])
-    ownGunSkinSkinsKey = GameData.ownGunSkinSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkinSkins_m
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
     ownGunSkinSkins = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinSkinsKey, [])
     if surplusCount < skinConf["consumeCount"]:
         mo.setResult("code", 1)  # 资源不足
@@ -529,7 +557,7 @@ def addGunSkin(userId, skinId, mode):
     """
     添加火炮皮肤
     """
-    ownGunSkinSkinsKey = GameData.ownGunSkinSkins  # if mode == CLASSIC_MODE else GameData.ownGunSkinSkins_m
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
     ownGunSkinSkins = gamedata.getGameAttrJson(userId, FISH_GAMEID, ownGunSkinSkinsKey, [])
     if skinId not in ownGunSkinSkins:
         ownGunSkinSkins.append(skinId)
@@ -545,40 +573,38 @@ def equipGunSkin(userId, gunId, skinId, mode):
     setGunData(userId, gunId, gunData, mode)
 
 
+def _isUnlockGun(userId, gunConf, mode):
+    from newfish.entity.honor import honor_system
+    _isUnlocked = False
+    vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+    gunLevelVal = util.getGunLevelVal(userId, mode)
+    if not gunConf:
+        return _isUnlocked
+    if gunConf.get("gunId") == 0:
+        _isUnlocked = True
+    elif gunConf.get("unlockType") == 0:
+        _isUnlocked = True
+    elif gunConf.get("unlockType") == 1 and vipLevel >= gunConf["unlockValue"]:
+        _isUnlocked = True
+    elif gunConf.get("unlockType") == 2 and gunConf["unlockValue"] in honor_system.getOwnedHonors(userId):
+        _isUnlocked = True
+    elif gunConf.get("unlockType") == 3 and gunLevelVal >= gunConf["unlockValue"]:
+        _isUnlocked = True
+    return _isUnlocked
+
+
 def isUnlock(userId, gunId, gunConf, mode):
     """
     皮肤炮是否已解锁
     """
-    from newfish.entity.honor import honor_system
-    vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
-    gunLevelVal = util.getGunLevelVal(userId, mode)
-    unlockedGunSkinsKey = GameData.unlockedGunSkins     # if mode == CLASSIC_MODE else GameData.unlockedGunSkins_m
-    unlockedGuns = gamedata.getGameAttrJson(userId, FISH_GAMEID, unlockedGunSkinsKey, [])
-    _isUnlocked = False
-    if gunId == 0 or gunId in unlockedGuns:
-        _isUnlocked = True
-    elif gunConf["unlockType"] == 0:
-        _isUnlocked = True
-    elif gunConf["unlockType"] == 1 and vipLevel >= gunConf["unlockValue"]:
-        _isUnlocked = True
-    elif gunConf["unlockType"] == 2 and gunConf["unlockValue"] in honor_system.getOwnedHonors(userId):
-        _isUnlocked = True
-    elif gunConf["unlockType"] == 3 and gunLevelVal >= gunConf["unlockValue"]:
-        _isUnlocked = True
+    # 先判断当前模式是否解锁
+    _isUnlocked = _isUnlockGun(userId, gunConf, mode)
     # 如果当前模式未达到解锁条件则检测另一个模式是否已达到解锁条件.（经典/千炮）
     if not _isUnlocked:
         clientId = util.getClientId(userId)
         _mode = MULTIPLE_MODE if mode == CLASSIC_MODE else CLASSIC_MODE
-        gunConf = config.getGunConf(gunId, clientId, 1, _mode)
-        gunLevelVal = util.getGunLevelVal(userId, _mode)
-        if gunConf["unlockType"] == 0:
-            _isUnlocked = True
-        elif gunConf["unlockType"] == 1 and vipLevel >= gunConf["unlockValue"]:
-            _isUnlocked = True
-        elif gunConf["unlockType"] == 2 and gunConf["unlockValue"] in honor_system.getOwnedHonors(userId):
-            _isUnlocked = True
-        elif gunConf["unlockType"] == 3 and gunLevelVal >= gunConf["unlockValue"]:
-            _isUnlocked = True
+        _gunConf = config.getGunConf(gunId, clientId, mode=_mode)
+        _isUnlocked = _isUnlockGun(userId, _gunConf, _mode)
     return _isUnlocked
 
 
@@ -588,59 +614,53 @@ def isCanEquip(userId, gunId, mode):
     """
     clientId = util.getClientId(userId)
     gunConf = config.getGunConf(gunId, clientId, 1, mode)
-    _isUnlocked = False
+    _isCanEquip = False
     if gunConf:
         from newfish.entity.honor import honor_system
         vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)
         gunLevelVal = util.getGunLevelVal(userId, mode)
         if gunId == 0:
-            _isUnlocked = True
+            _isCanEquip = True
         elif gunConf["equipType"] == 0:
-            _isUnlocked = True
+            _isCanEquip = True
         elif gunConf["equipType"] == 1 and vipLevel >= gunConf["equipValue"]:
-            _isUnlocked = True
+            _isCanEquip = True
         elif gunConf["equipType"] == 2 and gunConf["equipValue"] in honor_system.getOwnedHonors(userId):
-            _isUnlocked = True
+            _isCanEquip = True
         elif gunConf["equipType"] == 3 and gunLevelVal >= gunConf["equipValue"]:
-            _isUnlocked = True
-    return _isUnlocked
+            _isCanEquip = True
+    return _isCanEquip
 
 
-def incrGunPool(userId, gunId, coin):
-    """
-    增减皮肤炮奖池(暂已废弃)
-    """
-    isIn, roomId, tableId, seatId = util.isInFishTable(userId)
-    if isIn:
-        mo = MsgPack()
-        mo.setCmd("table_call")
-        mo.setParam("action", "guns_pool")
-        mo.setParam("gameId", FISH_GAMEID)
-        mo.setParam("clientId", util.getClientId(userId))
-        mo.setParam("userId", userId)
-        mo.setParam("roomId", roomId)
-        mo.setParam("tableId", tableId)
-        mo.setParam("seatId", seatId)
-        mo.setParam("gunId", gunId)
-        mo.setParam("coin", int(coin))
-        router.sendTableServer(mo, roomId)
-    else:
-        gunPool = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.gunSkinPool, {})
-        gunPool.setdefault(str(gunId), 0)
-        gunPool[str(gunId)] += int(coin)
-        gamedata.setGameAttr(userId, FISH_GAMEID, GameData.gunSkinPool, json.dumps(gunPool))
+# def incrGunPool(userId, gunId, coin):
+#     """
+#     增减皮肤炮奖池(已废弃)
+#     """
+#     isIn, roomId, tableId, seatId = util.isInFishTable(userId)
+#     if isIn:
+#         mo = MsgPack()
+#         mo.setCmd("table_call")
+#         mo.setParam("action", "guns_pool")
+#         mo.setParam("gameId", FISH_GAMEID)
+#         mo.setParam("clientId", util.getClientId(userId))
+#         mo.setParam("userId", userId)
+#         mo.setParam("roomId", roomId)
+#         mo.setParam("tableId", tableId)
+#         mo.setParam("seatId", seatId)
+#         mo.setParam("gunId", gunId)
+#         mo.setParam("coin", int(coin))
+#         router.sendTableServer(mo, roomId)
+#     else:
+#         gunPool = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.gunSkinPool, {})
+#         gunPool.setdefault(str(gunId), 0)
+#         gunPool[str(gunId)] += int(coin)
+#         gamedata.setGameAttr(userId, FISH_GAMEID, GameData.gunSkinPool, json.dumps(gunPool))
 
 
 def checkGunUpgrade(userId):
     """
     检查普通炮能否升级
     """
-    def isEnough(items):
-        for kindId, count in items.iteritems():
-            if util.balanceItem(userId, kindId) < count:
-                return False
-        return True
-
     for mode in config.GAME_MODES:
         gunLevelKey = GameData.gunLevel if mode == CLASSIC_MODE else GameData.gunLevel_m
         gunLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, gunLevelKey)
@@ -648,31 +668,47 @@ def checkGunUpgrade(userId):
             continue
         nextGunLevel = config.getNextGunLevel(gunLevel, mode)
         upgradeItemsConf = getUpgradeItemsConf(userId, nextGunLevel, mode=mode)
-        if isEnough(upgradeItemsConf):  # 判断升级所需物品是否足够
-            module_tip.addModuleTipEvent(userId, "upgun", 0)
+        if isEnough(userId, upgradeItemsConf):                                                  # 判断升级所需物品是否足够
+            module_tip.addModuleTipEvent(userId, "upgun", 0)                                    # 普通炮升级小红点
         else:
             module_tip.resetModuleTipEvent(userId, "upgun")
 
 
-def getUpgradeItemsConf(userId, gunLevel, upgradeGunTestMode="", mode=CLASSIC_MODE):
+def bindOrNotBindItem(userId, bindKindId, kindId, count):
+    """
+    绑定与非绑定是否足够
+    """
+    if util.balanceItem(userId, bindKindId) >= count:
+        return True
+    elif util.balanceItem(userId, bindKindId) + util.balanceItem(userId, kindId) >= count:
+        return True
+    elif util.balanceItem(userId, kindId) >= count:
+        return True
+    return False
+
+
+def consumeBindOrNotBindItem(userId, bindKindId, kindId, count):
+    """获取消耗的数据"""
+    consumeList = []
+    if util.balanceItem(userId, bindKindId) >= count:
+        consume = {"name": int(bindKindId), "count": count}
+    elif util.balanceItem(userId, bindKindId) + util.balanceItem(userId, kindId) >= count:
+        bind_count = util.balanceItem(userId, bindKindId)
+        count = count - bind_count
+        consume1 = {"name": int(bindKindId), "count": bind_count}
+        consumeList.append(consume1)
+        consume = {"name": int(kindId), "count": count}
+    else:
+        consume = {"name": int(kindId), "count": count}
+    consumeList.append(consume)
+    return consumeList
+
+
+def getUpgradeItemsConf(userId, gunLevel, mode=CLASSIC_MODE):
     """
     获取升级材料配置
     """
-    # # upgradeGunTestMode使用A模式.
-    # if upgradeGunTestMode == "":
-    #     upgradeGunTestMode = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.upgradeGunTestMode)
-    # upgradeGunTestMode = config.getPublic("upgradeGunTestMode") or upgradeGunTestMode
-    # # # 闲来，手q和老用户使用老版本.
-    # # if util.isChannel(userId, "xianlai") or util.isChannel(userId, "qq"):
-    # #     upgradeItems = config.getGunLevelConf(gunLevel).get("upgradeItems", {})
-    # #     ftlog.debug("A mode, gun_system, userId =", userId, "gunLevel =", gunLevel, "testMode =", upgradeGunTestMode)
-    # # el
-    if upgradeGunTestMode in ["b"]:
-        upgradeItems = config.getGunLevelConf(gunLevel, mode).get("upgradeItems1", {})
-        ftlog.debug("B mode, gun_system, userId =", userId, "gunLevel =", gunLevel, "testMode =", upgradeGunTestMode)
-    else:
-        upgradeItems = config.getGunLevelConf(gunLevel, mode).get("upgradeItems", {})
-        ftlog.debug("A mode, gun_system, userId =", userId, "gunLevel =", gunLevel, "testMode =", upgradeGunTestMode)
+    upgradeItems = config.getGunLevelConf(gunLevel, mode).get("upgradeItems", {})
     return upgradeItems
 
 
@@ -710,8 +746,8 @@ def _triggerAddGunSkinEvent(event):
     # 添加新得到的皮肤炮，同时从过期提示中移除它
     gunId = event.gunId
     mode = event.mode
-    ownGunSkinsKey = GameData.ownGunSkins               # if mode == CLASSIC_MODE else GameData.ownGunSkins_m
-    promptedGunSkinsKey = GameData.promptedGunSkins     # if mode == CLASSIC_MODE else GameData.promptedGunSkins_m
+    ownGunSkinsKey = GameData.ownGunSkins
+    promptedGunSkinsKey = GameData.promptedGunSkins
     ownGuns = gamedata.getGameAttrJson(event.userId, FISH_GAMEID, ownGunSkinsKey, [])
     if gunId not in ownGuns:
         ownGuns.append(gunId)
@@ -733,12 +769,24 @@ def _triggerAddGunSkinEvent(event):
         # incrGunPool(event.userId, gunId, coin)
 
 
+def reportOwnGunsAndGunSkins(event):
+    """报告拥有的火炮和火炮皮肤"""
+    ownGuns = gamedata.getGameAttrJson(event.userId, FISH_GAMEID, GameData.ownGunSkins, [])
+    bireport.reportGameEvent("BI_NFISH_GE_ADD_GUN_ID", event.userId, FISH_GAMEID, 0, 0, 0, 0, 0, 0, ownGuns,
+                             util.getClientId(event.userId))
+    ownGunSkinSkinsKey = GameData.ownGunSkinSkins
+    ownGunSkinSkins = gamedata.getGameAttrJson(event.userId, FISH_GAMEID, ownGunSkinSkinsKey, [])
+    bireport.reportGameEvent("BI_NFISH_GE_ADD_GUN_SKIN", event.userId, FISH_GAMEID, 0, 0, 0, 0, 0, 0, ownGunSkinSkins,
+                             util.getClientId(event.userId))
+
+
 def _triggerUserLoginEvent(event):
     """
     用户登录游戏
     """
-    initGun(event.userId)               # 初始化炮的信息
+    initGun(event.userId)                       # 初始化炮的信息
     checkGunUpgrade(event.userId)
+    reportOwnGunsAndGunSkins(event)
 
 
 _inited = False

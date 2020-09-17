@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/9/14
+# -*- coding=utf-8 -*-
 """
 Created by lichen on 2020/8/15.
 
@@ -53,7 +50,6 @@ import freetime.util.log as ftlog
 
 
 class FTCron():
-
     MAX_DAY_COUNT = 1000
 
     def __init__(self, config_json):

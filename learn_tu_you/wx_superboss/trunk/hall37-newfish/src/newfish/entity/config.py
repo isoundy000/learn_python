@@ -44,6 +44,7 @@ COUPON_KINDID = 103
 REDPACKET_KINDID = 104
 # 珍珠
 PEARL_KINDID = 1137
+
 # 海星
 STARFISH_KINDID = 3106
 # 海星抽奖券
@@ -60,8 +61,12 @@ SILVER_BULLET_KINDID = 1193
 GOLD_BULLET_KINDID = 1194
 # 紫水晶
 PURPLE_CRYSTAL_KINDID = 1429
+# 绑定紫水晶
+BIND_PURPLE_CRYSTAL_KINDID = 14177
 # 黄水晶
 YELLOW_CRYSTAL_KINDID = 1430
+# 绑定黄水晶
+BIND_YELLOW_CRYSTAL_KINDID = 14178
 # 五彩水晶
 COLOR_CRYSTAL_KINDID = 1431
 # 魔晶
@@ -95,6 +100,13 @@ TM_BULLET_KINDIDS = {
 }
 # 技能刷新冷却
 SKILLCD_KINDID = 1408
+# 金钥匙（宝箱超级boss的掉落素材）
+GOLDEN_KEY_KINDID = 13757
+# 大奖赛门票
+GRAND_PRIX_FEES_KINDID = 14164
+# 纪念币
+SOUVENIR_KIND_ID = 14166
+
 # 红包鱼配置
 RED_KINDIDS = {1: 2057, 5: 2061, 10: 2048, 20: 2062, 50: 2059, 100: 2050}
 # 实物道具ID对应金额
@@ -138,18 +150,22 @@ NORMAL_FISH_TYPE = [1, 3]
 NORMAL_FISH_TYPE_M = [1]
 # 道具鱼
 ITEM_FISH_TYPE = [4, 11, 12, 13, 14, 15, 16]
-# 捕获后掉口红的鱼
-HIPPO_FISH_TYPE = [22]
-# 红包鱼（包含奖券、话费、红包、京东卡、分享奖券鱼）
+# 捕获后掉落drop配置表中随机道具的鱼（随机奖品、河马）
+RANDOM_DROP_FISH_TYPE = [13, 22]
+# 红包鱼（包含奖券、红包、随机奖品、话费、京东卡、分享奖券鱼）
 RED_FISH_TYPE = [4, 11, 13, 14, 15, 27]
-# 捕获后会掉落海星的鱼
-STAR_FISH_TYPE = [1, 2, 3, 8, 9, 19]
-# 捕获后会掉落珍珠的鱼
+# 捕获后会掉落海星的鱼（普通鱼、金币Boss、倍率鱼、招财珠Boss）
+STAR_FISH_TYPE = [1, 2, 3, 8, 9, 19, 26]
+# 捕获后会掉落珍珠的鱼（普通鱼、金币Boss、倍率鱼、招财珠Boss、彩虹鱼）
 PEARL_FISH_TYPE = [1, 2, 3, 8, 9, 19, 26]
-# 捕获后会掉落紫水晶/黄水晶的鱼
+# 捕获后会掉落紫水晶/黄水晶的鱼（普通鱼、金币Boss、倍率鱼、招财珠Boss）
 CRYSTAL_FISH_TYPE = [1, 2, 3, 8, 9, 19]
 # Boss鱼
-BOSS_FISH_TYPE = [2, 8, 9, 19]
+BOSS_FISH_TYPE = [2, 8, 9, 19, 31]
+# 彩金鱼
+COlOR_GOLD_FISH_TYPE = [2, 3, 32, 36]
+# 大盘鱼
+PLATTER_FISH_TYPE = [32]
 # 金币宝箱
 CHIP_CHEST_FISH_TYPE = [10]
 # 招财模式倍率鱼
@@ -178,17 +194,24 @@ NUMB_FISH_TYPE = [28]
 DRILL_FISH_TYPE = [29]
 # 恐怖鱼
 TERROR_FISH_TYPE = [5, 28, 29, 33, 34, 35]
-# 超级boss
-SUPERBOSS_FISH_TYPE = [31]
+# 超级Boss
+SUPER_BOSS_FISH_TYPE = [31]
+# 金钱箱
+MONEY_BOX_FISH_TYPE = [35]
+# 死亡后会变为武器的特殊鱼
+SPECIAL_WEAPON_FISH_TYPE = [5, 28, 29, 31, 33, 34]
+
 # 概率专用鱼种类别
 # 非高冷鱼
 NON_ALOOF_FISH_TYPE = [1, 3]
 # 使用彩虹奖池的鱼
 RAINBOW_BONUS_FISH_TYPE = [5, 26, 28, 29]
+# 小游戏鱼
+MINI_GAME_FISH_TYPE = [80029]
 
 # 日志专用鱼种类别
 # 需要输出日志的鱼
-LOG_OUTPUT_FISH_TYPE = [2, 3, 5, 8, 9, 10, 11, 13, 14, 15, 18, 19, 20, 28, 29]
+LOG_OUTPUT_FISH_TYPE = [2, 3, 5, 8, 9, 10, 11, 13, 14, 15, 18, 19, 20, 28, 29, 33, 34, 35]
 # -------------------------
 
 # -------------------------
@@ -260,6 +283,9 @@ upgradeSkillKindIds = [14124, 14125, 14126, 14127, 1145, 1147, 1149, 1150, 1152,
 # 与火炮升级有关的道具ID
 upgradeGunKindIds = [PEARL_KINDID, PURPLE_CRYSTAL_KINDID, YELLOW_CRYSTAL_KINDID]
 
+# 与宝藏升级有关的道具ID
+upgradeTreasureKindIds = [14147, 14148, 14149, 14150, 14151, 14152, 14153, 14154, 14155, 14156]
+
 # 自定义ID与资产ID对应表
 customKindIdMap = {
     CHIP_KINDID: "user:chip",
@@ -295,10 +321,11 @@ RANK_COMPETITION_T3 = "110044025"
 RANK_COMPETITION_T4 = "110044026"
 RANK_COMPETITION_T5 = "110044027"
 RANK_COMPETITION = "110044028"
-RANK_SBOSS_BOX = "110044029"
-RANK_SBOSS_OCTOPUS = "110044030"
-RANK_SBOSS_QUEEN = "110044031"
-RANK_SBOSS_DRAGON = "110044032"
+RANK_ITEM_HAPPY_DOUBLE = "110044029"
+RANK_SBOSS_BOX = "110044030"
+RANK_SBOSS_OCTOPUS = "110044031"
+RANK_SBOSS_QUEEN = "110044032"
+RANK_SBOSS_DRAGON = "110044033"
 
 
 # 普通渔场
@@ -322,17 +349,23 @@ FISH_POSEIDON = "fish_poseidon"
 # 千炮模式渔场
 FISH_MULTIPLE = "fish_multiple"
 # 快速开始自动分配房间类型
-QUICK_START_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND)
-# 普通房间类型
+QUICK_START_ROOM_TYPE = (FISH_NEWBIE, FISH_FRIEND, FISH_POSEIDON, FISH_MULTIPLE)
+# 属于经典玩法的快开房间类型
+CLASSIC_MODE_ROOM_TYPE = (FISH_FRIEND)
+# 属于千炮玩法的快开房间类型
+MULTIPLE_MODE_ROOM_TYPE = (FISH_MULTIPLE, FISH_POSEIDON)
+# 普通房间类型（开火会消耗金币的房间）
 NORMAL_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH_POSEIDON, FISH_MULTIPLE)
 # 使用动态曲线的房间
-DYNAMIC_ODDS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_POSEIDON)
+DYNAMIC_ODDS_ROOM_TYPE = (FISH_FRIEND)
 # 使用充值奖池房间类型
-RECHARGE_BONUS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH_POSEIDON)
+RECHARGE_BONUS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH_POSEIDON, FISH_MULTIPLE)
 # 冰冻道具冻住的概率
-FREEZE_PROBB = 10000
+FREEZE_PROBB = 6500
+# 冰冻道具ID
+FREEZE_ITEM = 14119
 # 锁定道具ID
-LOCK_ITEM = "14120"
+LOCK_ITEM = 14120
 
 # 购买类型
 BT_COIN = "coin"
@@ -345,11 +378,11 @@ BT_RUBY = "ruby"
 BT_OCEANSTAR = "oceanStar"
 
 # 千炮游戏模式
-GOLDEN_COIN = 0     # 金币模式
-GOLDEN_RING = 1     # 金环模式
+GOLD_COIN = 0     # 金币模式
+GOLD_RING = 1     # 金环模式
 
 # 千炮游戏模式列表
-MULTIPLE_MODES_LIST = [GOLDEN_COIN, GOLDEN_RING]
+PLAY_MODES = [GOLD_COIN, GOLD_RING]
 
 # 游戏玩法
 CLASSIC_MODE = 0        # 经典玩法
@@ -373,8 +406,9 @@ groupsConf_m = {}               # 所有千炮鱼阵配置All
 weaponConf = {}
 weaponConf_m = {}
 weaponPowerRateConf = {}
-minWeaponId = 0
-minWeaponId_m = 0
+weaponPowerRateConf_m = {}
+weaponStageCountConf = {}
+weaponStageCountConf_m = {}
 fishConf = {}
 fishConf_m = {}
 matchFishConf = {}
@@ -413,6 +447,7 @@ giftConf = {}
 giftAbcTestConf = {}
 activityConf = {}
 catchDropConf = {}
+catchDropConf_m = {}
 vipConf = {}
 fixedMultipleFishConf = {}
 rankRewardConf = {}
@@ -462,9 +497,10 @@ superEggsConf = {}
 supplyBoxConf = {}
 grandPrixConf = {}
 festivalTurntableConf = {}
-superbossExchangeConf = {}
-superbossMinigameConf = {}
-superbossCommonConf = {}
+superBossExchangeConf = {}
+superBossMiniGameConf = {}
+superBossCommonConf = {}
+superBossDropConf = {}
 collectItemConf = {}
 poseidonConf = {}
 bigPrizeConf = {}
@@ -474,14 +510,17 @@ passCardConf = {}
 skillCompenConf = {}
 abTestConf = {}
 returnerMissionConf = {}
+itemHappyDoubleConf = {}
 miniGameConf = {}
 miniGameLevelMap = {}
 luckyTreeConf = {}
-superbossPowerConf = {}
 levelPrizeWheelConf = {}
 timePointMatchSkillConf = {}
 autofillFishConf_m = {}
 tideTaskConf = {}
+platterFishConf = {}
+miniGameFishConf = {}
+levelGiftConf = {}
 
 
 def getGameConf(key, defaultValue=None, intClientidNum=0):
@@ -520,6 +559,9 @@ def loadSceneGroupConf_m():
 def getFishGroups(sceneName, mode=CLASSIC_MODE):
     """
     获取渔场对应的所有鱼阵
+    :param sceneName: 渔场鱼阵配置ID（scene/0.json中的key）
+    :param mode: 渔场模式
+    每个渔场能出现的鱼阵 = sceneName中包含的鱼阵 + common中包含的鱼阵
     """
     global sceneGroupConf, groupsConf, sceneGroupConf_m, groupsConf_m
     if mode == CLASSIC_MODE:
@@ -773,7 +815,7 @@ def loadCmpttTaskConf():
     global cmpttTaskConf
     cmpttTaskConfTmp = getGameConf("cmpttTask")
     cmpttTaskConf = {}
-    for key, value in cmpttTaskConfTmp.iteritems():
+    for _, value in cmpttTaskConfTmp.iteritems():
         fishPool = value["fishPool"]
         if fishPool not in cmpttTaskConf:
             cmpttTaskConf[fishPool] = []
@@ -876,6 +918,9 @@ def loadFishConf_m():
 def getFishConf(fishType, typeName, multiple=1):
     """
     获取鱼配置 fishType: 鱼的ID typeName 渔场类型[好友、比赛、...] multiple渔场倍率
+    @param fishType: 鱼的类型ID
+    @param typeName: 渔场类型
+    @param multiple: 渔场倍率
     """
     global fishConf, fishConf_m
     if typeName in [FISH_TIME_MATCH, FISH_FIGHT, FISH_TIME_POINT_MATCH]:    # 回馈赛渔场、渔友竞技渔场、定时积分赛渔场
@@ -926,37 +971,7 @@ def loadWeaponConf():
     加载武器配置
     """
     global weaponConf
-    global minWeaponId
     weaponConf = rocopy(getGameConf("weapon"))
-    keys = [int(x) for x in weaponConf.keys()]
-    keys2 = sorted(keys)
-    minWeaponId = keys2[0]
-
-
-def getWeaponConf(wpId, useRate=True, mode=CLASSIC_MODE):
-    """
-    获取武器配置
-    """
-    global weaponConf
-    global weaponConf_m
-    conf = weaponConf if mode == CLASSIC_MODE else weaponConf_m
-    weaponInfo = conf.get(str(wpId), {})
-    powerRateConfig = getWeaponPowerRateConf(wpId)
-    if useRate and powerRateConfig:
-        weaponInfo = rwcopy(weaponInfo)
-        probab = random.randint(1, 10000)
-        for probabInfo in powerRateConfig:
-            probbArr = probabInfo["probb"]
-            if probbArr[0] <= probab <= probbArr[1]:
-                if len(probabInfo["value"]) == 1:
-                    rate = probabInfo["value"][0]
-                else:
-                    rate = round(random.uniform(probabInfo["value"][0], probabInfo["value"][1]), 2)
-                    if ftlog.is_debug():
-                        ftlog.debug("getWeaponConf", wpId, probabInfo["value"], rate)
-                weaponInfo["power"] *= rate
-                break
-    return weaponInfo
 
 
 def loadWeaponConf_m():
@@ -964,11 +979,27 @@ def loadWeaponConf_m():
     加载千炮武器配置
     """
     global weaponConf_m
-    global minWeaponId_m
     weaponConf_m = rocopy(getGameConf("weapon_m"))
-    keys = [int(x) for x in weaponConf_m.keys()]
-    keys2 = sorted(keys)
-    minWeaponId_m = keys2[0]
+
+
+def getWeaponConf(wpId, useRate=True, mode=CLASSIC_MODE):
+    """
+    获取武器配置
+    """
+    global weaponConf, weaponConf_m
+    conf = weaponConf if mode == CLASSIC_MODE else weaponConf_m
+    weaponInfo = conf.get(str(wpId), {})
+    powerRateConfig = getWeaponPowerRateConf(wpId, mode)
+    if useRate and powerRateConfig:
+        weaponInfo = rwcopy(weaponInfo)
+        probab = random.randint(1, 10000)
+        for probabInfo in powerRateConfig:
+            probbArr = probabInfo["probb"]
+            if probbArr[0] <= probab <= probbArr[1]:
+                rate = round(random.uniform(probabInfo["value"][0], probabInfo["value"][-1]), 2)
+                weaponInfo["power"] *= rate
+                break
+    return weaponInfo
 
 
 def loadWeaponPowerRateConf():
@@ -979,20 +1010,49 @@ def loadWeaponPowerRateConf():
     weaponPowerRateConf = rocopy(getGameConf("weaponPowerRate"))
 
 
-def getWeaponPowerRateConf(wpId):
+def loadWeaponPowerRateConf_m():
+    """
+    加载武器威力加成配置
+    """
+    global weaponPowerRateConf_m
+    weaponPowerRateConf_m = rocopy(getGameConf("weaponPowerRate_m"))
+
+
+def getWeaponPowerRateConf(wpId, mode=CLASSIC_MODE):
     """
     获取武器威力加成配置
     """
-    global weaponPowerRateConf
-    return weaponPowerRateConf.get(str(wpId), [])
+    global weaponPowerRateConf, weaponPowerRateConf_m
+    if mode == CLASSIC_MODE:
+        return weaponPowerRateConf.get(str(wpId), [])
+    return weaponPowerRateConf_m.get(str(wpId), [])
 
 
-def getMinWeaponId():
+def loadWeaponStageCountConf():
     """
-    获取最小武器ID
+    加载武器爆炸阶段次数
     """
-    global minWeaponId
-    return minWeaponId
+    global weaponStageCountConf
+    weaponStageCountConf = rocopy(getGameConf("weaponStageCount"))
+
+
+def loadWeaponStageCountConf_m():
+    """
+    加载武器爆炸阶段次数
+    """
+    global weaponStageCountConf_m
+    weaponStageCountConf_m = rocopy(getGameConf("weaponStageCount_m"))
+
+
+def getWeaponStageCountConf(wpId=None, mode=CLASSIC_MODE):
+    """
+    获取武器爆炸阶段次数
+    """
+    global weaponStageCountConf, weaponStageCountConf_m
+    conf = weaponStageCountConf if mode == CLASSIC_MODE else weaponStageCountConf_m
+    if wpId is None:
+        return conf
+    return conf.get(str(wpId), [])
 
 
 def loadTimeLimitedStoreConf():
@@ -1056,7 +1116,7 @@ def generateStoreConf(conf):
     chestStoreConf = OrderedDict()
 
     chestStoreConf["items"] = OrderedDict(sorted(chestStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
-    chestStoreConf["ads"] = conf.get("chestStore").get("ads")
+    chestStoreConf["shop"] = conf.get("chestStore").get("shop")
 
     couponStoreConfTmp = conf.get("couponStore", {}).get("items", {})
     couponStoreConf = OrderedDict(sorted(couponStoreConfTmp.iteritems(), key=lambda d: d[1]["order"]))
@@ -1078,18 +1138,22 @@ def generateStoreConf(conf):
     for productId, v in hotStoreConfTmp.iteritems():
         if v.get("pt") == "coin":
             product = coinStoreConf.get(str(productId))
-        elif v.get("pt") == "diamondStore":
+        elif v.get("pt") == "diamond":
             product = diamondStoreConf.get(str(productId))
-        elif v.get("pt") == "chestStore":
+        elif v.get("pt") == "chest":
             product = chestStoreConf["items"].get(str(productId))
-        elif v.get("pt") == "itemStore":
+        elif v.get("pt") == "item":
             product = itemStoreConf.get(str(productId))
         else:
             product = None
         if product:
             productConf = deepcopy(product)
             productConf["pt"] = v["pt"]
+            if "extendData" not in productConf:
+                productConf["extendData"] = {}
             productConf["extendData"].update(v.get("extendData", {}))
+            if "limitCond" not in productConf:
+                productConf["limitCond"] = {}
             productConf["limitCond"].update(v.get("limitCond", {}))
             hotStoreConf["items"][str(productId)] = productConf
     hotStoreConf["shop"] = conf.get("hotStore", {}).get("shop", {})
@@ -1131,14 +1195,6 @@ def loadUlevelConf():
     """
     global ulevelConf
     ulevelConf = rocopy(getGameConf("ulevel"))
-
-
-def getUlevelNum():
-    """
-    获取用户最大等级
-    """
-    global ulevelConf
-    return len(ulevelConf)
 
 
 def getUlevel(levelId):
@@ -1316,10 +1372,8 @@ def getDailyQuestRewardConf(activeLv=None, all=True):
     if activeLv:
         if all:
             return dailyQuestRewardConf.get(str(activeLv), {}).get(1, {})
-        else:
-            return dailyQuestRewardConf.get(str(activeLv), {}).get(0, {})
-    else:
-        return dailyQuestRewardConf
+        return dailyQuestRewardConf.get(str(activeLv), {}).get(0, {})
+    return dailyQuestRewardConf
 
 
 def getDailyQuestRewardFinishedStars(type, all=True):
@@ -1373,7 +1427,7 @@ def loadProbabilityConf_m():
 
 def getCouponFishConf(fishPool):
     """
-    获取奖券鱼配置
+    获取奖券鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("couponFish", {}).get(str(fishPool), {})
@@ -1381,7 +1435,7 @@ def getCouponFishConf(fishPool):
 
 def getMultipleFishConf(fishPool, mode=CLASSIC_MODE):
     """
-    获取倍率鱼配置
+    获取倍率鱼倍率配置
     """
     global probabilityConf, probabilityConf_m
     if mode == CLASSIC_MODE:
@@ -1389,9 +1443,17 @@ def getMultipleFishConf(fishPool, mode=CLASSIC_MODE):
     return probabilityConf_m.get("multipleFish", {}).get(str(fishPool), [])
 
 
+def getBossMultipleConf(fishType):
+    """
+    获取Boss倍率配置
+    """
+    global probabilityConf_m
+    return probabilityConf_m.get("bossMultiple", {}).get(str(fishType), {})
+
+
 def getBossFishConf(fishPool, mode=CLASSIC_MODE):
     """
-    获取Boss鱼配置
+    获取Boss鱼出现配置
     """
     global probabilityConf, probabilityConf_m
     if mode == CLASSIC_MODE:
@@ -1401,7 +1463,7 @@ def getBossFishConf(fishPool, mode=CLASSIC_MODE):
 
 def getChestFishConf(fishPool):
     """
-    获取宝箱鱼配置
+    获取宝箱鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("chestFish", {}).get(str(fishPool), {})
@@ -1409,7 +1471,7 @@ def getChestFishConf(fishPool):
 
 def getActivityFishConf(fishPool):
     """
-    获取活动鱼配置
+    获取活动鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("activityFish", {}).get(str(fishPool), {})
@@ -1417,7 +1479,7 @@ def getActivityFishConf(fishPool):
 
 def getShareFishConf(fishPool):
     """
-    获取分享宝箱鱼配置
+    获取分享宝箱鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("shareFish", {}).get(str(fishPool), {})
@@ -1433,7 +1495,7 @@ def getHitBossConf():
 
 def getBufferFishConf(fishPool, mode=CLASSIC_MODE):
     """
-    获取Buffer鱼配置
+    获取Buffer鱼出现配置
     """
     global probabilityConf, probabilityConf_m
     if mode == CLASSIC_MODE:
@@ -1443,7 +1505,7 @@ def getBufferFishConf(fishPool, mode=CLASSIC_MODE):
 
 def getHippoFishConf(fishPool):
     """
-    获取河马鱼配置
+    获取河马鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("hippoFish", {}).get(str(fishPool), [])
@@ -1451,7 +1513,7 @@ def getHippoFishConf(fishPool):
 
 def getAutofillFishConf(fishPool):
     """
-    获取autofill鱼配置
+    获取autofill鱼出现配置
     """
     global probabilityConf
     return probabilityConf.get("autofillFish", {}).get(str(fishPool), [])
@@ -1488,13 +1550,12 @@ def getTerrorFishConf(fishPool, mode=CLASSIC_MODE):
     global terrorFishConf, terrorFishConf_m
     if mode == CLASSIC_MODE:
         return terrorFishConf.get("terrorFish", {}).get(str(fishPool), [])
-    else:
-        return terrorFishConf_m.get("terrorFish_m", {}).get(str(fishPool), [])
+    return terrorFishConf_m.get("terrorFish", {}).get(str(fishPool), [])
 
 
 def loadAutofillFishConf_m():
     """
-    加载自动填充鱼配置
+    加载自动填充鱼出现配置
     """
     global autofillFishConf_m
     autofillFishConf_m = rocopy(getGameConf("autofillFish_m"))
@@ -1502,7 +1563,7 @@ def loadAutofillFishConf_m():
 
 def getAutofillFishConf_m(mode, fishPool):
     """
-    获取自动填充鱼配置
+    获取自动填充鱼出现配置
     """
     global autofillFishConf_m
     return autofillFishConf_m.get(mode, {}).get(str(fishPool), {})
@@ -1687,8 +1748,7 @@ def getNoticeConf(noticeId=None):
     global activityConf
     if noticeId:
         return activityConf.get("notice", {}).get(str(noticeId))
-    else:
-        return activityConf.get("notice", {})
+    return activityConf.get("notice", {})
 
 
 def getActivityTemplateByClientIdNum(clientIdNum, lang):
@@ -1716,12 +1776,20 @@ def loadCatchDropConf():
     catchDropConf = rocopy(getGameConf("catchDrop"))
 
 
+def getCatchDropFishType(groupType):
+    """
+    获取掉落分组类型对应的鱼类型
+    """
+    global catchDropConf
+    return catchDropConf.get("groupType", {}).get(groupType, [])
+
+
 def getCatchDropConf(fpMultiple, fishType, uid):
     """
     读取捕获掉率配置
     """
-    dropConf = None
     global catchDropConf
+    dropConf = None
     # dropConf = catchDropConf.get(str(fishPool), {})
     _conf = _getCatchDropGroupConf(fpMultiple, fishType)
     if _conf:
@@ -1741,26 +1809,20 @@ def _getCatchDropKindId(groupId, uid):
     """
     根据玩家uid和掉落组返回掉落kindId
     """
-    groupId = str(groupId)
-    kindId = None
     global catchDropConf
-    if catchDropConf.get("dropGroup"):
-        dropList = catchDropConf["dropGroup"].get(groupId, [])
-        idx = int(uid) % 2
+    kindId = None
+    dropList = catchDropConf.get("dropGroup", {}).get(str(groupId), [])
+    if dropList:
+        idx = int(uid) % len(dropList)
         if len(dropList) > idx:
-            total = 0
-            for item in dropList[idx]:
-                total += item["poss"]
+            total = sum([item["poss"] for item in dropList[idx]])
             ret = random.randint(1, total)
-            old_ret = ret
             for item in dropList[idx]:
                 if item["poss"] >= ret:
                     kindId = int(item["kindId"])
                     break
                 else:
                     ret -= item["poss"]
-            if ftlog.is_debug():
-                ftlog.debug("_getCatchDropKindId===>", groupId, uid, dropList[idx], idx, total, old_ret, kindId)
     return kindId
 
 
@@ -1800,6 +1862,68 @@ def _getCatchDropGroupConf(fpMultiple, fishType):
     if ftlog.is_debug():
         ftlog.debug("_getCatchDropGroupId===>", fpMultiple, finalFp, fishType, dropConf)
     return dropConf
+
+
+def loadCatchDropConf_m():
+    """
+    加载捕获掉率配置
+    """
+    global catchDropConf_m
+    catchDropConf_m = rocopy(getGameConf("catchDrop_m"))
+
+
+def getCatchDropConfList_m(gunX):
+    """
+    获取火炮倍率对应的捕获掉率组配置
+    """
+    global catchDropConf_m
+    return catchDropConf_m.get("dropGunX", {}).get(str(gunX), [])
+
+
+def getCatchDropFishTypeList_m(groupId):
+    """
+    获取掉落组ID对应的鱼类型
+    """
+    global catchDropConf_m
+    return catchDropConf_m.get("dropGroup", {}).get(str(groupId), {}).get("fishTypeList", [])
+
+
+def getCatchDropConf_m(conf, uid):
+    """
+    获取捕获掉率配置
+    """
+    dropConf = None
+    kindId = _getCatchDropKindId_m(conf["dropGroupId"], uid)
+    if kindId:
+        dropConf = {}
+        dropConf["kindId"] = kindId
+        dropConf["min"] = conf["min"]
+        dropConf["max"] = conf["max"]
+        dropConf["probability"] = conf["probability"]
+    if ftlog.is_debug():
+        ftlog.debug("getCatchDropConf_m===>", conf, uid, dropConf)
+    return dropConf
+
+
+def _getCatchDropKindId_m(groupId, uid):
+    """
+    根据玩家uid和掉落组返回掉落kindId
+    """
+    global catchDropConf_m
+    kindId = None
+    dropList = catchDropConf_m.get("dropGroup", {}).get(str(groupId), {}).get("dropItemList", [])
+    if dropList:
+        idx = int(uid) % len(dropList)
+        if len(dropList) > idx:
+            total = sum([item["poss"] for item in dropList[idx]])
+            ret = random.randint(1, total)
+            for item in dropList[idx]:
+                if item["poss"] >= ret:
+                    kindId = int(item["kindId"])
+                    break
+                else:
+                    ret -= item["poss"]
+    return kindId
 
 
 def loadVipConf():
@@ -2302,8 +2426,7 @@ def isClientIgnoredConf(key, val, clientId=""):
         return False
     if isinstance(_conf, int):
         return _conf == val
-    else:
-        return val in _conf
+    return val in _conf
 
 
 def loadPlayerBufferConf():
@@ -2396,8 +2519,7 @@ def getGunLevelConf(gunLevel, mode):
     global gunLevelConf, gunLevelConf_m
     if mode == CLASSIC_MODE:
         return gunLevelConf.get(str(gunLevel), {})
-    else:
-        return gunLevelConf_m.get(str(gunLevel), {})
+    return gunLevelConf_m.get(str(gunLevel), {})
 
 
 def getMaxGunLevel(mode):
@@ -2407,27 +2529,13 @@ def getMaxGunLevel(mode):
     global gunLevelConf, gunLevelConf_m
     if mode == CLASSIC_MODE:
         return int(sorted(gunLevelConf.keys())[-1])
-    else:
-        return int(sorted(gunLevelConf_m.keys())[-1])
+    return int(sorted(gunLevelConf_m.keys())[-1])
 
 
 def getNextGunLevel(gunLevel, mode):
     """
     获得下个火炮等级
     """
-    # gunLevel = int(gunLevel)
-    # global gunLevelConf, gunLevelConf_m
-    # if mode == CLASSIC_MODE:
-    #     gunLevelList = sorted(map(int, gunLevelConf.keys()))
-    # else:
-    #     gunLevelList = sorted(map(int, gunLevelConf_m.keys()))
-    # if gunLevel not in gunLevelList:
-    #     return -1
-    # idx = gunLevelList.index(gunLevel)
-    # if idx + 1 < len(gunLevelList):
-    #     return gunLevelList[idx + 1]
-    # else:
-    #     return gunLevelList[-1]
     gunLevel += 1
     gunLevel = min(gunLevel, getMaxGunLevel(mode))
     return gunLevel
@@ -2440,8 +2548,7 @@ def getGunLevelKeysConf(mode):
     global gunLevelConf, gunLevelConf_m
     if mode == CLASSIC_MODE:
         return sorted(map(int, gunLevelConf.keys()))
-    else:
-        return sorted(map(int, gunLevelConf_m.keys()))
+    return sorted(map(int, gunLevelConf_m.keys()))
 
 
 def loadTableTaskConf():
@@ -3035,54 +3142,72 @@ def getFestivalTurntableItemConf(key_=None):
     return rwcopy(festivalTurntableConf.get(str(key_)))
 
 
-def loadSuperbossExchangeConf():
+def loadSuperBossExchangeConf():
     """
     加载超级boss兑换配置
     """
-    global superbossExchangeConf
-    superbossExchangeConf = rocopy(getGameConf("superbossExchange"))
+    global superBossExchangeConf
+    superBossExchangeConf = rocopy(getGameConf("superBossExchange"))
 
 
-def getSuperbossExchangeConf(fishPool=None):
+def getSuperBossExchangeConf(fishPool=None):
     """
     获取超级boss兑换配置
     """
-    global superbossExchangeConf
+    global superBossExchangeConf
     if fishPool is None:
-        return superbossExchangeConf
-    return rwcopy(superbossExchangeConf.get(str(fishPool)))
+        return superBossExchangeConf
+    return rwcopy(superBossExchangeConf.get(str(fishPool)))
 
 
-def loadSuperbossMinigameConf():
+def loadSuperBossMiniGameConf():
     """
     加载超级boss小游戏配置
     """
-    global superbossMinigameConf
-    superbossMinigameConf = rocopy(getGameConf("superbossMinigame"))
+    global superBossMiniGameConf
+    superBossMiniGameConf = rocopy(getGameConf("superBossMiniGame"))
 
 
-def getSuperbossMinigameConf():
+def getSuperBossMiniGameConf():
     """
     获取超级boss小游戏配置
     """
-    global superbossMinigameConf
-    return superbossMinigameConf
+    global superBossMiniGameConf
+    return superBossMiniGameConf
 
 
-def loadSuperbossCommonConf():
+def loadSuperBossCommonConf():
     """
     加载超级boss通用配置
     """
-    global superbossCommonConf
-    superbossCommonConf = rocopy(getGameConf("superbossCommon"))
+    global superBossCommonConf
+    superBossCommonConf = rocopy(getGameConf("superBossCommon"))
 
 
-def getSuperbossCommonConf():
+def getSuperBossCommonConf():
     """
     获取超级boss通用配置
     """
-    global superbossCommonConf
-    return superbossCommonConf
+    global superBossCommonConf
+    return superBossCommonConf
+
+
+def loadSuperBossDropConf():
+    """
+    加载超级Boss掉落配置
+    """
+    global superBossDropConf
+    superBossDropConf = rocopy(getGameConf("superBossDrop"))
+
+
+def getSuperBossDropConf(fishType, playMode=GOLD_COIN):
+    """
+    获取超级Boss掉落配置
+    """
+    global superBossDropConf
+    if playMode == GOLD_COIN:
+        return superBossDropConf.get("goldCoin", {}).get(str(fishType), {})
+    return superBossDropConf.get("goldRing", {}).get(str(fishType), {})
 
 
 def loadCollectItemConf():
@@ -3248,6 +3373,19 @@ def getReturnerMissionConf(key_=None):
     return rwcopy(returnerMissionConf).get(str(key_))
 
 
+def loadItemHappyDoubleConf():
+    global itemHappyDoubleConf
+    itemHappyDoubleConf = rocopy(getGameConf("itemHappyDouble"))
+
+
+def getActItemHappyDoubleConfig():
+    """
+    获取道具翻番乐配置
+    """
+    global itemHappyDoubleConf
+    return rwcopy(itemHappyDoubleConf)
+
+
 def loadMiniGameConf():
     """
     加载小游戏配置（美人鱼的馈赠，宝箱）
@@ -3289,37 +3427,20 @@ def loadLuckyTreeConf():
     luckyTreeConf = rocopy(getGameConf("luckyTree"))
 
 
-def getLuckyTreeConf(key=None):
+def getLuckyTreeConf(key_=None):
     """
     获取免费金币摇钱树配置
     :return:
     """
     global luckyTreeConf
-    if key is None:
+    if key_ is None:
         return luckyTreeConf
-    return luckyTreeConf.get(str(key))
-
-
-def loadSuperbossPowerConf():
-    """
-    加载超级boss威力配置
-    """
-    global superbossPowerConf
-    superbossPowerConf = rocopy(getGameConf("superbossPower"))
-
-
-def getSuperbossPowerConf():
-    """
-    获取超级boss威力配置
-    """
-    global superbossPowerConf
-    return superbossPowerConf
+    return luckyTreeConf.get(str(key_))
 
 
 def loadLevelPrizeWheelConf():
     """
     加载等级转盘(青铜、白银、黄金、铂金、钻石)
-    :return:
     """
     global levelPrizeWheelConf
     levelPrizeWheelConf = rocopy(getGameConf("prizeWheel_m"))
@@ -3328,7 +3449,6 @@ def loadLevelPrizeWheelConf():
 def getLevelPrizeWheelConf():
     """
     获取等级转盘的配置
-    :return:
     """
     global levelPrizeWheelConf
     return levelPrizeWheelConf
@@ -3346,29 +3466,64 @@ def getTimePointMatchSkillConf():
     return timePointMatchSkillConf
 
 
-def loadTideTask():
+def loadTideTaskConf():
     """加载鱼潮任务"""
     global tideTaskConf
-    tideTaskConfTmp = getGameConf("tideTask")
-    tideTaskConf = {}
-    for key, value in tideTaskConfTmp.iteritems():
-        fishPool = value["fishPool"]
-        group = value["group"]
-        if fishPool not in tideTaskConf:
-            tideTaskConf[fishPool] = {}
-            tideTaskConf[fishPool][group] = value
-        else:
-            if group not in tideTaskConf[fishPool]:
-                tideTaskConf[fishPool][group] = value
-    tideTaskConf = rocopy(tideTaskConf)
+    tideTaskConf = getGameConf("tideTask")
 
 
-def getTideTask(key):
-    """获取渔潮任务"""
+def getTideTaskConf():
+    """获取鱼潮任务"""
     global tideTaskConf
-    if key is None:
-        return tideTaskConf
-    return tideTaskConf.get(str(key))
+    return tideTaskConf
+
+
+def loadPlatterFishConf():
+    """
+    加载大盘鱼
+    """
+    global platterFishConf
+    platterFishConf = rocopy(getGameConf("platterFish"))
+
+
+def getPlatterFishConf(fishPool):
+    """
+    获取大盘鱼配置
+    """
+    global platterFishConf
+    return platterFishConf.get("platterFish", {}).get(str(fishPool), [])
+
+
+def loadLevelGiftConf():
+    """
+    加载新的升级礼包
+    """
+    global levelGiftConf
+    levelGiftConf = rocopy(getGameConf("levelGift_m"))
+
+
+def getLevelGiftConf():
+    """
+    获取等级礼包
+    """
+    global levelGiftConf
+    return levelGiftConf
+
+
+def loadMiniGameFishConf():
+    """
+    加载小游戏鱼
+    """
+    global miniGameFishConf
+    miniGameFishConf = rocopy(getGameConf("miniGameFish"))
+
+
+def getMiniGameFishConf(fishPool):
+    """
+    获取小游戏鱼
+    """
+    global miniGameFishConf
+    return miniGameFishConf.get("miniGameFish", {}).get(str(fishPool), [])
 
 
 def initConfig():
@@ -3384,6 +3539,9 @@ def initConfig():
     loadWeaponConf()                        # 加载武器配置
     loadWeaponConf_m()                      # 加载千炮武器配置
     loadWeaponPowerRateConf()               # 加载武器威力加成配置
+    loadWeaponPowerRateConf_m()
+    loadWeaponStageCountConf()
+    loadWeaponStageCountConf_m()
     loadCheckinConf()                       # 加载签到配置
     loadStoreConf()
     loadDropConf()                          # 加载掉落配置
@@ -3412,6 +3570,7 @@ def initConfig():
     loadGiftConf()
     loadActivityConf()
     loadCatchDropConf()
+    loadCatchDropConf_m()
     loadVipConf()
     loadMatchFishConf()
     loadFixedMultipleFishConf()             # 加载固定倍率鱼配置
@@ -3462,9 +3621,10 @@ def initConfig():
     loadSupplyBoxConf()
     loadGrandPrixConf()
     loadFestivalTurntableConf()
-    loadSuperbossExchangeConf()
-    loadSuperbossMinigameConf()
-    loadSuperbossCommonConf()
+    loadSuperBossExchangeConf()
+    loadSuperBossMiniGameConf()
+    loadSuperBossCommonConf()
+    loadSuperBossDropConf()
     loadCollectItemConf()
     loadPoseidonConf()
     loadBigPrizeConf()
@@ -3475,16 +3635,19 @@ def initConfig():
     loadABTestConf()                                        #  加载ab test配置
     loadGiftAbcTestConf()
     loadReturnerMissionConf()                               # 加载回归豪礼配置
+    loadItemHappyDoubleConf()
     loadMiniGameConf()
     loadLuckyTreeConf()                                     # 加载免费金币摇钱树配置
     loadExchangeStoreConf()
-    loadSuperbossPowerConf()                                # 加载超级boss威力配置
     loadLevelPrizeWheelConf()                               # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
     loadTimePointMatchSkillConf()
     loadTerrorFishConf()
     loadTerrorFishConf_m()
     loadAutofillFishConf_m()
-    loadTideTask()
+    loadPlatterFishConf()
+    loadMiniGameFishConf()
+    loadTideTaskConf()
+    loadLevelGiftConf()
 
 
 def registerConfigEvent():
@@ -3508,6 +3671,9 @@ def reloadConfig(event):
         getConfigPath("weapon"): loadWeaponConf,            # 加载武器配置
         getConfigPath("weapon_m"): loadWeaponConf_m,        # 加载千炮武器配置
         getConfigPath("weaponPowerRate"): loadWeaponPowerRateConf,  # 加载武器威力加成配置
+        getConfigPath("weaponPowerRate_m"): loadWeaponPowerRateConf_m,
+        getConfigPath("weaponStageCount"): loadWeaponStageCountConf,
+        getConfigPath("weaponStageCount_m"): loadWeaponStageCountConf_m,
         getConfigPath("checkin"): loadCheckinConf,          # 加载签到配置
         getConfigPath("store"): loadStoreConf,
         getConfigPath("drop"): loadDropConf,                # 加载掉落配置
@@ -3536,6 +3702,7 @@ def reloadConfig(event):
         getConfigPath("gift"): loadGiftConf,
         getConfigPath("activity"): loadActivityConf,
         getConfigPath("catchDrop"): loadCatchDropConf,
+        getConfigPath("catchDrop_m"): loadCatchDropConf_m,
         getConfigPath("vip"): loadVipConf,
         getConfigPath("matchFish"): loadMatchFishConf,
         getConfigPath("fixedMultipleFish"): loadFixedMultipleFishConf,  # 加载固定倍率鱼配置
@@ -3586,9 +3753,10 @@ def reloadConfig(event):
         getConfigPath("supplyBox"): loadSupplyBoxConf,
         getConfigPath("grandPrix"): loadGrandPrixConf,
         getConfigPath("festivalTurntable"): loadFestivalTurntableConf,
-        getConfigPath("superbossExchange"): loadSuperbossExchangeConf,
-        getConfigPath("superbossMinigame"): loadSuperbossMinigameConf(),
-        getConfigPath("superbossCommon"): loadSuperbossCommonConf(),
+        getConfigPath("superBossExchange"): loadSuperBossExchangeConf,
+        getConfigPath("superBossMiniGame"): loadSuperBossMiniGameConf,
+        getConfigPath("superBossCommon"): loadSuperBossCommonConf,
+        getConfigPath("superBossDrop"): loadSuperBossDropConf,
         getConfigPath("collectItem"): loadCollectItemConf,
         getConfigPath("poseidon"): loadPoseidonConf,
         getConfigPath("bigPrize"): loadBigPrizeConf,
@@ -3599,16 +3767,19 @@ def reloadConfig(event):
         getConfigPath("abTest"): loadABTestConf,                        # 加载ab test配置
         getConfigPath("giftAbcTest"): loadGiftAbcTestConf,
         getConfigPath("returnerMission"): loadReturnerMissionConf,      # 加载回归豪礼配置
+        getConfigPath("itemHappyDouble"): loadItemHappyDoubleConf,
         getConfigPath("miniGame"): loadMiniGameConf,
         getConfigPath("luckyTree"): loadLuckyTreeConf,                  # 加载免费金币摇钱树配置
         getConfigPath("exchangeStore"): loadExchangeStoreConf,
-        getConfigPath("superbossPower"): loadSuperbossPowerConf,        # 加载超级boss威力配置
         getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,         # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
         getConfigPath("timePointMatchSkill_m"): loadTimePointMatchSkillConf,
         getConfigPath("terrorFish"): loadTerrorFishConf,
         getConfigPath("terrorFish_m"): loadTerrorFishConf_m,
         getConfigPath("autofillFish_m"): loadAutofillFishConf_m,
-        getConfigPath("tideTask"): loadTideTask,
+        getConfigPath("platterFish"): loadPlatterFishConf,
+        getConfigPath("miniGameFish"): loadMiniGameFishConf,
+        getConfigPath("tideTask"): loadTideTaskConf,
+        getConfigPath("levelGift_m"): loadLevelGiftConf,
     }
     try:
         for keyName in event.keylist:
@@ -3693,7 +3864,7 @@ class Config(dict):
 
     def __delitem__(self, key):
         raise AttributeError
-    
+
 
 def rocopy(data):
     """

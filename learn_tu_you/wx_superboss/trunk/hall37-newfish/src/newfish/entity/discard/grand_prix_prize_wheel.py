@@ -1,8 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/1
-
+# -*- coding=utf-8 -*-
+"""
+概述模块或脚本
+"""
+# @Author  : Kangxiaopeng
+# @Time    : 2019/11/12
 
 import json
 import random
@@ -29,8 +30,8 @@ class GrandPrixPrizeWheel(PrizeWheel):
     def __init__(self, userId, fishPool, roomId):
         super(GrandPrixPrizeWheel, self).__init__(userId, fishPool, roomId)
         self.pwConf = config.getGrandPrixPrizeWheelConf()
-        self.fireRatio = self.pwConf.get("ratio", {}).get("fire", 0)        # 开火充能系数
-        self.lossRatio = self.pwConf.get("ratio", {}).get("loss", 0)        # 亏损充能系数
+        self.fireRatio = self.pwConf.get("ratio", {}).get("fire", 0)    # 开火充能系数
+        self.lossRatio = self.pwConf.get("ratio", {}).get("loss", 0)    # 亏损充能系数
         self.maxSpinTimes = self.pwConf.get("maxSpinTimes", 1)
         self.isEnergyStorageMode = (self.maxSpinTimes > 1)
 

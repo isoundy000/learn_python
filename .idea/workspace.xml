@@ -3,16 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_level.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_level.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_table_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_table_system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/fish_achievement_task.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/fish_achievement_task.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/catchfish/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/catchfish/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/catchfish/dynamic_odds_m.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/catchfish/dynamic_odds_m.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/cron.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/cron.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/data.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/fish_cost_benefit_module.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/fish_cost_benefit_module.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/grand_prix_prize_wheel.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/grand_prix_prize_wheel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/level_rewards.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/level_rewards.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/lottery_ticket.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/discard/lottery_ticket.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/event.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/event.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_effect.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_effect.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_system.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_item.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_item.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_release.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_release.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_system.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -198,45 +204,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkin.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="checkin.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="34" column="25" lean-forward="false" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+            <state relative-caret-position="525">
+              <caret line="246" column="18" lean-forward="true" selection-start-line="246" selection-start-column="18" selection-end-line="246" selection-end-column="18" />
               <folding>
-                <element signature="e#126#137#0" expanded="true" />
+                <element signature="e#94#105#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quick_start.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/quick_start.py">
+      <file leaf-file-name="event.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/event.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="achievement_system.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_system.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="529">
+              <caret line="535" column="6" lean-forward="false" selection-start-line="535" selection-start-column="6" selection-end-line="535" selection-end-column="6" />
               <folding>
-                <element signature="e#89#100#0" expanded="true" />
+                <marker date="1600311870000" expanded="true" signature="260:449" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="starfish_bonus.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="account.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/account.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-457">
+              <caret line="247" column="37" lean-forward="false" selection-start-line="247" selection-start-column="37" selection-end-line="247" selection-end-column="37" />
+              <folding>
+                <marker date="1600156684000" expanded="true" signature="0:1" ph="..." />
+                <marker date="1600156684000" expanded="true" signature="9226:9293" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="starfish_bonus.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="161" column="23" lean-forward="true" selection-start-line="161" selection-start-column="23" selection-end-line="161" selection-end-column="23" />
+            <state relative-caret-position="863">
+              <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
               <folding>
                 <element signature="e#59#72#0" expanded="true" />
               </folding>
@@ -247,7 +256,7 @@
       <file leaf-file-name="datachangenotify.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/datachangenotify.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="506">
               <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
               <folding />
             </state>
@@ -257,8 +266,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="1926" column="4" lean-forward="false" selection-start-line="1926" selection-start-column="4" selection-end-line="1926" selection-end-column="4" />
+            <state relative-caret-position="42526">
+              <caret line="2050" column="4" lean-forward="false" selection-start-line="2050" selection-start-column="4" selection-end-line="2050" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -267,7 +276,7 @@
       <file leaf-file-name="item.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/item/item.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="7590">
               <caret line="361" column="13" lean-forward="false" selection-start-line="361" selection-start-column="13" selection-end-line="361" selection-end-column="13" />
               <folding />
             </state>
@@ -277,7 +286,7 @@
       <file leaf-file-name="user_handler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
+            <state relative-caret-position="18458">
               <caret line="871" column="29" lean-forward="false" selection-start-line="871" selection-start-column="29" selection-end-line="871" selection-end-column="29" />
               <folding />
             </state>
@@ -288,7 +297,7 @@
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/redis_keys.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="302">
-              <caret line="194" column="4" lean-forward="false" selection-start-line="194" selection-start-column="4" selection-end-line="194" selection-end-column="4" />
+              <caret line="164" column="52" lean-forward="false" selection-start-line="164" selection-start-column="30" selection-end-line="164" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -307,7 +316,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>piggy_bank_config</find>
       <find>WeaponStageCount</find>
       <find>dealSpecialFishFire</find>
       <find>_triggerMainQuestSectionFinishEvent</find>
@@ -337,6 +345,7 @@
       <find>isInWhiteList</find>
       <find>doGetBonusInfo</find>
       <find>doGetBonusResult</find>
+      <find>GameData.continuousCheckinDayTS</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -398,10 +407,10 @@
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/quest/daily_quest.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/account.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/achievement/achievement_system.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py" />
       </list>
     </option>
   </component>
@@ -430,7 +439,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -554,30 +562,6 @@
               <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="newfish" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="bonusgame" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
-              <item name="trunk" type="462c0819:PsiDirectoryNode" />
-              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="newfish" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="quest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
-              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
-              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
-              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
-              <item name="trunk" type="462c0819:PsiDirectoryNode" />
-              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="newfish" type="462c0819:PsiDirectoryNode" />
               <item name="player" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -656,6 +640,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -853,7 +838,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20695971" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17704518" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16352202" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -919,13 +904,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/msg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="23" column="8" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/interface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3608">
@@ -1179,7 +1157,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1201,42 +1178,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/account.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5126">
-          <caret line="247" column="37" lean-forward="false" selection-start-line="247" selection-start-column="37" selection-end-line="247" selection-end-column="37" />
-          <folding>
-            <marker date="1600156684000" expanded="true" signature="0:1" ph="..." />
-            <marker date="1600156684000" expanded="true" signature="9226:9293" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19976">
           <caret line="939" column="0" lean-forward="false" selection-start-line="939" selection-start-column="0" selection-end-line="939" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/change_notify.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1600156705000" expanded="true" signature="0:1" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="34" column="25" lean-forward="false" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-          <folding>
-            <element signature="e#126#137#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1253,14 +1199,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#89#100#0" expanded="true" />
+            <element signature="e#89#100#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/biz/item/item.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
+        <state relative-caret-position="7590">
           <caret line="361" column="13" lean-forward="false" selection-start-line="361" selection-start-column="13" selection-end-line="361" selection-end-column="13" />
           <folding />
         </state>
@@ -1268,7 +1214,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
+        <state relative-caret-position="18458">
           <caret line="871" column="29" lean-forward="false" selection-start-line="871" selection-start-column="29" selection-end-line="871" selection-end-column="29" />
           <folding />
         </state>
@@ -1276,23 +1222,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="1926" column="4" lean-forward="false" selection-start-line="1926" selection-start-column="4" selection-end-line="1926" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/redis_keys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="194" column="4" lean-forward="false" selection-start-line="194" selection-start-column="4" selection-end-line="194" selection-end-column="4" />
+        <state relative-caret-position="42526">
+          <caret line="2050" column="4" lean-forward="false" selection-start-line="2050" selection-start-column="4" selection-end-line="2050" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/hall37-py/src/hall/entity/datachangenotify.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
+        <state relative-caret-position="506">
           <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
           <folding />
         </state>
@@ -1300,10 +1238,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/bonusgame/starfish_bonus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="161" column="23" lean-forward="true" selection-start-line="161" selection-start-column="23" selection-end-line="161" selection-end-column="23" />
+        <state relative-caret-position="863">
+          <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
           <folding>
             <element signature="e#59#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/account.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-457">
+          <caret line="247" column="37" lean-forward="false" selection-start-line="247" selection-start-column="37" selection-end-line="247" selection-end-column="37" />
+          <folding>
+            <marker date="1600156684000" expanded="true" signature="0:1" ph="..." />
+            <marker date="1600156684000" expanded="true" signature="9226:9293" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/change_notify.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1600156705000" expanded="true" signature="0:1" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/event.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="535" column="6" lean-forward="false" selection-start-line="535" selection-start-column="6" selection-end-line="535" selection-end-column="6" />
+          <folding>
+            <marker date="1600311870000" expanded="true" signature="260:449" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/redis_keys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="164" column="52" lean-forward="false" selection-start-line="164" selection-start-column="30" selection-end-line="164" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/checkin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="246" column="18" lean-forward="true" selection-start-line="246" selection-start-column="18" selection-end-line="246" selection-end-column="18" />
+          <folding>
+            <element signature="e#94#105#0" expanded="true" />
           </folding>
         </state>
       </provider>

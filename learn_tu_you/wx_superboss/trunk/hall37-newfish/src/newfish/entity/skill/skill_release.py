@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+技能在渔场中释放
+"""
 
 import time
 import random
@@ -11,9 +12,9 @@ import json
 import freetime.util.log as ftlog
 from poker.entity.biz import bireport
 from poker.entity.dao import gamedata, daobase
-from newfish.entity import config, util
+from newfish.entity import config, util, weakdata
 from newfish.entity.config import FISH_GAMEID
-from newfish.entity.redis_keys import GameData, UserData
+from newfish.entity.redis_keys import GameData, UserData, WeakData
 from hall.entity import hallranking
 
 
@@ -23,44 +24,42 @@ class SkillBase(object):
         self.table = table
         self.player = player
         self.skillId = skillId
-        self.skillState = skillState
-        self.skillStar = skillStar
-        self.skillGrade = skillGrade
+        self.skillState = skillState                        # 技能状态
+        self.skillStar = skillStar                          # 技能星级
+        self.skillGrade = skillGrade                        # 技能等级
         self.skillGrade = self.getRealEffectSkillGrade()    # 玩家在欢乐竞技和王者争霸中夺冠，则下次比赛中使用该技能降级
-        # 技能类型（0:主技能;1:辅助技能）
-        self.skillType = skillType
-        self.skillMode = self.table.gameMode    # 0经典 1千炮
-        self.position = {}                      # [bulletId] = [fPosx, fPosy]
-        self.initData()                         # 初始化技能数据
-        self.initState()                        # 初始化技能状态
+        self.skillType = skillType                          # 技能类型（0:主技能 1:辅助技能）
+        self.skillMode = self.table.gameMode                # 0:经典 1:千炮
+        self.position = {}                                  # [bulletId] = [fPosx, fPosy]
+        self.initData()                                     # 初始化技能数据
+        self.initState()                                    # 初始化技能状态
 
     def initLevel(self):
         """
         初始化等级属性数据
         """
         skillGradeConf = config.getSkillGradeConf(self.skillId, self.skillGrade, self.skillMode)
-        self.cost = skillGradeConf.get("cost", 0)               # 消耗子弹
-        self.power = skillGradeConf.get("power", 0)             # 单发威力
-        self.HP = skillGradeConf.get("HP", 0)                   # HP
-        self.impale = skillGradeConf.get("impale", 0)           # 贯穿力
-        self.clip = skillGradeConf.get("clip", 0)               # 技能子弹数
-        self.interval = skillGradeConf.get("interval", 0)       # 每发间隔时间
-        self.duration = skillGradeConf.get("duration", 0)       # 效果时间
-        self.coolDown = skillGradeConf.get("coolDown", 0)       # 冷却时间
-        self.range = skillGradeConf.get("range", 0)             # 提升火蛇加农炮喷射距离
-        self.weaponId = skillGradeConf.get("weaponId", 0)       # 对应武器
-        self.double = skillGradeConf.get("double", [])          # 双倍皮肤炮ID
-        self.isReturn = skillGradeConf.get("isReturn", 0)       # 打空是否返还子弹
-        self.gunSkinMultiple = 1                                # 炮皮肤倍率
-        self.skillMultiple = 1                                  # 技能倍率
+        self.cost = skillGradeConf.get("cost", 0)
+        self.power = skillGradeConf.get("power", 0)
+        self.HP = skillGradeConf.get("HP", 0)
+        self.impale = skillGradeConf.get("impale", 0)
+        self.clip = skillGradeConf.get("clip", 0)
+        self.interval = skillGradeConf.get("interval", 0)
+        self.duration = skillGradeConf.get("duration", 0)
+        self.coolDown = skillGradeConf.get("coolDown", 0)
+        self.range = skillGradeConf.get("range", 0)
+        self.weaponId = skillGradeConf.get("weaponId", 0)
+        self.double = skillGradeConf.get("double", [])
+        self.isReturn = skillGradeConf.get("isReturn", 0)
 
     def initStar(self):
         """
         初始化星级属性数据
         """
-        self.fatal = 0                                          # 冰锥HP在65%以上时无法一击致命
-        self.distance = False                                   # 提高对远距离鱼的威力
-        self.impaleCatch = False                                # 被贯穿的鱼必被捕获
+        self.fatal = 0
+        self.distance = False
+        self.impaleCatch = False
+        self.dayFreeMaxMulti = 0
         for skillStar in xrange(1, self.skillStar + 1):
             skillStarConf = config.getSkillStarConf(self.skillId, skillStar, self.skillMode)
             for abilityConf in skillStarConf["abilities"]:
@@ -84,6 +83,8 @@ class SkillBase(object):
                     self.impaleCatch = True
                 elif ability == 13:                             # 提升火蛇加农炮喷射距离
                     self.range += self.range * value / 100
+                elif ability == 25:                             # 每天可在最高[var]倍下免费使用1次
+                    self.dayFreeMaxMulti = value
         if self.table.typeName in config.NORMAL_ROOM_TYPE:      # 新手/普通/好友渔场-皮肤炮特性，技能双倍消耗/收益
             self.gunSkinMultiple = 2 if self.player.gunId in self.double else 1
             if self.table.typeName == config.FISH_GRAND_PRIX and self.player.isGrandPrixMode():  # 大奖赛冷却减半
@@ -99,28 +100,29 @@ class SkillBase(object):
         elif self.table.typeName == config.FISH_FIGHT:          # 渔友竞技-冷却减半
             self.coolDown //= 2
         self.coolDown = max(self.coolDown, 1)
-        # 格林机关枪除回馈赛外收益翻倍
-        if self.skillId == 5110 and self.table.typeName != config.FISH_TIME_POINT_MATCH:
-            self.skillMultiple = 2
-        else:
-            self.skillMultiple = 1
-        self.gunSkinMultiple *= self.skillMultiple
 
     def initCommonData(self):
         """
         初始化公共数据
         """
         self.fpMultiple = self.player.fpMultiple
-        self.powerRate = 1                          # 技能威力倍率
-        self.durationEndTime = 0                    # 技能效果结束时间
-        self.skillFishes = []                       # 技能召唤的鱼(捕鱼机器人)
-        self.originClip = self.clip                 # 技能原始总子弹数
-        self.originEnergy = 0                       # 技能单发原始能量
-        self.energy = 0                             # 技能单发扣减能量
-        self.totalPower = 0                         # 技能总威力（无加成）
-        self.originRealPower = 0                    # 技能总威力（加能量）
-        self.deductionHP = 0                        # 技能扣减HP
-        self.consumePower = 0                       # 技能曲线消耗能量
+        self.gunSkinMultiple = 1
+        self.skillMultiple = 1
+        # 格林机关枪除回馈赛外收益翻倍
+        if self.skillId == 5110 and self.table.typeName != config.FISH_TIME_POINT_MATCH:
+            self.skillMultiple = 2
+        self.gunSkinMultiple *= self.skillMultiple
+        self.gunX = util.getGunX(self.player.nowGunLevel, self.skillMode)
+        self.powerRate = 1                                  # 技能威力倍率
+        self.durationEndTime = 0                            # 技能效果结束时间
+        self.skillFishes = []                               # 技能召唤的鱼(捕鱼机器人)
+        self.originClip = self.clip                         # 技能原始总子弹数
+        self.originEnergy = 0                               # 技能单发原始能量
+        self.energy = 0                                     # 技能单发扣减能量
+        self.totalPower = 0                                 # 技能总威力（无加成）
+        self.originRealPower = 0                            # 技能总威力（加能量）
+        self.deductionHP = 0                                # 技能扣减HP
+        self.consumePower = 0                               # 技能曲线消耗能量
         self.onceCostCoin = self.getCost / float(self.originClip) * self.fpMultiple  # 技能单发价值金币数
         # 新手期间技能使用次数
         _key = UserData.newbieUseSkillTimes % (FISH_GAMEID, self.player.userId)
@@ -138,63 +140,81 @@ class SkillBase(object):
         """
         初始化技能状态
         """
-        self.state = 0                              # 0:未使用 1:装备中 2:使用中
-        self.cdStartTime = int(time.time())         # 技能冷却开始时的时间
+        self.state = 0                                      # 0:未使用 1:装备中 2:使用中
+        self.cdStartTime = int(time.time())                 # 技能冷却开始时的时间
+        self.usingDayFree = False                           # 是否每日免费装备中
 
     def use(self, select):
         """
-        选中取消技能 select使用
+        选中取消技能
         """
         eventId = None
         orgState = self.state
         if select:
-            if self.state == 0:                     # 状态是未选中
+            if self.state == 0:
                 if self.player.gchgTimer:
                     self.player.gchgTimer.cancel()
-                self.state = 1                      # 选中技能
-                self.clear()                        # 清除技能数据(广播捕鱼机器人因主人离开房间而死亡)
-                self.initData()                     # 初始化技能数据
-                self.player.costClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)      # 消耗子弹
-                self.player.addUsingSkill(self.skillId, self.skillType)                         # 加技能
+                self.state = 1
+                self.clear()
+                self.initData()
+                if self.checkIfDayFree():
+                    # 每日免费使用
+                    self.doDayFreeUse()
+                    self.usingDayFree = True
+                else:
+                    self.player.costClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)
+                self.player.addUsingSkill(self.skillId, self.skillType)
                 eventId = "BI_NFISH_GE_SKILL_USE"
-        else:                                           # 未选中
-            if self.state == 1:                         # 选中状态
+        else:
+            if self.state == 1:
+                if self.usingDayFree:
+                    self.cancelDayFreeUse()
+                else:
+                    self.player.addClip(self.getCost, 0, self.skillId)
                 self.state = 0
-                self.player.addClip(self.getCost, "BI_NFISH_USE_SKILL_%d" % self.skillId)       # 加子弹
-                self.player.removeUsingSkill(self.skillId, self.skillType)                      # 取消技能
+                self.player.removeUsingSkill(self.skillId, self.skillType)
                 eventId = "BI_NFISH_GE_SKILL_CANCEL"
-        self.table.broadcastSkillUse(self, select, self.player.userId, orgState)                # 使用技能
+        self.table.broadcastSkillUse(self, select, self.player.userId, orgState)
+        if config.LOCK_ITEM in self.player.skill_item:
+            self.player.skill_item[config.LOCK_ITEM].pause_and_continue_time(config.LOCK_ITEM)
+        self.player.gunEffectState(2)
         if eventId:
-            bireport.reportGameEvent(eventId, self.player.userId, FISH_GAMEID, self.table.roomId,
-                                     self.table.tableId, int(self.skillId), self.player.level, 0, 0, [], self.player.clientId)
-            ftlog.info("skill_release->use",
-                       "userId =", self.player.userId,
-                       "eventId =", eventId,
-                       "skillId =", self.skillId,
-                       "skillStar =", self.skillStar,
-                       "skillGrade =", self.skillGrade,
-                       "skillType =", self.skillType,
-                       "gunId =", self.player.gunId,
-                       "nowGunLevel =", self.player.nowGunLevel)
+            bireport.reportGameEvent(eventId, self.player.userId, FISH_GAMEID, self.table.roomId,  self.table.tableId,
+                                     int(self.skillId), self.player.level, 1 if self.usingDayFree else 0, 0, [], self.player.clientId)
+            ftlog.info(
+                "skill_release->use",
+                "userId =", self.player.userId,
+                "eventId =", eventId,
+                "skillId =", self.skillId,
+                "skillStar =", self.skillStar,
+                "skillGrade =", self.skillGrade,
+                "skillType =", self.skillType,
+                "gunId =", self.player.gunId,
+                "nowGunLevel =", self.player.nowGunLevel,
+                "isDayFree =", self.usingDayFree
+            )
 
     def end(self):
         """
         结束技能
         """
         if ftlog.is_debug():
-            ftlog.debug("skill end, userId =", self.player.userId, "skillId =", self.skillId, "useTimes =",
-                        self.newbieUseTimes)
+            ftlog.debug("skill end, userId =", self.player.userId, "skillId =", self.skillId, "useTimes =", self.newbieUseTimes)
         if self.table.typeName == config.FISH_NEWBIE and not self.player.redState:
             _key = UserData.newbieUseSkillTimes % (FISH_GAMEID, self.player.userId)
             daobase.executeUserCmd(self.player.userId, "HINCRBY", _key, str(self.skillId), 1)
         self.initState()
         self.player.removeUsingSkill(self.skillId, self.skillType)
         self.table.broadcastSkillEnd(self)
+        if config.LOCK_ITEM in self.player.skill_item:        # 锁定继承开始时间计时
+            self.player.skill_item[config.LOCK_ITEM].pause_and_continue_time(config.LOCK_ITEM)
+        self.player.syncSkillItemSlots()
+        self.player.gunEffectState(2)
         if self.table.typeName in config.NORMAL_ROOM_TYPE:
             # 使用技能事件
             from newfish.game import TGFish
             from newfish.entity.event import UseSkillEvent
-            chip = int(self.getCost * self.fpMultiple)              # 消耗的金币
+            chip = int(self.getCost * self.fpMultiple)
             event = UseSkillEvent(self.player.userId, FISH_GAMEID, self.table.roomId, self.table.tableId, self.skillId, self.fpMultiple, chip)
             TGFish.getEventBus().publishEvent(event)
             self.player.triggerUseSkillEvent(event)
@@ -237,30 +257,27 @@ class SkillBase(object):
         """
         消耗技能子弹
         """
-        if self.clip > 0:                       # 技能子弹数
-            lastCoin = self.player.holdCoin     # 持有金币（非实时数据库+内存金币）
-            for val in self.player.usingSkill:  # 使用的技能
+        if self.clip > 0:
+            lastCoin = self.player.holdCoin
+            for val in self.player.usingSkill:      # 当前技能使用中时，检测之前技能是否在使用中，如果是，结束之前技能
                 skillId = val.get("skillId")
                 skillType = val.get("skillType")
                 if skillId != self.skillId or skillType != self.skillType:
                     skill = self.player.getSkill(skillId, skillType)
-                    if skill.state == 2:        # 使用中
+                    if skill.state == 2:
                         skill.end()
-            self.state = 2                      # 0:未使用 1:装备中 2:使用中
+            self.state = 2
             self.clip -= 1
-            self.position[bulletId] = [fPosx, fPosy]    # 子弹的位置
-            self.updateSkillData()                      # 更新技能power
-            self.player.reportBIFeatureData("BI_NFISH_GE_FT_FIRE", self.weaponId, self.onceCostCoin)    # 技能单发价值金币数
+            self.position[bulletId] = [fPosx, fPosy]
+            self.updateSkillData()
+            self.player.reportBIFeatureData("BI_NFISH_GE_FT_FIRE", self.weaponId, self.onceCostCoin)
 
+            # TODO 该段代码有问题（lichen）
             if lastCoin > self.table.runConfig.coinShortage > self.player.holdCoin:
-                coinShortageCount = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, {})   # 金币不足次数
+                coinShortageCount = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, {})
                 coinShortageCount.setdefault(str(self.table.runConfig.fishPool), 0)
                 coinShortageCount[str(self.table.runConfig.fishPool)] += 1
                 gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.coinShortageCount, json.dumps(coinShortageCount))
-                if ftlog.is_debug():
-                    ftlog.debug("costClip, skill", self.player.userId, lastCoin, self.table.runConfig.coinShortage,
-                                self.player.holdCoin,
-                                coinShortageCount)
             return True
         return False
 
@@ -274,43 +291,54 @@ class SkillBase(object):
         """
         更新技能数据
         """
-        self.updateSkillEnergy()            # 更新技能能量
-        skillGradeConf = config.getSkillGradeConf(self.skillId, self.skillGrade, self.skillMode)    # 获取技能等级的配置
+        self.updateSkillEnergy()
+        skillGradeConf = config.getSkillGradeConf(self.skillId, self.skillGrade, self.skillMode)
         self.impale = skillGradeConf.get("impale", 0)
         powerAddtion = self.player.getPowerAddition(self.weaponId)
         self.totalPower = float(self.power * self.powerRate * powerAddtion)
-        self.originRealPower = self.totalPower + self.energy    # 总威力 + 能量
+        self.originRealPower = self.totalPower + self.energy
         self.deductionHP = self.totalPower
         if ftlog.is_debug():
-            ftlog.debug("updateSkillData->",  "userId =", self.player.userId, "impale =", self.impale, "totalPower =", self.totalPower, "deductionHP =", self.deductionHP)
+            ftlog.debug(
+                "updateSkillData->",
+                "userId =", self.player.userId,
+                "impale =", self.impale,
+                "totalPower =", self.totalPower,
+                "deductionHP =", self.deductionHP
+            )
 
     def updateSkillEnergy(self):
         """
-        更新技能能量
+        更新技能能量（通过奖池转换而来）
         """
-        bonus = self.table.room.lotteryPool.getSkillPoolCoin() // self.fpMultiple   # 获取技能池的彩池奖金数
+        bonus = 0
+        if self.table.room.lotteryPool:
+            bonus = self.table.room.lotteryPool.getSkillPoolCoin() // self.fpMultiple
         randomNum = random.uniform(0.5, 1.5)
         singleEnergy = math.ceil(self.power * self.powerRate * randomNum)
-        self.originEnergy = min(self.player.energy, singleEnergy)           # 单发威力
-        self.energy = max(min(self.originEnergy, bonus), 0)                 # 能量
+        self.originEnergy = min(self.player.energy, singleEnergy)
+        self.energy = max(min(self.originEnergy, bonus), 0)
         self.player.energy -= self.energy
-        self.table.room.lotteryPool.deductionSkillPoolCoin(int(self.energy * self.fpMultiple))  # 扣除技能池的彩池奖金数
+        if self.table.room.lotteryPool:
+            self.table.room.lotteryPool.deductionSkillPoolCoin(int(self.energy * self.fpMultiple))
         if ftlog.is_debug():
-            ftlog.debug("updateSkillEnergy->",
-                    "userId =", self.player.userId,
-                    "bonus =", bonus,
-                    "randomNum =", randomNum,
-                    "singleEnergy =", singleEnergy,
-                    "originEnergy =", self.originEnergy,
-                    "energy =", self.energy,
-                    "player.energy =", self.player.energy)
+            ftlog.debug(
+                "updateSkillEnergy->",
+                "userId =", self.player.userId,
+                "bonus =", bonus,
+                "randomNum =", randomNum,
+                "singleEnergy =", singleEnergy,
+                "originEnergy =", self.originEnergy,
+                "energy =", self.energy,
+                "player.energy =", self.player.energy
+            )
 
     @property
     def getCost(self):
         """
         技能消耗子弹数
         """
-        return self.cost * self.gunSkinMultiple / self.skillMultiple
+        return self.cost * self.gunSkinMultiple / self.skillMultiple * self.gunX
 
     @property
     def cdTimeLeft(self):
@@ -336,23 +364,9 @@ class SkillBase(object):
         """
         raise NotImplementedError
 
-    def reportFishCost(self, use_fish_value, fishType, realPower, fishValue, *args):
-        """
-        上报开火捕鱼成本.
-        """
-        cost = fishValue if use_fish_value else realPower
-        cost *= (self.fpMultiple * self.gunSkinMultiple)
-        if ftlog.is_debug():
-            ftlog.debug("report, fish cost, skill", use_fish_value, fishType, cost, args)
-        self.table.cb_reporter.add_cost(fishType, cost)
-
     def normalCatchFish(self, bulletId, wpId, fIds, extends):
         """
         普通捕获算法
-        :param bulletId: 子弹Id
-        :param wpId: 武器Id
-        :param fIds: 鱼的Ids
-        :param extends: 扩展参数
         """
         catch = []
         gain = []
@@ -362,31 +376,28 @@ class SkillBase(object):
         isCatch = False
         self.consumePower = 0
         fishes, fishesHPDict = self._sortedFishes(fIds, extends)
-        totalPowerRate = self.totalPower / self.originRealPower     # 技能总威力（无加成）的占比
+        totalPowerRate = self.totalPower / self.originRealPower  # 技能总威力（无加成）的占比
         realPower = self.originRealPower
         bufferCoinAdd = self.player.getCoinAddition(self.weaponId)
         curveProfitCoin = 0
-        aloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=True)         # 返回概率系数
-        nonAloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=False)     # 返回概率系数
+        aloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=True)
+        nonAloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=False)
         for fId, probbRadix in fishes:
-            isOK, catchUserId, _ = self.table.verifyFish(self.player.userId, fId, wpId)
+            isOK, catchUserId = self.table.verifyFish(self.player.userId, fId, wpId)
             if not isOK:
                 continue
             catchMap = {}
             catchMap["fId"] = fId
             catchMap["reason"] = 1
             fishInfo = self.table.fishMap[fId]
-            last_real_power = max(realPower, 0)
             probb, realPower = self.getSkillCatchProbb(fId, len(fIds), realPower, probbRadix, aloofOdds, nonAloofOdds)
             catchMap["HP"] = fishInfo["HP"]
             randInt = random.randint(1, 10000)
-            use_fish_value = True if 10000 == probb else False
             if randInt <= probb:
                 multiple = self.gunSkinMultiple
                 # 欺诈只获得1倍收益.
                 if catchUserId != self.player.userId:
                     multiple = 1
-                # 捕鱼获得的金币、获得的道具、获得的经验
                 fishGainChip, fishGain, fishExp = self.table.dealKillFishGain(fId, self.player, self.fpMultiple, multiple, bufferCoinAdd)
                 catchMap["reason"] = 0
                 if catchUserId == self.player.userId:
@@ -410,35 +421,27 @@ class SkillBase(object):
                     otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain)
             # 技能曲线
             if self.table.typeName in config.DYNAMIC_ODDS_ROOM_TYPE:
-                fishType = fishInfo["conf"]["fishType"]
+                fishType = fishInfo["fishType"]
                 fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
                 if fishConf["type"] in config.NON_ALOOF_FISH_TYPE:
                     if catchMap["reason"] == 0:
-                        curveProfitCoin += totalPowerRate * fishConf[
-                            "value"] * self.gunSkinMultiple * self.fpMultiple
-                # 记录开火捕鱼成本.
-                if fishConf["type"] in config.NON_ALOOF_FISH_TYPE:
-                    odds = nonAloofOdds
-                else:
-                    odds = aloofOdds
-                if odds == 0:
-                    odds = 1
-                fishValue = fishConf["value"] / odds
-                self.reportFishCost(use_fish_value, fishType, last_real_power, fishValue, self.originRealPower, aloofOdds, nonAloofOdds)
+                        curveProfitCoin += totalPowerRate * fishConf["value"] * self.gunSkinMultiple * self.fpMultiple
         self.consumePower = min(self.consumePower, self.originRealPower)
         curveLossCoin = self.onceCostCoin * self.consumePower / self.originRealPower
         if ftlog.is_debug():
-            ftlog.debug("normalCatchFish->",
-                        "userId =", self.player.userId,
-                        "catch =", catch,
-                        "gain =", gain,
-                        "gainChip =", gainChip,
-                        "onceCostCoin =", self.onceCostCoin,
-                        "consumePower =", self.consumePower,
-                        "originRealPower =", self.originRealPower,
-                        "totalPowerRate =", totalPowerRate,
-                        "curveLossCoin =", curveLossCoin,
-                        "curveProfitCoin =", curveProfitCoin)
+            ftlog.debug(
+                "normalCatchFish->",
+                "userId =", self.player.userId,
+                "catch =", catch,
+                "gain =", gain,
+                "gainChip =", gainChip,
+                "onceCostCoin =", self.onceCostCoin,
+                "consumePower =", self.consumePower,
+                "originRealPower =", self.originRealPower,
+                "totalPowerRate =", totalPowerRate,
+                "curveLossCoin =", curveLossCoin,
+                "curveProfitCoin =", curveProfitCoin
+            )
         self.player.dynamicOdds.updateOdds(curveProfitCoin - curveLossCoin)
         if isCatch:
             self.player.addCombo()
@@ -450,11 +453,8 @@ class SkillBase(object):
         return catch, gain, gainChip, exp
 
     def _getFishProbbRadix(self, fishInfo, fishConf):
-        # 10倍场在完成641002时，难度使用200.
-        if hasattr(self.table, "isNeedAdjustFishProbbRadix") and self.table.isNeedAdjustFishProbbRadix(fishConf, self.player):
-            return 200
         # 新手任务期间概率特殊处理
-        if self.player and self.player.taskSystemUser and self.player.taskSystemUser.isRedRoom():
+        if self.player and util.isNewbieRoom(self.player.table.typeName):
             curTaskId = self.player.taskSystemUser.curTask.getTaskId()
             isTaskOver = self.player.taskSystemUser.curTask.isTaskOver()
             probbRadix = config.getCommonValueByKey("newbieFishProbb").get(str(fishConf["type"]), {}).get(str(curTaskId))
@@ -469,6 +469,9 @@ class SkillBase(object):
         elif fishConf["type"] in config.RAINBOW_BONUS_FISH_TYPE:
             value = fishConf["score"]
             gunMultiple = config.getGunConf(self.player.gunId, self.player.clientId, self.player.gunLv, self.table.gameMode).get("multiple", 1)
+            rainbowPoolCoin = 0
+            if self.table.room.lotteryPool:
+                rainbowPoolCoin = self.table.room.lotteryPool.getRainbowPoolCoin()
             if fishConf["type"] in config.TERROR_FISH_TYPE:
                 value = config.getWeaponConf(fishConf["weaponId"], False, self.table.gameMode)["power"]
             if self.player.dynamicOdds.currRechargeBonus >= value * gunMultiple * self.fpMultiple:
@@ -476,11 +479,10 @@ class SkillBase(object):
                 if ftlog.is_debug():
                     ftlog.debug("_getFishProbbRadix->currRechargeBonus =", self.player.dynamicOdds.currRechargeBonus, fishConf)
                 return fishConf["probb1"]
-            elif (min(3 * self.originEnergy * self.fpMultiple, self.table.room.lotteryPool.getRainbowPoolCoin()) >=
-                  value * gunMultiple * self.fpMultiple):
+            elif (min(3 * self.originEnergy * self.fpMultiple, rainbowPoolCoin) >= value * gunMultiple * self.fpMultiple):
                 # 存在能量及彩虹鱼奖池
                 if ftlog.is_debug():
-                    ftlog.debug("_getFishProbbRadix->energy =", self.originEnergy, self.table.room.lotteryPool.getRainbowPoolCoin(), fishConf)
+                    ftlog.debug("_getFishProbbRadix->energy =", self.originEnergy, rainbowPoolCoin, fishConf)
                 return fishConf["probb1"]
             return fishConf["probb2"]
         else:
@@ -499,8 +501,8 @@ class SkillBase(object):
             if not isOK:
                 continue
             fishInfo = self.table.fishMap[fId]
-            originHP = fishInfo["HP"]                   # 鱼血
-            fishType = fishInfo["conf"]["fishType"]     # 鱼ID
+            originHP = fishInfo["HP"]
+            fishType = fishInfo["fishType"]
             fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
             fatal = self.table.dealIceConeEffect(fId, fishConf)
             fishHP = int(originHP - self.deductionHP)
@@ -512,7 +514,6 @@ class SkillBase(object):
         if ftlog.is_debug():
             ftlog.debug("_sortedFishes->", fishes, fishesHPDict, fIds)
         return fishes, fishesHPDict
-
 
     def getSkillCatchProbb(self, fId, fIdsCount, realPower, probbRadix, aloofOdds, nonAloofOdds):
         """
@@ -527,25 +528,21 @@ class SkillBase(object):
         """
         fishInfo = self.table.fishMap[fId]
         fishHP = fishInfo["HP"]
-        fishConf = config.getFishConf(fishInfo["conf"]["fishType"], self.table.typeName, self.fpMultiple)
-        coefficient = self.table.getProbbCoefficient(self.player, fishConf, fishInfo)
+        ftType = fishInfo["type"]
+        coefficient = self.table.getProbbCoefficient(self.player, fishInfo)
         odds = 0
         lossPower = 0
-        _ft = fishConf["type"]
         # 概率参数为0时，无HP必定被捕获，有HP无法被捕获
         if probbRadix == 0:
-            if fishHP <= 0:
-                probb = 10000
-            else:
-                probb = 0
+            probb = 10000 if fishHP <= 0 else 0
         else:
             if realPower <= 0:
                 probb = 0
             else:
-                if _ft in config.NON_ALOOF_FISH_TYPE:       # 不是高冷鱼
+                if ftType in config.NON_ALOOF_FISH_TYPE:
                     odds = nonAloofOdds
                 else:
-                    odds = aloofOdds                        # 是否高冷鱼 是
+                    odds = aloofOdds
                 if odds > 0:
                     lossPower = probbRadix / odds
                     if realPower >= lossPower:
@@ -555,36 +552,26 @@ class SkillBase(object):
                 else:
                     lossPower = probbRadix * 2
                     probb = 0
-                if _ft in config.NON_ALOOF_FISH_TYPE:
+                if ftType in config.NON_ALOOF_FISH_TYPE:
                     if realPower >= lossPower:
                         self.consumePower += lossPower
                     else:
                         self.consumePower += realPower
                 realPower -= lossPower
         probb *= coefficient
-        if _ft in config.RED_FISH_TYPE:
+        if ftType in config.RED_FISH_TYPE:
             probb *= self.player.catchRedFishProbbRatio
             if self.player.userId in config.getPublic("banRedFishList", []):
                 probb *= 0.3
-        # 新手任务6期间.
-        if self.table.typeName == config.FISH_NEWBIE and not self.player.redState and self.player.taskSystemUser:
-            taskId = self.player.taskSystemUser.getCurMainTaskId()
-            if taskId == 10006 and self.skillId == 5101:    # 合金飞弹
-                if _ft not in config.BOSS_FISH_TYPE:
-                    probb = 10000
-            elif self.skillId == 5105:# 榴弹炮
-                if self.newbieUseTimes == 0:
-                    probb = max(4000, probb)
-                elif taskId == 10006 and _ft not in config.BOSS_FISH_TYPE:
-                    probb = max(2000, probb)
         if ftlog.is_debug():
-            ftlog.debug("getSkillCatchProbb->",
+            ftlog.debug(
+                "getSkillCatchProbb->",
                 "userId =", self.player.userId,
                 "probb =", probb,
                 "odds =", odds,
                 "fId =", fId,
                 "fIdsCount =", fIdsCount,
-                "fishType =", fishInfo["conf"]["fishType"],
+                "fishType =", fishInfo["fishType"],
                 "fishHP =", fishHP,
                 "realPower =", realPower,
                 "probbRadix =", probbRadix,
@@ -592,7 +579,8 @@ class SkillBase(object):
                 "nonAloofOdds =", nonAloofOdds,
                 "lossPower =", lossPower,
                 "consumePower =", self.consumePower,
-                "coefficient =", coefficient)
+                "coefficient =", coefficient
+            )
         return probb, realPower
 
     def getRealEffectSkillGrade(self):
@@ -600,7 +588,7 @@ class SkillBase(object):
         玩家在欢乐竞技和王者争霸中夺冠，则下次比赛中使用该技能降级
         """
         _skillGrade = self.skillGrade
-        match_rank = 0
+        match_rank = None
         reductGrade = 0
         if self.table.runConfig.fishPool == 44102:
             reductGrade = 5
@@ -617,16 +605,53 @@ class SkillBase(object):
                     "curGrade =", _skillGrade, self.table.runConfig.fishPool, match_rank, reductGrade)
         return _skillGrade
 
+    def checkIfDayFree(self):
+        """检查技能是否免费"""
+        if ftlog.is_debug():
+            ftlog.debug("SkillBase.checkIfDayFree IN", "tableId=", self.table.tableId, "userId=", self.player.userId,
+                        "dayFreeMaxMulti=", self.dayFreeMaxMulti, "multiple=", self.table.runConfig.multiple)
+        if self.table.typeName == config.FISH_TIME_MATCH or self.table.typeName == config.FISH_TIME_POINT_MATCH:
+            return False
+        if self.dayFreeMaxMulti >= self.table.runConfig.multiple:
+            data = weakdata.getDayFishData(self.player.userId, WeakData.skillFreeUseCount, {})
+            if ftlog.is_debug():
+                ftlog.debug("SkillBase.checkIfDayFree get data", "userId=", self.player.userId, "data=", data)
+            if str(self.skillId) in data:
+                if data[str(self.skillId)] < 1:                                             # 目前固定每日免费1次，不走配置
+                    return True
+            else:
+                return True
+        return False
+
+    def doDayFreeUse(self):
+        """免费使用次数"""
+        data = weakdata.getDayFishData(self.player.userId, WeakData.skillFreeUseCount, {})
+        skillId = str(self.skillId)
+        if skillId in data:
+            data[skillId] += 1
+        else:
+            data[skillId] = 1
+        weakdata.setDayFishData(self.player.userId, WeakData.skillFreeUseCount, data)
+        return data[skillId]
+
+    def cancelDayFreeUse(self):
+        """取消免费使用的次数"""
+        data = weakdata.getDayFishData(self.player.userId, WeakData.skillFreeUseCount, {})
+        skillId = str(self.skillId)
+        if skillId in data:
+            data[skillId] -= 1
+            weakdata.setDayFishData(self.player.userId, WeakData.skillFreeUseCount, data)
+        return data.get(skillId, 0)
+
 
 class SkillMissile(SkillBase):
     """
     合金飞弹(5101)
     """
-
     def catchFish(self, bulletId, wpId, fIds, extends):
         """合金飞弹捕鱼"""
         useMissileCount = gamedata.getGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount)
-        if not useMissileCount or useMissileCount < 5 and self.table.runConfig.fishPool == 44001:           # 普通渔场2倍爆炸威力增加5倍
+        if not useMissileCount or useMissileCount < 5 and self.table.runConfig.fishPool == 44001:   # 普通渔场2倍爆炸威力增加5倍
             self.powerRate = 5
             useMissileCount = 1 if not useMissileCount else useMissileCount + 1
             gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount, useMissileCount)
@@ -642,9 +667,9 @@ class SkillMissile(SkillBase):
                 continue
             fishInfo = self.table.fishMap[fId]
             originHP = fishInfo["HP"]
-            fishType = fishInfo["conf"]["fishType"]
+            fishType = fishInfo["fishType"]
             fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
-            fatal = self.table.dealIceConeEffect(fId, fishConf)     # 冰锥HP在65%以上时无法一击致命
+            fatal = self.table.dealIceConeEffect(fId, fishConf)         # 冰锥HP在65%以上时无法一击致命
             fishHP = int(originHP - self.deductionHP)
             fishHP = self.table.dealFishHP(fId, fishHP, fatal)
             fishesDict[fId] = self._getFishProbbRadix(fishInfo, fishConf)
@@ -661,16 +686,14 @@ class SkillMagic(SkillBase):
     """
     魔术炮(5102)
     """
-
     def initStar(self):
         super(SkillMagic, self).initStar()
-        if self.table.typeName == config.FISH_TIME_MATCH:           # 回馈赛-召唤出的鱼永久无敌
-            self.duration += 999                                    # 效果时间
-        elif self.table.typeName == config.FISH_TIME_POINT_MATCH:   # 定时积分赛渔场
+        if self.table.typeName == config.FISH_TIME_MATCH:   # 回馈赛-召唤出的鱼永久无敌
+            self.duration += 999
+        elif self.table.typeName == config.FISH_TIME_POINT_MATCH:
             self.duration += 999
 
     def catchFish(self, bulletId, wpId, fIds, extends):
-        """魔术炮捕鱼"""
         catch, gain, gainChip, exp = [], [], 0, 0
         position = self.position.get(bulletId, [0, 0])
         buffer = None
@@ -681,60 +704,126 @@ class SkillMagic(SkillBase):
             fishes = self.player.getTargetFishs()
             if fishes:
                 fishType = random.choice(fishes)
+        _skillGrade = self.skillGrade                       # self.getRealEffectSkillGrade()
+        commonRoom = config.NORMAL_ROOM_TYPE
+        if (self.table.typeName in commonRoom and not fishType) or \
+           (self.table.typeName not in commonRoom):         # 普通场无任务时或者非普通场召唤倍率鱼
+            callFishList = config.getCallMultipleFishConf(_skillGrade, self.table.typeName, self.table.runConfig.fishPool)
+            totalWeight = sum([dict(fishes)["weight"] for fishes in callFishList if fishes])
+            fishType = 0                                    # callFishList[0]["fishType"]
+            if totalWeight > 0:
+                weight = random.randint(0, totalWeight)
+                for callFish in callFishList:
+                    if callFish["weight"] == 0:
+                        continue
+                    if callFish and weight - callFish["weight"] <= 0:
+                        fishType = callFish["fishType"]
+                        break
+                    weight -= callFish["weight"]
+        if fishType > 0:
+            groupName = "call_%d_lv%d" % (fishType, _skillGrade)
+            self.table.insertFishGroup(groupName, position, buffer=buffer, gameResolution=self.player.gameResolution)
+            if ftlog.is_debug():
+                ftlog.debug("SkillMagic, insertFishGroup, userId =", self.player.userId, groupName, self.skillGrade, _skillGrade)
+        else:
+            if ftlog.is_debug():
+                ftlog.debug("catchFish, not find fishType !", self.player.userId)
+        return catch, gain, gainChip, exp
 
 
 class SkillCannon(SkillBase):
     """
     火蛇加农炮(5103)
     """
-    # def _sortedFishes(self, fIds, extends=None):
-    #     if extends:
-    #         fIds = sorted(zip(fIds, extends), key=lambda d: int(d[1]))
-    #     else:
-    #         ftlog.debug("_sortedFishes, missing extends param! userId =", self.player.userId, "skillId =", self.skillId)
-    #     fishesDict = {}
-    #     fishesHPDict = {}
-    #     for fId, distance in fIds:
-    #         isOK = self.table.findFish(fId)
-    #         if not isOK:
-    #             continue
-    #         fishInfo = self.table.fishMap[fId]
-    #         originHP = fishInfo["HP"]
-    #         fishType = fishInfo["conf"]["fishType"]
-    #         fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
-    #         fatal = self.table.dealIceConeEffect(fId)
-    #         powerRateHP = self.getPowerRateHP(distance)
-    #         self.deductionHP = self.totalPower * powerRateHP
-    #         fishHP = int(originHP - self.deductionHP)
-    #         fishHP = self.table.dealFishHP(fId, fishHP, fatal)
-    #         fishesDict[fId] = self._getFishProbbRadix(fishInfo, fishConf)
-    #         if originHP != fishHP:
-    #             fishesHPDict[fId] = originHP
-    #     fishes = fishesDict.items()
-    #     ftlog.debug("_sortedFishes->", fishes, fishesHPDict, fIds)
-    #     return fishes, fishesHPDict
-    #
-    # def getPowerRateHP(self, distance):
-    #     if distance > self.range * 0.75:
-    #         powerRateHP = 2 if self.distance else 1.5
-    #     elif distance > self.range * 0.5:
-    #         powerRateHP = 2.5 if self.distance else 2
-    #     else:
-    #         powerRateHP = 3
-    #     return powerRateHP
-    #
-    # def catchFish(self, bulletId, wpId, fIds, extends):
-    #     catch = []
-    #     gain = []
-    #     gainChip = 0
-    #     exp = 0
-    #     if len(fIds) != len(extends):
-    #         ftlog.error("SkillCannon->catchFish fIds != extends", self.player.userId)
-    #         return catch, gain, gainChip, exp
-    #     return self.normalCatchFish(bulletId, wpId, fIds, extends)
-
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        catch = []
+        gain = []
+        gainChip = 0
+        exp = 0
+        otherCatch = {}
+        isCatch = False
+        bufferCoinAdd = self.player.getCoinAddition(self.weaponId)
+        realPower = self.originRealPower
+        aloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=True)
+        for fId in fIds:
+            isOK, catchUserId = self.table.verifyFish(self.player.userId, fId)
+            if not isOK or self.impale <= 0:
+                break
+            catchMap = {}
+            catchMap["fId"] = fId
+            catchMap["reason"] = 1
+            fishInfo = self.table.fishMap[fId]
+            fishType = fishInfo["fishType"]
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            originHP = fishInfo["HP"]
+            probbRadix = fishInfo["HP"] + fishConf["probb2"]
+            if self.impale > probbRadix:  # 子弹能穿刺鱼
+                self.impale -= probbRadix
+                self.impale = max(self.impale, 0)
+                randInt = random.randint(1, 10000)
+                if randInt <= 9000 or self.impaleCatch:
+                    catchMap["reason"] = 0
+                if ftlog.is_debug():
+                    ftlog.debug("SkillCannon->impale->",
+                                "userId =", self.player.userId,
+                                "randInt =", randInt,
+                                "fId =", fId,
+                                "fishType =", fishInfo["fishType"],
+                                "probbRadix =", probbRadix,
+                                "impale =", self.impale)
+            else:  # 子弹无法穿刺鱼
+                realPower += self.impale
+                self.impale = 0
+                fatal = self.table.dealIceConeEffect(fId, fishConf)
+                self.deductionHP = self.totalPower
+                fishHP = int(originHP - self.deductionHP)
+                self.table.dealFishHP(fId, fishHP, fatal)
+                probbRadix = self._getFishProbbRadix(fishInfo, fishConf)
+                probb, realPower = self.getSkillCatchProbb(fId, len(fIds), realPower, probbRadix, aloofOdds, aloofOdds)
+                randInt = random.randint(1, 10000)
+                if randInt <= probb:
+                    catchMap["reason"] = 0
+            catchMap["HP"] = fishInfo["HP"]
+            if catchMap["reason"] == 0:
+                multiple = self.gunSkinMultiple
+                # 欺诈只获得1倍收益.
+                if catchUserId != self.player.userId:
+                    multiple = 1
+                fishGainChip, fishGain, fishExp = self.table.dealKillFishGain(fId, self.player, self.fpMultiple, multiple, bufferCoinAdd)
+                if catchUserId == self.player.userId:
+                    isCatch = True
+                    catch.append(catchMap)
+                    gainChip += fishGainChip
+                    exp += fishExp
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain, catchMap, fishExp)
+            else:
+                if originHP != catchMap["HP"]:
+                    catch.append(catchMap)
+                fishGainChip, fishGain = self.table.dealHitBossGain(self.power + self.impale, fId, self.player)
+                if catchUserId == self.player.userId:
+                    gainChip += fishGainChip
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain)
+        if ftlog.is_debug():
+            ftlog.debug("catchFish->",
+                        "userId =", self.player.userId,
+                        "catch =", catch,
+                        "gain =", gain,
+                        "onceCostCoin =", self.onceCostCoin,
+                        "originRealPower =", self.originRealPower)
+        if isCatch:
+            self.player.addCombo()
+        for userId, catchInfo in otherCatch.iteritems():
+            otherPlayer = self.table.getPlayer(userId)
+            if otherPlayer:
+                self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+        return catch, gain, gainChip, exp
 
 
 class SkillFrozen(SkillBase):
@@ -742,84 +831,51 @@ class SkillFrozen(SkillBase):
     极冻炮(5104)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        """
-        捕获算法 捕鱼
-        :param bulletId: 子弹ID
-        :param wpId: 武器ID
-        :param fIds: 鱼的ID
-        :param extends: 扩展
-        """
         catch = []
         gain = []
         gainChip = 0
-        exp = 0                     # 生用户等级的经验  现在炮的等级就是用户等级 炮的等级用珍珠升级
+        exp = 0
         position = self.position.get(bulletId, [0, 0])
-        endTime = time.time() + self.duration       # self.duration效果时间
+        endTime = time.time() + self.duration
         invincibleEndTime = 0
-        # 技能ID、结束时间、释放者ID、技能星级、技能等级、持续时间、次数、类型
-        buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0]
-        self.table.insertFishGroup("call_piton_%d" % self.skillStar, position, self.HP, buffer,
-                                   gameResolution=self.player.gameResolution)           # 增加鱼群 == 召唤鱼群
-        frozenFishes = []           # 冻住的鱼
+        frozenBuffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0]
+        self.table.insertFishGroup("call_piton_%d" % self.skillStar, position, self.HP, frozenBuffer,
+                                   gameResolution=self.player.gameResolution)
+        frozenFishes = []
         invincibleFishes = []
-        addTimeGroup = []           # 延长时间的鱼群
-        for fId in fIds:            # 冻住鱼并刷新剩余冰冻时间
+        addTimeGroups = []
+        for fId in fIds:
             isOK = self.table.findFish(fId)
             if not isOK:
                 continue
-            fishType = self.table.fishMap[fId]["conf"]["fishType"]
-            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
-            if fishConf["type"] in config.ICE_FISH_TYPE:  # 冰锥不会刷新冰冻时间
+            ftType = self.table.fishMap[fId]["type"]
+            if ftType in config.ICE_FISH_TYPE:    # 冰锥不会刷新冰冻时间
                 continue
-            lastFrozenTime = 0              # 上次冰冻的持续时间
-            frozenTime = self.duration
-            isCoverFrozen = True
             isCoverInvincible = True
-            buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0, self.skillType]  # 0冰冻次数
             buffers = self.table.fishMap[fId]["buffer"]
-            if ftlog.is_debug():
-                ftlog.debug("SkillFrozen->lastBuffer =", fId, self.table.fishMap[fId], buffers, endTime)
+            # 计算能否冰冻
+            isCoverFrozen, lastFrozenTime, frozenTime, _ = self.table.checkCoverFrozen(fId, self.duration, endTime)
+            if isCoverFrozen:
+                self.table.frozenFish(fId, frozenBuffer, lastFrozenTime, frozenTime, addTimeGroups)
+                frozenFishes.append(fId)
+            # 计算能否无敌
             for lastBuffer in buffers:
                 if lastBuffer[0] == 5102 and lastBuffer[1] > time.time():
-                    isCoverInvincible = False       # 不能覆盖魔术炮的无敌技能
-                if lastBuffer[0] == self.skillId:   # 之前处于冰冻状态的鱼
-                    lastFrozenTime = lastBuffer[5]
-                    if endTime > lastBuffer[1]:     # 新冰冻到期时间大于旧冰冻到期时间，覆盖时间
-                        # 如果上一个冰冻状态未到期且小于新冰冻到期时间，则鱼在冰冻状态下再次冰冻，实际冰冻时间为间隔时间
-                        if time.time() < lastBuffer[1] < endTime:
-                            frozenTime = round(endTime - lastBuffer[1], 3)
-                    else:
-                        isCoverFrozen = False       # 不能覆盖冰冻状态
-            if isCoverFrozen:
-                if ftlog.is_debug():
-                    ftlog.debug("SkillFrozen->frozenTime =", fId, frozenTime)
-                buffer[5] = round(lastFrozenTime + frozenTime, 3)
-                self.table.setFishBuffer(fId, buffer)
-                frozenFishes.append(fId)            # 冻住的鱼
-                if ftlog.is_debug():
-                    ftlog.debug("SkillFrozen->isCoverFrozen->buffer =", fId, self.table.fishMap[fId]["buffer"])
-                group = self.table.fishMap[fId]["group"]
-                if group.startFishId not in addTimeGroup:
-                    addTimeGroup.append(group.startFishId)
-                    group.adjust(frozenTime)
-                    self.table.superBossFishGroup and self.table.superBossFishGroup.frozen(fId, self.table.fishMap[fId]["conf"]["fishType"], frozenTime)
+                    isCoverInvincible = False
+                    break
             if isCoverInvincible and self.table.typeName not in config.NORMAL_ROOM_TYPE:  # 非普通场极冻炮附加无敌效果
-                if fishConf["type"] in [6, 7]:      # 冰锥、捕鱼机器人不会有无敌效果
+                if ftType in [6, 7]:  # 冰锥、捕鱼机器人不会有无敌效果
                     continue
                 invincibleDuration = round(self.duration / 3.0, 3)
                 if self.player.gunId == 1165:
                     invincibleDuration += 2
                 invincibleEndTime = time.time() + invincibleDuration
-                if ftlog.is_debug():
-                    ftlog.debug("SkillFrozen->invincibleTime =", fId, invincibleDuration)
                 invincibleBuffer = [5102, invincibleEndTime, self.player.userId, self.skillStar, self.skillGrade, invincibleDuration, 0, self.skillType]
                 self.table.setFishBuffer(fId, invincibleBuffer)
                 invincibleFishes.append(fId)
-                if ftlog.is_debug():
-                    ftlog.debug("SkillFrozen->isCoverInvincible->buffer =", fId, self.table.fishMap[fId]["buffer"])
-        if frozenFishes:                            # 广播新处于冰冻状态的鱼
+        if frozenFishes:    # 广播新处于冰冻状态的鱼
             self.table.broadcastSkillEffect(self.player, endTime, frozenFishes, self.skillId)
-        if invincibleFishes:                        # 广播新处于无敌状态的鱼
+        if invincibleFishes:     # 广播新处于无敌状态的鱼
             self.table.broadcastSkillEffect(self.player, invincibleEndTime, invincibleFishes, 5102)
         return catch, gain, gainChip, exp
 
@@ -829,7 +885,6 @@ class SkillGrenade(SkillBase):
     榴弹炮(5105)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        """榴弹炮捕鱼"""
         return self.normalCatchFish(bulletId, wpId, fIds, extends)
 
     def _sortedFishes(self, fIds, extends=None):
@@ -841,7 +896,7 @@ class SkillGrenade(SkillBase):
                 continue
             fishInfo = self.table.fishMap[fId]
             originHP = fishInfo["HP"]
-            fishType = fishInfo["conf"]["fishType"]
+            fishType = fishInfo["fishType"]
             fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
             fatal = self.table.dealIceConeEffect(fId, fishConf)
             fishHP = int(originHP - self.deductionHP)
@@ -870,7 +925,94 @@ class SkillEnergy(SkillBase):
     汇能弹(5106)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        catch = []
+        gain = []
+        gainChip = 0
+        exp = 0
+        otherCatch = {}
+        isCatch = False
+        bufferCoinAdd = self.player.getCoinAddition(self.weaponId)
+        realPower = self.originRealPower
+        aloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=True)
+        for fId in fIds:
+            isOK, catchUserId = self.table.verifyFish(self.player.userId, fId)
+            if not isOK or self.impale <= 0:
+                break
+            catchMap = {}
+            catchMap["fId"] = fId
+            catchMap["reason"] = 1
+            fishInfo = self.table.fishMap[fId]
+            fishType = fishInfo["fishType"]
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            originHP = fishInfo["HP"]
+            probbRadix = fishInfo["HP"] + fishConf["probb2"]
+            if self.impale > probbRadix:    # 子弹能穿刺鱼
+                self.impale -= probbRadix
+                self.impale = max(self.impale, 0)
+                randInt = random.randint(1, 10000)
+                if randInt <= 9000 or self.impaleCatch:
+                    catchMap["reason"] = 0
+                if ftlog.is_debug():
+                    ftlog.debug("SkillEnergy->impale->",
+                                "userId =", self.player.userId,
+                                "randInt =", randInt,
+                                "fId =", fId,
+                                "fishType =", fishInfo["fishType"],
+                                "probbRadix =", probbRadix,
+                                "impale =", self.impale)
+            else:                           # 子弹无法穿刺鱼
+                realPower += self.impale
+                self.impale = 0
+                fatal = self.table.dealIceConeEffect(fId, fishConf)
+                self.deductionHP = self.totalPower
+                fishHP = int(originHP - self.deductionHP)
+                self.table.dealFishHP(fId, fishHP, fatal)
+                probbRadix = self._getFishProbbRadix(fishInfo, fishConf)
+                probb, realPower = self.getSkillCatchProbb(fId, len(fIds), realPower, probbRadix, aloofOdds, aloofOdds)
+                randInt = random.randint(1, 10000)
+                if randInt <= probb:
+                    catchMap["reason"] = 0
+            catchMap["HP"] = fishInfo["HP"]
+            if catchMap["reason"] == 0:
+                multiple = self.gunSkinMultiple
+                # 欺诈只获得1倍收益.
+                if catchUserId != self.player.userId:
+                    multiple = 1
+                fishGainChip, fishGain, fishExp = self.table.dealKillFishGain(fId, self.player, self.fpMultiple, multiple, bufferCoinAdd)
+                if catchUserId == self.player.userId:
+                    isCatch = True
+                    catch.append(catchMap)
+                    gainChip += fishGainChip
+                    exp += fishExp
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain, catchMap, fishExp)
+            else:
+                if originHP != catchMap["HP"]:
+                    catch.append(catchMap)
+                fishGainChip, fishGain = self.table.dealHitBossGain(self.power + self.impale, fId, self.player)
+                if catchUserId == self.player.userId:
+                    gainChip += fishGainChip
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain)
+        if ftlog.is_debug():
+            ftlog.debug("catchFish->",
+                        "userId =", self.player.userId,
+                        "catch =", catch,
+                        "gain =", gain,
+                        "onceCostCoin =", self.onceCostCoin,
+                        "originRealPower =", self.originRealPower)
+        if isCatch:
+            self.player.addCombo()
+        for userId, catchInfo in otherCatch.iteritems():
+            otherPlayer = self.table.getPlayer(userId)
+            if otherPlayer:
+                self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+        return catch, gain, gainChip, exp
 
 
 class SkillFraud(SkillBase):
@@ -878,10 +1020,39 @@ class SkillFraud(SkillBase):
     欺诈水晶(5107)
     """
     def initStar(self):
-        pass
+        super(SkillFraud, self).initStar()
+        if self.table.typeName in [config.FISH_TIME_MATCH, config.FISH_FIGHT]:  # [回馈赛, 渔友竞技]-欺诈水晶3倍时长
+            self.duration *= 3
+        elif self.table.typeName == config.FISH_TIME_POINT_MATCH:
+            self.duration *= 3
 
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        catch = []
+        gain = []
+        gainChip = 0
+        exp = 0
+        fishes = []
+        endTime = time.time() + self.duration
+        for fId in fIds:
+            isOK, catchUserId = self.table.verifyFish(self.player.userId, fId)
+            if not isOK:
+                continue
+            buffers = self.table.fishMap[fId]["buffer"]
+            for lastBuffer in buffers:
+                if lastBuffer[0] == 5102 and lastBuffer[1] > time.time():
+                    isOK = False
+                    break
+            if not isOK:
+                continue
+            ftType = self.table.fishMap[fId]["type"]
+            if ftType in config.ICE_FISH_TYPE + config.ROBOT_FISH_TYPE:  # 欺诈水晶对冰锥、机器人无效
+                continue
+            buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0, self.skillType]
+            self.table.setFishBuffer(fId, buffer)
+            fishes.append(fId)
+        if fishes:
+            self.table.broadcastSkillEffect(self.player, endTime, fishes, self.skillId)
+        return catch, gain, gainChip, exp
 
 
 class SkillLaser(SkillBase):
@@ -889,16 +1060,149 @@ class SkillLaser(SkillBase):
     激光炮(5108)
     """
     def costClip(self, bulletId, fPosx=0, fPosy=0):
-        pass
+        """
+        消耗技能子弹
+        """
+        if self.clip > 0:
+            for val in self.player.usingSkill:      # 当前技能使用中时，检测之前技能是否在使用中，如果是，结束之前技能
+                skillId = val.get("skillId")
+                skillType = val.get("skillType")
+                if skillId != self.skillId or skillType != self.skillType:
+                    skill = self.player.getSkill(skillId, skillType)
+                    if skill.state == 2:
+                        skill.end()
+            self.state = 2
+            self.clip -= 1
+            self.position[bulletId] = [fPosx, fPosy]
+            return True
+        return False
 
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        catch = []
+        gain = []
+        gainChip = 0
+        exp = 0
+        otherCatch = {}
+        isCatch = False
+        if not extends:
+            return catch, gain, gainChip, exp
+        self.consumePower = 0
+        self.powerRate = self.getPowerRate(extends)
+        self.updateSkillData()
+        fishes, fishesHPDict = self._sortedFishes(fIds, extends)
+        totalPowerRate = self.totalPower / self.originRealPower  # 技能总威力（无加成）的占比
+        realPower = self.originRealPower
+        bufferCoinAdd = self.player.getCoinAddition(self.weaponId)
+        curveProfitCoin = 0
+        aloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=True)
+        nonAloofOdds = self.player.dynamicOdds.getOdds(skill=self, aloofFish=False)
+        for fId, probbRadix in fishes:
+            isOK, catchUserId = self.table.verifyFish(self.player.userId, fId, wpId)
+            if not isOK:
+                continue
+            catchMap = {}
+            catchMap["fId"] = fId
+            catchMap["reason"] = 1
+            fishInfo = self.table.fishMap[fId]
+            probb, realPower = self.getSkillCatchProbb(fId, len(fIds), realPower, probbRadix, aloofOdds, nonAloofOdds)
+            catchMap["HP"] = fishInfo["HP"]
+            randInt = random.randint(1, 10000)
+            if randInt <= probb:
+                multiple = self.gunSkinMultiple
+                # 欺诈只获得1倍收益.
+                if catchUserId != self.player.userId:
+                    multiple = 1
+                fishGainChip, fishGain, fishExp = self.table.dealKillFishGain(fId, self.player, self.fpMultiple, multiple, bufferCoinAdd)
+                catchMap["reason"] = 0
+                if catchUserId == self.player.userId:
+                    isCatch = True
+                    catch.append(catchMap)
+                    gainChip += fishGainChip
+                    exp += fishExp
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain, catchMap, fishExp)
+            else:
+                if fId in fishesHPDict:
+                    catch.append(catchMap)
+                count, fishGain, fishGainChip = extends[0], [], 0
+                if count == 1:  # 只有第一次算捕获
+                    fishGainChip, fishGain = self.table.dealHitBossGain(self.totalPower, fId, self.player)
+                if catchUserId == self.player.userId:
+                    gainChip += fishGainChip
+                    if fishGain:
+                        gain.extend(fishGain)
+                else:
+                    otherCatch = self.table.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain)
+            # 技能曲线
+            if self.table.typeName in config.DYNAMIC_ODDS_ROOM_TYPE:
+                fishType = fishInfo["fishType"]
+                fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+                if fishConf["type"] in config.NON_ALOOF_FISH_TYPE:
+                    if catchMap["reason"] == 0:
+                        curveProfitCoin += totalPowerRate * fishConf["value"] * self.gunSkinMultiple * self.fpMultiple
+        self.consumePower = min(self.consumePower, self.originRealPower)
+        curveLossCoin = self.onceCostCoin * self.powerRate * self.consumePower / self.originRealPower
+        if ftlog.is_debug():
+            ftlog.debug("catchFish->",
+                        "userId =", self.player.userId,
+                        "catch =", catch,
+                        "gain =", gain,
+                        "onceCostCoin =", self.onceCostCoin * self.powerRate,
+                        "consumePower =", self.consumePower,
+                        "originRealPower =", self.originRealPower,
+                        "totalPowerRate =", totalPowerRate,
+                        "curveLossCoin =", curveLossCoin,
+                        "curveProfitCoin =", curveProfitCoin)
+        self.player.dynamicOdds.updateOdds(curveProfitCoin - curveLossCoin)
+        if isCatch:
+            self.player.addCombo()
+        for userId, catchInfo in otherCatch.iteritems():
+            otherPlayer = self.table.getPlayer(userId)
+            if otherPlayer:
+                self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+        return catch, gain, gainChip, exp
 
     def _sortedFishes(self, fIds, extends=None):
-        pass
+        count = extends[0]
+        fishesDict = {}
+        fishesHPDict = {}
+        for fId in fIds:
+            isOK = self.table.findFish(fId)
+            if not isOK:
+                continue
+            fishInfo = self.table.fishMap[fId]
+            originHP = fishInfo["HP"]
+            fishType = fishInfo["fishType"]
+            fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            fatal = self.table.dealIceConeEffect(fId, fishConf)
+            fishHP = int(originHP - self.deductionHP)
+            fishHP = self.table.dealFishHP(fId, fishHP, fatal)
+            fishesDict[fId] = self._getFishProbbRadix(fishInfo, fishConf)
+            if originHP != fishHP:
+                fishesHPDict[fId] = originHP
+        if count <= 2:
+            fishes = sorted(fishesDict.iteritems(), key=lambda d: d[1])
+        else:
+            fishes = sorted(fishesDict.iteritems(), key=lambda d: d[1], reverse=True)
+        if ftlog.is_debug():
+            ftlog.debug("_sortedFishes->", fishes, fishesHPDict, fIds)
+        return fishes, fishesHPDict
 
     def getPowerRate(self, extends):
-        pass
+        count = extends[0]
+        if count == 1:
+            powerRate = 0.2
+        elif count == 2:
+            powerRate = 0.3
+        elif count == 3:
+            powerRate = 0.5
+        else:
+            powerRate = 0.2
+            ftlog.error("getPowerRate error", self.player.userId, extends)
+        return powerRate
 
 
 class SkillHunt(SkillBase):
@@ -906,7 +1210,36 @@ class SkillHunt(SkillBase):
     猎鱼机甲(5109)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
-        pass
+        catch, gain, gainChip, exp = [], [], 0, 0
+        if wpId == 2209:        # 释放猎鱼机甲
+            position = self.position.get(bulletId, [0, 0])
+            endTime = time.time() + self.duration
+            buffer = [self.skillId, endTime, self.player.userId, self.skillStar, self.skillGrade, self.duration, 0]
+            group = self.table.insertFishGroup("call_robot", position, self.HP, buffer,
+                                               gameResolution=self.player.gameResolution)
+            self.durationEndTime = endTime
+            self.onceCostCoin /= int(self.duration / self.interval)
+            if group:
+                self.skillFishes.append(group.startFishId)
+        elif wpId == 2301:      # 猎鱼机甲开火
+            if self.originRealPower and time.time() <= self.durationEndTime:
+                return self.normalCatchFish(bulletId, wpId, fIds, extends)
+        elif wpId == 2302:      # 猎鱼机甲爆炸
+            if self.originRealPower:
+                aliveTime = self.durationEndTime - time.time()
+                aliveTime = aliveTime if 0 < aliveTime < self.duration else self.duration
+                self.powerRate = (self.duration - aliveTime) * (1 / self.interval)
+                powerAddtion = self.player.getPowerAddition(self.weaponId)
+                self.totalPower = self.power * self.powerRate * powerAddtion + self.impale
+                self.energy *= self.powerRate
+                self.onceCostCoin *= self.powerRate
+                self.originRealPower = self.totalPower + self.energy
+                self.deductionHP = self.totalPower
+                self.skillFishes = []
+                if ftlog.is_debug():
+                    ftlog.debug("SkillHunt->catchFish powerRate =", self.powerRate)
+                return self.normalCatchFish(bulletId, wpId, fIds, extends)
+        return catch, gain, gainChip, exp
 
 
 class SkillGatling(SkillBase):
@@ -930,9 +1263,9 @@ skillMap = {
     5110: SkillGatling      # 格林机关枪
 }
 
-
+# 技能ID-武器ID对应关系
 skillWeaponMap = {
-    5101: 2201,         # 技能炮 武器
+    5101: 2201,
     5102: 2202,
     5103: 2203,
     5104: 2204,
@@ -944,9 +1277,9 @@ skillWeaponMap = {
     5110: 2210
 }
 
-
+# 武器ID-技能ID对应关系
 weaponSkillMap = {
-    2201: 5101,         # 武器 技能炮
+    2201: 5101,
     2202: 5102,
     2203: 5103,
     2204: 5104,
@@ -960,10 +1293,6 @@ weaponSkillMap = {
 
 
 def createSkill(table, player, skillId, skillState, skillStar, skillGrade, skillType):
-    """
-    创建技能对象
-    :return:
-    """
     skillClass = skillMap.get(skillId)
     skill = None
     if skillClass:

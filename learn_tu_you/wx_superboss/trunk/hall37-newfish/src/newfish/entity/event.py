@@ -15,7 +15,7 @@ class CatchEvent(UserEvent):
     捕获事件
     """
     def __init__(self, userId, gameId, roomId, tableId, fishTypes, wpId, gainChip, fpMultiple, catch=None, gain=None,
-                 resetTime=0, gunSkinMul=1, gameMode=CLASSIC_MODE):
+                 resetTime=0, gunSkinMul=1, gunX=1, gameMode=CLASSIC_MODE):
         super(CatchEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.tableId = tableId
@@ -28,6 +28,7 @@ class CatchEvent(UserEvent):
         self.resetTime = resetTime
         self.gunSkinMul = gunSkinMul
         self.gameMode = gameMode
+        self.gunX = gunX
 
 
 class GameTimeEvent(UserEvent):
@@ -44,12 +45,12 @@ class GameTimeEvent(UserEvent):
         self.fpMultiple = fpMultiple
 
 
-class LevelUpEvent(UserEvent):
+class GunLevelUpEvent(UserEvent):
     """
     火炮等级/倍率提升事件
     """
     def __init__(self, userId, gameId, level, gunLevel, mode):
-        super(LevelUpEvent, self).__init__(userId, gameId)
+        super(GunLevelUpEvent, self).__init__(userId, gameId)
         # 玩家等级
         self.level = level
         # 火炮等级
@@ -102,7 +103,7 @@ class UseSmiliesEvent(UserEvent):
 
 class OpenChestEvent(UserEvent):
     """
-    打开宝箱事件
+    打开背包中的宝箱事件（已废弃）
     """
     def __init__(self, userId, gameId, chestId, atOnce):
         super(OpenChestEvent, self).__init__(userId, gameId)
@@ -137,10 +138,11 @@ class BuyChestEvent(UserEvent):
     """
     购买宝箱事件
     """
-    def __init__(self, userId, gameId, chestId, buyType):
+    def __init__(self, userId, gameId, chestId, buyType, price):
         super(BuyChestEvent, self).__init__(userId, gameId)
         self.chestId = chestId
         self.buyType = buyType
+        self.price = price
 
 
 class BulletBuyEvent(UserEvent):
@@ -246,6 +248,14 @@ class GunItemCountChangeEvent(UserEvent):
     """
     def __init__(self, userId, gameId):
         super(GunItemCountChangeEvent, self).__init__(userId, gameId)
+
+
+class TreasureItemCountChangeEvent(UserEvent):
+    """
+    宝藏升级相关物品数量变化事件
+    """
+    def __init__(self, userId, gameId):
+        super(TreasureItemCountChangeEvent, self).__init__(userId, gameId)
 
 
 class SkillLevelUpEvent(UserEvent):
@@ -820,3 +830,40 @@ class ChangeGunLevelEvent(UserEvent):
         super(ChangeGunLevelEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.gLev = gLev
+
+
+class ConsumeVoucherEvent(UserEvent):
+    """
+    消耗代购券事件
+    """
+    def __init__(self, userId, gameId, count):
+        super(ConsumeVoucherEvent, self).__init__(userId, gameId)
+        self.count = count
+
+
+class PlayMiniGame(UserEvent):
+    """
+    玩小游戏次数
+    """
+    def __init__(self, userId, gameId, count=1):
+        super(PlayMiniGame, self).__init__(userId, gameId)
+        self.count = count
+
+
+class MiniGameBossExchange(UserEvent):
+    """
+    小游戏Boss兑换
+    """
+    def __init__(self, userId, gameId, count):
+        super(MiniGameBossExchange, self).__init__(userId, gameId)
+        self.count = count
+
+
+class TreasureLevelUp(UserEvent):
+    """
+    宝藏升级事件
+    """
+    def __init__(self, userId, gameId, kindId, level):
+        super(TreasureLevelUp, self).__init__(userId, gameId)
+        self.kindId = kindId
+        self.level = level

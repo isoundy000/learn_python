@@ -89,6 +89,8 @@ class GunEffect(object):
         获取狂暴皮肤炮的效果
         """
         conf = config.getGunConf(gunId, self.clientId, 1, self.mode)
+        if "fire_count" not in conf:
+            return []
         if conf["fire_count"] > 0 and gunId not in self.gunEffectData:
             val = daobase.executeUserCmd(self.userId, "HGET", self.rdKey, gunId)
             val = json.loads(val) if val else deepcopy(self.defaultVal)
@@ -117,7 +119,7 @@ class GunEffect(object):
 
     def addGunEffectPower(self, gunId, power, gunX):
         """
-        使用狂暴弹增加威力 需要完善TODO
+        使用狂暴弹增加威力 需要完善
         """
         if gunId not in self.gunEffectData:
             data = self._getData(gunId)

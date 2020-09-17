@@ -13,8 +13,9 @@ from poker.util import strutil
 from poker.entity.dao import daobase, gamedata
 from hall.entity import hallitem, datachangenotify
 from newfish.entity import config, module_tip, util, mail_system
-from newfish.entity.config import FISH_GAMEID, PEARL_KINDID, CHIP_KINDID
+from newfish.entity.config import FISH_GAMEID, CHIP_KINDID
 from newfish.entity.redis_keys import UserData, GameData
+from poker.entity.biz import bireport
 
 
 # 5101: [0, 0, 0, 0, 0]
@@ -63,7 +64,7 @@ def getSkill(userId, skillId):
     """
     value = daobase.executeUserCmd(userId, "HGET", _getUserSkillKey(userId), str(skillId))
     if value:
-        return strutil.loads(value, False, True)    # 字符串不转assci、忽略异常
+        return strutil.loads(value, False, True)
     return deepcopy(DEFAULT_VALUE)
 
 
@@ -72,22 +73,22 @@ def _getAllSkills(userId):
     获得所有技能数据
     """
     assert isinstance(userId, int) and userId > 0
-    value = daobase.executeUserCmd(userId, "HGETALL", _getUserSkillKey(userId))     # skill:44:10007  [1, 2, 3, 4, 5, 6]
+    value = daobase.executeUserCmd(userId, "HGETALL", _getUserSkillKey(userId))
     if value:
-        skillIds = value[0::2]      # fileds [1, 3, 5]
-        infos = [strutil.loads(info, False, True) for info in value[1::2] if info]  # [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+        skillIds = value[0::2]
+        infos = [strutil.loads(info, False, True) for info in value[1::2] if info]
         skillDict = dict(zip(skillIds, infos))
-        allSkillIdsConf = config.getAllSkillId()        # 获取配置中所有技能ID
+        allSkillIdsConf = config.getAllSkillId()
         popSkillIds = [skillId for skillId in skillIds if str(skillId) not in allSkillIdsConf]
         for _skillId in popSkillIds:
-            del skillDict[_skillId]                     # 删掉存档中与配置中不存在的skillId
+            del skillDict[_skillId]
         return skillDict
     return {}
 
 
 def getInstalledSkill(userId, skillMode):
     """
-    获得已装备技能数据 玩家userId skillMode 0经典 1千炮
+    获得已装备技能数据
     """
     skills = {}
     allSkills = _getAllSkills(userId)
@@ -96,24 +97,24 @@ def getInstalledSkill(userId, skillMode):
             if config.getSkillStarConf(skillId, info[INDEX_STAR_LEVEL], skillMode):
                 state = info[INDEX_STATE] if skillMode == config.CLASSIC_MODE else info[INDEX_STATE_M]
                 if state:
-                    skills[int(skillId)] = [info[INDEX_STAR_LEVEL], info[INDEX_CURRENT_LEVEL]]
+                    skills[int(skillId)] = [state, info[INDEX_STAR_LEVEL], info[INDEX_CURRENT_LEVEL]]
     return skills
 
 
-def getAuxiliarySkill(userId):
+def getNewbieSkill(userId):
     """
-    获得辅助技能数据
+    获取新手场技能（若合金弹头等级为0，则调为1）
     """
-    skills = {}
-    allSkills = _getAllSkills(userId)
-    if allSkills:
-        for skillId, info in allSkills.iteritems():
-            # 魔术炮，极冻炮
-            if int(skillId) in [5102, 5104] \
-                and 0 < info[INDEX_STAR_LEVEL] <= MAX_STAR_LEVEL \
-                and 0 < info[INDEX_ORIGINAL_LEVEL] <= MAX_ORIGINAL_LEVEL:
-                skills[int(skillId)] = [info[INDEX_STAR_LEVEL], info[INDEX_CURRENT_LEVEL]]
-    return skills
+    skillId = 5101
+    skill = getSkill(userId, skillId)
+    if skill[INDEX_STAR_LEVEL] == 0:
+        skill[INDEX_STAR_LEVEL] = 1
+        skill[INDEX_ORIGINAL_LEVEL] = 1
+        skill[INDEX_CURRENT_LEVEL] = 1
+    if skill[INDEX_STATE_M] == 0:
+        skill[INDEX_STATE_M] = 1
+        setSkill(userId, skillId, skill)
+    return {skillId: [1, skill[INDEX_STAR_LEVEL], skill[INDEX_CURRENT_LEVEL]]}
 
 
 def _getUserSkillKey(userId):
@@ -131,7 +132,8 @@ def getSkillList(userId, skillMode=0):
     allSkills = _getAllSkills(userId)
     if allSkills:
         for skillId, info in allSkills.iteritems():
-            if config.getSkillStarConf(skillId, info[INDEX_STAR_LEVEL], skillMode):
+            starLevel = max(info[INDEX_STAR_LEVEL], 1)
+            if config.getSkillStarConf(skillId, starLevel, skillMode):
                 skill = dict()
                 skill["skillId"] = int(skillId)
                 skill["starLevel"] = info[INDEX_STAR_LEVEL]
@@ -144,14 +146,15 @@ def getSkillList(userId, skillMode=0):
 
 def upgradeSkill(userId, skillId, actionType):
     """
-    技能升级0、升星1  渔场内、渔场外
+    技能升级、升星
+    @return: 是否成功, 当前星级, 原始等级, 当前等级, 升级前的技能等级
     """
     code, skill = checkSkillStatus(userId, skillId)
     if code != 0:
         return code, 0, 0, 0, 0
-    previousLevel = skill[INDEX_ORIGINAL_LEVEL]         # 之前的等级
+    previousLevel = skill[INDEX_ORIGINAL_LEVEL]
 
-    if actionType == 0:                                 # 升级
+    if actionType == 0:     # 升级
         if skill[INDEX_ORIGINAL_LEVEL] >= MAX_ORIGINAL_LEVEL:
             return 6, 0, 0, 0, 0
         skillGradeConf = config.getSkillGradeCommonConf(skillId, skill[INDEX_ORIGINAL_LEVEL] + 1)
@@ -159,11 +162,14 @@ def upgradeSkill(userId, skillId, actionType):
         if isOK:
             skill[INDEX_ORIGINAL_LEVEL] += 1
             skill[INDEX_CURRENT_LEVEL] = skill[INDEX_ORIGINAL_LEVEL]
+            # 激活技能时，技能等级和星级都为1
+            if skill[INDEX_ORIGINAL_LEVEL] == 1:
+                skill[INDEX_STAR_LEVEL] = 1
             setSkill(userId, skillId, skill)
         else:
             return 4, skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL], previousLevel
-    else:                                               # 升星
-        if skill[INDEX_STAR_LEVEL] >= MAX_STAR_LEVEL:
+    else:                   # 升星
+        if skill[INDEX_STAR_LEVEL] == 0 or skill[INDEX_STAR_LEVEL] >= MAX_STAR_LEVEL:
             return 6, 0, 0, 0, 0
         skillStarConf = config.getSkillStarCommonConf(skillId, skill[INDEX_STAR_LEVEL] + 1)
         isOK = consumeUpgradeSkillItem(userId, skillStarConf["consume"], skillId, skill[INDEX_STAR_LEVEL] + 1)
@@ -187,12 +193,14 @@ def upgradeSkill(userId, skillId, actionType):
     from newfish.entity.event import SkillLevelUpEvent
     event = SkillLevelUpEvent(userId, FISH_GAMEID, getSkillList(userId), actionType)
     TGFish.getEventBus().publishEvent(event)
+    bireport.reportGameEvent("BI_NFISH_GE_SKILL_UPGRADE", userId, FISH_GAMEID, 0, 0, skillId, 0, 0, 0,
+                             [upgradedSkill[INDEX_STAR_LEVEL], upgradedSkill[INDEX_ORIGINAL_LEVEL]], util.getClientId(userId))
     return 0, upgradedSkill[INDEX_STAR_LEVEL], upgradedSkill[INDEX_ORIGINAL_LEVEL], upgradedSkill[INDEX_CURRENT_LEVEL], previousLevel
 
 
 def upgradeMaxSkill(userId, expendItemId, clientId):
     """
-    技能升级满级 使用game_handler的使用道具
+    技能升级满级
     """
     if config.getItemConf(clientId, expendItemId).get("up_skill", 0) == 0:
         return 7, 0, 0, 0, 0
@@ -202,19 +210,96 @@ def upgradeMaxSkill(userId, expendItemId, clientId):
         if it["action"] == "up_skill":
             skillId = int(it["params"][0]["skillId"])
             break
+    if not skillId:
+        return 8, 0, 0, 0, 0
+    actionType = 0
+    userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
+    code, skill = checkSkillStatus(userId, skillId)
+    if code != 0:
+        return code, 0, 0, 0, 0
+    if skill[INDEX_ORIGINAL_LEVEL] >= MAX_ORIGINAL_LEVEL:
+        return 6, 0, 0, 0, 0
+    previousLevel = skill[INDEX_ORIGINAL_LEVEL]
+    expendItemKind = hallitem.itemSystem.findItemKind(expendItemId)
+    expendCount = userBag.calcTotalUnitsCount(expendItemKind)
+    needCount = 1
+    if needCount > expendCount:
+        return 4, skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL], previousLevel
+    consumeCount = userBag.consumeUnitsCountByKind(FISH_GAMEID, expendItemKind, needCount,
+                                                   pktimestamp.getCurrentTimestamp(),
+                                                   "BI_NFISH_SKILL_UPGRADE", skillId)
+    if consumeCount != needCount:
+        ftlog.error("upgradeMaxSkill-> needSkillCard not enough", userId, skillId)
+        return 4, skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL], previousLevel
+    skill[INDEX_ORIGINAL_LEVEL] = MAX_ORIGINAL_LEVEL
+    skill[INDEX_CURRENT_LEVEL] = MAX_ORIGINAL_LEVEL
+    setSkill(userId, skillId, skill)
+    upgradedSkill = getSkill(userId, skillId)
+    if not upgradedSkill:
+        ftlog.error("upgradeMaxSkill-> getSkill error", userId, skillId)
+        return 5, skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL], previousLevel
+    datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, "item")
+    skills = getSkillList(userId)
+    # convertOverflowCardToCoin(userId, skills)
+    # 技能道具数量变化事件（用于刷新小红点）
+    from newfish.game import TGFish
+    from newfish.entity.event import SkillItemCountChangeEvent
+    event = SkillItemCountChangeEvent(userId, FISH_GAMEID)
+    TGFish.getEventBus().publishEvent(event)
+    # 技能升级事件
+    from newfish.game import TGFish
+    from newfish.entity.event import SkillLevelUpEvent
+    event = SkillLevelUpEvent(userId, FISH_GAMEID, skills, actionType)
+    TGFish.getEventBus().publishEvent(event)
+    return 0, upgradedSkill[INDEX_STAR_LEVEL], upgradedSkill[INDEX_ORIGINAL_LEVEL], \
+           upgradedSkill[INDEX_CURRENT_LEVEL], previousLevel
 
 
+def degradeSkill(userId, skillId, level):
+    """
+    技能降级（调整等级）
+    """
+    code, skill = checkSkillStatus(userId, skillId)
+    if code != 0:
+        return code, 0, 0
+    if level < 1 or level > skill[INDEX_ORIGINAL_LEVEL]:
+        ftlog.error("degradeSkill-> level error", userId, skillId, level)
+        return 4, 0, 0
+    beforeLevel = skill[INDEX_CURRENT_LEVEL]
+    skill[INDEX_CURRENT_LEVEL] = level
+    setSkill(userId, skillId, skill)
+    degradedSkill = getSkill(userId, skillId)
+    if not degradedSkill:
+        ftlog.error("degradedSkill-> getSkill error", userId, skillId)
+        return 5, skill[INDEX_ORIGINAL_LEVEL], beforeLevel, skill[INDEX_CURRENT_LEVEL]
+    return 0, degradedSkill[INDEX_ORIGINAL_LEVEL], beforeLevel, degradedSkill[INDEX_CURRENT_LEVEL]
+
+
+def restoreSkill(userId, skillId):
+    """
+    技能等级还原
+    """
+    code, skill = checkSkillStatus(userId, skillId)
+    if code != 0:
+        return code, 0, 0
+    skill[INDEX_CURRENT_LEVEL] = skill[INDEX_ORIGINAL_LEVEL]
+    setSkill(userId, skillId, skill)
+    restoredSkill = getSkill(userId, skillId)
+    if not restoredSkill:
+        ftlog.error("restoreSkill-> getSkill error", userId, skillId)
+        return 5, skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL]
+    return 0, restoredSkill[INDEX_ORIGINAL_LEVEL], restoredSkill[INDEX_CURRENT_LEVEL]
 
 
 def installSkill(userId, skillId, skillMode, install):
     """
-    技能装备、卸下 skillMode 0经典 1千炮
+    技能装备、卸下
     """
     code, skill = checkSkillStatus(userId, skillId)
     if code != 0:
         return code
     allSkills = _getAllSkills(userId)
-    if install:     # 装备
+    if install:  # 装备
         installNum = 0
         maxInstallNum = MAX_INSTALL_NUM if skillMode == config.CLASSIC_MODE else MAX_INSTALL_NUM_M
         for _, info in allSkills.iteritems():
@@ -232,7 +317,7 @@ def installSkill(userId, skillId, skillMode, install):
         skill[INDEX_STATE] = install
     else:
         skill[INDEX_STATE_M] = install
-    setSkill(userId, skillId, skill)                        # 装备穿上、卸下
+    setSkill(userId, skillId, skill)
     installedSkill = getSkill(userId, skillId)
     state = installedSkill[INDEX_STATE] if skillMode == config.CLASSIC_MODE else installedSkill[INDEX_STATE_M]
     if state != install:
@@ -248,8 +333,8 @@ def replaceSkill(userId, skillMode, installSkillId, uninstallSkillId):
     uninstallSkill = getSkill(userId, uninstallSkillId)
     state = uninstallSkill[INDEX_STATE] if skillMode == config.CLASSIC_MODE else uninstallSkill[INDEX_STATE_M]
     if state:
-        installSkill(userId, uninstallSkillId, skillMode, 0)            # 卸下
-        return installSkill(userId, installSkillId, skillMode, state)   # 穿上
+        installSkill(userId, uninstallSkillId, skillMode, 0)
+        return installSkill(userId, installSkillId, skillMode, state)
     return 0
 
 
@@ -261,16 +346,16 @@ def checkSkillStatus(userId, skillId):
     if str(skillId) not in config.getAllSkillId():
         ftlog.error("checkSkillStatus-> not skillId", userId, skillId)
         return 1, skill
-    skill = getSkill(userId, skillId)       # 获取技能信息
+    skill = getSkill(userId, skillId)
     if not skill:
-        setSkill(userId, skillId, deepcopy(DEFAULT_VALUE))                  # 存储单个技能数据
+        setSkill(userId, skillId, deepcopy(DEFAULT_VALUE))
         ftlog.error("checkSkillStatus-> not skillInfo", userId, skillId)
         return 2, skill
-    if skill[INDEX_STAR_LEVEL] <= 0 or \
-        skill[INDEX_STAR_LEVEL] > MAX_STAR_LEVEL or \
-        skill[INDEX_ORIGINAL_LEVEL] <= 0 or \
-        skill[INDEX_ORIGINAL_LEVEL] > MAX_ORIGINAL_LEVEL:
-        ftlog.debug("checkSkillStatus-> skillLevel error", userId, skillId)
+    if skill[INDEX_STAR_LEVEL] < 0 or \
+       skill[INDEX_STAR_LEVEL] > MAX_STAR_LEVEL or \
+       skill[INDEX_ORIGINAL_LEVEL] < 0 or \
+       skill[INDEX_ORIGINAL_LEVEL] > MAX_ORIGINAL_LEVEL:
+        ftlog.warn("checkSkillStatus-> skillLevel error", userId, skillId)
         return 3, skill
     return 0, skill
 
@@ -320,12 +405,11 @@ def getHigherSkillLevelInfo(userId):
     return realLevelMap, realStarMap
 
 
-def checkSkillUpgrade(event):
+def checkSkillUpgrade(userId):
     """
     检查技能能否升级升星
     """
-    userId = event.userId
-    upskills = []
+    upSkills = []
     for skillId in config.getAllSkillId():
         skillId = int(skillId)
         code, skill = checkSkillStatus(userId, skillId)
@@ -334,14 +418,17 @@ def checkSkillUpgrade(event):
         if skill[INDEX_ORIGINAL_LEVEL] < MAX_ORIGINAL_LEVEL:
             skillGradeConf = config.getSkillGradeCommonConf(skillId, skill[INDEX_ORIGINAL_LEVEL] + 1)
             if checkUpgradeSkillItemCount(userId, skillGradeConf["consume"]):
-                upskills.append(skillId)
+                upSkills.append(skillId)
         if skill[INDEX_STAR_LEVEL] < MAX_STAR_LEVEL:
             skillStarConf = config.getSkillStarCommonConf(skillId, skill[INDEX_STAR_LEVEL] + 1)
             if checkUpgradeSkillItemCount(userId, skillStarConf["consume"]):
-                upskills.append(skillId)
+                upSkills.append(skillId)
+        bireport.reportGameEvent("BI_NFISH_GE_SKILL_UPGRADE", userId, FISH_GAMEID, 0, 0, skillId, 0, 0, 0,
+                                 [skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL]],
+                                 util.getClientId(userId))
     module_tip.resetModuleTip(userId, "upskill")
-    if upskills:
-        module_tip.addModuleTipEvent(userId, "upskill", upskills)
+    if upSkills:
+        module_tip.addModuleTipEvent(userId, "upskill", upSkills)
     else:
         module_tip.resetModuleTipEvent(userId, "upskill")
 
@@ -441,12 +528,12 @@ def doSkillCompensate(userId):
     卸载技能，取消要卸载技能的小红点，并补偿金币
     """
     allSkillIds = config.getAllSkillId()
-    installSkillIds = getInstalledSkill(userId, 1).keys()       # 1千炮
+    installSkillIds = getInstalledSkill(userId, config.CLASSIC_MODE).keys()
     moduleTipSkillIds = module_tip.getTipValue(userId, module_tip.findModuleTip("upskill"))
-    if installSkillIds:     # 卸载已经装备且要下线的技能
+    if installSkillIds: # 卸载已经装备且要下线的技能
         for _skillId in installSkillIds:
-            if str(_skillId) not in allSkillIds:                # 配置表的技能
-                code = installSkill(userId, _skillId, 1, 0)     # 技能装备、卸下  1千炮模式 0卸下
+            if str(_skillId) not in allSkillIds:
+                code = installSkill(userId, _skillId, config.CLASSIC_MODE, 0)
                 if code != 0:
                     ftlog.error("compensateSkill---> unstallSkill fail", userId, _skillId, code)
     compenSkillIds = config.getSkillCompenConf("skillList")
@@ -465,7 +552,7 @@ def compatibleSkillData(userId):
     order = 0
     for skillId, info in allSkills.iteritems():
         if len(info) < len(DEFAULT_VALUE):
-            if info[INDEX_STATE] == 1:              # 技能状态&顺序
+            if info[INDEX_STATE] == 1:
                 order += 1
                 info[INDEX_STATE] = order
             info.append(0)
@@ -480,11 +567,11 @@ def checkUpgradeSkillItemCount(userId, items):
     for item in items:
         kindId = item["name"]
         needCount = item["count"]
-        userAssets = hallitem.itemSystem.loadUserAssets(userId)     # 加载用户资产
-        surplusCount = userAssets.balance(FISH_GAMEID, util.getAssetKindId(kindId), 
-                                          pktimestamp.getCurrentTimestamp())        # 查询用户item:14119
+        userAssets = hallitem.itemSystem.loadUserAssets(userId)
+        surplusCount = userAssets.balance(FISH_GAMEID, util.getAssetKindId(kindId),
+                                          pktimestamp.getCurrentTimestamp())
         if surplusCount < needCount:
-            isOK = FISH_GAMEID
+            isOK = False
             break
     return isOK
 
@@ -500,29 +587,36 @@ def consumeUpgradeSkillItem(userId, items, intEventParam=0, param01=0, param02=0
     return False
 
 
+def _triggerSkillItemCountChangeEvent(event):
+    """
+    技能升级升星相关物品数量变化事件
+    """
+    checkSkillUpgrade(event.userId)
+
+
 def _triggerUserLoginEvent(event):
     """
     用户登录事件
     """
     userId = event.userId
-    initSkill(userId)                       # 初始化技能
-    compatibleSkillData(userId)             # 旧技能数据兼容
-    convertOverflowCardToCoin(event.userId)
+    initSkill(userId)
+    compatibleSkillData(userId)
+    # convertOverflowCardToCoin(userId)
     doSkillCompensate(userId)
+    checkSkillUpgrade(userId)
 
 
 _inited = False
 
 
 def initialize():
-    """技能系统初始化"""
     ftlog.info("newfish skill_system initialize begin")
     global _inited
     if not _inited:
         _inited = True
-        from poker.entity.events.tyevent import EventUserLogin          # 用户登录事件
+        from poker.entity.events.tyevent import EventUserLogin
         from newfish.game import TGFish
-        from newfish.entity.event import SkillItemCountChangeEvent      # 技能升级升星相关物品数量变化事件
-        TGFish.getEventBus().subscribe(SkillItemCountChangeEvent, checkSkillUpgrade)
+        from newfish.entity.event import SkillItemCountChangeEvent
+        TGFish.getEventBus().subscribe(SkillItemCountChangeEvent, _triggerSkillItemCountChangeEvent)
         TGFish.getEventBus().subscribe(EventUserLogin, _triggerUserLoginEvent)
     ftlog.info("newfish skill_system initialize end")
