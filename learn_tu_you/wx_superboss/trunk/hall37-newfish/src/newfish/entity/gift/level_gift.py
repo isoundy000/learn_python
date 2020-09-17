@@ -11,6 +11,8 @@ import time
 
 import freetime.util.log as ftlog
 from freetime.entity.msg import MsgPack
+
+from poker.entity.biz import bireport
 from poker.protocol import router
 from poker.entity.dao import gamedata, userchip
 from newfish.entity import config, util, store, weakdata
@@ -102,6 +104,11 @@ def doBuyLevelGift(userId, clientId, buyType, productId, itemId=0):
                     gunLevel = level
                     break
             gamedata.setGameAttr(userId, FISH_GAMEID, GameData.gunLevel_m, gunLevel)
+            from newfish.game import TGFish
+            from newfish.entity.event import GunLevelUpEvent
+            event = GunLevelUpEvent(userId, FISH_GAMEID, gamedata.getGameAttr(userId, FISH_GAMEID, GameData.level), gunLevel, config.MULTIPLE_MODE)
+            TGFish.getEventBus().publishEvent(event)
+            bireport.reportGameEvent("BI_NFISH_GE_LEVEL_UP", userId, FISH_GAMEID, 0, 0, 0, config.MULTIPLE_MODE, 0, 0, [gunLevel], util.getClientId(userId))
         # 发奖励
         rewards = levelGiftConf.get("rewards", [])
         # 资产/道具

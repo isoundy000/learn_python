@@ -9,13 +9,15 @@ from operator import itemgetter
 
 import freetime.util.log as ftlog
 from freetime.entity.msg import MsgPack
+
+from newfish.entity.gift.level_gift import doSendLevelGift
 from poker.protocol import router
 from poker.entity.dao import gamedata, userchip
 from poker.entity.configure import pokerconf
 from hall.entity import hallitem, hallvip
 from newfish.entity import config, util, weakdata, share_system, vip_system, store
 from newfish.entity.redis_keys import GameData, WeakData, ABTestData
-from newfish.entity.config import FISH_GAMEID, VOUCHER_KINDID, BT_VOUCHER
+from newfish.entity.config import FISH_GAMEID, VOUCHER_KINDID, BT_VOUCHER, MULTIPLE_MODE
 from newfish.entity.chest import chest_system
 from newfish.entity.gun import gun_system
 from newfish.entity.msg import GameMsg
@@ -50,7 +52,7 @@ class GiftBase(object):
         # 可领取礼包
         self.availableGift = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.availableGift, [])
         # 玩家等级
-        self.level = util.getLevelByGunLevel(self.userId)
+        self.level = util.getUserLevel(self.userId)
         # 玩家VIP等级
         self.vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
 
@@ -134,27 +136,6 @@ class SailGift(GiftBase):
             if giftId not in normalGift:
                 # 新用户直接把启航礼包加入到可领取礼包中
                 self.addGiftData(giftId)
-                # 增加充值奖池（新用户概率ab测试）
-                newbieMode = gamedata.getGameAttr(self.userId, FISH_GAMEID, ABTestData.newbieMode)
-                if newbieMode in ["b", "c"]:
-                    # 破产ab测试
-                    bankruptTestMode = gamedata.getGameAttr(self.userId, FISH_GAMEID, ABTestData.bankruptTestMode)  # 破产测试
-                    if bankruptTestMode == "b":
-                        rechargeBonus = config.getPublic("bankruptTestModeBonusB", 0)
-                    else:
-                        rechargeBonus = config.getPublic("bankruptTestModeBonusA", 0)
-                    # gamedata.incrGameAttr(self.userId, FISH_GAMEID, GameData.rechargeBonus, rechargeBonus)
-                    util.incrUserRechargeBonus(self.userId, rechargeBonus)                              # 增加充值奖池
-                else:
-                    # gamedata.incrGameAttr(self.userId, FISH_GAMEID, GameData.rechargeBonus, 10000)
-                    util.incrUserRechargeBonus(self.userId, 10000)
-                # 新手ABC测试.
-                testMode = util.getNewbieABCTestMode(self.userId)
-                registerRechargeBonus = config.getABTestConf("abcTest").get("registerRechargeBonus", {}).get(testMode, 0)
-                util.incrUserRechargeBonus(self.userId, registerRechargeBonus)
-                if ftlog.is_debug():
-                    ftlog.debug("abc test, userId =", self.userId, "mode =", testMode, "registerRechargeBonus =", registerRechargeBonus)
-
             # 启航礼包目前为手动领取
             availableGift = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.availableGift, [])
             if giftId in availableGift:
@@ -234,7 +215,7 @@ class NormalGift(GiftBase):
                         expiredGift.append(giftId)
                         gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.expiredGift, json.dumps(expiredGift))
                         continue
-                    else:  # 礼包未过期，把当前礼包加入到即将过期礼包中
+                    else:   # 礼包未过期，把当前礼包加入到即将过期礼包中
                         futureExpiredGift.append(giftId)
                         gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.futureExpiredGift, json.dumps(futureExpiredGift))
                 return giftConf
@@ -293,19 +274,25 @@ class BankruptGift(GiftBase):
         fishPool = util.getFishPoolByBigRoomId(bigRoomId)
         if not isIn:
             return None
-
         # 各渔场破产次数
         bankruptCount = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.coinShortageCount, {})
         bankruptTimes = bankruptCount.get(str(fishPool), 0)
         # 获取当前消费的礼包最高价格.
         consumePriceMax = 0
         # 获取已购买的普通礼包中最高价格
-        normalGiftInfo = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.normalGift, [])
-        buyGiftTimes = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.buyGiftTimes, {})
-        normalGiftInfo.extend(buyGiftTimes.keys())
-        for giftId in normalGiftInfo:
-            gift = config.getGiftConf(self.clientId, str(giftId))
-            price = gift.get("discountPrice", 0) if gift else 0
+        # normalGiftInfo = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.normalGift, [])
+        # buyGiftTimes = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.buyGiftTimes, {})
+        # normalGiftInfo.extend(buyGiftTimes.keys())
+        # for giftId in normalGiftInfo:
+        #     gift = config.getGiftConf(self.clientId, str(giftId))
+        #     price = gift.get("discountPrice", 0) if gift else 0
+        #     if price > consumePriceMax:
+        #         consumePriceMax = price
+        # 已经购买等级礼包中最高的价格
+        buyLevelGift = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.buyLevelGift, [])
+        for giftId in buyLevelGift:
+            levelGiftConf = config.getLevelGiftConf().get(str(giftId), {})
+            price = levelGiftConf.get("discountPrice", 0) if levelGiftConf else 0
             if price > consumePriceMax:
                 consumePriceMax = price
         # 获取已购买的每日礼包中最高价格
@@ -609,7 +596,6 @@ class LevelUpGift(GiftBase):
         # 升级礼包过期时间
         giftExpireTS = gamedata.getGameAttrJson(self.userId, FISH_GAMEID, GameData.giftsExpireTS, {})
         recommonGift = None
-
         for giftId in self.giftListConf:
             giftConf = config.getGiftConf(self.clientId, giftId)
             if not giftConf:
@@ -689,9 +675,11 @@ def doSendFishGift(userId, clientId):
     if sailGift:
         message.setResult("sailGift", sailGift)
     if not util.isVersionLimit(userId):                                     # 提审版本限制
-        bankruptGift, tip = BankruptGift(userId, clientId).getGiftInfo()    # 破产礼包
+        bankruptGift, bestIndex, tip = BankruptGift(userId, clientId).getGiftInfo()    # 破产礼包
         if bankruptGift:
+            message.setResult("dailyGiftMode", util.getGiftAbcTestMode(userId))
             message.setResult("dailyGift", bankruptGift)                    # 破产礼包
+            message.setResult("bestIndex", bestIndex)
             message.setResult("dailyGiftTxt", tip)                          # 提示信息
     alms = share_system.AlmsCoin(userId)                                    # 救济金分享
     gotTimes = alms.shareData[share_system.INDEX_FINISH_COUNT]
@@ -702,7 +690,7 @@ def doSendFishGift(userId, clientId):
     message.setResult("enterFishPoolTimes", enterFishPoolTimes)
     giftTestMode = config.getPublic("giftTestMode", None)                   # b测试模式
     if giftTestMode is None:
-        giftTestMode = "a" if userId % 2 == 0 else "b"
+        giftTestMode = "a"                                      # if userId % 2 == 0 else "b"
     # 显示钻石或元测试
     message.setResult("testMode", giftTestMode)
     router.sendToUser(message, userId)
@@ -712,10 +700,10 @@ def doSendFishSeriesGift(userId, clientId):
     """
     发送礼包合集消息（礼包ab测试之b模式）
     """
-    if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllRedTask(userId):
-        showIndex, seriesGift = getSeriesGift(userId, clientId)         # 普通礼包|升级礼包
-    else:
-        showIndex, seriesGift = -1, []
+    # if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllNewbieTask(userId):
+    #     showIndex, seriesGift = getSeriesGift(userId, clientId)
+    # else:
+    showIndex, seriesGift = -1, []
     message = MsgPack()
     message.setCmd("fishSeriesGift")                                    # 单独返回捕鱼系列礼包信息（当为b模式时才返回）
     message.setResult("gameId", FISH_GAMEID)
@@ -723,12 +711,6 @@ def doSendFishSeriesGift(userId, clientId):
     message.setResult("showIndex", showIndex)
     message.setResult("seriesGift", seriesGift)
     router.sendToUser(message, userId)
-
-
-# def isupgradeGunTestMode(userId):
-#     upgradeGunTestMode = config.getPublic("upgradeGunTestMode")
-#     upgradeGunTestMode = upgradeGunTestMode or gamedata.getGameAttr(userId, FISH_GAMEID, GameData.upgradeGunTestMode)
-#     return upgradeGunTestMode in [None, "a"]
 
 
 def getSeriesGift(userId, clientId):
@@ -751,20 +733,10 @@ def getSeriesGift(userId, clientId):
     availableGift = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.availableGift, [])
     # 普通礼包
     normalGiftIds = config.getGiftListConf(clientId, GiftType.NORMAL)
-    # if isupgradeGunTestMode(userId):
-    #     for giftId in normalGiftIds:
-    #         if giftId == 70212801:
-    #             normalGiftIds.remove(giftId)
-    #             normalGiftIds.remove(giftId+1)    # a模式下giftId为70212801何70212802的两个礼包不显示
-    # else:
-    #     for giftId in normalGiftIds:
-    #         if giftId == 702128:
-    #             normalGiftIds.remove(giftId)
-    #     ftlog.debug("isupgradeGunTestMode =", isupgradeGunTestMode, "userid = ", userId)
     for giftId in normalGiftIds:
         if giftId == 70212801:
             normalGiftIds.remove(giftId)
-            normalGiftIds.remove(giftId + 1)        # a模式下giftId为70212801何70212802的两个礼包不显示
+            normalGiftIds.remove(giftId + 1)                            # a模式下giftId为70212801何70212802的两个礼包不显示
     # 升级礼包
     levelUpGiftIds = config.getGiftListConf(clientId, GiftType.LEVELUP)
     # 所有系列礼包，并按价格排序
@@ -775,7 +747,6 @@ def getSeriesGift(userId, clientId):
         if not _gift:
             continue
         allSeriesGiftConf.append(dict(_gift))
-
     if allSeriesGiftConf:
         allSeriesGiftConf = sorted(allSeriesGiftConf, key=itemgetter("price"))
         allSeriesGiftId = map(lambda conf: conf["giftId"], allSeriesGiftConf)
@@ -817,6 +788,7 @@ def doBuyFishGift(userId, clientId, giftId, buyType=None, itemId=0):
     ftlog.debug("doBuyFishGift===>", userId, clientId, giftId, buyType, itemId)
     giftConf = getGiftConf(clientId, giftId)
     if not giftConf:
+        ftlog.error("doBuyFishGift, userId =", userId, "giftId =", giftId, "buyType =", buyType, "itemId =", itemId)
         return
     lang = util.getLanguage(userId, clientId)
     buyType = buyType or giftConf.get("buyType")
@@ -830,8 +802,9 @@ def doBuyFishGift(userId, clientId, giftId, buyType=None, itemId=0):
             price = giftConf.get("otherBuyType", {}).get(buyType)
             if buyType == BT_VOUCHER:
                 _consume = [{"name": VOUCHER_KINDID, "count": abs(price)}]
-                _ret = util.consumeItems(userId, _consume, "BI_NFISH_BUY_ITEM_CONSUME", intEventParam=int(giftId), param01=int(giftId))
-                if not _ret:
+                _, consumeCount, final = util.consumeItems(userId, _consume, "BI_NFISH_BUY_ITEM_CONSUME", 0,
+                                                          param01=int(giftId))
+                if abs(consumeCount) != price:
                     _sendBuyFishGiftRet(userId, clientId, giftId, 1)
                     return
                 else:
@@ -851,10 +824,12 @@ def doBuyFishGift(userId, clientId, giftId, buyType=None, itemId=0):
                 consumeCount = 0
                 if isSucc:
                     store.autoConvertVoucherToDiamond(userId, price)                                        # 代购券
-                    consumeCount, final = userchip.incrDiamond(userId, FISH_GAMEID, -abs(price), 0, "BI_NFISH_BUY_ITEM_CONSUME", int(giftId), util.getClientId(userId), param01=giftId)
-                if not isSucc and abs(consumeCount) != price:                                               # 钻石不足
+                    consumeCount, final = userchip.incrDiamond(userId, FISH_GAMEID, -abs(price), 0,
+                                                               "BI_NFISH_BUY_ITEM_CONSUME", int(giftId),
+                                                               util.getClientId(userId), param01=giftId)
+                if not isSucc or abs(consumeCount) != price:
                     _sendBuyFishGiftRet(userId, clientId, giftId, 1)
-
+                    return
     # 记录礼包购买次数.
     buyGiftTimes = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyGiftTimes, {})
     buyGiftTimes.setdefault(str(giftId), 0)
@@ -870,7 +845,10 @@ def doBuyFishGift(userId, clientId, giftId, buyType=None, itemId=0):
             # 购买成功后更新破产礼包购买次数并存储礼包等级.
             bankruptGiftInfo = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.bankruptGiftInfo, [])
             if bankruptGiftInfo:
-                fishPool, grade = bankruptGiftInfo
+                if len(bankruptGiftInfo) == 2:
+                    fishPool, grade = bankruptGiftInfo
+                else:
+                    fishPool, grade, _ = bankruptGiftInfo
                 buyBankruptGift = weakdata.getDayFishData(userId, WeakData.buyBankruptGiftTimesPerPool, {})
                 buyBankruptGift.setdefault(str(fishPool), {}).setdefault("count", 0)
                 buyBankruptGift[str(fishPool)]["count"] += 1
@@ -912,6 +890,7 @@ def _sendBuyFishGiftRet(userId, clientId, giftId, code, rewards=None):
         doSendNewMonthCardGiftInfo(userId, clientId)
     else:
         doSendFishGift(userId, clientId)
+    ftlog.info("buyGiftRet, userId =", userId, "clientId =", clientId, "giftId =", giftId, "code =", code)
 
 
 def doGetFishGiftReward(userId, clientId, giftId):
@@ -925,6 +904,7 @@ def doGetFishGiftReward(userId, clientId, giftId):
     chestRewards = []
     giftConf = getGiftConf(clientId, giftId)
     if not giftConf:
+        ftlog.error("doGetFishGiftReward, userId =", userId, "giftId =", giftId)
         return
     canGetRewards = False
     if giftConf["giftType"] == GiftType.MONTHCARD:
@@ -962,6 +942,11 @@ def doGetFishGiftReward(userId, clientId, giftId):
                     code = 0
                     rewards = [{"name": item["itemId"], "count": item["count"], "type": item["type"]}]
                     commonRewards.extend(rewards)
+            elif item["type"] == 6:     # 直升炮台
+                upToLevel = item["count"]
+                success = gun_system.upgradeGun(userId, False, MULTIPLE_MODE, byGift=True, upToLevel=upToLevel)
+                if success:
+                    code = 0
 
     message = MsgPack()
     if giftConf["giftType"] == GiftType.MONTHCARD:
@@ -1013,7 +998,7 @@ def _makeUserLevelUp(userId, level):
     礼包奖励为提升至指定等级
     """
     originLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
-    if originLevel >= level:                        # 原来等级
+    if originLevel >= level:
         return
     lastLevel = level - 1
     lastLevelConf = config.getUlevel(lastLevel)
@@ -1029,7 +1014,7 @@ def getLimitTimeGift(userId, clientId, popup=0):
     # limitTimeGiftData = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.limitTimeGift, {})
     # availableGift = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.availableGift, [])
     # limitTimeGift = {}
-    # if limitTimeGiftData and util.isFinishAllRedTask(userId):
+    # if limitTimeGiftData and util.isFinishAllNewbieTask(userId):
     #     lastGiftId = limitTimeGiftData["lastGiftId"]
     #     lastActivate = limitTimeGiftData["lastActivate"]
     #     giftConf = config.getGiftConf(clientId, lastGiftId)
@@ -1052,11 +1037,12 @@ def getWxFishGift(userId):
     # if normalGift and normalGift["available"] != 0:
     #     normalGift = {}
     # 新版礼包
-    _, seriesGift = getSeriesGift(userId, clientId)
-    if seriesGift:
-        seriesGift = list(filter(lambda x: x["available"] == 0, seriesGift))
+    # _, seriesGift = getSeriesGift(userId, clientId)
+    # if seriesGift:
+    #     seriesGift = list(filter(lambda x: x["available"] == 0, seriesGift))
+    levelGift = doSendLevelGift(userId, clientId)
     # 破产礼包
-    bankruptGift, _ = BankruptGift(userId, clientId).getGiftInfo()
+    bankruptGift, _, _ = BankruptGift(userId, clientId).getGiftInfo()
     if bankruptGift:
         bankruptGift = list(filter(lambda x: x["available"] == 0, bankruptGift))
     # 月卡
@@ -1068,7 +1054,7 @@ def getWxFishGift(userId):
     itemPermanent = userBag.getItemByKindId(config.PERMANENT_MONTH_CARD_KINDID)
     if itemPermanent:
         monthCardGift = None
-    return seriesGift, bankruptGift, monthCardGift
+    return levelGift, bankruptGift, monthCardGift
 
 
 def doSendNewMonthCardGiftInfo(userId, clientId, popup=0):
@@ -1084,7 +1070,7 @@ def doSendNewMonthCardGiftInfo(userId, clientId, popup=0):
     itemId = 0
     state = 0
     remain = 0
-    if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllRedTask(userId):
+    if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllNewbieTask(userId):
         giftInfo = MonthCardGift(userId, clientId).getGiftInfo()
         for _info in giftInfo:
             monthCardGift, itemId, state = _info
@@ -1129,7 +1115,7 @@ def getGiftConf(clientId, giftId):
     获取礼包配置
     """
     giftConf = config.getGiftConf(clientId, giftId)
-    if not giftConf and config.getGiftAbcTestConf(clientId).get("enable"):
+    if not giftConf:
         giftConf = config.getGiftAbcTestConf(clientId).get("gift", {}).get(str(giftId))
     return giftConf
 
@@ -1138,8 +1124,12 @@ def _triggerChargeNotifyEvent(event):
     """
     直充购买商品成功事件
     """
-    ftlog.info("gift_system._triggerChargeNotifyEvent->", "userId =", event.userId, "gameId =", event.gameId, "rmbs =",
-               event.rmbs, "productId =", event.productId, "clientId =", event.clientId)
+    ftlog.info("gift_system._triggerChargeNotifyEvent->",
+               "userId =", event.userId,
+               "gameId =", event.gameId,
+               "rmbs =", event.rmbs,
+               "productId =", event.productId,
+               "clientId =", event.clientId)
     userId = event.userId
     productId = event.productId
     allGiftConf = config.getGiftConf(event.clientId)

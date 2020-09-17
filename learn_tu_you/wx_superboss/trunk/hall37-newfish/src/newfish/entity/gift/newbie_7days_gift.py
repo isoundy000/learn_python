@@ -43,7 +43,7 @@ def checkNewbie7DaysGiftState(userId, redState):
 
 def queryNewbie7DayGift(userId, clientId):
     """
-    返回购买结果
+    返回新手礼包数据
     """
     module_tip.resetModuleTipEvent(userId, "newbie7DaysGift")
     message = MsgPack()

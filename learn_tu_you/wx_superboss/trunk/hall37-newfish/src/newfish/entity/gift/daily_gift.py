@@ -35,16 +35,17 @@ def doSendGift(userId, clientId):
     dailyGiftConf = config.getDailyGiftConf(clientId)
     lang = util.getLanguage(userId, clientId)
     giftInfo = []
-    if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllRedTask(userId):
+    if not util.isVersionLimit(userId) and not util.isPurchaseLimit(userId) and util.isFinishAllNewbieTask(userId):
         for id, giftConf in dailyGiftConf.iteritems():
             vipRange = giftConf.get("vipRange", [0, 0])
             if vipRange[0] <= vipLevel <= vipRange[1]:
                 hasBought = _isBought(userId, id)
                 continuousDay = _getContinuousDay(userId, id)
-                if hasBought and continuousDay > 0:
-                    continuousDay -= 1
+                if continuousDay < len(giftConf.get("giftInfo", [])):
+                    hasBought = 0
                 dayIdx = _getGiftDayIdx(clientId, id, continuousDay)
                 giftInfo.append(getGiftDetail(giftConf, hasBought, dayIdx, lang))
+                ftlog.debug("doSendGift", userId, id, hasBought, continuousDay, dayIdx)
     message.setResult("btnVisible", bool(len(giftInfo) > 0))
     message.setResult("giftInfo", giftInfo)
     giftTestMode = config.getPublic("giftTestMode", None)
@@ -136,44 +137,42 @@ def doBuyGift(userId, clientId, giftId, buyType, itemId=0):
     mail_rewards = []
     giftInfo = giftConf.get("giftInfo", [])
     for gift in giftInfo:
-        if gift["day_idx"] != dayIdx:
-            continue
-        for item in gift.get("items", []):
-            if util.isChestRewardId(item["itemId"]):  # 宝箱
-                chestId = item["itemId"]
-                rewards = chest_system.getChestRewards(userId, chestId)
-                if buyType == BT_VOUCHER:
-                    code = chest_system.deliveryChestRewards(userId, chestId, rewards, "BI_NFISH_BUY_ITEM_GAIN")
-                else:
-                    code = 0
-                    gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.openChestCount, 1)
-                    bireport.reportGameEvent("BI_NFISH_GE_CHEST_OPEN", userId, FISH_GAMEID, 0,
-                                             0, int(chestId), 0, 0, 0, [], util.getClientId(userId))
-                chestRewards.extend(rewards)
-                mail_rewards.extend([{"name": item["itemId"], "count": 1}])
-            else:  # 资产/道具
-                rewards = [{"name": item["itemId"], "count": item["count"]}]
-                if buyType == BT_VOUCHER:
-                    code = util.addRewards(userId, rewards, "BI_NFISH_BUY_ITEM_GAIN", int(giftId), param01=int(giftId))
-                else:
-                    code = 0
-                commonRewards.extend(rewards)
-                mail_rewards.extend(rewards)
-        break
-    if buyType != BT_VOUCHER:
+        if gift["day_idx"] == dayIdx:
+            for item in gift.get("items", []):
+                if util.isChestRewardId(item["itemId"]):  # 宝箱
+                    chestId = item["itemId"]
+                    rewards = chest_system.getChestRewards(userId, chestId)
+                    if buyType == BT_VOUCHER or buyType == config.BT_DIAMOND:
+                        code = chest_system.deliveryChestRewards(userId, chestId, rewards, "BI_NFISH_BUY_ITEM_GAIN")
+                    else:
+                        code = 0
+                        gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.openChestCount, 1)
+                        bireport.reportGameEvent("BI_NFISH_GE_CHEST_OPEN", userId, FISH_GAMEID, 0,
+                                                 0, int(chestId), 0, 0, 0, [], util.getClientId(userId))
+                    chestRewards.extend(rewards)
+                    mail_rewards.extend([{"name": item["itemId"], "count": 1}])
+                else:  # 资产/道具
+                    rewards = [{"name": item["itemId"], "count": item["count"]}]
+                    if buyType == BT_VOUCHER or buyType == config.BT_DIAMOND:
+                        code = util.addRewards(userId, rewards, "BI_NFISH_BUY_ITEM_GAIN", int(giftId), param01=int(giftId))
+                    else:
+                        code = 0
+                    commonRewards.extend(rewards)
+                    mail_rewards.extend(rewards)
+            break
+    if buyType == BT_VOUCHER or buyType == config.BT_DIAMOND:
+        _sendBuyGiftRet(userId, clientId, giftId, code, chestId, commonRewards, chestRewards)
+    else:
         message = config.getMultiLangTextConf("ID_DO_BUY_GIFT_MSG", lang=lang) % giftName
         title = config.getMultiLangTextConf("ID_MAIL_TITLE_DAILY_GIFT", lang=lang)
         mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, mail_rewards, message, title)
         doSendGift(userId, clientId)
-    else:
-        _sendBuyGiftRet(userId, clientId, giftId, code, chestId, commonRewards, chestRewards)
     # 购买礼包事件
     from newfish.game import TGFish
     from newfish.entity.event import GiftBuyEvent
     event = GiftBuyEvent(userId, FISH_GAMEID, giftConf["productId"], buyType, giftId)
     TGFish.getEventBus().publishEvent(event)
     util.addProductBuyEvent(userId, giftConf["productId"], clientId)
-
 
 
 def getGiftDetail(giftConf, hasBought, enableDayIdx, lang):
@@ -270,7 +269,12 @@ def _checkContinuosPurchase(userId, giftId):
 
 
 def _triggerChargeNotifyEvent(event):
-    ftlog.info("daily_gift._triggerChargeNotifyEvent->", "userId =", event.userId, "gameId =", event.gameId, "rmbs =", event.rmbs, "productId =", event.productId, "clientId =", event.clientId)
+    ftlog.info("daily_gift._triggerChargeNotifyEvent->",
+               "userId =", event.userId,
+               "gameId =", event.gameId,
+               "rmbs =", event.rmbs,
+               "productId =", event.productId,
+               "clientId =", event.clientId)
     userId = event.userId
     productId = event.productId
     dailyGiftConf = config.getDailyGiftConf(event.clientId)
