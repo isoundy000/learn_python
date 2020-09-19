@@ -32,8 +32,9 @@ from newfish.entity.fishactivity.fish_activity_system import VIP_ITEMS
 from newfish.entity.skill import skill_system
 from newfish.entity.fishactivity import super_egg_activity, competition_activity, pass_card_activity
 from newfish.entity.level_funds import doBuyLevelFunds
+from newfish.entity.gift.level_gift import doBuyLevelGift
 from newfish.entity.gun import gun_system
-
+from poker.entity.biz import bireport
 
 
 class BuyResultState:
@@ -68,7 +69,7 @@ class BuyAction(object):
         self.clientId = clientId
         self.productId = productId
         self.buyCount = count
-        self.actionType = actionType
+        self.actionType = actionType                                                    # 商城
         self.code = BuyResultState.BRS_SUCC
         self.ret = {}
         self.info = u""
@@ -88,8 +89,7 @@ class BuyAction(object):
         self.lang = util.getLanguage(userId, clientId)
         self.tabName = store.storeTabConfName.get(self.actionType)
         self._setConf()
-        # 每日数据刷新时间点.
-        self.dayRefreshTime = "00:00"
+        self.dayRefreshTime = "00:00"                                                   # 每日数据刷新时间点.
         self.curTime = int(time.time())
         self.allInfo = {}
         self.vipDailyCountLimit = []
@@ -109,7 +109,53 @@ class BuyAction(object):
         """
         初始化商品信息数据
         """
-        pass
+        self.product = self.storeConf.get(str(self.productId), {})                      # 商城的商品
+        self.itemId = self.product.get("itemId", 0)                                     # 道具Id
+        self.itemType = self.product.get("extendData", {}).get("itemType", 0)
+        if self.buyType not in self.product.get("otherBuyType", {}):                    # 购买类型
+            self.buyType = self.product.get("buyType", None)
+        self.vipLimit = self.product.get("vip", 0) or self.product.get("limitCond", {}).get("vipLimit", 0)
+        self.guideLimit = self.product.get("guideLimit", 0) or self.product.get("limitCond", {}).get("guideLimit", 0)
+        self.vipDailyCountLimit = self.product.get("limitCond", {}).get("vipDailyCountLimit", [])
+        self.dayBuyNum = self.product.get("limitCond", {}).get("userDailyCountLimit", 0)
+        self.thirdBuyType = config.isThirdBuyType(self.buyType)
+        self.buyTypeStr = config.getBuyTypeConf(self.buyType)
+        self.productObj = store.CreateProduct(None, self.actionType, self.productId, self.product, self.userId, self.clientId)      # 创建商品
+        if self.productObj:
+            self.name = self.productObj.getName()
+            self.itemCount = self.productObj.getItemCount()
+            self.price = self.productObj.getPrice(self.buyType)
+        else:
+            self.name = self.product.get("name", "")
+            self.itemCount = self.product.get("count", 0)
+        if ftlog.is_debug():
+            ftlog.debug("BuyAction->tabName", self.tabName, "userId =", self.userId, "buyType =", self.buyType,
+                        "price =", self.price, "name =", self.name, "itemId =", self.itemId, "itemCount =", self.itemCount)
+
+    def _checkCondition(self):
+        """检查条件"""
+        if self.price <= 0 or not self.product or not self.buyType:                     # 商品价格
+            self.code = BuyResultState.BRS_FAILED
+        elif self.guideLimit and not util.isFinishAllNewbieTask(self.userId):
+            self.code = BuyResultState.BRS_NEWBIE_LIMIT
+        elif self.userVip < self.vipLimit:
+            self.code = BuyResultState.BRS_VIP_LIMIT
+
+    def _checkServerCount(self):
+        """
+        检查商品服务器数量限制,此检测会尝试购买次数,所以需要在检测完其他条件后再检测！！！
+        """
+        ftlog.debug("checkServerCount0000", self.tabName, "userId =", self.userId, "buyType =", self.buyType,
+                    "price =", self.price, "name =", self.name, "itemId =", self.itemId, "itemCount =", self.itemCount)
+        if self.code != BuyResultState.BRS_SUCC:
+            return
+        if self.actionType == store.StoreTabType.STT_COUPON:            # 奖券
+            serverBuyCount = self.product.get("limitCond", {}).get("serverDailyCountLimit", -1)
+            key = MixData.buyProductServerCount % FISH_GAMEID
+        else:
+            serverBuyCount = self.product.get("limitCond", {}).get("hotServerDailyCountLimit", -1)
+            key = MixData.buyHotProductServerCount % FISH_GAMEID
+
 
 
 

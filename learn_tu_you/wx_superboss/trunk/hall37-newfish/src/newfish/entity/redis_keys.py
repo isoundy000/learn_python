@@ -31,6 +31,7 @@ redis数据key的规范：
       rank:z:p:6    — 游戏6的排行榜数据，不需要冷热处理，忽略掉
 """
 
+
 class GameData:
     """
     存储在gamedata:gameId:userId数据库中的key值
@@ -45,26 +46,16 @@ class GameData:
     level = "level"
     # 最近一次已拥有的皮肤炮列表（配合过期提示用）(经典和千炮模式共享)
     ownGunSkins = "ownGunSkins"
-    # # 最近一次已拥有的千炮皮肤炮列表（配合过期提示用）
-    # ownGunSkins_m = "ownGunSkins_m"
     # 已拥有的皮肤炮皮肤(经典和千炮模式共享)
     ownGunSkinSkins = "ownGunSkinSkins"
-    # # 已拥有的千炮皮肤炮皮肤
-    # ownGunSkinSkins_m = "ownGunSkinSkins_m"
     # 已发送了过期提示弹窗的皮肤炮(经典和千炮模式共享)
     promptedGunSkins = "promptedGunSkins"
-    # # 已发送了过期提示弹窗的千炮皮肤炮
-    # promptedGunSkins_m = "promptedGunSkins_m"
-    # 已解锁皮肤炮列表(经典和千炮模式共享)
-    unlockedGunSkins = "unlockedGunSkins"
-    # # 已解锁千炮皮肤炮列表
-    # unlockedGunSkins_m = "unlockedGunSkins_m"
     # 用户最大火炮等级
     gunLevel = "gunLevel"
     # 用户最大千炮倍率
     gunLevel_m = "gunLevel_m"
     # 用户当前皮肤炮ID
-    gunSkinId = "gunSkinId"  # 使用的皮肤炮ID
+    gunSkinId = "gunSkinId"             # 使用的皮肤炮ID
     # 用户当前千炮皮肤炮ID
     gunSkinId_m = "gunSkinId_m"
     # 当前玩家在经典渔场中的火炮等级
@@ -200,7 +191,7 @@ class GameData:
     # 是否领取了惊喜礼包（微信我的小程序进入奖励）
     surpriseGift = "surpriseGift"
     # 海星转盘数据
-    starfishRoulette = "starfishRoulette"
+    starfishRoulette = "starfishRoulette"  
     # 此次登录是否领取了普通礼包
     alreadyTakenNormalGift = "alreadyTakenNormalGift"
     # 招财模式充值奖池
@@ -277,6 +268,8 @@ class GameData:
     pb_enable = "pb_enable"
     # 存钱罐每日累计金币量
     pb_savedMoneyCount = "pb_savedMoneyCount"
+    # 存钱罐每日购买次数
+    pb_buyTimes = "pb_buyTimes"
     # === 存钱罐，end
     # sdk支付后自动购买商品的数据,autoBuyAfterSDKPay:44:uid
     autoBuyAfterSDKPay = "autoBuyAfterSDKPay:%d:%d"
@@ -303,11 +296,11 @@ class GameData:
     # 更版奖励
     updateVerRewards = "updateVerRewards"
     # 当前解锁的章节ID
-    currSectionId = "currSectionId"
+    currSectionId = "currSectionId1"
     # 主线任务是否在渔场中显示
-    mainQuestDisplay = "mainQuestDisplay"
+    mainQuestDisplay = "mainQuestDisplay1"
     # 是否已完成所有主线任务
-    finishAllMainQuest = "finishAllMainQuest"
+    finishAllMainQuest = "finishAllMainQuest1"
     # 每日盈亏金币量K
     dailyProfitCoin = "dailyProfitCoin"
     # 每日渔场盈亏金币量K
@@ -338,7 +331,7 @@ class GameData:
     # vertified = "vertified"
     # 玩家游戏昵称
     nickname = "nickname"
-    # 新手7日礼包数据
+    # 新手八日礼包数据
     newbie7DayGiftData = "newbie7DayGiftData"
     # 各个渔场开火消耗(用于红包券抽奖)
     lotteryFireCostChip = "lotteryFireCostChip:h:s:44"
@@ -362,40 +355,16 @@ class GameData:
     gunMode = "gunMode"
     # 每次抽奖的捕获鱼的数量
     levelPrizeWheelCatchFishNumber = "levelPrizeWheelCatchFishNumber"
+    # 购买等级礼包
+    buyLevelGift = "buyLevelGift"
+    # 是否发送过新手LED
+    hasSendUserNewLed = "hasSendUserNewLed"
 
 
 class ABTestData:
     """
     新手AB测试相关
     """
-    # 新手概率模式
-    newbieMode = "newbieMode"
-    # 新手房间列表模式
-    newbieRoomListMode = "newbieRoomListMode"
-    # 中期阶段目标模式
-    midTermTargetMode = "midTermTargetMode"
-    # 破产曲线模式
-    bankruptCurveMode = "bankruptCurveMode"
-    # 破产测试
-    bankruptTestMode = "bankruptTestMode"
-    # 道具赠送测试,b模式不显示物品赠送按钮及相关赠送活动
-    itemPresentTestMode = "itemPresentTestMode"
-    # 礼包显示测试
-    giftDisplayMode = "giftDisplayMode"
-    # 签到测试，b模式使用新的转盘方式
-    checkinTestMode = "checkinTestMode"
-    # # 50倍场17级初始曲线AB测试
-    # initCurve5017TestMode = "initCurve5017TestMode"
-    # # 10倍50倍动态曲线AB测试
-    # dynamicOdds1050TestMode = "dynamicOdds1050TestMode"
-    # 新手结束充值奖池AB测试
-    rechargePoolTestMode = "rechargePoolTestMode"
-    # # 火炮升级AB测试
-    # upgradeGunTestMode = "upgradeGunTestMode"
-    # 渔场倍率AB测试
-    fpMultipleTestMode = "fpMultipleTestMode"
-    # 子弹威力奖池
-    bulletPowerPool = "bulletPowerPool"
     # 新手ABC测试
     newbiewABCTestMode = "newbiewABCTestMode"
 
@@ -494,6 +463,8 @@ class WeakData:
     buyBankruptGiftTimesPerPool = "buyBankruptGiftTimesPerPool"
     # 回归豪礼每日登录次数
     returnerMission = "returnerMission"
+    # 翻番乐道具收集数量
+    itemHappyDoubleCount = "itemHappyDoubleCount"
     # 商品下次免费的时间戳
     productFreeTS = "productFreeTS"
     # 所有商品购买次数
@@ -504,22 +475,31 @@ class WeakData:
     buyDailyChestCount = "buyDailyChestCount"
     # 每日使用免费技能的次数{skillId: count}
     skillFreeUseCount = "skillFreeUseCount"
+    # 每日获得的海洋之星的数量
+    oceanStarCount = "oceanStarCount"
+    # 升级礼包倒计时
+    LevelUpCountDownData = "levelUpCountDownData"
 
 
 class UserData:
     """
     存储在user库中的key值 玩家存档gameId:userId
     """
+    # 游戏数据
+    gamedata = "gamedata:%d:%d"
     # 活动数据
     activity = "activity:%d:%d"
     # 荣耀数据
     achievement = "achievement3:%d:%d"
+    # 主线任务
+    # mainQuest = "mainQuest:%s:%s"
+    mainQuest = "mainQuest:%d:h:s:%d"
     # 称号数据
     honor = "honor3:%d:%d"
     # 火炮数据
     gunskin = "gunskin:%d:%d"
     # 千炮火炮数据
-    gunskin_m = "gunskin_m:%d:%d"
+    gunskin_m = "gunskin_m:%d:h:s:%d"
     # 宝藏数据
     treasure = "treasure2:%d:h:s:%d"
     # 分享数据
@@ -547,7 +527,8 @@ class UserData:
     # 存钱罐数据
     piggyBankData = "piggyBankData:%d:%d"
     # 主线任务类型完成数量数据
-    questType = "questType:%s:%s"
+    # questType = "questType:%s:%s"
+    questType = "questType:%d:h:s:%d"
     # 招财财富榜玩家数据
     robberyconsume = "robberyconsume:%d:%d:%s"
     # 招财赢家榜玩家数据
@@ -642,6 +623,10 @@ class MixData:
     ca_orderTeamId = "ca_orderTeamId"
     ca_compensatePoint = "ca_compensatePoint"
     # === 竞赛活动数据, end
+    # 兑换商城全服限购数据
+    couponExchangeCount = "couponExchangeCount:%d"
+    # 活动任务的全服次数记录
+    actTaskServerCount = "actTaskServerCount:%d:%s"
     # 超级boss数据,superbossBonus:gameId
     superbossBonus = "superbossBonus:%d"
     # 超级boss奖池数据,superboss_bonuspool:bigRoomId
@@ -649,3 +634,5 @@ class MixData:
     superbossBonusRingpool = "superbossBonusRingpool:%d"
     # 所有商品全服购买数据
     buyProductServerCount = "buyProductServerCount:%d"
+    # 热销商品全服购买数据
+    buyHotProductServerCount = "buyHotProductServerCount:%d"

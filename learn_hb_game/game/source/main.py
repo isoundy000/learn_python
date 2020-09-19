@@ -119,6 +119,33 @@ if __name__ == '__main__':
         Log.Write("[Error]TcpServerManager Init Error")
         exit(1)
 
+    TimerManager.Run()
+
+    GameData.gGameMode = 0
+
+    # 5.启动监听
+    # 6.启动主动处理循环
+
+    # gameListener = appConfig["Server"]["Interface"]["Player"]["listener"]
+    WSGIListener = appConfig["Server"]["Interface"]["WSGI"]["listener"]
+    # 启动外部计算单元
+    ExtServers = appConfig["Server"]["Interface"]["ExtServers"]["Ext"]
+    try:
+        AccServerConnection.Start()                 # 账号
+        WorldWarServerConnection.Start()            # 跨服战
+        if GameData.gAccMode == 1:
+            AccServerConnection2.Start()            # 账号2
+        # Log.Write("prepare acc 1")
+        # gevent.sleep(1)
+        # Log.Write("prepare acc 2")
+        # GatesConnectResponseTaskQueueManager.Init()
+        # gevent.spawn(GatesConnect)
+        TcpServerManager.CreateWSGI("Manage", (WSGIListener["ip"], int(WSGIListener["port"])), URLRoute)
+        TcpServerManager.Wait()
+    except BaseException, e:
+        Log.Write(e)
+    finally:
+        TcpServerManager.Kill()
 
 
 

@@ -4,7 +4,7 @@
 import traceback
 import gevent
 import gevent.event
-from Source.Timer.Config.Config import PerDayHalfHourConfig, PerDayHourConfig
+from Source.Timer.Config.Config import PerDayHalfHourConfig, PerDayHourConfig, ExactTimerConfig, TickTimerConfig
 from Source.DataBase.Common.DBEngine import DBEngine
 from datetime import datetime, timedelta
 from Source.Log.Write import Log
@@ -226,5 +226,13 @@ class TimerManager:
                         Log.Write(e)
                         Log.Write(traceback.format_exc())
                     exacttimerevent.wait(1)
+        for exact in ExactTimerConfig:
+            gevent.spawn(ExactTimerProcess, exact)
 
-
+    @staticmethod
+    def Run():
+        for v in TickTimerConfig:
+            TimerManager.CreateTickTimer(v[0], v[1])
+        gevent.spawn(TimerManager.DayHourTick)
+        gevent.spawn(TimerManager.DayHalfHourTick)
+        gevent.spawn(TimerManager.ExactTimer)

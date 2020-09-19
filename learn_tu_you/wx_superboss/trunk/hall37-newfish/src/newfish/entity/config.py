@@ -999,6 +999,8 @@ def getWeaponConf(wpId, useRate=True, mode=CLASSIC_MODE):
                 rate = round(random.uniform(probabInfo["value"][0], probabInfo["value"][-1]), 2)
                 weaponInfo["power"] *= rate
                 break
+        if ftlog.is_debug():
+            ftlog.debug("getWeaponConf", wpId, weaponInfo)
     return weaponInfo
 
 
@@ -1669,7 +1671,6 @@ def getGiftAbcTestConf(clientId):
     return giftAbcTestConf[defaultIntClientId]
 
 
-
 def getLimitTimeGiftConf(clientId, fishPool):
     """
     加载限时礼包配置
@@ -1678,7 +1679,6 @@ def getLimitTimeGiftConf(clientId, fishPool):
     for giftId, gift in _giftConf.get("gift", {}).iteritems():
         if gift.get("fishPool") == fishPool and gift.get("giftType") == 1:
             return gift
-    return None
 
 
 def getGiftListConf(clientId, giftType):

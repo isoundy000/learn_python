@@ -7,6 +7,7 @@ import time
 import json
 import random
 import string
+from distutils.version import StrictVersion
 
 from freetime.util import log as ftlog
 from hall.entity import hallvip
@@ -62,7 +63,13 @@ def getGameInfo(userId, clientId):
     # 是否为v2版本老玩家（1：是 0：否）
     isOldPlayerV2 = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.isOldPlayerV2)
     if isOldPlayerV2 is None:
-        isOldPlayerV2 = 1 if redState else 0
+        isOldPlayerV2 = 0
+        clientVersion = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.clientVersion)
+        if redState:
+            isOldPlayerV2 = 1
+        elif clientVersion and StrictVersion(str(clientVersion)) < StrictVersion("3.0.0"):
+            isOldPlayerV2 = 1
+            gamedata.setGameAttr(userId, FISH_GAMEID, GameData.redState, 1)
         gamedata.setGameAttr(userId, FISH_GAMEID, GameData.isOldPlayerV2, isOldPlayerV2)
     gdata["isOldPlayerV2"] = isOldPlayerV2
 
@@ -107,7 +114,7 @@ def createGameData(userId, gameId):
 
 def setNewbie7Day(userId):
     """
-    设置新手8日礼包数据
+    设置新手八日礼包数据
     """
     ts = int(time.time())
     gamedata.setGameAttr(userId, FISH_GAMEID, GameData.newbie7DayGiftData, strutil.dumps([util.getDayStartTimestamp(ts), []]))
