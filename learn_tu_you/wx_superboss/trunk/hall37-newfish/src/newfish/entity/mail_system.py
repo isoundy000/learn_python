@@ -48,8 +48,10 @@ class MailRewardType:
     PoseidonCompensate = 19 # 海皇补偿
 
 
-# 邮件状态
 class MailState:
+    """
+    邮件状态
+    """
     Default = 0
     Received = 1            # 已领取
     Delete = 2              # 已删除
@@ -67,10 +69,9 @@ def _getMailExpireTime(mailSenderType):
     """
     获取邮件过期时间
     """
-    expireDay = 1
-    mailExpireDay = config.getPublic("mailExpireDay", [])
-    if len(mailExpireDay) > mailSenderType:
-        expireDay = mailExpireDay[mailSenderType]
+    mailExpireKey = "system" if mailSenderType == MailSenderType.MT_SYS else "user"
+    mailExpireDay = config.getPublic("mailExpireDay", {})
+    expireDay = mailExpireDay.get(mailExpireKey, 7)
     return int(expireDay) * 86400
 
 
@@ -147,8 +148,16 @@ def _sendMailBySender(senderUserId, receiverUserId, type, reward=None, desc=None
     mailOutId = gamedata.incrGameAttr(senderUserId, FISH_GAMEID, GameData.outMailId, 1)
     mailOutInfos = gamedata.getGameAttrJson(senderUserId, FISH_GAMEID, GameData.outMailInfos, [])
     receiverUserName = util.getNickname(receiverUserId)
-    mailOutInfos.insert(0, {"id": mailOutId, "userId": receiverUserId, "time": curTime, "name": receiverUserName,
-                            "reward": reward, "type": type, "desc": desc, "title": title})
+    mailOutInfos.insert(0, {
+        "id": mailOutId,
+        "userId": receiverUserId,
+        "time": curTime,
+        "name": receiverUserName,
+        "reward": reward,
+        "type": type,
+        "desc": desc,
+        "title": title
+    })
     mailOutInfos = _removeOutMailExpData(mailOutInfos, MAX_OUT_MAIL_COUNT)
     gamedata.setGameAttr(senderUserId, FISH_GAMEID, GameData.outMailInfos, json.dumps(mailOutInfos))
     if type == MailRewardType.Present:
@@ -208,7 +217,7 @@ def doGetAllMails(userId, mailSenderType):
     """
     发送收件箱邮件列表消息
     """
-    if util.isFinishAllRedTask(userId):
+    if util.isFinishAllNewbieTask(userId):
         message = MsgPack()
         message.setCmd("fishMailList")
         message.setResult("gameId", FISH_GAMEID)
@@ -229,9 +238,7 @@ def getAllMail(userId):
         _key = GameData.mailInfos if _mt == MailSenderType.MT_SYS else GameData.userMailInfos
         mailInfos = gamedata.getGameAttrJson(userId, FISH_GAMEID, _key, [])
         tempMail[_mt] = _removeMailExpData(mailInfos, MAIL_DISPLAY_COUNT)
-        # tempMail[_mt] = _getUnDeleteMail(tempMail[_mt])
         _dealTips(userId, tempMail[_mt], _mt)
-        # tempMail[_mt].sort(cmp=_sortState)
     return tempMail
 
 
@@ -528,7 +535,7 @@ _inited = False
 
 
 def initialize():
-    ftlog.debug("newfish mailSystem￿ initialize begin")
+    ftlog.debug("newfish mailSystem initialize begin")
     global _inited
     if not _inited:
         from poker.entity.events.tyevent import EventUserLogin

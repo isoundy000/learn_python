@@ -5,6 +5,7 @@
 
 from copy import deepcopy
 
+from hall.entity import datachangenotify
 from poker.entity.dao import userchip
 from freetime.entity.msg import MsgPack
 from freetime.util import log as ftlog
@@ -33,18 +34,18 @@ class LevelPrizeWheel(PrizeWheel):
         """
         level = 1
         spin_level = 1
-        energy = self.pwConf['energy']
+        energy = {int(k): v for k, v in self.pwConf["energy"].items()}
         for lv, val in sorted(energy.items(), key=lambda d: d[0], reverse=True):
             data = self._getData(lv, 0)
             if int(data[0]) >= val:
-                level = int(lv) + 1
+                level = lv + 1
                 break
-        if level > int(max(energy.keys())):
+        if level > max(energy.keys()):
             level -= 1
-        if level > int(min(energy.keys())) and level < int(max(energy.keys())):                # 1、2、3、4
+        if level > min(energy.keys()) and level < max(energy.keys()):                # 1、2、3、4
             spin_level = level - 1
-        if level == int(max(energy.keys())):
-            if self.pwData.get(str(level), [0])[0] >= energy.get(str(level), 0):
+        if level == max(energy.keys()):
+            if self.pwData.get(str(level), [0])[0] >= energy.get(level, 0):
                 spin_level = level
             else:
                 spin_level = level - 1
@@ -69,45 +70,57 @@ class LevelPrizeWheel(PrizeWheel):
         level = str(level)
         pwData = self._getData(level, fpMultiple)
         if pwData[PWValueSlot.SPINTIMES] >= self.maxSpinTimes:
-            if ftlog.is_debug():
-                ftlog.debug("lpw_add_energy 0, userId =", self.userId, "ret =", ret, "level =", level,
-                            "fpMultiple =", fpMultiple, "value =", value, "pwData =", pwData)
             return ret
-
-        if self.isEnergyStorageMode or pwData[PWValueSlot.STATE] == PWState.NOT_SPIN:
+        if pwData[PWValueSlot.STATE] == PWState.NOT_SPIN:                            # self.isEnergyStorageMode or
             total = self._getCostEnergy(level, fpMultiple)
             if total > 0 and pwData[PWValueSlot.ENERGY] < total:
-                pwData[PWValueSlot.ENERGY] += value
-                if pwData[PWValueSlot.ENERGY] >= total:
-                    tmp_energy = pwData[PWValueSlot.ENERGY]                         # 1100
-                    pwData[PWValueSlot.ENERGY] = total                              # 1000
+                pwData[PWValueSlot.ENERGY] += value                                 # 目标能量
+                last_lv = int(level)
+                energy = {int(k): v for k, v in self.pwConf["energy"].items()}
+                for lv, val in sorted(energy.items(), key=lambda d: d[0]):
+                    if lv >= int(level) and pwData[PWValueSlot.ENERGY] >= val:
+                        last_lv = lv + 1
+                    if last_lv == max(energy.keys()) + 1:
+                        last_lv -= 1
+                # 本级充能
+                if last_lv == int(level):
+                    tmp_energy = pwData[PWValueSlot.ENERGY]
+                    if tmp_energy < total:
+                        self.pwData[level] = pwData
+                        self._setData(level, fpMultiple)
+                        return True
+                    pwData[PWValueSlot.ENERGY] = total
+                    pwData[PWValueSlot.SPINTIMES] = 1
+                    self.pwData[level] = pwData
+                    self._setData(level, fpMultiple)
                     next_level = str(int(level) + 1)
-                    if next_level in self.pwConf['energy'].keys():                  # 初始化下一个段位的数据
-                        # 处理之前的数据 本级的下一等级可以抽奖 其他等级不可抽奖
-                        if len(self.pwData) >= 2:
-                            for lv in self.pwData.keys():
-                                if int(lv) < int(level) and self.pwData[lv][PWValueSlot.SPINTIMES] == 1:
-                                    self.pwData[lv][PWValueSlot.SPINTIMES] = 0
-                                    self._setData(lv, fpMultiple)
+                    if next_level in self.pwConf['energy'].keys():
                         init_data = deepcopy(self.default_val)
-                        init_data[0] = int(tmp_energy)
+                        init_data[PWValueSlot.ENERGY] = int(tmp_energy)
                         self.pwData[next_level] = init_data
-                    if self.isEnergyStorageMode:
-                        pwData[PWValueSlot.SPINTIMES] += 1
-                        if pwData[PWValueSlot.SPINTIMES] >= self.maxSpinTimes:
-                            pwData[PWValueSlot.SPINTIMES] = self.maxSpinTimes
-                            ftlog.info("lpw_add_energy, userId =", self.userId, "level =", level,
-                                       "fpMultiple =", fpMultiple, "pwData =", pwData)
+                        self._setData(next_level, fpMultiple)
+                        return True
+                # 跨级充能
+                for lv in range(min(energy.keys()), last_lv + 1):
+                    init_data = deepcopy(self.default_val)
+                    if lv < last_lv:                                                # 重置之前等级数据
+                        init_data[PWValueSlot.ENERGY] = energy[lv]
                     else:
-                        pwData[PWValueSlot.SPINTIMES] = 1
-                    if ftlog.is_debug():
-                        ftlog.debug("lpw_add_energy 2, userId =", self.userId, "level =", level,
-                                    "fpMultiple =", fpMultiple, "pwData =", pwData)
-                self._setData(level, fpMultiple)
+                        init_data[PWValueSlot.ENERGY] = min(pwData[PWValueSlot.ENERGY], energy[lv])
+                        data = self._getData(last_lv - 1, fpMultiple)
+                        if data[PWValueSlot.ENERGY] >= energy[last_lv - 1]:
+                            data[PWValueSlot.SPINTIMES] = 1
+                            self.pwData[last_lv - 1] = data
+                            self._setData(last_lv - 1, fpMultiple)
+                    if last_lv == max(energy.keys()) and init_data[PWValueSlot.ENERGY] >= energy[last_lv]:
+                        data = self._getData(str(last_lv - 1), fpMultiple)
+                        data[PWValueSlot.SPINTIMES] = 0
+                        self.pwData[last_lv - 1] = data
+                        self._setData(last_lv - 1, fpMultiple)
+                        init_data[PWValueSlot.SPINTIMES] = 1
+                    self.pwData[str(lv)] = init_data
+                    self._setData(lv, fpMultiple)
                 ret = True
-        if ftlog.is_debug():
-            ftlog.debug("lpw_add_energy, userId =", self.userId, "ret =", ret, "level =", level,
-                        "fpMultiple =", fpMultiple, "value =", value, "pwData =", pwData)
         return ret
 
     def _getEnergyPct(self, level, fpMultiple):
@@ -236,7 +249,7 @@ class LevelPrizeWheel(PrizeWheel):
         mo.setResult('nowProgressPct', self._getEnergyPct(str(level), fpMultiple))  # 当前等级的能量
         # 下一级别等级的转盘进度
         next_level = int(level) + 1
-        if next_level <= int(max(self.pwConf['energy'])):
+        if next_level <= max([int(k) for k in self.pwConf['energy'].keys()]):
             mo.setResult("nextProgressPct", self._getEnergyPct(str(next_level), fpMultiple))  # 当前转盘的能量/目标轮盘的能量
         GameMsg.sendMsg(mo, self.userId)
 
@@ -302,9 +315,10 @@ class LevelPrizeWheel(PrizeWheel):
                 if diamondCount >= consumeDiamond:
                     code = 0
                     clientId = util.getClientId(self.userId)
-                    userchip.incrDiamond(self.userId, config.FISH_GAMEID, -consumeDiamond, 0,
+                    userchip.incrDiamond(self.userId, config.FISH_GAMEID, -consumeDiamond, self.roomId,
                                          "BI_NFISH_BUY_ITEM_CONSUME", config.DIAMOND_KINDID,
                                          clientId, param01="level_prize_wheel")
+                    datachangenotify.sendDataChangeNotify(FISH_GAMEID, self.userId, ["chip"])
                     ratioList = self._buildRetData(level, fpMultiple, _rewards)
                     pwData[PWValueSlot.RET] = ratioList
                     pwData[PWValueSlot.STATE] = PWState.NOT_TAKE_REWARD
@@ -314,31 +328,33 @@ class LevelPrizeWheel(PrizeWheel):
             elif pwData[PWValueSlot.STATE] == PWState.FAIL_SPIN and betType == "give_up":       # 放弃
                 code = 0
                 self._resetPrizeWheelState(level, fpMultiple)
-                ftlog.debug("lpw_give_up,  giveup, userId =", self.userId, "level =", level, pwData[PWValueSlot.STATE])
+                if ftlog.is_debug():
+                    ftlog.debug("lpw_give_up,  giveup, userId =", self.userId, "level =", level, pwData[PWValueSlot.STATE])
 
             elif pwData[PWValueSlot.STATE] == PWState.NOT_TAKE_REWARD and betType == "bet":     # 抽奖
                 for item in pwData[PWValueSlot.RET]:
-                    if item["ratio"] == bet:
-                        try:
-                            rewards = [item["rewards"][item["ret"]]]
-                            if rewards[0].get("name") == 0 and rewards[0].get("count") == 0:    # 转盘转到谢谢参与的奖励
-                                code = 0
+                    if item["ratio"] != bet:
+                        continue
+                    try:
+                        rewards = [item["rewards"][item["ret"]]]
+                        if rewards[0].get("name") == 0 and rewards[0].get("count") == 0:        # 转盘转到谢谢参与的奖励
+                            code = 0
+                            self._resetPrizeWheelState(level, fpMultiple)
+                        else:
+                            if rewards and rewards[0].get("count", 0) > 0:                      # 抽奖成功，获得奖励
+                                code = util.addRewards(self.userId, rewards, "BI_NFISH_LEVEL_PRIZE_WHEEL_REWARDS",
+                                                       int(level), self.roomId, fpMultiple)
                                 self._resetPrizeWheelState(level, fpMultiple)
-                            else:
-                                if rewards and rewards[0].get("count", 0) > 0:  # 抽奖成功，获得奖励
-                                    code = util.addRewards(self.userId, rewards, "BI_NFISH_LEVEL_PRIZE_WHEEL_REWARDS",
-                                                           int(level), self.roomId, fpMultiple)
-                                    self._resetPrizeWheelState(level, fpMultiple)
-                                else:                                           # 抽奖失败，谢谢参与
-                                    code = 0
-                                    pwData[PWValueSlot.STATE] = PWState.FAIL_SPIN
-                                    pwData[PWValueSlot.BET] = bet
-                                    self._setData(level, fpMultiple)
-                                    self.getInfo(fpMultiple)
-                        except:
-                            ftlog.error("lpw_bet_m, userId =", self.userId, "level =", level,
-                                        "bet =", bet, code, "data =", pwData[PWValueSlot.RET])
-                        break
+                            else:                                                               # 抽奖失败，谢谢参与
+                                code = 0
+                                pwData[PWValueSlot.STATE] = PWState.FAIL_SPIN
+                                pwData[PWValueSlot.BET] = bet
+                                self._setData(level, fpMultiple)
+                                self.getInfo(fpMultiple)
+                    except:
+                        ftlog.error("lpw_bet_m, userId =", self.userId, "level =", level,
+                                    "bet =", bet, code, "data =", pwData[PWValueSlot.RET])
+                    break
 
         self._setData(level, fpMultiple)
         mo = MsgPack()
@@ -361,16 +377,7 @@ class LevelPrizeWheel(PrizeWheel):
         :param fpMultiple: 1、2、3、4、5
         :param gunX: 炮倍
         """
-        level = min(self.pwConf['energy'].keys())
-        max_level = max(self.pwConf['energy'].keys())
-        for lv, value in sorted(self.pwConf['energy'].items(), key=lambda d: d[0]):
-            data = self._getData(lv, fpMultiple)
-            if data[PWValueSlot.ENERGY] >= value:
-                if lv == max_level:
-                    return
-                continue
-            level = lv                                            # 需要充能的等级
-            break
+        level = str(self.getEnergyIdx()[0])
         if not self._enable(level, fpMultiple):
             return
         pwData = self._getData(level, fpMultiple)
@@ -378,16 +385,14 @@ class LevelPrizeWheel(PrizeWheel):
             return
         if pwData[PWValueSlot.SPINTIMES] >= self.maxSpinTimes:
             return
-        # rate = fishConf.get("triggerRate", 0)
-        # rand = random.randint(1, 10000)
         val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunX
         if ftlog.is_debug():
             ftlog.debug("lpw_catch_fish, userId =", self.userId, "level =", level, "val =", val, fpMultiple, gunX)
-        if val and self._addEnergy(level, fpMultiple, val):
+        if val and self._addEnergy(level, fpMultiple, int(val)):
             number = gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber)
             number += 1
             gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber, number)
-            self.sendEnergyProgress(level, fpMultiple, self.roomId, val, fId)
+            self.sendEnergyProgress(0, fpMultiple, self.roomId, val, fId)       # 传0表示刷新当前最大的段位，因为会越级
 
     def _resetPrizeWheelState(self, level, fpMultiple):
         """
