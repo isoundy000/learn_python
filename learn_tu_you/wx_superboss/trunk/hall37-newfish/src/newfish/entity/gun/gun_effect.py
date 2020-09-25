@@ -105,8 +105,6 @@ class GunEffect(object):
         val = self.gunEffectData.get(gunId, [])
         if not val:
             return
-        if ftlog.is_debug():
-            ftlog.debug("gun_effect_set_data", val, gunId, self.gunEffectData)
         daobase.executeUserCmd(self.userId, "HSET", self.rdKey, gunId, json.dumps(val))
 
     def dumpData(self, gunId=None):
@@ -119,23 +117,31 @@ class GunEffect(object):
 
     def addGunEffectPower(self, gunId, power, gunX):
         """
-        使用狂暴弹增加威力 需要完善
+        使用狂暴弹增加威力
         """
+        if gunId not in self.useGunEffect:
+            return power, False
+        data = self.useGunEffect[gunId]
+        if data["state"] != State.USING:
+            return power, False
+        if float('%.2f' % time.time()) - data["start_time"] + data["progress"][0] >= data["progress"][1]:
+            return power, False
         if gunId not in self.gunEffectData:
-            data = self._getData(gunId)
-        else:
-            data = self.gunEffectData[gunId]
+            return power, False
+        data = self.gunEffectData[gunId]
         if not data:
-            return power
+            return power, False
         conf = config.getGunConf(gunId, self.clientId, 1, self.mode)
-        if data[0] > int(power * gunX * conf["power_rate"] / 100.0):
+        if data[0] >= int(power * gunX * conf["power_rate"] / 100.0):
             val = int(power * gunX * (conf["power_rate"] / 100.0 - 1))
             self.updateFireOrEnergy(self, gunId, 0, val, add=False)                     # 消耗能量
-            newPower = int(power * gunX * conf["power_rate"] / 100.0)                   # 最大威力
+            newPower = power * conf["power_rate"] / 100.0                               # 最大威力
         else:
             self.updateFireOrEnergy(self, gunId, 0, absValue=1)
-            newPower = int(power * (float(data[0]) / (power * gunX * conf["power_rate"] / 100.0) + 1))
-        return newPower
+            newPower = power * (float(data[0]) / (power * gunX * conf["power_rate"] / 100.0) + 1)
+        if ftlog.is_debug():
+            ftlog.debug("addGunEffectPower", newPower)
+        return newPower, True
 
     def addGunEffectFire(self, gunId, count):
         """
@@ -292,11 +298,11 @@ class GunEffect(object):
         else:
             if data["state"] == State.PAUSE:
                 data["state"] = State.USING
-                data["start_time"] = float('%.2f' % time.time())
                 if float('%.2f' % time.time()) - data["start_time"] + data["progress"][0] < data["progress"][1]:
                     data["progress"][0] += float('%.2f' % time.time()) - data["start_time"]
                     data["progress"][0] = min(data["progress"][0], data["progress"][1])
                     self.setUseEffectTimer(data["progress"][1] - data["progress"][0])   # 设置结束的定时器
+                data["start_time"] = float('%.2f' % time.time())
         self.sendUseEffectState(gunId)
 
     def sendUseEffectState(self, gunId=None):

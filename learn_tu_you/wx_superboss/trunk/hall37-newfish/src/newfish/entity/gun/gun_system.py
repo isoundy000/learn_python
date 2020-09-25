@@ -425,21 +425,6 @@ def upgradeGun(userId, protect, mode, byGift=False, upToLevel=0):
         mo.setResult("levelUpRewards", levelUpRewards)
     router.sendToUser(mo, userId)
     sendGunInfoMsg(userId, mode)                            # 发送普通炮信息
-    # 检查是否需要有需要弹出的升级礼包.
-    # TODO.需要检测游戏模式为经典还是千炮.
-    if mode == CLASSIC_MODE:
-        from newfish.entity.gift import gift_system
-        clientId = util.getClientId(userId)
-        levelUpGift = gift_system.LevelUpGift(userId, clientId).getGiftInfo()
-        if isinstance(levelUpGift, list) and len(levelUpGift) > 0:
-            giftId = levelUpGift[0].get("giftId")
-            giftConf = config.getGiftConf(clientId, giftId)
-            if giftConf and giftConf.get("popupLevel") == level:
-                popupGiftInfo = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.popupGift, [])
-                if giftId not in popupGiftInfo:
-                    popupGiftInfo.append(giftId)
-                    gamedata.setGameAttr(userId, FISH_GAMEID, GameData.popupGift, json.dumps(popupGiftInfo))
-                    gift_system.doRefreshFishGift(userId)
     return code == 0
 
 
