@@ -121,7 +121,7 @@ def getStoreTabsFish(userId, clientId, actionType, isRefresh=False):
     mo.setResult("tabs", tabs)
     router.sendToUser(mo, userId)
     # 宝箱免费次数存在多次,所以需要在获取商城时检测宝箱商城时候存在红点.
-    updateChestStoreModuleTip(userId, util.getUnlockCheckLevel(userId))
+    updateChestStoreModuleTip(userId, util.getUserLevel(userId), util.getGunLevelVal(userId, config.MULTIPLE_MODE))
 
 
 def isInvalidePruduct(isVerLimited, product, level, clientVersion, ownGunSkinSkins=None):

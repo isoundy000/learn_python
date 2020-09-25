@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/22
-# 免费金币摇钱树模块，玩家每隔一段时间可以领取奖励，看视频可以加速，但是最终领奖时还需要看视频
+# -*- coding: utf-8 -*-
+"""
+Created by zhanglin on：2020-04-09
+免费金币摇钱树模块，玩家每隔一段时间可以领取奖励，看视频可以加速，但是最终领奖时还需要看视频
+"""
 import time
 import json
 

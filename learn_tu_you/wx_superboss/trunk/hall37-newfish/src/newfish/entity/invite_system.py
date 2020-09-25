@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/21
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 18/03/30.
+"""
 import time
 import json
 from freetime.util import log as ftlog

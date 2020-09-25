@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # @Auther: houguangdong
 # @Time: 2020/7/22
+
 import json
 from datetime import datetime
 
@@ -17,6 +18,10 @@ from newfish.entity import config
 _LEDS = {}
 
 
+def canSendToUser(userId, clientId, led, userlang):
+    """
+    是否能发送给玩家
+    """
 
 
 
