@@ -141,11 +141,9 @@ class TGFish(TYGame):
         if serverType == gdata.SRV_TYPE_CENTER:
             from newfish.entity.lotterypool import grand_prize_pool
             grand_prize_pool.initialize()
-        from newfish.entity import piggy_bank, level_rewards, items_monitor
+        from newfish.entity import piggy_bank, items_monitor
         # 存钱罐
         piggy_bank.initialize()
-        # 等级奖励
-        level_rewards.initialize()
         # 道具监控
         items_monitor.initialize()
         # 鱼罐厂初始化

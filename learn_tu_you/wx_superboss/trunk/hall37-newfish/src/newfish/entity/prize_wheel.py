@@ -9,6 +9,7 @@ import json
 import random
 from copy import deepcopy
 
+from hall.entity import datachangenotify
 from poker.entity.dao import userchip, daobase
 from poker.entity.configure import gdata
 from freetime.entity.msg import MsgPack
@@ -98,20 +99,6 @@ class PrizeWheel(object):
             self.pwData[fishPool] = val
             # 处理新增数据.
             isUpdate = False
-            for _idx, _value in enumerate(deepcopy(self.default_val)):
-                if _idx + 1 > len(val):   # 有新增的数据
-                    isUpdate = True
-                    if _idx == PWValueSlot.BETCOUNT:
-                        _value = 1  # 老用户多倍竞猜次数为1
-                    elif _idx == PWValueSlot.SPINTIMES:
-                        self.pwData[fishPool].insert(_idx, 0)
-                        idx = len(self.pwData[fishPool][PWValueSlot.TAKEN]) % len(self.pwConf["energy"])
-                        total = self.pwConf["energy"][idx][fishPool]["cost"]
-                        if self.pwData[fishPool][PWValueSlot.ENERGY] >= total and self.pwData[fishPool][PWValueSlot.STATE] == PWState.NOT_SPIN:
-                            self.pwData[fishPool][PWValueSlot.ENERGY] = 0
-                            self.pwData[fishPool][PWValueSlot.SPINTIMES] = 1
-                        continue
-                    self.pwData[fishPool].insert(_idx, _value)
             if self.pwData[fishPool][PWValueSlot.SPINTIMES] > self.maxSpinTimes:
                 self.pwData[fishPool][PWValueSlot.SPINTIMES] = self.maxSpinTimes
                 isUpdate = True
@@ -216,9 +203,6 @@ class PrizeWheel(object):
             except:
                 pwData[PWValueSlot.ENERGY] = 0
             self._setData(fishPool, fpMultiple)
-        if ftlog.is_debug():
-            ftlog.debug("prize_wheel, userId =", self.userId,
-                        "fishPool =", fishPool, "fpMultiple =", fpMultiple, "data =", pwData, "lastIdx =", lastIdx)
 
     def _getEnergyPct(self, fishPool, fpMultiple):
         """
@@ -302,7 +286,7 @@ class PrizeWheel(object):
             if action == 0:# 查询
                 code = 0
             elif action == 1 and prizeList and weightList and sum(weightList) \
-                    and pwData[PWValueSlot.SPINTIMES] > 0 and pwData[PWValueSlot.STATE] == PWState.NOT_SPIN:# 抽奖
+                    and pwData[PWValueSlot.SPINTIMES] > 0 and pwData[PWValueSlot.STATE] == PWState.NOT_SPIN:    # 抽奖
                 code = self.spin(weightList, fpMultiple)
             # 更新数据.
             pwData = self._getData(fishPool, fpMultiple)
@@ -407,9 +391,10 @@ class PrizeWheel(object):
                 if diamondCount >= consumeDiamond:
                     code = 0
                     clientId = util.getClientId(self.userId)
-                    userchip.incrDiamond(self.userId, config.FISH_GAMEID, -consumeDiamond, 0,
+                    userchip.incrDiamond(self.userId, config.FISH_GAMEID, -consumeDiamond, self.roomId,
                                          "BI_NFISH_BUY_ITEM_CONSUME", config.DIAMOND_KINDID,
                                          clientId, param01="prize_wheel")
+                    datachangenotify.sendDataChangeNotify(FISH_GAMEID, self.userId, ["chip"])
                     ratioList = self._buildRetData(fishPool, fpMultiple, _rewards)
                     pwData[PWValueSlot.RET] = ratioList
                     pwData[PWValueSlot.STATE] = PWState.NOT_TAKE_REWARD
@@ -419,28 +404,30 @@ class PrizeWheel(object):
             elif pwData[PWValueSlot.STATE] == PWState.FAIL_SPIN and betType == "give_up":
                 code = 0
                 self._resetPrizeWheelState(fishPool, fpMultiple)
-                ftlog.debug("prize_wheel,  giveup, userId =", self.userId, "fishPool =", self.fishPool,
-                            pwData[PWValueSlot.STATE])
+                if ftlog.is_debug():
+                    ftlog.debug("prize_wheel,  giveup, userId =", self.userId, "fishPool =", self.fishPool,
+                                pwData[PWValueSlot.STATE])
 
             elif pwData[PWValueSlot.STATE] == PWState.NOT_TAKE_REWARD and betType == "bet":
                 for item in pwData[PWValueSlot.RET]:
-                    if item["ratio"] == bet:
-                        try:
-                            rewards = [item["rewards"][item["ret"]]]
+                    if item["ratio"] != bet:
+                        continue
+                    try:
+                        rewards = [item["rewards"][item["ret"]]]
+                        code = 0
+                        if rewards and rewards[0].get("count", 0) > 0:      # 抽奖成功，获得奖励
                             code = util.addRewards(self.userId, rewards, "BI_NFISH_PRIZE_WHEEL_REWARDS", int(fishPool), self.roomId, fpMultiple)
-                            if rewards and rewards[0].get("count", 0) > 0:  # 抽奖成功，获得奖励
-                                self.addRoomLotteryProfitCoin(rewards)
-                                self._resetPrizeWheelState(fishPool, fpMultiple)
-                            else: # 抽奖失败，谢谢参与
-                                pwData[PWValueSlot.STATE] = PWState.FAIL_SPIN
-                                pwData[PWValueSlot.BET] = bet
-                                self._setData(fishPool, fpMultiple)
-                                self.getInfo(fpMultiple)
-                        except:
-                            ftlog.error("prize_wheel, userId =", self.userId, "fishPool =", fishPool, "bet =", bet, code, "data =", pwData[PWValueSlot.RET])
-                        break
+                            self.addRoomLotteryProfitCoin(rewards)
+                            self._resetPrizeWheelState(fishPool, fpMultiple)
+                        else:                                               # 抽奖失败，谢谢参与
+                            pwData[PWValueSlot.STATE] = PWState.FAIL_SPIN
+                            pwData[PWValueSlot.BET] = bet
+                            self._setData(fishPool, fpMultiple)
+                            self.getInfo(fpMultiple)
+                    except:
+                        ftlog.error("prize_wheel, userId =", self.userId, "fishPool =", fishPool, "bet =", bet, code, "data =", pwData[PWValueSlot.RET])
+                    break
         self._setData(fishPool, fpMultiple)
-        #if self.pwData[fishPool][PWValueSlot.STATE] != PWState.FAIL_SPIN:
         mo = MsgPack()
         mo.setCmd("prize_wheel_bet")
         mo.setResult("betType", betType)
@@ -452,7 +439,7 @@ class PrizeWheel(object):
         GameMsg.sendMsg(mo, self.userId)
         self.sendEnergyProgress(self.fishPool, fpMultiple, self.roomId, 0)
 
-    def catchFish(self, fId, fishConf, fpMultiple, gunMultiple):
+    def catchFish(self, fId, fishConf, fpMultiple, gunX):
         """
         判断是否给轮盘充能
         """
@@ -465,9 +452,9 @@ class PrizeWheel(object):
             return
         rate = fishConf.get("triggerRate", 0)
         rand = random.randint(1, 10000)
-        val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunMultiple
+        val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunX
         if ftlog.is_debug():
-            ftlog.debug("prize_wheel, userId =", self.userId, "fishPool =", self.fishPool, "rand, rate =", rand, rate, "val =", val, fpMultiple, gunMultiple)
+            ftlog.debug("prize_wheel, userId =", self.userId, "fishPool =", self.fishPool, "rand, rate =", rand, rate, "val =", val, fpMultiple, gunX)
         if ftlog.is_debug():
             rate *= test_trigger_ratio
         if rand <= rate and val:
@@ -518,8 +505,8 @@ class PrizeWheel(object):
         for item in pwData[PWValueSlot.RET]:
             if item["ratio"] == 1:
                 rewards = item["rewards"][0]
-                consumeDiamond = rewards["count"] // 2000  # 抽奖需要消耗的钻石数量
-                return consumeDiamond, rewards
+                consumeDiamond = rewards["count"] // 30000  # 抽奖需要消耗的钻石数量
+                return max(consumeDiamond, 1), rewards
         return 0, {}
 
     def _resetPrizeWheelState(self, fishPool, fpMultiple):

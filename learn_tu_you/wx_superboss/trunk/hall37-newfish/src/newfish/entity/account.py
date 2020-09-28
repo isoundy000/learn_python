@@ -7,10 +7,11 @@ import time
 import json
 import random
 import string
+import math
 from distutils.version import StrictVersion
 
 from freetime.util import log as ftlog
-from hall.entity import hallvip
+from hall.entity import hallvip, hallitem
 from poker.entity.configure import gdata
 from poker.util import strutil
 from poker.entity.dao import gamedata, userchip, userdata
@@ -71,6 +72,7 @@ def getGameInfo(userId, clientId):
             isOldPlayerV2 = 1
             gamedata.setGameAttr(userId, FISH_GAMEID, GameData.redState, 1)
         gamedata.setGameAttr(userId, FISH_GAMEID, GameData.isOldPlayerV2, isOldPlayerV2)
+        v2DataTov3Data(userId, clientId)
     gdata["isOldPlayerV2"] = isOldPlayerV2
 
     # 当前技能页面显示的模式，老玩家默认为经典模式（0：经典 1：千炮）
@@ -88,11 +90,11 @@ def getGameInfo(userId, clientId):
     gdata["gunMode"] = gunMode
 
     exp, level = gamedata.getGameAttrs(userId, FISH_GAMEID, [GameData.exp, GameData.level])
-    level = max(1, level)
-    userLevelConf = config.getUserLevelConf()
-    lvUpExp = userLevelConf[level - 1]["exp"] if level <= len(userLevelConf) else userLevelConf[-1]["exp"]
+    exp = exp or 0
+    level = level or 1
+    _, expPct = util.getUserLevelExpData(userId, level, exp)
     gdata["level"] = level
-    gdata["expPct"] = min(100, max(0, int(exp * 100. / lvUpExp)))
+    gdata["expPct"] = expPct
     return gdata
 
 
@@ -132,11 +134,11 @@ def sendWelcomeMail(userId):
     rewards = config.getCommonValueByKey("welcomeMailRewards")
     for welcomeMailConf in welcomeMailConfs:
         if clientId in welcomeMailConf.get("clientIds", []):
-            # message = welcomeMailConf.get("messageNotAllow", None)
+            # 不可显示实物、人民币相关描述
             message = config.getMultiLangTextConf("ID_CONFIG_BAN_ENTITY_WELCOME_MSG", lang=lang)
         else:
+            # 可显示实物、人民币相关描述
             message = config.getMultiLangTextConf("ID_CONFIG_ALLOW_ENTITY_WELCOME_MSG", lang=lang)
-            #message = welcomeMailConf.get("messageAllowEntity", None)
     if message:
         mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, rewards, message=message,
                                    title=config.getMultiLangTextConf("ID_MAIL_TITLE_HOT_WELCOME", lang=lang))
@@ -217,15 +219,17 @@ def vipAutoSupplyPerDay(userId):
         rewards = [{"name": config.CHIP_KINDID, "count": (autoSupplyCount - chips)}]
         message = config.getMultiLangTextConf("ID_VIP_AUTO_SUPPLY_PER_DAY", lang=lang) % (autoSupplyCount / 10000)
         mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, rewards, message)
-    ftlog.debug("vipAutoSupplyPerDay", userId, vipLevel, autoSupplyCount, chips, key, autoSupplyCount - chips)
+    if ftlog.is_debug():
+        ftlog.debug("vipAutoSupplyPerDay", userId, vipLevel, autoSupplyCount, chips, key, autoSupplyCount - chips)
 
 
 def loginGame(userId, gameId, clientId, iscreate, isdayfirst):
     """
     用户登录一个游戏, 游戏自己做一些其他的业务或数据处理
     """
-    ftlog.debug("userId =", userId, "gameId =", gameId, "clientId =", clientId,
-                "iscreate =", iscreate, "isdayfirst =", isdayfirst, gdata.name())
+    if ftlog.is_debug():
+        ftlog.debug("userId =", userId, "gameId =", gameId, "clientId =", clientId,
+                    "iscreate =", iscreate, "isdayfirst =", isdayfirst, gdata.name())
     gamedata.setnxGameAttr(userId, FISH_GAMEID, GameData.gunLevel_m, 2101)
     if isdayfirst:
         sendVipSpringFestivalRewards(userId)
@@ -243,8 +247,6 @@ def loginGame(userId, gameId, clientId, iscreate, isdayfirst):
     serverVersion = gamedata.getGameAttrInt(userId, gameId, GameData.serverVersion)
     if isdayfirst and gamedata.getGameAttr(userId, FISH_GAMEID, GameData.hasBoughtMonthCard) is None:
         from hall.entity import hallitem
-        # _, itemId, _ = gift_system.MonthCardGift(userId, clientId).getGiftInfo()
-        # userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
         userBag = hallitem.itemSystem.loadUserAssets(userId).getUserBag()
         item = userBag.getItemByKindId(config.PERMANENT_MONTH_CARD_KINDID) or \
                userBag.getItemByKindId(config.MONTH_CARD_KINDID)
@@ -274,12 +276,6 @@ def loginGame(userId, gameId, clientId, iscreate, isdayfirst):
     if not util.isFinishAllNewbieTask(userId):  # 没完成所有新手引导，不主动弹出每日签到和最新消息
         return
 
-    # 未领取女王红包的老账号直接放弃女王红包.
-    redState = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.redState)
-    from newfish.entity.task.task_system_user import RedState
-    if redState in [RedState.Complete, RedState.CanReceived]:
-        gamedata.setGameAttr(userId, FISH_GAMEID, GameData.redState, RedState.GiveUp)
-
     # 限定玩家比赛幸运值.
     from newfish.entity.match_record import MatchRecord
     vip = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
@@ -294,6 +290,57 @@ def loginGame(userId, gameId, clientId, iscreate, isdayfirst):
     #     from newfish.entity import module_tip
     #     module_tip.addModuleTipEvent(userId, "notice", config.getNoticeVersion())
     #     gamedata.setGameAttr(userId, gameId, "noticeVersion", config.getNoticeVersion())
+
+
+def v2DataTov3Data(userId, clientId):
+    """
+    v2版本用户属性继承到v3版本
+    """
+    # 金币数量调整
+    totalChip = userchip.getUserChipAll(userId)
+    incrChip = totalChip * 10 - totalChip
+    userchip.incrChip(userId, FISH_GAMEID, incrChip, 0, "BI_NFISH_NEW_USER_REWARDS", 0, clientId)
+
+    # 处理宝藏相关数据
+    from newfish.entity import treasure_system
+    treasureList = config.getV2ToV3Conf("treasure")
+    userAssets = hallitem.itemSystem.loadUserAssets(userId)
+    for _, treasureConf in enumerate(treasureList):
+        old_kindId = treasureConf["old_kindId"]
+        new_kindId = treasureConf.get("new_kindId")
+        ratio = treasureConf.get("ratio", 0)
+        convert_kindId = treasureConf.get("convert_kindId")
+        convert_num = treasureConf.get("convert_num", 999999)
+        surplusCount = util.balanceItem(userId, old_kindId, userAssets)
+        if surplusCount > 0:
+            if new_kindId:
+                treasureData = treasure_system.getTreasure(userId, new_kindId)
+                if treasureData[treasure_system.INDEX_LEVEL] == 0:
+                    treasureData[treasure_system.INDEX_LEVEL] = 1
+                    treasure_system.setTreasure(userId, new_kindId, treasureData)
+            if convert_kindId:
+                convertNum = min(surplusCount, convert_num)
+                convertNum = int(math.ceil(convertNum * ratio))
+                rewards = [{"name": convert_kindId, "count": convertNum}]
+                util.addRewards(userId, rewards, "BI_NFISH_NEW_USER_REWARDS", old_kindId, surplusCount)
+            consumeItems = [{"name": old_kindId, "count": surplusCount}]
+            util.consumeItems(userId, consumeItems, "BI_NFISH_NEW_USER_REWARDS")
+
+    # 处理技能相关数据
+    skillList = config.getV2ToV3Conf("skill")
+    userAssets = hallitem.itemSystem.loadUserAssets(userId)
+    for _, skillConf in enumerate(skillList):
+        old_kindId = skillConf["old_kindId"]
+        ratio = skillConf.get("ratio", 0)
+        convert_kindId = skillConf.get("convert_kindId")
+        surplusCount = util.balanceItem(userId, old_kindId, userAssets)
+        if surplusCount > 0:
+            if convert_kindId:
+                convertNum = int(math.ceil(surplusCount * ratio))
+                rewards = [{"name": convert_kindId, "count": convertNum}]
+                util.addRewards(userId, rewards, "BI_NFISH_NEW_USER_REWARDS", old_kindId, surplusCount)
+            consumeItems = [{"name": old_kindId, "count": surplusCount}]
+            util.consumeItems(userId, consumeItems, "BI_NFISH_NEW_USER_REWARDS")
 
 
 def getDaShiFen(userId, clientId):

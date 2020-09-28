@@ -21,7 +21,7 @@ from hall.entity import hallvip, hallstore, hallitem
 from hall.entity.hallconf import HALL_GAMEID
 from hall.servers.util.store_handler import StoreHelper
 from newfish.entity import config, weakdata, util, vip_system
-from newfish.entity.config import FISH_GAMEID, BT_VOUCHER
+from newfish.entity.config import FISH_GAMEID, BT_VOUCHER, vipConf
 from newfish.entity.redis_keys import GameData, MixData, WeakData, UserData
 from newfish.entity.chest import chest_system
 
@@ -47,7 +47,7 @@ class StoreTabType:
     STT_BULLET = 7          # 招财珠
     STT_CHEST = 8           # 宝箱
     STT_TIMELIMITED = 9     # 限时
-    STT_EXCHANGE = 10       # 月度兑换
+    STT_CONVERT = 10       # 月度兑换
 
 
 # 商城标签商品配置.
@@ -61,7 +61,7 @@ storeTabConfName = {
     StoreTabType.STT_GUNSKIN: "gunSkinStore",
     StoreTabType.STT_BULLET: "bulletStore",
     StoreTabType.STT_TIMELIMITED: "timeLimitedStore",
-    StoreTabType.STT_EXCHANGE: "exchangeStore"
+    StoreTabType.STT_CONVERT: "exchangeStore"
 }
 
 
@@ -110,7 +110,7 @@ def getStoreTabsFish(userId, clientId, actionType, isRefresh=False):
         timeLimitedStoreTab = getTimeLimitedStore(userId, clientId, isRefresh)
         if timeLimitedStoreTab:
             tabs.append(timeLimitedStoreTab)
-    elif actionType == StoreTabType.STT_EXCHANGE:       # 兑换商城
+    elif actionType == StoreTabType.STT_CONVERT:       # 兑换商城
         exchangeStoreTab = ExchangeStoreShop(userId, clientId, actionType).getStore()
         if exchangeStoreTab:
             tabs.append(exchangeStoreTab)

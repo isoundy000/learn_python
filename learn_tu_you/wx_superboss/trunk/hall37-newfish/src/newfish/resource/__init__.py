@@ -1,10 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/1
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/2/16.
+"""
 
 import os
+
 import freetime.util.log as ftlog
 
 
@@ -37,12 +37,14 @@ def getGroupConfig(mode=0):
     fishGroupPath = "fish_group" if mode == 0 else "fish_group_m"
     groupsPath = getResourcePath(fishGroupPath)
     outJson = {}
-    ftlog.debug("getGroupConfig, fishGroupPath =", fishGroupPath, "mode =", mode)
+    if ftlog.is_debug():
+        ftlog.debug("getGroupConfig, fishGroupPath =", fishGroupPath, "mode =", mode)
     for fileName in os.listdir(groupsPath):
         abstractFilePath = os.path.join(groupsPath, fileName)
         if not os.path.isfile(abstractFilePath):
             continue
-        ftlog.debug("--------load group:" + fileName)
+        if ftlog.is_debug():
+            ftlog.debug("load group:", fileName, mode)
         fHandle = open(abstractFilePath, "r")
         lines = fHandle.readlines()
         isTotalTime = False
@@ -67,7 +69,7 @@ def getGroupConfig(mode=0):
                 outJson[fileName]["fishes"].append({
                     "fishType": int(fields[0]),
                     "enterTime": float(fields[1]),
-                    "exitTime": float(fields[2]),
+                    "exitTime": float(fields[2])
                 })
         fHandle.close()
     return outJson

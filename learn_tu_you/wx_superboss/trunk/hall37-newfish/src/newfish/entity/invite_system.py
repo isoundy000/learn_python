@@ -193,7 +193,6 @@ def doGetTaskRewards(userId, taskId, actionType):
 
 def _triggerUserLoginEvent(event):
     if event and hasattr(event, "inviter") and event.inviter > 0:
-        ftlog.debug("_triggerUserLoginEvent", event.isCreate, event.userId, event.inviter)
         loginByInvited(event.userId, int(event.inviter), event.isCreate)
 
 

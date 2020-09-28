@@ -379,11 +379,11 @@ def getSeedRandom(seed, min=1, max=10000):
     return int(min + rand * (max - min))
 
 
-def balanceItem(userId, kindId):
+def balanceItem(userId, kindId, userAssets=None):
     """
     获得道具数量
     """
-    userAssets = hallitem.itemSystem.loadUserAssets(userId)
+    userAssets = userAssets or hallitem.itemSystem.loadUserAssets(userId)
     surplusCount = userAssets.balance(FISH_GAMEID, "item:" + str(kindId), pktimestamp.getCurrentTimestamp())
     return surplusCount
 
@@ -1560,9 +1560,9 @@ def getNewbieABCTestMode(userId):
     return testMode
 
 
-def getGiftAbcTestMode(userId):
+def getGiftDTestMode(userId):
     """
-    获取玩家礼包cde测试模式
+    获取玩家礼包d测试模式
     """
     # if getClientIdSys(userId) == CLIENT_SYS_IOS.lower():
     #     return "c"
@@ -1669,6 +1669,61 @@ def isOldPlayerV2(userId):
     是否为2.0版本老用户
     """
     return gamedata.getGameAttr(userId, FISH_GAMEID, GameData.isOldPlayerV2)
+
+
+def isSameSubNet(ip1, ip2):
+    """
+    判断2个IP是否位于同一子网（网段）
+    """
+    ip1List = ip1.split(".")
+    ip2List = ip2.split(".")
+    if len(ip1List) != len(ip2List):
+        return False
+    for idx in xrange(len(ip1List)):
+        ip1Str = ip1List[idx]
+        ip2Str = ip2List[idx]
+        if "x" != ip1Str != ip2Str != "x":
+            return False
+    return True
+
+
+def checkGatedLaunch(userId, clientId):
+    """
+    检查是否存在灰度测试限制被禁止登录
+    """
+    gatedLaunchClientIp = config.getPublic("gatedLaunchClientIp", [])
+    gatedLaunchClientId = config.getPublic("gatedLaunchClientId", [])
+    gatedLaunchUserId = config.getPublic("gatedLaunchUserId", [])
+    isLimit = False
+    if gatedLaunchClientIp:
+        clientIp = sessiondata.getClientIp(userId)
+        for _ip in gatedLaunchClientIp:
+            if isSameSubNet(_ip, clientIp):
+                return False
+        else:
+            isLimit = True
+    if gatedLaunchClientId:
+        if clientId not in gatedLaunchClientId:
+            isLimit = True
+        else:
+            return False
+    if gatedLaunchUserId:
+        if userId not in gatedLaunchUserId:
+            isLimit = True
+        else:
+            return False
+    return isLimit
+
+
+def getUserLevelExpData(userId, level, currExp):
+    """
+    获取当前级别升级所需经验值以及百分比
+    @return: 当前级别升级所需经验值, 升级所需经验值占总经验的百分比
+    """
+    userLevelConf = config.getUserLevelConf()
+    lvUpExp = userLevelConf[level - 1]["exp"] if level <= len(userLevelConf) else userLevelConf[-1]["exp"]
+    expPct = min(100, max(0, int(currExp * 100. / lvUpExp)))
+    return lvUpExp, expPct
 
 
 def getGunX(wpId, mode):

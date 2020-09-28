@@ -521,6 +521,7 @@ tideTaskConf = {}
 platterFishConf = {}
 miniGameFishConf = {}
 levelGiftConf = {}
+v2Tov3Conf = {}
 
 
 def getGameConf(key, defaultValue=None, intClientidNum=0):
@@ -711,7 +712,6 @@ def loadChestDropConf():
     for _, value in chestDropConf["chestDrop"].iteritems():
         levelDropConf.setdefault(value["level"], []).append(value)
     chestDropConf["levelDrop"] = levelDropConf
-    ftlog.debug("chestDropConf->", chestDropConf)
     chestDropConf = rocopy(chestDropConf)
 
 
@@ -1900,8 +1900,6 @@ def getCatchDropConf_m(conf, uid):
         dropConf["min"] = conf["min"]
         dropConf["max"] = conf["max"]
         dropConf["probability"] = conf["probability"]
-    if ftlog.is_debug():
-        ftlog.debug("getCatchDropConf_m===>", conf, uid, dropConf)
     return dropConf
 
 
@@ -1978,12 +1976,10 @@ def getCallMultipleFishConf(skillGrade, typeName, fishPool):
     else:
         fishConf = rwcopy(callMultipleFishConf.get("normal", {}).get(str(skillGrade), []))
     validFishList = callMultipleFishConf.get("validGroup", {}).get(str(fishPool), None)
-    # ftlog.debug("getCallMultipleFishConf 1", validFishList, fishConf, fishPool)
     if validFishList is not None:
         for fish in fishConf:
             if fish["fishType"] not in validFishList:
                 fish["weight"] = 0
-    # ftlog.debug("getCallMultipleFishConf 2", validFishList, fishConf, fishPool)
     return fishConf
 
 
@@ -3526,6 +3522,24 @@ def getMiniGameFishConf(fishPool):
     return miniGameFishConf.get("miniGameFish", {}).get(str(fishPool), [])
 
 
+def loadV2ToV3Conf():
+    """
+    获取v2版本到v3版本属性继承配置
+    """
+    global v2Tov3Conf
+    v2Tov3Conf = rocopy(getGameConf("v2tov3"))
+
+
+def getV2ToV3Conf(key_=None):
+    """
+    获取等级礼包
+    """
+    global v2Tov3Conf
+    if key_ is None:
+        return v2Tov3Conf
+    return v2Tov3Conf.get(str(key_), [])
+
+
 def initConfig():
     """
     初始化所有配置
@@ -3648,6 +3662,7 @@ def initConfig():
     loadMiniGameFishConf()
     loadTideTaskConf()
     loadLevelGiftConf()
+    loadV2ToV3Conf()
 
 
 def registerConfigEvent():
@@ -3780,6 +3795,7 @@ def reloadConfig(event):
         getConfigPath("miniGameFish"): loadMiniGameFishConf,
         getConfigPath("tideTask"): loadTideTaskConf,
         getConfigPath("levelGift_m"): loadLevelGiftConf,
+        getConfigPath("v2tov3"): loadV2ToV3Conf,
     }
     try:
         for keyName in event.keylist:

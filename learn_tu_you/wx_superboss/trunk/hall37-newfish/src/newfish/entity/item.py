@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
-# 原则上每个商品购买对应一个BuyAction，每个BuyAction对应一个BaseProduct，
-# 但是HotStoreBuyAction中的商品购买根据pt类型对应不用的BaseProduct!
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/2/8.
+
+原则上每个商品购买对应一个BuyAction，每个BuyAction对应一个BaseProduct，
+但是HotStoreBuyAction中的商品购买根据pt类型对应不用的BaseProduct!
+"""
 
 import time
 import json
@@ -94,7 +95,7 @@ class BuyAction(object):
         self.allInfo = {}
         self.vipDailyCountLimit = []
         self._initData()
-    
+
     def _setConf(self):
         """
         设置商品配置
@@ -133,8 +134,10 @@ class BuyAction(object):
                         "price =", self.price, "name =", self.name, "itemId =", self.itemId, "itemCount =", self.itemCount)
 
     def _checkCondition(self):
-        """检查条件"""
-        if self.price <= 0 or not self.product or not self.buyType:                     # 商品价格
+        """
+        检查是否满足购买条件
+        """
+        if self.price <= 0 or not self.product or not self.buyType:
             self.code = BuyResultState.BRS_FAILED
         elif self.guideLimit and not util.isFinishAllNewbieTask(self.userId):
             self.code = BuyResultState.BRS_NEWBIE_LIMIT
@@ -145,8 +148,9 @@ class BuyAction(object):
         """
         检查商品服务器数量限制,此检测会尝试购买次数,所以需要在检测完其他条件后再检测！！！
         """
-        ftlog.debug("checkServerCount", self.tabName, "userId =", self.userId, "buyType =", self.buyType,
-                    "price =", self.price, "name =", self.name, "itemId =", self.itemId, "itemCount =", self.itemCount)
+        if ftlog.is_debug():
+            ftlog.debug("checkServerCount", self.tabName, "userId =", self.userId, "buyType =", self.buyType,
+                        "price =", self.price, "name =", self.name, "itemId =", self.itemId, "itemCount =", self.itemCount)
         if self.code != BuyResultState.BRS_SUCC:
             return
         if self.actionType == store.StoreTabType.STT_COUPON:            # 奖券
@@ -253,8 +257,8 @@ class BuyAction(object):
                 if price > 0 and isSucc:
                     store.autoConvertVoucherToDiamond(self.userId, abs(price))
                     consumeCount, final = userchip.incrDiamond(self.userId, gameId, -abs(price), 0,
-                                                               "BI_NFISH_BUY_ITEM_CONSUME", int(self.itemId),
-                                                               self.clientId, param01=self.productId)
+                                                           "BI_NFISH_BUY_ITEM_CONSUME", int(self.itemId),
+                                                           self.clientId, param01=self.productId)
             elif self.buyType == config.BT_COUPON:
                 consumeCount, final = userchip.incrCoupon(self.userId, gameId, -abs(price), 0,
                                                           "BI_NFISH_BUY_ITEM_CONSUME", int(self.itemId),
@@ -282,8 +286,8 @@ class BuyAction(object):
                 _ret = util.consumeItems(self.userId, _consume, "BI_NFISH_BUY_ITEM_CONSUME",
                                          intEventParam=int(self.itemId), param01=self.productId)
                 consumeCount, final = (_ret[0][1], _ret[0][2]) if _ret else (0, 0)
-
-            ftlog.debug("pay result =", consumeCount, final)
+            if ftlog.is_debug():
+                ftlog.debug("pay result =", consumeCount, final)
             if not isSucc or abs(consumeCount) != price:
                 if self.buyType == config.BT_COIN:
                     self.code = BuyResultState.BRS_COIN_NOTENOUGH
@@ -486,7 +490,8 @@ class PearlStoreBuyAction(BuyAction):
             self.price = self.product.get("otherBuyType").get(self.buyType)
         else:
             self.price = self.product.get("price")
-        ftlog.debug("PearlStoreBuyAction->", self.userId, self.buyType, self.price, self.name, self.itemId, self.itemCount)
+        if ftlog.is_debug():
+            ftlog.debug("PearlStoreBuyAction->", self.userId, self.buyType, self.price, self.name, self.itemId, self.itemCount)
 
     def _checkCondition(self):
         if self.price <= 0 or not self.product or not self.buyType:
@@ -615,7 +620,8 @@ class ChestStoreBuyAction(BuyAction):
     """
     def __init__(self, userId, clientId, actionType, productId, count, buyType=None, rebateItemId=0):
         super(ChestStoreBuyAction, self).__init__(userId, clientId, actionType, productId, count, buyType, rebateItemId)
-        self.buyChestCountList = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyChestCount, [0, 0, 0, 0, 0, 0, 0])
+        # self.buyChestCountList = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyChestCount, [0, 0, 0, 0, 0, 0, 0])
+        self.buyChestCountList = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.buyChestCount1, {})
 
     def _checkCondition(self):
         if self.price < 0 or not self.product or not self.buyType:
@@ -657,10 +663,12 @@ class ChestStoreBuyAction(BuyAction):
                     productFreeTS[str(self.productId)] = int(time.time()) + freeData.get("time", [1])[0] * 3600
                     gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.productFreeTS, json.dumps(productFreeTS))
                     module_tip.cancelModuleTipEvent(self.userId, "store", "chestStore2")
-
             # 更新商品购买次数.
-            self.buyChestCountList[self.product["order"]] += 1
-            gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.buyChestCount, json.dumps(self.buyChestCountList))
+            if str(self.productId) in self.buyChestCountList:
+                self.buyChestCountList[str(self.productId)] += 1
+            else:
+                self.buyChestCountList[str(self.productId)] = 1
+            gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.buyChestCount1, json.dumps(self.buyChestCountList))
             # 监测重要宝箱购买次数.
             if self.product["order"] == 3:
                 buySuperChestCount = weakdata.incrDayFishData(self.userId, "buySuperChestCount", 1)
@@ -708,8 +716,7 @@ class GunSkinStoreBuyAction(BuyAction):
     """
     def __init__(self, userId, clientId, actionType, productId, count, buyType=None, rebateItemId=0):
         super(GunSkinStoreBuyAction, self).__init__(userId, clientId, actionType, productId, count, buyType, rebateItemId)
-        priceList = self.product.get("discountPrice")
-        self.price = priceList[0]
+        self.price = self.product.get("discountPrice")[0]
         self.name = config.getMultiLangTextConf(self.name, lang=self.lang)
 
     def _add(self):
@@ -804,7 +811,8 @@ class TimeLimitedStoreBuyAction(BuyAction):
         else:
             self.price = int(self.product.get("price", 0))
         self.name = config.getMultiLangTextConf(self.product.get("name"), lang=self.lang)
-        ftlog.debug("TimeLimitedStoreBuyAction->", self.userId, self.buyType, self.price, self.name, self.itemId, self.itemCount)
+        if ftlog.is_debug():
+            ftlog.debug("TimeLimitedStoreBuyAction->", self.userId, self.buyType, self.price, self.name, self.itemId, self.itemCount)
 
     def _checkCondition(self):
         if self.price <= 0 or not self.product or not self.buyType:
@@ -1014,7 +1022,6 @@ def getItemList(userId, clientId):
     timestamp = pktimestamp.getCurrentTimestamp()
     itemList = ItemHelper.encodeUserItemListByGame(FISH_GAMEID, userBag, timestamp)
     itemsTmp = []
-    specialPresentList = [config.VOUCHER_KINDID]
     itemConf = config.getItemConf(clientId)
     clientVersion = util.getClientVersion(userId)
     isReviewLimitVersion = util.isVersionLimit(userId, clientVersion)
@@ -1028,7 +1035,7 @@ def getItemList(userId, clientId):
             if clientVersion and _item.get("minimumVersion"):
                 if StrictVersion(str(_item["minimumVersion"])) > StrictVersion(str(clientVersion)):
                     continue
-            item["giveCount"] = isVipItem(userId,item["kindId"])
+            item["giveCount"] = isVipItem(userId, item["kindId"])
             item["order"] = _item.get("order", 0)
             item["itemType"] = _item.get("itemType", 1)
             item["typeName"] = config.getMultiLangTextConf(_item.get("typeName", "ID_BAG_LIST_ITEM_TYPENAME_INTABLE"), lang=lang)
@@ -1277,7 +1284,8 @@ def processAutoBuy(userId, productId, clientId):
         for k, v in ret.iteritems():
             mo.setResult(k, v)
         router.sendToUser(mo, userId)
-    ftlog.debug("processAutoBuy, userId =", userId, autoBuyData)
+    if ftlog.is_debug():
+        ftlog.debug("processAutoBuy, userId =", userId, autoBuyData)
     return True
 
 
@@ -1467,7 +1475,7 @@ allActionType = {
     store.StoreTabType.STT_GUNSKIN: GunSkinStoreBuyAction,
     store.StoreTabType.STT_BULLET: BulletStoreBuyAction,
     store.StoreTabType.STT_TIMELIMITED: TimeLimitedStoreBuyAction,
-    store.StoreTabType.STT_EXCHANGE: ExchangeStoreBuyAction
+    store.StoreTabType.STT_CONVERT: ExchangeStoreBuyAction
 }
 
 

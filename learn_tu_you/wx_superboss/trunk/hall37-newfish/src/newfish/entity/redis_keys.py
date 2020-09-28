@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
 """
+Created by lichen on 2018/10/11.
+
 注意:key的最后一位必须为数字（user id或game id）
 redis数据key的规范：
   基本格式： <logic name>:<key type>:<swap policy>:<user id>
@@ -176,6 +175,8 @@ class GameData:
     buyCoinCount = "buyCoinCount"
     # 宝箱商城购买各宝箱次数
     buyChestCount = "buyChestCount"
+    # 宝箱商城购买各宝箱次数
+    buyChestCount1 = "buyChestCount1"
     # 珍珠商城购买各商品次数
     buyPearlCount = "buyPearlCount"
     # 限时商城购买各商品次数
@@ -492,7 +493,6 @@ class UserData:
     # 荣耀数据
     achievement = "achievement3:%d:%d"
     # 主线任务
-    # mainQuest = "mainQuest:%s:%s"
     mainQuest = "mainQuest:%d:h:s:%d"
     # 称号数据
     honor = "honor3:%d:%d"

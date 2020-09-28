@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/17
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2020/5/11.
+"""
+
 import codecs
 from sre_compile import isstring
 

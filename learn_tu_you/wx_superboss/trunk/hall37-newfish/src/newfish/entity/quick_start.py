@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import time
 
@@ -47,26 +47,26 @@ class FishQuickStart(BaseQuickStart):
     ENTER_ROOM_REASON_LESS_COIN = 12        # 金币不足
     ENTER_ROOM_REASON_EXCESSIVE_LOSS = 13   # 亏损过多
     ENTER_ROOM_REASON_NOT_OPEN = 14         # 房间暂未开放
-    ENTER_ROOM_REASON_GRAND_PRIX_LESS_FEES = 15 # 大奖赛门票不足
-    ENTER_ROOM_REASON_GRAND_PRIX_NOE_OPEN = 16  # 大奖赛没开期
+    ENTER_ROOM_REASON_GRAND_PRIX_LESS_FEES = 15     # 大奖赛门票不足
+    ENTER_ROOM_REASON_GRAND_PRIX_NOE_OPEN = 16      # 大奖赛没开期
 
     @classmethod
     def onCmdQuickStart(cls, msg, userId, gameId, roomId, tableId, clientId, kindId):
-        """UT server中处理来自客户端的quick_start请求
+        """UT server中处理来自客户端的quick_start请求  
         Args:
             msg
                 cmd : quick_start
                 if roomId == 0:
                     表示快速开始，服务器为玩家选择房间，然后将请求转给GR
-
-                if roomId > 0 and tableId == 0 :
+                    
+                if roomId > 0 and tableId == 0 : 
                     表示玩家选择了房间，将请求转给GR
-
+                    
                 if roomId > 0 and tableId == roomId * 10000 :
                     表示玩家在队列里断线重连，将请求转给GR
-
+                    
                 if roomId > 0 and tableId > 0:
-                    if onlineSeatId > 0:
+                    if onlineSeatId > 0: 
                         表示玩家在牌桌里断线重连，将请求转给GT
                     else:
                         表示玩家选择了桌子，将请求转给GR
@@ -74,8 +74,8 @@ class FishQuickStart(BaseQuickStart):
         assert isinstance(userId, int) and userId > 0
         assert isinstance(roomId, int) and roomId >= 0
         assert isinstance(tableId, int) and tableId >= 0
-
-        ftlog.debug("onCmdQuickStart->", userId, "msg =", msg, "roomId =", roomId, "tableId =", tableId, "clientId =", clientId)
+        if ftlog.is_debug():
+            ftlog.debug("onCmdQuickStart->", userId, "msg =", msg, "roomId =", roomId, "tableId =", tableId, "clientId =", clientId)
         isRobot = userId < config.ROBOT_MAX_USER_ID
         if not isRobot and not util.isUsableClientVersion(userId):
             cls.onQuickStartFailed(cls.ENTER_ROOM_REASON_VERSION_DISABLE, userId, clientId, roomId)
@@ -84,7 +84,8 @@ class FishQuickStart(BaseQuickStart):
         # 单开, 无论何时quick_start进入都检查loc
         if not pokerconf.isOpenMoreTable(clientId):
             locList = onlinedata.getOnlineLocList(userId)
-            ftlog.debug("onCmdQuickStart->getOnlineLocList->", userId, locList)
+            if ftlog.is_debug():
+                ftlog.debug("onCmdQuickStart->getOnlineLocList->", userId, locList)
             try:
                 for lRoomId, lTableId, lSeatId in locList:
                     roomGameId = strutil.getGameIdFromInstanceRoomId(lRoomId)
@@ -99,7 +100,7 @@ class FishQuickStart(BaseQuickStart):
             except:
                 ftlog.warn("onCmdQuickStart->error", userId, roomId, tableId)
 
-        redState = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.redState)      # 新手任务状态
+        redState = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.redState)
         if isRobot is False and redState == 0:
             ctrlRoomId = config.getCommonValueByKey("newbieRoomId")
             chosenTableId = 0
@@ -110,16 +111,16 @@ class FishQuickStart(BaseQuickStart):
             TYRoomMixin.queryRoomQuickStartReq(msg, ctrlRoomId, chosenTableId, shadowRoomId=shadowRoomId)  # 请求转给GR
             return
 
-        if roomId == 0:                                                                 # 玩家点击快速开始
+        if roomId == 0:                                                                         # 玩家点击快速开始
             chosenRoomId, reason = cls._chooseRoom(userId, gameId)
             ftlog.info("onCmdQuickStart->chosenRoomId", chosenRoomId, "userId =", userId, "reason =", reason)
             if reason == cls.ENTER_ROOM_REASON_OK:
-                TYRoomMixin.queryRoomQuickStartReq(msg, chosenRoomId, 0)  # 请求转给GR
+                TYRoomMixin.queryRoomQuickStartReq(msg, chosenRoomId, 0)                        # 请求转给GR
             else:
                 cls.onQuickStartFailed(reason, userId, clientId, roomId)
             return
-
-        if tableId == 0:                                                                # 玩家只选择了房间
+        
+        if tableId == 0:                                                                        # 玩家只选择了房间
             bigRoomId = gdata.getBigRoomId(roomId)
             if bigRoomId == 0:
                 cls.onQuickStartFailed(cls.ENTER_ROOM_REASON_ROOM_ID_ERROR, userId, clientId, roomId)
@@ -136,47 +137,47 @@ class FishQuickStart(BaseQuickStart):
                     ret = util.consumeItems(userId, _consume, "ROOM_GAME_FEE")
                     if ret and rewards:
                         util.addRewards(userId, rewards, "BI_NFISH_VOUCHER_REWARDS", kindId)
-                TYRoomMixin.queryRoomQuickStartReq(msg, ctrlRoomId, 0)  # 请求转给GR或GT
+                TYRoomMixin.queryRoomQuickStartReq(msg, ctrlRoomId, 0)                          # 请求转给GR或GT
             else:
                 cls.onQuickStartFailed(reason, userId, clientId, roomId)
             return
 
-        if tableId == roomId * 10000:                                                   # 玩家在队列里断线重连
-            TYRoomMixin.queryRoomQuickStartReq(msg, roomId, tableId)                    # 请求转给GR
+        if tableId == roomId * 10000:                                                           # 玩家在队列里断线重连
+            TYRoomMixin.queryRoomQuickStartReq(msg, roomId, tableId)  # 请求转给GR
             return
-
+        
         onlineSeat = onlinedata.getOnlineLocSeatId(userId, roomId, tableId)
-
+        
         if onlineSeat:
             TYRoomMixin.querySitReq(userId, roomId, tableId, clientId, {"seatId": onlineSeat})  # 玩家断线重连，请求转给GT
-        else:                                                                                   # 玩家选择了桌子
+        else:  # 玩家选择了桌子
             shadowRoomId = tableId / 10000
             ctrlRoomId = gdata.roomIdDefineMap()[shadowRoomId].parentId
             TYRoomMixin.queryRoomQuickStartReq(msg, ctrlRoomId, tableId, shadowRoomId=shadowRoomId)  # 请求转给GR
-
+    
     @classmethod
-    def _chooseRoom(cls, userId, gameId):
+    def _chooseRoom(cls, userId, gameId, gameMode=config.MULTIPLE_MODE):
         """
         服务端为玩家选择房间
         """
         candidateRoomIds = cls._getCandidateRoomIds(gameId, "")
-        ftlog.debug("_chooseRoom->candidateRoomIds =", candidateRoomIds)
         newbieRoomId = config.getCommonValueByKey("newbieRoomId")
-        if not util.isFinishAllRedTask(userId):
+        if not util.isFinishAllNewbieTask(userId):
             return newbieRoomId, cls.ENTER_ROOM_REASON_OK
-        uLevel = util.getLevelByGunLevel(userId)
+        uLevel = util.getUserLevel(userId)
+        gunLevel = util.getGunLevel(userId, gameMode)
         userChip = userchip.getChip(userId)
         candidateRoomId = 0
-        testMode = util.getNewbieABCTestMode(userId)
         for roomId in sorted(candidateRoomIds, reverse=True):
-            isOK, minCoin, minLevel = cls._matchEnterRoom(userChip, uLevel, roomId, abcTestMode=testMode)
+            isOK = cls._matchEnterRoom(roomId, uLevel, gunLevel, userChip, gameMode)
             if isOK:
                 candidateRoomId = roomId
                 break
+        if ftlog.is_debug():
+            ftlog.debug("_chooseRoom", userId, gameId, gameMode, candidateRoomId)
         if candidateRoomId > 0:
-            return candidateRoomId, cls.ENTER_ROOM_REASON_OK
-        else:
-            return 0, cls.ENTER_ROOM_REASON_LESS_LEVEL
+            return candidateRoomId, cls.ENTER_ROOM_REASON_OK                      
+        return 0, cls.ENTER_ROOM_REASON_LESS_LEVEL
 
     @classmethod
     def getFailedInfo(cls, reason, userId, roomId):
@@ -184,33 +185,34 @@ class FishQuickStart(BaseQuickStart):
         获取失败提示信息
         """
         lang = util.getLanguage(userId)
-        testMode = util.getNewbieABCTestMode(userId)
         roomConf = {}
         if gdata.roomIdDefineMap().get(roomId):
             roomConf = gdata.roomIdDefineMap()[roomId].configure
         info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON", lang=lang)
-        if reason == cls.ENTER_ROOM_REASON_LESS_LEVEL:              # 等级过低
-            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_LEVE", lang=lang) % util.getRoomMinLevel(roomId, testMode)    # roomConf["minLevel"]
-        elif reason == cls.ENTER_ROOM_REASON_MAINTENANCE:           # 系统维护
+        if reason == cls.ENTER_ROOM_REASON_LESS_LEVEL:
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_LEVEL", lang=lang) % roomConf["minLevel"]
+        elif reason == cls.ENTER_ROOM_REASON_MAINTENANCE:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_MAINTENANCE", lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_VERSION_DISABLE:       # 版本过低
+        elif reason == cls.ENTER_ROOM_REASON_VERSION_DISABLE:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_VERSION_DISABLE", lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_LESS_FEES:             # 钥匙不够
+        elif reason == cls.ENTER_ROOM_REASON_LESS_FEES:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_FEES", lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_LESS_BULLET:           # 招财珠不够
+        elif reason == cls.ENTER_ROOM_REASON_LESS_BULLET:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_BULLET", lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_LESS_COIN:             # 金币不足
-            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_COIN", lang=lang) % util.formatScore(util.getRoomMinCoin(roomId, testMode), lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_TIME_LIMIT:            # 未到开放时间
+        elif reason == cls.ENTER_ROOM_REASON_LESS_COIN:
+            info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_LESS_COIN", lang=lang) % util.formatScore(roomConf["minCoin"], lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_TIME_LIMIT:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_NOT_OPEN", lang=lang)
-            if roomConf.get("typeName") == config.FISH_ROBBERY:     # 招财模式渔场
+            if roomConf.get("typeName") == config.FISH_ROBBERY:
                 info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_TIME_LIMIT", lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_EXCESSIVE_LOSS:        # 亏损过多
+        elif reason == cls.ENTER_ROOM_REASON_EXCESSIVE_LOSS:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_EXCESSIVE_LOSS", lang=lang) % config.getMultiLangTextConf(roomConf["name"], lang=lang)
-        elif reason == cls.ENTER_ROOM_REASON_NOT_OPEN:              # 房间暂未开放
+        elif reason == cls.ENTER_ROOM_REASON_NOT_OPEN:
             info = config.getMultiLangTextConf("ID_ENTER_ROOM_REASON_NOT_OPEN", lang=lang)
         elif reason == cls.ENTER_ROOM_REASON_GRAND_PRIX_LESS_FEES:  # 大奖赛门票不足
             info = config.getMultiLangTextConf("ENTER_ROOM_REASON_GRAND_PRIX_LESS_FEES", lang=lang)
+        elif reason == cls.ENTER_ROOM_REASON_GRAND_PRIX_NOE_OPEN:
+            info = config.getMultiLangTextConf("ENTER_ROOM_REASON_GRAND_PRIX_NOE_OPEN", lang=lang)
         return info
 
     @classmethod
@@ -219,11 +221,7 @@ class FishQuickStart(BaseQuickStart):
         进入房间失败回调函数
         """
         ftlog.warn("onQuickStartFailed", userId, reason, roomId, caller=cls)
-        roomConf = {}
-        if gdata.roomIdDefineMap().get(roomId):
-            roomConf = gdata.roomIdDefineMap()[roomId].configure
-        testMode = util.getNewbieABCTestMode(userId)
-        minLevel = util.getRoomMinLevel(roomId, testMode)               # roomConf.get("minLevel", 1)
+        minLevel = util.getRoomMinLevel(roomId)
         info = cls.getFailedInfo(reason, userId, roomId)
         mo = MsgPack()
         mo.setCmd("quick_start")
@@ -233,28 +231,39 @@ class FishQuickStart(BaseQuickStart):
         mo.setResult("info", info)
         mo.setResult("reason", reason)
         router.sendToUser(mo, userId)
-
+        
     @classmethod
     def canQuickEnterRoom(cls, userId, gameId, roomId, kindId):
         """
         判断能否进入房间
         """
         try:
-            if not util.isFinishAllRedTask(userId):
+            if util.isFinishAllNewbieTask(userId):
+                newbieRoomId = config.getCommonValueByKey("newbieRoomId")
+                if gdata.getBigRoomId(roomId) == gdata.getBigRoomId(newbieRoomId):
+                    return cls.ENTER_ROOM_REASON_INNER_ERROR
+            else:
                 newbieRoomId = config.getCommonValueByKey("newbieRoomId")
                 if gdata.getBigRoomId(roomId) != gdata.getBigRoomId(newbieRoomId):
                     return cls.ENTER_ROOM_REASON_INNER_ERROR
-            uLevel = util.getLevelByGunLevel(userId)
-            if not uLevel:
+            gameMode = util.getRoomGameMode(roomId)
+            isOldPlayerV2 = util.isOldPlayerV2(userId)
+            if gameMode == config.CLASSIC_MODE and not isOldPlayerV2:
+                return cls.ENTER_ROOM_REASON_INNER_ERROR
+            uLevel = util.getUserLevel(userId)
+            gunLevel = util.getGunLevel(userId, gameMode)
+            if not uLevel or not gunLevel:
                 return cls.ENTER_ROOM_REASON_INNER_ERROR
             userChip = userchip.getUserChipAll(userId)
+            vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
             if ftlog.is_debug():
-                ftlog.debug(gdata.roomIdDefineMap()[roomId].configure)
+                ftlog.debug("canQuickEnterRoom->", gdata.roomIdDefineMap()[roomId].configure)
             roomConf = gdata.roomIdDefineMap()[roomId].configure
-            testMode = util.getNewbieABCTestMode(userId)
             fee = roomConf.get("fee_%s" % kindId, {}) or roomConf.get("fee", {})
-            minCoin = util.getRoomMinCoin(roomId, testMode)  # roomConf.get("minCoin", 1)
-            minLevel = util.getRoomMinLevel(roomId, testMode)  # roomConf.get("minLevel", 1)
+            minLevel = roomConf.get("minLevel", 1)
+            minGunLevel = roomConf.get("minGunLevel", 1)
+            minCoin = roomConf.get("minCoin", 1)
+            minVip = roomConf.get("minVip", 0)
             timeLimit = roomConf.get("timeLimit", [])
             bulletLimit = roomConf.get("bulletLimit", {})
             protectionLimit = roomConf.get("protectionLimit", {})
@@ -282,10 +291,15 @@ class FishQuickStart(BaseQuickStart):
                         break
                 if not isCan:
                     return cls.ENTER_ROOM_REASON_TIME_LIMIT
+            if uLevel < minLevel and not kindId:
+                if roomConf.get("typeName") == config.FISH_ROBBERY:
+                    if vipLevel >= minVip:
+                        return cls.ENTER_ROOM_REASON_OK
+                return cls.ENTER_ROOM_REASON_LESS_LEVEL
+            if gunLevel < minGunLevel and roomConf.get("typeName") != config.FISH_ROBBERY:
+                return cls.ENTER_ROOM_REASON_LESS_LEVEL
             if userChip < minCoin:
                 return cls.ENTER_ROOM_REASON_LESS_COIN
-            if int(uLevel) < minLevel and not kindId:
-                return cls.ENTER_ROOM_REASON_LESS_LEVEL
             if protectionLimit:
                 dailyProfitCoin, monthlyProfitCoin = 0, 0
                 if roomConf.get("typeName") == config.FISH_ROBBERY:

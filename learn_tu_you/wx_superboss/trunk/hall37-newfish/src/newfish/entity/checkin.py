@@ -46,7 +46,6 @@ def _isCheckContinuousBreak(userId, ts=None):
         gamedata.setGameAttrs(userId, FISH_GAMEID,
                               [GameData.breakContinuousCheckinTS, GameData.continuousCheckinDayTS],
                               [breakContinuousCheckinTS, continuousCheckinDayTS])
-        ftlog.debug("checkin, break, userId =", userId)
     # vip小于配置时，每周按照配置日期中断连续签到数据.
     st = time.localtime(dayStartTS)
     vipLevel = hallvip.userVipSystem.getVipInfo(userId).get("level", 0)

@@ -28,6 +28,7 @@ class State(object):
     NOT_EFFECT = -1     # 没有效果的炮
     NOT_USE = 0         # 不能使用
     CAN_USE = 1         # 可用
+    PREPARE = 5         # 准备
     USING = 2           # 使用中
     PAUSE = 3           # 暂停
     END = 4             # 结束

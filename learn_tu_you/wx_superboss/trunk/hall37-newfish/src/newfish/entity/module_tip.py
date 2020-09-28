@@ -73,7 +73,8 @@ def _reloadConf():
             raise TYBizConfException(moduleConf, "newfish Duplicate moduleTip %s" % (moduleTip.name))
         moduleTipMap[moduleTip.name] = moduleTip
     _moduleTipMap = moduleTipMap
-    ftlog.debug("newfish moduletip._reloadConf successed modules=", _moduleTipMap.keys())
+    if ftlog.is_debug():
+        ftlog.debug("newfish moduletip._reloadConf successed modules=", _moduleTipMap.keys())
 
 
 def _onConfChanged(event):
@@ -98,14 +99,12 @@ def handleEvent(event):
         else:
             isChange = resetTipValue(event.userId, moduleTip)
         if not isChange:
-            ftlog.debug("handleEvent->", event.userId, event.name, event.value)
-            return
-        from newfish.entity import util
-        level = util.getUnlockCheckLevel(event.userId)
-        if event.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
+            if ftlog.is_debug():
+                ftlog.debug("handleEvent->", event.userId, event.name, event.value)
             return
         moduleNames = [event.name]
-        ftlog.debug("newfish module_tip modulename=", event.name, "value =", event.value, "userId=", event.userId, event.type)
+        if ftlog.is_debug():
+            ftlog.debug("newfish module_tip modulename=", event.name, "value =", event.value, "userId=", event.userId, event.type)
         modules = getInfo(event.userId, moduleNames)
         mo = buildInfo(modules)
         router.sendToUser(mo, event.userId)
@@ -118,7 +117,8 @@ def addModuleTipEvent(userId, moduleName, value):
     from newfish.game import TGFish
     tip = FishModuleTipEvent(userId, FISH_GAMEID, 1, moduleName, value)
     TGFish.getEventBus().publishEvent(tip)
-    ftlog.debug("newfish addModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
+    if ftlog.is_debug():
+        ftlog.debug("newfish addModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
 
 
 def cancelModuleTipEvent(userId, moduleName, value):
@@ -128,7 +128,8 @@ def cancelModuleTipEvent(userId, moduleName, value):
     from newfish.game import TGFish
     tip = FishModuleTipEvent(userId, FISH_GAMEID, 0, moduleName, value)
     TGFish.getEventBus().publishEvent(tip)
-    ftlog.debug("newfish cancelModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
+    if ftlog.is_debug():
+        ftlog.debug("newfish cancelModuleTipEvent name=", moduleName, "value=", value, "userId=", userId)
 
 
 def resetModuleTipEvent(userId, moduleName):
@@ -138,7 +139,8 @@ def resetModuleTipEvent(userId, moduleName):
     from newfish.game import TGFish
     tip = FishModuleTipEvent(userId, FISH_GAMEID, -1, moduleName, None)
     TGFish.getEventBus().publishEvent(tip)
-    ftlog.debug("newfish resetModuleTipEvent name=", moduleName, "userId=", userId)
+    if ftlog.is_debug():
+        ftlog.debug("newfish resetModuleTipEvent name=", moduleName, "userId=", userId)
 
 
 def buildInfo(modules):
@@ -166,7 +168,8 @@ def _buildModuleTipKey(moduleTip):
 
 def findModuleTip(moduleName):
     global _moduleTipMap
-    ftlog.debug("newfish findModuleTip modules=", _moduleTipMap.keys(), moduleName)
+    if ftlog.is_debug():
+        ftlog.debug("newfish findModuleTip modules=", _moduleTipMap.keys(), moduleName)
     return _moduleTipMap.get(moduleName)
 
 
@@ -227,17 +230,12 @@ def getModulesInfo(userId, moduleNames):
     @param moduleNames: 模块名
     @return: list<ModuleTip>
     """
-    from newfish.entity import util
-    level = util.getUnlockCheckLevel(userId)
     modules = []
     for moduleName in moduleNames:
         m = findModuleTip(moduleName)
         if m:
             module = strutil.cloneData(m)
-            if module.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
-                module.value = []
-            else:
-                module.value = getTipValue(userId, module)
+            module.value = getTipValue(userId, module)
             modules.append(module)
     return modules
 
@@ -246,16 +244,11 @@ def getAllModulesInfo(userId):
     """
     获取所有模块tip信息
     """
-    from newfish.entity import util
-    level = util.getUnlockCheckLevel(userId)
     global _moduleTipMap
     modules = []
     for _key, value in _moduleTipMap.iteritems():
         module = strutil.cloneData(value)
-        if module.name == "task" and level < config.getCommonValueByKey("dailyQuestOpenLevel"):
-            module.value = []
-        else:
-            module.value = getTipValue(userId, module)
+        module.value = getTipValue(userId, module)
         modules.append(module)
     return modules
 

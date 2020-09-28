@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/22
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/7/17.
+"""
 
 import json
 
@@ -13,7 +13,7 @@ from poker.entity.dao import userchip, gamedata
 from poker.entity.configure import gdata
 from hall.entity import hallvip
 from newfish.entity import config, util
-from newfish.entity.config import FISH_GAMEID
+from newfish.entity.config import FISH_GAMEID, MULTIPLE_MODE
 from newfish.entity.redis_keys import GameData
 from newfish.entity.event import UserVipExpChangeEvent
 
@@ -35,6 +35,8 @@ def sendFishVipInfo(userId):
         vip["level"] = vipConf["vipLv"]
         # vip["desc"] = vipConf["vipDesc"]
         vip["desc"] = config.getMultiLangTextConf(vipConf["vipDesc"], lang=lang)
+        vip["name"] = config.getMultiLangTextConf(vipConf["giftName"], lang=lang)
+        vip["productId"] = vipConf["productId"]
         vip["originalPrice"] = vipConf["originalPrice"]
         vip["price"] = vipConf["price"]
         vip["bought"] = 1 if vipConf["vipLv"] in vipGiftBought else 0
@@ -118,8 +120,6 @@ def addUserVipExp(gameId, userId, toAddExp, eventId, intEventParam, productId, r
         vipExp = hallvip.userVipSystem.getUserVip(userId).vipExp
         oldVipLevel = hallvip.vipSystem.findVipLevelByVipExp(vipExp - toAddExp)
         userVip = hallvip.userVipSystem.getUserVip(userId)
-        ftlog.debug("check vip level change", userId, vipExp, toAddExp, oldVipLevel.level,
-                    userVip.vipLevel.level)
         if oldVipLevel.level != userVip.vipLevel.level:
             lv_event = TYUserVipLevelUpEvent(FISH_GAMEID, userId, oldVipLevel, userVip, [], 0, 0)
             TGHall.getEventBus().publishEvent(lv_event)
@@ -127,7 +127,8 @@ def addUserVipExp(gameId, userId, toAddExp, eventId, intEventParam, productId, r
     from newfish.game import TGFish
     event = UserVipExpChangeEvent(userId, gameId, toAddExp)
     TGFish.getEventBus().publishEvent(event)
-    ftlog.debug("addUserVipExp----->event", gameId, userId, toAddExp, eventId, intEventParam, rmbs, isAddVipExp)
+    if ftlog.is_debug():
+        ftlog.debug("addUserVipExp----->event", gameId, userId, toAddExp, eventId, intEventParam, rmbs, isAddVipExp)
     # 上报购买商品事件.
     loginDays = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.loginDays)
     userLevel = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level)
@@ -213,6 +214,8 @@ def sendVipCirculateInfo(userId):
         levelDict["present:1429"] = vipConf.get("vipPresentCount:1429", 0)
         levelDict["present:1430"] = vipConf.get("vipPresentCount:1430", 0)
         levelDict["present:1431"] = vipConf.get("vipPresentCount:1431", 0)
+        levelDict["present:14120"] = vipConf.get("vipPresentCount:14120", 0)
+        levelDict["present:14119"] = vipConf.get("vipPresentCount:14119", 0)
         levelDict["present:1193"] = vipConf.get("vipPresentCount:1193", 0)
         levelDict["present:1194"] = vipConf.get("vipPresentCount:1194", 0)
         levelDict["receive:1193"] = vipConf.get("vipReceiveCount:1193", 0)

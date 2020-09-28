@@ -19,9 +19,10 @@ def findCaller(func):
             filename = f.f_back.f_code.co_filename
             lineno = f.f_back.f_lineno
             name = f.f_back.f_code.co_name
-            ftlog.debug("######################################")
-            ftlog.debug("File \"%s\", line %s, in %s" % (filename, lineno, name))
-            ftlog.debug("the passed args is", args, kwargs)
-            ftlog.debug("######################################")
+            if ftlog.is_debug():
+                ftlog.debug("######################################")
+                ftlog.debug("File \"%s\", line %s, in %s" % (filename, lineno, name))
+                ftlog.debug("the passed args is", args, kwargs)
+                ftlog.debug("######################################")
         func(*args, **kwargs)
     return wrapper

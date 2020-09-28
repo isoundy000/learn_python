@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/3/16.
+"""
+
 import json
 
 from poker.entity.dao import weakdata
@@ -109,6 +110,7 @@ def setWeekFishDataAll(userId, gameId, data):
     """
     return weakdata.setWeakData(userId, gameId, weakdata.CYCLE_TYPE_WEEK, "fish", data)
 
+
 #===========================================================================================
 def setMonthFishData(userId, key, value):
     """
@@ -204,7 +206,6 @@ def incrDayRobberyData(userId, key, value):
 
 
 #===========================================================================================
-
 def getDayPoseidonData(userId, key, defaultVal=None):
     """
     根据key获取每日数据中的value（海皇来袭专用）

@@ -1,7 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/2/22.
+"""
+
+
 import random
 
 from freetime.util import log as ftlog
@@ -16,12 +18,12 @@ def getDropItem(dropId):
         ftlog.error("getDropItem error dropId =", dropId)
     dropType = 0
     drops = []
-    for count in xrange(dropInfo.get("randomCount", 1)):        # 随机次数
+    for count in xrange(dropInfo.get("randomCount", 1)):
         randInt = random.randint(1, 10000)
-        for item in dropInfo.get("items", []):                  # 道具
-            probb = item["probb"]                               # 道具概率
+        for item in dropInfo.get("items", []):
+            probb = item["probb"]
             if probb[0] <= randInt <= probb[1]:
-                dropType = dropInfo["type"]                     # 掉落类型
+                dropType = dropInfo["type"]
                 dropItem = {"name": item["itemId"], "count": item["number"]}
                 drops = _appendItem(drops, dropItem)
     ftlog.debug("getDropItem->", dropType, drops)
@@ -42,7 +44,7 @@ def _appendItem(drops, dropItem):
     itemIdList = [item["name"] for item in drops if item]
     if dropItem["name"] in itemIdList:
         index = itemIdList.index(dropItem["name"])
-        drop = drops[index]
+        drop =  drops[index]
         if drop["name"] == dropItem["name"]:
             drop["count"] += dropItem["count"]
     else:
@@ -60,3 +62,4 @@ def initialize():
     if not _inited:
         _inited = True
     ftlog.info("newfish drop_system initialize end")
+

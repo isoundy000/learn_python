@@ -162,7 +162,8 @@ def _sendMailBySender(senderUserId, receiverUserId, type, reward=None, desc=None
     gamedata.setGameAttr(senderUserId, FISH_GAMEID, GameData.outMailInfos, json.dumps(mailOutInfos))
     if type == MailRewardType.Present:
         lang = util.getLanguage(senderUserId)
-        message = config.getMultiLangTextConf("ID_PRESENT_TO_OTHER_MSG", lang=lang).format(receiverUserName, receiverUserId, util.buildRewardsDesc(reward, lang))
+        message = config.getMultiLangTextConf("ID_PRESENT_TO_OTHER_MSG", lang=lang)
+        message = message.format(receiverUserName, receiverUserId, util.buildRewardsDesc(reward, lang))
         GameMsg.sendPrivate(FISH_GAMEID, senderUserId, 0, message)
 
 
@@ -180,23 +181,33 @@ def sendMailToReceiver(senderUserId, receiverUserId, type, reward=None, desc=Non
     desc = desc or ""
     reward = reward or []
     title = title or ""
-    # 邮件的有效期.
+    mailSendId = gamedata.incrGameAttr(receiverUserId, FISH_GAMEID, GameData.mailId, 1)
+    # 邮件的有效期
     mailSenderType = MailSenderType.MT_SYS if senderUserId == config.ROBOT_MAX_USER_ID else MailSenderType.MT_USERS
     expireTs = curTime + _getMailExpireTime(mailSenderType)
-
-    mailSendId = gamedata.incrGameAttr(receiverUserId, FISH_GAMEID, GameData.mailId, 1)
-    _key = GameData.mailInfos if senderUserId == config.ROBOT_MAX_USER_ID else GameData.userMailInfos
-    mailInfos = gamedata.getGameAttrJson(receiverUserId, FISH_GAMEID, _key, [])
+    # 邮件数据存储key（系统邮件、玩家邮件）
+    mailKey = GameData.mailInfos if senderUserId == config.ROBOT_MAX_USER_ID else GameData.userMailInfos
+    mailInfos = gamedata.getGameAttrJson(receiverUserId, FISH_GAMEID, mailKey, [])
     senderUserName = util.getNickname(senderUserId)
-    mailInfos.insert(0, {"id": mailSendId, "userId": senderUserId, "time": curTime, "expireTime": expireTs,
-                         "name": senderUserName, "reward": reward, "type": type, "desc": desc,
-                         "state": MailState.Default, "title": title})
+    mailInfos.insert(0, {
+        "id": mailSendId,
+        "userId": senderUserId,
+        "time": curTime,
+        "expireTime": expireTs,
+        "name": senderUserName,
+        "reward": reward,
+        "type": type,
+        "desc": desc,
+        "state": MailState.Default,
+        "title": title
+    })
     mailInfos = _removeMailExpData(mailInfos, MAIL_DISPLAY_COUNT)
-    gamedata.setGameAttr(receiverUserId, FISH_GAMEID, _key, json.dumps(mailInfos))
+    gamedata.setGameAttr(receiverUserId, FISH_GAMEID, mailKey, json.dumps(mailInfos))
     _dealTips(receiverUserId, mailInfos, mailSenderType)
     if type == MailRewardType.Present:
         lang = util.getLanguage(receiverUserId)
-        message = config.getMultiLangTextConf("ID_ACCEPT_PRESENT_MSG", lang=lang).format(senderUserName, senderUserId, util.buildRewardsDesc(reward, lang))
+        message = config.getMultiLangTextConf("ID_ACCEPT_PRESENT_MSG", lang=lang)
+        message = message.format(senderUserName, senderUserId, util.buildRewardsDesc(reward, lang))
         GameMsg.sendPrivate(FISH_GAMEID, receiverUserId, 0, message)
 
 
@@ -252,44 +263,51 @@ def _dealMail(userId, mailIds, mailSenderType):
     curTime = int(time.time())
     _key = GameData.mailInfos if mailSenderType == MailSenderType.MT_SYS else GameData.userMailInfos
     mailInfos = gamedata.getGameAttrJson(userId, FISH_GAMEID, _key, [])
-    for _mailInfo in mailInfos:
-        expireTime = _mailInfo.get("expireTime")
-        # 过期邮件不可领取.
-        if expireTime and expireTime + 10 < curTime:
-            continue
-        if (not mailIds or _mailInfo["id"] in mailIds) and _mailInfo["state"] == MailState.Default:
-            eventId = "BI_NFISH_MAIL_REWARDS"
-            intEventParam = int(_mailInfo["type"])
-            param0 = None
-            if _mailInfo["type"] == MailRewardType.Present:
-                eventId = "ACCEPT_PRESENT_ITEM"
-                intEventParam = _mailInfo["userId"]
-            elif _mailInfo["type"] in [MailRewardType.StarRank, MailRewardType.RobberyRank, MailRewardType.PoseidonRank]:
-                eventId = "BI_NFISH_RANKING_REWARDS"
-            elif _mailInfo["type"] == MailRewardType.InviteReward:
-                param0 = _mailInfo["userId"]
-            elif _mailInfo["type"] == MailRewardType.MatchReward:
-                eventId = "MATCH_REWARD"
-            elif _mailInfo["type"] == MailRewardType.TreasureReward:
-                eventId = "BI_NFISH_TREASURE_REWARDS"
-            elif _mailInfo["type"] == MailRewardType.FishCanReturn:
-                eventId = "BI_NFISH_FISH_CAN_RETURN"
+    commonRewards = []
+    chestRewards = []
+    try:
+        for _mailInfo in mailInfos:
+            expireTime = _mailInfo.get("expireTime")
+            # 过期邮件不可领取.
+            if expireTime and expireTime + 10 < curTime:
+                continue
+            if (not mailIds or _mailInfo["id"] in mailIds) and _mailInfo["state"] == MailState.Default:
+                eventId = "BI_NFISH_MAIL_REWARDS"
+                intEventParam = int(_mailInfo["type"])
+                param0 = None
+                if _mailInfo["type"] == MailRewardType.Present:
+                    eventId = "ACCEPT_PRESENT_ITEM"
+                    intEventParam = _mailInfo["userId"]
+                elif _mailInfo["type"] in [MailRewardType.StarRank, MailRewardType.RobberyRank, MailRewardType.PoseidonRank]:
+                    eventId = "BI_NFISH_RANKING_REWARDS"
+                elif _mailInfo["type"] == MailRewardType.InviteReward:
+                    param0 = _mailInfo["userId"]
+                elif _mailInfo["type"] == MailRewardType.MatchReward:
+                    eventId = "MATCH_REWARD"
+                elif _mailInfo["type"] == MailRewardType.TreasureReward:
+                    eventId = "BI_NFISH_TREASURE_REWARDS"
+                elif _mailInfo["type"] == MailRewardType.FishCanReturn:
+                    eventId = "BI_NFISH_FISH_CAN_RETURN"
 
-            commonRewards = []
-            chestRewards = []
-            if _mailInfo["reward"]:
-                commonRewards, chestRewards, totalRewards = _getAllRewardInfo(userId, _mailInfo["reward"])
-                code = util.addRewards(userId, totalRewards, eventId, intEventParam, param01=param0)
-            if code == 0:
-                _mailInfo["state"] = MailState.Received
-                rewards.append({"commonReward": commonRewards, "chestRewards": chestRewards})
-            elif code == 4:  # code 4 ----  没有奖励
-                code = 0
-                _mailInfo["state"] = MailState.Received
+                commonReward = []
+                chestReward = []
+                if _mailInfo["reward"]:
+                    commonReward, chestReward, totalRewards = _getAllRewardInfo(userId, _mailInfo["reward"])
+                    code = util.addRewards(userId, totalRewards, eventId, intEventParam, param01=param0)
+                if code == 0:
+                    _mailInfo["state"] = MailState.Received
+                    commonRewards.extend(commonReward)
+                    chestRewards.extend(chestReward)
+                    # rewards.append({"commonReward": commonRewards, "chestRewards": chestRewards})
+                elif code == 4:  # 没有奖励
+                    code = 0
+                    _mailInfo["state"] = MailState.Received
+        rewards.append({"commonReward": commonRewards, "chestRewards": chestRewards})
+    except Exception as e:
+        ftlog.error("_dealMail error", userId, mailIds, mailSenderType, e)
     if ftlog.is_debug():
-        ftlog.debug("_dealMail=====>userId =", userId, "rewawrds =", rewards, "mailSenderType =", mailSenderType)
+        ftlog.debug("_dealMail=====>userId =", userId, "rewards =", rewards, "mailSenderType =", mailSenderType)
     gamedata.setGameAttr(userId, FISH_GAMEID, _key, json.dumps(mailInfos))
-    # _dealTips(userId, _getUnDeleteMail(mailInfos[0:30]))
     return code, rewards
 
 
@@ -411,15 +429,15 @@ def _removeMailExpData(infos, totalCount):
     删除收件箱过期邮件
     """
     curTime = int(time.time())
-    ftlog.debug("_removeMailExpData", len(infos), totalCount)
+    if ftlog.is_debug():
+        ftlog.debug("_removeMailExpData", len(infos), totalCount)
     # 删除过期邮件.
     for idx in range(len(infos) - 1, -1, -1):
         expireTime = infos[idx].get("expireTime")
         if (expireTime and curTime > expireTime) or infos[idx].get("state") == MailState.Delete:
             infos.pop(idx)
-    # infos.sort(key=lambda data: (data["id"]), reverse=True)
-    infos.sort(key=lambda data: (data["time"]), reverse=True)
-    # infos.sort(cmp=_sortMail)
+    # infos.sort(key=lambda data: (data["time"]), reverse=True)
+    infos.sort(cmp=_sortMail)
     if len(infos) > totalCount:# 最多50条
         infos = infos[0:totalCount]
     return infos
@@ -459,11 +477,9 @@ def _removeOutMailExpData(infos, totalCount):
     """
     删除发件箱过期邮件
     """
-    if ftlog.is_debug():
-        ftlog.debug("_removeOutMailExpData==>", len(infos), totalCount)
     infos.sort(key=lambda data: (data["time"]), reverse=True)
-    if len(infos) > totalCount:                                         # 最多50条
-        tempMail = infos[0: (totalCount)]
+    if len(infos) > totalCount:
+        tempMail = infos[0:(totalCount)]
         return tempMail
     else:
         return infos

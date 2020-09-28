@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 17/6/14.
+"""
+
 import json
 from distutils.version import StrictVersion
 
