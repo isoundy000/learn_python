@@ -149,7 +149,6 @@ class GunEffect(object):
         增加开火次数
         :param gunId: 武器ID
         :param count: 次数
-        :return:
         """
         if gunId in self.useGunEffect and self.useGunEffect[gunId]["state"] in [State.USING, State.PAUSE]:
             return
@@ -160,11 +159,39 @@ class GunEffect(object):
             self._setData(gunId)
         return count
 
+    def firstFireEffect(self, gunId):
+        """开火第一颗子弹触发狂暴效果"""
+        if gunId in self.useGunEffect and self.useGunEffect[gunId]["state"] == State.PREPARE:
+            conf = config.getGunConf(gunId, self.clientId, 1, self.mode)
+            self.useGunEffect[gunId] = {
+                "state": State.USING,
+                "start_time": float('%.2f' % time.time()),
+                "progress": [0, conf["duration"]]
+            }
+            self.updateFireOrEnergy(gunId, idx=1, absValue=1)
+            self._setData(gunId)
+            data = self.gunEffectData[gunId]
+            self.setUseEffectTimer(conf["duration"])  # 启动结束的定时器
+            if data:
+                dataTmp = deepcopy(data)
+                dataTmp.pop(0)
+                dataTmp.append(conf["fire_count"])
+                data = dataTmp
+            msg = MsgPack()
+            msg.setCmd("use_gun_effect")
+            msg.setResult("userId", self.userId)
+            msg.setResult("gunId", gunId)
+            msg.setResult("code", 0)
+            msg.setResult("progressData", data)
+            msg.setResult("data", self.useGunEffect[gunId])
+            GameMsg.sendMsg(msg, self.table.getBroadcastUids())
+            return
+
     def addGunEffectEnergy(self, gunId, coin):
         """
         添加能量
         """
-        if gunId in self.useGunEffect and self.useGunEffect[gunId]["state"] in [State.USING, State.PAUSE]:
+        if gunId in self.useGunEffect and self.useGunEffect[gunId]["state"] in [State.PREPARE, State.USING, State.PAUSE]:
             return
         conf = config.getGunConf(gunId, self.clientId, 1, self.mode)
         add_energy = coin * conf["percent"] / 100
@@ -179,7 +206,6 @@ class GunEffect(object):
         :param val: 更新的值
         :param abs_value: 赋值 0不赋值 1赋值
         :param add: 增加|减少
-        :return:
         """
         if gunId not in self.gunEffectData:
             listVal = self._getData(gunId)
@@ -222,15 +248,20 @@ class GunEffect(object):
         if len(self.player.usingSkill) > 0:                     # 使用技能期间, 不能使用狂暴
             code = 4
         if code == 0:
+            # self.useGunEffect[gunId] = {
+            #     "state": State.USING,
+            #     "start_time": float('%.2f' % time.time()),
+            #     "progress": [0, conf["duration"]]
+            # }
+            # self.updateFireOrEnergy(gunId, idx=1, absValue=1)
+            # self._setData(gunId)
             self.useGunEffect[gunId] = {
-                "start_time": float('%.2f' % time.time()),
-                "progress": [0, conf["duration"]],
-                "state": State.USING
+                "state": State.PREPARE,                         # 准备
+                "start_time": 0,                                # float('%.2f' % time.time())
+                "progress": [0, conf["duration"]]
             }
-            self.updateFireOrEnergy(gunId, idx=1, absValue=1)
-            self._setData(gunId)
-            data = self.gunEffectData[gunId]
-            self.setUseEffectTimer(conf["duration"])            # 启动结束的定时器
+            # data = self.gunEffectData[gunId]
+            # self.setUseEffectTimer(conf["duration"])          # 启动结束的定时器
         if data:
             dataTmp = deepcopy(data)
             dataTmp.pop(0)
@@ -293,6 +324,10 @@ class GunEffect(object):
         if gunId not in self.useGunEffect:
             return
         data = self.useGunEffect[gunId]
+        if data["state"] == State.PREPARE:
+            data["state"] = State.CAN_USE
+        else:
+            data["state"] = State.PREPARE
         if data["state"] == State.USING:
             data["state"] = State.PAUSE
             self.clearUeTimer()                                                         # 取消定时器

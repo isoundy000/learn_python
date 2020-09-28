@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/29
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/5/11.
+"""
 
 import traceback
 
@@ -25,7 +25,6 @@ from newfish.player.friend_player import FishFriendPlayer
 
 
 class FishFriendTable(FishNormalTable):
-    """好友的桌子"""
 
     def _doTableCall(self, msg, userId, seatId, action, clientId):
         try:

@@ -336,28 +336,26 @@ class FishQuickStart(BaseQuickStart):
             if not grand_prix.isGrandPrixOpenTime() or remainGrandPrixTimeSeconds < 10:
                 return cls.ENTER_ROOM_REASON_GRAND_PRIX_NOE_OPEN
             vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
-            if config.getVipConf(vipLevel).get("grandPrixFreeTimes", 0) <= weakdata.getDayFishData(userId,
-                                                                                                   WeakData.grandPrix_freeTimes,
-                                                                                                   0):  # 用免费次数已经用完
-                fee = config.getGrandPrixConf("fee")
+            if config.getVipConf(vipLevel).get("grandPrixFreeTimes", 0) <= \
+                    weakdata.getDayFishData(userId, WeakData.grandPrix_freeTimes, 0):  # 用免费次数已经用完
+                fee = config.getGrandPrixConf("fee")[0]
                 surplusCount = util.balanceItem(userId, fee["name"])
                 if surplusCount < fee["count"]:
                     return cls.ENTER_ROOM_REASON_GRAND_PRIX_LESS_FEES
-                util.consumeItems(userId, [{"name": fee["name"], "count": fee["count"]}], "ROOM_GRAND_PRIX_FEE")
         return cls.ENTER_ROOM_REASON_OK
 
     @classmethod
-    def _matchEnterRoom(cls, userChip, uLevel, roomId, lastRoomType=None, abcTestMode=None):
+    def _matchEnterRoom(cls, roomId, uLevel, gunLevel, userChip, gameMode):
         """匹配进入房间"""
         roomConf = gdata.roomIdDefineMap()[roomId].configure
-        minCoin = util.getRoomMinCoin(roomId, abcTestMode)                          # roomConf.get("minCoin", 0)
-        minLevel = util.getRoomMinLevel(roomId, abcTestMode)                        # roomConf.get("minLevel", 1)
+        minLevel = roomConf.get("minLevel", 1)
+        minGunLevel = roomConf.get("minGunLevel", 2101)
+        minCoin = roomConf.get("minCoin", 0)
         typeName = roomConf.get("typeName")
-        if not lastRoomType:
-            lastRoomType = config.FISH_FRIEND
-        if typeName == lastRoomType:
-            if userChip >= minCoin and uLevel >= minLevel:
-                return True, minCoin, minLevel
-            else:
-                return False, 0, 0
-        return False, 0, 0
+        roomType = config.CLASSIC_MODE_ROOM_TYPE
+        if gameMode == config.MULTIPLE_MODE:
+            roomType = config.MULTIPLE_MODE_ROOM_TYPE
+        if typeName in roomType:
+            if uLevel >= minLevel and gunLevel >= minGunLevel and userChip >= minCoin:
+                return True
+        return False

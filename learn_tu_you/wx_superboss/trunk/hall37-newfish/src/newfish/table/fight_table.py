@@ -1,7 +1,10 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+"""
+Created on 2017年12月26日
+
+@author: haohongxian
+"""
+
 import time
 import random
 import copy
@@ -36,7 +39,7 @@ class TableDetails(object):
         self.ftId = None
         self.userId = None
         self.fee = None
-
+        
     def fromDict(self, d):
         self.ftId = d["ftId"]
         self.fee = d["fee"]
@@ -60,7 +63,7 @@ class TableClearState(object):
 
 
 class FishFightTable(FishTable):
-    """渔友竞技桌子"""
+
     def __init__(self, room, tableId):
         super(FishFightTable, self).__init__(room, tableId)
         self.clearTableData()
@@ -104,7 +107,7 @@ class FishFightTable(FishTable):
     @property
     def ftId(self):
         return self.ftTable.ftId if self.ftTable else 0
-
+    
     @property
     def ftTable(self):
         return self._ftTable
@@ -113,7 +116,8 @@ class FishFightTable(FishTable):
         """
         清理桌子数据和状态
         """
-        ftlog.debug("friendTable.clear-->begin", "tableId=", self.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("friendTable.clear-->begin", "tableId=", self.tableId)
         self._tableState = TableState.DEFAULT                   # 桌子状态
         # 桌子详情(房号、房主、服务费)
         self._ftTable = None
@@ -124,7 +128,8 @@ class FishFightTable(FishTable):
         self.winnerId = None
         self.otherId = None
         self._overState = None
-        ftlog.debug("friendTable.clear-->end", "tableId=", self.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("friendTable.clear-->end", "tableId=", self.tableId)
 
     def clearAllTimer(self):
         """
@@ -148,7 +153,6 @@ class FishFightTable(FishTable):
 
     @locked
     def doFTEnter(self, ftId, userId, seatId):
-        """进入桌子"""
         ftlog.info("FishFriendTable.doFTEnter", "tableId=", self.tableId, "ftId=", ftId, "seatId=", seatId)
         lang = util.getLanguage(userId)
         if ftId != self.ftId:
@@ -167,7 +171,7 @@ class FishFightTable(FishTable):
             self.sendFriendDetails(userId)                      # 发送对战详情信息
             if userId != self.ftTable.userId:                   # 记录参与者Id
                 self.otherId = userId
-                fight_history.addOneHistory(userId, self.ftTable.userId, fight_history.HistoryType.Enter, self.ftId, self.ftTable.fee)  # 进入房间记录
+                fight_history.addOneHistory(userId, self.ftTable.userId, fight_history.HistoryType.Enter, self.ftId, self.ftTable.fee)          # 进入房间记录
         return 0
 
 

@@ -53,6 +53,7 @@ def doSendLevelGift(userId, clientId):
             giftInfo.append(getGiftDetail(giftConf, util.getLanguage(userId, clientId), timeout))
     message.setResult("giftInfo", giftInfo)
     router.sendToUser(message, userId)
+    return giftInfo
 
 
 def doBuyLevelGift(userId, clientId, buyType, productId, itemId=0):
@@ -161,23 +162,23 @@ def _sendBuyLevelGiftRet(userId, clientId, giftId, code, commonRewards):
     doSendLevelGift(userId, clientId)
 
 
-# def _triggerLevelUpEvent(event):
-#     """
-#     炮台升级/升倍率事件
-#     """
-#     userId = event.userId
-#     clientId = util.getClientId(userId)
-#     mode = event.gameMode
-#     if mode != 1:
-#         return
-#     gunLv = util.getGunLevelVal(userId, mode)
-#     levelGiftConf = config.getLevelGiftConf()
-#     for giftId, giftConf in levelGiftConf.iteritems():
-#         if not giftConf["minLevel"] <= gunLv <= giftConf["maxLevel"]:
-#             continue
-#         if not _isBought(userId, giftId):
-#             doSendLevelGift(userId, clientId)
-#             break
+def _triggerLevelUpEvent(event):
+    """
+    炮台升级/升倍率事件弹出升级礼包
+    """
+    userId = event.userId
+    clientId = util.getClientId(userId)
+    mode = event.gameMode
+    if mode != 1:
+        return
+    gunLv = util.getGunLevelVal(userId, mode)
+    levelGiftConf = config.getLevelGiftConf()
+    for giftId, giftConf in levelGiftConf.iteritems():
+        if not giftConf["minLevel"] <= gunLv <= giftConf["maxLevel"]:
+            continue
+        if not _isBought(userId, giftId):
+            doSendLevelGift(userId, clientId)
+            break
 
 
 _inited = False
@@ -188,7 +189,7 @@ def initialize():
     global _inited
     if not _inited:
         _inited = True
-        # from newfish.game import TGFish
-        # from newfish.entity.event import GunLevelUpEvent
-        # TGFish.getEventBus().subscribe(GunLevelUpEvent, _triggerLevelUpEvent)
+        from newfish.game import TGFish
+        from newfish.entity.event import GunLevelUpEvent
+        TGFish.getEventBus().subscribe(GunLevelUpEvent, _triggerLevelUpEvent)
     ftlog.debug("newfish level_gift initialize end")

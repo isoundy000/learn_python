@@ -1200,7 +1200,7 @@ def buyCoinDelivery(userId, productId, clientId):
     """
     金币商品发货
     """
-    product = config.getStoreConf(clientId).get("coinStore").get(str(productId))
+    product = config.getStoreConf(clientId).get("coinStore").get("items").get(str(productId))
     if product:
         try:
             _, ret = CoinStoreBuyAction(userId, clientId, 1, productId, 1).buy()
@@ -1293,7 +1293,7 @@ def buyDiamondDelivery(userId, productId, clientId):
     """
     钻石商品发货
     """
-    product = config.getStoreConf(clientId).get("diamondStore").get(str(productId))
+    product = config.getStoreConf(clientId).get("diamondStore").get("items").get(str(productId))
     if product:
         actionType = 2
         try:

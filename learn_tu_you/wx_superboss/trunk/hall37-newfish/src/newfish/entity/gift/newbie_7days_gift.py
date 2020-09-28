@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/22
+# -*- coding=utf-8 -*-
 """
 新手7日礼包
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2020/02/07
 
 import math
 import time

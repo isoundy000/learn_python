@@ -44,7 +44,6 @@ def _getBonusResult(userId, count):
     userAssets = hallitem.itemSystem.loadUserAssets(userId)
     _, consumeCount, final = userAssets.consumeAsset(FISH_GAMEID, "item:" + str(consumeItem["name"]), int(consumeItem["count"]), curTime, "ITEM_USE", 0)
     if consumeCount != consumeItem["count"]:  # 海星不够
-        ftlog.debug("_getBonusResult-====>", "资源不足", consumeItem["name"])
         code = 1
         return code, None, None
 
@@ -58,7 +57,6 @@ def _getBonusResult(userId, count):
         else:
             luckyNum = luckyNum + 1
         resultIndex.append(index)
-    ftlog.debug("_getBonusResult-====>", resultIndex)
     gamedata.setGameAttr(userId, FISH_GAMEID, GameData.wishLuckyValue, luckyNum)
     # 更新道具个数
     datachangenotify.sendDataChangeNotify(FISH_GAMEID, userId, ["item"])
@@ -89,7 +87,6 @@ def _testResult10000():
         totalNum = sum(itemInfo[index]["luckyIndex"])
         totalNum = totalNum/len(itemInfo[index]["luckyIndex"])
         itemInfo[index]["Average"] = totalNum
-    ftlog.debug("_testResult10000-====>", itemInfo, totalChip/10000)
 
 
 # 获取一次抽奖结果

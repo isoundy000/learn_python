@@ -99,6 +99,20 @@ class PrizeWheel(object):
             self.pwData[fishPool] = val
             # 处理新增数据.
             isUpdate = False
+            for _idx, _value in enumerate(deepcopy(self.default_val)):
+                if _idx + 1 > len(val):                                     # 有新增的数据
+                    isUpdate = True
+                    if _idx == PWValueSlot.BETCOUNT:
+                        _value = 1                                          # 老用户多倍竞猜次数为1
+                    elif _idx == PWValueSlot.SPINTIMES:
+                        self.pwData[fishPool].insert(_idx, 0)
+                        idx = len(self.pwData[fishPool][PWValueSlot.TAKEN]) % len(self.pwConf["energy"])
+                        total = self.pwConf["energy"][idx][fishPool]["cost"]
+                        if self.pwData[fishPool][PWValueSlot.ENERGY] >= total and self.pwData[fishPool][PWValueSlot.STATE] == PWState.NOT_SPIN:
+                            self.pwData[fishPool][PWValueSlot.ENERGY] = 0
+                            self.pwData[fishPool][PWValueSlot.SPINTIMES] = 1
+                        continue
+                    self.pwData[fishPool].insert(_idx, _value)
             if self.pwData[fishPool][PWValueSlot.SPINTIMES] > self.maxSpinTimes:
                 self.pwData[fishPool][PWValueSlot.SPINTIMES] = self.maxSpinTimes
                 isUpdate = True

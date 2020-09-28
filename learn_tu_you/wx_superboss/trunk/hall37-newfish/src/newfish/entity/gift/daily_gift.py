@@ -1,10 +1,10 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/21
+# -*- coding=utf-8 -*-
 """
 每日礼包
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/1/25
+
 import time
 import json
 
@@ -45,7 +45,8 @@ def doSendGift(userId, clientId):
                     hasBought = 0
                 dayIdx = _getGiftDayIdx(clientId, id, continuousDay)
                 giftInfo.append(getGiftDetail(giftConf, hasBought, dayIdx, lang))
-                ftlog.debug("doSendGift", userId, id, hasBought, continuousDay, dayIdx)
+                if ftlog.is_debug():
+                    ftlog.debug("doSendGift", userId, id, hasBought, continuousDay, dayIdx)
     message.setResult("btnVisible", bool(len(giftInfo) > 0))
     message.setResult("giftInfo", giftInfo)
     giftTestMode = config.getPublic("giftTestMode", None)
@@ -53,14 +54,16 @@ def doSendGift(userId, clientId):
         giftTestMode = "a" if userId % 2 == 0 else "b"
     message.setResult("testMode", giftTestMode)
     router.sendToUser(message, userId)
-    ftlog.debug("doSendGift===>", userId, giftInfo)
+    if ftlog.is_debug():
+        ftlog.debug("doSendGift===>", userId, giftInfo)
 
 
 def doBuyGift(userId, clientId, giftId, buyType, itemId=0):
     """
     购买礼包
     """
-    ftlog.debug("doBuyGift===>", userId, clientId, giftId, buyType)
+    if ftlog.is_debug():
+        ftlog.debug("doBuyGift===>", userId, clientId, giftId, buyType)
     giftConf = config.getDailyGiftConf(clientId).get(str(giftId), {})
     continuousDay = _getContinuousDay(userId, giftId)
     dayIdx = _getGiftDayIdx(clientId, giftId, continuousDay)

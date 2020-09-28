@@ -60,7 +60,7 @@ def sendFishVipInfo(userId):
     router.sendToUser(mo, userId)
 
 
-def buyFishVipGift(userId, level):
+def buyFishVipGift(userId, level, clientId, buyType=None, itemId=0):
     """
     购买特定VIP等级的礼包
     """
@@ -70,25 +70,65 @@ def buyFishVipGift(userId, level):
     mo.setResult("userId", userId)
     mo.setResult("level", level)
     vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
+    vipGiftBought = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.vipGiftBought, [])
     code = 1
-    if vipLevel >= level:
-        vipConf = config.getVipConf(level)
-        if vipConf:
-            price = vipConf["price"]
-            rewards = vipConf["vipGift"]
-            if userchip.getChip(userId) >= price:
-                vipGiftBought = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.vipGiftBought, [])
-                # 服务器限制购买次数.
-                if level not in vipGiftBought:
-                    util.addRewards(userId, [{"name": config.CHIP_KINDID, "count": -abs(price)}],
-                                    "BI_NFISH_BUY_ITEM_CONSUME", level)
-                    code = util.addRewards(userId, rewards, "BI_NFISH_BUY_ITEM_GAIN", level)
-                    vipGiftBought.append(level)
-                    gamedata.setGameAttr(userId, FISH_GAMEID, GameData.vipGiftBought, json.dumps(vipGiftBought))
-                else:
-                    return
-            if code == 0:
-                mo.setResult("rewards", rewards)
+    commonRewards = []
+    chestRewards = []
+    buyType = buyType if buyType else config.BT_DIAMOND
+    from newfish.entity import store
+    from newfish.entity.gun import gun_system
+    if vipLevel < level or level in vipGiftBought:
+        mo.setResult("code", code)
+        router.sendToUser(mo, userId)
+        return
+    vipConf = config.getVipConf(level)
+    if vipConf:
+        price = vipConf["price"]
+        vipGiftRewards = vipConf["vipGift"]
+        price, isSucc = store.getUseRebateItemPrice(userId, itemId, price, buyType, vipConf["productId"],
+                                                    clientId)  # 满减券之后的钻石 满减券
+        consumeCount = 0
+        if price > 0 and isSucc:
+            store.autoConvertVoucherToDiamond(userId, price)  # 代购券
+            consumeCount, final = userchip.incrDiamond(userId, FISH_GAMEID, -abs(price), 0,
+                                                       "BI_NFISH_BUY_ITEM_CONSUME", int(config.DIAMOND_KINDID),
+                                                       util.getClientId(userId), param01=vipConf["productId"])
+        if not isSucc or abs(consumeCount) != price:
+            code = 2
+        else:
+            eventId = "BI_NFISH_BUY_ITEM_GAIN"
+            for item in vipGiftRewards:
+                if item["type"] == 1:  # 宝箱
+                    chestId = item["name"]
+                    from newfish.entity.chest import chest_system
+                    rewards = chest_system.getChestRewards(userId, chestId)
+                    code = chest_system.deliveryChestRewards(userId, chestId, rewards, eventId)
+                    chestRewards.extend(rewards)
+                elif item["type"] == 2:  # 等级
+                    from newfish.entity.gift.gift_system import _makeUserLevelUp
+                    _makeUserLevelUp(userId, item["count"])
+                    code = 0
+                elif item["type"] == 3:  # 资产/道具
+                    rewards = [{"name": item["name"], "count": item["count"]}]
+                    code = util.addRewards(userId, rewards, eventId, int(level), param01=int(level))
+                    commonRewards.extend(rewards)
+                elif item["type"] == 5:  # 皮肤炮皮肤
+                    skinId = item["name"]
+                    ret = gun_system.addEquipGunSkinSkin(userId, skinId, clientId)
+                    if ret:
+                        code = 0
+                        rewards = [{"name": item["name"], "count": item["count"], "type": item["type"]}]
+                        commonRewards.extend(rewards)
+                elif item["type"] == 6:  # 直升炮台
+                    upToLevel = item["count"]
+                    success = gun_system.upgradeGun(userId, False, MULTIPLE_MODE, byGift=True,
+                                                    upToLevel=upToLevel)
+                    if success:
+                        code = 0
+            vipGiftBought.append(level)
+            gamedata.setGameAttr(userId, FISH_GAMEID, GameData.vipGiftBought, json.dumps(vipGiftBought))
+        if code == 0:
+            mo.setResult("rewards", vipGiftRewards)
     mo.setResult("code", code)
     router.sendToUser(mo, userId)
 

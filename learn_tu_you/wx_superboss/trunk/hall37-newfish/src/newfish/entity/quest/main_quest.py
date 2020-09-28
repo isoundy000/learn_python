@@ -1,8 +1,16 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/30
-# 主线任务
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2019-06-26.
+主线任务
+hset
+gamedata:44:116009
+currSectionId
+641000
+del
+mainQuest:44:116009
+del
+questType:44:116009
+"""
 
 import time
 import json
@@ -19,6 +27,7 @@ from newfish.entity.redis_keys import GameData, UserData
 from newfish.entity.chest import chest_system
 from newfish.entity.skill import skill_system
 from newfish.entity.event import MainQuestSectionFinishEvent
+from poker.entity.biz import bireport
 
 
 class QuestIndex:
@@ -45,21 +54,72 @@ class QuestState:
 class QuestType:
     """主线任务类型"""
     CatchMultipleFish = 10001   # 捕获倍率鱼数量
-    CatchBombFish = 10002       # 捕获炸弹鱼数量
+    CatchBombFish = 10002       # 捕获炸弹鱼数量                       # 炸弹蟹
     CatchDrillFish = 10003      # 捕获钻头鱼数量
     CatchBossFish = 10004       # 捕获Boss数量
+
+    LevelUp = 10007             # 火炮达到指定等级
+    SkillLevel16 = 10014        # 拥有xx个16级以上的技能
+    AchievementLevel = 10015    # 荣耀任务达到xx级
+    UseSkill = 10016            # 使用技能次数
+
+    # 暂时没用的类型
     HoldCoin = 10005            # 持有金币数量
     HoldGoldBullet = 10006      # 持有黄金招财珠数量
-    LevelUp = 10007             # 火炮达到指定等级
     EnterMatch44102 = 10008     # 欢乐竞技参赛次数
     EnterMatch44103 = 10009     # 王者争霸参赛次数
     ReceiveDailyChest = 10010   # 每日任务活跃宝箱领取次数(包含周活跃宝箱)
     ReceiveWeekChest = 10011    # 每日任务周活跃宝箱领取次数
     TableTaskWin = 10012        # 渔场内比赛(夺宝、奖金)胜利次数
     RobberyProfit = 10013       # 单次招财模式赢取招财珠价值
-    SkillLevel16 = 10014        # 拥有xx个16级以上的技能
-    AchievementLevel = 10015    # 荣耀任务达到xx级
-    UseSkill = 10016            # 使用技能次数
+
+    # 新增加的类型
+    CatchCrocodileFish = 10017  # 捕获鳄鱼的数量
+    CatchColorGoldFish = 10018  # 捕获彩金鱼的数量
+    CatchTentacleFish = 10019   # 捕获巨妖触手
+    CatchMermaidFish = 10020    # 捕获美人鱼
+    CatchPlatterFish = 10021    # 捕获大盘鱼
+    CatchSharkFish = 10022      # 捕获双髻鲨
+    CatchTerrorFish = 10023     # 捕获特殊效果鱼 6种鱼[金钱箱、能量宝珠、...]
+    CatchSuperBossFish = 10024  # 捕获超级Boss次数
+    CatchQueenFish = 10025      # 击破n次深海女王  破盾|捕获都算
+    CatchKylinFish = 10026      # 捕获麒麟
+    CatchTridentFish = 10027    # 捕获三叉戟
+    CatchDragonFish = 10028     # 击破n只远古寒龙
+    CatchDragonEggFish = 10029  # 捕获多少个龙蛋
+    CatchCrabFish = 10030       # 捕获多少只深渊螃蟹
+    CatchBoxFish = 10031        # 捕获多少只宝箱怪
+    CatchTurtle = 10032         # 捕获多少只金财富龟
+    CatchGotChip = 10033        # 捕获金币的任意鱼   金币量
+    CatchFishNum = 10034        # 捕获n条鱼
+
+    BossExchange = 10035        # 进行n次Boss素材兑换
+    PlayMiniGame = 10036        # 进行n次Boss小游戏
+    HitPoseidon = 10037         # 魔塔命中波塞冬n次
+    JoinGrandPrix = 10038       # 参加大奖赛次数
+    JoinMatch = 10039           # 参加回馈赛次数
+    JoinRobbery = 10040         # 参加多少次招财
+    TreasureLevelUp = 10041     # 将任一宝藏升至n级
+    SkillStar = 10042           # 技能星级数
+    UserLevelUp = 10043         # 玩家等级达到n级
+    UseSkillItem = 10044        # 使用n次锁定
+    LevelPrizeWheel = 10045     # 转盘的转动
+
+
+TaskTypeFishTypeMap = {
+    QuestType.CatchCrocodileFish:  [11090, 14090],                # 捕获n条鳄鱼
+    QuestType.CatchTentacleFish:   [73204, 73205, 73206],         # 巨妖触手
+    QuestType.CatchMermaidFish:    [80029],                       # 美人鱼
+    QuestType.CatchSharkFish:      [11024, 14024],                # 捕获双髻鲨
+    QuestType.CatchQueenFish:      [74207, 74215],                # 捕获深海女王
+    QuestType.CatchKylinFish:      [12234],                       # 捕获麒麟
+    QuestType.CatchTridentFish:    [78229],                       # 捕获三叉戟
+    QuestType.CatchBoxFish:        [71201, 71202, 71203],         # 捕获多少只宝箱怪
+    QuestType.CatchDragonFish:     [75208, 75216],                # 击破n只远古寒龙
+    QuestType.CatchCrabFish:       [12233],                       # 捕获多少只深渊螃蟹
+    QuestType.CatchDragonEggFish:  [75209],                       # 捕获多少个龙蛋
+    QuestType.CatchTurtle:         [11231],                       # 捕获多少只金财富龟
+}
 
 
 class MainQuest(object):
@@ -184,7 +244,7 @@ def _getMainQuestKey(userId):
     """
     主线任务状态数据存储key
     """
-    return "mainQuest:%s:%s" % (FISH_GAMEID, userId)
+    return UserData.mainQuest % (FISH_GAMEID, userId)
 
 
 def setTask(userId, clientId, taskId, data):
@@ -249,7 +309,7 @@ def refreshQuestState(userId, questType, totalValue):
     """
     isComplete = False
     clientId = util.getClientId(userId)
-    for _, taskConf in config.getMainQuestTaskConf(clientId).iteritems():
+    for taskConf in config.getMainQuestTaskConf(clientId).values():
         if questType == taskConf["type"] and totalValue >= taskConf["num"]:
             state = getTask(userId, taskConf["taskId"])[QuestIndex.State]
             if state == QuestState.Default:
@@ -325,21 +385,44 @@ def triggerCatchEvent(event):
     fishTypes = event.fishTypes
     roomId = event.roomId
     typeName = util.getRoomTypeName(roomId)
-    if util.isRedRoom(typeName):
+    if util.isNewbieRoom(typeName):
         return
+    gainChip = event.gainChip
     for fishType in fishTypes:
         fishConf = config.getFishConf(fishType, typeName)
         questType = None
-        if fishConf["type"] in config.BOSS_FISH_TYPE:  # Boss
-            questType = QuestType.CatchBossFish
-        elif fishConf["type"] in config.MULTIPLE_FISH_TYPE:  # 倍率鱼
+        if fishConf["type"] in config.MULTIPLE_FISH_TYPE:       # 倍率鱼
             questType = QuestType.CatchMultipleFish
-        elif fishConf["type"] in config.BOMB_FISH_TYPE:  # 炸弹鱼
+        elif fishConf["type"] in config.BOMB_FISH_TYPE:         # 炸弹鱼|炸弹蟹
             questType = QuestType.CatchBombFish
-        elif fishConf["type"] in config.DRILL_FISH_TYPE:  # 钻头鱼
+        elif fishConf["type"] in config.DRILL_FISH_TYPE:        # 钻头鱼
             questType = QuestType.CatchDrillFish
+        elif fishConf["type"] in config.PLATTER_FISH_TYPE:      # 大盘鱼
+            questType = QuestType.CatchPlatterFish
+        elif fishConf["type"] in config.SUPER_BOSS_FISH_TYPE:   # 超级boss
+            questType = QuestType.CatchSuperBossFish
+
         if questType:
             incrQuestTypeData(userId, questType, 1)
+
+        if fishConf["type"] in config.TERROR_FISH_TYPE:         # 特殊鱼
+            incrQuestTypeData(userId, QuestType.CatchTerrorFish, 1)
+        if fishConf["type"] in config.COlOR_GOLD_FISH_TYPE:     # 捕获彩金鱼
+            incrQuestTypeData(userId, QuestType.CatchColorGoldFish, 1)
+        if fishConf["type"] in config.BOSS_FISH_TYPE:           # Boss
+            incrQuestTypeData(userId, QuestType.CatchBossFish, 1)
+
+        tmpQuestType = None
+        for qt, fishTp in TaskTypeFishTypeMap.items():          # 具体的鱼
+            if fishConf["fishType"] in fishTp:
+                tmpQuestType = qt
+                break
+        if tmpQuestType:
+            incrQuestTypeData(userId, tmpQuestType, 1)
+    if gainChip:
+        incrQuestTypeData(userId, QuestType.CatchGotChip, gainChip)
+    if len(fishTypes):
+        incrQuestTypeData(userId, QuestType.CatchFishNum, len(fishTypes))
 
 
 def triggerItemChangeEvent(event):
@@ -357,11 +440,11 @@ def triggerItemChangeEvent(event):
 
 def triggerLevelUpEvent(event):
     """
-    玩家升级事件
+    火炮等级事件 解锁多少倍炮
     """
     userId = event.userId
-    # TODO.此处升级任务可能需要根据产品设计修改。
-    setQuestTypeData(userId, QuestType.LevelUp, event.level)
+    if event.gameMode == config.MULTIPLE_MODE:
+        setQuestTypeData(userId, QuestType.LevelUp, util.getGunX(event.gunLevel, event.gameMode))          # 解锁多少被炮
 
 
 def triggerEnterTableEvent(event):
@@ -372,10 +455,14 @@ def triggerEnterTableEvent(event):
         return
     userId = event.userId
     bigRoomId, _ = util.getBigRoomId(event.roomId)
+    if bigRoomId in range(44101, 44105):
+        incrQuestTypeData(userId, QuestType.JoinMatch, 1)                 # 进入回馈赛多少次
     if bigRoomId == 44102:
         incrQuestTypeData(userId, QuestType.EnterMatch44102, 1)
     elif bigRoomId == 44103:
         incrQuestTypeData(userId, QuestType.EnterMatch44103, 1)
+    elif bigRoomId in[44301, 44302]:
+        incrQuestTypeData(userId, QuestType.JoinRobbery, 1)               # 进入招财多少次
 
 
 def triggerGainChestEvent(event):
@@ -431,11 +518,11 @@ def triggerUserLoginEvent(event):
         gamedata.setGameAttr(userId, FISH_GAMEID, GameData.mainQuestDisplay, sectionConf["display"])
     isIn, _, _, _ = util.isInFishTable(userId)
     if not isIn:
-        setQuestTypeData(userId, QuestType.HoldCoin, userchip.getChip(userId))
-        setQuestTypeData(userId, QuestType.HoldGoldBullet, util.balanceItem(userId, config.GOLD_BULLET_KINDID))
-        # TODO.此处升级任务可能需要根据产品设计修改。
-        setQuestTypeData(userId, QuestType.LevelUp, gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level))
-        setQuestTypeData(userId, QuestType.AchievementLevel, gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.achievementLevel))
+        # setQuestTypeData(userId, QuestType.HoldCoin, userchip.getChip(userId))
+        # setQuestTypeData(userId, QuestType.HoldGoldBullet, util.balanceItem(userId, config.GOLD_BULLET_KINDID))
+        setQuestTypeData(userId, QuestType.UserLevelUp, gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.level))                   # 用户等级
+        setQuestTypeData(userId, QuestType.LevelUp, util.getGunX(gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.gunLevel_m), config.MULTIPLE_MODE)) # 皮肤炮等级
+        setQuestTypeData(userId, QuestType.AchievementLevel, gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.achievementLevel))   # 荣耀任务等级
         refreshHigherSkillLevel(userId)                                                     # 技能达到16级以上的任务
     refreshQuestModuleTip(userId, clientId)
 
@@ -462,19 +549,72 @@ def triggerUseSkillEvent(event):
     """
     userId = event.userId
     roomId = event.roomId
-    if util.isRedRoom(util.getRoomTypeName(roomId)):
+    if util.isNewbieRoom(util.getRoomTypeName(roomId)):
         return
     incrQuestTypeData(userId, QuestType.UseSkill, 1)
+
+
+def triggerUseSkillItemEvent(event):
+    """触发使用道具锁定"""
+    userId = event.userId
+    if event.kindId == config.LOCK_ITEM:
+        incrQuestTypeData(userId, QuestType.UseSkillItem, 1)
+
+
+def triggerUserLevelUpEvent(event):
+    """玩家等级达到n级"""
+    userId = event.userId
+    setQuestTypeData(userId, QuestType.UserLevelUp, event.level)
+
+
+def triggerPlayMiniGameEvent(event):
+    """玩家完小游戏的次数"""
+    userId = event.userId
+    count = event.count
+    incrQuestTypeData(userId, QuestType.PlayMiniGame, count)
+
+
+def triggerMiniGameBossExchangeEvent(event):
+    """玩家Boss素材兑换"""
+    userId = event.userId
+    count = event.count
+    incrQuestTypeData(userId, QuestType.BossExchange, count)
+
+
+def triggerHitPoseidonEvent(event):
+    """击中波塞冬的次数"""
+    userId = event.userId
+    count = event.count
+    incrQuestTypeData(userId, QuestType.HitPoseidon, count)
+
+
+def triggerJoinGrandPrixEvent(event):
+    """参加大奖赛次数"""
+    userId = event.userId
+    incrQuestTypeData(userId, QuestType.JoinGrandPrix, 1)
+
+
+def triggerTreasureLevelUpEvent(event):
+    """将任一宝藏升至n级"""
+    userId = event.userId
+    setQuestTypeData(userId, QuestType.TreasureLevelUp, event.level)
+
+
+def triggerPrizeWheelSpinEvent(event):
+    """转动多少次转盘"""
+    userId = event.userId
+    incrQuestTypeData(userId, QuestType.LevelPrizeWheel, 1)
 
 
 def refreshHigherSkillLevel(userId):
     """
     刷新持有技能的等级数据
     """
-    levelMap, _ = skill_system.getHigherSkillLevelInfo(userId)
-    skillCount = levelMap[16]
-    if skillCount > 0:
-        setQuestTypeData(userId, QuestType.SkillLevel16, skillCount)
+    levelMap, starMap = skill_system.getHigherSkillLevelInfo(userId)
+    # skillCount = levelMap[16]
+    # if skillCount > 0:
+    setQuestTypeData(userId, QuestType.SkillLevel16, max(levelMap.keys()))
+    setQuestTypeData(userId, QuestType.SkillStar, max(starMap.keys()))
 
 
 def pushCurrTask(userId, questType=None, task=None):
@@ -667,6 +807,7 @@ def getQuestRewards(userId, clientId, taskId):
                     module_tip.addModuleTipEvent(userId, "mainquest", "star_%d" % val["star"])
             mo.setResult("chestInfo", chestInfo)                                                # 宝箱奖励
             mo.setResult("rewards", rewards)
+            bireport.reportGameEvent("BI_NFISH_GE_MAIN_QUEST_TASKID", userId, FISH_GAMEID, 0, 0, 0, 0, 0, 0, [taskId], clientId)
     mo.setResult("code", code)
     router.sendToUser(mo, userId)
     pushCurrTask(userId)
@@ -754,14 +895,13 @@ def getSectionStarRewards(userId, clientId, sectionId, star):
             if code == 0:
                 # 章节任务全部完成并且星级奖励全部领取即可跳转章节.
                 finishTaskIds = sectionData[SectionIndex.FinishTasks]
-                if len(set(sectionConf["taskIds"]) - set(finishTaskIds)) == 0 \
-                        and len(set(stars) - set(sectionData[SectionIndex.TakenStars])) == 0:
-                    honorId = sectionConf["honorId"]
+                if len(set(sectionConf["taskIds"]) - set(finishTaskIds)) == 0 and len(set(stars) - set(sectionData[SectionIndex.TakenStars])) == 0:
+                    # honorId = sectionConf["honorId"]
                     sectionData[SectionIndex.State] = QuestState.Received                           # 领取星级奖励
                     module_tip.cancelModuleTipEvent(userId, "mainquest", sectionId)
                     switchToNextSection(userId, clientId, currSectionId)                            # 解锁下一个章节
                     from newfish.game import TGFish
-                    event = MainQuestSectionFinishEvent(userId, FISH_GAMEID, sectionId, honorId)
+                    event = MainQuestSectionFinishEvent(userId, FISH_GAMEID, sectionId, currSectionId)
                     TGFish.getEventBus().publishEvent(event)
                 setSection(userId, sectionId, sectionData)                                          # 保存当前章节数据
     mo.setResult("code", code)

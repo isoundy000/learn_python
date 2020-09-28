@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/2/6.
+"""
 
 import time
 
@@ -12,12 +12,14 @@ from poker.entity.events.tyevent import EventUserLogin
 from newfish.entity import weakdata
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.quest import daily_quest, main_quest
-from newfish.entity.event import CatchEvent, GameTimeEvent, LevelUpEvent, \
+from newfish.entity.event import CatchEvent, GameTimeEvent, GunLevelUpEvent, \
     OpenChestEvent, BuyChestEvent, UseSkillEvent, UseSmiliesEvent, \
     WinCmpttTaskEvent, WinNcmpttTaskEvent, WinBonusTaskEvent, EnterTableEvent, \
     StoreBuyEvent, TableTaskEndEvent, ShareFinishEvent, CheckinEvent, UseCoolDownEvent, \
     FireEvent, ItemChangeEvent, GainChestEvent, RobberyBulletProfitEvent, \
-    SkillLevelUpEvent, AchievementLevelUpEvent
+    SkillLevelUpEvent, AchievementLevelUpEvent, \
+    UseSkillItemEvent, UserLevelUpEvent, HitPoseidonEvent, JoinGrandPrixEvent, TreasureLevelUp, MiniGameBossExchange, \
+    PlayMiniGame, PrizeWheelSpinEvent
 
 
 def refreshQuestData(userId):
@@ -62,11 +64,6 @@ def _triggerLevelUpEvent(event):
     """火炮等级提升事件"""
     daily_quest.triggerLevelUpEvent(event)
     main_quest.triggerLevelUpEvent(event)
-
-
-def _triggerOpenChestEvent(event):
-    """开启宝箱事件"""
-    daily_quest.triggerOpenChestEvent(event)
 
 
 def _triggerBuyChestEvent(event):
@@ -163,11 +160,64 @@ def _triggerSkillLevelUpEvent(event):
 
 
 def _triggerAchievementLevelUpEvent(event):
+    """荣耀任务升级事件"""
     main_quest.triggerAchievementLevelUpEvent(event)
 
 
 def incrRecharge(userId, rmbs):
+    """充值"""
     daily_quest.incrRecharge(userId, rmbs)
+
+
+def _triggerUseSkillItemEvent(event):
+    """触发使用道具卡次数"""
+    daily_quest.triggerUseSkillItemEvent(event)
+    main_quest.triggerUseSkillItemEvent(event)
+
+
+def _triggerUserLevelUpEvent(event):
+    """触发玩家升级事件"""
+    main_quest.triggerUserLevelUpEvent(event)
+
+
+def _triggerPlayMiniGameEvent(event):
+    """玩家玩小游戏次数"""
+    main_quest.triggerPlayMiniGameEvent(event)
+
+
+def _triggerMiniGameBossExchangeEvent(event):
+    """玩家Boss素材兑换"""
+    main_quest.triggerMiniGameBossExchangeEvent(event)
+
+
+def _triggerHitPoseidonEvent(event):
+    """
+    击中波塞冬事件
+    """
+    main_quest.triggerHitPoseidonEvent(event)
+
+
+def _triggerJoinGrandPrixEvent(event):
+    """
+    参加大奖赛事件
+    """
+    daily_quest.triggerJoinGrandPrixEvent(event)
+    main_quest.triggerJoinGrandPrixEvent(event)
+
+
+def _triggerTreasureLevelUpEvent(event):
+    """
+    宝藏升级事件
+    """
+    main_quest.triggerTreasureLevelUpEvent(event)
+
+
+def _triggerPrizeWheelSpinEvent(event):
+    """
+    转动多少次转盘
+    """
+    daily_quest.triggerPrizeWheelSpinEvent(event)
+    main_quest.triggerPrizeWheelSpinEvent(event)
 
 
 _inited = False
@@ -181,27 +231,35 @@ def initialize():
         # 每日任务系统初始化
         daily_quest.initialize()
         from newfish.game import TGFish
-        TGFish.getEventBus().subscribe(CatchEvent, _triggerCatchEvent)
-        TGFish.getEventBus().subscribe(GameTimeEvent, _triggerGameTimeEvent)
-        TGFish.getEventBus().subscribe(LevelUpEvent, _triggerLevelUpEvent)
-        TGFish.getEventBus().subscribe(OpenChestEvent, _triggerOpenChestEvent)
+        TGFish.getEventBus().subscribe(CatchEvent, _triggerCatchEvent)                                  # 捕鱼事件
+        TGFish.getEventBus().subscribe(GameTimeEvent, _triggerGameTimeEvent)                            # 每日任务
         TGFish.getEventBus().subscribe(BuyChestEvent, _triggerBuyChestEvent)
-        TGFish.getEventBus().subscribe(UseSkillEvent, _triggerUseSkillEvent)
+        TGFish.getEventBus().subscribe(UseSkillEvent, _triggerUseSkillEvent)                            # 使用n次技能
         TGFish.getEventBus().subscribe(UseSmiliesEvent, _triggerUseSmiliesEvent)
         TGFish.getEventBus().subscribe(WinCmpttTaskEvent, _triggerWinCmpttTaskEvent)
         TGFish.getEventBus().subscribe(WinNcmpttTaskEvent, _triggerWinNcmpttTaskEvent)
         TGFish.getEventBus().subscribe(WinBonusTaskEvent, _triggerWinBonusTaskEvent)
-        TGFish.getEventBus().subscribe(EnterTableEvent, _triggerEnterTableEvent)
+        TGFish.getEventBus().subscribe(EnterTableEvent, _triggerEnterTableEvent)                        # 进入招财模式
         TGFish.getEventBus().subscribe(StoreBuyEvent, _triggerStoreBuyEvent)
         TGFish.getEventBus().subscribe(TableTaskEndEvent, _triggerTableTaskEndEvent)
         TGFish.getEventBus().subscribe(ShareFinishEvent, _triggerShareFinishEvent)
-        TGFish.getEventBus().subscribe(CheckinEvent, _triggerCheckinEvent)
+        TGFish.getEventBus().subscribe(CheckinEvent, _triggerCheckinEvent)                              # 每日签到
         TGFish.getEventBus().subscribe(UseCoolDownEvent, _triggerUseCoolDownEvent)
         TGFish.getEventBus().subscribe(FireEvent, _triggerFireEvent)
         TGFish.getEventBus().subscribe(ItemChangeEvent, _triggerItemChangeEvent)
         TGFish.getEventBus().subscribe(GainChestEvent, _triggerGainChestEvent)
         TGFish.getEventBus().subscribe(RobberyBulletProfitEvent, _triggerRobberyBulletProfitEvent)
-        TGFish.getEventBus().subscribe(EventUserLogin, _triggerUserLoginEvent)
-        TGFish.getEventBus().subscribe(SkillLevelUpEvent, _triggerSkillLevelUpEvent)
-        TGFish.getEventBus().subscribe(AchievementLevelUpEvent, _triggerAchievementLevelUpEvent)
+        TGFish.getEventBus().subscribe(EventUserLogin, _triggerUserLoginEvent)                          # 登陆事件
+        TGFish.getEventBus().subscribe(SkillLevelUpEvent, _triggerSkillLevelUpEvent)                    # 提升技能等级
+        TGFish.getEventBus().subscribe(AchievementLevelUpEvent, _triggerAchievementLevelUpEvent)        # 荣耀任务升级事件
+        TGFish.getEventBus().subscribe(GunLevelUpEvent, _triggerLevelUpEvent)                           # 解锁多少倍炮
+
+        TGFish.getEventBus().subscribe(UseSkillItemEvent, _triggerUseSkillItemEvent)                    # 触发使用道具卡次数
+        TGFish.getEventBus().subscribe(UserLevelUpEvent, _triggerUserLevelUpEvent)                      # 触发玩家升级事件
+        TGFish.getEventBus().subscribe(MiniGameBossExchange, _triggerMiniGameBossExchangeEvent)         # 玩家Boss素材兑换
+        TGFish.getEventBus().subscribe(PlayMiniGame, _triggerPlayMiniGameEvent)                         # 玩家玩小游戏次数
+        TGFish.getEventBus().subscribe(HitPoseidonEvent, _triggerHitPoseidonEvent)                      # 击中波塞冬事件
+        TGFish.getEventBus().subscribe(JoinGrandPrixEvent, _triggerJoinGrandPrixEvent)                  # 参加大奖赛事件
+        TGFish.getEventBus().subscribe(TreasureLevelUp, _triggerTreasureLevelUpEvent)                   # 宝藏升级事件
+        TGFish.getEventBus().subscribe(PrizeWheelSpinEvent, _triggerPrizeWheelSpinEvent)                # 转动轮盘
     ftlog.info("newfish quest_system initialize end")

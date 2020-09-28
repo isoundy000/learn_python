@@ -71,8 +71,8 @@ class FishTable(TYTable):
             "skill_use": self._skill_use,                               # 使用技能 1使用 0取消
             "skill_install": self._skill_install,                       # 技能穿上1、卸下0
             "skill_replace": self._skill_replace,                       # 技能替换 uninstallSkillId 要卸下的技能ID
-            "chat": self._doTableChat,
-            "smile": self.doTableSmilies,
+            "chat": self._doTableChat,                                  # 渔场自定义聊天
+            "smile": self.doTableSmilies,                               # 渔场互动表情
             "clip_info": self._clip_info,                               # 显示弹药购买详情信息响应
             "clip_add": self._clip_add,                                 # 弹药购买
             "clip_alms": self._clip_alms,                               # 弹药救济金响应
@@ -80,21 +80,21 @@ class FishTable(TYTable):
             "bullet_use": self._bullet_use,                             # 使用招财珠
             "refresh_user_data": self._refreshUserData,                 # 刷新用户VIP等级和金币数
             "achievement_tasks": self._achievement_task,                # 荣耀任务
-            "achievement_tasks_reward": self._achievement_reward,
-            "honor_push": self._honor_push,
-            "honor_replace": self._honor_replace,
+            "achievement_tasks_reward": self._achievement_reward,       # 领取荣耀任务奖励
+            "honor_push": self._honor_push,                             # 刷新称号
+            "honor_replace": self._honor_replace,                       # 更换称号(暂时不用)
             "guns_list": self._guns_list,                               # 发送火炮列表消息
             "guns_pool": self._guns_pool,                               # 更新炮的奖池
             "gun_up": self._gun_up,                                     # 普通炮升级
             "recharge_notify": self._recharge_notify,                   # 充值通知
             "skill_upgrade": self._skill_upgrade,                       # 技能升级0、升星1
             "refresh_skill_cd": self._refresh_skill_cd,                 # 刷新技能cd时间
-            "achievement_target": self._achievement_target,
-            "fishActivityBtns": self._activity_all_btns,
-            "fishActivityRead": self._activity_read,
+            "achievement_target": self._achievement_target,             # 成就任务(暂时不用)
+            "fishActivityBtns": self._activity_all_btns,                # 所有活动按钮
+            "fishActivityRead": self._activity_read,                    # 读活动
             "fishActivityReceive": self._activity_reward,
             "fishActivityBonusResult": self._activity_bonus,
-            "take_gift_reward": self._takeGiftReward,
+            "take_gift_reward": self._takeGiftReward,                   # 领取礼包奖励
             "treasure_rewards": self._getTreasureRewards,
             "task_update": self._taskUpdate,
             "main_reward": self._getMainQuestRewards,
@@ -102,10 +102,9 @@ class FishTable(TYTable):
             "prize_wheel_bet": self._prizeWheelBet,                     # 确定轮盘最终奖励
             "prize_wheel_info_m": self._prizeWheelInfo,                 # 渔场内千炮转盘
             "prize_wheel_bet_m": self._prizeWheelBet,                   # 确定轮盘最终奖励
-            # "chg_multiple": self._chgMultiple,
             "comp_act_notify": self._inspireNotify,
-            "newbie_7_gift_take": self._takeNewbie7DaysGift,
-            "mini_game_start": self._miniGameStart,
+            "newbie_7_gift_take": self._takeNewbie7DaysGift,            # 领取新手7日礼包奖励
+            "mini_game_start": self._miniGameStart,                     # 开始小游戏宝箱
             "mini_game_action": self._miniGameAction,                   # 小游戏抽奖
             "item_use": self.item_use,                                  # 使用道具技能
             "use_gun_effect": self.gun_effect_use                       # 使用皮肤炮的特殊效果
@@ -553,6 +552,8 @@ class FishTable(TYTable):
         player.chgGunData(gunId)        # 切换炮台
         player.sendChgGunInfo()         # 发送火炮修改消息
         gun_system.sendGunListMsg(player.userId, self.gameMode)
+        if hasattr(player, "tableMaxGunLevel") and self.typeName in config.MULTIPLE_MODE_ROOM_TYPE:
+            player.tableMaxGunLevel(True)
 
     def _refreshUserData(self, msg, userId, seatId):
         """刷新用户数据"""
@@ -1911,7 +1912,7 @@ class FishTable(TYTable):
         msg.setResult("seatNum", self.maxSeatN)
         msg.setResult("typeName", self.typeName)
         msg.setResult("multiple", self.runConfig.multiple)
-        msg.setResult("gameMode", self.gameMode)                # 游戏模式(经典/千炮)
+        msg.setResult("gameMode", self.gameMode)                        # 游戏模式(经典/千炮)
         player = self.getPlayer(userId)
         msg.setResult("buyLimitChip", self.runConfig.minCoin)           # 最小准入金币
         msg.setResult("maxSkillLevel", self.runConfig.maxSkillLevel)    # 最大技能等级
@@ -2028,14 +2029,12 @@ class FishTable(TYTable):
         info["userId"] = p.userId
         info["seatId"] = seatId
         info["name"] = p.name
-        info["offline"] = p.offline                         # 在线1|离线
+        info["offline"] = p.offline                         # 是否离线(0:否 1:是)
         info["uLv"] = p.level
-        userLevelConf = config.getUserLevelConf()
-        # 用户下一等级需要的经验
-        lvUpExp = userLevelConf[p.level - 1]["exp"] if p.level <= len(userLevelConf) else userLevelConf[-1]["exp"]
-        info["expPct"] = min(100, max(0, int(p.exp * 100. / lvUpExp)))
-        info["gLv"] = p.gunLevel
-        info["gLvNow"] = p.nowGunLevel
+        _, expPct = util.getUserLevelExpData(p.userId, p.level, p.exp)
+        info["expPct"] = expPct
+        info["gLv"] = p.gunLevel                            # 炮的等级
+        info["gLvNow"] = p.nowGunLevel                      # 现在炮的等级
         info["gunLevel"] = p.gunLv
         info["exp"] = p.exp
         info["skillSlots"] = p.getSkillSlotsInfo()          # 主技能槽的数据
@@ -2054,10 +2053,11 @@ class FishTable(TYTable):
         info["redState"] = p.redState                       # 新手任务状态
         info["fpMultiple"] = p.fpMultiple
         info["gameResolution"] = p.gameResolution
-        info["playMode"] = p.playMode                        # 0金币模式 1金环
+        info["playMode"] = p.playMode                       # 0金币模式 1金环
         info["itemSlots"] = p.getSkillItemInfo()            # 获取道具技能槽信息
         if self.gameMode == config.MULTIPLE_MODE:
             info["gunEffect"] = p.gunEffect.getGunEffectInfo(p.gunId)    # 获取其他玩家的狂暴炮效果
+            info["tableMaxGunLevel"] = p.tableMaxGunLevel() if hasattr(p, "tableMaxGunLevel") else self.runConfig.maxGunLevel
         return info
 
     def _broadcastPlayerSit(self, userId, seatId):

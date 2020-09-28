@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
-# 新版称号系统
+# -*- coding=utf-8 -*-
+"""
+新版称号系统
+Created by haohongxian on 2019/06/05.
+"""
 
 import json
 import time
@@ -436,5 +436,5 @@ def initialize():
         TGFish.getEventBus().subscribe(GetAchievementTaskRewardEvent, _triggerAchievementTaskRewardEvent)
         TGFish.getEventBus().subscribe(NewbieTaskCompleteEvent, _triggerNewbieTaskCompleteEvent)
         TGFish.getEventBus().subscribe(EventUserLogin, _triggerUserLoginEvent)
-        TGFish.getEventBus().subscribe(MainQuestSectionFinishEvent, _triggerMainQuestSectionFinishEvent)
+        # TGFish.getEventBus().subscribe(MainQuestSectionFinishEvent, _triggerMainQuestSectionFinishEvent)
         ftlog.debug("newfish honor_system initialize end")

@@ -470,7 +470,8 @@ def changeGunSkin(userId, gunId, skinId, mode):
     """
     切换火炮皮肤
     """
-    ftlog.debug("changeGunSkin, userId =", userId, "gunId =", gunId, "skinId =", skinId, "mode =", mode)
+    if ftlog.is_debug():
+        ftlog.debug("changeGunSkin, userId =", userId, "gunId =", gunId, "skinId =", skinId, "mode =", mode)
     mo = MsgPack()
     mo.setCmd("gun_change_skin")
     mo.setResult("gameId", FISH_GAMEID)
@@ -501,7 +502,8 @@ def composeGunSkin(userId, gunId, skinId, mode):
     合成火炮皮肤
     """
     clientId = util.getClientId(userId)
-    ftlog.debug("composeGunSkin, userId =", userId, "gunId =", gunId, "skinId =", skinId, "clientId =", clientId, "mode =", mode)
+    if ftlog.is_debug():
+        ftlog.debug("composeGunSkin, userId =", userId, "gunId =", gunId, "skinId =", skinId, "clientId =", clientId, "mode =", mode)
     skinConf = config.getGunSkinConf(skinId, clientId, mode)
     mo = MsgPack()
     mo.setCmd("gun_compose_skin")

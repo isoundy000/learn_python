@@ -38,5 +38,6 @@ def sendUpdateRewards(userId, clientId):
             if rewards:
                 mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemCompensate, rewards,
                                            message, config.getMultiLangTextConf("ID_MAIL_VERSION_UPDATE_REWARDS", lang=lang))
-            ftlog.debug("sendUpdateRewards, userId =", userId, "vip =", vipLv, "type =", rewardTye,
-                        "rewards =", rewards, "updateVer =", updateClientVer, "updateVerRewards =", updateVerRewards)
+            if ftlog.is_debug():
+                ftlog.debug("sendUpdateRewards, userId =", userId, "vip =", vipLv, "type =", rewardTye,
+                            "rewards =", rewards, "updateVer =", updateClientVer, "updateVerRewards =", updateVerRewards)
