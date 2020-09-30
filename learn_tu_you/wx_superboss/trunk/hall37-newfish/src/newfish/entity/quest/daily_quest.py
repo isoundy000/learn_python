@@ -296,7 +296,7 @@ def getDailyQuestReward(userId, star, type="day"):
         ftlog.debug("daily_quest, userId =", userId, "star =", star, "type =", type, "mo =", mo)
 
 
-def getQuestReward(userId, taskId):
+def getQuestReward(userId, taskId, rewardflyPos):
     """
     领取每日任务奖励
     """
@@ -346,6 +346,7 @@ def getQuestReward(userId, taskId):
     mo.setResult("userId", userId)
     mo.setResult("action", "questReward")
     mo.setResult("taskId", taskId)
+    mo.setResult("rewardflyPos", rewardflyPos)
     mo.setResult("reason", reason)
     if reason == 0:
         mo.setResult("code", code)

@@ -15,7 +15,7 @@ class CatchEvent(UserEvent):
     捕获事件
     """
     def __init__(self, userId, gameId, roomId, tableId, fishTypes, wpId, gainChip, fpMultiple, catch=None, gain=None,
-                 resetTime=0, gunSkinMul=1, gunX=1, gameMode=CLASSIC_MODE):
+                 resetTime=0, gunSkinMul=1, gunX=1, gameMode=CLASSIC_MODE, catchFishMultiple=None):
         super(CatchEvent, self).__init__(userId, gameId)
         self.roomId = roomId
         self.tableId = tableId
@@ -29,6 +29,7 @@ class CatchEvent(UserEvent):
         self.gunSkinMul = gunSkinMul
         self.gameMode = gameMode
         self.gunX = gunX
+        self.catchFishMultiple = catchFishMultiple
 
 
 class GameTimeEvent(UserEvent):

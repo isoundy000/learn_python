@@ -53,7 +53,7 @@ def getGroupConfig(mode=0):
             if line.startswith("#"):
                 line = line.strip()
                 fileName = line.split("#")[1]
-                outJson[fileName] = {}          # {atide2_44001_1: {"id": "atide2_44001_1", "fishes": [{"fishType": 28050, "enterTime": 15.00. "exitTime": 60.87}, {"fishType": 28050, "enterTime": 15.00. "exitTime": 60.93}, {"fishType": 28050, "enterTime": 17.00. "exitTime": 60.87}], "totalTime": 90.91}}
+                outJson[fileName] = {}
                 outJson[fileName]["id"] = fileName
                 outJson[fileName]["fishes"] = []
                 isTotalTime = True
@@ -73,3 +73,4 @@ def getGroupConfig(mode=0):
                 })
         fHandle.close()
     return outJson
+

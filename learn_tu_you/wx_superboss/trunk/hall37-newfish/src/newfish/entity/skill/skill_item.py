@@ -73,7 +73,7 @@ class SkillItem(object):
         if val.get("free_times"):
             self.player.skills_item_slots[itemId]["free_times"] = val["free_times"]
 
-    def reason(self, kindId, fIds):
+    def reason(self, kindId, fIds, lockFid=0):
         """是否使用道具"""
         if kindId not in self.player.skills_item_slots:
             return 1
@@ -84,7 +84,7 @@ class SkillItem(object):
                 if not isOK:
                     continue
                 bufferEffect = [1 for buffer in self.table.fishMap[fId]["buffer"] if buffer[0] == 5104 and time.time() < buffer[1]]
-                if len(bufferEffect) > 0:
+                if len(bufferEffect) > 0 and lockFid != fId:
                     frozenNum += 1
                     continue
             if frozenNum >= SkillItem.FREEZE_NUM:
@@ -123,11 +123,11 @@ class SkillItem(object):
         data["start_time"] = float("%.2f" % time.time())
         return 0
 
-    def use_item(self, seatId, kindId, fIds):
+    def use_item(self, seatId, kindId, fIds, lockFid=0):
         """
         使用道具
         """
-        code = self.reason(kindId, fIds)
+        code = self.reason(kindId, fIds, lockFid)
         msg = MsgPack()
         msg.setCmd("item_use")
         msg.setResult("gameId", config.FISH_GAMEID)
@@ -138,7 +138,7 @@ class SkillItem(object):
         GameMsg.sendMsg(msg, self.table.getBroadcastUids())
         if code == 0:
             if kindId == config.FREEZE_ITEM:                     # 冰冻特性，有几率冰冻鱼
-                self.catchFish(kindId, fIds)
+                self.catchFish(kindId, fIds, lockFid)
             # 使用技能道具事件
             from newfish.game import TGFish
             from newfish.entity.event import UseSkillItemEvent
@@ -166,7 +166,7 @@ class SkillItem(object):
             item_data["start_time"] = float("%.2f" % time.time())
         self.player.syncSkillItemSlots(kindId)
 
-    def catchFish(self, kindId, fIds=None):
+    def catchFish(self, kindId, fIds=None, lockFid=0):
         """
         处理技能道具效果
         """
@@ -185,7 +185,7 @@ class SkillItem(object):
             if not isOK:
                 continue
             bufferEffect = [1 for buffer in self.table.fishMap[fId]["buffer"] if buffer[0] == 5104 and time.time() < buffer[1]]
-            if len(bufferEffect) > 0:
+            if len(bufferEffect) > 0 and lockFid != fId:
                 frozenNum += 1
                 continue
             fishConf = config.getFishConf(self.table.fishMap[fId]["fishType"], self.table.typeName, self.table.runConfig.multiple)

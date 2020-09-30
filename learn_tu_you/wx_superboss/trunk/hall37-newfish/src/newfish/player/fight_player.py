@@ -13,7 +13,7 @@ class FishFightPlayer(FishPlayer):
     def __init__(self, table, seatIndex, clientId=None):
         super(FishFightPlayer, self).__init__(table, seatIndex, clientId)
 
-    def _checkSkillCondition(self, skillId, select, skillType):
+    def _checkSkillCondition(self, skillId, select, skillType=0):
         """检查技能是否满足条件"""
         reason = 0
         skill = self.getSkill(skillId, skillType)

@@ -59,6 +59,7 @@ class SkillBase(object):
         self.fatal = 0
         self.distance = False
         self.impaleCatch = False
+        self.gunSkinMultiple = 1
         self.dayFreeMaxMulti = 0
         for skillStar in xrange(1, self.skillStar + 1):
             skillStarConf = config.getSkillStarConf(self.skillId, skillStar, self.skillMode)
@@ -91,12 +92,8 @@ class SkillBase(object):
                 self.coolDown //= 2
                 if self.skillType == 1:
                     self.cost = 0
-        elif self.table.typeName == config.FISH_TIME_MATCH:     # 回馈赛-弹药消耗为0，冷却减半
+        elif self.table.typeName in [config.FISH_TIME_MATCH, config.FISH_TIME_POINT_MATCH]: # 回馈赛-弹药消耗为0，冷却减半
             self.cost = 0
-            self.coolDown //= 2
-        elif self.table.typeName == config.FISH_TIME_POINT_MATCH:   # 定时积分赛-弹药消耗为0，冷却减半
-            self.cost = 0
-            self.coolDown //= 2
         elif self.table.typeName == config.FISH_FIGHT:          # 渔友竞技-冷却减半
             self.coolDown //= 2
         self.coolDown = max(self.coolDown, 1)
@@ -106,7 +103,6 @@ class SkillBase(object):
         初始化公共数据
         """
         self.fpMultiple = self.player.fpMultiple
-        self.gunSkinMultiple = 1
         self.skillMultiple = 1
         # 格林机关枪除回馈赛外收益翻倍
         if self.skillId == 5110 and self.table.typeName != config.FISH_TIME_POINT_MATCH:
@@ -262,8 +258,8 @@ class SkillBase(object):
             for val in self.player.usingSkill:      # 当前技能使用中时，检测之前技能是否在使用中，如果是，结束之前技能
                 skillId = val.get("skillId")
                 skillType = val.get("skillType")
-                if skillId != self.skillId or skillType != self.skillType:
-                    skill = self.player.getSkill(skillId, skillType)
+                if skillId != self.skillId:
+                    skill = self.player.getSkill(skillId)
                     if skill.state == 2:
                         skill.end()
             self.state = 2
@@ -449,7 +445,7 @@ class SkillBase(object):
             otherPlayer = self.table.getPlayer(userId)
             if otherPlayer:
                 self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
-                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, self.gunSkinMultiple, self.gunX)
         return catch, gain, gainChip, exp
 
     def _getFishProbbRadix(self, fishInfo, fishConf):
@@ -609,15 +605,17 @@ class SkillBase(object):
         """检查技能是否免费"""
         if ftlog.is_debug():
             ftlog.debug("SkillBase.checkIfDayFree IN", "tableId=", self.table.tableId, "userId=", self.player.userId,
-                        "dayFreeMaxMulti=", self.dayFreeMaxMulti, "multiple=", self.table.runConfig.multiple)
+                        "dayFreeMaxMulti=", self.dayFreeMaxMulti, "gunX=", self.gunX)
         if self.table.typeName == config.FISH_TIME_MATCH or self.table.typeName == config.FISH_TIME_POINT_MATCH:
             return False
-        if self.dayFreeMaxMulti >= self.table.runConfig.multiple:
+        self.gunX = util.getGunX(self.player.nowGunLevel, self.skillMode)
+        if self.dayFreeMaxMulti >= self.gunX:
             data = weakdata.getDayFishData(self.player.userId, WeakData.skillFreeUseCount, {})
             if ftlog.is_debug():
                 ftlog.debug("SkillBase.checkIfDayFree get data", "userId=", self.player.userId, "data=", data)
             if str(self.skillId) in data:
-                if data[str(self.skillId)] < 1:                                             # 目前固定每日免费1次，不走配置
+                # 目前固定每日免费1次，不走配置
+                if data[str(self.skillId)] < 1:
                     return True
             else:
                 return True
@@ -822,7 +820,7 @@ class SkillCannon(SkillBase):
             otherPlayer = self.table.getPlayer(userId)
             if otherPlayer:
                 self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
-                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, self.gunSkinMultiple, self.gunX)
         return catch, gain, gainChip, exp
 
 
@@ -912,7 +910,7 @@ class SkillGrenade(SkillBase):
 
     def returnClip(self):
         """
-        榴弹炮打空，返还技能子弹
+        打空返还技能子弹
         """
         if self.state == 2:
             if self.clip < self.originClip:
@@ -1011,7 +1009,7 @@ class SkillEnergy(SkillBase):
             otherPlayer = self.table.getPlayer(userId)
             if otherPlayer:
                 self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
-                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, self.gunSkinMultiple, self.gunX)
         return catch, gain, gainChip, exp
 
 
@@ -1067,8 +1065,8 @@ class SkillLaser(SkillBase):
             for val in self.player.usingSkill:      # 当前技能使用中时，检测之前技能是否在使用中，如果是，结束之前技能
                 skillId = val.get("skillId")
                 skillType = val.get("skillType")
-                if skillId != self.skillId or skillType != self.skillType:
-                    skill = self.player.getSkill(skillId, skillType)
+                if skillId != self.skillId:
+                    skill = self.player.getSkill(skillId)
                     if skill.state == 2:
                         skill.end()
             self.state = 2
@@ -1162,7 +1160,7 @@ class SkillLaser(SkillBase):
             otherPlayer = self.table.getPlayer(userId)
             if otherPlayer:
                 self.table.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
-                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, isFraud=True)
+                                     catchInfo["gainChip"], catchInfo["exp"], self.fpMultiple, self.gunSkinMultiple, self.gunX)
         return catch, gain, gainChip, exp
 
     def _sortedFishes(self, fIds, extends=None):
@@ -1248,6 +1246,15 @@ class SkillGatling(SkillBase):
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
         return self.normalCatchFish(bulletId, wpId, fIds, extends)
+
+    def returnClip(self):
+        """
+        打空返还技能子弹
+        """
+        if self.state == 2:
+            if self.clip < self.originClip:
+                self.clip += 1
+                self.updateSkillData()
 
 
 skillMap = {

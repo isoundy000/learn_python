@@ -273,7 +273,7 @@ def getDayStartTimestamp(timestamp=None):
     if timestamp is None:
         timestamp = time.time()
     ts = int(timestamp - time.timezone) / 86400 * 86400 + time.timezone
-    return ts
+    return max(ts, 0)
 
 
 def getHourStartTimestamp(timestamp):

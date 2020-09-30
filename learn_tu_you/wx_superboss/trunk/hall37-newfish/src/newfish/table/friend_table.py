@@ -79,3 +79,23 @@ class FishFriendTable(FishNormalTable):
         新创建Player对象
         """
         return FishFriendPlayer(table, seatIndex, clientId)
+
+    def _takeGiftReward(self, msg, userId, seatId):
+        """
+        领取礼包奖励
+        """
+        productId = msg.getParam("productId", "")
+        # 转运礼包购买后一定概率转运,当玩家购买任意转运礼包后，如果玩家当前房间所在曲线为6~10，则强制重置当前房间曲线，随机范围1~10
+        if productId not in config.getPublic("luckyGiftProductIds", []):
+            return
+        player = self.getPlayer(userId)
+        if player is None or not hasattr(player, "dynamicOdds"):
+            return
+        waveId = 0
+        waveList = [wave["waveId"] for wave in player.dynamicOdds.getWaveList("low")]
+        if player.dynamicOdds.waveId in waveList:
+            waveId = player.dynamicOdds.getWaveId()
+            if waveId:
+                player.dynamicOdds.resetOdds(waveId)
+        if ftlog.is_debug():
+            ftlog.debug("_takeGiftReward", userId, self.bigRoomId, waveList, waveId)

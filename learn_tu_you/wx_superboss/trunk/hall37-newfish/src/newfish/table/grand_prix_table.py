@@ -54,6 +54,21 @@ class FishGrandPrixTable(FishMultipleTable):
             player.startGrandPrix()
             player.setTipTimer()
 
+    def dealAfterCatchFish(self, player, fId, fishConf, fpMultiple, gunMultiple, gunX, wpId, catchMap):
+        """
+        在捕获结算之后处理部分鱼涉及的一些功能
+        """
+        # 大奖赛计算捕鱼积分
+        if fishConf.get("score", 0) > 0 and fishConf["type"] not in config.TERROR_FISH_TYPE:
+            fishType = self.fishMap[fId]["fishType"]
+            point = fishConf["score"]
+            if fishConf["type"] in config.MULTIPLE_FISH_TYPE and catchMap.get("fishMultiple", 1) > 1:
+                point *= catchMap["fishMultiple"]
+            point = player.addGrandPrixFishPoint(point, str(fishType), gunMultiple * gunX)
+            if point:
+                return {"fishPoint": {"fId": fId, "point": point}}
+        return None
+
     def broadcastSkillUse(self, skill, select, userId, orgState):
         """
         广播选中/取消技能消息
@@ -73,7 +88,8 @@ class FishGrandPrixTable(FishMultipleTable):
         if useSkillTimes:
             msg.setResult("useSkillTimes", useSkillTimes)       # 可使用的次数
         GameMsg.sendMsg(msg, userId)
-        ftlog.debug("broadcastSkillUse, userId =", userId, int(skill.skillId), skill.skillType, select, orgState)
+        if ftlog.is_debug():
+            ftlog.debug("broadcastSkillUse, userId =", userId, int(skill.skillId), skill.skillType, select, orgState)
 
     def installGrandPrixUseSkillTimes(self, userId, skill, select, orgState):
         """初始化大奖赛使用技能次数"""

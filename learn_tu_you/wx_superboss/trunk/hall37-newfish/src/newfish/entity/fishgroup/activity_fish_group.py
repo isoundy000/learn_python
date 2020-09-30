@@ -17,7 +17,6 @@ class ActivityFishGroup(object):
     """
     活动鱼(幸运海螺)及河马
     """
-
     def __init__(self, table):
         self.table = table
         self._nextActivityGroup()
@@ -61,7 +60,6 @@ class ActivityFishGroup(object):
             fishType = hippoFishConf["fishType"]
             allActivityGroupIds = self.table.runConfig.allActivityGroupIds
             groupId = random.choice(allActivityGroupIds[fishType])
-            ftlog.debug("HippoFishGroup->_checkHippoCondition->", groupId)
             self._addActivityFishGroup(groupId)
         self._nextHippoGroup()
 
@@ -73,7 +71,8 @@ class ActivityFishGroup(object):
         isOpen = fish_activity_system.isActivityOpen(ActivityType.CatchItemExchange)
         if activityFishConf and isOpen:
             totalBullet = sum([player.activityConsumeClip for player in self.table.players if player and player.userId > 0])
-            ftlog.debug("ActivityFishGroup->_checkCondition->totalBullet =", totalBullet, self.table.bigRoomId)
+            if ftlog.is_debug():
+                ftlog.debug("ActivityFishGroup->_checkCondition->totalBullet =", totalBullet, self.table.bigRoomId)
             interval = time.time() - self._lastAppearTime
             if (totalBullet >= activityFishConf["totalBullet"] and interval >= activityFishConf["minSecond"]) or \
                     interval >= activityFishConf["maxSecond"]:  # 子弹大于配置表中的子弹数且时间间隔大于等于最小配置间隔 或者间隔大于等于最大时间，添加活动鱼阵
@@ -91,7 +90,8 @@ class ActivityFishGroup(object):
         """
         添加活动鱼鱼阵,修改鱼阵最后出现时间并重置玩家在活动中消耗的金币数
         """
-        ftlog.debug("_addActivityFishGroup", groupId, self.table.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("_addActivityFishGroup", groupId, self.table.tableId)
         self.table.insertFishGroup(groupId)
         self._lastAppearTime = time.time()
         for player in self.table.players:

@@ -17,7 +17,6 @@ class AutofillFishGroup(object):
     """
     autofill鱼群
     """
-
     def __init__(self, table):
         self.table = table
         self.autofillFishConf = config.getAutofillFishConf(self.table.runConfig.fishPool)
@@ -106,7 +105,7 @@ class AutofillFishGroup(object):
                 ret = [int(val["fishType"]) for val in fishConf["fish"] if val["probb"][0] <= randomNum <= val["probb"][-1]]
                 fishType = ret[0] if ret else 0
         if ftlog.is_debug():
-            ftlog.debug("_randomFishTypeAndInterval", self.table.tableId, fishType, interval, fishConf["fish"][-1]["probb"][-1])
+            ftlog.debug("AutofillFishGroup._randomFishTypeAndInterval", self.table.tableId, fishType, interval)
         return fishType, interval
 
 

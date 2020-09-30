@@ -48,8 +48,8 @@ class SignupCode:           # 注册
 
 class FishGrandPrixPlayer(FishMultiplePlayer):
 
-    def __init__(self, table, seatIndex, clientId):
-        super(FishGrandPrixPlayer, self).__init__(table, seatIndex, clientId)
+    def _loadUserData(self):
+        super(FishGrandPrixPlayer, self)._loadUserData()
         # 捕鱼积分
         self.grandPrixFishPoint = weakdata.getDayFishData(self.userId, WeakData.grandPrix_fishPoint, 0)
         # 大奖赛剩余开火次数
@@ -70,7 +70,6 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         self.grandPrixGetPointsInfo = weakdata.getDayFishData(self.userId, WeakData.grandPrix_getPointsInfo, [])
         self._freeTimes = weakdata.getDayFishData(self.userId, WeakData.grandPrix_freeTimes, 0)
 
-        self.fpMultipleTestMode = "b"
         self.multipleList = []                      # 10、50、200、500
         for v in gdata.roomIdDefineMap().values():
             roomConf = v.configure
@@ -92,15 +91,7 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         super(FishGrandPrixPlayer, self)._incrGameTimer()
         self.inGameTimes += 1
 
-    def checkChgFpMultiple(self, multiple):
-        """切换玩家渔场倍率"""
-        if self.isGrandPrixMode():                  # 大奖赛模式不可以切换倍率.
-            code = 7
-        else:
-            code = super(FishGrandPrixPlayer, self).checkChgFpMultiple(multiple)
-        return code
-
-    def _checkSkillCondition(self, skillId, select, skillType):
+    def _checkSkillCondition(self, skillId, select, skillType=0):
         """
         检测技能使用条件
         """
@@ -112,36 +103,41 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
                     break
         return super(FishGrandPrixPlayer, self)._checkSkillCondition(skillId, select, skillType)
 
-    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, skill=None, power=None, multiple=None, clientFire=True,
-                targetPos=None, fishType=None, costChip=0):
+    def addFire(self, bulletId, wpId, sendTimestamp, fpMultiple, gunMultiple=1, gunX=1, skill=None, power=None,
+                clientFire=True, targetPos=None, fishType=None, costChip=0, superBullet=None):
         """添加开火信息"""
-        super(FishGrandPrixPlayer, self).addFire(bulletId, wpId, sendTimestamp, fpMultiple, skill, power, multiple, clientFire, targetPos, fishType, costChip)
+        super(FishGrandPrixPlayer, self).addFire(bulletId, wpId, sendTimestamp, fpMultiple, gunMultiple, gunX,
+                                                 skill, power, clientFire, targetPos, fishType, costChip, superBullet)
         if clientFire and skill is None and self.isGrandPrixMode():
             self.grandPrixFireCount -= 1                                                # 开火次数减少
             if self.grandPrixFireCount == 0:                                            # 结束比赛
                 self.endGrandPrix()
 
-    def _refreshFpMultiple(self):
-        """
-        刷新使用的渔场倍率
-        """
-        levelFpMultiple = weakdata.getDayFishData(self.userId, WeakData.grandPrix_levelFpMultiple)
-        if levelFpMultiple:
-            _, self.fpMultiple = levelFpMultiple
-        else:
-            self.fpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)
-        self.fpMultiple = max(self.table.runConfig.minMultiple, min(self.fpMultiple, self.table.runConfig.maxMultiple))
+    # def refreshGunLevel(self):
+    #     """
+    #     刷新火炮等级数据
+    #     """
+    #     levelFpMultiple = weakdata.getDayFishData(self.userId, WeakData.grandPrix_levelFpMultiple)
+    #     if levelFpMultiple:
+    #         self.nowGunLevel, _ = levelFpMultiple
+    #     else:
+    #     self.nowGunLevel = self.gunLevel
+    #     self.nowGunLevel = max(self.table.runConfig.minGunLevel, min(self.nowGunLevel, self.table.runConfig.maxGunLevel))
 
-    def _refreshGunLevel(self):
+    def _refreshSkillSlots(self, skillType=0):
         """
-        刷新火炮等级数据
+        刷新技能数据 安装技能槽
         """
-        levelFpMultiple = weakdata.getDayFishData(self.userId, WeakData.grandPrix_levelFpMultiple)
-        if levelFpMultiple:
-            self.nowGunLevel, _ = levelFpMultiple
+        if skillType == 0:
+            self.skillSlots = {}
+        if self.grandPrixUseSkillTimes:
+            for val in self.grandPrixUseSkillTimes:
+                if isinstance(val, dict) and val.get("skillId"):
+                    if val.get("skillType", 0) == skillType:
+                        if skillType == 0:
+                            self.skillSlots[val["skillId"]] = [val["state"], val["star"], val["grade"]]
         else:
-            self.nowGunLevel = self.gunLevel
-        self.nowGunLevel = max(self.table.runConfig.minGunLevel, min(self.nowGunLevel, self.table.runConfig.maxGunLevel))
+            super(FishGrandPrixPlayer, self)._refreshSkillSlots(skillType)
 
     def clearTimer(self):
         """清理提示和结束的定时器"""
@@ -183,6 +179,7 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         retMsg = MsgPack()
         retMsg.setCmd("fire")
         retMsg.setResult("gameId", FISH_GAMEID)
+        retMsg.setResult("userId", userId)
         retMsg.setResult("wpId", wpId)
         retMsg.setResult("bulletId", bulletId)
         retMsg.setResult("skillId", skillId)
@@ -202,16 +199,10 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
             retMsg.setResult("seatId", seatId)
             GameMsg.sendMsg(retMsg, self.table.getBroadcastUids(userId))
 
-    def getMatchingFishPool(self, fpMultiple):
-        """
-        获取玩家渔场倍率对应的fishPool
-        """
-        return self.table.runConfig.fishPool
-
     def saveUserData(self):
         """保存用户数据"""
         super(FishGrandPrixPlayer, self).saveUserData()
-        self.saveGrandPrixPoint()                               # 保存大奖赛积分
+        self.saveGrandPrixPoint()                                           # 保存大奖赛积分
 
     def getTargetFishs(self):
         """
@@ -239,22 +230,27 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         """
         return self.grandPrixStartTS > 0
 
-    def _calcuCatchFishGrandPrixPoint(self, fishPoint, level):
+    def _calcuCatchFishGrandPrixPoint(self, fishPoint, gunX):
         """
         计算捕鱼积分 炮倍和vip的加成
         """
+        if ftlog.is_debug():
+            ftlog.debug('calcuCatchFishGrandPrixPoint', fishPoint, gunX)
         vipAddition = config.getVipConf(self.vipLevel).get("grandPrixAddition", 0.)
-        levelAddition = self.getLevelAddition(level)
-        points = fishPoint * 100 * (1 + vipAddition + levelAddition)
+        gunXAddition = self.getGunXAddition(gunX)
+        if ftlog.is_debug():
+            ftlog.debug('calcuCatchFishGrandPrixPoint1', vipAddition, gunXAddition)
+        point = fishPoint * 100
+        points = point * (1 + vipAddition) * (1 + gunXAddition)
         return int(points)
 
-    def getLevelAddition(self, level):
+    def getGunXAddition(self, gunX):
         """
         根据开火时候[炮倍 * 炮(单倍率|双倍率)]确定 加成值
         """
         gunMInfo = config.getGrandPrixConf("gunMultiAddition")
         for info in gunMInfo:
-            if info["rangeList"][0] <= level <= info["rangeList"][1]:
+            if info["rangeList"][0] <= gunX <= info["rangeList"][1]:
                 return info["addition"]
         return 0
 
@@ -276,19 +272,21 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         """
         取消处于使用中的技能
         """
-        if self.usingSkill:                                                             # 有之前技能记录
-            lastSkillId = self.usingSkill[-1].get("skillId")
-            lastSkillType = self.usingSkill[-1].get("skillType", 0)
-            lastSkill = self.getSkill(lastSkillId, lastSkillType)
-            if lastSkill:
-                if lastSkill.state == 1:
-                    lastSkill.use(0)
-                else:
-                    self.removeUsingSkill(lastSkillId, lastSkillType)
-                    orgState = lastSkill.state
-                    lastSkill.state = 0
-                    self.table.broadcastSkillUse(lastSkill, 0, self.userId, orgState)   # 广播选中/取消技能消息
-                self.table.broadcastGunChange(self)                                     # 广播玩家现在的火炮等级
+        if not self.usingSkill:                                                         # 有之前技能记录
+            return
+        lastSkillId = self.usingSkill[-1].get("skillId")
+        lastSkillType = self.usingSkill[-1].get("skillType", 0)
+        lastSkill = self.getSkill(lastSkillId, lastSkillType)
+        if not lastSkill:
+            return
+        if lastSkill.state == 1:
+            lastSkill.use(0)
+        else:
+            self.removeUsingSkill(lastSkillId, lastSkillType)
+            orgState = lastSkill.state
+            lastSkill.state = 0
+            self.table.broadcastSkillUse(lastSkill, 0, self.userId, orgState)           # 广播选中/取消技能消息
+        self.table.broadcastGunChange(self)                                             # 广播玩家现在的火炮等级
 
     def unloadSkills(self):
         """
@@ -308,8 +306,6 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         curTime = int(time.time())
         dayStartTimestamp = util.getDayStartTimestamp(curTime)
         remainGrandPrixTimeSeconds = util.timeStrToInt(config.getGrandPrixConf("openTimeRange")[1]) - (curTime - dayStartTimestamp)     # 大奖赛剩余时间
-        if ftlog.is_debug():
-            ftlog.debug("startGrandPrix", '-----------------', self.grandPrixStartTS)
         # 当局进入大奖赛
         if self.grandPrixStartTS == 0:
             event = JoinGrandPrixEvent(self.userId, FISH_GAMEID, self.table.bigRoomId)              # 参加大奖赛事件
@@ -325,18 +321,16 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
                 fee = config.getGrandPrixConf("fee")[0]
                 _consume = [{"name": fee.get("name"), "count": fee.get("count")}]
                 _ret = util.consumeItems(self.userId, _consume, "ITEM_USE", self.table.roomId)
-                if ftlog.is_debug():
-                    ftlog.debug("startGrandPrix_consume", '+++++++++++++++', _consume, self.grandPrixStartTS, _ret)
                 if _ret:
                     code = SignupCode.SC_SUCC
                 else:
                     code = SignupCode.SC_FEE_NOT_ENOUGH
             if code == SignupCode.SC_SUCC:
                 # 选择目标鱼
-                for _val in config.getGrandPrixConf("group").values():                              # 1、2、3个组
-                    idx = random.randint(0, len(_val) - 1)                                          # 一组鱼
-                    _cnt = config.getGrandPrixConf("target").get(str(_val[idx]), {}).get("count", 999)  # 谋一种鱼 捕获数量
-                    _point = config.getGrandPrixConf("target").get(str(_val[idx]), {}).get("point", 0)  # 谋一种鱼 获得的积分
+                for _val in config.getGrandPrixConf("group").values():                                  # 1、2、3个组
+                    idx = random.randint(0, len(_val) - 1)                                              # 一组鱼
+                    _cnt = config.getGrandPrixConf("target").get(str(_val[idx]), {}).get("count", 999)  # 某一种鱼 捕获数量
+                    _point = config.getGrandPrixConf("target").get(str(_val[idx]), {}).get("point", 0)  # 某一种鱼 获得的积分
                     self.grandPrixTargetFish[str(_val[idx])] = [0, _cnt, _point]
 
                 # 备份技能数据.
@@ -344,8 +338,8 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
                 for i in range(skill_system.MAX_INSTALL_NUM - 1):
                     self.grandPrixUseSkillTimes.append({
                         "skillId": 0, "state": 0, "star": 0, "grade": 0,
-                        "count": config.getGrandPrixConf("fireCount")[1],               # 技能使用次数3
-                        "skillType": 0 if i < skill_system.MAX_INSTALL_NUM else 1       # 0主技能 1辅助技能
+                        "count": config.getGrandPrixConf("fireCount")[1],                       # 技能使用次数3
+                        "skillType": 0 if i < skill_system.MAX_INSTALL_NUM else 1               # 0主技能 1辅助技能
                     })
 
                 for idx, _skillId in enumerate(self.skillSlots):
@@ -355,26 +349,17 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
                     self.grandPrixUseSkillTimes[idx]["star"] = _skill.skillStar
                     self.grandPrixUseSkillTimes[idx]["grade"] = _skill.skillGrade
 
-                fpMultiple = config.getGunLevelConf(self.gunLevel, self.table.gameMode).get("unlockMultiple", 1)    # 渔场解锁的倍率
-                fpMultiple = max(self.table.runConfig.minMultiple, min(fpMultiple, self.table.runConfig.maxMultiple))
-                if self.fpMultiple != fpMultiple:           # 修改渔场倍率
-                    self.changeFpMultiple(fpMultiple)
-                nowGunLevel = 2100 + self.table.runConfig.minUserLevel
-                if self.nowGunLevel != nowGunLevel:         # 玩家火炮升级了 改变加成
-                    self.gunChange(nowGunLevel)
-
                 if self.inGameTimes:
                     bireport.reportGameEvent("BI_NFISH_GRAND_PRIX_INGAMETIMES", self.userId, FISH_GAMEID, 0, 0, self.grandPrixStartTS, self.inGameTimes, 0, 0, [], util.getClientId(self.userId))
                     self.inGameTimes = 0
 
-                # self.grandPrixLevelFpMultiple = [self.nowGunLevel, self.fpMultiple]     # 大奖赛火炮等级和倍率
                 self.grandPrixFishPoint = 0
                 self.grandPrixSurpassCount = 0
-                self.grandPrixStartTS = curTime                                         # 大奖赛开始的时间戳
+                self.grandPrixStartTS = curTime                                                 # 大奖赛开始的时间戳
                 self.grandPrixFireCount = config.getGrandPrixConf("fireCount")[0]
-                self._saveGrandPrixData()                                               # 保存大奖赛数据
+                self._saveGrandPrixData()                                                       # 保存大奖赛数据
         else:
-            if not grand_prix.isGrandPrixOpenTime():                                    # 现在不可参赛
+            if not grand_prix.isGrandPrixOpenTime():                                            # 现在不可参赛
                 code = SignupCode.SC_NOT_OPEN
             elif not self.isGrandPrixMode():
                 code = SignupCode.SC_SUCC
@@ -408,7 +393,7 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         mo.setResult("fireCount", self.grandPrixFireCount)
         mo.setResult("fishPoint", self.grandPrixFishPoint)
         mo.setResult("targetFish", self.grandPrixTargetFish)
-        mo.setResult("useSkillTimes", [val.get("count", 0) for val in self.grandPrixUseSkillTimes])
+        mo.setResult("useSkillTimes", {val.get("skillId", 0): val.get("count", 0) for val in self.grandPrixUseSkillTimes})
         mo.setResult("pointsInfo", grand_prix.getPointInfo(self.userId))  # 奖励积分 道具Id、道具数量、是否领取了奖励0|1
         mo.setResult("todayMaxPoints", weakdata.getDayFishData(self.userId, WeakData.grandPrix_point, 0))  # 今日最高积分
         GameMsg.sendMsg(mo, self.userId)
@@ -456,6 +441,7 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         mo.setResult("tabs", ranking_system.getRankingTabs(self.userId, util.getClientId(self.userId), RankType.TodayGrandPrix, rankDetail=True))
         GameMsg.sendMsg(mo, self.userId)
         self.sendGrandPrixInfo()
+        self.table.clearPlayer(self)                # 从桌子中踢掉玩家
 
     def _resetGrandPrixData(self):
         """
@@ -520,12 +506,12 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         if ftlog.is_debug():
             ftlog.debug("FishGrandPrixPlayer, userId =", self.userId, "mo =", mo)
 
-    def addGrandPrixFishPoint(self, fishPoint, fishType, gunLevel):
+    def addGrandPrixFishPoint(self, fishPoint, fishType, gunX):
         """
         添加大奖赛捕鱼积分
         """
         if self.isGrandPrixMode():
-            fishPoint = self._calcuCatchFishGrandPrixPoint(fishPoint, gunLevel)     # 计算捕获 vip加成 + 火炮倍率加成
+            fishPoint = self._calcuCatchFishGrandPrixPoint(fishPoint, gunX)         # 计算捕获 vip加成 + 火炮倍率加成
             self.grandPrixFishPoint += fishPoint
             fishType = int(fishType) % 100
             for ft, val in self.grandPrixTargetFish.iteritems():                    # 添加目标鱼积分
@@ -546,17 +532,14 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
         是否获取积分阶段奖励
         """
         rewards = []
-        stageInfo = config.getGrandPrixConf("stageInfo")
-        flag = False
-        for idx, info in enumerate(stageInfo):
+        for info in config.getGrandPrixConf("stageInfo"):
             point = info["point"]
-            rewards = info["rewards"]
+            reward = info["rewards"]
             if self.grandPrixFishPoint >= point and point not in self.grandPrixGetPointsInfo:
-                rewards.extend(info["rewards"])
-                util.addRewards(userId, rewards, "BI_GRAND_PRIX_POINT_REWARD")    # 添加奖励
+                rewards.extend(reward)
                 self.grandPrixGetPointsInfo.append(point)
-                flag = True
-        if flag:
+        if rewards:
+            util.addRewards(userId, rewards, "BI_GRAND_PRIX_POINT_REWARD")          # 添加奖励
             weakdata.setDayFishData(userId, WeakData.grandPrix_getPointsInfo, json.dumps(self.grandPrixGetPointsInfo))
         return rewards
 

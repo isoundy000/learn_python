@@ -95,8 +95,12 @@ class TideTask(object):
         """
         任务结束
         """
-        self.state = TaskState.TS_End
-        for uid in self.userIds:
+        if not userId:
+            self.state = TaskState.TS_End
+        tmp_userIds = copy.deepcopy(self.userIds)
+        if ftlog.is_debug():
+            ftlog.debug("taskEnd", tmp_userIds, self.usersData, self.recordStartTime, int(time.time()))
+        for uid in tmp_userIds:
             if userId and userId != uid:
                 continue
             if uid not in self.usersData:
@@ -226,6 +230,8 @@ class TideTask(object):
         """
         uid = event.userId
         fishTypes = event.fishTypes
+        catch = event.catch
+        catchFishMultiple = event.catchFishMultiple
         if uid not in self.userIds:
             return
         usersData = self.usersData.get(uid, {})
@@ -234,12 +240,18 @@ class TideTask(object):
         if usersData["state"] != TaskState.TS_Start:
             return
         score = 0
-        for fishType in fishTypes:
+        for catchMap in catch:
+            fId = catchMap["fId"]
+            fishType = self.table.fishMap[fId]["fishType"]
             fishConf = config.getFishConf(fishType, self.table.typeName, self.fpMultiple)
+            fishMultiple = 1
+            if catchFishMultiple and catchFishMultiple.get(fId):
+                fishMultiple = catchFishMultiple.get(fId)
             if fishConf.get("itemId", 0) in config.BULLET_KINDIDS:
                 score += (fishConf.get("score", 0) * config.BULLET_KINDIDS[fishConf.get("itemId", 0)] / self.fpMultiple)
             else:
-                score += fishConf.get("score", 0)
+                score += fishConf.get("score", 0) * fishMultiple
+            ftlog.debug("zzzzzzzzzzzzzzzzzzz", fishConf.get("score", 0), fishMultiple)
 
         player = self.table.getPlayer(uid)
         targets = usersData["task"]["targets"]

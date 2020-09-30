@@ -385,7 +385,8 @@ def getHigherSkillLevelInfo(userId):
         starLevel = info[INDEX_STAR_LEVEL]
         levelMap[skillLevel] = levelMap.setdefault(skillLevel, 0) + 1
         starMap[starLevel] = starMap.setdefault(starLevel, 0) + 1
-    ftlog.debug("getHigherSkillLevelInfo->start->", levelMap, starMap)
+    if ftlog.is_debug():
+        ftlog.debug("getHigherSkillLevelInfo->start->", levelMap, starMap)
 
     # 把高等级技能数量算入低等级以上数量中
     levelNum = 0
@@ -401,7 +402,8 @@ def getHigherSkillLevelInfo(userId):
         if starLevel in starMap:
             starNum += starMap[starLevel]
         realStarMap[starLevel] = starNum
-    ftlog.debug("getHigherSkillLevelInfo->end->", realLevelMap, realStarMap)
+    if ftlog.is_debug():
+        ftlog.debug("getHigherSkillLevelInfo->end->", realLevelMap, realStarMap)
     return realLevelMap, realStarMap
 
 

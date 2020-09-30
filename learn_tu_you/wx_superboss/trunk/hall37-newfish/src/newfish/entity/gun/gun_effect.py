@@ -326,7 +326,7 @@ class GunEffect(object):
         data = self.useGunEffect[gunId]
         if data["state"] == State.PREPARE:
             data["state"] = State.CAN_USE
-        else:
+        elif data["state"] == State.CAN_USE:
             data["state"] = State.PREPARE
         if data["state"] == State.USING:
             data["state"] = State.PAUSE
