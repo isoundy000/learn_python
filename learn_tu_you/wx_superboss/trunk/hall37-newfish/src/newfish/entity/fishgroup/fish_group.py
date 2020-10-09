@@ -8,6 +8,9 @@ import time
 from freetime.util import log as ftlog
 from freetime.core.timer import FTLoopTimer
 
+# 特殊处理存活状态的鱼类型
+SPECIAL_ALIVE_TYPE = ("robot", "piton", "boss", "superboss", "autofill")
+
 
 class FishGroup(object):
     """

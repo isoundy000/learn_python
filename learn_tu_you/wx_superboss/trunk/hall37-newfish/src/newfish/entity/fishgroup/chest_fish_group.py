@@ -29,7 +29,9 @@ class ChestFishGroup(object):
         userId = player.userId
         chestFishInterval = int(config.getCommonValueByKey("chestFishInterval", 120))
         if time.time() - self.chestFishTime >= chestFishInterval:
-            chestPoolCoin = self.table.room.lotteryPool.getChestPoolCoin()
+            chestPoolCoin = 0
+            if self.table.room.lotteryPool:
+                chestPoolCoin = self.table.room.lotteryPool.getChestPoolCoin()
             chestFishConf = config.getChestFishConf(self.table.runConfig.fishPool)
             playerMaxCoin = chestFishConf["maxCoin"]
             profitForChest = player.profitForChest.get(str(self.table.runConfig.fishPool), 0)
@@ -64,4 +66,5 @@ class ChestFishGroup(object):
         allChestGroupIds = self.table.runConfig.allChestGroupIds
         groupId = random.choice(allChestGroupIds)
         self.table.insertFishGroup(groupId, userId=userId, score=score)
-        self.table.room.lotteryPool.deductionChestPoolCoin(score * self.table.runConfig.multiple)
+        if self.table.room.lotteryPool:
+            self.table.room.lotteryPool.deductionChestPoolCoin(score * self.table.runConfig.multiple)

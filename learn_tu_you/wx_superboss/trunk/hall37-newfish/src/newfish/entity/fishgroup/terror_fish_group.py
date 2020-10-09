@@ -39,14 +39,19 @@ class TerrorFishGroup(object):
 
     def _addTerrorFishGroup(self):
         """添加恐怖鱼鱼群"""
-        if self._fishType not in self.table.runConfig.allTerrorGroupIds:
-            ftlog.debug("_addTerrorFishGroup, error", self.table.tableId, self._fishType, self.table.runConfig.allTerrorGroupIds)
+        if self._fishType not in self.table.runConfig.allTerrorGroupIds:    # 鱼阵配置中不存在该鱼
+            ftlog.error("_addTerrorFishGroup, error", self.table.tableId, self._fishType, self.table.runConfig.allTerrorGroupIds)
+            return
+        if self.table.fishMap.get(self._fishId, {}).get("alive"):   # 当前渔场已存在恐怖鱼
+           return
+        if self.table.hasTideFishGroup():   # 当前渔场存在鱼潮
+            return
+        if self.table.hasSuperBossFishGroup():  # 超级Boss已经存在或即将出现
             return
         terrorGroupIds = self.table.runConfig.allTerrorGroupIds[self._fishType]
         if terrorGroupIds:
             self._terrorGroupId = random.choice(terrorGroupIds)
-            ftlog.debug("_addTerrorFishGroup", self.table.tableId, self._fishType, self.table.tableId, self._terrorGroupId)
-            self.table.insertFishGroup(self._terrorGroupId)
+            self._fishId = self.table.insertFishGroup(self._terrorGroupId).startFishId
         self._fishType, _ = self._randomFishTypeAndInterval()
 
     def _randomFishTypeAndInterval(self):

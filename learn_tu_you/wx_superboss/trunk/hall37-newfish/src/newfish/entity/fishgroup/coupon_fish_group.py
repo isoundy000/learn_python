@@ -42,7 +42,6 @@ class CouponFishGroup(object):
         初始化个人可见奖券鱼相关数据
         """
         self._playerCouponTimerDict = {}                # 玩家奖券定时器
-        self._enableUserCoupon = {}                     # 是否可见的用户奖券
         for player in self.table.players:
             if player and player.userId:
                 self._clearPlayerTimer(player.userId)
@@ -60,94 +59,7 @@ class CouponFishGroup(object):
         """
         定时器条件检查
         """
-        # self._checkUtilCondition()
         self._checkUtilConditionNew()
-
-    def _checkUtilCondition(self):
-        """
-        检查所用人都可见奖券鱼出现条件是否满足
-        """
-        couponFishConf = config.getCouponFishConf(self.table.runConfig.fishPool)
-        if not couponFishConf:
-            return
-        totalBullet = sum([player.couponConsumeClip for player in self.table.players if player and player.userId > 0])
-        interval = time.time() - self._lastUtilAppearTime
-        if ftlog.is_debug():
-            ftlog.debug("_checkUtilCondition->totalBullet =", totalBullet, interval, couponFishConf)
-        if (totalBullet >= couponFishConf["totalBullet"] and interval >= couponFishConf["minSecond"]) or interval >= couponFishConf["maxSecond"]:
-            randInt = random.randint(1, 10000)
-            for fish in couponFishConf["fishes"]:
-                probb = fish["probb"]
-                if probb[0] <= randInt <= probb[1]:
-                    fishType = fish["fishType"]
-                    allCouponGroupIds = self.table.runConfig.allCouponGroupIds
-                    groupId = random.choice(allCouponGroupIds[fishType])
-                    self._addUtilCouponFishGroup(groupId)
-                    break
-
-    def _checkUserCondition(self, userId):
-        """
-        检查个人可见奖券鱼出现条件是否满足
-        """
-        userCouponFishConf = config.getUserCouponFishConf(self.table.runConfig.fishPool)
-        groupId = self._isAppearUserCouponFish(userId, userCouponFishConf)
-        if groupId:
-            interval = random.randint(userCouponFishConf["minSecond"], userCouponFishConf["maxSecond"])
-            timer = FTLoopTimer(interval, 0, self._addUserCouponFishGroup, groupId, userId)
-            timer.start()
-            self._playerCouponTimerDict[userId] = timer
-            if ftlog.is_debug():
-                ftlog.debug("_checkUserCondition->userId =", userId, groupId, interval)
-
-    def _isAppearUserCouponFish(self, userId, userCouponFishConf):
-        """
-        个人奖券鱼是否出现
-        """
-        groupId = None
-        if not userCouponFishConf:
-            return groupId
-        catchCountDict = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.catchUserCouponFishCount, {})   # 各渔场个人可见红包券鱼捕获次数
-        catchCount = catchCountDict.get(str(self.table.runConfig.fishPool), 0)
-        if catchCount >= userCouponFishConf["limitCount"]:
-            return groupId
-        rechargeAmount = hallvip.userVipSystem.getUserVip(userId).vipExp // 10
-        totalEntityAmount = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.totalEntityAmount)   # 通过捕鱼累计获得奖券和实物卡金额（元）
-        totalEntityAmount = float(totalEntityAmount) if totalEntityAmount else 0
-        for section in userCouponFishConf["sections"]:
-            # 充值金额大于等于指定值，获得金额小于指定值
-            if rechargeAmount >= section[0] and totalEntityAmount < section[1]:
-                randInt = random.randint(1, 10000)
-                for fish in userCouponFishConf["fishes"]:
-                    probb = fish["probb"]
-                    if probb[0] <= randInt <= probb[1]:
-                        fishType = fish["fishType"]
-                        allCouponGroupIds = self.table.runConfig.allCouponGroupIds
-                        groupId = random.choice(allCouponGroupIds[fishType])
-        if ftlog.is_debug():
-            ftlog.debug("_isAppearUserCouponFish->userId =", userId, groupId, catchCountDict, rechargeAmount, totalEntityAmount)
-        return groupId
-
-    def _addUtilCouponFishGroup(self, groupId):
-        """
-        添加所有人可见的奖券鱼
-        """
-        if ftlog.is_debug():
-            ftlog.debug("_addUtilCouponFishGroup", groupId)
-        self.table.insertFishGroup(groupId)
-        self._lastUtilAppearTime = time.time()
-        for player in self.table.players:
-            if player and player.userId > 0:
-                player.resetCouponConsumeClip()
-
-    def _addUserCouponFishGroup(self, groupId, userId):
-        """
-        添加个人可见的奖券鱼
-        """
-        if ftlog.is_debug():
-            ftlog.debug("_addUserCouponFishGroup", userId)
-        self.table.insertFishGroup(groupId, userId=userId, sendUserId=userId)
-        self._clearPlayerTimer(userId)
-        self._checkUserCondition(userId)
 
     def _checkUtilConditionNew(self):
         """
@@ -215,7 +127,7 @@ class CouponFishGroup(object):
         groupId = None
         interval = 0
         totalBullet = 0
-        if not userCouponFishConf or self._enableUserCoupon.get(userId, 1) == 0:
+        if not userCouponFishConf:
             return groupId, interval, totalBullet
         catchCountDict = gamedata.getGameAttrJson(userId, FISH_GAMEID, GameData.catchUserCouponFishCount, {})
         catchCount = catchCountDict.get(str(self.table.runConfig.fishPool), 0)
@@ -274,14 +186,7 @@ class CouponFishGroup(object):
         处理进入事件
         """
         if event.tableId == self.table.tableId and not event.reconnect:
-            # self._checkUserCondition(event.userId)
             self._checkUserConditionNew(event.userId)
-            # 新手ABC测试.
-            testMode = util.getNewbieABCTestMode(event.userId)
-            enableUserCoupon = config.getABTestConf("abcTest").get("enableUserCoupon", {}).get(testMode, 1)
-            self._enableUserCoupon[event.userId] = enableUserCoupon
-            if ftlog.is_debug():
-                ftlog.debug("abc test, userId =", event.userId, "mode =", testMode, "enableUserCoupon =", enableUserCoupon)
 
     def _dealLeaveTable(self, event):
         """
@@ -289,8 +194,6 @@ class CouponFishGroup(object):
         """
         if event.tableId == self.table.tableId:
             self._clearPlayerTimer(event.userId)
-            if self._enableUserCoupon.get(event.userId):
-                del self._enableUserCoupon[event.userId]
 
     def _registerEvent(self):
         """
