@@ -1302,7 +1302,7 @@ def getAllLanguage():
     """
     获取服务器所有语言
     """
-    return ["zh", "en"]
+    return ["zh"]
 
 
 def sendUserLed(msg, userId):

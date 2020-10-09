@@ -40,13 +40,11 @@ class GrandPrixFishGroup(object):
 
     def _addGrandPrixFishGroup(self):
         """增加大奖赛鱼群"""
-        ftlog.debug("_addGrandPrixFishGroup", self.table.tableId, self._fishTypes)
         for _val in self._fishTypes:
             _fishType = _val[self._idx % len(_val)]
             if _fishType in self.table.runConfig.allGrandPrixGroupIds:
                 grandPrixGroupIds = self.table.runConfig.allGrandPrixGroupIds[_fishType]
                 if grandPrixGroupIds:
                     grandPrixGroupId = random.choice(grandPrixGroupIds)
-                    ftlog.debug("_addGrandPrixFishGroup", self.table.tableId, _fishType, grandPrixGroupId)
                     self.table.insertFishGroup(grandPrixGroupId)        # 召唤大奖赛鱼群
         self._idx += 1

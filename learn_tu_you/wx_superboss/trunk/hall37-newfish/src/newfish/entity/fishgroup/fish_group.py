@@ -146,3 +146,12 @@ class FishGroup(object):
             interval = self.deadTimer.getTimeOut() + self.addTime
             if interval > 0:
                 self.deadTimer.reset(interval)
+
+    def getFishExitTime(self, fishType):
+        """
+        获取指定一条鱼的离场时间
+        """
+        for fish in self.fishes:
+            if fishType == fish["fishType"]:
+                return fish["exitTime"]
+        return 0

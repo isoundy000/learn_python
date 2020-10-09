@@ -41,7 +41,8 @@ class ShareFishGroup(object):
             for player in self.table.players:
                 if player:
                     appearCount, playTime, expiresTime, state = self._getShareData(player.userId)
-                    ftlog.debug("ShareFishGroup_checkCondition", player.userId, appearCount, playTime, expiresTime)
+                    if ftlog.is_debug():
+                        ftlog.debug("ShareFishGroup_checkCondition", player.userId, appearCount, playTime, expiresTime)
                     appearMinTime = 180 + 120 * appearCount
                     appearMaxTime = 240 + 120 * appearCount
                     groupId = self._getFishGroupId()
@@ -81,6 +82,7 @@ class ShareFishGroup(object):
 
     def _addShareFishGroup(self, groupId, userId=None):
         """添加分享宝箱鱼群"""
-        ftlog.debug("_addShareFishGroup", groupId, userId)
+        if ftlog.is_debug():
+            ftlog.debug("_addShareFishGroup", groupId, userId)
         self.table.insertFishGroup(groupId, userId=userId, sendUserId=userId)
         self.addAppearCount(userId)

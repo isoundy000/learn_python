@@ -25,7 +25,13 @@ class AutofillFishGroup(object):
         self._checkCategoryTimerList = []
         # 各鱼种类别下的鱼群定时器
         self._checkShoalTimerList = []
+        # 刷新分组配置定时器
+        self._refreshGroupConfTimer = None
         self.startDefaultAutofillFish()
+        # 大奖赛间隔5分钟刷新分组配置
+        if self.table.typeName == config.FISH_GRAND_PRIX:
+            self._refreshGroupConfTimer = FTLoopTimer(300, -1, self.refreshCategoryGroupConf)
+            self._refreshGroupConfTimer.start()
 
     def clearTimer(self):
         """
@@ -33,7 +39,11 @@ class AutofillFishGroup(object):
         """
         self.clearCategoryTimer()
         self.clearShoalTimer()
-        ftlog.debug("AutofillFishGroup clearTimer", self.table.tableId)
+        if self._refreshGroupConfTimer:
+            self._refreshGroupConfTimer.cancel()
+            self._refreshGroupConfTimer = None
+        if ftlog.is_debug():
+            ftlog.debug("AutofillFishGroup clearTimer", self.table.tableId)
 
     def clearCategoryTimer(self):
         """
@@ -72,14 +82,24 @@ class AutofillFishGroup(object):
         self.superBossConf = config.getAutofillFishConf_m("superBoss", self.table.runConfig.fishPool)
         if self.superBossConf:
             self._generalCategoryGroupConf(self.superBossConf)
+            self._generalCategoryTimer()
+            self._generalShoalTimer()
 
-    def _generalCategoryGroupConf(self, autofillFishConf):
+    def refreshCategoryGroupConf(self):
         """
-        生成并记录各类鱼的分组index
+        刷新各类鱼的分组数据（重新随机分组）
         """
-        self.autofillFishConf = autofillFishConf
-        for categoryId, categoryConf in autofillFishConf.iteritems():
+        self._generalCategoryGroupConf()
+
+    def _generalCategoryGroupConf(self, autofillFishConf=None):
+        """
+        生成并记录各类鱼的分组数据
+        """
+        self.autofillFishConf = autofillFishConf or self.autofillFishConf
+        for categoryId, categoryConf in self.autofillFishConf.iteritems():
             self._categoryGroupConf[categoryId] = random.choice(categoryConf["groups"])
+        if ftlog.is_debug():
+            ftlog.debug("_generalCategoryGroupConf", self.table.tableId, self._categoryGroupConf)
 
     def _generalCategoryTimer(self):
         """
@@ -96,42 +116,49 @@ class AutofillFishGroup(object):
         """
         检测该类鱼是否需要填充鱼
         """
+        if self.table.hasTideFishGroup():  # 当前渔场存在鱼潮
+            return
         group = self._categoryGroupConf[categoryId]
         groupType = group["groupType"]
         if groupType == 1:
             for fishConf in group["fishes"]:
-                fillCount = self._getAutoFillCount(fishConf)
-                self._addAutoFillFishGroup(fishConf, fillCount)
+                fillCount, totalCount = self._getAutoFillCount([fishConf])
+                self._addAutoFillFishGroup(categoryId, fishConf, fillCount, totalCount)
         elif groupType == 2:
-            fishConf = util.getOneResultByWeight(group["fishes"])
-            if fishConf:
-                fillCount = self._getAutoFillCount(fishConf)
-                self._addAutoFillFishGroup(fishConf, fillCount)
-                ftlog.debug("_checkCategoryAutoFillFish", fillCount, self.table.tableId)
+            fillCount, totalCount = self._getAutoFillCount(group["fishes"])
+            for _ in xrange(fillCount):
+                fishConf = util.getOneResultByWeight(group["fishes"])
+                self._addAutoFillFishGroup(categoryId, fishConf, 1, totalCount)
 
-    def _getAutoFillCount(self, fishConf):
+    def _getAutoFillCount(self, fishConfList):
         """
-        获取某条鱼所需填充数量
+        统计某类鱼的存活数量，再计算某条鱼所需填充数量
+        @return: 需要填充数量, 该类鱼存活数量
         """
-        totalCount = self.table.fishCountMap.get(fishConf["fishType"], 0)
-        if totalCount <= fishConf["minCount"]:
+        aliveCount = 0
+        fishConf = None
+        for fishConf in fishConfList:
+            aliveCount += self.table.fishCountMap.get(fishConf["fishType"], 0)
+        if aliveCount <= fishConf["minCount"]:
             randInt = random.randint(fishConf["minCount"], fishConf["maxCount"])
-            return int(math.ceil(float(randInt - totalCount) / max(fishConf["fishCount"], 1)))
-        return 0
+            return int(math.ceil(float(randInt - aliveCount) / max(fishConf["fishCount"], 1))), aliveCount
+        return 0, aliveCount
 
-    def _addAutoFillFishGroup(self, fishConf, fillCount):
+    def _addAutoFillFishGroup(self, categoryId, fishConf, fillCount, aliveCount):
         """
         添加填充鱼
         """
         if fillCount > 0:
             if fishConf["fishType"] not in self.table.runConfig.allAutofillGroupIds:
+                ftlog.error("_addAutoFillFishGroup error", self.table.tableId, fishConf["fishType"])
                 return
             if ftlog.is_debug():
                 ftlog.debug("_addAutoFillFishGroup tableId =", self.table.tableId,
+                            "categoryId =", categoryId,
                             "fishType =", fishConf["fishType"],
-                            "currentCount =", self.table.fishCountMap.get(fishConf["fishType"], 0),
-                            "maxCount =", fishConf["maxCount"],
-                            "fillCount =", fillCount)
+                            "aliveCount =", aliveCount,
+                            "fillCount =", fillCount,
+                            "maxCount =", fishConf["maxCount"])
             autofillGroupIds = self.table.runConfig.allAutofillGroupIds[fishConf["fishType"]]
             if autofillGroupIds:
                 groupNames = random.sample(autofillGroupIds, min(len(autofillGroupIds), fillCount))
@@ -153,6 +180,8 @@ class AutofillFishGroup(object):
         """
         检测该类鱼的鱼群是否需要填充
         """
+        if self.table.hasTideFishGroup():  # 当前渔场存在鱼潮
+            return
         group = self._categoryGroupConf[categoryId]
         fishConf = random.choice(group["fishes"])
         self._addAutoFillFishShoal(fishConf)

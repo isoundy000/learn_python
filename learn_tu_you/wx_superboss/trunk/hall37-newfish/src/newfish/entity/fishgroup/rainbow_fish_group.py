@@ -38,5 +38,6 @@ class RainbowFishGroup(object):
             return
         rainbowGroupId = random.choice(self.table.runConfig.allRainbowGroupIds)
         if rainbowGroupId:
-            ftlog.debug("_addRainbowFishGroup", self.table.tableId, rainbowGroupId)
+            if ftlog.is_debug():
+                ftlog.debug("_addRainbowFishGroup", self.table.tableId, rainbowGroupId)
             self.table.insertFishGroup(rainbowGroupId)

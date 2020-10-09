@@ -49,7 +49,8 @@ class BufferFishGroup(object):
             self._nextBufferTimer.cancel()
             self._nextBufferTimer = None
         interval_ = random.randint(int(25 + (1 - self._tableRank) * 20), int((1 - self._tableRank) * 40 + 35))
-        ftlog.debug("_setBufferTimer========>", self.table.tableId, interval_, self._tableRank)
+        if ftlog.is_debug():
+            ftlog.debug("_setBufferTimer========>", self.table.tableId, interval_, self._tableRank)
         self._nextBufferTimer = FTLoopTimer(interval_, 0,  self._addBufferFishGroup)
         self._nextBufferTimer.start()
 
@@ -57,7 +58,6 @@ class BufferFishGroup(object):
         """添加buffer鱼群"""
         fishType = 0
         randomNum = random.randint(1, 10000)
-        ftlog.debug("_addBufferFishGroup", randomNum)
         for bufferFishMap in config.getBufferFishConf(self.table.runConfig.fishPool, self.table.runConfig.gameMode):
             probb = bufferFishMap["probb"]
             if probb[0] <= randomNum <= probb[-1]:
@@ -65,11 +65,11 @@ class BufferFishGroup(object):
                 break
 
         allBufferGroupIds = self.fishes[fishType]
-        ftlog.debug("_addBufferFishGroup", fishType, allBufferGroupIds, self.fishes)
+        if ftlog.is_debug():
+            ftlog.debug("_addBufferFishGroup", fishType, allBufferGroupIds, self.fishes)
         # 选择一个鱼阵
         if allBufferGroupIds:
             self._bufferGroupId = allBufferGroupIds[self.chooseOneGroup()]
-            ftlog.debug("_addBufferFishGroup", self._bufferGroupId)
             self.table.insertFishGroup(self._bufferGroupId)
             self._setBufferTimer()
 
@@ -94,7 +94,8 @@ class BufferFishGroup(object):
             w3 = int(k3 / (k1 + k2 + k3) * 10000)
 
         randomNum = random.randint(1, w1 + w2 + w3)
-        ftlog.debug("chooseOneBufferGroup========>", self.table.runConfig.fishPool, luckyNums, w1, w2, w3, randomNum)
+        if ftlog.is_debug():
+            ftlog.debug("chooseOneBufferGroup========>", self.table.runConfig.fishPool, luckyNums, w1, w2, w3, randomNum)
         if 1 <= randomNum <= w1:
             return random.choice([0, 1])
         elif w1 + 1 <= randomNum <= w1 + w2:

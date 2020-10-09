@@ -47,7 +47,7 @@ class SkillItem(object):
     技能道具的使用
     """
 
-    FREEZE_NUM = 30
+    FREEZE_NUM = 30     # 30
 
     def __init__(self, table, player, itemId):
         self.table = table

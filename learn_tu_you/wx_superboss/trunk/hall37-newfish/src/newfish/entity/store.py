@@ -361,6 +361,8 @@ class ItemStoreShop(BaseStoreShop):
         for chestId, product in chestItemsConf.iteritems():
             if isInvalidePruduct(self.isVerLimited, product, self.level, self.gunLevel, self.clientVersion, ownGunSkinSkins):
                 continue
+            if not util.isOldPlayerV2(self.userId) and product.get("itemId", 0) == config.SKILLCD_KINDID:   # 老玩家可见冷却道具
+                continue
             productObj = CreateProduct(self, self.actionType, chestId, product, self.userId, self.clientId)
             if productObj:
                 data = productObj.parse()

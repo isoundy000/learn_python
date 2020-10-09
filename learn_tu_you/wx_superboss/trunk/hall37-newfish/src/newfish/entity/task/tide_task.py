@@ -62,7 +62,7 @@ class TideTask(object):
         self.state = TaskState.TS_TIP
         targets = task["targets"]
         for uid in self.userIds:
-            self.usersData[uid] = {"uid": uid, "task": task, "targets": targets, "state": TaskState.TS_Ready, "rewardType": 1, "results": {}}
+            self.usersData[uid] = {"uid": uid, "task": task, "targets": targets, "state": TaskState.TS_Ready, "rewardType": task["rewardType"], "results": {}}
         msg = MsgPack()
         msg.setCmd("tide_task")
         msg.setResult("gameId", FISH_GAMEID)
@@ -192,11 +192,13 @@ class TideTask(object):
         """
         发送任务奖励
         """
-        dropItems = None
         if dropType == 1:                   # 金币
             dropItems = {"chip": dropItem["count"]}
             rewards = [{"name": "tableChip", "count": dropItem["count"]}]
             util.addRewards(player.userId, rewards, "BI_NFISH_TIDE_TASK_REWARDS", self.table.roomId)
+        else:
+            util.addRewards(player.userId, [dropItem], "BI_NFISH_TIDE_TASK_REWARDS", self.table.roomId)
+            dropItems = dropItem
         return dropItems
 
     def _sendRanksInfo(self, userId):

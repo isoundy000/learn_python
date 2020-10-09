@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/9/29
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2020/8/19.
+"""
 
 import random
 
@@ -16,7 +16,6 @@ class TideFishGroup(object):
     """
     鱼潮
     """
-
     def __init__(self, table):
         self.table = table
         self._isAppear = False

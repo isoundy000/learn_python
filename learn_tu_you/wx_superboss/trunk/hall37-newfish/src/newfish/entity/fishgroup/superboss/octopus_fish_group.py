@@ -4,12 +4,15 @@ Created by lichen on 2020/4/11.
 """
 
 import random
+import time
+from datetime import datetime
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
 from freetime.core.timer import FTLoopTimer
 import poker.util.timestamp as pktimestamp
 from newfish.entity import util
+from newfish.entity.cron import FTCron
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.heartbeat import HeartbeatAble
 from newfish.entity.fishgroup.superboss.superboss_fish_group import SuperBossFishGroup
@@ -21,8 +24,7 @@ class OctopusFishGroup(SuperBossFishGroup):
     巨型章鱼Boss鱼群
     """
     def __init__(self, table):
-        super(OctopusFishGroup, self).__init__()
-        self.table = table
+        super(OctopusFishGroup, self).__init__(table)
         self.octopus = None
         if self.table.room.roomConf.get("octopusConf") and self.table.room.roomConf.get("tentacleConf"):
             self.octopus = Octopus(table)
@@ -69,12 +71,25 @@ class Octopus(HeartbeatAble):
         self._state = None
         # 章鱼表情定时器
         self._faceTimer = None
+        # 章鱼延迟退场定时器（全部触手被捕获后延迟退场）
+        self._delayLeaveTimer = None
+        self.clear()
+
+    def clear(self):
         # 所有触手对象
         self._tentacles = []
         # 已死亡触手
         self.diedTentaclesCount = {}
         # 剩余可出现触手
         self.surplusTentaclesCount = {}
+
+    def clearTimer(self):
+        if self._faceTimer:
+            self._faceTimer.cancel()
+            self._faceTimer = None
+        if self._delayLeaveTimer:
+            self._delayLeaveTimer.cancel()
+            self._delayLeaveTimer = None
 
     @property
     def state(self):
@@ -95,7 +110,9 @@ class Octopus(HeartbeatAble):
                 self.postCall(self._doAppeared)
         elif self._state == Octopus.ST_APPEARED:
             if timestamp >= self.leaveTime:
-                self.postCall(self._doLeave)
+                # 超过离场时间且没有被捕获
+                if self.diedTentaclesCount != self.tentacleConf["totalTentacleCount"]:
+                    self.postCall(self._doLeave)
         elif self._state == Octopus.ST_LEAVE:
             if timestamp >= self.finalTime:
                 self.postCall(self._doFinal)
@@ -108,13 +125,18 @@ class Octopus(HeartbeatAble):
         """
         空闲状态
         """
+        self.clear()
         self.octopusConf = self.table.room.roomConf["octopusConf"]
         self.tentacleConf = self.table.room.roomConf["tentacleConf"]
         self._state = Octopus.ST_IDLE
+        self._cron = FTCron(self.octopusConf["cronTime"])
         # 空闲状态开始时间戳
         self.idleTime = self.calcIdleTime()
         # 出场前状态开始时间戳
         self.prepareTime = self.calcPrepareTime()
+        if not self.prepareTime:
+            ftlog.error("Octopus._doIdle->error", self.prepareTime, self.octopusConf)
+            return
         # 出场中状态开始时间戳
         self.appearingTime = self.calcAppearingTime()
         # 已出现状态开始时间戳
@@ -125,10 +147,6 @@ class Octopus(HeartbeatAble):
         self.finalTime = self.calcFinalTime()
         # 下一只巨型章鱼空闲状态开始时间戳
         self.nextTime = self.finalTime
-        # 已死亡触手
-        self.diedTentaclesCount = {}
-        # 剩余可出现触手
-        self.surplusTentaclesCount = {}
         for fishType, count in self.tentacleConf["totalTentacleCount"].iteritems():
             self.diedTentaclesCount[str(fishType)] = 0
             self.surplusTentaclesCount[str(fishType)] = count
@@ -141,6 +159,7 @@ class Octopus(HeartbeatAble):
         出场前状态
         """
         self._state = Octopus.ST_PREPARE
+        self.table.superBossFishGroup.appear()
         self.syncOctopusState()
 
     def _doAppearing(self):
@@ -163,18 +182,21 @@ class Octopus(HeartbeatAble):
         """
         退场中状态
         """
-        self._state = Octopus.ST_LEAVE
-        if isNow:
-            self.leaveTime = pktimestamp.getCurrentTimestamp()
-            self.finalTime = self.calcFinalTime()
-        self.syncOctopusState()
+        if self._state != Octopus.ST_LEAVE:
+            self._state = Octopus.ST_LEAVE
+            if isNow:
+                self.leaveTime = pktimestamp.getCurrentTimestamp()
+                self.finalTime = self.calcFinalTime()
+            self.syncOctopusState()
+            self.clearTimer()
+            self.clearTentacles()
 
     def _doFinal(self):
         """
         结束状态
         """
         self._state = Octopus.ST_FINAL
-        self.clearTentacles()
+        self.table.superBossFishGroup.leave()
 
     def _doNext(self):
         """
@@ -186,12 +208,11 @@ class Octopus(HeartbeatAble):
         """
         初始化所有触手
         """
-        if self.table.playersNum >= self.table.room.roomConf["superBossMinSeatN"]:
-            for initTentacle in self.tentacleConf["initTentacles"]:
-                tentacle = Tentacle(self.table, self)
-                tentacle.init(initTentacle["posId"], initTentacle["fishType"], initTentacle["delayTime"])
-                self._tentacles.append(tentacle)
-            self.syncTentacleState()
+        for initTentacle in self.tentacleConf["initTentacles"]:
+            tentacle = Tentacle(self.table, self)
+            tentacle.init(initTentacle["posId"], initTentacle["fishType"], initTentacle["delayTime"])
+            self._tentacles.append(tentacle)
+        self.syncTentacleState()
 
     def clearTentacles(self):
         """
@@ -215,11 +236,13 @@ class Octopus(HeartbeatAble):
                     self.diedTentaclesCount[str(_tentacle.fishType)] += 1
                     _tentacle.catch()
             if ftlog.is_debug():
-                ftlog.debug("catchTentacles", fIds, self.diedTentaclesCount)
-            if self.diedTentaclesCount == self.tentacleConf["totalTentacleCount"]:
-                self._doLeave(isNow=True)
-            elif isCatch:
-                self.playingOctopusPainFace()
+                ftlog.debug("catchTentacles", event.userId, fIds, self.diedTentaclesCount)
+            if isCatch:
+                if self.diedTentaclesCount == self.tentacleConf["totalTentacleCount"]:
+                    self._delayLeaveTimer = FTLoopTimer(self.tentacleConf["delayLeaveTime"], 0, self._doLeave, isNow=True)
+                    self._delayLeaveTimer.start()
+                else:
+                    self.playingOctopusPainFace()
 
     def frozenTentacles(self, fishId, fishType, frozenTime):
         """
@@ -227,7 +250,8 @@ class Octopus(HeartbeatAble):
         """
         if self._state == Octopus.ST_APPEARED:
             if str(fishType) in self.tentacleConf["totalTentacleCount"]:
-                ftlog.debug("frozenTentacles", fishId, fishType, frozenTime)
+                if ftlog.is_debug():
+                    ftlog.debug("frozenTentacles", fishId, fishType, frozenTime)
                 for _tentacle in self._tentacles:
                     if _tentacle.state == Tentacle.ST_SWING and _tentacle.fishId == fishId:
                         _tentacle.frozenTentacleFish(frozenTime)
@@ -278,7 +302,6 @@ class Octopus(HeartbeatAble):
             msg.setResult("tableId", self.table.tableId)
             msg.setResult("state", state)
             GameMsg.sendMsg(msg, self.table.getBroadcastUids())
-            ftlog.debug("sendOctopusFaceInfo", self.table.tableId, msg)
 
     # def refreshTentacles(self, timestamp):
     #     """
@@ -301,7 +324,14 @@ class Octopus(HeartbeatAble):
         """
         计算出场前状态开始时间戳
         """
-        return self.idleTime + self.octopusConf["idle.time"]
+        timestamp = pktimestamp.getCurrentTimestamp()
+        ntime = datetime.fromtimestamp(int(timestamp))
+        nexttime = None
+        if self._cron:
+            nexttime = self._cron.getNextTime(ntime)
+        if nexttime:
+            return int(time.mktime(nexttime.timetuple()))
+        return None
 
     def calcAppearingTime(self):
         """
@@ -354,7 +384,6 @@ class Octopus(HeartbeatAble):
                         "count": count
                     }
                     probability.append(probb)
-            ftlog.debug("generateNewTentacleConf", probability)
             if probability:
                 idx = util.selectIdxByWeight([probb["count"] for probb in probability])
                 fishType = probability[idx]["fishType"]
@@ -362,7 +391,8 @@ class Octopus(HeartbeatAble):
                 delayTimeRange = self.tentacleConf["delayTimeRange"][0] if self.getAliveTentacles() < 2 else \
                     self.tentacleConf["delayTimeRange"][1]
                 delayTime = random.randint(*delayTimeRange)
-                ftlog.debug("generateNewTentacleConf", fishType, posId, delayTime)
+                if ftlog.is_debug():
+                    ftlog.debug("generateNewTentacleConf", fishType, posId, delayTime)
                 return posId, fishType, delayTime
         return 0, 0, 0
 
@@ -389,7 +419,8 @@ class Octopus(HeartbeatAble):
             msg.setResult("state", self.state)
             msg.setResult("progress", self.getCurrentStateStageTime())
             GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
-            ftlog.debug("syncOctopusState", self.table.tableId, msg)
+            if ftlog.is_debug():
+                ftlog.debug("syncOctopusState", self.table.tableId, msg)
 
     def syncTentacleState(self, tentacle=None, userId=0):
         """
@@ -401,7 +432,8 @@ class Octopus(HeartbeatAble):
             for _tentacle in tentacles:
                 if Tentacle.ST_IDLE < _tentacle.state < Tentacle.ST_FINAL:
                     tentacleList.append(_tentacle.toDict())
-            ftlog.debug("syncTentacleState", userId, self.table.tableId, tentacleList, self._tentacles, self.state)
+            if ftlog.is_debug():
+                ftlog.debug("syncTentacleState", userId, self.table.tableId, tentacleList, self._tentacles, self.state)
             if tentacleList:
                 msg = MsgPack()
                 msg.setCmd("tentacle_info")
@@ -410,7 +442,8 @@ class Octopus(HeartbeatAble):
                 msg.setResult("tableId", self.table.tableId)
                 msg.setResult("tentacles", tentacleList)
                 GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
-                ftlog.debug("syncTentacleState", self.table.tableId, msg)
+                if ftlog.is_debug():
+                    ftlog.debug("syncTentacleState", self.table.tableId, msg)
 
 
 class Tentacle(object):
@@ -436,9 +469,15 @@ class Tentacle(object):
         return self._state
 
     def clear(self):
-        self._idleTimer and self._idleTimer.cancel()
-        self._swingTimer and self._swingTimer.cancel()
-        self._retractTimer and self._retractTimer.cancel()
+        if self._idleTimer:
+            self._idleTimer.cancel()
+            self._idleTimer = None
+        if self._swingTimer:
+            self._swingTimer.cancel()
+            self._swingTimer = None
+        if self._retractTimer:
+            self._retractTimer.cancel()
+            self._retractTimer = None
         self._state = None
         self.posId = 0
         self.fishId = 0
@@ -487,7 +526,7 @@ class Tentacle(object):
 
     def _doRetract(self):
         """
-        触手开始收回
+        触手到时间正常收回
         """
         if self._state == Tentacle.ST_SWING:
             self._state = Tentacle.ST_RETRACT
@@ -497,11 +536,13 @@ class Tentacle(object):
             self._retractTimer = FTLoopTimer(interval, 0, self._doFinal)
             self._retractTimer.start()
 
-    def _doFinal(self):
+    def _doFinal(self, isCatch=False):
         """
         触手已收回
         """
-        if self.octopus.state == Octopus.ST_APPEARED and self._state == Tentacle.ST_RETRACT:
+        self._retractTimer and self._retractTimer.cancel()
+        if self.octopus.state == Octopus.ST_APPEARED and isCatch is False:
+            # 正常收回，增加剩余可出现触手数量
             self.octopus.surplusTentaclesCount[str(self.fishType)] += 1
         self.disappear()
 
@@ -510,20 +551,24 @@ class Tentacle(object):
         触手消失
         """
         self._state = Tentacle.ST_FINAL
+        self.table.setFishDied(self.fishId)
         posId, fishType, delayTime = self.octopus.generateNewTentacleConf(self.posId)
         self.clear()
         if self.octopus.state == Octopus.ST_APPEARED:
             if fishType and posId:
-                ftlog.debug("disappear init", self.table.tableId, posId, fishType, delayTime)
+                if ftlog.is_debug():
+                    ftlog.debug("disappear init", self.table.tableId, posId, fishType, delayTime)
                 self.init(posId, fishType, delayTime)
 
     def catch(self):
         """
-        触手被捕获
+        摆动状态下触手被捕获
         """
-        self._swingTimer and self._swingTimer.cancel()
-        self._retractTimer = FTLoopTimer(self.tentacleConf["retractTime"], 0, self._doFinal)
-        self._retractTimer.start()
+        if self._state == Tentacle.ST_SWING:
+            self._state = Tentacle.ST_RETRACT
+            self._swingTimer and self._swingTimer.cancel()
+            self._retractTimer = FTLoopTimer(self.tentacleConf["retractTime"], 0, self._doFinal, isCatch=True)
+            self._retractTimer.start()
 
     def calcIdleTime(self):
         """

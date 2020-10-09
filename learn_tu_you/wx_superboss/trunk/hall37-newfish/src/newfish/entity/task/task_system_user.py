@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/14
+# -*- coding=utf-8 -*-
+"""
+Created by hhx on 18/05/10.
+"""
+
 import time
 
 from freetime.util import log as ftlog
@@ -53,7 +54,7 @@ class TaskSystemUser(object):
         self.player = player
         self.userId = self.player.userId
         self.curTask = None
-        if self.isRedRoom():
+        if self.isNewbieRoom():
             self.saveKey = GameData.tableTask % self.table.bigRoomId
         else:
             self.saveKey = GameData.tableTask % self.table.runConfig.fishPool
@@ -79,7 +80,7 @@ class TaskSystemUser(object):
         self._initCurTask()
 
     def _reload(self):
-        if self.isRedRoom():
+        if self.isNewbieRoom():
             allRoomTaskIds = config.getAllTableTaskIds(self.table.bigRoomId)
         else:
             allRoomTaskIds = config.getAllTableTaskIds(self.table.runConfig.fishPool)

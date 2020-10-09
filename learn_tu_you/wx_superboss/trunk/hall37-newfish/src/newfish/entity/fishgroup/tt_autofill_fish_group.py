@@ -36,14 +36,12 @@ class TTAutofillFishGroup(object):
 
     def reloadConf(self, event):
         """重新加载配置"""
-        # ftlog.debug("TTAutofillFishGroup", event.keylist)
         if "game:44:bonusTask:0" not in event.keylist and "game:44:cmpttTask:0" not in event.keylist and "game:44:ncmpttTask:0" not in event.keylist:
             return
         tasks = config.getNcmpttTaskConf(self.table.runConfig.fishPool)
         tasks.extend(config.getCmpttTaskConf(self.table.runConfig.fishPool))
         tasks.extend(config.getBonusTaskConf(self.table.runConfig.fishPool))
         self.tasks = tasks
-        # ftlog.debug("TTAutofillFishGroup, refresh tasks success!", event.keylist)
 
     def startAutofill(self, uid, taskId):
         """

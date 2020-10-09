@@ -19,6 +19,7 @@ class TerrorFishGroup(object):
     def __init__(self, table):
         self.table = table
         self._fishType = 0
+        self._fishId = 0
         self._interval = 300
         self._terrorGroupId = None
         self._nextTerrorTimer = None
@@ -59,7 +60,8 @@ class TerrorFishGroup(object):
                 fishType = int(terrorFishMap["fishType"])
                 interval = int(terrorFishMap["interval"])
                 break
-        ftlog.debug("_randomFishTypeAndInterval", self.table.tableId, fishType, interval)
+        if ftlog.is_debug():
+            ftlog.debug("TerrorFishGroup._randomFishTypeAndInterval", self.table.tableId, fishType, interval)
         if interval != self._interval and self._nextTerrorTimer is not None:
             self._interval = interval
             self._setTerrorTimer()

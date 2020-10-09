@@ -3,13 +3,15 @@
 Created by lichen on 2020/6/12.
 """
 
-import time
 import random
+import time
+from datetime import datetime
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
 from freetime.core.timer import FTLoopTimer
 import poker.util.timestamp as pktimestamp
+from newfish.entity.cron import FTCron
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.heartbeat import HeartbeatAble
 from newfish.entity.fishgroup.superboss.superboss_fish_group import SuperBossFishGroup
@@ -21,8 +23,7 @@ class DragonFishGroup(SuperBossFishGroup):
     远古寒龙Boss鱼群
     """
     def __init__(self, table):
-        super(DragonFishGroup, self).__init__()
-        self.table = table
+        super(DragonFishGroup, self).__init__(table)
         self.dragon = None
         if self.table.room.roomConf.get("dragonConf"):
             self.dragon = Dragon(table)
@@ -37,7 +38,7 @@ class DragonFishGroup(SuperBossFishGroup):
     def dealEnterTable(self, userId):
         if self.dragon:
             self.dragon.syncDragonState(userId)
-            if self.dragon.stage and self.dragon.stage.STAGE_ID == 1:
+            if self.dragon.stage and isinstance(self.dragon.stage, RoarStage):
                 self.dragon.stage.sendDragonRoarMsg()
 
     def frozen(self, fishId, fishType, frozenTime):
@@ -61,10 +62,18 @@ class Dragon(HeartbeatAble):
         self.table = table
         # 冰龙状态
         self._state = None
-        # 冰龙当前阶段
-        self.stage = None
         # 冰龙阶段定时器
         self.stageTimer = None
+        self.clear()
+
+    def clear(self):
+        # 冰龙当前阶段
+        self.stage = None
+
+    def clearTimer(self):
+        if self.stageTimer:
+            self.stageTimer.cancel()
+            self.stageTimer = None
 
     @property
     def state(self):
@@ -83,7 +92,7 @@ class Dragon(HeartbeatAble):
         elif self._state == Dragon.ST_APPEARED:
             if timestamp >= self.leaveTime:
                 # 超过离场时间且没有被捕获
-                if self.stage.STAGE_ID == 2 and not self.stage.catchUserId:
+                if isinstance(self.stage, SwimStage) and not self.stage.catchUserId:
                     self.postCall(self._doLeave)
         elif self._state == Dragon.ST_LEAVE:
             if timestamp >= self.finalTime:
@@ -97,9 +106,12 @@ class Dragon(HeartbeatAble):
         """
         空闲状态
         """
+        self.clear()
         self.dragonConf = self.table.room.roomConf["dragonConf"]
         self._state = Dragon.ST_IDLE
-        self.stage = None
+        self._cron = FTCron(self.dragonConf["cronTime"])
+        # 冰龙出场方向（0:左 1:右）
+        self.direction = random.randint(0, 1)
         # 空闲状态开始时间戳
         self.idleTime = self.calcIdleTime()
         # 出场前状态开始时间戳
@@ -123,13 +135,14 @@ class Dragon(HeartbeatAble):
         出场前状态
         """
         self._state = Dragon.ST_PREPARE
+        self.table.superBossFishGroup.appear()
         self.syncDragonState()
 
-    def _doAppearing(self):
-        """
-        出场中状态
-        """
-        self._state = Dragon.ST_APPEARING
+    # def _doAppearing(self):
+    #     """
+    #     出场中状态
+    #     """
+    #     self._state = Dragon.ST_APPEARING
 
     def _doAppeared(self):
         """
@@ -143,19 +156,21 @@ class Dragon(HeartbeatAble):
         """
         退场中状态
         """
-        self._state = Dragon.ST_LEAVE
-        self.stage and self.stage.clearTimer()
-        self.stage = None
-        if isNow:
-            self.leaveTime = pktimestamp.getCurrentTimestamp()
-            self.finalTime = self.calcFinalTime()
-        self.syncDragonState()
+        if self._state != Dragon.ST_LEAVE:
+            self._state = Dragon.ST_LEAVE
+            self.stage and self.stage.clearTimer()
+            self.stage = None
+            if isNow:
+                self.leaveTime = pktimestamp.getCurrentTimestamp()
+                self.finalTime = self.calcFinalTime()
+            self.syncDragonState()
 
     def _doFinal(self):
         """
         结束状态
         """
         self._state = Dragon.ST_FINAL
+        self.table.superBossFishGroup.leave()
 
     def _doNext(self):
         """
@@ -173,7 +188,14 @@ class Dragon(HeartbeatAble):
         """
         计算出场前状态开始时间戳
         """
-        return self.idleTime + self.dragonConf["idle.time"]
+        timestamp = pktimestamp.getCurrentTimestamp()
+        ntime = datetime.fromtimestamp(int(timestamp))
+        nexttime = None
+        if self._cron:
+            nexttime = self._cron.getNextTime(ntime)
+        if nexttime:
+            return int(time.mktime(nexttime.timetuple()))
+        return None
 
     def calcAppearingTime(self):
         """
@@ -224,38 +246,62 @@ class Dragon(HeartbeatAble):
             msg.setResult("roomId", self.table.roomId)
             msg.setResult("tableId", self.table.tableId)
             msg.setResult("state", self.state)
+            msg.setResult("direction", self.direction)
             msg.setResult("progress", self.getCurrentStateStageTime())
             GameMsg.sendMsg(msg, userId or self.table.getBroadcastUids())
             if ftlog.is_debug():
                 ftlog.debug("syncDragonState", self.table.tableId, msg)
 
-    def switchDragonStage(self):
+    def switchDragonStage(self, isTimeout=False):
         """
         切换冰龙阶段
+        @param isTimeout: 是否为超时切换
         """
         self.stage and self.stage.clearTimer()
+        if self.stageTimer:
+            self.stageTimer.cancel()
+            self.stageTimer = None
         if not self.stage:
-            self.stage = RoarStage(self)
-            self.stageTimer = FTLoopTimer(self.dragonConf["roar.stage.time"], 0, self.switchDragonStage)
+            # 创建龙吼阶段
+            self.creatrDragonStage(RoarStage)
+            # 龙吼阶段超时将切换至游动阶段
+            self.stageTimer = FTLoopTimer(self.dragonConf["roar.stage.time"], 0, self.switchDragonStage, isTimeout=True)
             self.stageTimer.start()
-        else:
-            if self.stageTimer:
-                self.stageTimer.cancel()
-                self.stageTimer = None
-            self.stage = SwimStage(self)
+        elif isinstance(self.stage, RoarStage):
+            # 龙吼阶段超时强制结束回合
+            if isTimeout:
+                self.stage.setRoundEndState(isNow=True)
+            # 龙吼阶段结束切换为游动阶段
+            switchStageTime = random.randint(*self.dragonConf["switch.stage.time"])
+            self.stageTimer = FTLoopTimer(switchStageTime, 0, self.creatrDragonStage, SwimStage)
+            self.stageTimer.start()
+
+    def creatrDragonStage(self, stageClass):
+        """
+        新创建冰龙阶段
+        """
+        self.stage = stageClass(self)
 
     def catchDragon(self, event):
         """
         捕获冰龙
         """
         if self._state == Dragon.ST_APPEARED:
-            catch = event.catch
-            fIds = [catchMap["fId"] for catchMap in catch if catchMap["reason"] == 0]
-            if self.stage and self.stage.fishId in fIds:
-                if self.stage.STAGE_ID == 1:
+            isCatch, stageCount = False, 0
+            for catchMap in event.catch:
+                if catchMap["reason"] == 0 and catchMap["fId"] == self.stage.fishId:
+                    isCatch = True
+                    stageCount = catchMap.get("stageCount")
+                    break
+            if isCatch and self.stage:
+                if isinstance(self.stage, RoarStage):
+                    self.stage.isAlive = False
                     self.switchDragonStage()
                 else:
-                    self.stage.catchDragon(event.userId)
+                    if stageCount:
+                        self.stage.catchDragon(event.userId, stageCount)
+                    else:
+                        ftlog.error("catchDragon error", event.userId, event.catch, event.gain)
 
     def frozenDragon(self, fishId, fishType, frozenTime):
         """
@@ -263,7 +309,7 @@ class Dragon(HeartbeatAble):
         """
         if self._state == Dragon.ST_APPEARED:
             if self.stage and self.stage.fishId == fishId:
-                if self.stage.STAGE_ID == 2:
+                if isinstance(self.stage, SwimStage):
                     self.stage.frozenDragon(frozenTime)
 
 
@@ -271,8 +317,6 @@ class RoarStage(object):
     """
     冰龙龙吼阶段
     """
-    # 阶段ID
-    STAGE_ID = 1
     # 冰龙鱼群
     DRAGON_FISH_TYPE = 75208
     # 龙蛋鱼群
@@ -285,9 +329,10 @@ class RoarStage(object):
         self.currentRound = 0
         self.state = 0
         self.startTime = 0
-        self.direction = random.randint(0, 1)
+        self.direction = self.dragon.direction
         self.timer = None
         self.fishId = self.callDragonFishGroup(self.DRAGON_FISH_TYPE).startFishId
+        self.isAlive = True
         self.setRoundStartState()
 
     def clearTimer(self):
@@ -299,11 +344,12 @@ class RoarStage(object):
         """
         召唤冰龙鱼群
         """
+        group = None
         if fishType == self.DRAGON_FISH_TYPE:
             groupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
             groupIds = random.choice(groupIds)
             group = self.table.insertFishGroup(groupIds)
-        else:
+        elif fishType == self.DRAGON_EGG_FISH_TYPE:
             groupIds = self.table.runConfig.allSuperBossGroupIds[fishType]
             groupIdPrefix = "superboss_%s_%s" % (fishType, self.direction)
             groupIds = filter(lambda _groupId: _groupId.startswith(groupIdPrefix), groupIds)
@@ -315,11 +361,10 @@ class RoarStage(object):
         """
         回合开始
         """
-        if self.currentRound < self.totalRound:
+        if self.currentRound < self.totalRound and self.isAlive:
             self.clearTimer()
             self.currentRound += 1
             self.state = 0
-            self.direction ^= 1
             self.startTime = int(time.time())
             self.sendDragonRoarMsg()
             # 龙头出现 + 龙吼 + 喷射冰弹动画总时间
@@ -327,31 +372,34 @@ class RoarStage(object):
             self.timer = FTLoopTimer(roundTime, 0, self.setRoundEndState)
             self.timer.start()
 
-    def setRoundEndState(self):
+    def setRoundEndState(self, isNow=False):
         """
         回合撤退
+        @param isNow: 是否为立即撤退
         """
-        if self.currentRound <= self.totalRound:
+        if self.currentRound <= self.totalRound and self.state == 0:
             self.clearTimer()
             self.state = 1
             self.startTime = int(time.time())
             self.sendDragonRoarMsg()
-            # 龙头缩回动画时间
-            roundTime = self.dragon.dragonConf["round.time"][self.currentRound - 1][1]
-            self.timer = FTLoopTimer(roundTime, 0, self.switchRoundState)
-            self.timer.start()
+            if not isNow:
+                # 龙头缩回动画时间
+                roundTime = self.dragon.dragonConf["round.time"][self.currentRound - 1][1]
+                self.timer = FTLoopTimer(roundTime, 0, self.switchRoundState)
+                self.timer.start()
 
     def switchRoundState(self):
         """
         切换回合状态
         """
-        if self.currentRound < self.totalRound:
+        if self.currentRound < self.totalRound and self.isAlive:
             self.clearTimer()
             # 撤退时出现龙蛋鱼群
             self.callDragonFishGroup(self.DRAGON_EGG_FISH_TYPE)
-            # 冰龙穿梭动画时间
-            shuttleTime = self.dragon.dragonConf["shuttle.time"]
-            # 撤退穿梭动画完成后切换为回合开始
+            # 冰龙穿梭动画时间+随机延迟时间
+            shuttleTime = random.randint(*self.dragon.dragonConf["round.shuttle.time"])
+            # 撤退穿梭动画完成，切换龙头方向，并延迟时间后切换为回合开始
+            self.direction ^= 1
             self.timer = FTLoopTimer(shuttleTime, 0, self.setRoundStartState)
             self.timer.start()
 
@@ -387,15 +435,13 @@ class SwimStage(object):
     """
     冰龙游动阶段
     """
-    # 阶段ID
-    STAGE_ID = 2
     # 冰龙鱼群
     DRAGON_FISH_TYPE = 75216
 
     def __init__(self, dragon):
         self.dragon = dragon
         self.table = self.dragon.table
-        self.totalRound = random.randint(3, 6)
+        self.totalRound = 0
         self.currentRound = 0
         self.fishId = 0
         self.catchUserId = 0
@@ -420,17 +466,18 @@ class SwimStage(object):
         self.timer.start()
         return group
 
-    def catchDragon(self, userId):
+    def catchDragon(self, userId, stageCount):
         """
         捕获冰龙
         """
         self.catchUserId = userId
+        self.totalRound = stageCount
         self.clearTimer()
         # 捕获后延迟出现冰结晶
-        self.timer = FTLoopTimer(self.dragon.dragonConf["crystal.appear.time"], 0, self.switchRound)
+        self.timer = FTLoopTimer(self.dragon.dragonConf["crystal.appear.time"], 0, self.switchStormRound)
         self.timer.start()
 
-    def switchRound(self):
+    def switchStormRound(self):
         """
         切换冰冻风暴回合
         """
@@ -439,10 +486,11 @@ class SwimStage(object):
             self.clearTimer()
             self.sendDragonStormMsg()
             # 每回合风暴时间
-            self.timer = FTLoopTimer(self.dragon.dragonConf["crystal.storm.time"], 0, self.switchRound)
+            self.timer = FTLoopTimer(self.dragon.dragonConf["crystal.storm.time"], 0, self.switchStormRound)
             self.timer.start()
         else:
-            self.dragon._doLeave(isNow=True)
+            self.timer = FTLoopTimer(self.dragon.dragonConf["crystal.leave.time"], 0, self.dragon._doLeave, isNow=True)
+            self.timer.start()
 
     def sendDragonStormMsg(self):
         """
@@ -462,6 +510,7 @@ class SwimStage(object):
         """
         冰龙被冻住
         """
-        interval = self.timer.getTimeOut() + frozenTime
-        if interval > 0:
-            self.timer.reset(interval)
+        if not self.catchUserId:
+            interval = self.timer.getTimeOut() + frozenTime
+            if interval > 0:
+                self.timer.reset(interval)

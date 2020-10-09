@@ -45,7 +45,8 @@ class MultipleFishGroup(object):
                 fishType = multipleFishMap["fishType"]
                 allMultipleGroupIds = self.table.runConfig.allMultipleGroupIds
                 groupId = random.choice(allMultipleGroupIds[fishType])
-                ftlog.debug("_addMultipleFishGroup", fishType, allMultipleGroupIds, groupId)
+                if ftlog.is_debug():
+                    ftlog.debug("_addMultipleFishGroup", fishType, allMultipleGroupIds, groupId)
                 self.table.insertFishGroup(groupId)
                 self._setNextGroupTimer()
                 break

@@ -123,7 +123,8 @@ class NewbieFishGroup(object):
                 self._allMultipleGroupIds = newbieFishGroupConf[str(taskId)].get("multipleFishGroups", [])
                 self._allBombGroupIds = newbieFishGroupConf[str(taskId)].get("bombFishGroups", [])
                 self._allRainbowGroupIds = newbieFishGroupConf[str(taskId)].get("rainbowFishGroups", [])
-        ftlog.debug("_addNormalFishGroup->", taskIds, self._taskId, self._allNormalGroupIds)
+        if ftlog.is_debug():
+            ftlog.debug("_addNormalFishGroup->", taskIds, self._taskId, self._allNormalGroupIds)
         randomGroupIds = list(set(self._allNormalGroupIds) - set(self._appearedNormalGroupIds))
         if not randomGroupIds:
             randomGroupIds = self._allNormalGroupIds
@@ -145,13 +146,14 @@ class NewbieFishGroup(object):
         self._nextMultipleFishGroup()
         self._nextBombFishGroup()
         self._nextRainbowFishGroup()
-        ftlog.debug("_addNormalFishGroup->nextAddGroupInterval =", nextAddGroupInterval,
-                    "nextGroupEnterTimeInterval =", self.table.startTime + enterTime - time.time(),
-                    "tableId =", self.table.tableId,
-                    "self.table.startTime =", self.table.startTime,
-                    "enterTime =", enterTime,
-                    "nowTime =", time.time(),
-                    "correctValue =", correctValue)
+        if ftlog.is_debug():
+            ftlog.debug("_addNormalFishGroup->nextAddGroupInterval =", nextAddGroupInterval,
+                        "nextGroupEnterTimeInterval =", self.table.startTime + enterTime - time.time(),
+                        "tableId =", self.table.tableId,
+                        "self.table.startTime =", self.table.startTime,
+                        "enterTime =", enterTime,
+                        "nowTime =", time.time(),
+                        "correctValue =", correctValue)
 
     def _addMultipleFishGroup(self):
         """
@@ -212,7 +214,8 @@ class NewbieFishGroup(object):
         """
         添加红包券鱼
         """
-        ftlog.debug("_addCouponFishGroup", userId, self.table.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("_addCouponFishGroup", userId, self.table.tableId)
         player = self.table.getPlayer(userId)
         catchCouponFishCount = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.catchCouponFishCount)
         if player and player.taskSystemUser and player.taskSystemUser.curTask:
@@ -231,7 +234,8 @@ class NewbieFishGroup(object):
         """
         添加Boss鱼
         """
-        ftlog.debug("_addBossFishGroup", userId, self.table.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("_addBossFishGroup", userId, self.table.tableId)
         player = self.table.getPlayer(userId)
         if player and player.taskSystemUser:
             taskId = player.taskSystemUser.getCurMainTaskId()
@@ -249,7 +253,8 @@ class NewbieFishGroup(object):
         """
         添加Terror鱼
         """
-        ftlog.debug("_addTerrorFishGroup", userId, self.table.tableId)
+        if ftlog.is_debug():
+            ftlog.debug("_addTerrorFishGroup", userId, self.table.tableId)
         player = self.table.getPlayer(userId)
         if player and player.taskSystemUser:
             taskId = player.taskSystemUser.getCurMainTaskId()
@@ -270,7 +275,8 @@ class NewbieFishGroup(object):
         player = self.table.getPlayer(userId)
         if player and player.taskSystemUser:
             taskId = player.taskSystemUser.getCurMainTaskId()
-            ftlog.debug("_addTuitionFishGroup", userId, self.table.tableId, taskId)
+            if ftlog.is_debug():
+                ftlog.debug("_addTuitionFishGroup", userId, self.table.tableId, taskId)
             newbieFishGroupConf = config.getPublic("newbieFishGroupConf", {})
             tuitionFishGroups = newbieFishGroupConf.get(str(taskId), {}).get("tuitionFishGroups", [])
             data = self._playerTuitionTimerDict.get(userId)
@@ -288,7 +294,8 @@ class NewbieFishGroup(object):
         player = self.table.getPlayer(userId)
         if player and player.taskSystemUser:
             taskId = player.taskSystemUser.getCurMainTaskId()
-            ftlog.debug("_addSharkFishGroup", userId, self.table.tableId, taskId)
+            if ftlog.is_debug():
+                ftlog.debug("_addSharkFishGroup", userId, self.table.tableId, taskId)
             newbieFishGroupConf = config.getPublic("newbieFishGroupConf", {})
             sharkFishGroups = newbieFishGroupConf.get(str(taskId), {}).get("sharkFishGroups", [])
             data = self._playerSharkTimerDict.get(userId)
