@@ -5,6 +5,7 @@ Created by lichen on 2020/3/27.
 
 import random
 import time
+from collections import OrderedDict
 
 from freetime.util import log as ftlog
 from newfish.table.normal_table import FishNormalTable

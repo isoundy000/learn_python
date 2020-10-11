@@ -70,7 +70,6 @@ def _sendTableInfo(self, userId, seatId):
     for _, expression in expressionConf.iteritems():
         expressions.append(expression)
     msg.setResult("expressions", expressions)
-    ftlog.debug("_sendTableInfo->msg =", msg)
     players = []
     for i in xrange(0, self.maxSeatN):
         if self.seats[i].userId != 0 and self.players[i]:
@@ -103,7 +102,6 @@ def _sendTableInfo(self, userId, seatId):
 
 
 def _getPlayerInfo(self, seatId):
-    ftlog.debug("_getPlayerInfo->seatId =", seatId, "userId =", self.seats[seatId - 1].userId)
     info = {}
     p = self.players[seatId - 1]
     if not p:
@@ -119,8 +117,7 @@ def _getPlayerInfo(self, seatId):
     info["gLvNow"] = p.nowGunLevel
     info["gunLevel"] = p.gunLv
     info["exp"] = p.exp
-    info["skillSlots"] = p.getSkillSlotsInfo(0)
-    info["auxiliarySkillSlots"] = p.getSkillSlotsInfo(1)
+    info["skillSlots"] = p.getSkillSlotsInfo()
     info["usingSkill"] = p.getUsingSkillInfo()
     info["chip"] = p.chip
     info["tableChip"] = p.tableChip

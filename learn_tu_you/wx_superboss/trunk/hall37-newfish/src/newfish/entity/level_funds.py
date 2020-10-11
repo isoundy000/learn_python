@@ -105,7 +105,6 @@ def getLevelFundsData(userId, clientId, mode):
     """
     获取成长基金数据
     """
-    module_tip.resetModuleTipEvent(userId, "levelfunds")
     message = MsgPack()
     message.setCmd("levelFundsData")
     message.setResult("gameId", config.FISH_GAMEID)
@@ -122,6 +121,10 @@ def getLevelFundsData(userId, clientId, mode):
         message.setResult("mode", mode)
         router.sendToUser(message, userId)
         return
+    if mode == 1:
+        module_tip.resetModuleTipEvent(userId, "levelfundsNew")
+    else:
+        module_tip.resetModuleTipEvent(userId, "levelfunds")
     userLv, funds, userIdxs, lf_funds, lf_rewards, isAllTaken = isShow(userId, clientId, mode)
     message.setResult("level", userLv)
     fundsList = []
@@ -150,7 +153,12 @@ def getLevelFundsData(userId, clientId, mode):
     message.setResult("mode", mode)
     router.sendToUser(message, userId)
     if addTipPIds:
-        module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
+        if ftlog.is_debug():
+            ftlog.debug("getLevelFundsData", mode)
+        if mode == 1:
+            module_tip.addModuleTipEvent(userId, "levelfundsNew", addTipPIds)
+        else:
+            module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
 
 
 def isShow(userId, clientId, mode):
@@ -237,7 +245,10 @@ def getLevelFundsRewards(userId, clientId, productId, level=0, rewardType=0):
                 daobase.executeUserCmd(userId, "HSET", _getRdKey(userId, mode), GameData.lf_rewards, json.dumps(lf_rewards))
             hasTip, rewardsState = _getLevelFundsRewardState(userId, clientId, val["idx"], mode, lf_funds=lf_funds, lf_rewards=lf_rewards)
             if not hasTip:
-                module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
+                if mode == 1:
+                    module_tip.cancelModuleTipEvent(userId, "levelfundsNew", productId)
+                else:
+                    module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
             break
         else:
             code = 1
@@ -345,9 +356,15 @@ def sendBuyLevelFundsRet(userId, clientId, productId, idx, code, mode):
         message.setResult("state", 1)
         hasTip, rewardsState = _getLevelFundsRewardState(userId, clientId, idx, mode)
         if hasTip:
-            module_tip.addModuleTipEvent(userId, "levelfunds", productId)
+            if mode == 1:
+                module_tip.addModuleTipEvent(userId, "levelfundsNew", productId)
+            else:
+                module_tip.addModuleTipEvent(userId, "levelfunds", productId)
         else:
-            module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
+            if mode == 1:
+                module_tip.cancelModuleTipEvent(userId, "levelfundsNew", productId)
+            else:
+                module_tip.cancelModuleTipEvent(userId, "levelfunds", productId)
     message.setResult("rewardsState", rewardsState)
     router.sendToUser(message, userId)
 
@@ -371,7 +388,10 @@ def _triggerLevelUpEvent(event):
         if hasTip:
             addTipPIds.append(productId)
     if addTipPIds:
-        module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
+        if mode == 1:
+            module_tip.addModuleTipEvent(userId, "levelfundsNew", addTipPIds)
+        else:
+            module_tip.addModuleTipEvent(userId, "levelfunds", addTipPIds)
 
 
 _inited = False

@@ -3,13 +3,13 @@
 Created by lichen on 16/12/13.
 """
 
+import random
 import traceback
 from datetime import datetime
 
 from freetime.util import log as ftlog
 from freetime.entity.msg import MsgPack
 from poker.entity.dao import userdata
-from newfish.entity import util
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.msg import GameMsg
 from newfish.table.table_base import FishTable
@@ -21,6 +21,8 @@ from newfish.entity.fishgroup.terror_fish_group import TerrorFishGroup
 from newfish.entity.fishgroup.autofill_fish_group import AutofillFishGroup
 from newfish.entity.fishgroup.tt_autofill_fish_group import TTAutofillFishGroup
 from newfish.player.normal_player import FishNormalPlayer
+from newfish.entity import util, config, drop_system
+from newfish.entity.config import CHIP_KINDID, PEARL_KINDID, BULLET_KINDIDS
 
 
 class FishNormalTable(FishTable):
@@ -28,16 +30,14 @@ class FishNormalTable(FishTable):
     def _doTableCall(self, msg, userId, seatId, action, clientId):
         try:
             if not super(FishNormalTable, self)._doTableCall(msg, userId, seatId, action, clientId):
-                if seatId == 0 and action not in ["task_ready",
-                                                  "task_start",
-                                                  "task_end"]:
+                if seatId == 0 and action not in ["task_ready", "task_start", "task_end"]:
                     ftlog.warn("invalid seatId")
                     return
                 func = self.systemTableActionMap.get(action) if hasattr(self, "systemTableActionMap") else None
                 if func:
                     func(msg, userId, seatId)
                 else:
-                    ftlog.warn("not reconized action:", action)
+                    ftlog.warn("unrecognized action", action)
         except:
             ftlog.error("_doTableCall error clear table", userId, msg, traceback.format_exc())
             self._clearTable()

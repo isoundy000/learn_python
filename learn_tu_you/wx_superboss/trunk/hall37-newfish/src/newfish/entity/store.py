@@ -424,6 +424,12 @@ class HotStoreShop(BaseStoreShop):
                 productObj = CreateProduct(self, self.actionType, productId, product, self.userId, self.clientId)
                 if productObj:
                     data = productObj.parse()
+                    serverBuyCount = product.get("limitCond", {}).get("hotServerDailyCountLimit", -1)
+                    if serverBuyCount != -1:
+                        key = MixData.buyHotProductServerCount % FISH_GAMEID
+                        serverPurchaseNum = daobase.executeMixCmd("HGET", key, productId) or 0
+                        leftNum = serverBuyCount - serverPurchaseNum
+                        data.update({"leftNum": leftNum})
                     hotItems.append(data)
         hotStoreTab["items"] = hotItems
         hotStoreTab["tip"] = tip

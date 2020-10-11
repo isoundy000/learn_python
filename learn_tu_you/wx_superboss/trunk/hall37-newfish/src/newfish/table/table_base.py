@@ -2372,7 +2372,7 @@ class FishTable(TYTable):
 
     def dealGunEffect(self, player, fIds):
         """
-        处理火炮皮肤特性
+        处理霜冻皮肤炮特性
         """
         if player.gunId == 1165:        # 霜冻特性，有几率冰冻鱼
             addTimeGroups = []
@@ -2700,10 +2700,12 @@ class FishTable(TYTable):
         msg = MsgPack()
         msg.setCmd("mini_game_start")
         msg.setResult("gameId", FISH_GAMEID)
+        msg.setResult("userId", userId)
         msg.setResult("seatId", seatId)
         for key, value in ret.items():
             msg.setResult(key, value)
         GameMsg.sendMsg(msg, self.getBroadcastUids())
+        self.lastActionTime = int(time.time())
 
     def _miniMermaidStart(self, seatId, fishTypes):
         """

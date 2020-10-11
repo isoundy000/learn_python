@@ -349,13 +349,14 @@ class FishQuickStart(BaseQuickStart):
         """匹配进入房间"""
         roomConf = gdata.roomIdDefineMap()[roomId].configure
         minLevel = roomConf.get("minLevel", 1)
-        minGunLevel = roomConf.get("minGunLevel", 2101)
+        gunLevelVal = config.getGunLevelConf(gunLevel, gameMode).get("levelValue", 1)
+        minGunLevelVal = roomConf.get("minGunLevelVal", 0)
         minCoin = roomConf.get("minCoin", 0)
         typeName = roomConf.get("typeName")
         roomType = config.CLASSIC_MODE_ROOM_TYPE
         if gameMode == config.MULTIPLE_MODE:
             roomType = config.MULTIPLE_MODE_ROOM_TYPE
         if typeName in roomType:
-            if uLevel >= minLevel and gunLevel >= minGunLevel and userChip >= minCoin:
+            if uLevel >= minLevel and gunLevelVal >= minGunLevelVal and userChip >= minCoin:
                 return True
         return False

@@ -27,26 +27,13 @@ class DynamicOdds(object):
     def __init__(self, table, player):
         self.table = table
         self.player = player
-        self.fishPool = player.matchingFishPool     # self.table.runConfig.fishPool
-        # # 目前使用A模式.
-        # dynamicOdds1050TestMode = config.getPublic("dynamicOdds1050TestMode") or gamedata.getGameAttr(self.player.userId, FISH_GAMEID, GameData.dynamicOdds1050TestMode)
-        # # 非a模式玩家，10倍50倍场使用2倍场曲线.
-        # if dynamicOdds1050TestMode not in ["a"] and self.table.runConfig.fishPool in [44002, 44003]:
-        #     fishPool = 44001
-        # else:
-        #     fishPool = self.fishPool
-        if self.player.fpMultipleTestMode in ["b"]:     # 倍率测试模式 AB测试
-            self.minWaveRadix = self.table.runConfig.minWaveRadix_b     # 最小波动基数(渔场倍率b模式)
-            self.maxWaveRadix = self.table.runConfig.maxWaveRadix_b
-        else:
-            self.minWaveRadix = self.table.runConfig.minWaveRadix
-            self.maxWaveRadix = self.table.runConfig.maxWaveRadix
+        self.fishPool = self.table.runConfig.fishPool
+        self.minWaveRadix = self.table.runConfig.minWaveRadix
+        self.maxWaveRadix = self.table.runConfig.maxWaveRadix
         self.dynamicOddsMap = config.getDynamicOddsConf(self.fishPool)
         self.initConstData()
         self.initVarData()
         self.refreshOdds()
-        # ftlog.debug("DynamicOdds, userId =", self.player.userId, "testMode =", dynamicOdds1050TestMode,
-        #             "tableFishPool =", self.table.runConfig.fishPool, "oddsFishPool =", fishPool)
 
     @property
     def chip(self):
@@ -63,10 +50,7 @@ class DynamicOdds(object):
             return bonus
         if not self.player or not self.player.userId:
             return bonus
-        # 新手期间使用奖池.
-        # if self.isProtectMode():
-        #     return bonus
-        return self._currRechargeBonus          # 当前充值奖池
+        return self._currRechargeBonus
 
     def initConstData(self):
         """
@@ -125,8 +109,6 @@ class DynamicOdds(object):
         self._originRechargeBonus = gamedata.getGameAttrInt(self.player.userId, FISH_GAMEID, GameData.rechargeBonus)
         # 当前充值奖池
         self._currRechargeBonus = self._originRechargeBonus
-        # 破产AB测试模式
-        self._bankruptTestMode = gamedata.getGameAttr(self.player.userId, FISH_GAMEID, ABTestData.bankruptTestMode)
         # 扣除的充值奖池
         self.decreasedRechargeBonus = 0
         # 初始额外奖池
@@ -137,9 +119,7 @@ class DynamicOdds(object):
         是否在新手保护期间
         """
         protectLevel = len(self.protectOdds)
-        if self._bankruptTestMode == "b":
-            protectLevel = min(7, protectLevel)
-        if self.player.level <= protectLevel:       # len(self.protectOdds):
+        if self.player.level <= protectLevel:
             return True
         return False
 
@@ -161,20 +141,153 @@ class DynamicOdds(object):
             self.computeTargetCoins(oddsData[WAVE_RADIX])
             self.refreshTargetCoin()
             self.waveCoin = oddsData[WAVE_COIN]
-            # # 该玩家重置波动金币值.
-            # if self.player.userId == 100350041 and self.waveCoin < 0:
-            #     tmp_reset_odds = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, "tmp_reset_odds", [])
-            #     if int(self.table.runConfig.fishPool) not in tmp_reset_odds:
-            #         self.waveCoin = 0
-            #         tmp_reset_odds.append(int(self.table.runConfig.fishPool))
-            #         gamedata.setGameAttr(self.player.userId, FISH_GAMEID, "tmp_reset_odds", json.dumps(tmp_reset_odds))
         else:
-            waveId = 1
-            pass
+            waveId = 6
+            self.resetOdds(waveId)
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->refreshOdds->",
+                        "userId =", self.player.userId,
+                        "chip =", self.chip,
+                        "waveId =", self.waveId,
+                        "waveIndex =", self.waveIndex,
+                        "targetCoins =", self.targetCoins,
+                        "waveCoin =", self.waveCoin)
 
-    def saveDynamicOddsData(self):
-        pass
+    def getWaveList(self, type=None):
+        """
+        获取指定类型曲线的列表
+        """
+        if type == "high":
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems() if dynamicOdds["type"] > 0]
+        elif type == "low":
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems() if dynamicOdds["type"] < 0]
+        else:
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems()]
+        return dynamicOddsList
 
+    def getWaveId(self, type=None):
+        """
+        确定曲线ID
+        :param type: 曲线类型(涨跌)
+        """
+        if type == "high":
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems() if dynamicOdds["type"] > 0]
+        elif type == "low":
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems() if dynamicOdds["type"] < 0]
+        else:
+            dynamicOddsList = [dynamicOdds for _, dynamicOdds in self.dynamicOddsMap.iteritems()]
+
+        totalWeight = sum([dynamicOdds["weight"] for dynamicOdds in dynamicOddsList])
+        randomNum = random.randint(1, totalWeight)
+        for dynamicOdds in dynamicOddsList:
+            randomNum -= dynamicOdds["weight"]
+            if randomNum <= 0:
+                return dynamicOdds["waveId"]
+
+    def getWaveRadix(self):
+        """
+        确定波动单位基数
+        """
+        allChip = self.player.allChip
+        waveRadix = int(self.minWaveRadix + (allChip - self.minWaveRadix) * self.table.runConfig.waveRadixRate)
+        waveRadix = min(max(waveRadix, self.minWaveRadix), self.maxWaveRadix)
+        if ftlog.is_debug():
+            ftlog.debug("getWaveRadix->",
+                        "userId =", self.player.userId,
+                        "waveRadix =", waveRadix,
+                        "allChip =", allChip,
+                        "minWaveRadix =", self.minWaveRadix,
+                        "maxWaveRadix =", self.maxWaveRadix,
+                        "waveRadixRate =", self.table.runConfig.waveRadixRate)
+        return waveRadix
+
+    def resetOdds(self, waveId=None):
+        """
+        重置动态概率数据
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        if not self.player or not self.player.userId:
+            return
+        if self.isProtectMode():
+            return
+        recentWaveStateDict = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.recentWaveStateDict, {})
+        recentWaveStateList = recentWaveStateDict.get(str(self.fishPool), [])
+        if waveId is None:
+            if recentWaveStateList.count("low") >= 3:
+                waveId = self.getWaveId("high")
+            elif recentWaveStateList.count("high") >= 3:
+                waveId = self.getWaveId("low")
+            else:
+                waveId = self.getWaveId()
+        dynamicOdds = self.dynamicOddsMap[str(waveId)]
+        if dynamicOdds["type"] > 0:
+            recentWaveStateList.append("high")
+        elif dynamicOdds["type"] < 0:
+            recentWaveStateList.append("low")
+        else:
+            recentWaveStateList.append("balance")
+        recentWaveStateDict[str(self.fishPool)] = recentWaveStateList[-3:]
+        gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.recentWaveStateDict, json.dumps(recentWaveStateDict))
+
+        self.waveIndex = 0
+        self.loadDynamicOddsData(waveId)
+        self.computeTargetCoins(self.getWaveRadix())
+        self.refreshTargetCoin()
+        self.saveDynamicOddsData()
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->resetOdds->", "userId =", self.player.userId, "waveId =", waveId)
+
+    def updateOdds(self, profitCoin):
+        """
+        更新概率
+        :param profitCoin: 每次开火盈亏值
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        if not self.player or not self.player.userId:
+            return
+        if self.isProtectMode():
+            return
+        if self.player.userId in self.banOddsList:
+            return
+        if not self.frequency or not self.targetCoins:  # 刚度过新手保护期后走高概率曲线
+            self.refreshOdds()
+        self.waveCoin += int(profitCoin)
+        if self.getWaveState():
+            if self.waveCoin >= self.targetCoin:
+                self.waveCoin -= self.targetCoin
+                self.moveOddsIndex()
+        else:
+            if self.waveCoin <= self.targetCoin:
+                self.waveCoin -= self.targetCoin
+                self.moveOddsIndex()
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->updateOdds->",
+                        "userId =", self.player.userId,
+                        "waveId", self.waveId,
+                        "waveIndex", self.waveIndex,
+                        "frequencyPoint =", self.frequencyPoint,
+                        "profitCoin =", profitCoin,
+                        "waveCoin =", self.waveCoin,
+                        "targetCoin =", self.targetCoin,
+                        "waveState =", self.getWaveState())
+
+    def moveOddsIndex(self):
+        """
+        移动曲线节点
+        """
+        self.waveIndex += 1
+        if self.waveIndex >= len(self.frequency):
+            self.resetOdds()
+        elif self.frequency[self.waveIndex] == 1:
+            self.moveOddsIndex()
+        else:
+            self.refreshTargetCoin()
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->moveOddsIndex->",
+                        "userId =", self.player.userId,
+                        "waveIndex =", self.waveIndex)
 
     def getOdds(self, skill=None, superBullet=None, aloofFish=False, gunConf=None):
         """
@@ -185,28 +298,21 @@ class DynamicOdds(object):
         :param gunConf: 当前装备火炮配置
         :return: 返回概率系数 1、1.3、1.25
         """
-        # 2倍场使用低概率.
-        # if self.table.bigRoomId == 44401:
-        #     return 0.25
         if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
-            # 大奖赛使用高冷模式
-            if self.table.typeName == config.FISH_GRAND_PRIX:
-                aloofFish = True
-            else:
-                return 1
+            return 1
         if not self.player or not self.player.userId:
             return 1
         if self.isProtectMode():
             return self.protectOdds[self.player.level - 1]
-        if self.table.typeName == config.FISH_NEWBIE and self.chip <= 50:
-            return 10000
-
         if skill:
             if self.player.userId in self.banOddsList:      # 黑名单概率
                 odds = self.skillBanOdds                    # 0.5
             else:
-                if superBullet:                             # 超级子弹
-                    odds = 1
+                if skill.skillId in self.spSkills:
+                    if aloofFish:
+                        odds = self.getSpSkillNonCurveOdds()
+                    else:
+                        odds = self.getSpSkillCurveOdds()
                 else:
                     if aloofFish:
                         odds = self.getNorSkillNonCurveOdds()
@@ -233,14 +339,232 @@ class DynamicOdds(object):
                         "gunConf =", gunConf)
         return odds
 
+    def getWaveState(self):
+        """
+        获得波动状态（当前涨跌）
+        """
+        return self.targetCoin >= 0
+
+    def getGunCurveOdds(self):
+        """
+        火炮-曲线概率系数
+        """
+        if self.getWaveState():
+            return random.uniform(self.gunCurveHighSection[0], self.gunCurveHighSection[1])
+        else:
+            return random.uniform(self.gunCurveLowSection[0], self.gunCurveLowSection[1])
+
+    def getGunNonCurveOdds(self, gunConf):
+        """
+        火炮-非曲线概率系数
+        """
+        gunConf = gunConf or {}
+        gunId = gunConf.get("gunId", 0)
+        gunLevel = gunConf.get("gunLevel", 1)
+        aloofOdds = config.getGunConf(gunId, self.player.clientId, gunLevel, self.table.gameMode).get("aloofOdds", [])
+        probb = 0
+        randomNum = random.randint(1, 10000)
+        for oddsMap in aloofOdds:
+            probb += oddsMap["probb"] * 10000
+            if randomNum <= probb:
+                return oddsMap["odds"]
+
+    def getNorSkillCurveOdds(self):
+        """
+        常规技能-曲线概率系数
+        """
+        if self.getWaveState():
+            return random.uniform(self.norSkillCurveHighSection[0], self.norSkillCurveHighSection[1])
+        else:
+            return random.uniform(self.norSkillCurveLowSection[0], self.norSkillCurveLowSection[1])
+
+    def getNorSkillNonCurveOdds(self):
+        """
+        常规技能-非曲线概率系数
+        """
+        return random.uniform(self.norSkillNonCurveSection[0], self.norSkillNonCurveSection[1])
+
+    def getSpSkillCurveOdds(self):
+        """
+        特殊技能-曲线概率系数
+        """
+        if self.getWaveState():
+            oddsSection = self.spSkillCurveHighSection
+        else:
+            oddsSection = self.spSkillCurveLowSection
+        randomNum = random.randint(1, 10000)
+        probb = 0
+        for oddsDetail in oddsSection:
+            probb += oddsDetail[1] * 10000
+            if randomNum <= probb:
+                return oddsDetail[0]
+
+    def getSpSkillNonCurveOdds(self):
+        """
+        特殊技能-非曲线概率系数
+        """
+        oddsSection = self.spSkillNonCurveSection
+        randomNum = random.randint(1, 10000)
+        probb = 0
+        for oddsDetail in oddsSection:
+            probb += oddsDetail[1] * 10000
+            if randomNum <= probb:
+                return oddsDetail[0]
+
+    def computeTargetCoins(self, waveRadix):
+        """
+        计算所有目标金币列表
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        self.waveRadix = waveRadix
+        self.targetCoins = []
+        for frequencyPoint in self.frequency:
+            targetCoin = int(self.waveRadix * (frequencyPoint - 1.0))
+            self.targetCoins.append(targetCoin)
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->computeTargetCoins->",
+                        "userId =", self.player.userId,
+                        "waveRadix =", self.waveRadix,
+                        "targetCoins =", self.targetCoins)
+
+    def refreshTargetCoin(self):
+        """
+        刷新当前目标金币
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        self.frequencyPoint = self.frequency[self.waveIndex]
+        self.targetCoin = self.targetCoins[self.waveIndex]
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->refreshTargetCoin->",
+                        "userId =", self.player.userId,
+                        "frequencyPoint =", self.frequencyPoint,
+                        "targetCoin =", self.targetCoin)
+
+    def loadDynamicOddsData(self, waveId):
+        """
+        根据曲线ID读取动态概率配置数据
+        """
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        if str(waveId) not in self.dynamicOddsMap:
+            ftlog.error("loadDynamicOddsData error", self.player.userId, waveId)
+            self.resetOdds()
+            return
+        dynamicOddsConf = self.dynamicOddsMap[str(waveId)]
+        self.waveId = dynamicOddsConf["waveId"]
+        self.frequency = dynamicOddsConf["frequency"]
+        if ftlog.is_debug():
+            ftlog.debug("DynamicOdds->loadDynamicOddsData->",
+                        "userId =", self.player.userId,
+                        "waveId =", self.waveId,
+                        "frequency =", self.frequency)
+
+    def saveDynamicOddsData(self):
+        """
+        保存动态概率配置数据
+        """
+        if not self.player or not self.player.userId:
+            return
+        if self.table.typeName not in config.RECHARGE_BONUS_ROOM_TYPE:
+            return
+        gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.rechargeBonus, self._currRechargeBonus)
+        util.decreaseExtraceRechargeBonus(self.player.userId, self.decreasedRechargeBonus)
+        self.decreasedRechargeBonus = 0
+        if self.isProtectMode():
+            return
+        if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
+            return
+        if self.waveId:
+            oddsData = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.dynamicOdds, {})
+            oddsData[str(self.fishPool)] = [self.waveId, self.waveIndex, self.waveRadix, self.waveCoin]
+            gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.dynamicOdds, json.dumps(oddsData))
+            ftlog.info("saveDynamicOddsData->",
+                        "userId =", self.player.userId,
+                        "_originRechargeBonus =", self._originRechargeBonus,
+                        "_currRechargeBonus =", self._currRechargeBonus,
+                        "oddsData =", oddsData[str(self.fishPool)])
+
+    def refreshRechargeOdds(self):
+        """
+        刷新充值概率数据
+        """
+        if self.table.typeName not in config.RECHARGE_BONUS_ROOM_TYPE:
+            return
+        if not self.player or not self.player.userId:
+            return
+        if self._originRechargeBonus <= 0:
+            self._originRechargeBonus = gamedata.getGameAttrInt(self.player.userId, FISH_GAMEID, GameData.rechargeBonus)
+            self._currRechargeBonus = self._originRechargeBonus
+        else:
+            newestBonus = gamedata.getGameAttrInt(self.player.userId, FISH_GAMEID, GameData.rechargeBonus)
+            self._currRechargeBonus += newestBonus - self._originRechargeBonus
+            self._originRechargeBonus = self._currRechargeBonus
+            gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.rechargeBonus, self._currRechargeBonus)
+            ftlog.info("refreshRechargeOdds->",
+                        "userId =", self.player.userId,
+                        "newestBonus =", newestBonus,
+                        "_originRechargeBonus =", self._originRechargeBonus,
+                        "_currRechargeBonus =", self._currRechargeBonus)
+        # 更新额外充值奖池,先按照额外充值奖池增加前的数据结算当前的扣除额外奖池，然后更新额外奖池和扣除奖池的数据.
+        _orginExtraRechargeBonus = self._orginExtraRechargeBonus
+        util.decreaseExtraceRechargeBonus(self.player.userId, min(_orginExtraRechargeBonus, self.decreasedRechargeBonus))
+        self.decreasedRechargeBonus = 0
+        self._orginExtraRechargeBonus = gamedata.getGameAttrInt(self.player.userId, FISH_GAMEID, GameData.extraRechargePool)
+
+    def addRechargeBonus(self, coin):
+        """
+        增加充值奖池
+        """
+        if self.table.typeName not in config.RECHARGE_BONUS_ROOM_TYPE:
+            return
+        if not self.player or not self.player.userId:
+            return
+        # if self.isProtectMode():
+        #     return
+        self._currRechargeBonus += int(coin)
+        if ftlog.is_debug():
+            ftlog.debug("addRechargeBonus->",
+                        "userId =", self.player.userId,
+                        "_originRechargeBonus =", self._originRechargeBonus,
+                        "_currRechargeBonus =", self._currRechargeBonus)
+
+    def deductionRechargeBonus(self, coin):
+        """
+        扣减充值奖池
+        """
+        if self.table.typeName not in config.RECHARGE_BONUS_ROOM_TYPE:
+            return
+        if not self.player or not self.player.userId:
+            return
+        self._currRechargeBonus -= int(coin)
+        self.decreasedRechargeBonus += int(coin)
+        if ftlog.is_debug():
+            ftlog.debug("deductionRechargeBonus->",
+                        "userId =", self.player.userId,
+                        "_originRechargeBonus =", self._originRechargeBonus,
+                        "_currRechargeBonus =", self._currRechargeBonus,
+                        "decreasedRechargeBonus =", self.decreasedRechargeBonus)
+
     def changeOdds(self):
         """
         切换曲线
         """
         if self.table.typeName not in config.DYNAMIC_ODDS_ROOM_TYPE:
             return
-        fishPool = self.player.matchingFishPool
-        if fishPool == self.fishPool:
-            return
-        ftlog.debug("changeOdds, userId =", self.player.userId, "lastFishPool =", self.fishPool, "curFishPool =", fishPool)
-        pass
+        self.saveDynamicOddsData()
+        self.dynamicOddsMap = config.getDynamicOddsConf(self.fishPool)
+        self.initVarData()
+        self.refreshOdds()
+
+    def triggerBankruptEvent(self, bankruptCount):
+        """
+        玩家破产
+        """
+        if self.fishPool == 44003:
+            if bankruptCount <= 1:
+                self.resetOdds()
+        bireport.reportGameEvent("BI_NFISH_GE_BANKRUPT", self.player.userId, FISH_GAMEID, self.table.roomId,
+                                 self.table.tableId, bankruptCount, self.player.level, 0, 0, [], self.player.clientId)
+

@@ -234,7 +234,7 @@ NUMB_WEAPON_TYPE = 7
 DRILL_WEAPON_TYPE = 8
 # 超级Boss
 SUPER_BOSS_WEAPON_TYPE = 9
-# 能量宝珠
+# 火神珠
 ENERGY_ORB = 10
 # 三叉戟
 TRIDENT = 11
@@ -243,6 +243,10 @@ MONEY_BOX = 12
 # 特殊武器类别集合
 SPECIAL_WEAPON_TYPE_SET = (BOMB_WEAPON_TYPE, NUMB_WEAPON_TYPE, DRILL_WEAPON_TYPE,
                            SUPER_BOSS_WEAPON_TYPE, ENERGY_ORB, TRIDENT)
+
+# 多段爆炸的武器类别集合
+MULTIPLE_STAGE_WEAPON_TYPE_SET = (SUPER_BOSS_WEAPON_TYPE, ENERGY_ORB, TRIDENT)
+
 # 需要输出日志的武器类别集合
 LOG_OUTPUT_WEAPON_TYPE_SET = (SKILL_WEAPON_TYPE, RB_BOMB_WEAPON_TYPE, BOMB_WEAPON_TYPE, NUMB_WEAPON_TYPE,
                               DRILL_WEAPON_TYPE, SUPER_BOSS_WEAPON_TYPE, ENERGY_ORB, TRIDENT)
@@ -361,7 +365,7 @@ DYNAMIC_ODDS_ROOM_TYPE = (FISH_FRIEND)
 # 使用充值奖池房间类型
 RECHARGE_BONUS_ROOM_TYPE = (FISH_NEWBIE, FISH_NORMAL, FISH_FRIEND, FISH_GRAND_PRIX, FISH_POSEIDON, FISH_MULTIPLE)
 # 冰冻道具冻住的概率
-FREEZE_PROBB = 6500
+FREEZE_PROBB = 6500            # 6500
 # 冰冻道具ID
 FREEZE_ITEM = 14119
 # 锁定道具ID
@@ -399,10 +403,10 @@ NEWBIE_GUIDE_MISSILE = 1006     # 合金弹头
 
 # 游戏配置数据
 defaultIntClientId = 0
-sceneGroupConf = {}             # 加载渔场鱼阵配置 scene场景鱼阵 [group_44201_1、group_44201_2、... group_44201_30]
+sceneGroupConf = {}
 sceneGroupConf_m = {}
-groupsConf = {}                 # 所有鱼阵配置All
-groupsConf_m = {}               # 所有千炮鱼阵配置All
+groupsConf = {}
+groupsConf_m = {}
 weaponConf = {}
 weaponConf_m = {}
 weaponPowerRateConf = {}
@@ -917,7 +921,7 @@ def loadFishConf_m():
 
 def getFishConf(fishType, typeName, multiple=1):
     """
-    获取鱼配置 fishType: 鱼的ID typeName 渔场类型[好友、比赛、...] multiple渔场倍率
+    获取鱼的配置
     @param fishType: 鱼的类型ID
     @param typeName: 渔场类型
     @param multiple: 渔场倍率
@@ -3544,28 +3548,28 @@ def initConfig():
     """
     初始化所有配置
     """
-    loadPublicConf()                        # 加载公共配置
-    loadGroupsConf()                        # 加载所有鱼阵
-    loadSceneGroupConf()                    # 加载渔场鱼阵配置
-    loadSceneGroupConf_m()                  # 加载千炮渔场鱼阵配置
+    loadPublicConf()
+    loadGroupsConf()
+    loadSceneGroupConf()
+    loadSceneGroupConf_m()
     loadFishConf()
     loadFishConf_m()
-    loadWeaponConf()                        # 加载武器配置
-    loadWeaponConf_m()                      # 加载千炮武器配置
-    loadWeaponPowerRateConf()               # 加载武器威力加成配置
+    loadWeaponConf()
+    loadWeaponConf_m()
+    loadWeaponPowerRateConf()
     loadWeaponPowerRateConf_m()
     loadWeaponStageCountConf()
     loadWeaponStageCountConf_m()
-    loadCheckinConf()                       # 加载签到配置
+    loadCheckinConf()
     loadStoreConf()
-    loadDropConf()                          # 加载掉落配置
+    loadDropConf()
     loadUlevelConf()
     loadUserLevelConf()
-    loadSkillConf()                         # 加载技能配置
-    loadSkillGradeConf()                    # 加载技能升级配置
-    loadSkillGradeConf_m()                  # 加载千炮技能升级配置
-    loadSkillStarConf()                     # 加载技能星级配置
-    loadSkillStarConf_m()                   # 加载千炮技能星级配置
+    loadSkillConf()
+    loadSkillGradeConf()
+    loadSkillGradeConf_m()
+    loadSkillStarConf()
+    loadSkillStarConf_m()
     loadMainQuestConf()
     loadDailyQuestConf()
     loadDailyQuestRewardConf()
@@ -3574,11 +3578,11 @@ def initConfig():
     loadBonusTaskConf()
     loadGuideTaskConf()
     loadExpressionConf()
-    loadChestConf()                         # 加载宝箱配置
-    loadChestDropConf()                     # 加载宝箱掉落配置
-    loadProbabilityConf()                   # 加载概率配置
+    loadChestConf()
+    loadChestDropConf()
+    loadProbabilityConf()
     loadProbabilityConf_m()
-    loadDynamicOddsConf()                   # 加载动态概率配置
+    loadDynamicOddsConf()
     loadLotteryPoolConf()
     loadRingLotteryPoolConf()
     loadGiftConf()
@@ -3587,23 +3591,23 @@ def initConfig():
     loadCatchDropConf_m()
     loadVipConf()
     loadMatchFishConf()
-    loadFixedMultipleFishConf()             # 加载固定倍率鱼配置
+    loadFixedMultipleFishConf()
     loadCallMultipleFishConf()
     loadMatchMultipleFishConf()
     loadRankRewardConf()
     loadBounsGameConf()
     loadAchievementConf()
-    loadItemConf()                          # 加载道具配置
+    loadItemConf()
     loadHonorConf()
-    loadGunTypeConf()                       # 加载皮肤炮炮配置
-    loadGunTypeConf_m()                     # 加载千炮皮肤炮炮配置
+    loadGunTypeConf()
+    loadGunTypeConf_m()
     loadRobberyConf()
     loadCommonConf()
     loadPlayerBufferConf()
     loadRobotConf()
     loadRandomMultipleFishConf()
-    loadGunLevelConf()                      # 加载火炮升级配置
-    loadGunLevelConf_m()                    # 加载千炮火炮升级配置
+    loadGunLevelConf()
+    loadGunLevelConf_m()
     loadTableTaskConf()
     loadInviteTaskConf()
     loadRechargePoolConf()
@@ -3644,16 +3648,16 @@ def initConfig():
     loadBigPrizeConf()
     loadCompActConf()
     loadNewbie7DaysGfitConf()
-    loadPassCardConf()                                      # 加载通行证活动配置
-    loadSkillCompenConf()                                   # 加载技能补偿配置
-    loadABTestConf()                                        #  加载ab test配置
+    loadPassCardConf()
+    loadSkillCompenConf()
+    loadABTestConf()
     loadGiftAbcTestConf()
-    loadReturnerMissionConf()                               # 加载回归豪礼配置
+    loadReturnerMissionConf()
     loadItemHappyDoubleConf()
     loadMiniGameConf()
-    loadLuckyTreeConf()                                     # 加载免费金币摇钱树配置
+    loadLuckyTreeConf()
     loadExchangeStoreConf()
-    loadLevelPrizeWheelConf()                               # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
+    loadLevelPrizeWheelConf()
     loadTimePointMatchSkillConf()
     loadTerrorFishConf()
     loadTerrorFishConf_m()
@@ -3678,40 +3682,40 @@ def reloadConfig(event):
     """
     ftlog.debug("reloadConfig->", event.keylist)
     config = {
-        getConfigPath("public"): loadPublicConf,            # 加载公共配置
-        getConfigPath("scene"): loadSceneGroupConf,         # 加载渔场鱼阵配置
-        getConfigPath("scene_m"): loadSceneGroupConf_m,     # 加载千炮渔场鱼阵配置
+        getConfigPath("public"): loadPublicConf,
+        getConfigPath("scene"): loadSceneGroupConf,
+        getConfigPath("scene_m"): loadSceneGroupConf_m,
         getConfigPath("fish"): loadFishConf,
         getConfigPath("fish_m"): loadFishConf_m,
-        getConfigPath("weapon"): loadWeaponConf,            # 加载武器配置
-        getConfigPath("weapon_m"): loadWeaponConf_m,        # 加载千炮武器配置
-        getConfigPath("weaponPowerRate"): loadWeaponPowerRateConf,  # 加载武器威力加成配置
+        getConfigPath("weapon"): loadWeaponConf,
+        getConfigPath("weapon_m"): loadWeaponConf_m,
+        getConfigPath("weaponPowerRate"): loadWeaponPowerRateConf,
         getConfigPath("weaponPowerRate_m"): loadWeaponPowerRateConf_m,
         getConfigPath("weaponStageCount"): loadWeaponStageCountConf,
         getConfigPath("weaponStageCount_m"): loadWeaponStageCountConf_m,
-        getConfigPath("checkin"): loadCheckinConf,          # 加载签到配置
+        getConfigPath("checkin"): loadCheckinConf,
         getConfigPath("store"): loadStoreConf,
-        getConfigPath("drop"): loadDropConf,                # 加载掉落配置
+        getConfigPath("drop"): loadDropConf,
         getConfigPath("ulevel"): loadUlevelConf,
         getConfigPath("userLevel"): loadUserLevelConf,
-        getConfigPath("skill"): loadSkillConf,              # 加载技能配置
-        getConfigPath("skillGrade"): loadSkillGradeConf,    # 加载技能等级配置
-        getConfigPath("skillGrade_m"): loadSkillGradeConf_m,# 加载千炮技能等级配置
-        getConfigPath("skillStar"): loadSkillStarConf,      # 加载技能星级配置
-        getConfigPath("skillStar_m"): loadSkillStarConf_m,  # 加载千炮技能星级配置
+        getConfigPath("skill"): loadSkillConf,
+        getConfigPath("skillGrade"): loadSkillGradeConf,
+        getConfigPath("skillGrade_m"): loadSkillGradeConf_m,
+        getConfigPath("skillStar"): loadSkillStarConf,
+        getConfigPath("skillStar_m"): loadSkillStarConf_m,
         getConfigPath("mainQuest"): loadMainQuestConf,
         getConfigPath("dailyQuest"): loadDailyQuestConf,
         getConfigPath("dailyQuestReward"): loadDailyQuestRewardConf,
-        getConfigPath("cmpttTask"): loadCmpttTaskConf,      # 加载宝藏争夺赛配置
+        getConfigPath("cmpttTask"): loadCmpttTaskConf,
         getConfigPath("ncmpttTask"): loadNcmpttTaskConf,
         getConfigPath("bonusTask"): loadBonusTaskConf,
         getConfigPath("guideTask"): loadGuideTaskConf,
         getConfigPath("expression"): loadExpressionConf,
-        getConfigPath("chest"): loadChestConf,              # 加载宝箱配置
-        getConfigPath("chestDrop"): loadChestDropConf,      # 加载宝箱掉落配置
-        getConfigPath("probability"): loadProbabilityConf,  # 加载概率配置
+        getConfigPath("chest"): loadChestConf,
+        getConfigPath("chestDrop"): loadChestDropConf,
+        getConfigPath("probability"): loadProbabilityConf,
         getConfigPath("probability_m"): loadProbabilityConf_m,
-        getConfigPath("dynamicOdds"): loadDynamicOddsConf,  # 加载动态概率配置
+        getConfigPath("dynamicOdds"): loadDynamicOddsConf,
         getConfigPath("lotteryPool"): loadLotteryPoolConf,
         getConfigPath("ringLotteryPool"): loadRingLotteryPoolConf,
         getConfigPath("gift"): loadGiftConf,
@@ -3720,23 +3724,23 @@ def reloadConfig(event):
         getConfigPath("catchDrop_m"): loadCatchDropConf_m,
         getConfigPath("vip"): loadVipConf,
         getConfigPath("matchFish"): loadMatchFishConf,
-        getConfigPath("fixedMultipleFish"): loadFixedMultipleFishConf,  # 加载固定倍率鱼配置
+        getConfigPath("fixedMultipleFish"): loadFixedMultipleFishConf,
         getConfigPath("callMultipleFish"): loadCallMultipleFishConf,
         getConfigPath("matchMultipleFish"): loadMatchMultipleFishConf,
         getConfigPath("rankReward"): loadRankRewardConf,
         getConfigPath("fishBonusGame"): loadBounsGameConf,
         getConfigPath("achievement"): loadAchievementConf,
-        getConfigPath("item"): loadItemConf,                            # 加载道具配置
+        getConfigPath("item"): loadItemConf,
         getConfigPath("honor"): loadHonorConf,
-        getConfigPath("gun"): loadGunTypeConf,                          # 加载皮肤炮炮配置
-        getConfigPath("gun_m"): loadGunTypeConf_m,                      # 加载千炮皮肤炮炮配置
+        getConfigPath("gun"): loadGunTypeConf,
+        getConfigPath("gun_m"): loadGunTypeConf_m,
         getConfigPath("robbery"): loadRobberyConf,
         getConfigPath("common"): loadCommonConf,
         getConfigPath("playerBuffer"): loadPlayerBufferConf,
         getConfigPath("robot"): loadRobotConf,
         getConfigPath("randomMultipleFish"): loadRandomMultipleFishConf,
-        getConfigPath("gunLevel"): loadGunLevelConf,                    # 加载火炮升级配置
-        getConfigPath("gunLevel_m"): loadGunLevelConf_m,                # 加载千炮火炮升级配置
+        getConfigPath("gunLevel"): loadGunLevelConf,
+        getConfigPath("gunLevel_m"): loadGunLevelConf_m,
         getConfigPath("tableTask"): loadTableTaskConf,
         getConfigPath("inviteTask"): loadInviteTaskConf,
         getConfigPath("rechargePool"): loadRechargePoolConf,
@@ -3776,17 +3780,17 @@ def reloadConfig(event):
         getConfigPath("poseidon"): loadPoseidonConf,
         getConfigPath("bigPrize"): loadBigPrizeConf,
         getConfigPath("competition"): loadCompActConf,
-        getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,      # 加载默认商店配置
-        getConfigPath("passCard"): loadPassCardConf,                    # 加载通行证活动配置
-        getConfigPath("skillCompensate"): loadSkillCompenConf,          # 加载技能补偿配置
-        getConfigPath("abTest"): loadABTestConf,                        # 加载ab test配置
+        getConfigPath("newbie7DaysGift"): loadNewbie7DaysGfitConf,
+        getConfigPath("passCard"): loadPassCardConf,
+        getConfigPath("skillCompensate"): loadSkillCompenConf,
+        getConfigPath("abTest"): loadABTestConf,
         getConfigPath("giftAbcTest"): loadGiftAbcTestConf,
-        getConfigPath("returnerMission"): loadReturnerMissionConf,      # 加载回归豪礼配置
+        getConfigPath("returnerMission"): loadReturnerMissionConf,
         getConfigPath("itemHappyDouble"): loadItemHappyDoubleConf,
         getConfigPath("miniGame"): loadMiniGameConf,
-        getConfigPath("luckyTree"): loadLuckyTreeConf,                  # 加载免费金币摇钱树配置
+        getConfigPath("luckyTree"): loadLuckyTreeConf,
         getConfigPath("exchangeStore"): loadExchangeStoreConf,
-        getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,         # 加载等级转盘(青铜、白银、黄金、铂金、钻石)
+        getConfigPath("prizeWheel_m"): loadLevelPrizeWheelConf,
         getConfigPath("timePointMatchSkill_m"): loadTimePointMatchSkillConf,
         getConfigPath("terrorFish"): loadTerrorFishConf,
         getConfigPath("terrorFish_m"): loadTerrorFishConf_m,

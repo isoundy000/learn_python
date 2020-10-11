@@ -37,7 +37,7 @@ def sendFishCheckinInfo(userId, continueWindow=0):
     code = 1
     if (continueWindow and isCheckin):
         code = 2
-    elif util.isFinishAllRedTask(userId):
+    elif util.isFinishAllNewbieTask(userId):
         code = 0
         if not isCheckin:
             if checkinDay == len(config.getCheckinConf()):

@@ -163,6 +163,7 @@ class LevelPrizeWheel(PrizeWheel):
         mo.setResult("roomId", roomId)
         mo.setResult("fId", fId)
         mo.setResult("progressPct", self._getEnergyPct(level, fpMultiple))      # 对应段位等级的进度百分比0-100. 100时可以抽奖.
+        mo.setResult("nowLevel", level)                                         # 当前充能的段位
         mo.setResult("state", pwData[PWValueSlot.STATE])
         mo.setResult("progressChanged", changed)                                # 进度变化量，大于0表示增加，小于0表示减少，0表示同步数据
         mo.setResult("curRemainTimes", pwData[PWValueSlot.SPINTIMES])

@@ -165,6 +165,13 @@ def upgradeSkill(userId, skillId, actionType):
             # 激活技能时，技能等级和星级都为1；当技能槽有空位时，自动帮玩家装备该技能
             if skill[INDEX_ORIGINAL_LEVEL] == 1:
                 skill[INDEX_STAR_LEVEL] = 1
+                skillMode = gamedata.getGameAttr(userId, FISH_GAMEID, GameData.skillMode)
+                idleOrder = getSkillIdleOrder(userId, skillMode)
+                if idleOrder > 0:
+                    if skillMode == config.CLASSIC_MODE:
+                        skill[INDEX_STATE] = idleOrder
+                    else:
+                        skill[INDEX_STATE_M] = idleOrder
             setSkill(userId, skillId, skill)
         else:
             return 4, skill[INDEX_STAR_LEVEL], skill[INDEX_ORIGINAL_LEVEL], skill[INDEX_CURRENT_LEVEL], previousLevel
@@ -358,6 +365,23 @@ def checkSkillStatus(userId, skillId):
         ftlog.warn("checkSkillStatus-> skillLevel error", userId, skillId)
         return 3, skill
     return 0, skill
+
+
+def getSkillIdleOrder(userId, skillMode):
+    """
+    获得空闲技能槽位置
+    """
+    allSkills = _getAllSkills(userId)
+    maxInstallNum = MAX_INSTALL_NUM if skillMode == config.CLASSIC_MODE else MAX_INSTALL_NUM_M
+    allOrderList = [order + 1 for order in xrange(maxInstallNum)]
+    installedOrderList = []
+    for skillId, info in allSkills.iteritems():
+        if config.getSkillStarConf(skillId, info[INDEX_STAR_LEVEL], skillMode):
+            state = info[INDEX_STATE] if skillMode == config.CLASSIC_MODE else info[INDEX_STATE_M]
+            if state:
+                installedOrderList.append(state)
+    idleOrderList = list(set(allOrderList) - set(installedOrderList))
+    return min(idleOrderList) if idleOrderList else -1
 
 
 def isSkillMax(userId, skillId):
