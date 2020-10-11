@@ -61,8 +61,6 @@ class FishGroupSystem(object):
             group.clear()
         for group in self.table.callFishGroups.itervalues():
             group.clear()
-        self.table.normalFishGroups.clear()
-        self.table.callFishGroups.clear()
         self._clear()
 
     def deleteFishGroups(self, clearGroups, clearNum):
@@ -76,8 +74,7 @@ class FishGroupSystem(object):
         if ftlog.is_debug():
             ftlog.debug("deleteFishGroups:", self.table.tableId, nowTableTime, allGroupsLen)
         i = 0
-        for serverGroupId in clearGroups.keys():
-            group = clearGroups[serverGroupId]
+        for group in clearGroups.values():
             if not group.isAlive(nowTableTime) and allGroupsLen - i >= clearNum:
                 if not group.isCleared():
                     self.deleteFishGroup(group, clearGroups)
@@ -90,17 +87,16 @@ class FishGroupSystem(object):
         删除单个鱼群
         """
         if ftlog.is_debug():
-            ftlog.debug("deleteFishGroup:", self.table.tableId, group.desc())
+            nowTableTime = time.time() - self.table.startTime
+            ftlog.debug("deleteFishGroup:", self.table.tableId, group.desc(), "nowTableTime =", nowTableTime)
         startFishId = group.startFishId
         fishCount = group.fishCount
         serverGroupId = group.serverGroupId
         group.clear()
         for i in xrange(fishCount):
-            _fish = self.table.fishMap.get(startFishId + i)
-            if _fish:
-                if _fish["alive"]:
-                    self.table.refreshFishTypeCount(_fish)
-                del self.table.fishMap[startFishId + i]
+            fishId = startFishId + i
+            if self.table.setFishDied(fishId):
+                del self.table.fishMap[fishId]
         if clearGroups:
             del clearGroups[serverGroupId]
         elif serverGroupId in self.table.callFishGroups:
@@ -112,7 +108,7 @@ class FishGroupSystem(object):
                         sendUserId=None, gameResolution=None):
         """
         召唤鱼群（调用后立即出现的鱼群）
-        :param groupNames: 鱼阵文件名称 tide_44002_1、terror_77228_2、
+        :param groupNames: 鱼阵文件名称
         :param position: 出现位置
         :param HP: 鱼群中鱼的血量
         :param buffer: 鱼群中鱼的buffer
@@ -134,8 +130,6 @@ class FishGroupSystem(object):
                     ftlog.error("invalid fish groupType", groupName)
                     return None
                 groupConf = allGroups[groupName]
-                if ftlog.is_debug():
-                    ftlog.debug("insertFishGroup->groupConf =", groupName, groupConf)
                 enterTime = time.time() - self.table.startTime
                 startFishId = self._getNewFishId(len(groupConf["fishes"]))
                 group = FishGroup(groupConf, enterTime, self._getNewGroupId(), startFishId, position, gameResolution,
@@ -157,11 +151,11 @@ class FishGroupSystem(object):
                         "owner": userId,
                         "score": score,
                         "fishType": fishType,
+                        "type": fishConf["type"],
                         "sendUsersList": sendUserId if isinstance(sendUserId, list) else None
                     }
                     self.table.fishCountMap[fishType] = self.table.fishCountMap.setdefault(fishType, 0) + 1
                 self.table.callFishGroups[group.serverGroupId] = group
-                # ftlog.debug("insertFishGroup", self.table.tableId, group.serverGroupId, self.table.callFishGroups.keys())
                 newGroups.append(group)
         except:
             ftlog.error("insertFishGroup error", self.table.tableId, groupName, fishType)
@@ -210,7 +204,8 @@ class FishGroupSystem(object):
                         "alive": True,
                         "owner": None,
                         "score": None,
-                        "fishType": fishType
+                        "fishType": fishType,
+                        "type": fishConf["type"],
                     }
                     self.table.fishCountMap[fishType] = self.table.fishCountMap.setdefault(fishType, 0) + 1
                 self.table.normalFishGroups[group.serverGroupId] = group
@@ -252,7 +247,8 @@ class FishGroupSystem(object):
             groupMap["enT"] = round(group.enterTime, 2)
             groupMap["fishesStartId"] = group.startFishId
             groupMap["position"] = group.position
-            groupMap["gameResolution"] = group.gameResolution
+            if group.gameResolution:
+                groupMap["gameResolution"] = group.gameResolution
             HPFish = {}                                     # 带血的鱼
             bufferFish = {}                                 # 带buffer的鱼
             multipleFish = {}                               # 倍率鱼

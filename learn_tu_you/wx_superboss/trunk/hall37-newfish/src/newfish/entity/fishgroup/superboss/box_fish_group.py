@@ -215,7 +215,7 @@ class BoxFishGroup(SuperBossFishGroup):
                 self._isBossShowTimeStage = -0x1
                 FTLoopTimer(self.boxConf["fDelayTime"], 0, self._addBoss, self._fBossFishType).start()  # 宝箱爸爸
             else:                                                       # 时间不够则结束boss状态.
-                self._clearData(isSendMsg=True, fishType=_fishType, isEnd=0.1)
+                self._clearData(isSendMsg=True, fishType=_fishType, isEnd=5.0)
 
         if self._fBossFishType in event.fishTypes:
             if not self._group.get(self._fBossFishType):                # 宝箱爸爸被捕获时可能刚好超时,所以此时就不要再爆炸了.

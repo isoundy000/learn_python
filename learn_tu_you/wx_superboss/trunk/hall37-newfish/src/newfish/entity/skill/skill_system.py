@@ -146,7 +146,7 @@ def getSkillList(userId, skillMode=0):
 
 def upgradeSkill(userId, skillId, actionType):
     """
-    技能升级、升星
+    技能激活/升级、升星
     @return: 是否成功, 当前星级, 原始等级, 当前等级, 升级前的技能等级
     """
     code, skill = checkSkillStatus(userId, skillId)
@@ -162,7 +162,7 @@ def upgradeSkill(userId, skillId, actionType):
         if isOK:
             skill[INDEX_ORIGINAL_LEVEL] += 1
             skill[INDEX_CURRENT_LEVEL] = skill[INDEX_ORIGINAL_LEVEL]
-            # 激活技能时，技能等级和星级都为1
+            # 激活技能时，技能等级和星级都为1；当技能槽有空位时，自动帮玩家装备该技能
             if skill[INDEX_ORIGINAL_LEVEL] == 1:
                 skill[INDEX_STAR_LEVEL] = 1
             setSkill(userId, skillId, skill)
@@ -308,10 +308,10 @@ def installSkill(userId, skillId, skillMode, install):
                 if state:
                     installNum += 1
                 if state == install:
-                    ftlog.error("installSkill->, has been installed", userId, skillId, skillMode, install)
+                    ftlog.error("installSkill-> has been installed", userId, skillId, skillMode, install)
                     return 4
         if installNum >= maxInstallNum:
-            ftlog.error("installSkill->, attain max install num", userId, skillId, skillMode, install)
+            ftlog.error("installSkill-> attain max install num", userId, skillId, skillMode, install)
             return 4
     if skillMode == config.CLASSIC_MODE:
         skill[INDEX_STATE] = install

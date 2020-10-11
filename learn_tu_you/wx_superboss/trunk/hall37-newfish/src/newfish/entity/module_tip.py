@@ -82,7 +82,6 @@ def _onConfChanged(event):
     if _inited and event.isChanged("game:" + str(FISH_GAMEID) + ":moduleTip:0"):
         ftlog.debug("newfish moduletip._onConfChanged")
         _reloadConf()                                   # 模块配置发生了改变
-        
 
 
 def handleEvent(event):
@@ -177,7 +176,7 @@ def getTipValue(userId, moduleTip):
     """
     获取数据库的值
     """
-    value = gamedata.getGameAttrJson(userId, FISH_GAMEID, _buildModuleTipKey(moduleTip),[])
+    value = gamedata.getGameAttrJson(userId, FISH_GAMEID, _buildModuleTipKey(moduleTip), [])
     return value
 
 

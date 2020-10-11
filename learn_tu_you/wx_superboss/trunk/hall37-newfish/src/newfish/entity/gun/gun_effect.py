@@ -248,20 +248,11 @@ class GunEffect(object):
         if len(self.player.usingSkill) > 0:                     # 使用技能期间, 不能使用狂暴
             code = 4
         if code == 0:
-            # self.useGunEffect[gunId] = {
-            #     "state": State.USING,
-            #     "start_time": float('%.2f' % time.time()),
-            #     "progress": [0, conf["duration"]]
-            # }
-            # self.updateFireOrEnergy(gunId, idx=1, absValue=1)
-            # self._setData(gunId)
             self.useGunEffect[gunId] = {
                 "state": State.PREPARE,                         # 准备
                 "start_time": 0,                                # float('%.2f' % time.time())
                 "progress": [0, conf["duration"]]
             }
-            # data = self.gunEffectData[gunId]
-            # self.setUseEffectTimer(conf["duration"])          # 启动结束的定时器
         if data:
             dataTmp = deepcopy(data)
             dataTmp.pop(0)

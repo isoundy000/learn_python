@@ -29,21 +29,27 @@ class FishGroup(object):
         self.position = position if position else [0, 0]
         self.gameResolution = gameResolution if gameResolution else []
         self.enterTime = enterTime
+        self.startFishId = startFishId
         # 鱼群文件名字
         self.id = conf.get("id")
-        # 鱼群类型
-        groupType = self.id.split("_")[0]
-        if self.id.startswith("call_"):
-            groupType = self.id.split("_")[1]
+        # 鱼群自增ID
         self.serverGroupId = serverGroupId
-        self.type = groupType
-        self.totalTime = conf.get("totalTime")
+        # 鱼群类型
+        self.type = self.id.split("_")[1] if self.id.startswith("call_") else self.id.split("_")[0]
+        # 因客户端消息延迟和设备卡顿延长的存活时间
+        self.delayTime = 1
+        # 鱼群存活时间
+        self.totalTime = conf.get("totalTime") + self.delayTime
+        # 鱼群中的所有鱼
         self.fishes = conf.get("fishes")
+        # 鱼群中鱼的数量
         self.fishCount = len(self.fishes)
+        # 该鱼群的出场时间
         self.exitTime = self.enterTime + self.totalTime
-        self.startFishId = startFishId
+        # 该鱼群最后一条鱼的鱼ID
         self.endFishId = startFishId + self.fishCount - 1
         self.maxEnterTime = self._getMaxEnterTime()
+        # 该鱼群是否已被清除
         self.isClear = False
         # 鱼群被冰冻后延长的存活时间
         self.addTime = 0
@@ -51,6 +57,7 @@ class FishGroup(object):
         self.extendGroupTime = 0
         # 鱼群死亡定时器
         self.deadTimer = None
+        # 鱼群死亡回调
         self.deadCallback = deadCallback
         if self.deadCallback:
             self.deadTimer = FTLoopTimer(self.totalTime, 0, self.deadCallback, self)
@@ -76,18 +83,21 @@ class FishGroup(object):
         该鱼群中是否存在某条鱼
         """
         fish = self.fishes[fishId - self.startFishId]
-        return (self.enterTime + fish["enterTime"] <= nowTableTime <= self.enterTime + fish["exitTime"] + self.addTime)
+        enterTime = self.enterTime + fish["enterTime"]
+        exitTime = self.enterTime + fish["exitTime"] + self.addTime
+        return enterTime <= nowTableTime <= exitTime
 
     def isAlive(self, nowTableTime, table=None):
         """
         该鱼群是否存活（包含特殊鱼及已生成但即将出现的鱼群）
         """
         # 客户端特殊处理的鱼群且鱼群中鱼的数量不多时，判断鱼群是否存活看其中鱼的存活状态
-        if table and (self.type == "robot" or self.type == "piton" or self.type == "boss"):
+        if table and self.type in SPECIAL_ALIVE_TYPE:
             for fId in xrange(self.startFishId, self.endFishId + 1):
                 isOK = table.findFish(fId)
                 if isOK:
                     return isOK
+            return False
         # 一般鱼群，判断鱼群是否存活看鱼群的整体退出时间，因为其中鱼的数量过多，避免循环查找
         return nowTableTime < self.exitTime + self.addTime
 

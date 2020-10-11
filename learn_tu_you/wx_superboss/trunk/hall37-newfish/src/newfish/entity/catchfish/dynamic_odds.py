@@ -1,21 +1,23 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/4/20.
+"""
+
 import random
 import json
 
 from freetime.util import log as ftlog
 from poker.entity.dao import gamedata
 from poker.entity.biz import bireport
-from newfish.entity import config, util, weakdata
+from newfish.entity import config, util
 from newfish.entity.config import FISH_GAMEID
-from newfish.entity.redis_keys import GameData, ABTestData, WeakData
+from newfish.entity.redis_keys import GameData
 
-WAVE_ID = 0             # 波动曲线ID
-WAVE_INDEX = 1          # 波动频点位置
-WAVE_RADIX = 2          # 波动单元基数
-WAVE_COIN = 3           # 波动金币
+
+WAVE_ID = 0     # 波动曲线ID
+WAVE_INDEX = 1  # 波动频点位置
+WAVE_RADIX = 2  # 波动单元基数
+WAVE_COIN = 3   # 波动金币
 
 
 class DynamicOdds(object):
@@ -83,16 +85,16 @@ class DynamicOdds(object):
         # 常规技能-曲线高概率随机区间
         self.norSkillCurveHighSection = (0.5, 2.5)
         # 常规技能-非曲线概率随机区间
-        self.norSkillNonCurveSection = (0.32, 1.55)     # (0.3, 1.55)
+        self.norSkillNonCurveSection = (0.32, 1.55)
 
         # 汇能弹、激光炮、猎鱼机甲、格林机关枪
         self.spSkills = [5106, 5108, 5109, 5110]
         # 特殊技能-曲线低概率区间((概率系数, 出现概率))
         self.spSkillCurveLowSection = ((1.35, 0.05), (1.05, 0.65), (0.5, 0.3))
-        # 特殊技能-曲线高概率区间
+        # 特殊技能-曲线高概率区间((概率系数, 出现概率))
         self.spSkillCurveHighSection = ((3.9, 0.1), (1.5, 0.7), (0.8, 0.2))
-        # 特殊技能-非曲线概率区间
-        self.spSkillNonCurveSection = ((1.5, 0.1), (1.05, 0.7), (0.3, 0.2)) # ((2, 0.1), (1.05, 0.7), (0, 0.2))
+        # 特殊技能-非曲线概率区间((概率系数, 出现概率))
+        self.spSkillNonCurveSection = ((1.5, 0.1), (1.05, 0.7), (0.3, 0.2))
 
         # 黑名单概率
         self.banOddsList = config.getPublic("banOddsList", [])
@@ -151,31 +153,6 @@ class DynamicOdds(object):
             return
         if self.isProtectMode():
             return
-        # # 使用B模式.
-        # # 50倍场，玩家升到17级，处于A模式，初始化曲线为9.
-        # if self.fishPool == 44003 and self.player.level == 17:
-        #     if gamedata.getGameAttr(self.player.userId, FISH_GAMEID, GameData.initCurve5017TestMode) in ["a"] \
-        #             and gamedata.getGameAttrInt(self.player.userId, FISH_GAMEID, GameData.setUserCurve5017) == 0:
-        #         gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.setUserCurve5017, 1)
-        #         bankruptCount = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.bankruptCount, {})
-        #         _cnt = bankruptCount.get(str(self.fishPool), 0)
-        #         if _cnt == 0:
-        #             _waveId = 9
-        #         elif 0 < _cnt <= 2:
-        #             _waveId = 6
-        #         else:
-        #             _waveId = 0
-        #         if _waveId > 0:
-        #             self.resetOdds(_waveId)
-        #             ftlog.debug("DynamicOdds->refreshOdds->",
-        #                         "userId =", self.player.userId,
-        #                         "chip =", self.chip,
-        #                         "waveId =", self.waveId,
-        #                         "waveIndex =", self.waveIndex,
-        #                         "targetCoins =", self.targetCoins,
-        #                         "waveCoin =", self.waveCoin,
-        #                         "bankruptCount =", _cnt)
-        #             return
         data = gamedata.getGameAttrJson(self.player.userId, FISH_GAMEID, GameData.dynamicOdds, {})
         oddsData = data.get(str(self.fishPool), [])
         if oddsData:
