@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/11
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2019-10-22.
+"""
 
 import functools
 import time
@@ -63,16 +63,17 @@ class FishPoseidonRoom(TYNormalRoom):
         return table
 
     def _addTable(self, table):
-        """添加桌子"""
         self._allTableDict[table.tableId] = table
         self._usableTableList.append(table)
-        ftlog.debug("_addTable->", self._allTableDict, self._usableTableList)
+        if ftlog.is_debug():
+            ftlog.debug("_addTable->", self._allTableDict, self._usableTableList)
 
     def initializedGT(self, shadowRoomId, tableCount):
         """
         GT初始化完成
         """
-        ftlog.debug("initializedGT->", shadowRoomId, tableCount)
+        if ftlog.is_debug():
+            ftlog.debug("initializedGT->", shadowRoomId, tableCount)
         for i in xrange(tableCount):
             tableId = shadowRoomId * 10000 + i + 1
             table = Table(self.gameId, shadowRoomId, tableId)
@@ -81,7 +82,8 @@ class FishPoseidonRoom(TYNormalRoom):
         self.initializedRoomIds.add(shadowRoomId)
         if len(self.initializedRoomIds) == len(self.roomDefine.shadowRoomIds):
             self.initialized = True
-        ftlog.debug("initializedGT->", self.initialized, self.allTableDict)
+        if ftlog.is_debug():
+            ftlog.debug("initializedGT->", self.initialized, self.allTableDict)
 
     def initPoseidon(self):
         """
@@ -147,9 +149,8 @@ class FishPoseidonRoom(TYNormalRoom):
         if self.runStatus != self.ROOM_STATUS_RUN:
             FishQuickStart.onQuickStartFailed(FishQuickStart.ENTER_ROOM_REASON_MAINTENANCE, userId, clientId, self.roomId)
             return
-        if tableId == 0:                # 服务器为玩家选择桌子并坐下
+        if tableId == 0:  # 服务器为玩家选择桌子并坐下
             details = bireport.getRoomOnLineUserCount(FISH_GAMEID, True)[2]
-            ftlog.debug("doQuickStart->", self.roomDefine.shadowRoomIds, details)
             complete = False
             roomIds = self.roomDefine.shadowRoomIds
             # 按VIP等级分桌
@@ -170,7 +171,7 @@ class FishPoseidonRoom(TYNormalRoom):
             if not complete:
                 shadowRoomId = choice(self.roomDefine.shadowRoomIds)
             tableId = self.getBestTableId(userId, shadowRoomId)
-        else:                           # 玩家自选桌子坐下
+        else:  # 玩家自选桌子坐下
             assert isinstance(shadowRoomId, int) and gdata.roomIdDefineMap()[shadowRoomId].bigRoomId == self.roomDefine.bigRoomId
             tableId = self.enterOneTable(userId, shadowRoomId, tableId)
 
@@ -193,25 +194,24 @@ class FishPoseidonRoom(TYNormalRoom):
         pass
 
     def _triggerEnterTableEvent(self, event):
-        """触发进入桌子事件"""
         tableId = event.tableId
         userId = event.userId
         if tableId in self._allTableDict:
             self._allPlayerDict[userId] = tableId
-            ftlog.debug("_triggerEnterTableEvent", self._allPlayerDict)
+            if ftlog.is_debug():
+                ftlog.debug("_triggerEnterTableEvent", self._allPlayerDict)
 
     def _triggerLeaveTableEvent(self, event):
-        """触发离开桌子事件"""
         tableId = event.tableId
         userId = event.userId
         if tableId in self._allTableDict:
             if userId in self._allPlayerDict:
                 self._allPlayerDict.pop(userId)
-            ftlog.debug("_triggerLeaveTableEvent", self._allPlayerDict)
+            if ftlog.is_debug():
+                ftlog.debug("_triggerLeaveTableEvent", self._allPlayerDict)
 
 
 class Heartbeat(object):
-
     ST_IDLE = 0
     ST_START = 1
     ST_STOP = 2
@@ -240,18 +240,12 @@ class Heartbeat(object):
 
     @property
     def count(self):
-        """执行队列函数的次数"""
         return self._count
 
     def postCall(self, func, *args, **kwargs):
-        """添加处理函数"""
         self.postTask(functools.partial(func, *args, **kwargs))
 
     def postTask(self, task):
-        """
-        添加任务
-        :param task: 任务
-        """
         if self._state != Heartbeat.ST_STOP:
             self._postTaskList.append(task)
             if self._init and self._timer:
@@ -260,7 +254,6 @@ class Heartbeat(object):
                 self._timer.start()
 
     def _onInit(self):
-        """初始化"""
         try:
             self._timer = None
             interval = self._target.onInit()
@@ -284,14 +277,12 @@ class Heartbeat(object):
         self._scheduleTimer()
 
     def _scheduleTimer(self):
-        """定时计时器"""
         if self._state == Heartbeat.ST_START:
             interval = 0 if self._postTaskList else self._interval
             self._timer = FTLoopTimer(interval, 0, self._onTimeout)
             self._timer.start()
 
     def _processPostTaskList(self):
-        """处理任务队列"""
         taskList = self._postTaskList
         self._postTaskList = []
         for task in taskList:
@@ -302,7 +293,7 @@ class Heartbeat(object):
 
 
 class HeartbeatAble(object):
-    """心跳执行函数"""
+
     def __init__(self, interval):
         self._heart = Heartbeat(self, interval)
 
@@ -325,7 +316,6 @@ class HeartbeatAble(object):
         return 1
 
     def _doHeartbeat(self):
-        """多少秒数之后执行函数"""
         return 1
 
 
@@ -576,7 +566,6 @@ class Tower(HeartbeatAble):
         self._multiples = None
 
     def _doHeartbeat(self):
-        # ftlog.is_debug() and ftlog.debug("Tower._doHeartbeat", "state=", self._state)
         timestamp = pktimestamp.getCurrentTimestamp() + 1
         if self._state == Tower.ST_CHARGE:
             if timestamp >= self.attackTime:

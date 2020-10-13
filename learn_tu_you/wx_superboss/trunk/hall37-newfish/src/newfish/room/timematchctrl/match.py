@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/10
+"""
+Created on 2016年7月13日
 
+@author: zhaojiangang
+"""
 import time
 import random
 from datetime import datetime
@@ -1801,6 +1801,7 @@ class MatchMaster(HeartbeatAble):
         return targetsMap
     
     def _setupNextInst(self, instCtrl, signers, matchingCount):
+        """创建实例"""
         timestamp = pktimestamp.getCurrentTimestamp()
         startTime = self.matchConf.start.calcNextStartTime(timestamp + 1)
         skills = self._getSkills(self.matchId)
@@ -2540,8 +2541,8 @@ class TimePointMatch(object):
             conf.start.userMaxCountPerMatch = int(conf.start.userMaxCount / max(len(ctrlRoomIdList), 1))
             conf.start.signinMaxCountPerMatch = int(conf.start.signinMaxCount / max(len(ctrlRoomIdList), 1))
 
-        master = MatchMaster(room, conf)
-        master.matchStatusDao = MatchStatusDaoRedis(room)
+        master = MatchMaster(room, conf)                                            # 主控 技能
+        master.matchStatusDao = MatchStatusDaoRedis(room)                           # 初始化技能和目标鱼
         master.matchFactory = TimePointMatchFactory()
         area = MatchAreaLocal(master, room, conf)
         master.addArea(area)

@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/6
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/7/5.
+"""
 
 import json
 import traceback
@@ -122,38 +122,44 @@ def sendGrandPrizeReward(roomId, tableId, userId, fId, coinCount, level, seatId,
             msg = config.getMultiLangTextConf(leds[level], lang=lang) % \
                   (name, config.getMultiLangTextConf(table.runConfig.title, lang=lang), util.formatScore(coinCount, lang=lang))
             user_rpc.sendLed(FISH_GAMEID, msg, id=leds[level], lang=lang)
-    except Exception, e:
+    except Exception as e:
         ftlog.error("sendGrandPrizeReward", roomId, tableId, userId, fId, coinCount, traceback.format_exc())
     return 0
 
 
 @markRpcCall(groupName="roomId", lockName="", syncCall=1)
 def startTowerTotalBetsTimer(roomId):
-    """启动魔塔累计充能金币刷新定时器"""
-    ftlog.debug("startTowerTotalBetsTimer", roomId)
+    """
+    启动魔塔累计充能金币刷新定时器（海皇来袭）
+    @param roomId:
+    @return:
+    """
     try:
         room = gdata.rooms()[roomId]
         room.startTowerTotalBetsTimer()
-    except Exception, e:
+    except Exception as e:
         ftlog.error("startTowerTotalBetsTimer", roomId, traceback.format_exc())
     return 0
 
 
 @markRpcCall(groupName="roomId", lockName="", syncCall=1)
 def stopTowerTotalBetsTimer(roomId):
-    """停止魔塔累计充能金币刷新定时器"""
-    ftlog.debug("stopTowerTotalBetsTimer", roomId)
+    """
+    停止魔塔累计充能金币刷新定时器（海皇来袭）
+    """
     try:
         room = gdata.rooms()[roomId]
         room.stopTowerTotalBetsTimer()
-    except Exception, e:
+    except Exception as e:
         ftlog.error("stopTowerTotalBetsTimer", roomId, traceback.format_exc())
     return 0
 
 
 @markRpcCall(groupName="roomId", lockName="", syncCall=1)
 def notifyInspireInfo(roomId, teamId, ratio, remainTime, purchaserUid, interval, lv):
-    """渔场内鼓舞礼包通知"""
+    """
+    通知购买鼓舞礼包
+    """
     room = gdata.rooms()[roomId]
     ftlog.debug("notifyInspireInfo, ", roomId, teamId, ratio, remainTime, room.maptable.keys() if room else [])
     # for table in room.maptable.values():

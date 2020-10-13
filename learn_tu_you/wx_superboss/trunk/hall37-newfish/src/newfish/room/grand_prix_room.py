@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/11
+# -*- coding=utf-8 -*-
 """
 大奖赛房间逻辑
 """
+# @Author  : Kangxiaopeng
+# @Time    : 2019/10/08
 
 import time
 from random import choice
@@ -51,31 +50,24 @@ class FishGrandPrixRoom(FishFriendRoom):
         super(FishGrandPrixRoom, self).doQuickStart(msg)
 
     def _addTable(self, table):
-        """添加桌子"""
         super(FishGrandPrixRoom, self)._addTable(table)
 
     def _choiceTableRoom(self, userId):
-        """选择一个桌子"""
         return super(FishGrandPrixRoom, self)._choiceTableRoom(userId)
 
     def quickStartInGR(self, shadowRoomId, tableId, userId, clientId, extParams):
-        """快速进入房间进程"""
         super(FishGrandPrixRoom, self).quickStartInGR(shadowRoomId, tableId, userId, clientId, extParams)
 
     def quickStartInGT(self, shadowRoomId, tableId, userId, clientId, extParams):
-        """快速进入桌子GT进程"""
         super(FishGrandPrixRoom, self).quickStartInGT(shadowRoomId, tableId, userId, clientId, extParams)
 
     def _trySitDown(self, shadowRoomId, tableId, userId, clientId, extParams):
-        """尝试坐下 桌子的位置"""
         return super(FishGrandPrixRoom, self)._trySitDown(shadowRoomId, tableId, userId, clientId, extParams)
 
     def makeSitMsg(self, userId, shadowRoomId, tableId, clientId, extParams):
-        """生成落座的消息"""
         return super(FishGrandPrixRoom, self).makeSitMsg(userId, shadowRoomId, tableId, clientId, extParams)
 
     def roomUserOccupy(self, shadowRoomId, roomOccupy, extData=None):
-        """房间占用空间"""
         return super(FishGrandPrixRoom, self).roomUserOccupy(shadowRoomId, roomOccupy, extData)
 
     def _reportRoomUserOccupy(self):

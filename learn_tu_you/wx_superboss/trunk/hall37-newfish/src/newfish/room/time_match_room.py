@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/6/16.
+"""
 
 
 import functools
@@ -80,7 +80,7 @@ class FishTimeMatchRoom(TYRoom):
         match.tableManager = tableManager
 
         if gdata.mode() == gdata.RUN_MODE_ONLINE:
-            playerCapacity = tableManager.allTableCount * tableManager.tableSeatCount               # 玩家容量
+            playerCapacity = tableManager.allTableCount * tableManager.tableSeatCount
             if playerCapacity <= conf.start.userMaxCountPerMatch:
                 self._logger.error("initMatch", "allTableCount=", tableManager.allTableCount,
                                    "tableSeatCount=", tableManager.tableSeatCount,
@@ -89,6 +89,7 @@ class FishTimeMatchRoom(TYRoom):
                                    "confUserMaxCountPerMatch=", conf.start.userMaxCountPerMatch,
                                    "err=", "NotEnoughTable")
             # assert (playerCapacity > conf.start.userMaxCountPerMatch)
+
         self.match = match
         self.matchMaster = master
         self.matchPlugin.setMatch(self.roomId, match)

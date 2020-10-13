@@ -78,11 +78,12 @@ class FishNormalRoom(TYNormalRoom):
         """添加桌子"""
         self._allTableDict[table.tableId] = table
         self._usableTableList.append(table)
-        ftlog.debug("_addTable->", self._allTableDict, self._usableTableList)
+        if ftlog.is_debug():
+            ftlog.debug("_addTable->", self._allTableDict, self._usableTableList)
 
     def _choiceTableRoom(self, userId):
         """选择一个房间ID"""
-        level = util.getLevelByGunLevel(userId)
+        level = util.getUserLevel(userId)
         shadowRoomIdList = self.shadowRoomIdOccupyList
         if level <= 5:
             shadowRoomIdList = self.shadowRoomIdOccupyList[::-1]
@@ -92,9 +93,10 @@ class FishNormalRoom(TYNormalRoom):
                 continue
             choiceShadowRoomId = shadowRoomIdList[index][0]
             break
-        ftlog.debug("FishNormalRoom._choiceTableRoom", "roomId=", self.roomId, "userId=", userId,
-                    "choiceShadowRoomId=", choiceShadowRoomId, "shadowRoomIdList=", shadowRoomIdList,
-                    "shadowRoomIdOccupyList=", self.shadowRoomIdOccupyList)
+        if ftlog.is_debug():
+            ftlog.debug("FishNormalRoom._choiceTableRoom", "roomId=", self.roomId, "userId=", userId,
+                        "choiceShadowRoomId=", choiceShadowRoomId, "shadowRoomIdList=", shadowRoomIdList,
+                        "shadowRoomIdOccupyList=", self.shadowRoomIdOccupyList)
         return choiceShadowRoomId
 
     def quickStartInGR(self, shadowRoomId, tableId, userId, clientId, extParams):
@@ -160,11 +162,12 @@ class FishNormalRoom(TYNormalRoom):
         for shadowRoomOccupy in self.shadowRoomIdOccupyList:
             if shadowRoomOccupy[0] == int(shadowRoomId):
                 shadowRoomOccupy[1] = roomOccupy
-        ftlog.debug("FishNormalRoom.roomUserOccupy",
-                    "roomId=", self.roomId,
-                    "shadowRoomId=", shadowRoomId,
-                    "roomOccupy=", roomOccupy,
-                    "shadowRoomIdOccupyList=", self.shadowRoomIdOccupyList)
+        if ftlog.is_debug():
+            ftlog.debug("FishNormalRoom.roomUserOccupy",
+                        "roomId=", self.roomId,
+                        "shadowRoomId=", shadowRoomId,
+                        "roomOccupy=", roomOccupy,
+                        "shadowRoomIdOccupyList=", self.shadowRoomIdOccupyList)
         return True
 
     def _reportRoomUserOccupy(self):
@@ -178,13 +181,14 @@ class FishNormalRoom(TYNormalRoom):
         tableSeatCount = self.tableConf["maxSeatN"]
         totalCount = tableSeatCount * tableCount
         occupy = round(playerCount * 1.0 / (totalCount or 1), 3)
-        ftlog.debug("FishNormalRoom._processRoomUserOccupy",
-                    "roomId=", self.roomId,
-                    "playerCount=", playerCount,
-                    "tableCount=", tableCount,
-                    "tableSeatCount=", tableSeatCount,
-                    "totalCount=", totalCount,
-                    "roomUserOccupy=", occupy)
+        if ftlog.is_debug():
+            ftlog.debug("FishNormalRoom._processRoomUserOccupy",
+                        "roomId=", self.roomId,
+                        "playerCount=", playerCount,
+                        "tableCount=", tableCount,
+                        "tableSeatCount=", tableSeatCount,
+                        "totalCount=", totalCount,
+                        "roomUserOccupy=", occupy)
         room_remote.reportRoomUserOccupy(self.ctrlRoomId, self.roomId, occupy)
 
     def _updateUsableTableList(self):
@@ -214,7 +218,8 @@ class FishNormalRoom(TYNormalRoom):
         userId = event.userId
         if tableId in self._allTableDict:
             self._allPlayerDict[userId] = tableId
-            ftlog.debug("_triggerEnterTableEvent", self._allPlayerDict)
+            if ftlog.is_debug():
+                ftlog.debug("_triggerEnterTableEvent", self._allPlayerDict)
 
     def _triggerLeaveTableEvent(self, event):
         """
@@ -225,4 +230,5 @@ class FishNormalRoom(TYNormalRoom):
         if tableId in self._allTableDict:
             if userId in self._allPlayerDict:
                 self._allPlayerDict.pop(userId)
-            ftlog.debug("_triggerLeaveTableEvent", self._allPlayerDict)
+            if ftlog.is_debug():
+                ftlog.debug("_triggerLeaveTableEvent", self._allPlayerDict)

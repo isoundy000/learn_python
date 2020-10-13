@@ -45,13 +45,12 @@ class FishRobberyRoom(TYNormalRoom):
         tableId = msg.getParam("tableId")
         clientId = msg.getParam("clientId")
         ftlog.hinfo(getMethodName(), "->|userId, clientId, roomId, shadowRoomId, tableId:", userId, clientId, self.roomId, shadowRoomId, tableId)
-        # 10007 H5_5.1_weixin.weixin.0-hall44.weixin.tyjdby 443011000 None 0
+
         if self.runStatus != self.ROOM_STATUS_RUN:
             FishQuickStart.onQuickStartFailed(FishQuickStart.ENTER_ROOM_REASON_MAINTENANCE, userId, clientId, self.roomId)
             return
-        if tableId == 0:                            # 服务器为玩家选择桌子并坐下
+        if tableId == 0:  # 服务器为玩家选择桌子并坐下
             _, _, details = bireport.getRoomOnLineUserCount(FISH_GAMEID, True)
-            ftlog.debug("doQuickStart->", self.roomDefine.shadowRoomIds, details)   # [443011001] {'441011000': 0, '441021000': 0, '441031000': 0, '441041000': 0, '441011001': 0, '441021001': 0, '441031001': 0, '441041001': 0, '443011000': 0, '443021000': 0, '444991000': 0, '445011000': 0, '446011000': 0, '443011001': 0, '443021001': 0, '444991001': 0, '445011001': 0, '446011001': 0, '444111000': 0, '444121000': 0, '444111001': 0, '444121001': 0, '444151000': 0, '444151001': 0, '444141000': 0, '444141001': 0, '444021000': 0, '444031000': 0, '444041000': 0, '444051000': 0, '444021001': 0, '444031001': 0, '444041001': 0, '444051001': 0}
             complete = False
             roomIds = self.roomDefine.shadowRoomIds
             # 按VIP等级分桌
@@ -72,13 +71,14 @@ class FishRobberyRoom(TYNormalRoom):
             if not complete:
                 shadowRoomId = choice(self.roomDefine.shadowRoomIds)
             tableId = self.getBestTableId(userId, shadowRoomId)
-        else:                                       # 玩家自选桌子坐下
+        else:  # 玩家自选桌子坐下
             assert isinstance(shadowRoomId, int) and gdata.roomIdDefineMap()[shadowRoomId].bigRoomId == self.roomDefine.bigRoomId
             tableId = self.enterOneTable(userId, shadowRoomId, tableId)
 
         if not tableId:
             ftlog.error(getMethodName(), "getFreeTableId timeout", "|userId, roomId, tableId:", userId, self.roomId, tableId)
             return
+
         if ftlog.is_debug():
             ftlog.info(getMethodName(), "after choose table", "|userId, shadowRoomId, tableId:", userId, shadowRoomId, tableId)
         extParams = msg.getKey("params")

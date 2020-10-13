@@ -1,7 +1,9 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/10
+"""
+Created on 2016年5月13日
+
+@author: zhaojiangang
+"""
 
 import functools
 
@@ -14,23 +16,23 @@ class Heartbeat(object):
     ST_IDLE = 0
     ST_START = 1
     ST_STOP = 2
-
+    
     def __init__(self, target, interval):
         self._target = target
         self._state = Heartbeat.ST_IDLE
-        self._count = 0                                     # 执行任务次数
-        self._postTaskList = []                             # 任务列表
-        self._timer = None                                  # 定时器
-        self._interval = interval                           # 间隔
+        self._count = 0
+        self._postTaskList = []
+        self._timer = None
+        self._interval = interval
         self._logger = Logger()
         self._init = False
-
+        
     def start(self):
-        assert (self._state == Heartbeat.ST_IDLE)
+        assert(self._state == Heartbeat.ST_IDLE)
         self._state = Heartbeat.ST_START
         self._timer = FTLoopTimer(0, 0, self._onInit)
         self._timer.start()
-
+        
     def stop(self):
         if self._state != Heartbeat.ST_STOP:
             self._state = Heartbeat.ST_STOP
@@ -41,20 +43,18 @@ class Heartbeat(object):
     @property
     def count(self):
         return self._count
-
+    
     def postCall(self, func, *args, **kwargs):
-        """请求调用"""
         self.postTask(functools.partial(func, *args, **kwargs))
-
+    
     def postTask(self, task):
-        """处理任务"""
         if self._state != Heartbeat.ST_STOP:
             self._postTaskList.append(task)
             if self._init and self._timer:
                 self._timer.cancel()
                 self._timer = FTLoopTimer(0, 0, self._onTimeout)
                 self._timer.start()
-
+    
     def _onInit(self):
         try:
             self._timer = None
@@ -64,29 +64,27 @@ class Heartbeat(object):
             self._scheduleTimer()
         except:
             self._logger.error("Heartbeat._onInit")
-
+    
     def _onTimeout(self):
         try:
             self._timer = None
             self._count += 1
             self._processPostTaskList()
-            interval = self._target.onHeartbeat()                           # 心跳间隔
+            interval = self._target.onHeartbeat()
             if interval is not None:
                 self._interval = interval
         except:
             self._interval = 1
             self._logger.error("Heartbeat._onTimeout")
         self._scheduleTimer()
-
+    
     def _scheduleTimer(self):
-        """排期定时器"""
         if self._state == Heartbeat.ST_START:
             interval = 0 if self._postTaskList else self._interval
             self._timer = FTLoopTimer(interval, 0, self._onTimeout)
             self._timer.start()
-
+            
     def _processPostTaskList(self):
-        """处理请求任务列表"""
         taskList = self._postTaskList
         self._postTaskList = []
         for task in taskList:
@@ -100,22 +98,22 @@ class HeartbeatAble(object):
 
     def __init__(self, interval):
         self._heart = Heartbeat(self, interval)
-
+        
     def startHeart(self):
         self._heart.start()
-
+        
     def stopHeart(self):
         self._heart.stop()
-
+        
     def onInit(self):
         return self._doInit()
-
+    
     def onHeartbeat(self):
         return self._doHeartbeat()
 
     def _doInit(self):
         return 1
-
+    
     def _doHeartbeat(self):
         return 1
 
@@ -131,25 +129,25 @@ class Logger(object):
     def add(self, k, v):
         self._args.append("%s=" % (k))
         self._args.append(v)
-
+            
     def hinfo(self, prefix=None, *args):
         self._log(prefix, ftlog.hinfo, *args)
-
+        
     def info(self, prefix=None, *args):
         self._log(prefix, ftlog.info, *args)
-
+    
     def debug(self, prefix=None, *args):
         self._log(prefix, ftlog.debug, *args)
-
+    
     def warn(self, prefix=None, *args):
         self._log(prefix, ftlog.warn, *args)
-
+    
     def error(self, prefix=None, *args):
         self._log(prefix, ftlog.error, *args)
-
+        
     def isDebug(self):
         return ftlog.is_debug()
-
+    
     def _log(self, prefix, func, *args):
         argl = []
         if prefix:

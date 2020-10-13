@@ -1,7 +1,9 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/9/8
+"""
+Created on 2016年7月14日
+
+@author: zhaojiangang
+"""
 
 import math
 import time
@@ -41,14 +43,13 @@ from newfish.entity.redis_keys import GameData
 
 
 class SigninRecordDaoRedis(SigninRecordDao):
-    """报名记录操作redis"""
     def __init__(self, gameId):
         self._gameId = gameId
         self._logger = Logger()
-
+        
     def buildKey(self, matchId, ctrlRoomId, instId):
         return "msignin4:%s:%s:%s" % (self._gameId, ctrlRoomId, instId)
-
+    
     @classmethod
     def decodeRecord(cls, userId, jstr):
         d = strutil.loads(jstr)
@@ -58,14 +59,14 @@ class SigninRecordDaoRedis(SigninRecordDao):
         if fee:
             record.fee = TYContentItem.decodeFromDict(fee)
         return record
-
+    
     @classmethod
     def encodeRecord(cls, record):
         d = {"st": record.signinTime}
         if record.fee:
             d["fee"] = record.fee.toDict()
         return strutil.dumps(d)
-
+    
     def loadAll(self, matchId, instId, ctrlRoomId):
         ret = []
         key = self.buildKey(matchId, instId, ctrlRoomId)
@@ -121,30 +122,29 @@ class SigninRecordDaoRedis(SigninRecordDao):
 
 
 class MatchStatusDaoRedis(MatchStatusDao):
-    """比赛状态的操作redis"""
+
     def __init__(self, room):
         self._room = room
         self._logger = Logger()
         self._logger.add("roomId", self._room.roomId)
-
+        
     def load(self, matchId):
         """
         加载比赛信息
         @return: MatchStatus
         """
-        key = "mstatus:%s" % (self._room.gameId)
+        key = "mstatus:%s" % self._room.gameId
         jstr = daobase.executeMixCmd("hget", key, matchId)
         if jstr:
             d = strutil.loads(jstr)
             return MatchStatus(matchId, d["seq"], d["startTime"], d.get("skills"), d.get("targets"))
-        return None
 
     def save(self, status):
         """
         保存比赛信息
         """
         try:
-            key = "mstatus:%s" % (self._room.gameId)
+            key = "mstatus:%s" % self._room.gameId
             d = {"seq": status.sequence, "startTime": status.startTime, "skills": status.skills}
             jstr = strutil.dumps(d)
             daobase.executeMixCmd("hset", key, status.matchId, jstr)
@@ -159,7 +159,7 @@ class MatchStatusDaoRedis(MatchStatusDao):
         """
         下场比赛的轮次ID
         """
-        key = "matchingId:%s" % (self._room.gameId)
+        key = "matchingId:%s" % self._room.gameId
         self._logger.hinfo("MatchStatusDaoRedis.getNextMatchingSequence",
                            "matchId=", matchId,
                            "key=", key)
@@ -167,7 +167,6 @@ class MatchStatusDaoRedis(MatchStatusDao):
 
 
 class MatchRankDaoRedis(object):
-    """比赛排行信息"""
     def __init__(self, master):
         self._master = master
         self.key = "mrank:%s:%s:%s" % (self._master.gameId, self._master.roomId, self._master.matchId)
@@ -256,7 +255,6 @@ class MatchRankDaoRedis(object):
 
 
 class SigninFeeTime(SigninFee):
-    """报名费"""
     def __init__(self, room):
         self._room = room
         self._logger = Logger()
@@ -324,7 +322,6 @@ class TimePointPlayer(TimePlayer):
 
 
 class SignerInfoLoaderTime(SignerInfoLoader):
-    """报名信息"""
     def __init__(self):
         self._logger = Logger()
 
@@ -350,7 +347,6 @@ class TableControllerTime(TableController):
 
     @classmethod
     def buildTableInfoMessage(cls, table, msg):
-        """构建桌子信息"""
         seats = []
         group = table.group
         for seat in table.seats:
@@ -377,7 +373,6 @@ class TableControllerTime(TableController):
 
     @classmethod
     def buildPlayerRankMessage(cls, table, msg):
-        """构建玩家排行榜信息"""
         seats = []
         group = table.group
         stage = table.group.stage
@@ -397,7 +392,6 @@ class TableControllerTime(TableController):
 
     @classmethod
     def buildTableStartMessage(cls, table):
-        """桌子开始的信息"""
         msg = MsgPack()
         msg.setCmd("table_manage")
         msg.setParam("action", "m_table_start")
@@ -405,7 +399,6 @@ class TableControllerTime(TableController):
 
     @classmethod
     def buildUpdateMessage(cls, table):
-        """更新排行榜信息"""
         msg = MsgPack()
         msg.setCmd("table_manage")
         msg.setParam("action", "m_table_update")
@@ -413,7 +406,6 @@ class TableControllerTime(TableController):
 
     @classmethod
     def buildTableClearMessage(cls, table):
-        """清理桌子信息"""
         msg = MsgPack()
         msg.setCmd("table_manage")
         msg.setParam("action", "m_table_clear")
@@ -502,13 +494,11 @@ class TableControllerTime(TableController):
 
 
 class TableControllerTimePoint(TableControllerTime):
-    """限时回馈赛"""
     def __init__(self, area):
         super(TableControllerTimePoint, self).__init__(area)
 
     @classmethod
     def buildTableInfoMessage(cls, table, msg):
-        """获取桌子信息"""
         seats = []
         group = table.group
         for seat in table.seats:
@@ -538,7 +528,6 @@ class TableControllerTimePoint(TableControllerTime):
 
 
 class MatchRewardsTime(MatchRewards):
-    """比赛奖励"""
     def __init__(self, room):
         self._room = room
         self._logger = Logger()
@@ -581,7 +570,6 @@ class MatchRewardsTime(MatchRewards):
 
 
 class MatchRewardsTimePoint(MatchRewardsTime):
-    """限时回馈赛奖励"""
     def __init__(self, room):
         super(MatchRewardsTimePoint, self).__init__(room)
 
@@ -623,7 +611,6 @@ class MatchRewardsTimePoint(MatchRewardsTime):
 
 
 class MatchUserIFTime(MatchUserIF):
-    """比赛玩家"""
     def __init__(self, room, tableId, seatId):
         self._room = room
         self._tableId = tableId
@@ -1107,7 +1094,6 @@ class PlayerNotifierTimePoint(PlayerNotifierTime):
 
 
 class TimeStage(MatchStage):
-    """比赛阶段"""
     def __init__(self, stageConf, group):
         super(TimeStage, self).__init__(stageConf, group)
         # value=list<Player>

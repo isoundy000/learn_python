@@ -1,8 +1,9 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/10
+"""
+Created on 2016年5月12日
 
+@author: zhaojiangang
+"""
 import random
 
 from newfish.room.timematchctrl.const import SeatQueuingType, ScoreCalcType
@@ -50,7 +51,7 @@ class Player(object):
     ST_WINLOSE = 4
     ST_RISE = 5
     ST_OVER = 6
-
+    
     def __init__(self, userId):
         # 用户ID
         self.userId = userId
@@ -92,27 +93,27 @@ class Player(object):
         self.playCount = 0
         # 平均排名
         self.averageRank = 0
-
+    
     @property
     def state(self):
         return self._state
-
+        
     @property
     def group(self):
         return self._group
-
+    
     @property
     def stage(self):
         return self._group.stage
-
+    
     @property
     def seat(self):
         return self._seat
-
+    
     @property
     def seatId(self):
         return self._seat.seatId
-
+    
     @property
     def table(self):
         return self._seat.table if self._seat else None
@@ -124,31 +125,31 @@ class Seat(object):
         self._seatId = seatId
         self._location = "%s.%s.%s.%s" % (table.gameId, table.roomId, table.tableId, seatId)
         self._player = None
-
+        
     @property
     def gameId(self):
         return self.table.gameId
-
+    
     @property
     def table(self):
         return self._table
-
+    
     @property
     def seatId(self):
         return self._seatId
-
+    
     @property
     def roomId(self):
         return self.table.roomId
-
+    
     @property
     def tableId(self):
         return self.table.tableId
-
+    
     @property
     def location(self):
         return self._location
-
+    
     @property
     def player(self):
         return self._player
@@ -174,31 +175,31 @@ class Table(object):
         self._location = "%s.%s.%s" % (self.gameId, self.roomId, self.tableId)
         # 桌子排名比例
         self._tableRankRatio = 0
-
+         
     @property
     def gameId(self):
         return self._gameId
-
+    
     @property
     def roomId(self):
         return self._roomId
-
+    
     @property
     def tableId(self):
         return self._tableId
-
+    
     @property
     def seats(self):
         return self._seats
-
+    
     @property
     def group(self):
         return self._group
-
+    
     @property
     def location(self):
         return self._location
-
+    
     @property
     def seatCount(self):
         return len(self._seats)
@@ -210,14 +211,14 @@ class Table(object):
     @property
     def tableRankRatio(self):
         return self._tableRankRatio
-
+    
     @property
     def idleSeatCount(self):
         """
         空闲座位的数量
         """
         return len(self._idleSeats)
-
+    
     def getPlayingPlayerCount(self):
         """
         获取PLAYING状态的玩家数量
@@ -227,20 +228,20 @@ class Table(object):
             if seat.player and seat.player.state == Player.ST_PLAYING:
                 count += 1
         return count
-
+    
     def getPlayingPlayerList(self):
         playerList = []
         for seat in self._seats:
             if seat.player and seat.player.state == Player.ST_PLAYING:
                 playerList.append(seat.player)
         return playerList
-
+    
     def getPlayerList(self):
         """
         获取本桌的所有player
         """
         return [seat.player for seat in self.seats if seat.player]
-
+        
     def getUserIdList(self):
         """
         获取本桌所有userId
@@ -249,26 +250,26 @@ class Table(object):
         for seat in self.seats:
             ret.append(seat.player.userId if seat.player else 0)
         return ret
-
+    
     def sitdown(self, player):
         """
         玩家坐下
         """
-        assert (player._seat is None)
-        assert (len(self._idleSeats) > 0)
+        assert(player._seat is None)
+        assert(len(self._idleSeats) > 0)
         seat = self._idleSeats[-1]
         del self._idleSeats[-1]
         seat._player = player
         player._table = self
         player._seat = seat
-
+        
     def standup(self, player):
         """
         玩家离开桌子
         """
         assert(player._seat is not None and player._seat.table == self)
         self._clearSeat(player._seat)
-
+        
     def clear(self):
         """
         清理桌子上的所有玩家
@@ -276,14 +277,14 @@ class Table(object):
         for seat in self._seats:
             if seat._player:
                 self.standup(seat._player)
-
+                
     def _clearSeat(self, seat):
         seat._player._seat = None
         seat._player = None
         self._idleSeats.append(seat)
-
+        
     def _makeSeats(self, count):
-        assert (count > 0)
+        assert(count > 0)
         seats = []
         for i in xrange(count):
             seats.append(Seat(self, 2 * i + 1))
@@ -298,7 +299,7 @@ class PlayerSort(object):
         if p1.score < p2.score:
             return 1
         return -1
-
+    
     @classmethod
     def cmpBySigninTime(cls, p1, p2):
         return cmp(p1.signinTime, p2.signinTime)
@@ -329,7 +330,7 @@ class PlayerSort(object):
     @classmethod
     def getLuckyValue(cls, player):
         return player.averageRank + player.luckyValue / random.randint(500, 1000) + random.randint(-2, 5)
-
+    
     @classmethod
     def cmpByTableRanking(cls, p1, p2):
         if p1.tableRank <= 0 and p2.tableRank <= 0:
@@ -389,7 +390,7 @@ class PlayerQueuing(object):
         SeatQueuingType.SIGNIN_TIME: PlayerQueuingSigninTime(),
         SeatQueuingType.LUCKY: PlayerQueuingLucky()
     }
-
+        
     @classmethod
     def sort(cls, queuingType, players):
         if queuingType in cls._queuingMap:
@@ -405,7 +406,7 @@ class PlayerScoreCalcImpl(object):
 class PlayerScoreCalcFixed(PlayerScoreCalcImpl):
     def __init__(self, value):
         self._value = value
-
+        
     def calc(self, score):
         if self._value == 0:
             return score
@@ -420,7 +421,7 @@ class PlayerScoreCalcPingFangGen(PlayerScoreCalcImpl):
 class PlayerScoreCalcBaiFenBi(PlayerScoreCalcImpl):
     def __init__(self, rate):
         self._rate = rate
-
+        
     def calc(self, score):
         return int(score * self._rate)
 
@@ -430,7 +431,7 @@ class PlayerScoreCalcKaiFangFangDa(PlayerScoreCalcImpl):
         self._base = base
         self._middle = max(middle, 1)
         self._rate = self._base / self._middle ** 0.5
-
+        
     def calc(self, score):
         if score < 0:
             score = 0
@@ -439,7 +440,7 @@ class PlayerScoreCalcKaiFangFangDa(PlayerScoreCalcImpl):
 
 class PlayerScoreCalc:
     _pingFangGenInstance = PlayerScoreCalcPingFangGen()
-
+    
     @classmethod
     def makeCalc(cls, stageConf, playerList):
         calcType = stageConf.chipUser
@@ -468,16 +469,16 @@ class PlayerGrouping(object):
             nextPos = pos + countPerGroup
             ret.append(playerList[pos:nextPos])
             pos = nextPos
-
+            
         rem = len(playerList) - pos
         if rem > 0:
             for i in xrange(groupCount):
                 if pos >= len(playerList):
                     break
-                ret[i].extend(playerList[pos:pos + tableSeatCount])
+                ret[i].extend(playerList[pos:pos+tableSeatCount])
                 pos += tableSeatCount
         return ret
-
+    
     @classmethod
     def calcFixCount(cls, userCount, tableSeatCount):
         mod = userCount % tableSeatCount
@@ -489,7 +490,7 @@ class PlayerGrouping(object):
                 return add
             return -mod
         return 0
-
+    
     @classmethod
     def groupingByMaxUserCountPerGroup(cls, playerList, userCount, tableSeatCount):
         groupCount = (len(playerList) + userCount - 1) / userCount
@@ -504,17 +505,17 @@ class PlayerGrouping(object):
             nextPos = pos + countPerGroup
             ret.append(playerList[pos:nextPos])
             pos = nextPos
-
+            
         rem = len(playerList) - pos
         if rem > 0:
             for i in xrange(groupCount):
                 if pos >= len(playerList):
                     break
                 addCount = min(tableSeatCount, userCount - len(ret[i]))
-                ret[i].extend(playerList[pos:pos + addCount])
+                ret[i].extend(playerList[pos:pos+addCount])
                 pos += addCount
         return ret
-
+    
     @classmethod
     def groupingByFixedUserCountPerGroup(cls, playerList, userCount):
         pos = 0
@@ -528,10 +529,9 @@ class PlayerGrouping(object):
 
 class GroupNameGenerator(object):
     GROUP_NAME_PREFIX = [chr(i) for i in range(ord("A"), ord("Z") + 1)]
-
     @classmethod
     def generateGroupName(cls, groupCount, i):
-        assert (0 <= i < groupCount)
+        assert(0 <= i < groupCount)
         groupName = GroupNameGenerator.GROUP_NAME_PREFIX[i % len(GroupNameGenerator.GROUP_NAME_PREFIX)]
         if groupCount > len(GroupNameGenerator.GROUP_NAME_PREFIX):
             number = i + 1
@@ -543,66 +543,63 @@ class GroupNameGenerator(object):
 
 
 class TableManager(object):
-    """桌子管理者"""
+
     def __init__(self, room, tableSeatCount):
         self._room = room
-        self._tableSeatCount = tableSeatCount       # 桌子座位数
+        self._tableSeatCount = tableSeatCount
         self._idleTables = []
         self._allTableMap = {}
         self._roomIds = set()
         self._logger = Logger()
         self._logger.add("roomId", self._room.roomId)
-
+        
     @property
     def tableSeatCount(self):
         return self._tableSeatCount
-
+    
     @property
     def roomCount(self):
         return len(self._roomIds)
-
+    
     @property
     def gameId(self):
         return self._room.gameId
-
+    
     @property
     def allTableCount(self):
-        """所有的桌子数"""
         return len(self._allTableMap)
-
+    
     @property
     def idleTableCount(self):
-        """空闲的桌子数"""
         return len(self._idleTables)
-
-    @property
+    
+    @property    
     def busyTableCount(self):
-        """繁忙的桌子数"""
         return max(0, self.allTableCount - self.idleTableCount)
-
+    
     def getTableCountPerRoom(self):
         return len(self._allTableMap) / max(1, self.roomCount)
-
+    
     def addTable(self, table):
-        assert (not table.tableId in self._allTableMap)
-        assert (table.seatCount == self.tableSeatCount)
+        assert(not table.tableId in self._allTableMap)
+        assert(table.seatCount == self.tableSeatCount)
         self._idleTables.append(table)
         self._allTableMap[table.tableId] = table
-
+        
     def addTables(self, roomId, baseId, count):
         if count > 0:
             self._roomIds.add(roomId)
         for i in xrange(count):
-            tableId = baseId + i + 1  # 新框架里tableId 从 1开始计数， 0表示队列。
+            tableId = baseId + i + 1    # 新框架里tableId 从 1开始计数， 0表示队列。
             table = Table(self.gameId, roomId, tableId, self._tableSeatCount)
             self._idleTables.append(table)
             self._allTableMap[tableId] = table
-
+            
     def borrowTables(self, count):
         """
         从空闲的table中获取可用table
         """
-        assert (self.idleTableCount >= count)
+        assert(self.idleTableCount >= count)
         ret = self._idleTables[0:count]
         self._idleTables = self._idleTables[count:]
         self._logger.info("TableManager.borrowTables",
@@ -610,19 +607,19 @@ class TableManager(object):
                           "idleTableCount=", self.idleTableCount,
                           "allTableCount=", self.allTableCount)
         return ret
-
+    
     def returnTables(self, tables):
         """
         释放table到空闲状态
         """
         for table in tables:
-            assert (self._allTableMap.get(table.tableId, None) == table)
-            assert (not table.getPlayerList())
+            assert(self._allTableMap.get(table.tableId, None) == table)
+            assert(not table.getPlayerList())
             self._idleTables.append(table)
         self._logger.info("TableManager.returnTables",
                           "count=", len(tables),
                           "idleTableCount=", self.idleTableCount,
                           "allTableCount=", self.allTableCount)
-
+        
     def findTable(self, roomId, tableId):
         return self._allTableMap.get(tableId, None)

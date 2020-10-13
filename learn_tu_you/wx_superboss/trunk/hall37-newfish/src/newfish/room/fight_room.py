@@ -46,7 +46,8 @@ class FishFightRoom(TYRoom):
         """查找房间"""
         if isinstance(ftId, int):
             ftId = str(ftId)
-        ftlog.debug("findFT-----", self._ftMap, self._ftMap.get(ftId), ftId)
+        if ftlog.is_debug():
+            ftlog.debug("findFT-----", self._ftMap, self._ftMap.get(ftId), ftId)
         return self._ftMap.get(ftId)
 
     def createFT(self, userId, ftConf):
@@ -66,7 +67,7 @@ class FishFightRoom(TYRoom):
                 # raise TYBizException(2, u"渔场太火爆了，请稍后再试!")
                 raise TYBizException(2, config.getMultiLangTextConf("ID_ENTER_ROOM_REASON", lang=lang))
             if self._tableManager.idleTableCount < 1:
-                # raise TYBizException(2, u"渔场太火爆了，请稍后再试!")
+                # raise TYBizException(2, u"次数不足或道具不够!")
                 raise TYBizException(2, config.getMultiLangTextConf("ID_ENTER_ROOM_REASON", lang=lang))
             from newfish.entity.fishactivity import fish_activity_system
             code = fish_activity_system.isCanCreatRoom(userId, ftConf.fee)
@@ -84,7 +85,8 @@ class FishFightRoom(TYRoom):
             # 通知桌子绑定了朋友桌
             self._tableCtrl.bindTable(ftTable.table)
             self.enterFT(userId, ftId)
-            ftlog.info("FTRoom.createFT Success", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=", ftConf.fee)
+            ftlog.info("FTRoom.createFT Success", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=",
+                       ftConf.fee)
             return 0
         except Exception, e:
             if isCollectFee:
@@ -98,7 +100,8 @@ class FishFightRoom(TYRoom):
 
     def disbindFT(self, ftId, isReturnFee):
         """释放自建桌子"""
-        ftlog.debug("FriendRoom disbindFT", ftId)
+        if ftlog.is_debug():
+            ftlog.debug("FriendRoom disbindFT", ftId)
         ftTable = self.findFT(ftId)
         if not ftTable:
             # raise TYBizException(-1,  u"没有找到该房间! ")
@@ -110,7 +113,8 @@ class FishFightRoom(TYRoom):
         self._tableManager.returnTable(ftTable.table)
         releaseFTId(ftId)
 
-        ftlog.info("FTRoom.disbindFT Succ", "roomId=", self.roomId, "userId=", ftTable.userId, "ftId=", ftTable.ftId, "fee=", ftTable.ftConf.fee)
+        ftlog.info("FTRoom.disbindFT Succ", "roomId=", self.roomId, "userId=", ftTable.userId, "ftId=", ftTable.ftId,
+                   "fee=", ftTable.ftConf.fee)
 
     def enterFT(self, userId, ftId):
         """进入桌子"""
@@ -146,13 +150,15 @@ class FishFightRoom(TYRoom):
 
     def userStandUp(self, ftId, userId):
         """用户离开桌子"""
-        ftlog.debug("room userStandUp->", userId, ftId, self._ftMap)
+        if ftlog.is_debug():
+            ftlog.debug("room userStandUp->", userId, ftId, self._ftMap)
         ftTable = self.findFT(ftId)
         if ftTable and ftTable.table:
             player = ftTable.table.getPlayer(userId)
             if player:
                 ftTable.table.standup(player)
-            ftlog.debug("room userStandUp->", userId, ftTable.table.getUserNum())
+            if ftlog.is_debug():
+                ftlog.debug("room userStandUp->", userId, ftTable.table.getUserNum())
 
     def _returnFee(self, userId, ftId, ftConf):
         """返还门票"""
@@ -161,9 +167,11 @@ class FishFightRoom(TYRoom):
         try:
             from newfish.entity import util
             code = util.addRewards(userId, ftConf.fee, "ROOM_GAME_FEE", int(ftId))
-            ftlog.info("FTRoom._returnFee", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=", ftConf.fee, "final=", code)
+            ftlog.info("FTRoom._returnFee", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=",
+                       ftConf.fee, "final=", code)
         except:
-            ftlog.error("FTRoom._returnFee", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=", ftConf.fee)
+            ftlog.error("FTRoom._returnFee", "roomId=", self.roomId, "userId=", userId, "ftId=", ftId, "fee=",
+                        ftConf.fee)
 
     def _collectFee(self, userId, ftId, ftConf):
         """收取门票"""
@@ -195,17 +203,17 @@ class FishFightRoom(TYRoom):
         """构建桌子管理者"""
         shadowRoomIds = self.roomDefine.shadowRoomIds
         seatCount = self.matchConf.get("table.seat.count")
-        ftlog.info("FTRoom._buildTableManager", "roomId=", self.roomId, "shadowRoomIds=", list(shadowRoomIds), "seatCount=", seatCount)
-
+        ftlog.info("FTRoom._buildTableManager", "roomId=", self.roomId, "shadowRoomIds=", list(shadowRoomIds),
+                   "seatCount=", seatCount)
         tableManager = TableManager(self)
         for roomId in self.roomDefine.shadowRoomIds:
             count = self.roomDefine.configure["gameTableCount"]
             baseId = roomId * 10000 + 1
-            ftlog.info("FTRoom._buildTableManager addTables", "roomId=", self.roomId, "shadowRoomId=", roomId, "baseId=", baseId, "tableCount=", count)
+            ftlog.info("FTRoom._buildTableManager addTables", "roomId=", self.roomId, "shadowRoomId=", roomId,
+                       "baseId=", baseId, "tableCount=", count)
             for i in xrange(count):
                 table = Table(FISH_GAMEID, roomId, baseId + i, seatCount)
                 tableManager.addTable(table)
-
         ftlog.info("FTRoom._buildTableManager Succ",
                    "roomId=", self.roomId,
                    "shadowRoomIds=", list(shadowRoomIds),
@@ -333,7 +341,6 @@ class Player(object):
     """
     比赛中的用户
     """
-
     def __init__(self, userId):
         super(Player, self).__init__()
         # 用户ID
@@ -342,19 +349,19 @@ class Player(object):
         self._seat = None
         # 玩家状态
         self._state = None
-
+    
     @property
     def state(self):
         return self._state
-
+        
     @property
     def table(self):
         return self._seat.table if self._seat else None
-
+    
     @property
     def seat(self):
         return self._seat
-
+    
     @property
     def ftId(self):
         return self.table.ftId if self.table else None
@@ -367,31 +374,31 @@ class Seat(object):
         self._seatId = seatId
         self._location = "%s.%s.%s.%s" % (table.gameId, table.roomId, table.tableId, seatId)
         self._player = None
-
+        
     @property
     def gameId(self):
         return self.table.gameId
-
+    
     @property
     def table(self):
         return self._table
-
+    
     @property
     def seatId(self):
         return self._seatId
-
+    
     @property
     def roomId(self):
         return self.table.roomId
-
+    
     @property
     def tableId(self):
         return self.table.tableId
-
+    
     @property
     def location(self):
         return self._location
-
+    
     @property
     def player(self):
         return self._player
@@ -416,42 +423,42 @@ class Table(object):
         self._location = "%s.%s.%s" % (self.gameId, self.roomId, self.tableId)
         # 本桌相关的ftTable
         self._ftTable = None
-
+        
     @property
     def gameId(self):
         return self._gameId
-
+    
     @property
     def roomId(self):
         return self._roomId
-
+    
     @property
     def tableId(self):
         return self._tableId
-
+    
     @property
     def seats(self):
         return self._seats
-
+    
     @property
     def location(self):
         return self._location
-
+    
     @property
     def seatCount(self):
         return len(self._seats)
-
+    
     @property
     def idleSeatCount(self):
         """
         空闲座位的数量
         """
         return len(self._idleSeats)
-
+    
     @property
     def ftTable(self):
         return self._ftTable
-
+    
     @property
     def ftId(self):
         """桌子Id"""
@@ -463,13 +470,13 @@ class Table(object):
             if seat.player and seat.player.userId == userId:
                 return seat.player
         return None
-
+    
     def getPlayerList(self):
         """
         获取本桌的所有player
         """
         return [seat.player for seat in self.seats if seat.player]
-
+        
     def getUserIdList(self):
         """
         获取本桌所有userId
@@ -488,26 +495,26 @@ class Table(object):
             if seat.player and seat.player.userId:
                 num += 1
         return num
-
+    
     def sitdown(self, player):
         """
         玩家坐下
         """
-        assert (player._seat is None)
-        assert (len(self._idleSeats) > 0)
+        assert(player._seat is None)
+        assert(len(self._idleSeats) > 0)
         seat = self._idleSeats[-1]
         del self._idleSeats[-1]
         seat._player = player
         player._table = self
         player._seat = seat
-
+        
     def standup(self, player):
         """
         玩家离开桌子
         """
-        assert (player._seat is not None and player._seat.table == self)
+        assert(player._seat is not None and player._seat.table == self)
         self._clearSeat(player._seat)
-
+        
     def clear(self):
         """
         清理桌子上的所有玩家
@@ -515,14 +522,14 @@ class Table(object):
         for seat in self._seats:
             if seat._player:
                 self.standup(seat._player)
-
+                
     def _clearSeat(self, seat):
         seat._player._seat = None
         seat._player = None
         self._idleSeats.append(seat)
 
     def _makeSeats(self, count):
-        assert (count > 0)
+        assert(count > 0)
         seats = []
         for i in xrange(count):
             seats.append(Seat(self, 2 * i + 1))
@@ -535,22 +542,22 @@ class TableManager(object):
         self._room = room
         self._idleTables = []
         self._allTableMap = {}
-
+        
     @property
     def allTableCount(self):
         """桌子数量"""
         return len(self._allTableMap)
-
+    
     @property
     def idleTableCount(self):
         """空闲的桌子数量"""
         return len(self._idleTables)
-
-    @property
+    
+    @property    
     def busyTableCount(self):
         """繁忙的桌子数"""
         return max(0, self.allTableCount - self.idleTableCount)
-
+    
     def addTable(self, table):
         """添加桌子"""
         assert (not table.tableId in self._allTableMap)
@@ -561,15 +568,17 @@ class TableManager(object):
         """提取|出借一个桌子"""
         assert (self.idleTableCount > 0)
         table = self._idleTables.pop(0)
-        ftlog.info("TableManager.borrowTable", "roomId=", self._room.roomId, "idleTableCount=", self.idleTableCount, "allTableCount=", self.allTableCount, "tableId=", table.tableId)
+        ftlog.info("TableManager.borrowTable", "roomId=", self._room.roomId, "idleTableCount=", self.idleTableCount,
+                   "allTableCount=", self.allTableCount, "tableId=", table.tableId)
         return table
-
+    
     def returnTable(self, table):
         """释放一个桌子"""
         assert (self._allTableMap.get(table.tableId, None) == table)
         assert (not table.getPlayerList())
         self._idleTables.append(table)
-        ftlog.info("TableManager.returnTable", "roomId=", self._room.roomId, "idleTableCount=", self.idleTableCount, "allTableCount=", self.allTableCount, "tableId=", table.tableId)
+        ftlog.info("TableManager.returnTable", "roomId=", self._room.roomId, "idleTableCount=", self.idleTableCount,
+                   "allTableCount=", self.allTableCount, "tableId=", table.tableId)
 
     def findTable(self, roomId, tableId):
         """获取一个桌子实例"""
@@ -617,7 +626,7 @@ class TableController(object):
             "fee": ftTable.fee
         }
         return ret
-
+    
     def bindTable(self, table):
         """绑定桌子"""
         try:
@@ -627,7 +636,7 @@ class TableController(object):
             return code
         except TYBizException, e:
             raise TYBizException(e.errorCode, e.message)
-
+        
     def tableEnter(self, table, userId, seatId):
         """
         进入桌子

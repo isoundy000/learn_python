@@ -1,14 +1,14 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/9/8
+"""
+Created on 2016年5月13日
 
+@author: zhaojiangang
+"""
 
 from poker.entity.events.tyevent import TYEvent
 
 
 class MatchStartSigninEvent(TYEvent):
-    """比赛开始报名事件"""
     def __init__(self, gameId, instId):
         super(MatchStartSigninEvent, self).__init__()
         self.gameId = gameId
@@ -16,7 +16,6 @@ class MatchStartSigninEvent(TYEvent):
 
 
 class MatchCancelEvent(TYEvent):
-    """比赛取消事件"""
     def __init__(self, gameId, instId, reason):
         super(MatchCancelEvent, self).__init__()
         self.gameId = gameId
@@ -25,7 +24,6 @@ class MatchCancelEvent(TYEvent):
 
 
 class MatchingEvent(TYEvent):
-    """比赛事件"""
     def __init__(self, gameId, matchId, instId, matchingId):
         super(MatchingEvent, self).__init__()
         self.gameId = gameId
@@ -35,26 +33,22 @@ class MatchingEvent(TYEvent):
 
 
 class MatchingStartEvent(MatchingEvent):
-    """比赛开始事件"""
     def __init__(self, gameId, matchId, instId, matchingId):
         super(MatchingStartEvent, self).__init__(gameId, matchId, instId, matchingId)
 
 
 class MatchingStageStartEvent(MatchingEvent):
-    """比赛阶段开始事件"""
     def __init__(self, gameId, matchId, instId, matchingId, stageIndex):
         super(MatchingStageStartEvent, self).__init__(gameId, matchId, instId, matchingId)
         self.stageIndex = stageIndex
 
 
 class MatchingStageFinishEvent(MatchingEvent):
-    """比赛阶段完成事件"""
     def __init__(self, gameId, matchId, instId, matchingId, stageIndex):
         super(MatchingStageFinishEvent, self).__init__(gameId, matchId, instId, matchingId)
         self.stageIndex = stageIndex
 
 
 class MatchingFinishEvent(MatchingEvent):
-    """比赛完成事件"""
     def __init__(self, gameId, matchId, instId, matchingId):
         super(MatchingFinishEvent, self).__init__(gameId, matchId, instId, matchingId)

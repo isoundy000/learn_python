@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/10
+"""
+Created on 2014年9月23日
+
+@author: zjgzzz@126.com
+"""
 
 import time
 from datetime import datetime
@@ -38,7 +41,7 @@ class StartConfig(object):
         self.prepareTimes = None
         self.signinTimesStr = None
         self.times = None
-        self._cron = None                   # 是否是定时
+        self._cron = None
 
         # 开赛速度
         self.startMatchSpeed = None
@@ -64,9 +67,8 @@ class StartConfig(object):
     def isTimePointType(self):
         """定时积分赛"""
         return self.type == MatchType.TIME_POINT
-
+        
     def calcNextStartTime(self, timestamp=None):
-        """计算下次开赛事件"""
         timestamp = timestamp or pktimestamp.getCurrentTimestamp()
         ntime = datetime.fromtimestamp(int(timestamp))
         nexttime = None
@@ -75,45 +77,39 @@ class StartConfig(object):
         if nexttime is not None:
             return int(time.mktime(nexttime.timetuple()))
         return None
-
+    
     def getTodayNextLater(self):
-        """获取今天下一个比赛时间点"""
         if self._cron:
             return self._cron.getTodayNextLater()
         return -1
-
+    
     def calcSigninTime(self, startTime):
-        """计算报名时间"""
-        assert (self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType() or self.isTimePointType())
         if self.signinTimes:
             return startTime - self.signinTimes
         return None
-
+    
     def calcPrepareTime(self, startTime):
-        """计算准备时间"""
-        assert (self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType() or self.isTimePointType())
         if self.prepareTimes:
             return startTime - self.prepareTimes
         return startTime - 5
 
     def calcCloseTime(self, startTime):
-        """计算结束时间"""
-        assert (self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType() or self.isTimePointType())
         endTime = self.calcEndTime(startTime)
         if endTime and self.closeTime:
             return endTime - self.closeTime
         return None
 
     def calcRewardTime(self, startTime):
-        """计算发奖时间"""
-        assert (self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType() or self.isTimePointType())
         endTime = self.calcEndTime(startTime)
         if endTime and self.rewardTimes:
             return endTime - self.rewardTimes
         return None
 
     def calcEndTime(self, startTime):
-        """计算结束时间"""
         assert (self.isTimingType() or self.isTimePointType())
         if startTime is None:
             return None
@@ -129,9 +125,6 @@ class StartConfig(object):
                 strfTime = time.strftime("%Y%m%d", time.localtime(startTime))
                 if strfTime in self.matchStartTimeDayStr:
                     idx = self.matchStartTimeDayStr.index(strfTime)
-                    # import freetime.util.log as ftlog
-                    # ftlog.debug("--calcEndTime", strfTime, self.matchStartTimeDayStr, idx, len(self.matchTimes),
-                    #             idx % len(self.matchTimes))
                     idx = idx % len(self.matchTimes)
                     if 0 <= idx < len(self.matchTimes):
                         return startTime + self.matchTimes[idx] * 60
@@ -139,9 +132,8 @@ class StartConfig(object):
         elif self.times.get("times_in_day") and self.times["times_in_day"].get("interval"):
             return startTime + self.times["times_in_day"]["interval"] * 60
         return None
-
+    
     def buildSigninTimeStr(self):
-        """创建报名时间字符串"""
         if not (self.isTimingType() or self.isTimePointType()):
             return u""
         if self.signinTimesStr:
@@ -160,7 +152,7 @@ class StartConfig(object):
         if tseconds > 0:
             tstr = tstr + unicode(tseconds) + u"秒"
         return "请在比赛开始前%s，报名参加此比赛" % (tstr)
-
+    
     def checkValid(self):
         if not MatchType.isValid(self.type):
             raise MatchConfException("start.type must in:" + str(MatchType.VALID_TYPES))
@@ -241,8 +233,6 @@ class StartConfig(object):
             ret._cron = FTCron(ret.times)                   # crontab
             ret.matchStartTimeStr = [time_.strftime("%R") for time_ in ret._cron.getTimeList()]
             ret.matchStartTimeDayStr = [time_.strftime("%Y%m%d") for time_ in ret._cron.getDaysList()]
-            # import freetime.util.log as ftlog
-            # ftlog.debug("matchStartTimeStr =", ret.matchStartTimeStr, "matchStartTimeDayStr =", ret.matchStartTimeDayStr)
 
         ret.closeTime = conf.get("close.times", None)       # 360s
         ret.rewardTimes = conf.get("reward.times", None)    # 180s
@@ -500,7 +490,7 @@ class MatchConfig(object):
         if not isinstance(self.matchId, int):
             raise MatchConfException("matchId must be int")
         if not isinstance(self.tableSeatCount, int) or self.tableSeatCount <= 0:
-            raise MatchConfException("table.seat.count must be int > 0" )
+            raise MatchConfException("table.seat.count must be int > 0")
         return self
 
     @classmethod

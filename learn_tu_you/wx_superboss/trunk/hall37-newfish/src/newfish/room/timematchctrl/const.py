@@ -1,8 +1,9 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/10
+"""
+Created on 2016年7月12日
 
+@author: zhaojiangang
+"""
 from newfish.entity import config, util
 
 
