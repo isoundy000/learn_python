@@ -11,6 +11,8 @@ from freetime.core.timer import FTLoopTimer
 from newfish.entity import config
 from newfish.entity.cron import FTCron
 
+
+# 测试配置
 cronTime = {
     "days": {
         "count": 365,
@@ -54,6 +56,10 @@ class BossFishGroup(object):
         # 当前Boss鱼的fishId
         self._fishId = 0
         self._initConf()
+        # 深渊螃蟹
+        self.CatchCrabFish = 12233
+        # 捕获深渊螃蟹的次数
+        self.killNum = 0
 
     def clearTimer(self):
         """
@@ -133,6 +139,7 @@ class BossFishGroup(object):
             self._bossGroupId = bossGroupIds[0] if isDebut else random.choice(bossGroupIds[1:])
             if ftlog.is_debug():
                 ftlog.debug("BossFishGroup._addBossFishGroup", self.table.tableId, self._bossGroupId, isDebut)
+            self.killNum = 0
             self._group = self.table.insertFishGroup(self._bossGroupId)
             self._fishId = self._group.startFishId
             if int(time.time()) + self._group.totalTime < self._bossAppearTS + self._duration:
@@ -177,5 +184,10 @@ class BossFishGroup(object):
         """
         if self._fishType in event.fishTypes and int(time.time()) < self._bossAppearTS + self._duration:
             if ftlog.is_debug():
-                ftlog.debug("BossFishGroup.triggerCatchFishEvent", self.table.tableId)
-            self._addAutoFillBoss(4)
+                ftlog.debug("BossFishGroup.triggerCatchFishEvent_m", self.table.tableId, self._fishType)
+            if self._fishType == self.CatchCrabFish:                             # 深渊螃蟹一对
+                self.killNum += 1
+                if self.killNum >= 2:
+                    self._addAutoFillBoss(4)
+            else:
+                self._addAutoFillBoss(4)

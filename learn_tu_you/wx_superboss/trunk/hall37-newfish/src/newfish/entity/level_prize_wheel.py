@@ -103,6 +103,8 @@ class LevelPrizeWheel(PrizeWheel):
                 # 跨级充能
                 for lv in range(min(energy.keys()), last_lv + 1):
                     init_data = deepcopy(self.default_val)
+                    if lv == 1:
+                        init_data[PWValueSlot.BETCOUNT] = self._getData(lv, fpMultiple)[PWValueSlot.BETCOUNT]
                     if lv < last_lv:                                                # 重置之前等级数据
                         init_data[PWValueSlot.ENERGY] = energy[lv]
                     else:
@@ -133,7 +135,7 @@ class LevelPrizeWheel(PrizeWheel):
         level = str(level)
         if not self._enable(level, fpMultiple):
             return 0
-        pwData = self._getData(self.getEnergyIdx()[0], fpMultiple)  # 当前等级的能量   2100
+        pwData = self._getData(level, fpMultiple)                   # self.getEnergyIdx()[0] 当前等级的能量   2100
         if not self.isEnergyStorageMode and pwData[PWValueSlot.STATE] != PWState.NOT_SPIN:       # 已经抽完奖|抽奖失败
             return 0
         if pwData[PWValueSlot.SPINTIMES] > 0:                       # 可以抽奖
@@ -266,7 +268,10 @@ class LevelPrizeWheel(PrizeWheel):
         pwData = self._getData(level, fpMultiple)
         try:
             # 获取轮盘结果
-            idx = util.selectIdxByWeight(weightList)
+            if pwData[PWValueSlot.BETCOUNT] == 0 and int(level) == 1:
+                idx = self.getSecondMaxIdx(weightList, level, fpMultiple)
+            else:
+                idx = util.selectIdxByWeight(weightList)
             rewards = prizeConf["wheel"][idx]["rewards"]
             ratioList = self._buildRetData(level, fpMultiple, rewards)
             pwData[PWValueSlot.RET] = ratioList
@@ -289,6 +294,17 @@ class LevelPrizeWheel(PrizeWheel):
             event = PrizeWheelSpinEvent(self.userId, config.FISH_GAMEID, self.roomId)
             TGFish.getEventBus().publishEvent(event)
             return code
+
+    def getSecondMaxIdx(self, weightList, level, fpMultiple):
+        """
+        获取第二大的奖励索引
+        """
+        secondRateTmp = sorted(weightList)[1]
+        prizeConf = self.getPrizeConf(level, fpMultiple)
+        for idx, item in enumerate(prizeConf.get("wheel", [])):
+            if item["rate"] == secondRateTmp:
+                return idx
+        return 0
 
     def setRewards(self, level, bet, betType=None):
         """
@@ -399,7 +415,47 @@ class LevelPrizeWheel(PrizeWheel):
         """
         重置转盘状态
         """
-        for lv in self.pwConf["energy"].keys():                      # 重置所有数据
-            self.pwData[lv] = deepcopy(self.default_val)
+        for lv in self.pwConf["energy"].keys():                                 # 重置所有数据
+            default_val = deepcopy(self.default_val)
+            if int(lv) == 1:
+                default_val[PWValueSlot.BETCOUNT] = self._getData(lv, fpMultiple)[PWValueSlot.BETCOUNT]
+            self.pwData[lv] = default_val
             self._setData(lv, fpMultiple)
         gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber, 0)
+
+    def _buildRetData(self, fishPool, fpMultiple, rewards):
+        """
+        生成单次结果数据
+        :param pwData: 转盘数据
+        :param fishPool: 渔场号
+        :param rewards: 直接领取的奖励
+        """
+        ratioList = []
+        ratioList.append({"ratio": 1, "rewards": [{"name": rewards["name"], "count": rewards["count"], "rate": 100}], "ret": 0})
+        prizeConf = self.getPrizeConf(fishPool, fpMultiple)
+        pwData = self._getData(fishPool, fpMultiple)
+        if rewards.get("name", 0) and rewards.get("count", 0):
+            for _bet in prizeConf.get("betList", []):
+                _betConfList = self.pwConf["bet"].get(str(_bet), {}).get(fishPool) or self.pwConf["bet"].get(str(_bet), {}).get("0")
+                if len(_betConfList) == 0:
+                    continue
+                _betsWeight = [_ratio["weight"] for _ratio in _betConfList]
+                _idx = util.selectIdxByWeight(_betsWeight)
+                ratioDict = {}
+                ratioDict["ratio"] = _bet
+                ratioDict["ret"] = _idx
+                if int(fishPool) == 1 and _bet == 2:                            # 青铜等级首次2倍竞猜必中双倍
+                    if pwData[PWValueSlot.BETCOUNT] == 0:
+                        ratioDict["ret"] = 1
+                else:
+                    ratioDict["ret"] = _idx
+                pwData[PWValueSlot.BETCOUNT] += 1
+                ratioDict["rewards"] = []
+                for _ratio in _betConfList:
+                    _betRewards = {
+                        "name": rewards["name"], "rate": _ratio["rate"],
+                        "count": rewards["count"] * _ratio.get("ratio", 0) + _ratio.get("extra", 0)
+                    }
+                    ratioDict["rewards"].append(_betRewards)
+                ratioList.append(ratioDict)
+        return ratioList

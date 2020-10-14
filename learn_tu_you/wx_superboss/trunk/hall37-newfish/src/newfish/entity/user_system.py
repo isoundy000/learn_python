@@ -761,7 +761,7 @@ def _triggerNewbieTaskCompleteEvent(event):
     """
     增加充值奖池
     """
-    util.incrUserRechargeBonus(event.userId, 25000)
+    util.incrUserRechargeBonus(event.userId, 100000)
 
 
 def _triggerProductBuyEvent(event):

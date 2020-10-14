@@ -438,6 +438,8 @@ def checkSkillUpgrade(userId):
     upSkills = []
     for skillId in config.getAllSkillId():
         skillId = int(skillId)
+        if not config.getSkillStarConf(skillId, 1, config.MULTIPLE_MODE):
+            continue
         code, skill = checkSkillStatus(userId, skillId)
         if code != 0:
             continue
@@ -445,7 +447,7 @@ def checkSkillUpgrade(userId):
             skillGradeConf = config.getSkillGradeCommonConf(skillId, skill[INDEX_ORIGINAL_LEVEL] + 1)
             if checkUpgradeSkillItemCount(userId, skillGradeConf["consume"]):
                 upSkills.append(skillId)
-        if skill[INDEX_STAR_LEVEL] < MAX_STAR_LEVEL:
+        if skill[INDEX_STAR_LEVEL] > 0 and skill[INDEX_STAR_LEVEL] < MAX_STAR_LEVEL:
             skillStarConf = config.getSkillStarCommonConf(skillId, skill[INDEX_STAR_LEVEL] + 1)
             if checkUpgradeSkillItemCount(userId, skillStarConf["consume"]):
                 upSkills.append(skillId)

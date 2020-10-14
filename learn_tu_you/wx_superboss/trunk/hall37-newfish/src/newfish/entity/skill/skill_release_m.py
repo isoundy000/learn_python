@@ -162,6 +162,11 @@ class SkillMissile_m(SkillBase_m):
     合金飞弹(5101)
     """
     def catchFish(self, bulletId, wpId, fIds, extends):
+        useMissileCount = gamedata.getGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount)
+        if not useMissileCount or useMissileCount < 5 and self.gunX < 300:  # 前5个合金飞弹且炮倍低于300
+            self.powerRate = 3
+            useMissileCount = 1 if not useMissileCount else useMissileCount + 1
+            gamedata.setGameAttr(self.player.userId, FISH_GAMEID, GameData.useMissileCount, useMissileCount)
         return self.normalCatchFish(bulletId, wpId, fIds, extends)
 
     def _sortedFishes(self, fIds, extends=None):

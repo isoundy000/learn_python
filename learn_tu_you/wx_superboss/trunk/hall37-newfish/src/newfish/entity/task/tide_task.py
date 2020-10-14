@@ -253,7 +253,6 @@ class TideTask(object):
                 score += (fishConf.get("score", 0) * config.BULLET_KINDIDS[fishConf.get("itemId", 0)] / self.fpMultiple)
             else:
                 score += fishConf.get("score", 0) * fishMultiple
-            ftlog.debug("zzzzzzzzzzzzzzzzzzz", fishConf.get("score", 0), fishMultiple)
 
         player = self.table.getPlayer(uid)
         targets = usersData["task"]["targets"]

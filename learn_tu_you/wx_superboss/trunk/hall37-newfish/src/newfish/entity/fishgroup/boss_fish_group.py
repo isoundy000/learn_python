@@ -97,5 +97,5 @@ class BossFishGroup(object):
         """
         if self._fishType in event.fishTypes and int(time.time()) < self._bossAppearTS + 60:
             if ftlog.is_debug():
-                ftlog.debug("BossFishGroup.triggerCatchFishEvent", self.table.tableId)
+                ftlog.debug("BossFishGroup.triggerCatchFishEvent", self.table.tableId, self._fishType)
             self._addBossFishGroup(False, True)
