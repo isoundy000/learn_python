@@ -9,6 +9,25 @@ import time
 from freetime.util import log as ftlog
 from freetime.core.timer import FTLoopTimer
 from newfish.entity import config
+from newfish.entity.cron import FTCron
+
+
+cronTime = {
+    "days": {
+        "count": 365,
+        "first": "",
+        "interval": "1d"
+    },
+    "times_in_day": {
+        "count": 10000,
+        "first": [
+            "0:04:30",
+            "0:07:30",
+            "0:10:30"
+        ],
+        "interval": 12
+    }
+}
 
 
 class MiniGameFishGroup(object):
@@ -17,21 +36,35 @@ class MiniGameFishGroup(object):
     """
     def __init__(self, table):
         self.table = table
-        self._fishType = 0
+        # 美人鱼出现间隔
         self._interval = 180
+        # 每轮持续时间
         self._duration = 30
-        self._groupId = None
+        # 初始化配置定时器
+        self._initConfTimer = None
+        # 下个美人鱼出现定时器
         self._nextTimer = None
+        # 在美人鱼存续期内自动填充定时器
         self._autofillTimer = None
-        self._fishId = 0
+        # 鱼阵文件名
+        self._groupId = None
+        # 当前美人鱼ID
+        self._fishType = 0
+        # 当前美人鱼阵对象
         self._group = None
+        # 当前美人鱼ID
+        self._fishId = 0
+        # 美人鱼首次出现时间戳
         self._mermaidAppearTS = 0
-        self._setTimer()
+        self._initConf()
 
     def clearTimer(self):
         """
         清理定时器
         """
+        if self._initConfTimer:
+            self._initConfTimer.cancel()
+            self._initConfTimer = None
         if self._nextTimer:
             self._nextTimer.cancel()
             self._nextTimer = None
@@ -39,26 +72,42 @@ class MiniGameFishGroup(object):
             self._autofillTimer.cancel()
             self._autofillTimer = None
 
+    def _initConf(self):
+        """
+        初始化配置
+        """
+        if self._initConfTimer:
+            self._initConfTimer.cancel()
+            self._initConfTimer = None
+        self.cronTime = cronTime
+        self._cron = FTCron(self.cronTime)
+        self._interval = self._cron.getNextLater()
+        if self._interval > 0:
+            self._setTimer()
+            self._initConfTimer = FTLoopTimer(self._interval + 1, 0, self._initConf)
+            self._initConfTimer.start()
+        else:
+            ftlog.error("MiniGameFishGroup initConf error", self._cron.getTimeList())
+
     def _setTimer(self):
         """
         设置添加美人鱼定时器
         """
-        self.clearTimer()
-        self._fishType, self._interval, self._duration = self._randomFishTypeAndInterval()
+        self._fishType, self._duration = self._randomFishType()
         self._nextTimer = FTLoopTimer(self._interval, 0, self._addMermaidFishGroup, isDebut=True)
         self._nextTimer.start()
-
 
     def _addMermaidFishGroup(self, isDebut=False):
         """
         添加美人鱼
+        @param isDebut: 是否首次出现
         """
         if self._autofillTimer:
             self._autofillTimer.cancel()
             self._autofillTimer = None
-        if not self._canAddMermaid():  # 新出场的美人鱼不满足出现条件
-            return
         if self._fishType not in self.table.runConfig.allMiniGameGroupIds:
+            return
+        if not self._canAddMermaid():  # 新出场的美人鱼不满足出现条件
             return
         if self.table.hasTideFishGroup():   # 当前渔场存在鱼潮
             return
@@ -70,6 +119,7 @@ class MiniGameFishGroup(object):
         if not self._fishType:
             ftlog.error("_addMermaidFishGroup error", self.table.tableId, self._fishType)
             return
+        self._group = None
         groupIds = self.table.runConfig.allMiniGameGroupIds[self._fishType]
         if ftlog.is_debug():
             ftlog.debug("_addMermaidFishGroup", self.table.tableId, isDebut, groupIds)
@@ -90,7 +140,7 @@ class MiniGameFishGroup(object):
 
     def _dealAutoFillMermaid(self):
         """
-        处理自动填充美人鱼相关逻辑
+        处理自动填充美人鱼相关逻辑（因冰冻延迟填充）
         """
         if self._group and self._group.extendGroupTime > 0:
             if int(time.time()) + self._group.extendGroupTime < self._mermaidAppearTS + self._duration:
@@ -107,25 +157,25 @@ class MiniGameFishGroup(object):
         """
         延时添加自动填充美人鱼
         """
+        if ftlog.is_debug():
+            ftlog.debug("_addAutoFillMermaid", self.table.tableId, interval)
         if self._autofillTimer:
             self._autofillTimer.cancel()
             self._autofillTimer = None
         self._autofillTimer = FTLoopTimer(interval, 0, self._addMermaidFishGroup)
         self._autofillTimer.start()
 
-    def _randomFishTypeAndInterval(self):
+    def _randomFishType(self):
+        """
+        获取随机到的鱼ID
+        """
         fishType = 0
-        interval = 180
         duration = 30
         randomNum = random.randint(1, 10000)
         for fishMap in config.getMiniGameFishConf(self.table.runConfig.fishPool):
             probb = fishMap["probb"]
             if probb[0] <= randomNum <= probb[-1]:
                 fishType = int(fishMap["fishType"])
-                interval = int(fishMap["interval"])
                 duration = int(fishMap["duration"])
                 break
-        if interval != self._interval and self._nextTimer is not None:
-            self._interval = interval
-            self._setTimer()
-        return fishType, interval, duration
+        return fishType, duration

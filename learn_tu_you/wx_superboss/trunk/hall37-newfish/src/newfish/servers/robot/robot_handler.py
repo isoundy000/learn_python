@@ -1,7 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
+"""
+RobotTcpHandler
+"""
+# @Author  : Kangxiaopeng
+# @Time    : 2019/1/16
 
 import freetime.util.log as ftlog
 from poker.entity.game.game import TYGame

@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
+
 import time
 import json
 

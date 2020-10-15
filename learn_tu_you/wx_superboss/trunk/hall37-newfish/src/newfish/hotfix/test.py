@@ -4,6 +4,10 @@
 # @Time: 2020/7/27
 
 
+# 命令网址
+# http://c.biancheng.net/cplus/inherit/
+
+
 class A(object):
 
     def __init__(self):

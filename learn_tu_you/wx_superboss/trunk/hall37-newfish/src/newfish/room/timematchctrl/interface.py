@@ -31,27 +31,27 @@ class SigninRecord(object):
 
 
 class SigninRecordDao(object):
-    def loadAll(self, matchId, instId, ctrlRoomId):
+    def loadAll(self, matchId, ctrlRoomId, instId):
         """
         获取所有在本ctrlRoomId下的所有报名记录
         @return: list<SigninRecord>
         """
         raise NotImplementedError
     
-    def add(self, matchId, instId, ctrlRoomId, record):
+    def add(self, matchId, ctrlRoomId, instId, record):
         """
         记录用户报名
         @return: 成功返回True，如果已经存返回False
         """
         raise NotImplementedError
     
-    def remove(self, matchId, instId, ctrlRoomId, userId):
+    def remove(self, matchId, ctrlRoomId, instId, userId):
         """
         删除用户报名记录
         """
         raise NotImplementedError
     
-    def removeAll(self, matchId, instId, ctrlRoomId):
+    def removeAll(self, matchId, ctrlRoomId, instId):
         """
         删除所有报名记录
         """

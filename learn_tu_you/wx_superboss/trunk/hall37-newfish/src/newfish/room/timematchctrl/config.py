@@ -84,33 +84,33 @@ class StartConfig(object):
         return -1
     
     def calcSigninTime(self, startTime):
-        assert(self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType())
         if self.signinTimes:
             return startTime - self.signinTimes
         return None
     
     def calcPrepareTime(self, startTime):
-        assert(self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType())
         if self.prepareTimes:
             return startTime - self.prepareTimes
         return startTime - 5
 
     def calcCloseTime(self, startTime):
-        assert(self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType())
         endTime = self.calcEndTime(startTime)
         if endTime and self.closeTime:
             return endTime - self.closeTime
         return None
 
     def calcRewardTime(self, startTime):
-        assert(self.isTimingType() or self.isTimePointType())
+        assert(self.isTimingType())
         endTime = self.calcEndTime(startTime)
         if endTime and self.rewardTimes:
             return endTime - self.rewardTimes
         return None
 
     def calcEndTime(self, startTime):
-        assert (self.isTimingType() or self.isTimePointType())
+        assert (self.isTimingType())
         if startTime is None:
             return None
         if self.matchTimes:
@@ -134,7 +134,7 @@ class StartConfig(object):
         return None
     
     def buildSigninTimeStr(self):
-        if not (self.isTimingType() or self.isTimePointType()):
+        if not (self.isTimingType()):
             return u""
         if self.signinTimesStr:
             return self.signinTimesStr
@@ -229,7 +229,7 @@ class StartConfig(object):
         ret.userNextGroup = conf.get("user.next.group", None)
         ret.selectFirstStage = conf.get("selectFirstStage", 0)
         ret.times = conf.get("times", None)                 # 开赛的时间段 365天
-        if ret.isTimingType() or ret.isTimePointType():
+        if ret.isTimingType():
             ret._cron = FTCron(ret.times)                   # crontab
             ret.matchStartTimeStr = [time_.strftime("%R") for time_ in ret._cron.getTimeList()]
             ret.matchStartTimeDayStr = [time_.strftime("%Y%m%d") for time_ in ret._cron.getDaysList()]
@@ -490,7 +490,7 @@ class MatchConfig(object):
         if not isinstance(self.matchId, int):
             raise MatchConfException("matchId must be int")
         if not isinstance(self.tableSeatCount, int) or self.tableSeatCount <= 0:
-            raise MatchConfException("table.seat.count must be int > 0")
+            raise MatchConfException("table.seat.count must be int > 0" )
         return self
 
     @classmethod

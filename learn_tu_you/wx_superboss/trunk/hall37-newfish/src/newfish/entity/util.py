@@ -693,6 +693,7 @@ def getFishMatchSigninInfo(userId):
         if roomConfig.get("isMatch", 0):
             startTime = room_remote.getUserMatchSignin(userId, ctrlRoomId)      # 获取比赛的开始时间
             if startTime > 0:
+                ftlog.debug("getFishMatchSigninInfo", userId, ctrlRoomId, startTime)
                 return ctrlRoomId, startTime
     return None, None
 
@@ -1745,7 +1746,7 @@ def getGunLevel(userId, mode):
 # TODO.需要根据产品设计需求确定使用火炮等级还是玩家等级等等.
 def getGunLevelVal(userId, mode):
     """
-    获取火炮等级/倍率
+    获取当前玩家经典下的最大火炮等级/千炮下的最大火炮倍数
     """
     gunLevel = getGunLevel(userId, mode)
     return config.getGunLevelConf(gunLevel, mode).get("levelValue", 1)

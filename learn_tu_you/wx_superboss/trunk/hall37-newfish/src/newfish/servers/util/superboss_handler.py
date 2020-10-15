@@ -1,8 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/8
-
+# -*- coding=utf-8 -*-
+"""
+概述模块或脚本
+"""
+# @Author  : Kangxiaopeng
+# @Time    : 2020/4/2
 
 from poker.protocol.decorator import markCmdActionHandler, markCmdActionMethod
 from hall.servers.common.base_checker import BaseMsgPackChecker
@@ -56,6 +57,12 @@ class SuperBossHandler(BaseMsgPackChecker):
             return None, idx
         return "ERROR of idx !" + str(idx), None
 
+    def _check_param_groupIdx(self, msg, key, params):
+        groupIdx = msg.getParam(key, 0)
+        if isinstance(groupIdx, int):
+            return None, groupIdx
+        return "ERROR of idx !" + str(groupIdx), None
+
     def _check_param_mode(self, msg, key, params):
         mode = msg.getParam(key, 0)
         if isinstance(mode, int):
@@ -69,10 +76,10 @@ class SuperBossHandler(BaseMsgPackChecker):
         return "ERROR of mgType !" + str(mgType), None
 
     def _check_param_userIds(self, msg, key, params):
-        userIds = msg.getParam(key, 0)
+        userIds = msg.getParam(key, [])
         if isinstance(userIds, list):
             return None, userIds
-        return "ERROR of mgType !" + str(userIds), None
+        return "ERROR of userIds !" + str(userIds), None
 
     @markCmdActionMethod(cmd="game", action="superboss_gameplay_info", clientIdVer=0, scope="game", lockParamName="")
     def doGetSuperbosGamePlayInfo(self, userId, gameId, roomId0, clientId, mode=0):
@@ -88,12 +95,19 @@ class SuperBossHandler(BaseMsgPackChecker):
         """
         minigame.sendMinigameInfo(roomId0, userId, mode)
 
+    @markCmdActionMethod(cmd="game", action="superboss_minigame_show", clientIdVer=0, scope="game", lockParamName="")
+    def doPlayMinigameShow(self, userId, gameId, roomId0, clientId, idx, mode, userIds):
+        """
+        发送巨龙转盘盘面
+        """
+        minigame.playMinigameShow(roomId0, userId, idx, mode, userIds)
+
     @markCmdActionMethod(cmd="game", action="superboss_minigame", clientIdVer=0, scope="game", lockParamName="")
-    def doPlayMinigame(self, userId, gameId, roomId0, clientId, idx, mode, userIds):
+    def doPlayMinigame(self, userId, gameId, roomId0, clientId, idx, mode, userIds, groupIdx):
         """
         发送选箱子请求
         """
-        minigame.playMinigame(roomId0, userId, idx, mode, userIds)
+        minigame.playMinigame(roomId0, userId, idx, mode, userIds, groupIdx)
 
     @markCmdActionMethod(cmd="game", action="superboss_convert_info", clientIdVer=0, scope="game", lockParamName="")
     def doGetSuperbossConvertInfo(self, userId, gameId, roomId0, clientId, mode):
@@ -109,8 +123,7 @@ class SuperBossHandler(BaseMsgPackChecker):
         """
         item_exchange.convertItem(roomId0, idx, count, userId, mode)
 
-    @markCmdActionMethod(cmd="game", action="store_superboss_convert_info", clientIdVer=0, scope="game",
-                         lockParamName="")
+    @markCmdActionMethod(cmd="game", action="store_superboss_convert_info", clientIdVer=0, scope="game", lockParamName="")
     def doGetStoreSuperbossConvert(self, userId, gameId, clientId, mgType):
         """
         发送商城中兑换数据

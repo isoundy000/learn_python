@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/4
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import traceback
 
@@ -14,7 +14,7 @@ from hall.servers.common.base_checker import BaseMsgPackChecker
 from newfish.entity.config import FISH_GAMEID
 
 
-@markCmdActionMethod
+@markCmdActionHandler
 class TableTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="fish_table_call", action="*", clientIdVer=0, scope="game", lockParamName="userId")
@@ -27,7 +27,7 @@ class TableTcpHandler(BaseMsgPackChecker):
                 room = gdata.rooms()[roomId]
                 table = room.maptable[tableId]
                 action = msg.getParam("action")
-                seatId = msg.getParam("seatId", -1)     # 旁观时没有seatId参数
+                seatId = msg.getParam("seatId", -1) # 旁观时没有seatId参数
                 assert isinstance(seatId, int)
                 table.doTableCallOwn(msg, userId, seatId, action, clientId)
             except:

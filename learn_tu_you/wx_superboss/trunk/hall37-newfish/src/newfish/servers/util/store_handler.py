@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/8
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/10/16.
+"""
 
 from datetime import datetime
 from sre_compile import isstring
@@ -21,10 +20,12 @@ from poker.entity.events.tyevent import ChargeNotifyEvent
 from poker.protocol import router, runcmd
 from poker.protocol.decorator import markCmdActionHandler, markCmdActionMethod
 from poker.util import strutil
-from hall.entity import hallstore, hallitem, datachangenotify, hall_first_recharge, hallvip
+from hall.entity import hallstore, hallitem, datachangenotify, \
+    hall_first_recharge, hallvip
 from hall.entity.hallconf import HALL_GAMEID
 from hall.entity.hallusercond import UserConditionRegister
-from hall.entity.todotask import TodoTaskPayOrder, TodoTaskShowInfo, TodoTaskHelper, TodoTaskGotoShop, TodoTaskRegister
+from hall.entity.todotask import TodoTaskPayOrder, TodoTaskShowInfo, \
+    TodoTaskHelper, TodoTaskGotoShop, TodoTaskRegister
 from hall.entity.hallpopwnd import findTodotaskTemplate
 from hall.game import TGHall
 from hall.servers.common.base_checker import BaseMsgPackChecker
@@ -159,7 +160,7 @@ class StoreTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="store_config_fish", action="update", clientIdVer=0, scope="game", lockParamName="")
     def doStoreConfigUpdateFish(self, gameId, userId, clientId, actionType, refresh=0):
-        """捕鱼商店"""
+        """获取捕鱼商店"""
         ftlog.debug("doStoreConfigUpdateFish", gameId, userId, clientId, actionType, bool(refresh == 1))
         store.getStoreTabsFish(userId, clientId, actionType, bool(refresh == 1))
 
@@ -171,7 +172,7 @@ class StoreTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="store_config_fish", action="autoBuyAferSDKPay", clientIdVer=0, scope="game", lockParamName="")
     def doStoreAutoBuyAferSDKPay(self, gameId, userId, clientId, productIdA, productIdB, count, actionType):
-        """设置sdk支付后自动购买商品的数据"""
+        """设置自动购买钻石触发自动发奖的逻辑"""
         ftlog.debug("doStoreAutoBuyAferSDKPay", gameId, userId, clientId, productIdA, productIdB, count, actionType)
         store.setAutoBuyAfterSDKPayData(userId, productIdA, productIdB, actionType, count)
 

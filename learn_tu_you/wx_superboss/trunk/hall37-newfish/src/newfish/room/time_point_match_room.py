@@ -20,7 +20,7 @@ from newfish.room.timematchctrl.interfaceimpl import TimePointPlayer
 from newfish.room.time_match_room import FishTimeMatchRoom
 from newfish.entity import util, config, mail_system
 from newfish.room.timematchctrl.exceptions import MatchException, SigninException, BadStateException, \
-    NotSigninException, RunOutSigninChanceException, MaintenanceException
+    NotSigninException, AlreadySigninException, RunOutSigninChanceException, MaintenanceException
 from newfish.room.timematchctrl.match import TimePointMatch
 
 
@@ -75,12 +75,15 @@ class FishTimePointMatchRoom(FishTimeMatchRoom):
             signer = self.match.findSigner(userId)
             self._logger.debug("doEnter", "signer=", signer)
             if signer:
-                self.matchMaster.startMatching([signer])
-                self.userFee[int(userId)] = signer.fee.toDict()
-                self.match.enter(userId)
-                mo.setResult("enter", 1)
-                mo.setResult("targets", self.match.curInst.targets if self.match.curInst else {})
-                router.sendToUser(mo, userId)
+                if not signer.isEnter:
+                    self.matchMaster.startMatching([signer])
+                    self.userFee[int(userId)] = signer.fee.toDict()
+                    self.match.enter(userId)
+                    mo.setResult("enter", 1)
+                    mo.setResult("targets", self.match.curInst.targets if self.match.curInst else {})
+                    router.sendToUser(mo, userId)
+                else:
+                    raise AlreadySigninException()
             else:
                 raise NotSigninException()
         except MatchException, e:
@@ -337,7 +340,7 @@ class FishTimePointMatchRoom(FishTimeMatchRoom):
         """
         停服准备返还玩家报名费
         """
-        # des = u"由于游戏维护导致您离开了比赛，特将此次报名费全额返还，请您查收！非常抱给您带来不便，祝您游戏愉快！"
+        # des = u"由于游戏维护导致您离开了比赛，特将此次报名费全额返还，请您查收！非常抱歉给您带来不便，祝您游戏愉快！"
         userList = msg.getParam("users")
         assert (isinstance(userList, list))
         for user in userList:

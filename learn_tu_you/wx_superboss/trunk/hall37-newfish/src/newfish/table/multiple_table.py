@@ -8,6 +8,7 @@ import time
 from collections import OrderedDict
 
 from freetime.util import log as ftlog
+from freetime.entity.msg import MsgPack
 from newfish.table.normal_table import FishNormalTable
 from newfish.player.multiple_player import FishMultiplePlayer
 from newfish.entity import config, util
@@ -18,6 +19,9 @@ from newfish.entity.fishgroup.superboss import superboss_fish_group
 from newfish.entity.fishgroup.platter_fish_group import PlatterFishGroup
 from newfish.entity.fishgroup.minigame_fish_group import MiniGameFishGroup
 from newfish.entity.fishgroup.tide_fish_group import TideFishGroup
+from newfish.entity import mini_game
+from newfish.entity.msg import GameMsg
+from newfish.entity.config import FISH_GAMEID
 
 
 class FishMultipleTable(FishNormalTable):
@@ -25,6 +29,8 @@ class FishMultipleTable(FishNormalTable):
     def __init__(self, room, tableId):
         super(FishMultipleTable, self).__init__(room, tableId)
         self.actionMap["dragon_iceball"] = self._dragon_iceball
+        self.actionMap["mini_game_start"] = self._miniGameStart                     # 开始小游戏宝箱
+        self.actionMap["mini_game_action"] = self._miniGameAction                   # 小游戏抽奖
 
     def createPlayer(self, table, seatIndex, clientId):
         """
@@ -64,6 +70,8 @@ class FishMultipleTable(FishNormalTable):
         """
         super(FishMultipleTable, self)._afterSendTableInfo(userId)
         self.superBossFishGroup and self.superBossFishGroup.dealEnterTable(userId)
+        # 发送断线后的小游戏进度信息
+        mini_game.sendMiniGameProgress(self, userId, self.roomId)
 
     def _catchFish(self, player, bulletId, wpId, fIds, extends, stageId):
         """

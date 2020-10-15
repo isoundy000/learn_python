@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/6/16.
+"""
 
 import time
 import copy
@@ -18,11 +18,9 @@ from newfish.player.time_match_player import FishTimeMatchPlayer
 from newfish.entity import config, util
 from newfish.entity.config import FISH_GAMEID, CHIP_KINDID
 from newfish.entity.msg import GameMsg
-from newfish.entity.fishgroup.fish_group_system import FishGroupSystem
 from newfish.entity.fishgroup.normal_fish_group import NormalFishGroup
 from newfish.entity.fishgroup.buffer_fish_group import BufferFishGroup
 from newfish.entity.fishgroup.multiple_fish_group import MultipleFishGroup
-
 
 
 class MatchState:
@@ -32,8 +30,7 @@ class MatchState:
     END = 3
 
 
-class FishTimeMatchTable(FishTable):
-
+class FishTimeMatchTable(FishMultipleTable):
     def __init__(self, room, tableId):
         super(FishTimeMatchTable, self).__init__(room, tableId)
         self.clearTableData()
@@ -150,7 +147,7 @@ class FishTimeMatchTable(FishTable):
             self._logger.debug("doMatchTableStart", "msg=", msg)
         table_info = msg.getKey("params")
 
-        self._doUpdateTableInfo(table_info)                                 #
+        self._doUpdateTableInfo(table_info)
         self._doMatchQuickStart()                                           # 开始
         self.bufferFishGroup and self.bufferFishGroup.initGroup(self._match_table_info["tableRankRatio"])
         self.multipleFishGroup and self.multipleFishGroup.initGroup(self._match_table_info["tableRankRatio"])
@@ -444,13 +441,14 @@ class FishTimeMatchTable(FishTable):
             c = self._match_table_info["realPlayerCount"]
             k = float(4 * c) / (3 * c - 1)
             b = 1 - float(2 * c) / (3 * c - 1)
-            j2 = 1                                                          # k * min(player.rank, c) / c + b
+            j2 = 1#k * min(player.rank, c) / c + b
             j = (j1 + j2) * 0.5
-            ftlog.debug("getProbbCoefficient", player, fishInfo,
-                        "luckyValue =", player.matchLuckyValue,
-                        "rank =", player.rank,
-                        "j1 =", j1, "c =", c, "k =", k, "b =", b,
-                        "j2 =", j2, "j =", j)
+            if ftlog.is_debug():
+                ftlog.debug("getProbbCoefficient", player, fishInfo,
+                            "luckyValue =", player.matchLuckyValue,
+                            "rank =", player.rank,
+                            "j1 =", j1, "c =", c, "k =", k, "b =", b,
+                            "j2 =", j2, "j =", j)
             return j
         return 1
 
@@ -461,7 +459,7 @@ class FishTimeMatchTable(FishTable):
         :param player: 捕鱼者
         :param fpMultiple: 渔场倍率
         :param gunMultiple: 炮的倍率
-        :param bufferCoinAdd: buffer加成金币系数（暂时无用）
+        :param bufferCoinAdd: buffer加成金币系数
         :param wpType: 武器类型
         :param extends: 扩展数据
         :param gunX: 炮的倍数
@@ -487,6 +485,7 @@ class FishTimeMatchTable(FishTable):
                 multiple = self.getMultipleFishMultiple(player, fishConf, fpMultiple, gunMultiple, gunX)
                 gainMap["itemId"] = CHIP_KINDID
                 gainMap["count"] = int(fishConf["score"] * fpMultiple * gunX * taskMultiple * multiple * bufferCoinAdd)
+                gainMap["fishMultiple"] = multiple
                 gainChip = int(gainMap["count"])
                 gain.append(gainMap)
             else:

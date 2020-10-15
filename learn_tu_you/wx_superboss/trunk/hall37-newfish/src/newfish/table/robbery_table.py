@@ -1,8 +1,6 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
 """
+Created by lichen on 2018/1/9.
 招财模式渔场
 """
 
@@ -47,12 +45,12 @@ class FishRobberyTable(FishTable):
 
         # table_call可用action
         self.actionMap = {
-            "leave": self._clearPlayer,                     # 离开渔场
-            "catch": self._verifyCatch,                     # 捕鱼
-            "skill_use": self._skill_use,                   # 使用技能
-            "chat": self._doTableChat,                      # 聊天
-            "smile": self.doTableSmilies,                   # 表情
-            "honor_push": self._honor_push,                 #
+            "leave": self._clearPlayer,
+            "catch": self._verifyCatch,
+            "skill_use": self._skill_use,
+            "chat": self._doTableChat,
+            "smile": self.doTableSmilies,
+            "honor_push": self._honor_push,
             "honor_replace": self._honor_replace,
             "treasure_rewards": self._getTreasureRewards,
             "fishActivityBtns": self._activity_all_btns,
@@ -75,7 +73,6 @@ class FishRobberyTable(FishTable):
         return FishRobberyPlayer(table, seatIndex, clientId)
 
     def _verifyFire(self, msg, userId, seatId):
-        """验证开火"""
         wpId = msg.getParam("wpId")
         fPosx = msg.getParam("fPosx")
         fPosy = msg.getParam("fPosy")
@@ -86,7 +83,7 @@ class FishRobberyTable(FishTable):
         reason = 0
         player = self.players[seatId - 1]
         wpType = util.getWeaponType(wpId)
-        if wpType != config.ROBBERY_WEAPON_TYPE:                                # 招财模式火炮
+        if wpType != config.ROBBERY_WEAPON_TYPE:
             reason = 1
         retMsg = MsgPack()
         retMsg.setCmd("fire")
@@ -105,7 +102,6 @@ class FishRobberyTable(FishTable):
             player.addFire(bulletId, wpId, timestamp, player.fpMultiple)
 
     def _verifyCatch(self, msg, userId, seatId):
-        """验证捕获"""
         wpId = msg.getParam("wpId")
         fIds = msg.getParam("fIds")
         skillId = msg.getParam("skillId")

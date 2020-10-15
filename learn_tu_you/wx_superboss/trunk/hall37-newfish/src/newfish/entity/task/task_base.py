@@ -50,7 +50,7 @@ class TaskType:
     CatchFishNumByOneFire = 10  # xx网捕获xx鱼
     HoldCoin = 11               # 持有xx金币
     CatchPearlNum = 12          # 捕获xx颗珍珠
-    UpgradeLevel = 13           # 升级火炮到xx级
+    GunLevelUp = 13             # 升级xx次火炮
     CatchRainbowFishNum = 14    # 捕获xx只彩虹鱼
     CatchRedPacketFishNum = 15  # 捕获多少只红包券鱼
     UserSkillItem = 16          # 使用技能道具
@@ -90,7 +90,6 @@ class TaskBase(object):
             self.userEndTaskTimer.cancel()
 
     def _reload(self):
-        ftlog.debug("Task_base_reload", self.player.userId)
         self.recordStartTime = 0
         if not self.isTaskOver():
             if self.taskData.get("type", 0) and self.taskData.get("type", 0) != self.taskConfig["type"]:
@@ -106,7 +105,7 @@ class TaskBase(object):
     def _getInitMainData(self):
         """获取初始化主线数据"""
         targetNum = self.taskConfig["targetNum"]
-        if self.taskSystem.isRedRoom() and self.taskConfig["type"] == TaskType.HoldCoin:
+        if util.isNewbieRoom(self.player.table.typeName) and self.taskConfig["type"] == TaskType.HoldCoin:
             targetNum += self.player.allChip // 100 * 100
         return {
             "type": self.taskConfig["type"],
@@ -166,7 +165,7 @@ class TaskBase(object):
         if not _rewards:
             _rewards = self.taskConfig["rewards"]     # 普通奖励
         if _rewards and util.isChestRewardId(_rewards[0]["name"]):      # 宝箱奖励(新手宝箱奖励固定)
-            if self.taskSystem.isRedRoom():
+            if util.isNewbieRoom(self.player.table.typeName):
                 _rewards = [
                     {"name": 101, "count": 500},
                     {"name": 1145, "count": 1},
@@ -187,7 +186,6 @@ class TaskBase(object):
             rewards.append(rwDict)
 
         code = 0
-        ftlog.debug("_receiveTaskReward", self.userId, rewards, self.taskConfig["rewards"])
         self.taskData["state"] = TaskState.Success  # 改变状态
         if rewards:
             code = util.addRewards(self.userId, rewards, "BI_NFISH_TABLE_TASK_REWARDS", int(self.taskId))
@@ -203,7 +201,6 @@ class TaskBase(object):
             if dropConf:
                 _, rds = drop_system.getDropItem(dropId)
                 realRewards.append(rds)
-        ftlog.debug("_getDropItems===>", realRewards)
         return realRewards
 
     def _getCatchFishCoin(self, event, target=0):
@@ -236,7 +233,6 @@ class TaskBase(object):
         """
         if self.taskConfig["type"] in [TaskType.UseSkillNum, TaskType.ComboNum]:
            return
-        ftlog.debug("taskBase_______dealCatchEvent00", self.userId, self.taskData["state"])
         if self.taskData["state"] != TaskState.Update:
             return
         isMe = event.userId == self.userId
@@ -258,9 +254,6 @@ class TaskBase(object):
                 isTargetAddition = True
         if self.taskConfig["type"] == TaskType.CatchFishCoin:  # 1捕获xx鱼达金币数
             totalCoin, fishCoins, _ = self._getCatchFishCoin(event)
-            if gunSkinMul != 1:
-                ftlog.debug("taskBase_______dealCatchEvent", gunSkinMul)
-            ftlog.debug("Tabletask_dealCatchEvent", totalCoin, fishCoins)
             if target:
                 self._addProgress(fishCoins.get(str(target), 0), isMe, progress=progress, isTargetAddition=isTargetAddition)
             else:
@@ -270,7 +263,6 @@ class TaskBase(object):
             if target:
                 betTarget = 14000 + int(target) % 11000
                 fishNum = fishTypes.count(target) + fishTypes.count(betTarget)
-                ftlog.debug("taskBase_______dealCatchEventCatchFishNum", betTarget, fishTypes.count(betTarget))
                 self._addProgress(fishNum, isMe, progress=progress, isTargetAddition=isTargetAddition)
             else:
                 self._addProgress(len(fishTypes), isMe, progress=progress, isTargetAddition=isTargetAddition)
@@ -286,8 +278,6 @@ class TaskBase(object):
 
         elif self.taskConfig["type"] == TaskType.FishNumCoinHigh:  # 4多少金币以上的鱼
             _, _, num = self._getCatchFishCoin(event, target)
-            if gunSkinMul != 1:
-                ftlog.debug("taskBase_______dealCatchEvent", gunSkinMul, num)
             self._addProgress(num, isMe, progress=progress, isTargetAddition=isTargetAddition)
             return
         elif self.taskConfig["type"] == TaskType.BetFishNum: # 5--多少只倍率鱼
@@ -319,8 +309,6 @@ class TaskBase(object):
 
         elif self.taskConfig["type"] == TaskType.UseSkillCatchFishCoin:  # 9 使用技能捕获XX金币类型的鱼数
             totalCoin, fishCoins, _ = self._getCatchFishCoin(event)  # 总金币数不包括招财珠
-            if gunSkinMul != 1:
-                ftlog.debug("taskBase_______dealCatchEvent", gunSkinMul, totalCoin, fishCoins)
             wpType = util.getWeaponType(wpId)
             if wpType in [config.SKILL_WEAPON_TYPE,
                           config.RB_FIRE_WEAPON_TYPE,
@@ -359,7 +347,7 @@ class TaskBase(object):
             if target == 0:
                 self._addProgress(1, event.userId == self.userId)
             else:
-                if event.kindId == str(target):
+                if event.skillId == target:
                     self._addProgress(1, event.userId == self.userId)
 
     def dealUseSkillItem(self, event):
@@ -373,7 +361,6 @@ class TaskBase(object):
         """获得珍珠"""
         if self.taskData["state"] != TaskState.Update:
             return
-        ftlog.debug("task, type", self.taskConfig["type"], TaskType.CatchPearlNum, self.taskConfig["type"] == TaskType.CatchPearlNum)
         if self.taskConfig["type"] == TaskType.CatchPearlNum:
             self._addProgress(pearl, True)
 
@@ -389,7 +376,8 @@ class TaskBase(object):
         """刷新持有金币数量"""
         if self.taskData["state"] != TaskState.Update:
             return
-        ftlog.debug("refreshHoldCoin", self.userId, coin)
+        if ftlog.is_debug():
+            ftlog.debug("refreshHoldCoin", self.userId, coin)
         if self.taskConfig["type"] == TaskType.HoldCoin:
             self._updateProgress(coin, True)
 
@@ -411,7 +399,8 @@ class TaskBase(object):
         """
         任务开始
         """
-        ftlog.debug("taskBase_______taskStart", self.taskId)
+        if ftlog.is_debug():
+            ftlog.debug("taskBase_______taskStart", self.taskId)
 
         if self.taskActivateTimer:
             self.taskActivateTimer.cancel()
@@ -420,7 +409,7 @@ class TaskBase(object):
             self.taskActivateTimer = FTLoopTimer(taskActivateInterval, 0, self._taskActivate, delay)
             self.taskActivateTimer.start()
         elif self.taskConfig["timeLong"] > 0:
-            if self.taskSystem.isRedRoom() and self.taskSystem.taskModel == TaskModel.Main:
+            if util.isNewbieRoom(self.player.table.typeName) and self.taskSystem.taskModel == TaskModel.Main:
                 time_ = Task_Red_Ready_Time
             else:
                 time_ = Task_Normal_Ready_Time
@@ -452,10 +441,11 @@ class TaskBase(object):
                     self.taskActivateTimer.cancel()
                 self.taskActivateTimer = FTLoopTimer(60, 0, self._taskActivate)
                 self.taskActivateTimer.start()
-                ftlog.debug("_taskActivate, need delay !", self.player.userId, self.taskId)
+                if ftlog.is_debug():
+                    ftlog.debug("_taskActivate, need delay !", self.player.userId, self.taskId)
                 return
-
-        ftlog.debug("_taskActivate->", delay, self.waitTime)
+        if ftlog.is_debug():
+            ftlog.debug("_taskActivate->", delay, self.waitTime)
         self.taskData["state"] = TaskState.Start
         if delay > 0:
             self.taskData["state"] = TaskState.Update
@@ -504,7 +494,7 @@ class TaskBase(object):
         taskInfo["failTimeConf"] = self.taskConfig["failTime"]
         taskInfo["failTime"] = self.taskData["failTime"]        # 失败次数
         taskInfo["isNextLimitTime"] = self.taskSystem.isNextLimitTime(self.getTaskId())
-        taskInfo["model"] = TaskModel.Red if self.taskSystem.isRedRoom() and self.taskSystem.taskModel == TaskModel.Main else self.taskSystem.taskModel
+        taskInfo["model"] = TaskModel.Red if util.isNewbieRoom(self.player.table.typeName) and self.taskSystem.taskModel == TaskModel.Main else self.taskSystem.taskModel
         taskInfo["type"] = self.taskConfig["type"]
         if self.taskSystem.taskModel in [TaskModel.Red, TaskModel.Main]:
             taskInfo["index"] = self.taskSystem.allMainTaskIds.index(self.taskId)
@@ -532,7 +522,8 @@ class TaskBase(object):
         """
         任务结束
         """
-        ftlog.debug("taskBase_______taskEnd", self.taskId, self.userId, self.taskData["state"])
+        if ftlog.is_debug():
+            ftlog.debug("taskBase_______taskEnd", self.taskId, self.userId, self.taskData["state"])
         beforeState = self.taskData["state"]
         self.clear()
         if beforeState == TaskState.Update:

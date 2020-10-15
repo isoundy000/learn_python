@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/15
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 import hashlib
 
@@ -25,7 +25,6 @@ from newfish.entity.redis_keys import GameData, WeakData, UserData
 class FishHttpHandler(BaseHttpMsgChecker):
 
     def checkCode(self):
-        """错误吗"""
         code = ""
         datas = runhttp.getDict()
         if "code" in datas:
@@ -36,9 +35,8 @@ class FishHttpHandler(BaseHttpMsgChecker):
         if code != signStr:
             return -1, "Verify code error"
         return 0, None
-
+    
     def _check_param_ismgr(self, key, params):
-        """检查"""
         ismgr = runhttp.getParamInt(key, 0)
         if ismgr == 0 or ismgr == 1:
             return None, ismgr
@@ -49,7 +47,7 @@ class FishHttpHandler(BaseHttpMsgChecker):
         if msgstr:
             return None, msgstr
         return "ERROR of msgstr !" + str(msgstr), None
-
+    
     def _check_param_scope(self, key, params):
         scope = runhttp.getParamStr(key, "")
         if scope:
@@ -111,7 +109,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
 
     @markHttpMethod(httppath="/newfish/v1/user/info")
     def doGetUserInfo(self, userId):
-        """获取用户信息"""
         info = {}
         info["code"] = 0
         level = util.getUserValidCheckLevel(userId)
@@ -125,7 +122,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
 
     @markHttpMethod(httppath="/gtest/newfish/user")
     def getUserData(self, userId, name, hash):
-        """获取用户存储的数据"""
         ftlog.debug("getUserData->", userId, name, hash)
         if hash:
             return daobase.executeUserCmd(userId, "HGETALL", name)
@@ -142,7 +138,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
 
     @markHttpMethod(httppath="/gtest/newfish/rank")
     def getRankData(self, rankType):
-        """获取排行榜信息"""
         userId = runhttp.getParamInt("userId", config.ROBOT_MAX_USER_ID)
         ftlog.debug("getRankData->", userId, rankType)
         from newfish.entity.ranking import ranking_system
@@ -150,7 +145,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
 
     @markHttpMethod(httppath="/gtest/newfish/reset")
     def doResetData(self, gameId, userId):
-        """重置数据"""
         ftlog.debug("doResetData->", gameId, userId)
         isDel = False
         delUserIds = [103155760, 103138308]
@@ -160,19 +154,20 @@ class FishHttpHandler(BaseHttpMsgChecker):
         else:
             isDel = True
         if isDel:
-            fishDelKeys = ["achievement3", "activity", "fishDailyQuest", "fishDailyQuestReward",
-                           "gamedata", "gunskin", "honor3", "share", "skill", "treasure", "mainQuest", "questType",
-                           "piggyBankData", "autoBuyAfterSDKPay", "timeLimitedStore",
-                           "levelFundsData", "prizeWheelData", "playGameTime"]
-            fishDelKeys2 = [UserData.lotteryTicketData, UserData.newbieUseSkillTimes, UserData.buyProductCount]
-            hallDelKeys = ["gamedata", "item2"]
+            fishDelKeys = [UserData.activity, UserData.achievement, UserData.honor, UserData.gunskin,
+                           UserData.gunskin_m, UserData.treasure, UserData.share, UserData.skill,
+                           UserData.fishDailyQuest, UserData.fishDailyQuestReward, UserData.fishDailyQuestWeeklyReward,
+                           UserData.fishDailyQuestInfo, UserData.fishDailyQuestGroupLv, UserData.prizeWheelData,
+                           UserData.levelFundsData, UserData.levelFundsData_m, UserData.piggyBankData,
+                           UserData.questType, UserData.newbieUseSkillTimes, UserData.luckyTreeData,
+                           UserData.buyProductCount,UserData.buyExchangeProduct, UserData.prizeWheelData_m,
+                           UserData.gunEffect_m, UserData.gamedata, UserData.mainQuest]
+            hallDelKeys = ["gamedata:%d:%d", "item2:%d:%d"]
             weakDelKeys = ["weak:day:1st:44", "weak:day:1st:9999", "weak:day:fish:44", "weak:week:fish:44"]
             for keyName in fishDelKeys:
-                daobase.executeUserCmd(userId, "DEL", "%s:%s:%s" % (keyName, FISH_GAMEID, userId))
-            for keyName in fishDelKeys2:
                 daobase.executeUserCmd(userId, "DEL", keyName % (FISH_GAMEID, userId))
             for keyName in hallDelKeys:
-                daobase.executeUserCmd(userId, "DEL", "%s:%s:%s" % (keyName, HALL_GAMEID, userId))
+                daobase.executeUserCmd(userId, "DEL", keyName % (HALL_GAMEID, userId))
             for keyName in weakDelKeys:
                 daobase.executeUserCmd(userId, "DEL", "%s:%s" % (keyName, userId))
             userchip.incrChip(userId, FISH_GAMEID, -userchip.getChip(userId), 0, "BI_NFISH_BUY_ITEM_CONSUME", 0, util.getClientId(userId))
@@ -214,7 +209,7 @@ class FishHttpHandler(BaseHttpMsgChecker):
         """
         ftlog.info("doWechatGetProduct", userId)
         allProduct = {}
-        level = util.getLevelByGunLevel(userId)
+        level = util.getUserLevel(userId)
         vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
         if level <= 0:
             code = 1
@@ -300,7 +295,7 @@ class FishHttpHandler(BaseHttpMsgChecker):
         elif subStore == "gift":
             product["id"] = item["productId"]
             product["name"] = item["giftName"]
-            product["price"] = item["price_direct"]  # item["discountPrice"]
+            product["price"] = item["price_direct"]             # item["discountPrice"]
             product["desc"] = ""
         return product
 
@@ -335,7 +330,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
         return mo
 
     def _exchangeCredit(self, userId, productId):
-        """积分兑换"""
         code, credit = 1, 0
         vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
         creditStoreConf = config.getCreditStoreConf()
@@ -345,11 +339,9 @@ class FishHttpHandler(BaseHttpMsgChecker):
                 if vipLevel >= creditStore["limitVipLevel"]:
                     rewards = [{"name": creditStore["kindId"], "count": creditStore["count"]}]
                     # message = u"恭喜您在公众号会员积分商城成功兑换%s，请查收附件！" % creditStore["name"]
-                    message = config.getMultiLangTextConf("ID_PUBLIC_ACCOUNT_EXCHANGE_REWARD_MSG", lang=lang) % \
-                              creditStore["name"]
+                    message = config.getMultiLangTextConf("ID_PUBLIC_ACCOUNT_EXCHANGE_REWARD_MSG", lang=lang) % creditStore["name"]
                     title = config.getMultiLangTextConf("ID_MAIL_TITLE_SYSTEM_INFO", lang=lang)
-                    mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, rewards, message,
-                                               title)  # 系统邮件
+                    mail_system.sendSystemMail(userId, mail_system.MailRewardType.SystemReward, rewards, message, title) # 系统邮件
                     code, credit = 0, creditStore["credit"]
                     break
                 else:
@@ -358,7 +350,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
 
     @markHttpMethod(httppath="/newfish/v1/h5/getProduct")
     def doH5GetProduct(self, userId):
-        """获取H5所有的商品"""
         return self.getH5AllProduct(userId)
 
     def getH5AllProduct(self, userId):
@@ -412,7 +403,6 @@ class FishHttpHandler(BaseHttpMsgChecker):
         return groupInfo
 
     def buildH5Product(self, item, storeName):
-        """生成H5产品信息"""
         product = {}
         if storeName == "diamond":
             product["prod_name"] = item["name"]

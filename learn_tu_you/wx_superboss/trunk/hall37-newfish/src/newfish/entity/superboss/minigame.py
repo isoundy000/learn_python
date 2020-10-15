@@ -16,7 +16,6 @@ from newfish.entity.msg import GameMsg
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity import util, config, weakdata, module_tip
 from newfish.entity.redis_keys import WeakData, GameData
-from newfish.entity.util import getGunLevelVal
 from newfish.entity.event import PlayMiniGame
 from newfish.servers.table.rpc import table_remote
 
@@ -50,7 +49,7 @@ def sendMinigameInfo(roomId, userId, mode):
         remainTimes = max(0, maxTimes - playedTimes) if maxTimes >= 0 else -1
         currencyList = conf.get("info", {}).get(key, {}).get("currencyList", [])
         items = config.rwcopy(conf.get("game", {}).get(key, []))
-        gunLevelVal = getGunLevelVal(userId, 1)
+        gunLevelVal = util.getGunLevelVal(userId, config.MULTIPLE_MODE)
         lang = util.getLanguage(userId)
         itemsinfo = []
         for item in items:

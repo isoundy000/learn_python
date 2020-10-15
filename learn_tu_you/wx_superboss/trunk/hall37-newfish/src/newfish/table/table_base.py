@@ -37,7 +37,6 @@ from newfish.entity.lotterypool.grand_prize_pool import GrandPrizePool
 from newfish.entity.task.task_system_table import TaskSystemTable
 from newfish.entity.quest import quest_system
 from newfish.entity.redis_keys import GameData
-from newfish.entity import mini_game
 from newfish.entity.task.tide_task import TideTask
 
 
@@ -69,8 +68,9 @@ class FishTable(TYTable):
             "robot_leave": self._robotLeave,                            # 机器人离开房间
             "catch": self._verifyCatch,                                 # 验证该次捕获是否有效
             "skill_use": self._skill_use,                               # 使用技能 1使用 0取消
-            "skill_install": self._skill_install,                       # 技能穿上1、卸下0
+            "skill_install": self._skill_install,                       # 技能装备1、卸下0
             "skill_replace": self._skill_replace,                       # 技能替换 uninstallSkillId 要卸下的技能ID
+            "skill_upgrade": self._skill_upgrade,                       # 技能升级0、升星1
             "chat": self._doTableChat,                                  # 渔场自定义聊天
             "smile": self.doTableSmilies,                               # 渔场互动表情
             "clip_info": self._clip_info,                               # 显示弹药购买详情信息响应
@@ -87,7 +87,6 @@ class FishTable(TYTable):
             "guns_pool": self._guns_pool,                               # 更新炮的奖池
             "gun_up": self._gun_up,                                     # 普通炮升级
             "recharge_notify": self._recharge_notify,                   # 充值通知
-            "skill_upgrade": self._skill_upgrade,                       # 技能升级0、升星1
             "refresh_skill_cd": self._refresh_skill_cd,                 # 刷新技能cd时间
             "achievement_target": self._achievement_target,             # 成就任务(暂时不用)
             "fishActivityBtns": self._activity_all_btns,                # 所有活动按钮
@@ -104,8 +103,6 @@ class FishTable(TYTable):
             "prize_wheel_bet_m": self._prizeWheelBet,                   # 确定轮盘最终奖励
             "comp_act_notify": self._inspireNotify,
             "newbie_7_gift_take": self._takeNewbie7DaysGift,            # 领取新手7日礼包奖励
-            "mini_game_start": self._miniGameStart,                     # 开始小游戏宝箱
-            "mini_game_action": self._miniGameAction,                   # 小游戏抽奖
             "item_use": self.item_use,                                  # 使用道具技能
             "use_gun_effect": self.gun_effect_use                       # 使用皮肤炮的特殊效果
         }
@@ -631,7 +628,7 @@ class FishTable(TYTable):
                     # 增加狂暴弹期间子弹威力
                     wpPower, superBullet = player.gunEffectState(6, player.gunId, wpConf["power"], gunX * gunMultiple)
                 clip = player.costClip(costBullet, "BI_NFISH_GUN_FIRE")
-            player.addFire(bulletId, wpId, timestamp, fpMultiple, gunMultiple1=gunMultiple, gunX=gunX,
+            player.addFire(bulletId, wpId, timestamp, fpMultiple, gunMultiple=gunMultiple, gunX=gunX,
                            skill=skill, power=wpPower, costChip=costChip, superBullet=superBullet)
 
         if player:
@@ -705,7 +702,7 @@ class FishTable(TYTable):
         if fireWpId and wpType != config.SKILL_WEAPON_TYPE:  # 删除非技能子弹
             maxStage = player.getFireMaxStage(bulletId, extendId)
             # 子弹达到最大阶段后销毁.
-            if stageId == maxStage:     # if wpType != config.DRILL_WEAPON_TYPE or stageId == 1:
+            if stageId == maxStage:
                 player.delFire(bulletId, extendId)
         if wpType in config.LOG_OUTPUT_WEAPON_TYPE_SET:
             ftlog.info("_verifyCatch->", "userId =", userId, "msg =", msg)
@@ -893,19 +890,11 @@ class FishTable(TYTable):
                     exp += fishExp
                     if fishGain:
                         gain.extend(fishGain)
-                else:
-                    otherCatch = self.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain, catchMap, fishExp)
             else:
                 notCatchFids.append(fId)
                 if originHP != catchMap["HP"]:
                     catch.append(catchMap)
-                # fishGainChip, fishGain = self.dealHitBossGain(0, fId, player, originHP)     # 处理打中boss掉落金币
-                # if catchUserId == player.userId:
-                #     gainChip += fishGainChip
-                #     if fishGain:
-                #         gain.extend(fishGain)
-                # else:
-                #     otherCatch = self.extendOtherCatchGain(fId, catchUserId, otherCatch, fishGainChip, fishGain)
+
             fishType = fishInfo["fishType"]
             fIdTypes[fId] = fishType
             if wpType == config.GUN_WEAPON_TYPE:
@@ -961,9 +950,9 @@ class FishTable(TYTable):
         skillId = msg.getParam("skillId")
         totalCoin = msg.getParam("totalCoin")
         fishId = msg.getParam("fishId")
-        multiple = msg.getParam("multiple")
-        # stageCount = msg.getParam("stageCount")
-        fpMultiple = msg.getParam("fpMultiple", self.runConfig.multiple)
+        gunM = msg.getParam("gunM")
+        stageCount = msg.getParam("stageCount")
+        fpMultiple = self.runConfig.multiple
         wpType = util.getWeaponType(wpId)
 
         mo = MsgPack()
@@ -1227,7 +1216,7 @@ class FishTable(TYTable):
         :param player: 捕鱼者
         :param fpMultiple: 渔场倍率
         :param gunMultiple: 炮的倍率
-        :param bufferCoinAdd: buffer加成金币系数（暂时无用）
+        :param bufferCoinAdd: buffer加成金币系数（非回馈赛暂时无用）
         :param wpType: 武器类型
         :param extends: 扩展数据
         :param gunX: 炮的倍数
@@ -1590,7 +1579,10 @@ class FishTable(TYTable):
             event = CheckLimitTimeGiftEvent(player.userId, FISH_GAMEID, player.level, player.dynamicOdds.chip, self.runConfig.fishPool, player.clientId)
             TGFish.getEventBus().publishEvent(event)
         # 触发美人鱼的馈赠小游戏
-        self._miniMermaidStart(player.seatId, fishTypes)            # 开始小游戏美人鱼的馈赠, 8101是美人鱼小游戏id
+        if self.gameMode == config.MULTIPLE_MODE:
+            player._miniMermaidStart(fishTypes, gunMultiple * gunX)            # 开始小游戏美人鱼的馈赠, 8101是美人鱼小游戏id
+            # self._miniMermaidStart(player, fishTypes, gunMultiple * gunX)            # 开始小游戏美人鱼的馈赠, 8101是美人鱼小游戏id
+
 
     def dealSpecialFishFire(self, player, fishConf, fpMultiple, gunMultiple, gunX, catchMap):
         """
@@ -2334,15 +2326,12 @@ class FishTable(TYTable):
                     if self.typeName in config.NORMAL_ROOM_TYPE:
                         player.countLotteryConsumeCoin(price)
                     if lastCoin > self.runConfig.coinShortage > player.holdCoin:
-                        coinShortageCount = gamedata.getGameAttrJson(player.userId, FISH_GAMEID,
-                                                                     GameData.coinShortageCount, {})
+                        coinShortageCount = gamedata.getGameAttrJson(player.userId, FISH_GAMEID, GameData.coinShortageCount, {})
                         coinShortageCount.setdefault(str(self.runConfig.fishPool), 0)
                         coinShortageCount[str(self.runConfig.fishPool)] += 1
-                        gamedata.setGameAttr(player.userId, FISH_GAMEID, GameData.coinShortageCount,
-                                             json.dumps(coinShortageCount))
+                        gamedata.setGameAttr(player.userId, FISH_GAMEID, GameData.coinShortageCount, json.dumps(coinShortageCount))
                         if ftlog.is_debug():
-                            ftlog.debug("doTableSmilies2", player.userId, lastCoin, self.runConfig.coinShortage, player.holdCoin,
-                                    coinShortageCount)
+                            ftlog.debug("doTableSmilies2", player.userId, lastCoin, self.runConfig.coinShortage, player.holdCoin, coinShortageCount)
 
                     player.charm = userdata.incrCharm(userId, self_charm)
                     if len(str(player.charm)) >= 11:
@@ -2704,60 +2693,17 @@ class FishTable(TYTable):
         idx = msg.getParam("idx")
         newbie_7days_gift.takeGiftRewards(userId, clientId, idx, fireCount, level)
 
-    def _miniGameStart(self, msg, userId, seatId):
-        """
-        开始小游戏宝箱
-        """
-        miniGameLevel = 2
-        player = self.players[seatId - 1]
-        ret = mini_game.miniGameStart(self, player, miniGameLevel)
-        msg = MsgPack()
-        msg.setCmd("mini_game_start")
-        msg.setResult("gameId", FISH_GAMEID)
-        msg.setResult("userId", userId)
-        msg.setResult("seatId", seatId)
-        for key, value in ret.items():
-            msg.setResult(key, value)
-        GameMsg.sendMsg(msg, self.getBroadcastUids())
-        self.lastActionTime = int(time.time())
-
-    def _miniMermaidStart(self, seatId, fishTypes):
-        """
-        开始小游戏美人鱼的馈赠, 8101是美人鱼小游戏id
-        """
-        miniGameLevel = 1
-        player = self.players[seatId - 1]
-        isTrigger = False
-        if player:
-            for fishType in fishTypes:
-                if fishType in config.MINI_GAME_FISH_TYPE:
-                    isTrigger = True
-                    break
-            if isTrigger and mini_game.addCard(self.roomId, player):
-                ret = mini_game.miniGameStart(self, player, miniGameLevel)
-                msg = MsgPack()
-                msg.setCmd("mini_game_start")
-                msg.setResult("gameId", FISH_GAMEID)
-                msg.setResult("seatId", seatId)
-                for key, value in ret.items():
-                    msg.setResult(key, value)
-                GameMsg.sendMsg(msg, self.getBroadcastUids())
-
-    def _miniGameAction(self, msg, userId, seatId):
-        """
-        小游戏抽奖, actType=1表示翻硬币/选择箱子， actType=2表示宝箱抽奖
-        """
-        mini_game.doAction(msg, self, self.players[seatId - 1])
-
     def item_use(self, msg, userId, seatId):
         """
         使用道具技能卡
         """
         kindId = msg.getParam("kindId")
         fIds = msg.getParam("fIds") or []
+        lockFid = msg.getParam("lockFid") or 0
         player = self.players[seatId - 1]
+        self.lastActionTime = int(time.time())
         if player and hasattr(player, "skill_item"):
-            player.skill_item[kindId].use_item(seatId, kindId, fIds)
+            player.skill_item[kindId].use_item(seatId, kindId, fIds, lockFid)
 
     def asyncEnterTableEvent(self, userId, seatId, reconnect):
         """

@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/9/9
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2017/6/23.
+"""
 
 import freetime.util.log as ftlog
 from poker.entity.biz.content import TYContentItem

@@ -169,7 +169,7 @@ class FishQuickStart(BaseQuickStart):
         userChip = userchip.getChip(userId)
         candidateRoomId = 0
         for roomId in sorted(candidateRoomIds, reverse=True):
-            isOK = cls._matchEnterRoom(roomId, uLevel, gunLevel, userChip, gameMode)
+            isOK = cls.matchEnterRoom(roomId, uLevel, gunLevel, userChip, gameMode)
             if isOK:
                 candidateRoomId = roomId
                 break
@@ -254,6 +254,7 @@ class FishQuickStart(BaseQuickStart):
             gunLevel = util.getGunLevel(userId, gameMode)
             if not uLevel or not gunLevel:
                 return cls.ENTER_ROOM_REASON_INNER_ERROR
+            gunLevelVal = config.getGunLevelConf(gunLevel, gameMode).get("levelValue", 1)
             userChip = userchip.getUserChipAll(userId)
             vipLevel = hallvip.userVipSystem.getUserVip(userId).vipLevel.level
             if ftlog.is_debug():
@@ -261,7 +262,7 @@ class FishQuickStart(BaseQuickStart):
             roomConf = gdata.roomIdDefineMap()[roomId].configure
             fee = roomConf.get("fee_%s" % kindId, {}) or roomConf.get("fee", {})
             minLevel = roomConf.get("minLevel", 1)
-            minGunLevel = roomConf.get("minGunLevel", 1)
+            minGunLevelVal = roomConf.get("minGunLevelVal", 1)
             minCoin = roomConf.get("minCoin", 1)
             minVip = roomConf.get("minVip", 0)
             timeLimit = roomConf.get("timeLimit", [])
@@ -296,7 +297,7 @@ class FishQuickStart(BaseQuickStart):
                     if vipLevel >= minVip:
                         return cls.ENTER_ROOM_REASON_OK
                 return cls.ENTER_ROOM_REASON_LESS_LEVEL
-            if gunLevel < minGunLevel and roomConf.get("typeName") != config.FISH_ROBBERY:
+            if gunLevelVal < minGunLevelVal:
                 return cls.ENTER_ROOM_REASON_LESS_LEVEL
             if userChip < minCoin:
                 return cls.ENTER_ROOM_REASON_LESS_COIN
@@ -345,8 +346,8 @@ class FishQuickStart(BaseQuickStart):
         return cls.ENTER_ROOM_REASON_OK
 
     @classmethod
-    def _matchEnterRoom(cls, roomId, uLevel, gunLevel, userChip, gameMode):
-        """匹配进入房间"""
+    def matchEnterRoom(cls, roomId, uLevel, gunLevel, userChip, gameMode):
+        """是否满足推荐房间准入条件"""
         roomConf = gdata.roomIdDefineMap()[roomId].configure
         minLevel = roomConf.get("minLevel", 1)
         gunLevelVal = config.getGunLevelConf(gunLevel, gameMode).get("levelValue", 1)

@@ -102,8 +102,9 @@ class QuestType:
     TreasureLevelUp = 10041     # 将任一宝藏升至n级
     SkillStar = 10042           # 技能星级数
     UserLevelUp = 10043         # 玩家等级达到n级
-    UseSkillItem = 10044        # 使用n次锁定
+    UseSkillItemLock = 10044    # 使用n次锁定
     LevelPrizeWheel = 10045     # 转盘的转动
+    UseSkillItem = 10046        # 使用n次冰冻
 
 
 TaskTypeFishTypeMap = {
@@ -558,7 +559,9 @@ def triggerUseSkillItemEvent(event):
     """触发使用道具锁定"""
     userId = event.userId
     if event.kindId == config.LOCK_ITEM:
-        incrQuestTypeData(userId, QuestType.UseSkillItem, 1)
+        incrQuestTypeData(userId, QuestType.UseSkillItemLock, 1)
+    elif event.kindId == config.FREEZE_ITEM:
+        incrQuestTypeData(userId, QuestType.UseSkillItemFreeze, 1)
 
 
 def triggerUserLevelUpEvent(event):

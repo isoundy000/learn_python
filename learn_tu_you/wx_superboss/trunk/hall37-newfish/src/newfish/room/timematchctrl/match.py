@@ -72,7 +72,7 @@ class MatchInst(HeartbeatAble):
         self.endTime = self.matchConf.start.calcEndTime(startTime)
         # 单次随机报名人数
         self.singleSignerNum = 0
-        # 所有报名过的玩家
+        # 报名过的机器人userId
         self.signerRecord = set()
         # 状态
         self._state = MatchInst.ST_IDLE
@@ -236,6 +236,10 @@ class MatchInstLocal(MatchInst):
             
             # 创建MatchUser
             self.area.matchUserIF.createUser(self.matchId, self.roomId, self.instId, signer.userId, signer.fee)
+
+    def delSigner(self, userId):
+        self.area.signinRecordDao.remove(self.matchId, self.roomId, self.instId, userId)
+        del self._signerMap[userId]
     
     def signin(self, userId, feeIndex):
         # 检查参数
@@ -293,8 +297,6 @@ class MatchInstLocal(MatchInst):
                     canEnter = True
                     self._lockSigner(signer)
                     self.area.playerNotifier.notifyMatchStart(self.instId, [signer])
-                    self.area.signinRecordDao.remove(self.matchId, self.roomId, self.instId, signer.userId)
-                    del self._signerMap[signer.userId]
             else:
                 raise BadStateException()
         else:
@@ -519,7 +521,7 @@ class MatchInstLocal(MatchInst):
         else:
             if self._state >= MatchInst.ST_PREPARE:
                 raise SigninStoppedException()
-        
+
         # 已经报名
         if self.findSigner(userId):
             raise AlreadySigninException()
@@ -531,15 +533,7 @@ class MatchInstLocal(MatchInst):
         # 已经报名其他场次
         ctrlRoomId, startTime = util.getFishMatchSigninInfo(userId)
         if ctrlRoomId:
-            roomConfig = gdata.getRoomConfigure(ctrlRoomId)
-            type = None
-            if roomConfig.get("matchConf") and roomConfig["matchConf"].get("start"):
-                type = roomConfig["matchConf"]["start"].get("type", None)
-            # 可以同时报名多个定时积分赛
-            if self.matchConf.start.isTimePointType() and self.matchConf.start.type == type:
-                pass
-            else:
-                raise AlreadySigninOtherException()
+            raise AlreadySigninOtherException()
 
     def _doHeartbeat(self):
         return 1
@@ -577,7 +571,11 @@ class MatchGroup(HeartbeatAble):
         self._logger.add("groupId", self.groupId)
         self._logger.add("matchingId", self.matchingId)
         self._logger.add("stageIndex", self.stageIndex)
-        
+
+    @property
+    def roomId(self):
+        return self.area.roomId
+
     @property
     def matchId(self):
         return self.area.matchId
@@ -605,6 +603,7 @@ class MatchGroup(HeartbeatAble):
         """
         查找Player
         """
+        ftlog.debug("findPlayerxxx", userId, self._playerMap)
         return self._playerMap.get(userId)
     
     def removePlayer(self, player):

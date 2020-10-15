@@ -1,14 +1,14 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/1/12.
+"""
 
 import random
 
 from freetime.util import log as ftlog
 from newfish.entity import config
 from newfish.entity.config import FISH_GAMEID
-from newfish.entity.skill.skill_system import getSkill
+from newfish.entity.skill import skill_system
 from newfish.player.multiple_player import FishMultiplePlayer
 from newfish.entity.match_record import MatchRecord
 from newfish.player.player_buffer import FishPlayerBuffer
@@ -56,7 +56,7 @@ class FishTimeMatchPlayer(FishMultiplePlayer):
             # sumNum += int(yn * 1000)
             probs.append(yn)
             if i > 0:
-                zn = int((probs[i] + probs[i - 1]) * bufferNum * 1000)  # 结果扩大3位数
+                zn = int((probs[i] + probs[i-1]) * bufferNum * 1000)  # 结果扩大3位数
                 probZs.append(zn)
         randNum = random.randint(1, sum(probZs))
         sumNum = 0
@@ -83,10 +83,11 @@ class FishTimeMatchPlayer(FishMultiplePlayer):
             self.skillSlots = {}
         if self.table._matchSkills:
             for idx, skillId in enumerate(self.table._matchSkills):
-                skill = getSkill(self.userId, skillId)
-                if skill:
-                    self.skillSlots[skillId] = [idx + 1, skill[0], skill[2]]
-                else:
-                    self.skillSlots[skillId] = [idx + 1, 1, 1]
+                skill = skill_system.getSkill(self.userId, skillId)
+                starLevel, currentLevel = 1, 1
+                if skill[skill_system.INDEX_STAR_LEVEL]:
+                    starLevel = skill[skill_system.INDEX_STAR_LEVEL]
+                    currentLevel = skill[skill_system.INDEX_CURRENT_LEVEL]
+                self.skillSlots[skillId] = [idx + 1, starLevel, currentLevel]
         else:
             super(FishTimeMatchPlayer, self)._refreshSkillSlots(skillType)

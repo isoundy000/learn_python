@@ -1904,3 +1904,7 @@ class FishPlayer(TYPlayer):
     def gunEffectState(self, _type=1, *args):
         """千炮场狂暴效果"""
         pass
+
+    def _miniMermaidStart(self, fishTypes, gunM):
+        """美人鱼小游戏开始"""
+        pass

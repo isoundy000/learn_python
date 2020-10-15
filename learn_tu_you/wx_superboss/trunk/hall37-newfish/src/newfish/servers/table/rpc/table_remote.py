@@ -191,3 +191,20 @@ def notifyInspireInfo(roomId, teamId, ratio, remainTime, purchaserUid, interval,
             GameMsg.sendMsg(mo, _uid)
             ftlog.debug("notifyInspireInfo, userId =", _uid, "teamId =", teamId, "mo =", mo)
     return 1
+
+@markRpcCall(groupName="roomId", lockName="", syncCall=1)
+def addRewardsToTable(roomId, tableId, userId, rewards, eventId, intEventParam):
+    """
+    在渔场内发放奖励
+    """
+    try:
+        room = gdata.rooms()[roomId]
+        table = room.maptable[tableId]
+        player = table.getPlayer(userId)
+        if player and rewards[0]["name"] == config.CHIP_KINDID:
+            player.addTableChip(rewards[0]["count"], eventId, intEventParam)
+        else:
+            util.addRewards(userId, rewards, eventId, intEventParam)
+    except Exception as e:
+        ftlog.error("addRewardsToTable", roomId, tableId, userId, rewards, eventId, intEventParam, traceback.format_exc())
+    return 0

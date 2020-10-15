@@ -41,7 +41,7 @@ class FishHttpGdssHandler(BaseHttpMsgChecker):
             return None, punishState
         return "ERROR of punishState !" + str(punishState), None
 
-    @markHttpMethod(httppath='/_gdss/newfish/user/mail/list')
+    @markHttpMethod(httppath="/_gdss/newfish/user/mail/list")
     def doGetUserMailList(self, userId):
         """
         GM工具查询玩家邮件接口

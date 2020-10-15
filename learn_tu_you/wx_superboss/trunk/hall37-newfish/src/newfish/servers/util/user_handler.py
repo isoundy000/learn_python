@@ -1,14 +1,14 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/8
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 2018/5/13.
+"""
 
 import json
 
 import freetime.util.log as ftlog
 from freetime.entity.msg import MsgPack
 from poker.entity.biz import bireport
-from poker.entity.dao import gamedata, onlinedata, userchip
+from poker.entity.dao import gamedata, onlinedata, userchip, sessiondata
 from poker.protocol import router
 from poker.entity.biz.exceptions import TYBizException
 from poker.protocol.decorator import markCmdActionHandler, markCmdActionMethod
@@ -36,6 +36,7 @@ from newfish.entity.gun import gun_system
 from newfish.entity.fishactivity import starfish_turntable
 from newfish.entity.fishactivity import slot_machine_activity, super_egg_activity, competition_activity
 from newfish.entity.redis_keys import GameData, WeakData, ABTestData
+from newfish.entity.gift import level_gift
 
 
 @markCmdActionHandler
@@ -199,7 +200,7 @@ class UserTcpHandler(BaseMsgPackChecker):
         if isinstance(shareUserId, int):
             return None, shareUserId
         return "ERROR of shareUserId !" + str(shareUserId), None
-
+    
     def _check_param_groupId(self, msg, key, params):
         groupId = msg.getParam("groupId", "")
         return None, groupId
@@ -432,7 +433,6 @@ class UserTcpHandler(BaseMsgPackChecker):
             ftlog.debug("update user biggest hallVersion:", clientVer)
 
     def recoverUserTableChips(self, userId, clientId):
-        """"""
         try:
             tableChips = userchip.getTableChipsAll(userId)
             ftlog.debug("recoverUserTableChips->", tableChips)
@@ -604,8 +604,7 @@ class UserTcpHandler(BaseMsgPackChecker):
             mo.setResult("userId", userId)
             mo.setResult("skillId", skillId)
             mo.setResult("actionType", actionType)
-            code, starLevel, originalLevel, currentLevel, previousLevel = skill_system.upgradeSkill(userId, skillId,
-                                                                                                    actionType)
+            code, starLevel, originalLevel, currentLevel, previousLevel = skill_system.upgradeSkill(userId, skillId, actionType)
             mo.setResult("starLevel", starLevel)
             mo.setResult("originalLevel", originalLevel)
             mo.setResult("currentLevel", currentLevel)
@@ -881,14 +880,12 @@ class UserTcpHandler(BaseMsgPackChecker):
         ftlog.debug("turntableGameResult", gameId, clientId, userId, count, itemId)
         starfish_turntable.doGetTurntableResult(userId, itemId, count)
 
-    @markCmdActionMethod(cmd="user", action="slotMachineTurntableInfo", clientIdVer=0, scope="game",
-                         lockParamName="userId")
+    @markCmdActionMethod(cmd="user", action="slotMachineTurntableInfo", clientIdVer=0, scope="game", lockParamName="userId")
     def getSlotMachineTurntableInfo(self, gameId, userId, actType):
         ftlog.debug("slotMachineTurntableGameInfo", gameId, userId, actType)
         slot_machine_activity.doGetSlotTurntableInfo(userId, actType)
 
-    @markCmdActionMethod(cmd="user", action="slotMachineTurntableResult", clientIdVer=0, scope="game",
-                         lockParamName="userId")
+    @markCmdActionMethod(cmd="user", action="slotMachineTurntableResult", clientIdVer=0, scope="game", lockParamName="userId")
     def getSlotTurntableResult(self, userId, gameId, clientId, count, drawMode, actType):
         ftlog.debug("slotTurntableGameResult", gameId, clientId, userId, count, drawMode, actType)
         slot_machine_activity.doGetSlotTurntableResult(userId, count, drawMode, actType)
@@ -1017,16 +1014,16 @@ class UserTcpHandler(BaseMsgPackChecker):
 
     @markCmdActionMethod(cmd="user", action="fish_vip_info", clientIdVer=0, scope="game", lockParamName="userId")
     def doGetFishVip(self, userId, gameId, clientId):
-        """发送VIP特权信息和道具流通数量限制信息"""
+        """发送VIP特权信息"""
         ftlog.debug("doGetFishVip", gameId, userId)
         vip_system.sendFishVipInfo(userId)
         vip_system.sendVipCirculateInfo(userId)
 
     @markCmdActionMethod(cmd="user", action="buy_fish_vip_gift", clientIdVer=0, scope="game", lockParamName="userId")
-    def doBuyFishVipGift(self, userId, gameId, clientId, level):
+    def doBuyFishVipGift(self, userId, gameId, clientId, level, buyType, rebateItemId):
         """购买特定VIP等级的礼包"""
-        ftlog.debug("doBuyFishVipGift", gameId, userId, level)
-        vip_system.buyFishVipGift(userId, level)
+        ftlog.debug("doBuyFishVipGift", gameId, userId, level, buyType, rebateItemId)
+        vip_system.buyFishVipGift(userId, level, clientId, buyType, rebateItemId)
 
     @markCmdActionMethod(cmd="user", action="modify_vip_show", clientIdVer=0, scope="game", lockParamName="userId")
     def doModifyVipShow(self, userId, gameId, modify):
@@ -1126,8 +1123,7 @@ class UserTcpHandler(BaseMsgPackChecker):
         else:
             gun_system.upgradeGun(userId, protect, gameMode)
 
-    @markCmdActionMethod(cmd="user", action="id_card_identify_reward", clientIdVer=0, scope="game",
-                         lockParamName="userId")
+    @markCmdActionMethod(cmd="user", action="id_card_identify_reward", clientIdVer=0, scope="game", lockParamName="userId")
     def doIdentifyIdCardReward(self, userId, clientId):
         user_system.sendIdentifyReward(userId)
 
@@ -1173,8 +1169,7 @@ class UserTcpHandler(BaseMsgPackChecker):
         from newfish.entity.fishactivity import canned_fish_factory
         canned_fish_factory.doGetMakeCannedFishInfo(userId, name, count, desc, batchNumber)
 
-    @markCmdActionMethod(cmd="user", action="make_cannedFish_propInfo", clientIdVer=0, scope="game",
-                         lockParamName="userId")
+    @markCmdActionMethod(cmd="user", action="make_cannedFish_propInfo", clientIdVer=0, scope="game", lockParamName="userId")
     def doGetPropInfo(self, gameId, userId, clientId):
         ftlog.debug("doGetPropInfo", gameId, userId, clientId)
         from newfish.entity.fishactivity import canned_fish_factory
@@ -1332,8 +1327,31 @@ class UserTcpHandler(BaseMsgPackChecker):
         ftlog.debug("doGetLuckyTreeReward", gameId, userId, clientId, idx, actType)
         free_coin_lucky_tree.sendLuckyTreeReward(userId, actType, idx)
 
-    @markCmdActionMethod(cmd="user", action="lucky_tree_accelerate", clientIdVer=0, scope="game",
-                         lockParamName="userId")
+    @markCmdActionMethod(cmd="user", action="lucky_tree_accelerate", clientIdVer=0, scope="game", lockParamName="userId")
     def doGetLuckyTreeAccelerate(self, gameId, userId, clientId):
         ftlog.debug("doGetLuckyTreeAccelerate", gameId, userId, clientId)
         free_coin_lucky_tree.sendLuckyTreeAccelerate(userId)
+
+    @markCmdActionMethod(cmd="user", action="levelGiftData", clientIdVer=0, scope="game", lockParamName="userId")
+    def doGetLevelGiftData(self, gameId, userId, clientId):
+        """
+        获取等级礼包数据
+        """
+        ftlog.debug("doGetLevelGiftData", gameId, userId, clientId)
+        level_gift.doSendLevelGift(userId, clientId)
+
+    @markCmdActionMethod(cmd="user", action="buyLevelGift", clientIdVer=0, scope="game", lockParamName="userId")
+    def doBuyLevelGift(self, gameId, userId, clientId, productId, buyType, rebateItemId=0):
+        """
+        购买等级礼包
+        """
+        ftlog.debug("buyLevelGift", gameId, userId, clientId, productId, buyType, rebateItemId)
+        level_gift.doBuyLevelGift(userId, clientId, buyType, productId, rebateItemId)
+
+    @markCmdActionMethod(cmd="user", action="sendUserNewLed", clientIdVer=0, scope="game", lockParamName="userId")
+    def sendUserNewLed(self, gameId, userId, clientId):
+        """
+        新手LED
+        """
+        ftlog.debug("sendUserNewLed", gameId, userId, clientId)
+        led.sendUserNewLed(userId, clientId)

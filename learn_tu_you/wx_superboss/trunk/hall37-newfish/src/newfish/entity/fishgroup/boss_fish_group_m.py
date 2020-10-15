@@ -39,8 +39,6 @@ class BossFishGroup(object):
         self._interval = 300
         # 每轮Boss的持续时间
         self._duration = 90
-        # Boss首次出现时间戳
-        self._bossAppearTS = 0
         # 初始化配置定时器
         self._initConfTimer = None
         # 下一个Boss出现定时器
@@ -55,11 +53,13 @@ class BossFishGroup(object):
         self._group = None
         # 当前Boss鱼的fishId
         self._fishId = 0
-        self._initConf()
+        # Boss首次出现时间戳
+        self._bossAppearTS = 0
         # 深渊螃蟹
-        self.CatchCrabFish = 12233
+        self._crabFishType = 12233
         # 捕获深渊螃蟹的次数
-        self.killNum = 0
+        self._catchCrabNum = 0
+        self._initConf()
 
     def clearTimer(self):
         """
@@ -112,7 +112,7 @@ class BossFishGroup(object):
         if self._autofillTimer:
             self._autofillTimer.cancel()
             self._autofillTimer = None
-        if not self._canAddBoss():   # 新出场的Boss不满足出现条件
+        if not self._canAddBoss():  # 新出场的Boss不满足出现条件
             return
         if self.table.hasSuperBossFishGroup():  # 超级Boss已经存在或即将出现时不创建普通Boss
             return
@@ -139,7 +139,7 @@ class BossFishGroup(object):
             self._bossGroupId = bossGroupIds[0] if isDebut else random.choice(bossGroupIds[1:])
             if ftlog.is_debug():
                 ftlog.debug("BossFishGroup._addBossFishGroup", self.table.tableId, self._bossGroupId, isDebut)
-            self.killNum = 0
+            self._catchCrabNum = 0
             self._group = self.table.insertFishGroup(self._bossGroupId)
             self._fishId = self._group.startFishId
             if int(time.time()) + self._group.totalTime < self._bossAppearTS + self._duration:
@@ -185,9 +185,9 @@ class BossFishGroup(object):
         if self._fishType in event.fishTypes and int(time.time()) < self._bossAppearTS + self._duration:
             if ftlog.is_debug():
                 ftlog.debug("BossFishGroup.triggerCatchFishEvent_m", self.table.tableId, self._fishType)
-            if self._fishType == self.CatchCrabFish:                             # 深渊螃蟹一对
-                self.killNum += 1
-                if self.killNum >= 2:
+            if self._fishType == self._crabFishType:                             # 深渊螃蟹一对
+                self._catchCrabNum += 1
+                if self._catchCrabNum >= 2:
                     self._addAutoFillBoss(4)
             else:
                 self._addAutoFillBoss(4)

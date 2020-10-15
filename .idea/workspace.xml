@@ -2,17 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab943618-be83-4add-9378-2d94f4dc7157" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/item_exchange.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/robotuser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/boss_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/boss_fish_group.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/boss_fish_group_m.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/boss_fish_group_m.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/level_prize_wheel.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/level_prize_wheel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_release_m.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_release_m.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/skill/skill_system.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/gameplay.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/gameplay.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/tide_task.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/tide_task.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/user_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/user_system.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/fish_group_system.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/minigame_fish_group.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/fishgroup/minigame_fish_group.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_system.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/gun/gun_system.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/quick_start.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/quick_start.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/store.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/store.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/util.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/grand_prix_player.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/grand_prix_player.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/multiple_player.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/multiple_player.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/player_base.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/time_match_player.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/time_match_player.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/config.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/interface.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/interface.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/interfaceimpl.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/interfaceimpl.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/match.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/match.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/http/gdss_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/http/gdss_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/http/http_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/http/http_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/robot/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/robot/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/robot/robot_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/robot/robot_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/room_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/room_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/rpc/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/rpc/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/rpc/room_remote.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/room/rpc/room_remote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/rpc/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/rpc/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/rpc/table_remote.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/rpc/table_remote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/table_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/table/table_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/hall_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/hall_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/ranking_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/ranking_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/__init__.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/match_remote.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/match_remote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/table_remote.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/table_remote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/user_rpc.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/rpc/user_rpc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/store_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/store_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/superboss_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/superboss_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/servers/util/user_handler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/multiple_table.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/multiple_table.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/robbery_table.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_base.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_base.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_match_table.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_match_table.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_point_match_table.py" afterPath="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_point_match_table.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -189,8 +227,8 @@
       <file leaf-file-name="time_point_match_room.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7282">
-              <caret line="347" column="84" lean-forward="false" selection-start-line="347" selection-start-column="84" selection-end-line="347" selection-end-column="84" />
+            <state relative-caret-position="560">
+              <caret line="350" column="67" lean-forward="false" selection-start-line="350" selection-start-column="67" selection-end-line="350" selection-end-column="67" />
               <folding>
                 <element signature="e#88#99#0" expanded="true" />
               </folding>
@@ -198,11 +236,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameplay.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="robotuser.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/robotuser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gameplay.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/gameplay.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="114" column="16" lean-forward="true" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+            <state relative-caret-position="2266">
+              <caret line="114" column="14" lean-forward="false" selection-start-line="114" selection-start-column="14" selection-end-line="114" selection-end-column="14" />
               <folding>
                 <element signature="e#90#101#0" expanded="true" />
               </folding>
@@ -210,48 +258,24 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="item_exchange.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/item_exchange.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
+            <state relative-caret-position="4752">
               <caret line="229" column="18" lean-forward="false" selection-start-line="229" selection-start-column="4" selection-end-line="229" selection-end-column="18" />
               <folding>
+                <element signature="e#94#105#0" expanded="true" />
                 <marker date="1602647063000" expanded="true" signature="0:91" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="94:556" ph="import ..." />
-                <marker date="1602647063000" expanded="true" signature="605:1728" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="610:632" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="898:1677" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="1347:1677" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="1773:2369" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="1778:1800" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="2413:2823" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="2418:2449" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="2874:6501" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="2879:2929" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="3462:3566" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="3498:3566" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="3622:5988" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4111:4475" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4428:4475" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4631:5988" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4684:4894" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4953:5219" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="4991:5219" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="5065:5219" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="5263:5681" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="5783:5988" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="6006:6470" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="6554:7395" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="6559:6577" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="7219:7395" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="7453:8054" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="7458:7480" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="7964:8054" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="8111:8455" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="8116:8154" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="8308:8393" ph="..." />
-                <marker date="1602647063000" expanded="true" signature="8504:8528" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647063000" expanded="true" signature="8893:9303" ph="..." />
               </folding>
             </state>
           </provider>
@@ -260,48 +284,12 @@
       <file leaf-file-name="minigame.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-37">
-              <caret line="215" column="18" lean-forward="false" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="18" />
+            <state relative-caret-position="4444">
+              <caret line="214" column="18" lean-forward="false" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="18" />
               <folding>
-                <marker date="1602647069000" expanded="true" signature="0:84" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="86:600" ph="import ..." />
-                <marker date="1602647069000" expanded="true" signature="715:2975" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="720:743" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647069000" expanded="true" signature="1233:2680" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="2049:2238" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="2094:2238" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="2266:2564" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="2305:2564" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="3035:4961" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="3040:3064" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647069000" expanded="true" signature="3605:4870" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4236:4534" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4361:4491" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4436:4491" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4587:4870" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4626:4773" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="4670:4773" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="5027:9272" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="5032:5053" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647069000" expanded="true" signature="5598:8445" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="6181:6593" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="6688:8445" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="6939:7069" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="7014:7069" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="7087:8215" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="7275:8215" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="7562:8215" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="8671:8895" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="8706:8841" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="8746:8841" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="9001:9064" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="9082:9228" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="9324:9350" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                <marker date="1602647069000" expanded="true" signature="9569:10501" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="10227:10501" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="10259:10501" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="10307:10416" ph="..." />
-                <marker date="1602647069000" expanded="true" signature="10438:10501" ph="..." />
+                <marker date="1602682671000" expanded="true" signature="0:84" ph="..." />
+                <marker date="1602682671000" expanded="true" signature="86:477" ph="import ..." />
+                <marker date="1602682671000" expanded="true" signature="1935:2657" ph="..." />
               </folding>
             </state>
           </provider>
@@ -310,7 +298,7 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="69828">
               <caret line="3186" column="4" lean-forward="false" selection-start-line="3186" selection-start-column="4" selection-end-line="3186" selection-end-column="4" />
               <folding>
                 <marker date="1602404353000" expanded="true" signature="92379:92923" ph="..." />
@@ -322,21 +310,11 @@
       <file leaf-file-name="script_base.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/script/script_base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="54" column="21" lean-forward="true" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+            <state relative-caret-position="990">
+              <caret line="54" column="21" lean-forward="false" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
               <folding>
                 <element signature="e#87#100#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="table_base.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_base.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13156">
-              <caret line="633" column="78" lean-forward="false" selection-start-line="633" selection-start-column="78" selection-end-line="633" selection-end-column="78" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -346,16 +324,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="484">
               <caret line="22" column="10" lean-forward="false" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="table_player.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/learn_tu_you/tu_yoo/src/poker/entity/game/tables/table_player.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1034">
-              <caret line="47" column="8" lean-forward="false" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -429,7 +397,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/task/tide_task.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_match_table.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/time_point_match_table.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/player/time_match_player.py" />
@@ -475,11 +442,12 @@
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/timematchctrl/config.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/script/script_base.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/table/table_base.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py" />
-        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/item_exchange.py" />
         <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/gameplay.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py" />
+        <option value="$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/robotuser.py" />
       </list>
     </option>
   </component>
@@ -509,7 +477,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -641,6 +608,17 @@
               <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="robot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="learn_python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="learn_python" type="462c0819:PsiDirectoryNode" />
+              <item name="learn_tu_you" type="462c0819:PsiDirectoryNode" />
+              <item name="wx_superboss" type="462c0819:PsiDirectoryNode" />
+              <item name="trunk" type="462c0819:PsiDirectoryNode" />
+              <item name="hall37-newfish" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="newfish" type="462c0819:PsiDirectoryNode" />
               <item name="table" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -697,6 +675,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -885,7 +864,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="986" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="986" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -894,7 +873,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825205" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18009768" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18376069" sideWeight="0.49444443" order="0" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15689866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -960,13 +939,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/free_coin_lucky_tree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="26" column="26" lean-forward="false" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/grand_prix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1606">
@@ -1216,6 +1188,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="924">
           <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1223,7 +1196,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10428">
           <caret line="482" column="28" lean-forward="false" selection-start-line="482" selection-start-column="28" selection-end-line="482" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1239,7 +1211,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53218">
           <caret line="2460" column="8" lean-forward="false" selection-start-line="2460" selection-start-column="8" selection-end-line="2460" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1247,7 +1218,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13156">
           <caret line="633" column="78" lean-forward="false" selection-start-line="633" selection-start-column="78" selection-end-line="633" selection-end-column="78" />
-          <folding />
+          <folding>
+            <marker date="1602683852000" expanded="true" signature="24878:26335" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="25422:26335" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="124274:124515" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="124283:124317" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1602683852000" expanded="true" signature="124567:124766" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="124576:124610" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1602683852000" expanded="true" signature="124821:126299" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="124890:125078" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="125097:126299" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="125194:125354" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="125380:125960" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="126356:127248" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="126365:126529" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1602683852000" expanded="true" signature="126720:127178" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="126906:127122" ph="..." />
+            <marker date="1602683852000" expanded="true" signature="127340:127541" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1275,27 +1263,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="36" column="6" lean-forward="false" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7282">
-          <caret line="347" column="84" lean-forward="false" selection-start-line="347" selection-start-column="84" selection-end-line="347" selection-end-column="84" />
-          <folding>
-            <element signature="e#88#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/script/script_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="54" column="21" lean-forward="true" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+        <state relative-caret-position="990">
+          <caret line="54" column="21" lean-forward="false" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding>
             <element signature="e#87#100#0" expanded="true" />
           </folding>
@@ -1304,7 +1275,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
+        <state relative-caret-position="69828">
           <caret line="3186" column="4" lean-forward="false" selection-start-line="3186" selection-start-column="4" selection-end-line="3186" selection-end-column="4" />
           <folding>
             <marker date="1602404353000" expanded="true" signature="92379:92923" ph="..." />
@@ -1314,104 +1285,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/minigame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-37">
-          <caret line="215" column="18" lean-forward="false" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="18" />
+        <state relative-caret-position="4444">
+          <caret line="214" column="18" lean-forward="false" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="18" />
           <folding>
-            <marker date="1602647069000" expanded="true" signature="0:84" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="86:600" ph="import ..." />
-            <marker date="1602647069000" expanded="true" signature="715:2975" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="720:743" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647069000" expanded="true" signature="1233:2680" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="2049:2238" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="2094:2238" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="2266:2564" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="2305:2564" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="3035:4961" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="3040:3064" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647069000" expanded="true" signature="3605:4870" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4236:4534" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4361:4491" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4436:4491" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4587:4870" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4626:4773" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="4670:4773" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="5027:9272" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="5032:5053" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647069000" expanded="true" signature="5598:8445" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="6181:6593" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="6688:8445" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="6939:7069" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="7014:7069" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="7087:8215" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="7275:8215" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="7562:8215" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="8671:8895" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="8706:8841" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="8746:8841" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="9001:9064" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="9082:9228" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="9324:9350" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647069000" expanded="true" signature="9569:10501" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="10227:10501" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="10259:10501" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="10307:10416" ph="..." />
-            <marker date="1602647069000" expanded="true" signature="10438:10501" ph="..." />
+            <marker date="1602682671000" expanded="true" signature="0:84" ph="..." />
+            <marker date="1602682671000" expanded="true" signature="86:477" ph="import ..." />
+            <marker date="1602682671000" expanded="true" signature="1935:2657" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/item_exchange.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
+        <state relative-caret-position="4752">
           <caret line="229" column="18" lean-forward="false" selection-start-line="229" selection-start-column="4" selection-end-line="229" selection-end-column="18" />
           <folding>
+            <element signature="e#94#105#0" expanded="true" />
             <marker date="1602647063000" expanded="true" signature="0:91" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="94:556" ph="import ..." />
-            <marker date="1602647063000" expanded="true" signature="605:1728" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="610:632" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="898:1677" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="1347:1677" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="1773:2369" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="1778:1800" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="2413:2823" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="2418:2449" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="2874:6501" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="2879:2929" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="3462:3566" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="3498:3566" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="3622:5988" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4111:4475" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4428:4475" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4631:5988" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4684:4894" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4953:5219" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="4991:5219" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="5065:5219" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="5263:5681" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="5783:5988" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="6006:6470" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="6554:7395" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="6559:6577" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="7219:7395" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="7453:8054" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="7458:7480" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="7964:8054" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="8111:8455" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="8116:8154" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="8308:8393" ph="..." />
-            <marker date="1602647063000" expanded="true" signature="8504:8528" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1602647063000" expanded="true" signature="8893:9303" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/entity/superboss/gameplay.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="114" column="16" lean-forward="true" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
+        <state relative-caret-position="2266">
+          <caret line="114" column="14" lean-forward="false" selection-start-line="114" selection-start-column="14" selection-end-line="114" selection-end-column="14" />
           <folding>
             <element signature="e#90#101#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/hotfix/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/room/time_point_match_room.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="350" column="67" lean-forward="false" selection-start-line="350" selection-start-column="67" selection-end-line="350" selection-end-column="67" />
+          <folding>
+            <element signature="e#88#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/learn_tu_you/wx_superboss/trunk/hall37-newfish/src/newfish/robot/robotuser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

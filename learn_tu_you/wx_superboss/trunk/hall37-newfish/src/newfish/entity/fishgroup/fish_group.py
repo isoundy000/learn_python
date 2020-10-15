@@ -36,10 +36,8 @@ class FishGroup(object):
         self.serverGroupId = serverGroupId
         # 鱼群类型
         self.type = self.id.split("_")[1] if self.id.startswith("call_") else self.id.split("_")[0]
-        # 因客户端消息延迟和设备卡顿延长的存活时间
-        self.delayTime = 1
         # 鱼群存活时间
-        self.totalTime = conf.get("totalTime") + self.delayTime
+        self.totalTime = conf.get("totalTime")
         # 鱼群中的所有鱼
         self.fishes = conf.get("fishes")
         # 鱼群中鱼的数量

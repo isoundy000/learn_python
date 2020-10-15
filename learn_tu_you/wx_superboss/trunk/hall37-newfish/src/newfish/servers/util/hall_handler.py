@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/5
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 17/3/23.
+"""
 
 from distutils.version import StrictVersion
 
@@ -18,7 +17,7 @@ from newfish.entity.quick_start import FishQuickStartDispatcher, FishQuickStart
 from newfish.entity import util, module_tip, config
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.redis_keys import GameData, ABTestData
-from newfish.entity.grand_prize_pool import GrandPrizePool
+from newfish.entity.lotterypool.grand_prize_pool import GrandPrizePool
 
 
 @markCmdActionHandler
@@ -84,7 +83,7 @@ class HallTcpHandler(BaseMsgPackChecker):
                         tableId = tableId0
                     else:           # 用户选择的房间无法进入
                         roomConf = gdata.getRoomConfigure(roomId0)
-                        if roomConf and roomConf.get("typeName") in config.QUICK_START_ROOM_TYPE:   # 普通房间系统自动分配
+                        if roomConf and roomConf.get("typeName") in config.QUICK_START_ROOM_TYPE:   # 系统自动分配
                             roomId, reason = FishQuickStart._chooseRoom(userId, gameId)
                         else:       # 非普通房间无法进入
                             roomId = roomId0
@@ -128,17 +127,17 @@ class HallTcpHandler(BaseMsgPackChecker):
     def doGetRoomList(self, userId, gameId):
         """获取所有房间信息"""
         normalRoomInfos, friendRoomInfos, matchRoomInfos, robberyRoomInfos, \
-        pointMatchRoomInfos, grandPrixRoomInfos, poseidonRoomInfos = self._fetchAllRoomInfos(userId, gameId)
+        pointMatchRoomInfos, grandPrixRoomInfos, multipleRoomInfos = self._fetchAllRoomInfos(userId, gameId)
         message = MsgPack()
         message.setCmd("room_list")
         message.setResult("gameId", gameId)
-        message.setResult("normalRooms", normalRoomInfos)           # 普通房间信息
-        message.setResult("friendRooms", friendRoomInfos)           # 好友房间信息
-        message.setResult("matchRooms", matchRoomInfos)             # 回馈赛房间信息
-        message.setResult("pointMatchRooms", pointMatchRoomInfos)   # 定时积分赛
-        message.setResult("robberyRooms", robberyRoomInfos)         # 招财
-        message.setResult("grandPrixRooms", grandPrixRoomInfos)     # 大奖
-        message.setResult("poseidonRooms", poseidonRoomInfos)       # 海皇
+        message.setResult("normalRooms", normalRoomInfos)
+        message.setResult("friendRooms", friendRoomInfos)
+        message.setResult("matchRooms", matchRoomInfos)
+        message.setResult("pointMatchRooms", pointMatchRoomInfos)
+        message.setResult("robberyRooms", robberyRoomInfos)
+        message.setResult("grandPrixRooms", grandPrixRoomInfos)
+        message.setResult("multipleRooms", multipleRoomInfos)
         router.sendToUser(message, userId)
 
     def _fetchAllRoomInfos(self, userId, gameId):
@@ -195,7 +194,7 @@ class HallTcpHandler(BaseMsgPackChecker):
             module = module_tip.findModuleTip(moduleName)
             if module.needReport:
                 moduleNames.append(moduleName)
-        modulesInfo = module_tip.delModulesTipValue(userId, moduleNames, values)    # 删除模块tip信息中某个值
+        modulesInfo = module_tip.delModulesTipValue(userId, moduleNames, values)
         if modulesInfo:
             mo = module_tip.buildInfo(modulesInfo)
             router.sendToUser(mo, userId)

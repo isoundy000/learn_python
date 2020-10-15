@@ -407,7 +407,8 @@ def upgradeGun(userId, protect, mode, byGift=False, upToLevel=0):
         from newfish.entity.event import GunLevelUpEvent
         event = GunLevelUpEvent(userId, FISH_GAMEID, level, gunLevel, mode)
         TGFish.getEventBus().publishEvent(event)
-        bireport.reportGameEvent("BI_NFISH_GE_LEVEL_UP", userId, FISH_GAMEID, 0, 0, int(level), mode, 0, 0, [byGift, upToLevel, gunLevel], util.getClientId(userId))
+        bireport.reportGameEvent("BI_NFISH_GE_LEVEL_UP", userId, FISH_GAMEID, 0, 0, int(level), mode, 0, 0,
+                                 [byGift, upToLevel, gunLevel], util.getClientId(userId))
 
     mo = MsgPack()
     mo.setCmd("gun_up")                                     # 升级普通炮

@@ -113,17 +113,6 @@ class FishGrandPrixPlayer(FishMultiplePlayer):
             if self.grandPrixFireCount == 0:                                            # 结束比赛
                 self.endGrandPrix()
 
-    # def refreshGunLevel(self):
-    #     """
-    #     刷新火炮等级数据
-    #     """
-    #     levelFpMultiple = weakdata.getDayFishData(self.userId, WeakData.grandPrix_levelFpMultiple)
-    #     if levelFpMultiple:
-    #         self.nowGunLevel, _ = levelFpMultiple
-    #     else:
-    #     self.nowGunLevel = self.gunLevel
-    #     self.nowGunLevel = max(self.table.runConfig.minGunLevel, min(self.nowGunLevel, self.table.runConfig.maxGunLevel))
-
     def _refreshSkillSlots(self, skillType=0):
         """
         刷新技能数据 安装技能槽

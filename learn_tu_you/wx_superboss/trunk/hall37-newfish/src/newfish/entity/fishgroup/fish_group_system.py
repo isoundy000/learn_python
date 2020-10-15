@@ -9,6 +9,7 @@ import time
 from copy import deepcopy
 from freetime.entity.msg import MsgPack
 from freetime.util import log as ftlog
+from freetime.core.timer import FTLoopTimer
 from newfish.entity import config
 from newfish.entity.config import FISH_GAMEID
 from newfish.entity.fishgroup.fish_group import FishGroup
@@ -104,6 +105,18 @@ class FishGroupSystem(object):
         elif serverGroupId in self.table.normalFishGroups:
             del self.table.normalFishGroups[serverGroupId]
 
+    def setFishGroupDied(self, group):
+        """
+        设置鱼群中的鱼为死亡状态
+        """
+        startFishId = group.startFishId
+        fishCount = group.fishCount
+        for i in xrange(fishCount):
+            fishId = startFishId + i
+            self.table.setFishDied(fishId)
+        # 因客户端消息延迟和设备卡顿，为避免后端报错延迟删除鱼群
+        FTLoopTimer(3, 0, self.deleteFishGroup, group).start()
+
     def insertFishGroup(self, groupNames, position=None, HP=None, buffer=None, userId=None, score=None,
                         sendUserId=None, gameResolution=None):
         """
@@ -133,18 +146,17 @@ class FishGroupSystem(object):
                 enterTime = time.time() - self.table.startTime
                 startFishId = self._getNewFishId(len(groupConf["fishes"]))
                 group = FishGroup(groupConf, enterTime, self._getNewGroupId(), startFishId, position, gameResolution,
-                                  deadCallback=self.deleteFishGroup)
+                                  deadCallback=self.setFishGroupDied)
                 if ftlog.is_debug():
                     ftlog.debug("insertFishGroup:", group.desc(), self.table.tableId, enterTime)
                 for i in xrange(group.fishCount):
                     conf = group.fishes[i]
                     fishType = conf.get("fishType")
                     fishConf = config.getFishConf(fishType, self.table.typeName, self.table.runConfig.multiple)
-                    HP = HP if HP else fishConf["HP"]
                     self.table.fishMap[startFishId + i] = {
                         "group": group,
                         "conf": conf,
-                        "HP": HP,
+                        "HP": HP if HP else fishConf["HP"],
                         "buffer": deepcopy(buffer),
                         "multiple": 1,
                         "alive": True,

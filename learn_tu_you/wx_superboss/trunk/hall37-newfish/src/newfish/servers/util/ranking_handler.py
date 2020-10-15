@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/8
-
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 from freetime.entity.msg import MsgPack
 from poker.protocol import router
@@ -15,9 +14,8 @@ from newfish.entity.ranking import ranking_system
 
 @markCmdActionHandler
 class RankingTcpHandler(BaseMsgPackChecker):
-
+        
     def _check_param_rankType(self, msg, key, params):
-        """检查参数"""
         userId = msg.getParam("userId") or config.ROBOT_MAX_USER_ID
         rankType = msg.getParam("rankType")                     # or ranking_system.getAllTabs(userId)[0]["rankType"]
         if isinstance(rankType, int) and rankType >= 0:

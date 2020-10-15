@@ -1,7 +1,9 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/17
+# -*- coding=utf-8 -*-
+"""
+定时积分赛
+"""
+# @Author  : Kangxiaopeng
+# @Time    : 2018/11/12
 
 from freetime.entity.msg import MsgPack
 
@@ -94,7 +96,7 @@ class FishTimePointMatchTable(FishTimeMatchTable):
         self._playerBestScore = self._match_table_info["bestScore"]
         if self._logger.isDebug():
             self._logger.debug("doMatchTableStart", "bestScore=", self._playerBestScore,
-                               "rankListCache=", self._rankListCache, "matchSkills=", self._matchSkills)
+                               "targets=", self._rankListCache, "matchSkills=", self._matchSkills)
 
     def doUserGiveup(self, msg):
         """放弃"""

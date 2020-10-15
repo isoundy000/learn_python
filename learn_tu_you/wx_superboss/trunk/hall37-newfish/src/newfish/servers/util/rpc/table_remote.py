@@ -1,18 +1,19 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/6/18
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/12/13.
+"""
 
 from newfish.entity import util
 
 
 def getChipFinal(changed):
     final = -1
-    if 'ud' in changed:
+    if "ud" in changed:
         for item in changed["ud"]:
             if item["name"] == "user:chip":
                 final = item["count"]
                 break
+            
     return final
 
 

@@ -378,6 +378,11 @@ class ItemStoreShop(BaseStoreShop):
                     data.update({"dayPurchaseNum": dayPurchaseNum})
                     data.update({"buyCountLimit": buyCountLimit})
                     data.update({"minVipLimit": [vipLimit, vipDailyCountLimit[vipLimit]]})
+                if product.get("itemId", 0) == 36201:
+                    freeChestCount = weakdata.getDayFishData(self.userId, "buyDailyChestCount", 0)
+                    freeData = product.get("extendData", {}).get("free")
+                    dayLeftFreeCount = len(freeData.get("time")) - freeChestCount
+                    data.update({"dayLeftFreeCount": dayLeftFreeCount})
                 chestItems.append(data)
         self.chestStoreTab["items"] = chestItems
         if self.actionType == StoreTabType.STT_CHEST:

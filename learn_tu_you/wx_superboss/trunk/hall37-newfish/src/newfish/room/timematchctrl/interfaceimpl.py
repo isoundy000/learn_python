@@ -1932,7 +1932,6 @@ class TimePointStage(TimeStage):
                 self._outPlayer(self._rankList[-1], reason)
 
         if reason == MatchFinishReason.FINISH:
-            # self._sendRewards(rankList)
             self._unlockUsers(rankList)
         elif reason in [MatchFinishReason.USER_NOT_ENOUGH, MatchFinishReason.RESOURCE_NOT_ENOUGH]:
             self._unlockUsers(rankList)
@@ -1963,6 +1962,7 @@ class TimePointStage(TimeStage):
             if player in self._finishPlayerSet:
                 self._finishPlayerSet.discard(player)
 
+            self.area.curInst.delSigner(player.userId)
             self.area.master.userPlayedTimes.setdefault(player.userId, 0)
             self.area.master.userPlayedTimes[player.userId] += 1
         except:
