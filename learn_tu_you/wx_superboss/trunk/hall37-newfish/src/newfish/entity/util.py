@@ -639,7 +639,7 @@ def addRewards(userId, rewards, eventId, intEventParam=0, param01=0, param02=0, 
         elif config.getTreasureConf(kindId):                                                # 获取宝藏配置
             from newfish.entity import treasure_system
             treasure_system.refreshTreasureState(userId, kindId)
-        elif kindId == config.SOUVENIR_KIND_ID and item["count"] < 0:
+        elif kindId == config.SOUVENIR_KINDID and item["count"] < 0:
             from newfish.game import TGFish
             event = ConsumeVoucherEvent(userId, FISH_GAMEID, abs(item["count"]))
             TGFish.getEventBus().publishEvent(event)

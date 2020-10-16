@@ -209,23 +209,6 @@ def renameNickname(userId, clientId, nickname):
     router.sendToUser(message, userId)
 
 
-def sendThanksLetterReward(userId):
-    thanksRewardNum = gamedata.getGameAttrInt(userId, FISH_GAMEID, GameData.ThanksLetterRewardNum)
-    message = MsgPack()
-    message.setCmd("thanks_letter_reward")
-    message.setResult("gameId", FISH_GAMEID)
-    message.setResult("userId", userId)
-    if thanksRewardNum < config.getCommonValueByKey("thanksLetterRewardNum"):
-        gamedata.incrGameAttr(userId, FISH_GAMEID, GameData.ThanksLetterRewardNum, 1)
-        rewards = config.getCommonValueByKey("thanksLetterRewards")
-        util.addRewards(userId, rewards, "BI_NFISH_SHARE_REWARDS")
-        message.setResult("code", 0)
-        message.setResult("rewards", rewards)
-    else:
-        message.setResult("code", 1)
-    router.sendToUser(message, userId)
-
-
 def addShareGroupId(userId, groupId):
     """
     添加分享到群的群ID

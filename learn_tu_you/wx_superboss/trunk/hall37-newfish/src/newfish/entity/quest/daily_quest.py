@@ -981,9 +981,9 @@ def triggerFireEvent(event):
 def triggerUseSkillItemEvent(event):
     """使用冰冻或者所动道具卡"""
     userId = event.userId
-    if event.kindId == config.LOCK_ITEM:
+    if event.kindId == config.LOCK_KINDID:
         _incQuestValue(userId, TaskType.UseSkillLockItem, 1)
-    elif event.kindId == config.FREEZE_ITEM:
+    elif event.kindId == config.FREEZE_KINDID:
         _incQuestValue(userId, TaskType.UseSkillFreezeItem, 1)
 
 

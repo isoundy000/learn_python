@@ -918,11 +918,6 @@ class FishTable(TYTable):
         player.checkConnect(isInvalid)
         if isCatch:
             player.addCombo()
-        for userId, catchInfo in otherCatch.iteritems():
-            otherPlayer = self.getPlayer(userId)
-            if otherPlayer:
-                self.dealCatch(bulletId, wpId, otherPlayer, catchInfo["catch"], catchInfo["gain"],
-                               catchInfo["gainChip"], catchInfo["exp"], fpMultiple, extends, isFraud=True)
         if wpType in config.LOG_OUTPUT_WEAPON_TYPE_SET:
             ftlog.info(
                 "_catchFish, userId =", player.userId,
@@ -964,50 +959,44 @@ class FishTable(TYTable):
         mo.setResult("fishResId", fResId)
         mo.setResult("skillId", skillId)
         mo.setResult("fishId", fishId)
-        mo.setResult("multiple", multiple)
+        # mo.setResult("gunMultiple", gunMultiple)
         mo.setResult("totalCoin", totalCoin)
-        mo.setResult("fpMultiple", fpMultiple)
+        # mo.setResult("fpMultiple", fpMultiple)
         GameMsg.sendMsg(mo, self.getBroadcastUids(userId))
 
         event = CatchEvent(userId, FISH_GAMEID, self.roomId, self.tableId, [], wpId, totalCoin, fpMultiple)
         player.activitySystem and player.activitySystem.dealDrillCatchFish(event)
         if wpType in [config.DRILL_WEAPON_TYPE, config.SUPER_BOSS_WEAPON_TYPE]:
-            self.checkBigPrize(player, totalCoin / (multiple * fpMultiple), totalCoin, fpMultiple)
+            self.checkBigPrize(player, totalCoin / (gunM * fpMultiple), totalCoin, fpMultiple)
 
         if self.typeName not in config.NORMAL_ROOM_TYPE:
             return
         fishConf = config.getFishConf(fResId, self.typeName, fpMultiple)
-        if fishConf.get("type", None) in config.TERROR_FISH_TYPE and totalCoin / fpMultiple >= 1500 and (self.runConfig.fishPool == 44004 or self.runConfig.fishPool == 44405):
+        if fishConf.get("type", None) in config.TERROR_FISH_TYPE and totalCoin / fpMultiple >= 1500 and (self.runConfig.fishPool == 44004 or self.runConfig.fishPool == 44005):
             # msg = u"恭喜%s击杀%s总计%s分，获得%s金币！" % \
             title = config.getMultiLangTextConf(self.runConfig.title, lang=player.lang)
             fishName = config.getMultiLangTextConf(fishConf["name"], lang=player.lang)
-            self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH", player.name, fishName, totalCoin / fpMultiple,
+            self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH", player.name, fishName,
                                 util.formatScore(totalCoin, lang=player.lang))
-            if ftlog.is_debug():
-                ftlog.debug("totalCatch", userId, totalCoin, self.runConfig.multiple, fpMultiple, totalCoin)
-        elif fishConf.get("type", None) in config.TERROR_FISH_TYPE and totalCoin >= 5000000 and multiple >= 10000:
+        elif fishConf.get("type", None) in [5, 28, 29, 35] and totalCoin >= 5000000 and gunM >= 10000:
             # msg = u"恭喜%s用%s倍炮击杀%s获得%s分，共%s金币" % \
             fishName = config.getMultiLangTextConf(fishConf["name"], lang=player.lang)
-            totalValue = totalCoin / multiple
-            self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH_VALUE", player.name, multiple,
-                                fishName, totalValue, util.formatScore(totalCoin, lang=player.lang))
-            if ftlog.is_debug():
-                ftlog.debug("totalCatch", userId, totalValue, fishName, multiple, totalCoin)
-        elif fishConf["type"] == 31 and multiple >= 10000:
-            # msg = u"实力超群！恭喜%s用%s倍炮击杀%s获得%s金币，额外获得%s个%s！" % \
+            totalValue = totalCoin / gunM
+            self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH_VALUE", player.name, gunM,
+                                fishName, util.formatScore(totalCoin, lang=player.lang))
+        elif fishConf.get("type", None) in [33, 34, 31] and stageCount >= 5 and gunM >= 10000:
+            # msg = u"恭喜%s用%s倍炮击杀%s共爆炸%s次，获得%s金币！" % \
             fishName = config.getMultiLangTextConf(fishConf["name"], lang=player.lang)
-            self._sendFormatLed(player, "ID_LED_CATCH_SUPER_BOSS_MULTIPL", player.name, multiple, fishName,
-                                util.formatScore(totalCoin, lang=player.lang))
-        # elif fishConf["type"] in config.TERROR_FISH_TYPE and stageCount >= 5 and multiple >= 10000:
-        #     # msg = u"恭喜%s用%s倍炮击杀%s共爆炸%s次，获得%s金币！" % \
-        #     fishName = config.getMultiLangTextConf(fishConf["name"], lang=player.lang)
-        #     self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH_COUNT", player.name, multiple,
-        #                         fishName, stageCount, util.formatScore(totalCoin, lang=player.lang))
+            self._sendFormatLed(player, "ID_LED_CATCH_TERROR_FISH_COUNT", player.name, gunM,
+                                fishName, stageCount, util.formatScore(totalCoin, lang=player.lang))
 
-    def getCatchProbb(self, player, wpConf, fId, fIdsCount=1, superBullet=None, extendId=0, aloofOdds=0, nonAloofOdds=0, stageId=0, datas=None):
-        return self._getCatchProbb(player, wpConf, fId, fIdsCount, superBullet, extendId, aloofOdds, nonAloofOdds, stageId, datas)
+    def getCatchProbb(self, player, bulletId, wpConf, fId, fIdsCount=1, superBullet=None, extendId=0,
+                      aloofOdds=0, nonAloofOdds=0, stageId=0, datas=None):
+        return self._getCatchProbb(player, bulletId, wpConf, fId, fIdsCount, superBullet, extendId,
+                                   aloofOdds, nonAloofOdds, stageId, datas)
 
-    def _getCatchProbb(self, player, wpConf, fId, fIdsCount=1, superBullet=None, extendId=0, aloofOdds=0, nonAloofOdds=0, stageId=0, datas=None):
+    def _getCatchProbb(self, player, bulletId, wpConf, fId, fIdsCount=1, superBullet=None, extendId=0,
+                       aloofOdds=0, nonAloofOdds=0, stageId=0, datas=None):
         """
         获取捕获概率
         :param player: 玩家
@@ -1024,7 +1013,8 @@ class FishTable(TYTable):
         gunMultiple = datas and datas.get("gunMultiple", None) or 1                 # 开火时的武器倍率
         fpMultiple = datas and datas.get("fpMultiple", self.runConfig.multiple) or self.runConfig.multiple
         if ftlog.is_debug():
-            ftlog.debug("getCatchProbb", player.userId, wpConf, fId, fIdsCount, superBullet, extendId, aloofOdds, nonAloofOdds, stageId)
+            ftlog.debug("getCatchProbb", player.userId, bulletId, wpConf, fId, fIdsCount, superBullet, extendId,
+                        aloofOdds, nonAloofOdds, stageId, datas)
         wpId = wpConf["weaponId"]
         wpType = util.getWeaponType(wpId)
         fishInfo = self.fishMap[fId]
@@ -1282,7 +1272,7 @@ class FishTable(TYTable):
         :param skillId: 技能
         :param stageId: 阶段
         :param fpMultiple: 渔场倍率
-        :param isFraud:
+        :param isFraud: 是否为欺诈
         :param skillType: 技能类型
         :return:
         """
@@ -1328,7 +1318,8 @@ class FishTable(TYTable):
         retMsg.setResult("skillId", skillId)
         retMsg.setResult("skillType", skillType)
         retMsg.setResult("stageId", stageId)
-        retMsg.setResult("multiple", multiple)
+        retMsg.setResult("multiple", gunMultiple)
+        retMsg.setResult("gunX", gunX)
         retMsg.setResult("extends", extends)        # 扩展
         retMsg.setResult("fpMultiple", fpMultiple)
         retMsg.setResult("clip", clip)              # 子弹
@@ -1398,7 +1389,7 @@ class FishTable(TYTable):
         :param catch: 捕获
         :param gain: 捕获道具
         :param gainChip: 捕获金币
-        :param exp: 捕获金鱼
+        :param exp: 捕获经验
         :param fpMultiple: 渔场倍率
         :param extends: 扩展数据
         :param skillId: 技能Id
@@ -1439,6 +1430,8 @@ class FishTable(TYTable):
                            "userId =", player.userId,
                            "fishType =", fishConf["type"],
                            "wpId =", wpId,
+                           "gunMultiple =", gunMultiple,
+                           "gunX =", gunX,
                            "gainMap =", gainMap,
                            "gainChip =", gainChip)
             # 捕获了超级boss添加积分到排行榜.
@@ -1469,10 +1462,11 @@ class FishTable(TYTable):
         :param gain: 获得奖励
         :param gainChip: 获取金币
         :param fpMultiple: 渔场倍率
+        :param gunMultiple: 武器倍率
+        :param gunX: 炮倍数
         :param extends: 扩展数据
         :param skillId: 技能ID
-        :param isFraud: 是否存在欺诈水晶效果
-        :param skillType: 技能类型
+        :param catchFishMultiple: {fId:fishMultiple} 鱼倍率字典
         """
         fishTypes = []
         extendId = extends[0] if extends and not skillId else None  # 激光炮extends有特殊含义，代表判定次数
@@ -1702,8 +1696,11 @@ class FishTable(TYTable):
         """
         格式化Led消息并发送
         """
-        msg = config.getMultiLangTextConf(mid, lang=player.lang).format(*args)
-        user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+        try:
+            msg = config.getMultiLangTextConf(mid, lang=player.lang).format(*args)
+            user_rpc.sendLed(FISH_GAMEID, msg, id=mid, lang=player.lang)
+        except Exception as e:
+            ftlog.error("_sendFormatLed error", player.userId, mid, args, e)
 
     def _doSit(self, msg, userId, seatId, clientId):
         """
@@ -1959,8 +1956,6 @@ class FishTable(TYTable):
         if player and player.compAct:                                       # 竞赛活动
             player.compAct.sendInspireInfo()
         player.gunEffectState(5)                                                            # 狂暴炮的状态和时间进度
-        # 发送断线后的小游戏进度信息
-        mini_game.sendMiniGameProgress(self, userId, self.roomId)
 
     def _getTableGroups(self, userId):
         """
@@ -2491,21 +2486,7 @@ class FishTable(TYTable):
         """
         领取礼包奖励
         """
-        productId = msg.getParam("productId", "")
-        # 转运礼包购买后一定概率转运,当玩家购买任意转运礼包后，如果玩家当前房间所在曲线为6~10，则强制重置当前房间曲线，随机范围1~10
-        if productId not in config.getPublic("luckyGiftProductIds", []):
-            return
-        player = self.getPlayer(userId)
-        if player is None or not hasattr(player, "dynamicOdds"):
-            return
-        waveId = 0
-        waveList = [wave["waveId"] for wave in player.dynamicOdds.getWaveList("low")]
-        if player.dynamicOdds.waveId in waveList:
-            waveId = player.dynamicOdds.getWaveId()
-            if waveId:
-                player.dynamicOdds.resetOdds(waveId)
-        if ftlog.is_debug():
-            ftlog.debug("_takeGiftReward", userId, self.bigRoomId, waveList, waveId)
+        pass
 
     def _skill_upgrade(self, msg, userId, seatId):
         """技能升级0、升星1"""

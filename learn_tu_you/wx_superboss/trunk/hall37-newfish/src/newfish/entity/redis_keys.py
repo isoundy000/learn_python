@@ -101,10 +101,6 @@ class GameData:
     redAdvanceOpen = "redAdvanceOpen"
     # 上次选择的房间类型
     lastRoomType = "lastRoomType"
-    # 收到感谢信次数
-    ThanksLetterNum = "ThanksLetterNum"
-    # 领取感谢信奖励次数
-    ThanksLetterRewardNum = "ThanksLetterRewardNum"
     # 已邀请玩家列表
     inviteList = "inviteList"
     # 邀请记录自增ID
@@ -316,10 +312,6 @@ class GameData:
     totalEntityAmount = "totalEntityAmount"
     # 各渔场个人可见红包券鱼捕获次数
     catchUserCouponFishCount = "catchUserCouponFishCount"
-    # 新解锁的渔场倍率
-    unlockedFpMultiples = "unlockedFpMultiples"
-    # 拥有的可使用的渔场倍率
-    ownedFpMultiples = "ownedFpMultiples"
     # 玩家的游戏分辨率
     gameResolution = "gameResolution"
     # 海皇七日赢家榜数据
@@ -360,19 +352,21 @@ class GameData:
     buyLevelGift = "buyLevelGift"
     # 是否发送过新手LED
     hasSendUserNewLed = "hasSendUserNewLed"
+    # 已解锁的千炮金币渔场
+    unlockedMultiGoldCoinRoom = "unlockedMultiGoldCoinRoom"
 
 
 class ABTestData:
     """
     新手AB测试相关
     """
-    # 新手ABC测试
+    # 新手ABC测试（暂时无用）
     newbiewABCTestMode = "newbiewABCTestMode"
 
 
 class WeakData:
     """
-    存储在weak:xxx:fish:gameId:userId数据库中的key值 临时数据
+    存储在weak:xxx:fish:gameId:userId数据库中的key值
     """
     # 领取月卡礼包
     getMonthCardGift = "getMonthCardGift"

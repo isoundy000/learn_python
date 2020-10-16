@@ -703,7 +703,7 @@ class ChestStoreBuyAction(BuyAction):
         """
         super(ChestStoreBuyAction, self)._setErrorInfo()
         storeName = self.name
-        if self.itemId in [config.PEARL_KINDID or config.RUBY_KINDID or config.GOLDEN_KEY_KINDID or config.LOCK_ITEM or config.FREEZE_ITEM]:
+        if self.itemId in [config.PEARL_KINDID or config.RUBY_KINDID or config.GOLDEN_KEY_KINDID or config.LOCK_KINDID or config.FREEZE_KINDID]:
             storeName = "%sx%d" % (self.name, self.itemCount * self.buyCount)
         self.allInfo[BuyResultState.BRS_SUCC] = config.getMultiLangTextConf("ID_BUY_RESULT_INFO_0", lang=self.lang).format(
             time.strftime("%X", time.localtime()), storeName, self.price * self.buyCount,

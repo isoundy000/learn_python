@@ -77,7 +77,7 @@ class SkillItem(object):
         """是否使用道具"""
         if kindId not in self.player.skills_item_slots:
             return 1
-        if kindId == config.FREEZE_ITEM:
+        if kindId == config.FREEZE_KINDID:
             frozenNum = 0
             for fId in fIds:
                 isOK = self.table.findFish(fId)
@@ -137,7 +137,7 @@ class SkillItem(object):
         msg.setResult("code", code)
         GameMsg.sendMsg(msg, self.table.getBroadcastUids())
         if code == 0:
-            if kindId == config.FREEZE_ITEM:                     # 冰冻特性，有几率冰冻鱼
+            if kindId == config.FREEZE_KINDID:                     # 冰冻特性，有几率冰冻鱼
                 self.catchFish(kindId, fIds, lockFid)
             # 使用技能道具事件
             from newfish.game import TGFish
@@ -192,7 +192,7 @@ class SkillItem(object):
             # 计算能否冰冻
             isCoverFrozen, lastFrozenTime, frozenTime, _ = self.table.checkCoverFrozen(fId, duration, endTime)
             if isCoverFrozen:
-                isCoverFrozen = random.randint(1, 10000) <= config.FREEZE_PROBB
+                isCoverFrozen = random.randint(1, 10000) <= config.getCommonValueByKey("freezeProbb", 6500)
             if isCoverFrozen:
                 frozenFishes.append([fId, lastFrozenTime, frozenTime, fishConf["probb2"]])
 

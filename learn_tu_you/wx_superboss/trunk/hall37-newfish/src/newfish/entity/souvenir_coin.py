@@ -16,7 +16,7 @@ def _triggerUserVipExpChangeEvent(event):
         rmbs = int(event.toAddExp / 10)
         rewards = [
             {
-                "name": config.SOUVENIR_KIND_ID,
+                "name": config.SOUVENIR_KINDID,
                 "count": int(RMB_SOUVENIR_RATE * rmbs)
             }
         ]

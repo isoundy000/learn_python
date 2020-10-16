@@ -171,8 +171,8 @@ class SkillBase(object):
                 self.player.removeUsingSkill(self.skillId, self.skillType)
                 eventId = "BI_NFISH_GE_SKILL_CANCEL"
         self.table.broadcastSkillUse(self, select, self.player.userId, orgState)
-        if config.LOCK_ITEM in self.player.skill_item:
-            self.player.skill_item[config.LOCK_ITEM].pause_and_continue_time(config.LOCK_ITEM)
+        if config.LOCK_KINDID in self.player.skill_item:
+            self.player.skill_item[config.LOCK_KINDID].pause_and_continue_time(config.LOCK_KINDID)
         self.player.gunEffectState(2)
         if eventId:
             bireport.reportGameEvent(eventId, self.player.userId, FISH_GAMEID, self.table.roomId,  self.table.tableId,
@@ -202,8 +202,8 @@ class SkillBase(object):
         self.initState()
         self.player.removeUsingSkill(self.skillId, self.skillType)
         self.table.broadcastSkillEnd(self)
-        if config.LOCK_ITEM in self.player.skill_item:        # 锁定继承开始时间计时
-            self.player.skill_item[config.LOCK_ITEM].pause_and_continue_time(config.LOCK_ITEM)
+        if config.LOCK_KINDID in self.player.skill_item:        # 锁定继承开始时间计时
+            self.player.skill_item[config.LOCK_KINDID].pause_and_continue_time(config.LOCK_KINDID)
         self.player.syncSkillItemSlots()
         self.player.gunEffectState(2)
         if self.table.typeName in config.NORMAL_ROOM_TYPE:

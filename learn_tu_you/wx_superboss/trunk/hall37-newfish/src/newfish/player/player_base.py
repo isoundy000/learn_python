@@ -844,8 +844,8 @@ class FishPlayer(TYPlayer):
             "gunLv": self.gunLv,                    # 皮肤炮等级
             "sendTimestamp": sendTimestamp,         # 发送时间
             "receiveTimestamp": nowTimestamp,       # 接收时间
-            "power": power,                         # 威力
-            "initPower": power,                     # 初始威力
+            "power": power,                         # 威力列表
+            "initPower": power,                     # 初始威力列表
             "targetPos": targetPos,                 # 目标位置
             "fishType": fishType,                   # 鱼的Id
             "fpMultiple": fpMultiple,               # 渔场倍率

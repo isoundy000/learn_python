@@ -104,7 +104,7 @@ class QuestType:
     UserLevelUp = 10043         # 玩家等级达到n级
     UseSkillItemLock = 10044    # 使用n次锁定
     LevelPrizeWheel = 10045     # 转盘的转动
-    UseSkillItem = 10046        # 使用n次冰冻
+    UseSkillItemFreeze = 10046  # 使用n次冰冻
 
 
 TaskTypeFishTypeMap = {
@@ -558,9 +558,9 @@ def triggerUseSkillEvent(event):
 def triggerUseSkillItemEvent(event):
     """触发使用道具锁定"""
     userId = event.userId
-    if event.kindId == config.LOCK_ITEM:
+    if event.kindId == config.LOCK_KINDID:
         incrQuestTypeData(userId, QuestType.UseSkillItemLock, 1)
-    elif event.kindId == config.FREEZE_ITEM:
+    elif event.kindId == config.FREEZE_KINDID:
         incrQuestTypeData(userId, QuestType.UseSkillItemFreeze, 1)
 
 

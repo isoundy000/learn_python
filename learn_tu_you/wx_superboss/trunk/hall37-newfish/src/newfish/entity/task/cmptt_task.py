@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/16
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/11/21.
+"""
+
 import random
 import time
 import copy
@@ -27,7 +28,7 @@ class CmpttTask(TableMatchTask):
     def __init__(self, table, taskName, taskInterval):
         super(CmpttTask, self).__init__(table, taskName, taskInterval)
         self._reload()
-
+                
     def _reload(self):
         self.currentTask = {}
         self.userIds = []
@@ -81,7 +82,7 @@ class CmpttTask(TableMatchTask):
         randTask = random.choice(tasks)
         self.currentTask = copy.deepcopy(randTask)
         for uid in self.table.getBroadcastUids():
-            if util.isFinishAllRedTask(uid):
+            if util.isFinishAllNewbieTask(uid):
                 self.userIds.append(uid)
         if len(self.userIds) <= 2:
             self.chestRewardId = self.currentTask["chestReward"][0]
@@ -197,7 +198,7 @@ class CmpttTask(TableMatchTask):
         """
         userIds = []
         for uid in self.table.getBroadcastUids():
-            if util.isFinishAllRedTask(uid):
+            if util.isFinishAllNewbieTask(uid):
                 userIds.append(uid)
         if self.sendInfoTimer:
             self.sendInfoTimer.cancel()
@@ -276,7 +277,6 @@ class CmpttTask(TableMatchTask):
             task = copy.deepcopy(self.currentTask)
             player.currentTask = [self.taskName, task["taskId"], task["taskType"], task["targets"]]
 
-
     def sendTaskInfoForReconnect(self, userId):
         """
         用户断线重连发送任务相关信息
@@ -332,7 +332,7 @@ class CmpttTask(TableMatchTask):
         处理捕获事件
         """
         if self.state != 2:
-            return
+            return 
         uid = event.userId
         fishTypes = event.fishTypes
         if uid not in self.userIds:
@@ -430,7 +430,7 @@ class CmpttTask(TableMatchTask):
         number2 = targets.get("number2", 999)
         finished = False
         if taskType == 1:
-            if len(targets.keys()) == 3:  # 一个target会对应有3个字段
+            if len(targets.keys()) == 3:    # 一个target会对应有3个字段
                 if target1 in results.keys() and results[target1] >= number1:
                     finished = True
             else:

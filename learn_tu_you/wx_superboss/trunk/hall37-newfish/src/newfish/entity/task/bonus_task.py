@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/16
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/11/21.
+"""
+
 import random
 import time
 
@@ -26,22 +27,22 @@ class BonusTask(TableMatchTask):
     奖金赛任务
     """
     def __init__(self, table, taskName, taskInterval):
-        super(BonusTask, self).__init__(table, taskName, taskInterval)      # taskName: bonus
+        super(BonusTask, self).__init__(table, taskName, taskInterval)
         self._reload()
 
     def _reload(self):
         # 火炮效果(增加比赛分数)
         self.wpScoreScale = {12: 1.1, 16: 1.15, 18: 1.2}
-        self.currentTask = {}                                               # 当前的任务
+        self.currentTask = {}
         self.userIds = []
         self.usersData = {}
-        self.state = 0                                                      # 0、1(准备)、2(开始)
+        self.state = 0
         self.bonusPool = 0
         self.firstBonusScale = 1
         self.secondBonusScale = 0
-        self.recordStartTime = 0                                            # 记录开始时间
+        self.recordStartTime = 0
         self.sendInfoTime = 60
-        self.catchId = 100000000                                            # 捕鱼ID次数 用于积分排名二次排序
+        self.catchId = 100000000
         # self.readyTimer = FishTableTimer(self.table)
         self.startTimer = FishTableTimer(self.table)
         self.endTimer = FishTableTimer(self.table)
@@ -67,7 +68,7 @@ class BonusTask(TableMatchTask):
             self.startTimer.cancel()
         if self.endTimer:
             self.endTimer.cancel()
-        if self.sendInfoTimer:                                             # 发送奖金赛任务倒计时的定时器
+        if self.sendInfoTimer:
             self.sendInfoTimer.cancel()
 
     def taskReady(self, *args):
@@ -99,9 +100,9 @@ class BonusTask(TableMatchTask):
                 self.bonusPool = self.table.runConfig.systemBonus
         self.bonusPool = self.bonusPool if self.bonusPool < self.table.runConfig.multiple * 5000 else self.table.runConfig.multiple * 5000
         self.taskId = "%d-%d" % (self.table.tableId, int(time.time()))
-        self.currentTask = random.choice(tasks)                                                 # 当前任务
+        self.currentTask = random.choice(tasks)
         for uid in self.table.getBroadcastUids():
-            if util.isFinishAllRedTask(uid):
+            if util.isFinishAllNewbieTask(uid):
                 self.userIds.append(uid)
         for uid in self.userIds:
             self.usersData[uid] = {"uid": uid, "task": self.currentTask, "score": 0, "lastCatchId": 0}
@@ -179,7 +180,7 @@ class BonusTask(TableMatchTask):
                 self.userIds.remove(uid)
             if uid in self.usersData:
                 del self.usersData[uid]
-        if self.state == 0 or len((self.userIds)) == 0:
+        if self.state == 0 or len(self.userIds) == 0:
             for userId in self.userIds:
                 player = self.table.getPlayer(userId)
                 if player:
@@ -192,7 +193,7 @@ class BonusTask(TableMatchTask):
         """
         userIds = []
         for uid in self.table.getBroadcastUids():
-            if util.isFinishAllRedTask(uid):
+            if util.isFinishAllNewbieTask(uid):
                 userIds.append(uid)
         if self.sendInfoTimer:
             self.sendInfoTimer.cancel()
@@ -223,7 +224,7 @@ class BonusTask(TableMatchTask):
         msg.setCmd("bonus_task")
         msg.setResult("gameId", FISH_GAMEID)
         msg.setResult("action", "info")
-        msg.setResult("state", state)                               # 0:xx秒后开赛 1:比赛中
+        msg.setResult("state", state)
         msg.setResult("timeLeft", timeLeft)
         msg.setResult("minBonus", self.table.runConfig.minBonus)
         msg.setResult("bonusPool", bonusPool)

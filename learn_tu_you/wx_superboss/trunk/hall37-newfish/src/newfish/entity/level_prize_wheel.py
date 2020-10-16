@@ -400,15 +400,17 @@ class LevelPrizeWheel(PrizeWheel):
         pwData = self._getData(level, fpMultiple)
         if pwData[PWValueSlot.STATE] != PWState.NOT_SPIN and not self.isEnergyStorageMode:
             return
-        if pwData[PWValueSlot.SPINTIMES] >= self.maxSpinTimes:
-            return
         val = fishConf.get("prizeWheelValue", 0) * fpMultiple * gunX
         if ftlog.is_debug():
             ftlog.debug("lpw_catch_fish, userId =", self.userId, "level =", level, "val =", val, fpMultiple, gunX)
-        if val and self._addEnergy(level, fpMultiple, int(val)):
-            number = gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber)
-            number += 1
-            gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber, number)
+        if not val:
+            return
+        number = gamedata.getGameAttrInt(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber)
+        number += 1
+        gamedata.setGameAttr(self.userId, FISH_GAMEID, GameData.levelPrizeWheelCatchFishNumber, number)
+        if pwData[PWValueSlot.SPINTIMES] >= self.maxSpinTimes:
+            return
+        if self._addEnergy(level, fpMultiple, int(val)):
             self.sendEnergyProgress(0, fpMultiple, self.roomId, val, fId)       # 传0表示刷新当前最大的段位，因为会越级
 
     def _resetPrizeWheelState(self, level, fpMultiple):

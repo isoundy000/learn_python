@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# @Auther: houguangdong
-# @Time: 2020/7/13
+# -*- coding=utf-8 -*-
+"""
+Created by lichen on 16/1/12.
+"""
 
 import random
 import time
@@ -14,7 +14,6 @@ from newfish.entity.msg import GameMsg
 from newfish.entity import config
 from newfish.entity import util
 from newfish.entity.timer import FishTableTimer
-from newfish.entity import change_notify
 from newfish.entity import drop_system
 from newfish.entity.chest import chest_system
 from newfish.entity.task.table_task_base import TableMatchTask, TaskState
